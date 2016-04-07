@@ -2,11 +2,13 @@ RTPROG = ../..
 
 BOARD = rtboard
 
-DRIVERS += usbserial ax12
+DRIVERS += ax12 usbserial titi
 
 -include $(RTPROG)/support/rtprog.mk
 
 
-all:
-	echo $(DRIVERS)
-	echo $(DEVICE) $(ARCHI) $(CC)
+all :
+	@echo $(DRIVERS)
+	@echo $(DRIVER_FILES)
+	@echo $(DEVICE) $(ARCHI) $(CC)
+	# $(CC) main.c
