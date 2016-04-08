@@ -1,5 +1,6 @@
 
 # check BOARD variable exists
+# TODO: BOARD does not have to be defined. A project can be setted BOARD (ie. working with a labdec) 
 ifndef BOARD
 $(error Define BOARD in your project)
 endif
