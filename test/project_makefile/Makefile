@@ -4,7 +4,7 @@ BOARD = rtboard
 
 DRIVERS += ax12 usbserial toto usbserial
 
--include $(RTPROG)/support/rtprog.mk
+-include $(RTPROG)/rtprog.mk
 
 
 all :
