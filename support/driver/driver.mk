@@ -1,20 +1,30 @@
 
 # $(warning $(DRIVERS))
 
-define checkfile
-ifneq "$(wildcard $(RTPROG)/support/driver/$(1)/$(1).mk)" ""
-DRIVER_FILES += $(RTPROG)/support/driver/$(1)/$(1).mk
-IDRIVERS += $(1)
-else
-BADDRIVERS += $(1)
-endif
+define includedriver
+ NDRIVER_FILES=
+ ifneq "$(wildcard $(RTPROG)/support/driver/$(1)/$(1).mk)" ""
+  ifeq (,$(findstring " $1 ",$(IDRIVERS)))
+   DRIVER_FILES += $(RTPROG)/support/driver/$(1)/$(1).mk
+   NDRIVER_FILES += $(RTPROG)/support/driver/$(1)/$(1).mk
+   IDRIVERS += $(1)
+  endif
+ else
+  ifeq (,$(findstring $1,$(BADDRIVERS)))
+   BADDRIVERS += $(1)
+  endif
+ endif
 endef
 
 define includedrivers
-$(foreach DRIVER, $(DRIVERS), $(eval $(call checkfile,$(DRIVER))))
+ $(foreach DRIVER, $(filter-out $(sort $(BADDRIVERS) $(IDRIVERS)), $(sort $(DRIVERS))), $(eval $(call includedriver,$(DRIVER))))
+ -include $(NDRIVER_FILES)
 endef
 
 $(eval $(includedrivers))
+$(eval $(includedrivers))
+$(eval $(includedrivers))
+$(eval $(includedrivers))
+$(eval $(includedrivers))
 
--include $(DRIVER_FILES)
-
+DRIVERS := $(sort $(IDRIVERS))
