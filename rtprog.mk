@@ -1,4 +1,6 @@
 
+RTPROG := $(dir $(lastword $(MAKEFILE_LIST)))
+
 include $(RTPROG)/support/support.mk
 
 ifndef OUT_PWD
@@ -6,21 +8,24 @@ ifndef OUT_PWD
 endif
 OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=.o)))
 
+INCLUDEPATH += -I. -I$(RTPROG)/include
+
 .PHONY : all
 
-$(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
-	$(CC) $(CCFLAGS) -o $(OUT_PWD)/$(notdir $@) $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -T p$(DEVICE).gld
-
+# rule to build OBJECTS to OUT_PWD
 $(OUT_PWD)/%.o : %.c
 	@test -d $(OUTPWD) || mkdir -p $(OUTPWD)
-	$(CC) $(CCFLAGS) -c $< -o $(OUT_PWD)/$(notdir $@) $(DEFINES)
+	$(CC) $(CCFLAGS) -c $< -o $(OUT_PWD)/$(notdir $@) $(DEFINES) $(INCLUDEPATH)
+
+# rule to link OBJECTS to OUT_PWD
+$(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
+	$(CC) $(CCFLAGS) -o $(OUT_PWD)/$(notdir $@) $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -T p$(DEVICE).gld
 
 clean: FORCE
 	rm -f $(OBJECTS)
 	rm -f $(OUT_PWD)/$(PROJECT).elf
 
-$(OUT_PWD)/main.o: modules.h
-
+#test, ignored at the moment
 modules.h : Makefile
 	echo $(addprefix #include , $(DRIVERS)) >> modules.h
 
