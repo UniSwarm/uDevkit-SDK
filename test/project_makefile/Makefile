@@ -2,20 +2,19 @@ RTPROG = ../..
 
 PROJECT = testproj
 BOARD = rtboard
+OUT_PWD = build
 # DEVICE = 33EP256MU806
 # ARCHI = dspic33ep
 
-DRIVERS += ax12 usbserial toto usbserial
+DRIVERS += ax12 usbserial usbserial
 
 SRC += main.c
 
 -include $(RTPROG)/rtprog.mk
 
-all : $(PROJECT).elf
+all : FORCE
 	@echo "DRIVERS asked         :" $(sort $(DRIVERS) $(BADDRIVERS))
 	@echo "DRIVERS implemented   :" $(DRIVERS)
 	@echo "BADDRIVERS sorted     :" $(sort $(BADDRIVERS))
-	@echo "DRIVER_FILES mk files :" $(DRIVER_FILES) , $(MAKEFILE_LIST)
 	@echo DEVICE: $(DEVICE), ARCHI: $(ARCHI), CC: $(CC)
-	
-	@echo SRC: $(SRC)
+	@echo OBJECTS: $(OBJECTS)

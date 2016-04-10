@@ -3,9 +3,9 @@ USBSERIAL_DRIVER=
 
 DRIVERS += usb
 
-SRC := $(SRC) \
-	$(DRIVERPATH)usb_serial.c \
-	$(DRIVERPATH)usb_serial_dspic.c
+vpath %.c $(DRIVERPATH)
+
+SRC += usb_serial.c usb_serial_dspic.c
 HEADER := $(HEADER)
 
 endif

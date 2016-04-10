@@ -1,4 +1,6 @@
 
+ARCHIPATH = $(dir $(lastword $(MAKEFILE_LIST)))
+
 # check ARCHI variable exists
 ifndef ARCHI
  $(error Invalid ARCHI in board definition)
