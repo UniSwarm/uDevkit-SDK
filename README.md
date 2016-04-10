@@ -1,9 +1,9 @@
-
+# RTprog
+A tool to simplify modules inclusion in embeded system.
 
 ## dependencies
 ### MPLAB
 To program device and debug
-download link :
 * windows : http://www.microchip.com/mplabx-ide-windows-installer
 * linux : http://www.microchip.com/mplabx-ide-linux-installer
 
@@ -14,5 +14,7 @@ Compiler for 16bits devices
 
 ### default windows PATHs
 C:\Program Files (x86)\Microchip\xc16\v1.26\bin
+
 C:\Program Files (x86)\Microchip\MPLABX\v3.26\mplab_ipe
+
 C:\Program Files (x86)\Microchip\MPLABX\v3.26\mplab_ide\bin

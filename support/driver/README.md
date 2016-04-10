@@ -42,3 +42,5 @@ And for specific architecture :
 	 SRC += timer_pic24.c
 	 HEADER += timer_pic24.h
 	endif
+
+And for global inclusion of the driver, add a header file that include needed include files of the support in include/driver/.

@@ -5,7 +5,7 @@ DRIVERS += usb
 
 vpath %.c $(DRIVERPATH)
 
-SRC += usb_serial.c usb_serial_dspic.c
+SRC += usbserial.c usbserial_dspic.c
 HEADER := $(HEADER)
 
 endif

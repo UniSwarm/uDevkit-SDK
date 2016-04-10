@@ -26,8 +26,8 @@ clean: FORCE
 	rm -f $(OUT_PWD)/$(PROJECT).elf
 
 #test, ignored at the moment
-modules.h : Makefile
-	echo $(addprefix #include , $(DRIVERS)) >> modules.h
+modules.h : FORCE
+	echo -e "// include all modules in project\n$(foreach DRIVER,$(sort $(DRIVERS)),#include \"driver/$(DRIVER).h\"\n)" > modules.h
 
 FORCE : 
 
