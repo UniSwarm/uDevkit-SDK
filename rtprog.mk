@@ -11,9 +11,6 @@ OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=.o)))
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	$(CC) $(CCFLAGS) -o $(OUT_PWD)/$(notdir $@) $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -T p$(DEVICE).gld
 
-$(OUT_PWD)/ : $(OUT_PWD)/
-	mkdir $(OUT_PWD)
-
 $(OUT_PWD)/%.o : %.c
 	@test -d $(OUTPWD) || mkdir -p $(OUTPWD)
 	$(CC) $(CCFLAGS) -c $< -o $(OUT_PWD)/$(notdir $@) $(DEFINES)
