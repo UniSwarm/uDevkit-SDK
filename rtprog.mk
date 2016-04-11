@@ -16,7 +16,7 @@ INCLUDEPATH += -I. -I$(RTPROG)/include
 # rule to build OBJECTS to OUT_PWD and give dependencies
 $(OUT_PWD)/%.o : %.c
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	 $(CC) $(CCFLAGS) -c  $< $(DEFINES) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@) -DMODULEDEF=$(notdir $(patsubst %/,%,$(dir $<)))
+	 $(CC) $(CCFLAGS) -c  $< $(DEFINES) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@)
 	@$(CC) $(CCFLAGS) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
 # rule to link OBJECTS to OUT_PWD

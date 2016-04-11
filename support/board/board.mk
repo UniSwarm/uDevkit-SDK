@@ -1,11 +1,14 @@
 
-# check BOARD variable exists
+BOARDPATH = $(dir $(lastword $(MAKEFILE_LIST)))
+
+# check BOARD variable exists or DEVICE + ARCHI
 # BOARD does not have to be defined. A project can be setted BOARD (ie. working with a labdec) 
 ifndef BOARD
  ifndef ARCHI
-  ifndef DEVICE
-   $(error Define BOARD or (ARCHI and DEVICE) in your project)
-  endif
+  $(error Define BOARD or (ARCHI and DEVICE) in your project)
+ endif
+ ifndef DEVICE
+  $(error Define BOARD or (ARCHI and DEVICE) in your project)
  endif
 endif
 
@@ -19,4 +22,6 @@ ifdef BOARD
  
  # include the board file
  include $(BOARD_FILE)
+ 
+ INCLUDEPATH += -I$(RTPROG)/support/board/$(BOARD)/
 endif
