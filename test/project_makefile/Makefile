@@ -6,11 +6,11 @@ OUT_PWD = build
 # DEVICE = 33EP256MU806
 # ARCHI = dspic33ep
 
-DRIVERS += ax12 usbserial usbserial timer
+DRIVERS += timer
 
 SRC += main.c
 
--include $(RTPROG)/rtprog.mk
+include $(RTPROG)/rtprog.mk
 
 all : FORCE
 	@echo "DRIVERS asked         :" $(sort $(DRIVERS) $(BADDRIVERS))
