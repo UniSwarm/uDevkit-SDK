@@ -13,7 +13,7 @@ ifeq ("$(wildcard $(ARCHI_FILE))","")
  $(error Invalid ARCHI name)
 endif
 
-DEFINES += -DARCHI=$(ARCHI) -DDEVICE=$(DEVICE)
+DEFINES += -DARCHI_$(ARCHI) -DDEVICE_$(DEVICE)
 
 # include the achitechture file
 include $(ARCHI_FILE)
