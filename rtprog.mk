@@ -19,11 +19,15 @@ $(OUT_PWD)/%.o : %.c
 	 $(CC) $(CCFLAGS) -c  $< $(DEFINES) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@)
 	@$(CC) $(CCFLAGS) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
-# rule to link OBJECTS to OUT_PWD
+# rule to link OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	$(CC) $(CCFLAGS) -o $(OUT_PWD)/$(notdir $@) $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -T p$(DEVICE).gld
+	
+$(OUT_PWD)/$(PROJECT).hex : build/$(PROJECT).elf
+	$(HX) $(OUT_PWD)/$(PROJECT).elf
 
 elf : $(OUT_PWD)/$(PROJECT).elf
+hex : $(OUT_PWD)/$(PROJECT).hex
 
 clean: FORCE
 	rm -f $(OBJECTS)
