@@ -32,3 +32,11 @@ build/
 # Debug files
 *.dSYM/
 
+# Specific xc16 and MPLAB
+*.cof
+*.map
+*.mcp
+*.mcs
+*.mcw
+modules.h
+
