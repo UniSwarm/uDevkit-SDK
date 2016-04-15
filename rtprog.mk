@@ -30,12 +30,12 @@ elf : $(OUT_PWD)/$(PROJECT).elf
 hex : $(OUT_PWD)/$(PROJECT).hex
 
 clean: FORCE
-	rm -f $(OBJECTS)
-	rm -f $(OUT_PWD)/$(PROJECT).elf 
+	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d
+	rm -f $(OUT_PWD)/$(PROJECT).elf
 
-#test, ignored at the moment
+# generate list of used drivers modules
 modules.h : Makefile
-	printf "// include all modules in project\n$(foreach DRIVER,$(sort $(DRIVERS)),#include \"driver/$(DRIVER).h\"\n)" > modules.h
+	@printf "// include all modules in project\n$(foreach DRIVER,$(sort $(DRIVERS)),#include \"driver/$(DRIVER).h\"\n)" > modules.h
 
 FORCE : 
 	
