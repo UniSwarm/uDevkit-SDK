@@ -13,7 +13,24 @@
 
 #include <xc.h>
 
-#define uart_enable(d) \
- U1MODEbits.UARTEN=1
+// calculate UART count on the device
+#ifdef U1MODE
+ #ifdef U2MODE
+  #ifdef U3MODE
+   #ifdef U4MODE
+    #define UART_COUNT 4
+   #else
+    #define UART_COUNT 3
+   #endif
+  #else
+   #define UART_COUNT 2
+  #endif
+ #else
+  #define UART_COUNT 1
+ #endif
+#else
+ #define UART_COUNT 0
+ #warning No uart on the current device
+#endif
 
 #endif // UART_DSPIC_H
