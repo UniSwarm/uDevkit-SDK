@@ -13,13 +13,13 @@
 #include "uart_dspic.h"
 
 #if UART_COUNT==1
- const struct UART *uarts[1]={U1MODE};
+ UART *uarts[1]={&U1MODE};
 #elif UART_COUNT==2
- const struct UART *uarts[2]={U1MODE, U2MODE};
+ UART *uarts[2]={&U1MODE, &U2MODE};
 #elif UART_COUNT==3
- const struct UART *uarts[3]={U1MODE, U2MODE, U3MODE};
+ UART *uarts[3]={&U1MODE, &U2MODE, &U3MODE};
 #elif UART_COUNT==4
- const struct UART *uarts[4]={U1MODE, U2MODE, U3MODE, U4MODE};
+ UART *uarts[4]={(UART *)&U1MODE, (UART *)&U2MODE, (UART *)&U3MODE, (UART *)&U4MODE};
 #else
  #error No device
 #endif
@@ -29,5 +29,6 @@ int uart_enable(uint8_t device)
 	if(device>UART_COUNT)
 		return -1;
 	
-	uarts[device].uxmode.UARTEN = 1;
+	UART1.uxmode = 1;
+	uarts[device]->uxmode = 1;
 }

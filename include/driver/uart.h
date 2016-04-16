@@ -1,1 +1,1 @@
-#include "../../support/driver/uart/uart.h"
+#include "../../support/driver/periph/uart/uart.h"

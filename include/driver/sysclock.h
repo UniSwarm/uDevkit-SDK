@@ -1,1 +1,1 @@
-#include "../../support/driver/sysclock/sysclock.h"
+#include "../../support/driver/periph/sysclock/sysclock.h"

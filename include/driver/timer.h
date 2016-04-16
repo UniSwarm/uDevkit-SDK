@@ -1,1 +1,1 @@
-#include "../../support/driver/timer/timer.h"
+#include "../../support/driver/periph/timer/timer.h"
