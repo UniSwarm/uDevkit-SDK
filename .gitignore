@@ -39,4 +39,6 @@ build/
 *.mcs
 *.mcw
 modules.h
-
+log.*
+*.xml.lck
+*Log.xml
