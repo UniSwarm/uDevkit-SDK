@@ -583,3 +583,108 @@ uint8_t uart_datardy(uint8_t device)
 {
 
 }
+
+#ifdef UART_RP
+
+int uart_setRxPin(uint8_t device, uint16_t rxPin)
+{
+    if (device > UART_COUNT)
+        return -1;
+
+    // Unlock configuration pin
+    OSCCONL = 0x46;
+    OSCCONL = 0x57;
+    OSCCONbits.IOLOCK = 0;
+
+    switch (device)
+    {
+    case 1:
+        RPINR18bits.U1RXR = rxPin; // UART1 RX ==> RPn
+        break;
+#    if UART_COUNT>=2
+    case 2:
+        RPINR19bits.U2RXR = rxPin; // UART2 RX ==> RPn
+        break;
+#    endif
+#    if UART_COUNT>=3
+    case 3:
+        RPINR27bits.U3RXR = rxPin; // UART3 RX ==> RPn
+        break;
+#    endif
+#    if UART_COUNT>=4
+    case 4:
+        RPINR28bits.U4RXR = rxPin; // UART4 RX ==> RPn
+        break;
+#    endif
+    }
+
+    // Lock configuration pin
+    OSCCONL = 0x46;
+    OSCCONL = 0x57;
+    OSCCONbits.IOLOCK = 1;
+
+    return 0;
+}
+
+int uart_setTxPin(uint8_t device, uint16_t txPin)
+{
+    // Unlock configuration pin
+    OSCCONL = 0x46;
+    OSCCONL = 0x57;
+    OSCCONbits.IOLOCK = 0;
+
+    // UART1 pins
+    RPOR4bits.RP80R = 0b00001; // TX ==> RP80 AnP1
+
+    // Lock configuration pin
+    OSCCONL = 0x46;
+    OSCCONL = 0x57;
+    OSCCONbits.IOLOCK = 1;
+}
+
+int uart_setCtsPin(uint8_t device, uint16_t ctsPin)
+{
+    if (device > UART_COUNT)
+        return -1;
+
+    // Unlock configuration pin
+    OSCCONL = 0x46;
+    OSCCONL = 0x57;
+    OSCCONbits.IOLOCK = 0;
+
+    switch (device)
+    {
+    case 1:
+        RPINR18bits.U1CTSR = ctsPin; // UART1 CTS ==> RPn
+        break;
+#    if UART_COUNT>=2
+    case 2:
+        RPINR19bits.U2CTSR = ctsPin; // UART2 CTS ==> RPn
+        break;
+#    endif
+#    if UART_COUNT>=3
+    case 3:
+        RPINR27bits.U3CTSR = ctsPin; // UART3 CTS ==> RPn
+        break;
+#    endif
+#    if UART_COUNT>=4
+    case 4:
+        RPINR28bits.U4CTSR = ctsPin; // UART4 CTS ==> RPn
+        break;
+#    endif
+    }
+
+    // Lock configuration pin
+    OSCCONL = 0x46;
+    OSCCONL = 0x57;
+    OSCCONbits.IOLOCK = 1;
+
+    return 0;
+}
+
+int uart_setRtsPin(uint8_t device, uint16_t rtsPin)
+{
+
+}
+
+#endif
