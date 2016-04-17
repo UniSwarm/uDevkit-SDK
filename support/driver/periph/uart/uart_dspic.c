@@ -13,10 +13,42 @@
 #include "driver/sysclock.h"
 
 #if !defined (UART_COUNT) || UART_COUNT==0
-//#error No device
+//#    error No device
 #endif
 
-uint32_t baudSpeed[UART_COUNT] = {0};
+uint32_t baudSpeeds[UART_COUNT] = {0};
+
+/**
+ * @brief Gives a free uart device number
+ * @return uart device number
+ */
+uint8_t uart_getFreeDevice()
+{
+    int i;
+
+    for (i = 0; i < UART_COUNT; i++)
+        if (baudSpeeds[i] == 0)
+            break;
+
+    if (i == UART_COUNT)
+        return 0;
+
+    baudSpeeds[i] = 1;
+
+    return 1;
+}
+
+/**
+ * @brief Release an uart
+ * @param device uart device number
+ */
+void uart_releaseDevice(uint8_t device)
+{
+    if (device > UART_COUNT)
+        return;
+
+    baudSpeeds[device] = 0;
+}
 
 /**
  * @brief Enable the specified uart device
@@ -32,20 +64,24 @@ int uart_enable(uint8_t device)
     {
     case 1:
         U1MODEbits.UARTEN = 1;
+        U1STAbits.UTXEN = 1;
         break;
 #if UART_COUNT>=2
     case 2:
         U2MODEbits.UARTEN = 1;
+        U2STAbits.UTXEN = 1;
         break;
 #endif
 #if UART_COUNT>=3
     case 3:
         U3MODEbits.UARTEN = 1;
+        U3STAbits.UTXEN = 1;
         break;
 #endif
 #if UART_COUNT>=4
     case 4:
         U4MODEbits.UARTEN = 1;
+        U4STAbits.UTXEN = 1;
         break;
 #endif
     }
@@ -103,18 +139,23 @@ int uart_setBaudSpeed(uint8_t device, uint32_t baudSpeed)
     if (device > UART_COUNT)
         return -1;
 
+    if (baudSpeed == 0)
+        return -1;
+
+    baudSpeeds[device] = baudSpeed;
+
     systemClockPeriph = getSystemClockPeriph();
     uBrg = systemClockPeriph / baudSpeed;
 
     if ((uBrg & 0x0F) == 0)
     {
         hs = 0;
-        uBrg >> 4;
+        uBrg = uBrg >> 4;
     }
     else
     {
         hs = 1;
-        uBrg >> 2;
+        uBrg = uBrg >> 2;
     }
 
     switch (device)
@@ -149,7 +190,7 @@ int uart_setBaudSpeed(uint8_t device, uint32_t baudSpeed)
 /**
  * @brief Gets the true baud speed of the specified uart device
  * @param device uart device number
- * @return
+ * @return speed of receive and transmit in bauds (bits / s)
  */
 uint32_t uart_baudSpeed(uint8_t device)
 {
@@ -198,18 +239,19 @@ uint32_t uart_baudSpeed(uint8_t device)
 /**
  * @brief Gets the effective baud speed of the specified uart device
  * @param device uart device number
- * @return
+ * @return speed of receive and transmit in bauds (bits / s)
  */
 uint32_t uart_effectiveBaudSpeed(uint8_t device)
 {
     if (device > UART_COUNT)
         return 0;
 
-    return baudSpeed[device];
+    return baudSpeeds[device];
 }
 
 /**
- * @brief
+ * @brief Sets the config bit (bit lenght, stop bits, parity) of the specified
+ * uart device
  * @param device uart device number
  * @param bitLenght
  * @param bitParity
@@ -263,9 +305,9 @@ int uart_setBitConfig(uint8_t device, uint8_t bitLenght,
 }
 
 /**
- * @brief
+ * @brief Gets the bit lenght of the device
  * @param device uart device number
- * @return
+ * @return lenght of bytes in bits
  */
 uint8_t uart_bitLenght(uint8_t device)
 {
@@ -304,9 +346,9 @@ uint8_t uart_bitLenght(uint8_t device)
 }
 
 /**
- * @brief
+ * @brief Gets the uart parity mode of the specified uart device
  * @param device uart device number
- * @return
+ * @return parity mode
  */
 uint8_t uart_bitParity(uint8_t device)
 {
@@ -345,9 +387,9 @@ uint8_t uart_bitParity(uint8_t device)
 }
 
 /**
- * @brief
+ * @brief Gets number of stop bit of the specified uart device
  * @param device uart device number
- * @return
+ * @return number of stop bit
  */
 uint8_t uart_bitStop(uint8_t device)
 {
@@ -444,10 +486,10 @@ uint16_t uart_4_getw(uint16_t word);
 #endif
 
 /**
- * @brief
+ * @brief Puts a char to the specified uart device
  * @param device uart device number
- * @param c
- * @return
+ * @param c char to send
+ * @return 0 if ok, -1 in case of error
  */
 int uart_putc(uint8_t device, const char c)
 {
@@ -480,10 +522,10 @@ int uart_putc(uint8_t device, const char c)
 }
 
 /**
- * @brief
+ * @brief Puts a word to the specified uart device
  * @param device uart device number
- * @param word
- * @return
+ * @param word word to send
+ * @return 0 if ok, -1 in case of error
  */
 int uart_putw(uint8_t device, const uint16_t word)
 {
