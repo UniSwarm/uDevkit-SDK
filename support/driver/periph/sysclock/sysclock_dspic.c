@@ -27,6 +27,8 @@ int setSystemClockWPLL(uint32_t fosc)
 	uint16_t multiplier;
 	uint16_t prediv, postdiv;
 	
+	uint8_t frc_mode;
+	
 	if(fosc > SYSCLOCK_FOSC_MAX)
 		return 1;	// cannot generate fosc > SYSCLOCK_FOSC_MAX
 	
@@ -36,8 +38,10 @@ int setSystemClockWPLL(uint32_t fosc)
 	#ifndef SYSCLOCK_XTAL
 		OSCTUN = 23; // ==> Fin = 8 MHz Internal clock
 		fin = 8000000;
+		frc_mode = 1;
 	#else
 		fin = SYSCLOCK_XTAL;
+		frc_mode = 0;
 	#endif
 	
 	// calculate post-diviser and fsys
@@ -79,10 +83,17 @@ int setSystemClockWPLL(uint32_t fosc)
 	//              ((PLLPRE + 2) * 2 * (PLLPOST + 1))
 	PLLFBD = multiplier - 2;
 	
-	__builtin_write_OSCCONH(0x03);
-	__builtin_write_OSCCONL(0x01);
-
-	while (OSCCONbits.COSC != 0x3); // Wait for PLL to lock
+	if(frc_mode == 1)
+		__builtin_write_OSCCONH(0x01);	// frc input
+	else
+		__builtin_write_OSCCONH(0x03);	// primariry osc input
+	__builtin_write_OSCCONL(OSCCON | 0x01);
+	
+	// Wait for Clock switch to occur
+	while (OSCCONbits.COSC!= 0b011);
+	
+	// Wait for PLL to lock
+	while (OSCCONbits.LOCK!= 1);
 	
 	sysfreq = fplli * multiplier / postdiv; // Complete this
 	
