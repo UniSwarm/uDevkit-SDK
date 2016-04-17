@@ -6,7 +6,7 @@ OUT_PWD = build
 # DEVICE = 33EP256MU806
 # ARCHI = dspic33ep
 
-DRIVERS += timer
+DRIVERS += timer uart
 
 SRC += main.c
 

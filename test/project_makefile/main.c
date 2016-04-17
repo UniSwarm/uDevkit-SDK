@@ -22,7 +22,7 @@
 
 // FPOR
 #pragma config FPWRT = PWR128           // Power-on Reset Timer Value Select bits (128ms)
-#pragma config BOREN = OFF              // Brown-out Reset (BOR) Detection Enable bit (BOR is disabled)
+#pragma config BOREN = ON              // Brown-out Reset (BOR) Detection Enable bit (BOR is disabled)
 #pragma config ALTI2C1 = OFF            // Alternate I2C pins for I2C1 (SDA1/SCK1 pins are selected as the I/O pins for I2C1)
 
 // FICD
@@ -46,22 +46,42 @@
 int main(void)
 {
 	unsigned int i,j;
+	uint8_t uart;
 	
-	i = setSystemClock(120000000);
+	ANSELD = 0x0000;	// all analog inputs of port D as digital buffer
+	TRISDbits.TRISD11 = 0;		// LED pin as output
+	LED = 1;
+	
+	
+	i = setSystemClock(60000000);
 	
 	ANSELB = 0x00C7;	// port B as digital buffer, but RB7-6 and RB2-0
 	ANSELD = 0x0000;	// all analog inputs of port D as digital buffer
 	ANSELG = 0x0000;	// all analog inputs of port G as digital buffer
-	TRISDbits.TRISD11 = 0;		// LED pin as output
+	// Unlock configuration pin
+	OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 0;
+		
+		// UART1 pins
+		RPOR4bits.RP80R = 0b00001; // TX ==> RP80 AnP1
+		RPINR18bits.U1RXR = 81; // RX ==> RP81 AnP2
+		
+	// Lock configuration pin
+	OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 1;
 	
-	LED = 1;
+	// uart init
+	uart = uart_getFreeDevice();
+	uart_setBaudSpeed(uart, 115200);
+	uart_setBitConfig(uart, 8, UART_BIT_PARITY_NONE, 1);
+	uart_enable(uart);
 	
 	while(1)
 	{
 		for(j=0;j<50;j++) for(i=0;i<65000;i++);
 		LED = 0;
-		for(j=0;j<50;j++) for(i=0;i<65000;i++);
+		uart_putc(uart, 'A');
+		for(j=0;j<10;j++) for(i=0;i<65000;i++);
 		LED = 1;
+		uart_putc(uart, 'B');
 	}
 	
 	return 0;
