@@ -3,7 +3,8 @@ TIMER_DRIVER=
 
 vpath %.c $(DRIVERPATH)
 
-SRC += timer.c
+DRIVERS += sysclock
+
 HEADER += timer.h
 
 ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ep dspic33fj))
