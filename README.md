@@ -1,5 +1,5 @@
 # RTprog
-A tool to simplify module inclusions in embedded system.
+A tool to simplify module inclusions in embedded systems.
 
 ## dependencies
 ### MPLAB
