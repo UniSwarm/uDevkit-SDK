@@ -1,7 +1,7 @@
 # TODO
 
-[ ] Find a solution for fuses
-[ ] Find a solution for pins mapping and declaration
+- [ ] Find a solution for fuses
+- [ ] Find a solution for pins mapping and declaration
 
 ## Support:
 ### PPS
@@ -16,7 +16,7 @@
 - [ ] receive
 
 ### QEI
-- [ ] prototypes
+- [x] prototypes
 - [ ] device assignation
 - [ ] config
 - [ ] read data
