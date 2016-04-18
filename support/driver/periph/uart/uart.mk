@@ -5,7 +5,6 @@ vpath %.c $(DRIVERPATH)
 
 DRIVERS += sysclock
 
-SRC += uart.c
 HEADER += uart.h
 
 ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ep dspic33fj))
