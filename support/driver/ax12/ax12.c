@@ -12,15 +12,15 @@
 
 // BE CAREFUL : this code is awful but... it works
 
-unsigned char idr=255;
-unsigned char buffr[30];
-unsigned char trame[20],idax,size;
+uint8_t idr=255;
+uint8_t buffr[30];
+uint8_t trame[20],idax,size;
 
 #define axSendMode() U1MODEbits.STSEL = 1; RWB=1; idr = 0
 
 void axRecMode()
 {
-	unsigned char rec;
+	uint8_t rec;
 	U1MODEbits.STSEL = 0;
 	RWB = 0;
 	//idr = 0;
@@ -73,7 +73,7 @@ void setup_uart_AX(void)
 	U1RXIE = 1;
 }
 
-void send_char_ax(unsigned char addr, unsigned char param, unsigned char val)
+void send_char_ax(uint8_t addr, uint8_t param, uint8_t val)
 {
 	int p;
 	axSendMode();
@@ -84,7 +84,7 @@ void send_char_ax(unsigned char addr, unsigned char param, unsigned char val)
 	trame[4]=INST_WRITE;
 	trame[5]=param;
 	trame[6]=val;
-	trame[7]=~(unsigned char)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]);
+	trame[7]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]);
 	size=8;
 	idax=0;
 	U1TXREG = trame[0];
@@ -96,7 +96,7 @@ void send_char_ax(unsigned char addr, unsigned char param, unsigned char val)
 	//axRecMode();
 }
 
-void send_short_ax(unsigned char addr, unsigned char param, unsigned short val)
+void send_short_ax(uint8_t addr, uint8_t param, unsigned short val)
 {
 	int p;
 	axSendMode();
@@ -108,7 +108,7 @@ void send_short_ax(unsigned char addr, unsigned char param, unsigned short val)
 	trame[5]=param;
 	trame[6]=val;
 	trame[7]=*((char*)(&val)+1);
-	trame[8]=~(unsigned char)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]);
+	trame[8]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]);
 	size=9;
 	idax=0;
 	U1TXREG = trame[0];
@@ -120,7 +120,7 @@ void send_short_ax(unsigned char addr, unsigned char param, unsigned short val)
 	//axRecMode();
 }
 
-void send_dbshort_ax(unsigned char addr, unsigned char param, unsigned short val, unsigned short val2)
+void send_dbshort_ax(uint8_t addr, uint8_t param, unsigned short val, unsigned short val2)
 {
 	int p;
 	axSendMode();
@@ -134,7 +134,7 @@ void send_dbshort_ax(unsigned char addr, unsigned char param, unsigned short val
 	trame[7]=*((char*)(&val)+1);
 	trame[8]=val2;
 	trame[9]=*((char*)(&val2)+1);
-	trame[10]=~(unsigned char)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]+trame[8]+trame[9]);
+	trame[10]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]+trame[8]+trame[9]);
 	size=11;
 	idax=0;
 	U1TXREG = trame[0];
@@ -146,7 +146,7 @@ void send_dbshort_ax(unsigned char addr, unsigned char param, unsigned short val
 	//axRecMode();
 }
 
-void send_trishort_ax(unsigned char addr, unsigned char param, unsigned short val, unsigned short val2, unsigned short val3)
+void send_trishort_ax(uint8_t addr, uint8_t param, unsigned short val, unsigned short val2, unsigned short val3)
 {
 	int p;
 	axSendMode();
@@ -162,7 +162,7 @@ void send_trishort_ax(unsigned char addr, unsigned char param, unsigned short va
 	trame[9]=*((char*)(&val2)+1);
 	trame[10]=val3;
 	trame[11]=*((char*)(&val3)+1);
-	trame[12]=~(unsigned char)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]+trame[8]+trame[9]+trame[10]+trame[11]);
+	trame[12]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]+trame[8]+trame[9]+trame[10]+trame[11]);
 	size=13;
 	idax=0;
 	U1TXREG = trame[0];
@@ -174,7 +174,7 @@ void send_trishort_ax(unsigned char addr, unsigned char param, unsigned short va
 	//axRecMode();
 }
 
-void read_param_ax(unsigned char addr, unsigned char param, unsigned char nbParam)
+void read_param_ax(uint8_t addr, uint8_t param, uint8_t nbParam)
 {
 	int p;
 	axSendMode();
@@ -185,7 +185,7 @@ void read_param_ax(unsigned char addr, unsigned char param, unsigned char nbPara
 	trame[4]=INST_READ;
 	trame[5]=param;
 	trame[6]=nbParam;
-	trame[7]=~(unsigned char)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]);
+	trame[7]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]);
 	size=8;
 	idax=0;
 	U1TXREG = trame[0];
@@ -196,13 +196,13 @@ void read_param_ax(unsigned char addr, unsigned char param, unsigned char nbPara
 	//axRecMode();
 }
 
-unsigned char parseResponse6(unsigned char addr, unsigned short *pos, unsigned short *speed, unsigned short *load)
+uint8_t parseResponse6(uint8_t addr, unsigned short *pos, unsigned short *speed, unsigned short *load)
 {
-	unsigned char sum,i;
+	uint8_t sum,i;
 	for(i=6;i<20;i++) if(buffr[i]==0xFF && buffr[i+1]==0xFF) break;
 	if(buffr[i+1]!=0xFF) return 0;
 	if(buffr[i+2]!=addr) return 0;
-	sum=~(unsigned char)(buffr[i+2]+buffr[i+3]+buffr[i+4]+buffr[i+5]+buffr[i+6]+buffr[i+7]+buffr[i+8]+buffr[i+9]+buffr[i+10]);
+	sum=~(uint8_t)(buffr[i+2]+buffr[i+3]+buffr[i+4]+buffr[i+5]+buffr[i+6]+buffr[i+7]+buffr[i+8]+buffr[i+9]+buffr[i+10]);
 	if(buffr[i+11]!=sum) return 0;
 	*pos=(unsigned short)buffr[i+6]*256+buffr[i+5];
 	*speed=(unsigned short)buffr[i+8]*256+buffr[i+7];
@@ -255,7 +255,7 @@ void interrupt tx1_int(void) @ U1TX_VCTR
 
 void interrupt rx1_int(void) @ U1RX_VCTR
 {
-	unsigned char rec;
+	uint8_t rec;
 	while(U1STAbits.URXDA==1)
 	{
 		if(U1STAbits.FERR==1)

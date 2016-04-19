@@ -14,13 +14,13 @@
 void setup_AX(void);
 void setup_uart_AX(void);
 
-void send_char_ax(unsigned char addr, unsigned char param, unsigned char val);
-void send_short_ax(unsigned char addr, unsigned char param, unsigned short val);
-void send_dbshort_ax(unsigned char addr, unsigned char param, unsigned short val, unsigned short val2);
-void send_trishort_ax(unsigned char addr, unsigned char param, unsigned short val, unsigned short val2, unsigned short val3);
+void send_char_ax(uint8_t addr, uint8_t param, uint8_t val);
+void send_short_ax(uint8_t addr, uint8_t param, unsigned short val);
+void send_dbshort_ax(uint8_t addr, uint8_t param, unsigned short val, unsigned short val2);
+void send_trishort_ax(uint8_t addr, uint8_t param, unsigned short val, unsigned short val2, unsigned short val3);
 
-void read_param_ax(unsigned char addr, unsigned char param, unsigned char size);
-unsigned char parseResponse6(unsigned char addr, unsigned short *pos, unsigned short *speed, unsigned short *load);
+void read_param_ax(uint8_t addr, uint8_t param, uint8_t size);
+uint8_t parseResponse6(uint8_t addr, unsigned short *pos, unsigned short *speed, unsigned short *load);
 void clearAxResponse(void);
 
 //--- Control Table Address ---
