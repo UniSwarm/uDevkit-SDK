@@ -1,0 +1,12 @@
+PROJECT_NAME           = "RTprog"
+PROJECT_BRIEF          = "A tool to simplify module inclusions in embeded systems"
+OUTPUT_DIRECTORY       = build-doc/
+OPTIMIZE_OUTPUT_FOR_C  = YES
+
+INPUT                  = .
+RECURSIVE              = YES
+EXCLUDE_PATTERNS       = */build/*
+
+GENERATE_TODOLIST      = YES
+INLINE_SOURCES         = YES
+USE_MDFILE_AS_MAINPAGE = ./README.md

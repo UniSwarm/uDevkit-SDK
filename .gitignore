@@ -42,3 +42,6 @@ modules.h
 log.*
 *.xml.lck
 *Log.xml
+
+# doc generated
+build-doc/
