@@ -4,7 +4,7 @@
  * @copyright Robotips 2016
  *
  * @date April 11, 2016, 05:12 PM
- * 
+ *
  * @brief System clock support for rtprog
  */
 
@@ -15,9 +15,9 @@
 
 #include "board.h"
 #if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33fj)
- #include "sysclock_dspic.h"
+#include "sysclock_dspic.h"
 #else
- #error Unsuported ARCHI
+#error Unsuported ARCHI
 #endif
 
 int setSystemClock(uint32_t freq);
