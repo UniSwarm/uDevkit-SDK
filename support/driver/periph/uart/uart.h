@@ -13,8 +13,6 @@
 
 #include <stdint.h>
 
-#include "board.h"
-
 #define UART_BIT_PARITY_NONE 0
 #define UART_BIT_PARITY_EVEN 1
 #define UART_BIT_PARITY_ODD 2

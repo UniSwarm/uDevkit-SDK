@@ -16,7 +16,7 @@
 //#    error No device
 #endif
 
-uint32_t baudSpeeds[UART_COUNT] = {0};
+uint32_t baudSpeeds[UART_COUNT + 1] = {0};
 
 /**
  * @brief Gives a free uart device number
@@ -24,7 +24,7 @@ uint32_t baudSpeeds[UART_COUNT] = {0};
  */
 uint8_t uart_getFreeDevice()
 {
-    int i;
+    uint8_t i;
 
     for (i = 0; i < UART_COUNT; i++)
         if (baudSpeeds[i] == 0)
@@ -35,7 +35,7 @@ uint8_t uart_getFreeDevice()
 
     baudSpeeds[i] = 1;
 
-    return 1;
+    return i;
 }
 
 /**
@@ -571,7 +571,7 @@ char uart_getc(uint8_t device);
  */
 uint16_t uart_getw(uint8_t device)
 {
-
+	return 0;
 }
 
 /**
@@ -581,11 +581,10 @@ uint16_t uart_getw(uint8_t device)
  */
 uint8_t uart_datardy(uint8_t device)
 {
-
+	return 0;
 }
 
 #ifdef UART_RP
-
 int uart_setRxPin(uint8_t device, uint16_t rxPin)
 {
     if (device > UART_COUNT)
@@ -601,21 +600,21 @@ int uart_setRxPin(uint8_t device, uint16_t rxPin)
     case 1:
         RPINR18bits.U1RXR = rxPin; // UART1 RX ==> RPn
         break;
-#    if UART_COUNT>=2
+#if UART_COUNT>=2
     case 2:
         RPINR19bits.U2RXR = rxPin; // UART2 RX ==> RPn
         break;
-#    endif
-#    if UART_COUNT>=3
+#endif
+#if UART_COUNT>=3
     case 3:
         RPINR27bits.U3RXR = rxPin; // UART3 RX ==> RPn
         break;
-#    endif
-#    if UART_COUNT>=4
+#endif
+#if UART_COUNT>=4
     case 4:
         RPINR28bits.U4RXR = rxPin; // UART4 RX ==> RPn
         break;
-#    endif
+#endif
     }
 
     // Lock configuration pin
@@ -657,21 +656,21 @@ int uart_setCtsPin(uint8_t device, uint16_t ctsPin)
     case 1:
         RPINR18bits.U1CTSR = ctsPin; // UART1 CTS ==> RPn
         break;
-#    if UART_COUNT>=2
+#if UART_COUNT>=2
     case 2:
         RPINR19bits.U2CTSR = ctsPin; // UART2 CTS ==> RPn
         break;
-#    endif
-#    if UART_COUNT>=3
+#endif
+#if UART_COUNT>=3
     case 3:
         RPINR27bits.U3CTSR = ctsPin; // UART3 CTS ==> RPn
         break;
-#    endif
-#    if UART_COUNT>=4
+#endif
+#if UART_COUNT>=4
     case 4:
         RPINR28bits.U4CTSR = ctsPin; // UART4 CTS ==> RPn
         break;
-#    endif
+#endif
     }
 
     // Lock configuration pin
@@ -686,5 +685,4 @@ int uart_setRtsPin(uint8_t device, uint16_t rtsPin)
 {
 
 }
-
 #endif
