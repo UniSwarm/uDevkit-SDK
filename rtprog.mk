@@ -21,7 +21,7 @@ $(OUT_PWD)/%.o : %.c
 
 # rule to link OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
-	$(CC) $(CCFLAGS) -o $(OUT_PWD)/$(notdir $@) $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -T p$(DEVICE).gld
+	$(CC) $(CCFLAGS) -o $(OUT_PWD)/$(notdir $@) $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -legacy-libc -lc -T p$(DEVICE).gld
 	
 $(OUT_PWD)/$(PROJECT).hex : build/$(PROJECT).elf
 	$(HX) $(OUT_PWD)/$(PROJECT).elf
