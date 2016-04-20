@@ -1,10 +1,12 @@
 #ifndef __ESP_HEADER__
 #define __ESP_HEADER__
 
+#include <stdint.h>
+
 void esp_init();
 
 void esp_send_cmd(char data[]);
-void esp_write(char data[], unsigned short size);
+void esp_write(char data[], uint16_t size);
 
 void esp_rst();
 
@@ -16,15 +18,15 @@ typedef enum
 	ESP_MODE_STA_AP
 } ESP_MODE;
 void esp_set_mode(ESP_MODE mode);
-unsigned char esp_connect_ap(char ssid[], char pw[]);		// warning, be careful to special car, protect with backslash
-unsigned char esp_disconnect_ap();
+uint8_t esp_connect_ap(char ssid[], char pw[]);		// warning, be careful to special car, protect with backslash
+uint8_t esp_disconnect_ap();
 
 // tcp/ip layer
-unsigned char esp_open_tcp_socket(char ip_domain[], unsigned short port);
-unsigned char esp_open_udp_socket(char ip_domain[], unsigned short port, unsigned short localPort, unsigned char mode);
-void esp_close_socket(unsigned char sock);
-void esp_write_socket(unsigned char sock, char data[], unsigned short size);
-void esp_write_socket_string(unsigned char sock, char str[]);
+uint8_t esp_open_tcp_socket(char ip_domain[], uint16_t port);
+uint8_t esp_open_udp_socket(char ip_domain[], uint16_t port, uint16_t localPort, uint8_t mode);
+void esp_close_socket(uint8_t sock);
+void esp_write_socket(uint8_t sock, char data[], uint16_t size);
+void esp_write_socket_string(uint8_t sock, char str[]);
 
 typedef enum 
 {
@@ -75,11 +77,11 @@ typedef enum
 } WIFI_STATE;
 
 void wait_ok();
-unsigned char getRec();
+uint8_t getRec();
 WIFI_STATE get_state();
-unsigned char getRecSocket();
+uint8_t getRecSocket();
 
 char *getRecData();
-unsigned short getRecSize();
+uint16_t getRecSize();
 
 #endif   //__ESP_HEADER__
