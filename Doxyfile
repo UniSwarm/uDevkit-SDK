@@ -3,9 +3,9 @@ PROJECT_BRIEF          = "A tool to simplify module inclusions in embeded system
 OUTPUT_DIRECTORY       = build-doc/
 OPTIMIZE_OUTPUT_FOR_C  = YES
 
-INPUT                  = .
+INPUT                  = ./support/
 RECURSIVE              = YES
-EXCLUDE_PATTERNS       = */build/*
+EXCLUDE_PATTERNS       = */build/* */include/*
 
 GENERATE_TODOLIST      = YES
 INLINE_SOURCES         = YES
