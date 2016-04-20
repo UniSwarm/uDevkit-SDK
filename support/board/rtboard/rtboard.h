@@ -13,6 +13,8 @@
 
 #include <xc.h>
 
+int init_board();
+
 #define BOARD_NAME "rtboard"
 #define SYSCLOCK_XTAL 8000000
 
@@ -29,10 +31,10 @@
 
 #define M3A LATBbits.LATB8
 #define M3B LATBbits.LATB9
-#define M3en LATFbits.LATF4
+#define M3en LATFbits.LATF5
 
 #define M4A LATBbits.LATB10
 #define M4B LATBbits.LATB11
-#define M4en LATFbits.LATF5
+#define M4en LATFbits.LATF4
 
 #endif // RTBOARD_H
