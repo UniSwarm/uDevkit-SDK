@@ -1,6 +1,7 @@
 # TODO
 
 - [ ] Find a solution for fuses
+- [ ] Find a solution for interrupts (call back?)
 - [ ] Find a solution for pins mapping and declaration
 
 ## Support:
@@ -17,9 +18,9 @@
 
 ### QEI
 - [x] prototypes
-- [ ] device assignation
-- [ ] config
-- [ ] read data
+- [x] device assignation
+- [ ] config (default config done)
+- [x] read data
 
 ### Timers
 - [x] prototypes
@@ -34,7 +35,7 @@
 - [ ] set pwm
 
 ### ADC
-- [ ] prototypes
+- [x] prototypes
 - [ ] config
 - [ ] read data
 - [ ] interrupt
@@ -47,3 +48,8 @@
 - [ ] porting
 - [ ] complete API
 - [ ] debug emit
+
+## Boards
+### RTBoard
+- [x] init io
+- [ ] adc static, motors...
