@@ -48,25 +48,9 @@ int main(void)
 	unsigned int i,j;
 	uint8_t uart;
 	
-	ANSELD = 0x0000;	// all analog inputs of port D as digital buffer
-	TRISDbits.TRISD11 = 0;		// LED pin as output
-	LED = 1;
-	
-	
-	i = setSystemClock(60000000);
-	
-	ANSELB = 0x00C7;	// port B as digital buffer, but RB7-6 and RB2-0
-	ANSELD = 0x0000;	// all analog inputs of port D as digital buffer
-	ANSELG = 0x0000;	// all analog inputs of port G as digital buffer
-	// Unlock configuration pin
-	OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 0;
-		
-		// UART1 pins
-		RPOR4bits.RP80R = 0b00001; // TX ==> RP80 AnP1
-		RPINR18bits.U1RXR = 81; // RX ==> RP81 AnP2
-		
-	// Lock configuration pin
-	OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 1;
+	setSystemClock(60000000);
+	init_board();
+	esp_init();
 	
 	// uart init
 	uart = uart_getFreeDevice();
