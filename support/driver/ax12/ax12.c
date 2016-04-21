@@ -10,6 +10,9 @@
 
 #include "ax12.h"
 
+#include "driver/uart.h"
+#include <xc.h>
+
 uint8_t idr=255;
 uint8_t buffr[30];
 uint8_t trame[20], idax,
@@ -95,10 +98,10 @@ void setup_uart_AX(void)
     //             4 * (UXBRG + 1)
     
     // Uart Interrupt
-    IPC2bits.U1RXIP = 5;     // Interrupt priority for receptor
-    IPC3bits.U1TXIP = 6;     // Interrupt priority for transmitor
-    U1TXIE = 0;
-    U1RXIE = 1;
+    IPC20bits.U3RXIP = 5;     // Interrupt priority for receptor
+    IPC20bits.U3TXIP = 6;     // Interrupt priority for transmitor
+    IEC5bits.U3TXIE = 0;
+    IEC5bits.U3RXIE = 1;
 }
 
 /**
@@ -305,7 +308,7 @@ void clearAxResponse(void)
 /**
  * @brief foo
  */
-void interrupt tx1_int(void) @ U1TX_VCTR
+void interrupt tx3_int(void) @ U3TX_VCTR
 {
     int p;
     idax++;
@@ -326,7 +329,7 @@ void interrupt tx1_int(void) @ U1TX_VCTR
 /**
  * @brief foo
  */
-void interrupt rx1_int(void) @ U1RX_VCTR
+void interrupt rx3_int(void) @ U3RX_VCTR
 {
     uint8_t rec;
     while(U1STAbits.URXDA==1)
