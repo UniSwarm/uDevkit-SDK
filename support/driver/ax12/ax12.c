@@ -10,19 +10,37 @@
 
 #include "ax12.h"
 
-// BE CAREFUL : this code is awful but... it works
-
 uint8_t idr=255;
 uint8_t buffr[30];
-uint8_t trame[20],idax,size;
+uint8_t trame[20], idax,
+// size,
+my_size //compiler said there is a redefinition... STAY CALM
+;
 
-#define axSendMode() U1MODEbits.STSEL = 1; RWB=1; idr = 0
+////////////////////////////////////////////////////////////////////////////////
+//OLD VERSION
+////////////////////////////////////////////////////////////////////////////////
+// #define axSendMode() U1MODEbits.STSEL=1; RWB=1; idr=0
+// #define axReceiveMode() U1MODEbits.STSEL=0; RWB = 0
+
+////////////////////////////////////////////////////////////////////////////////
+//NEW VERSION
+////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Set the device the send mode
+ */
+void axSendMode()
+{
+    U1MODEbits.STSEL=1;
+    RWB=1;
+    idr=0;
+}
 
 /**
- * @brief foo
- * @return bar
+ * @brief Set the device to receive mode
  */
-void axRecMode()
+// void axRecMode()                             //OLD NAME
+void axReceiveMode()                            //NEW NAME
 {
     uint8_t rec;
     U1MODEbits.STSEL = 0;
@@ -36,8 +54,7 @@ void axRecMode()
 }
 
 /**
- * @brief foo
- * @return bar
+ * @brief Setup the device
  */
 void setup_AX(void)
 {
@@ -46,7 +63,6 @@ void setup_AX(void)
 
 /**
  * @brief foo
- * @return bar
  */
 void setup_uart_AX(void)
 {
@@ -86,8 +102,10 @@ void setup_uart_AX(void)
 }
 
 /**
- * @brief foo
- * @return bar
+ * @brief Send a char (8 bits) to the specified device
+ * @param addr the device address
+ * @param param
+ * @param val
  */
 void send_char_ax(uint8_t addr, uint8_t param, uint8_t val)
 {
@@ -101,7 +119,7 @@ void send_char_ax(uint8_t addr, uint8_t param, uint8_t val)
     trame[5]=param;
     trame[6]=val;
     trame[7]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]);
-    size=8;
+    my_size,=8;
     idax=0;
     U1TXREG = trame[0];
     U1TXIE = 1;
@@ -113,10 +131,10 @@ void send_char_ax(uint8_t addr, uint8_t param, uint8_t val)
 }
 
 /**
- * @brief foo
- * @return bar
+ * @brief Send a short (16 bits) to the specified device
+ * @param addr the device address
  */
-void send_short_ax(uint8_t addr, uint8_t param, uint16_t val)
+void send_1_short_ax(uint8_t addr, uint8_t param, uint16_t val)
 {
     int p;
     axSendMode();
@@ -129,22 +147,22 @@ void send_short_ax(uint8_t addr, uint8_t param, uint16_t val)
     trame[6]=val;
     trame[7]=*((char*)(&val)+1);
     trame[8]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]);
-    size=9;
+    my_size,=9;
     idax=0;
     U1TXREG = trame[0];
     U1TXIE = 1;
     //for(p=0;p<100;p++);
-    //while(idax!=size);
+    //while(idax!=my_size,);
     //for(p=0;p<100;p++);
     //idr=0;
     //axRecMode();
 }
 
 /**
- * @brief foo
- * @return bar
+ * @brief Send a two shorts (16 bits) to the specified device
+ * @param addr the device address
  */
-void send_dbshort_ax(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2)
+void send_2_short_ax(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2)
 {
     int p;
     axSendMode();
@@ -159,22 +177,22 @@ void send_dbshort_ax(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2)
     trame[8]=val2;
     trame[9]=*((char*)(&val2)+1);
     trame[10]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]+trame[8]+trame[9]);
-    size=11;
+    my_size,=11;
     idax=0;
     U1TXREG = trame[0];
     U1TXIE = 1;
     //for(p=0;p<100;p++);
-    //while(idax!=size);
+    //while(idax!=my_size,);
     //for(p=0;p<100;p++);
     //idr=0;
     //axRecMode();
 }
 
 /**
- * @brief foo
- * @return bar
+ * @brief Send three shorts (16 bits) to the specified device
+ * @param addr the device address
  */
-void send_trishort_ax(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2, uint16_t val3)
+void send_3_short_ax(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2, uint16_t val3)
 {
     int p;
     axSendMode();
@@ -191,20 +209,20 @@ void send_trishort_ax(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2, 
     trame[10]=val3;
     trame[11]=*((char*)(&val3)+1);
     trame[12]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]+trame[8]+trame[9]+trame[10]+trame[11]);
-    size=13;
+    my_size,=13;
     idax=0;
     U1TXREG = trame[0];
     U1TXIE = 1;
     //for(p=0;p<100;p++);
-    //while(idax!=size);
+    //while(idax!=my_size,);
     //for(p=0;p<100;p++);
     //idr=0;
     //axRecMode();
 }
 
 /**
- * @brief foo
- * @return bar
+ * @brief Read parameters of the device
+ * @param addr the device address
  */
 void read_param_ax(uint8_t addr, uint8_t param, uint8_t nbParam)
 {
@@ -218,19 +236,19 @@ void read_param_ax(uint8_t addr, uint8_t param, uint8_t nbParam)
     trame[5]=param;
     trame[6]=nbParam;
     trame[7]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]);
-    size=8;
+    my_size,=8;
     idax=0;
     U1TXREG = trame[0];
     U1TXIE = 1;
     //for(p=0;p<100;p++);
-    //while(idax!=size);
+    //while(idax!=my_size,);
     //for(p=0;p<100;p++);
     //axRecMode();
 }
 
 /**
  * @brief foo
- * @return bar
+ * @return 1 if ok, 0 in case of error
  */
 uint8_t parseResponse6(uint8_t addr, uint16_t *pos, uint16_t *speed, uint16_t *load)
 {
@@ -248,7 +266,6 @@ uint8_t parseResponse6(uint8_t addr, uint16_t *pos, uint16_t *speed, uint16_t *l
 
 /**
  * @brief foo
- * @return bar
  */
 void clearAxResponse(void)
 {
@@ -278,18 +295,27 @@ void clearAxResponse(void)
     buffr[i++]=0;
 }
 
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// ET CA ?? ON LE MET PAS DE .H ????
+////////////////////////////////////////////////////////////////////////////////
 /**
  * @brief foo
- * @return bar
  */
 void interrupt tx1_int(void) @ U1TX_VCTR
 {
     int p;
     idax++;
-    if(idax>=size)
+    if(idax>=my_size,)
     {
         U1TXIE = 0;
-        axRecMode();
+
+        // axRecMode();                 //OLD NAME
+        axReceiveMode();                //NEW NAME
+        
         return;
     }
     //for(p=0;p<50;p++);
@@ -299,7 +325,6 @@ void interrupt tx1_int(void) @ U1TX_VCTR
 
 /**
  * @brief foo
- * @return bar
  */
 void interrupt rx1_int(void) @ U1RX_VCTR
 {
@@ -328,3 +353,7 @@ void interrupt rx1_int(void) @ U1RX_VCTR
     }
     U1RXIF = 0;
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// FIN DE : ET CA ?? ON LE MET PAS DE .H ????
+////////////////////////////////////////////////////////////////////////////////

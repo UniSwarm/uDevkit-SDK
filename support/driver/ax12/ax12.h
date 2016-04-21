@@ -8,18 +8,25 @@
  * @brief AX12 servomotor support
  */
 
+#include "../periph/uart/uart.h"
+
 #ifndef AX12_H
 #define AX12_H
+
+//ON LES DECLARE ?
+void axSendMode();
+void axReceiveMode();
+//OU PAS ?
 
 void setup_AX(void);
 void setup_uart_AX(void);
 
 void send_char_ax(uint8_t addr, uint8_t param, uint8_t val);
-void send_short_ax(uint8_t addr, uint8_t param, uint16_t val);
-void send_dbshort_ax(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2);
-void send_trishort_ax(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2, uint16_t val3);
+void send_1_short_ax(uint8_t addr, uint8_t param, uint16_t val);
+void send_2_short_ax(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2);
+void send_3_short_ax(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2, uint16_t val3);
 
-void read_param_ax(uint8_t addr, uint8_t param, uint8_t size);
+void read_param_ax(uint8_t addr, uint8_t param, uint8_t nbParam);
 uint8_t parseResponse6(uint8_t addr, uint16_t *pos, uint16_t *speed, uint16_t *load);
 void clearAxResponse(void);
 
