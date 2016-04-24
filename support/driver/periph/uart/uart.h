@@ -12,6 +12,7 @@
 #define UART_H
 
 #include <stdint.h>
+#include <stdlib.h>
 
 #define UART_BIT_PARITY_NONE 0
 #define UART_BIT_PARITY_EVEN 1
