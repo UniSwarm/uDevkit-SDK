@@ -8,7 +8,7 @@
  * @brief Code for A6screenboard from Robotips
  */
 
-#include "rtboard.h"
+#include "a6screenboard.h"
 
 #include <xc.h>
 
@@ -17,8 +17,6 @@ int init_io()
 	ANSELB = 0x0000;	// all analog inputs of port B as digital buffer
 	ANSELD = 0x0000;	// all analog inputs of port D as digital buffer
 	ANSELG = 0x0000;	// all analog inputs of port G as digital buffer
-	
-	TRISB = 0;					// SCREEN_PORT pins as output
 	
 	TRISDbits.TRISD3 = 0;		// SCREEN_RD pin as output
 	TRISDbits.TRISD2 = 0;		// SCREEN_RW pin as output

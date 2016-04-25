@@ -36,7 +36,7 @@
 
 void init_lcd();
 
-void fill_screen(unsigned int bColor);
-void affImage(unsigned short x, unsigned short y, unsigned short w, unsigned short h, __prog__ const unsigned short *img);
+void fill_screen(uint16_t bColor);
+void affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, __prog__ const uint16_t *img);
 
 #endif // LCD_H

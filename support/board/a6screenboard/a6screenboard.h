@@ -17,6 +17,8 @@ int init_board();
 
 // pins define
 #define SCREEN_PORT		LATB
+#define SCREEN_PORT_INPUT		(TRISB = 1)
+#define SCREEN_PORT_OUTPUT		(TRISB = 0)
 #define SCREEN_RD		LATDbits.LATD3
 #define SCREEN_RW		LATDbits.LATD2
 #define SCREEN_RS		LATDbits.LATD1

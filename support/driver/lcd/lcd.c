@@ -1,41 +1,46 @@
-/**
- * @file lcd_dspic.c
- * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
- *
- * @date April 25, 2016, 18:35 AM 
- * 
- * @brief LCD support driver
- */
+#include "lcd.h"
 
 #include "board.h"
-#include "lcd.h"
 
 #include <xc.h>
 
-void write_command_lcd(unsigned short cmd)
+// <TODO write this functions correctly
+void delay_ms(uint16_t ms)
 {
-	TRISB = 0;
-	RS=0;
-	CS=0;
-	PORT=cmd;
-	RW=0;
-	RW=1;
-	CS=1;
-	RS=1;
+	int i, j;
+	for(j=0; j<ms; j++) for(i=0; i<6210; i++) asm("NOP");
 }
 
-void write_data_lcd(unsigned short data)
+void delay_us(uint16_t us)
 {
-	TRISB = 0;
-	CS=0;
-	PORT=data;
-	RW=0;
-	RW=1;
-	CS=1;
+	int i, j;
+	for(j=0; j<us; j++) for(i=0; i<6; i++) asm("NOP");
+}
+// TODO/>
+
+void write_command_lcd(uint16_t cmd)
+{
+	SCREEN_PORT_OUTPUT;
+	SCREEN_RS = 0;
+	SCREEN_CS = 0;
+	SCREEN_PORT = cmd;
+	SCREEN_RW = 0;
+	SCREEN_RW = 1;
+	SCREEN_CS = 1;
+	SCREEN_RS = 1;
 }
 
-void  write_command_data_lcd (unsigned char cmd, unsigned short data)
+void write_data_lcd(uint16_t data)
+{
+	SCREEN_PORT_INPUT;
+	SCREEN_CS = 0;
+	SCREEN_PORT = data;
+	SCREEN_RW = 0;
+	SCREEN_RW = 1;
+	SCREEN_CS = 1;
+}
+
+void write_command_data_lcd (uint8_t cmd, uint16_t data)
 {
 	write_command_lcd(cmd);
 	write_data_lcd(data);
@@ -43,15 +48,15 @@ void  write_command_data_lcd (unsigned char cmd, unsigned short data)
 
 void init_lcd()
 {
-	CS = 1;
-	RS = 1;
-	RW = 1;
-	RD = 1;
-	RST=1;
+	SCREEN_CS = 1;
+	SCREEN_RS = 1;
+	SCREEN_RW = 1;
+	SCREEN_RD = 1;
+	SCREEN_RST = 1;
 	delay_ms(5);
-	RST=0;
+	SCREEN_RST = 0;
 	delay_ms(5);
-	RST=1;
+	SCREEN_RST = 1;
 	delay_ms(5);
 	
 	write_command_data_lcd(0x0001, 0x003C);
@@ -108,7 +113,7 @@ void init_lcd()
 	write_command_data_lcd(0x0007, 0x0017);
 }
 
-static void setPos_lcd(unsigned int x0,unsigned int x1,unsigned int y0,unsigned int y1)
+static void setPos_lcd(uint16_t x0, uint16_t x1, uint16_t y0, uint16_t y1)
 {
 	write_command_data_lcd(WINDOW_XADDR_START,x0);
 	write_command_data_lcd(WINDOW_XADDR_END,x1);
@@ -120,25 +125,25 @@ static void setPos_lcd(unsigned int x0,unsigned int x1,unsigned int y0,unsigned 
 	write_command_lcd (0x22);
 }
 
-void fill_screen(unsigned int bColor)
+void fill_screen(uint16_t bColor)
 {
-	unsigned short i,j;
-	setPos_lcd(0,319,0,479);
+	uint16_t i,j;
+	setPos_lcd(0, 319, 0, 479);
 	
-	for (i=0;i<320;i++)
+	for (i=0; i<320; i++)
 		for (j=0;j<480;j++) write_data_lcd(bColor);
 }
 
-void affImage(unsigned short x, unsigned short y, unsigned short w, unsigned short h, __prog__ const unsigned short *img)
+void affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, __prog__ const uint16_t *img)
 {
-	unsigned short i,j;
+	uint16_t i,j;
 	unsigned long addr=0;
 	//setPos_lcd(0+x,239+x,0+y,319+y);//320x240
-	setPos_lcd(y,y+h-1,x,x+w-1);
+	setPos_lcd(y, y+h-1, x, x+w-1);
 	
-	for (i=0;i<w;i++)
+	for (i=0; i<w; i++)
 	{
-		for (j=0;j<h;j++)
+		for (j=0; j<h; j++)
 		{
 			write_data_lcd(img[addr]);
 			addr++;
