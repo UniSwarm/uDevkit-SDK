@@ -20,21 +20,12 @@ uint8_t trame[20], idax,
 my_size //compiler said there is a redefinition... STAY CALM
 ;
 
-////////////////////////////////////////////////////////////////////////////////
-//OLD VERSION
-////////////////////////////////////////////////////////////////////////////////
-// #define axSendMode() U1MODEbits.STSEL=1; RWB=1; idr=0
-// #define axReceiveMode() U1MODEbits.STSEL=0; RWB = 0
-
-////////////////////////////////////////////////////////////////////////////////
-//NEW VERSION
-////////////////////////////////////////////////////////////////////////////////
 /**
  * @brief Set the device the send mode
  */
 void axSendMode()
 {
-    U1MODEbits.STSEL=1;
+    U3MODEbits.STSEL=1;
     RWB=1;
     idr=0;
 }
@@ -46,13 +37,13 @@ void axSendMode()
 void axReceiveMode()                            //NEW NAME
 {
     uint8_t rec;
-    U1MODEbits.STSEL = 0;
+    U3MODEbits.STSEL = 0;
     RWB = 0;
     //idr = 0;
-    // if(U1STAbits.OERR==1)
+    // if(U3STAbits.OERR==1)
     // {
-    //     rec=U1RXREG;
-    //     U1STAbits.OERR=0;
+    //     rec=U3RXREG;
+    //     U3STAbits.OERR=0;
     // }
 }
 
@@ -70,29 +61,29 @@ void setup_AX(void)
 void setup_uart_AX(void)
 {
     // U1MODE bits configuration
-    U1MODEbits.USIDL = 0;   // Continue operation in Idle mode
-    U1MODEbits.IREN = 0;     // IrDA encoder and decoder are disabled
-    U1MODEbits.RTSMD = 0;   // UxRTS is in Flow Control mode
-    U1MODEbits.UEN = 0;         // UxTX and UxRX pins are enabled and used; UxCTS, UxRTS and BCLKx pins are controlled by port latches
-    U1MODEbits.WAKE = 0;     // Wake-up is disabled
-    U1MODEbits.LPBACK = 0;     // Loopback mode is disabled
-    U1MODEbits.ABAUD = 0;   // Baud rate measurement disabled
-    U1MODEbits.URXINV = 0;     // UxRX Idle state is ‘1’
-    U1MODEbits.BRGH = 1;     // Low-speed mode
-    U1MODEbits.PDSEL = 0b00;   // 8-bit data, no parity
-    U1MODEbits.STSEL = 0;   // 1 Stop bit
-    U1MODEbits.UARTEN = 1;     // UARTx is enabled
-    
+    U3MODEbits.STSEL = 0;   // 1 Stop bit
+    U3MODEbits.PDSEL = 0b00;   // 8-bit data, no parity
+    U3MODEbits.BRGH = 1;     // Low-speed mode
+    U3MODEbits.URXINV = 0;     // UxRX Idle state is ‘1’
+    U3MODEbits.ABAUD = 0;   // Baud rate measurement disabled
+    U3MODEbits.LPBACK = 0;     // Loopback mode is disabled
+    U3MODEbits.WAKE = 0;     // Wake-up is disabled
+    U3MODEbits.UEN = 0;         // UxTX and UxRX pins are enabled and used; UxCTS, UxRTS and BCLKx pins are controlled by port latches
+    U3MODEbits.RTSMD = 0;   // UxRTS is in Flow Control mode
+    U3MODEbits.IREN = 0;     // IrDA encoder and decoder are disabled
+    U3MODEbits.USIDL = 0;   // Continue operation in Idle mode
+    U3MODEbits.UARTEN = 1;     // UARTx is enabled
+
     // U1STA bits configuration
-    U1STAbits.UTXISEL1 = 0;       // Interrupt is generated when the last transmission is over
-    U1STAbits.UTXINV = 0;   // UxTX Idle state is ‘1’
-    U1STAbits.UTXISEL0 = 1;       // Interrupt is generated when the last transmission is over
-    U1STAbits.UTXBRK = 0;   // Sync Break transmission is disabled
-    U1STAbits.UTXEN = 1;     // UARTx transmitter enabled
-    U1STAbits.URXISEL = 0;     // Interrupt flag bit is set when a character is received
+    U3STAbits.URXISEL = 0;     // Interrupt flag bit is set when a character is received
+    U3STAbits.UTXEN = 1;     // UARTx transmitter enabled
+    U3STAbits.UTXBRK = 0;   // Sync Break transmission is disabled
+    U3STAbits.UTXISEL0 = 1;       // Interrupt is generated when the last transmission is over
+    U3STAbits.UTXINV = 0;   // UxTX Idle state is ‘1’
+    U3STAbits.UTXISEL1 = 0;       // Interrupt is generated when the last transmission is over
 
     // Baud rate generator
-    U1BRG = 9;
+    U3BRG = 9;
     //                   FCY
     // baudRate = -----------------       (with BRGH=1)
     //             4 * (UXBRG + 1)
@@ -122,12 +113,12 @@ void send_char_ax(uint8_t addr, uint8_t param, uint8_t val)
     trame[5]=param;
     trame[6]=val;
     trame[7]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]);
-    my_size,=8;
+    my_size=8;
     idax=0;
-    U1TXREG = trame[0];
-    U1TXIE = 1;
+    U3TXREG = trame[0];
+    IEC5bits.U3TXIE = 1;
     //for(p=0;p<100;p++);
-    //while(U1TXIE==1);
+    //while(IEC5bits.U3TXIE==1);
     //for(p=0;p<100;p++);
     //idr=0;
     //axRecMode();
@@ -150,12 +141,12 @@ void send_1_short_ax(uint8_t addr, uint8_t param, uint16_t val)
     trame[6]=val;
     trame[7]=*((char*)(&val)+1);
     trame[8]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]);
-    my_size,=9;
+    my_size=9;
     idax=0;
-    U1TXREG = trame[0];
-    U1TXIE = 1;
+    U3TXREG = trame[0];
+    IEC5bits.U3TXIE = 1;
     //for(p=0;p<100;p++);
-    //while(idax!=my_size,);
+    //while(idax!=my_size);
     //for(p=0;p<100;p++);
     //idr=0;
     //axRecMode();
@@ -180,12 +171,12 @@ void send_2_short_ax(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2)
     trame[8]=val2;
     trame[9]=*((char*)(&val2)+1);
     trame[10]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]+trame[8]+trame[9]);
-    my_size,=11;
+    my_size=11;
     idax=0;
-    U1TXREG = trame[0];
-    U1TXIE = 1;
+    U3TXREG = trame[0];
+    IEC5bits.U3TXIE = 1;
     //for(p=0;p<100;p++);
-    //while(idax!=my_size,);
+    //while(idax!=my_size);
     //for(p=0;p<100;p++);
     //idr=0;
     //axRecMode();
@@ -212,12 +203,12 @@ void send_3_short_ax(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2, u
     trame[10]=val3;
     trame[11]=*((char*)(&val3)+1);
     trame[12]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]+trame[8]+trame[9]+trame[10]+trame[11]);
-    my_size,=13;
+    my_size=13;
     idax=0;
-    U1TXREG = trame[0];
-    U1TXIE = 1;
+    U3TXREG = trame[0];
+    IEC5bits.U3TXIE = 1;
     //for(p=0;p<100;p++);
-    //while(idax!=my_size,);
+    //while(idax!=my_size);
     //for(p=0;p<100;p++);
     //idr=0;
     //axRecMode();
@@ -239,12 +230,12 @@ void read_param_ax(uint8_t addr, uint8_t param, uint8_t nbParam)
     trame[5]=param;
     trame[6]=nbParam;
     trame[7]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]);
-    my_size,=8;
+    my_size=8;
     idax=0;
-    U1TXREG = trame[0];
-    U1TXIE = 1;
+    U3TXREG = trame[0];
+    IEC5bits.U3TXIE = 1;
     //for(p=0;p<100;p++);
-    //while(idax!=my_size,);
+    //while(idax!=my_size);
     //for(p=0;p<100;p++);
     //axRecMode();
 }
@@ -298,13 +289,6 @@ void clearAxResponse(void)
     buffr[i++]=0;
 }
 
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////
-// ET CA ?? ON LE MET PAS DE .H ????
-////////////////////////////////////////////////////////////////////////////////
 /**
  * @brief foo
  */
@@ -312,9 +296,9 @@ void interrupt tx3_int(void) @ U3TX_VCTR
 {
     int p;
     idax++;
-    if(idax>=my_size,)
+    if(idax>=my_size)
     {
-        U1TXIE = 0;
+        IEC5bits.U3TXIE = 0;
 
         // axRecMode();                 //OLD NAME
         axReceiveMode();                //NEW NAME
@@ -322,8 +306,8 @@ void interrupt tx3_int(void) @ U3TX_VCTR
         return;
     }
     //for(p=0;p<50;p++);
-    U1TXREG = trame[idax];
-    U1TXIF = 0;
+    U3TXREG = trame[idax];
+    IFS5bits.U3TXIF = 0;
 }
 
 /**
@@ -332,31 +316,27 @@ void interrupt tx3_int(void) @ U3TX_VCTR
 void interrupt rx3_int(void) @ U3RX_VCTR
 {
     uint8_t rec;
-    while(U1STAbits.URXDA==1)
+    while(U3STAbits.URXDA==1)
     {
-        if(U1STAbits.FERR==1)
+        if(U3STAbits.FERR==1)
         {
-            rec=U1RXREG;
-            U1RXIF = 0;
+            rec=U3RXREG;
+            IFS5bits.U3RXIF = 0;
             return;
         }
-        if(U1STAbits.OERR==1)
+        if(U3STAbits.OERR==1)
         {
-            rec=U1RXREG;
-            U1STAbits.OERR=0;
-            U1RXIF = 0;
+            rec=U3RXREG;
+            U3STAbits.OERR=0;
+            IFS5bits.U3RXIF = 0;
             return;
         }
-        rec=U1RXREG;
+        rec=U3RXREG;
         if(idr<30)
         {
             buffr[idr]=rec;
             idr++;
         }
     }
-    U1RXIF = 0;
+    IFS5bits.U3RXIF = 0;
 }
-
-////////////////////////////////////////////////////////////////////////////////
-// FIN DE : ET CA ?? ON LE MET PAS DE .H ????
-////////////////////////////////////////////////////////////////////////////////
