@@ -14,13 +14,14 @@
 #include <QDir>
 #include <QTextStream>
 #include <QDebug>
+#include <QCommandLineParser>
 
 #include <QImage>
 
 void exportimg(QImage image, QString filename)
 {
     QFileInfo finfo(filename);
-    QFile file(filename+".c");
+    QFile file(filename);
     file.open(QIODevice::WriteOnly | QIODevice::Text);
 
     QTextStream stream(&file);
@@ -51,9 +52,37 @@ void exportimg(QImage image, QString filename)
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    QCoreApplication app(argc, argv);
+    QCoreApplication::setApplicationName("img2raw");
+    QCoreApplication::setApplicationVersion("1.0");
     
-    QString filename = QCoreApplication::arguments().at(1);
+    QCommandLineParser parser;
+    parser.setApplicationDescription("Test helper");
+    parser.addHelpOption();
+    parser.addVersionOption();
+
+    QCommandLineOption inputOption(QStringList() << "i" << "input", "Input image file (jpg, png, bmp ...)", "image.jpg");
+    parser.addOption(inputOption);
+    QCommandLineOption outputOption(QStringList() << "o" << "output", "Write generated data into <file>.", "image.c");
+    parser.addOption(outputOption);
+
+    parser.process(app);
+
+    // check input
+    if(!parser.isSet(inputOption))
+    {
+        qDebug()<<"No input file specified.";
+        return 1;
+    }
+    QString inputFile = parser.value(inputOption);
+    if(!QFile::exists(inputFile))
+    {
+        qDebug()<<"File " << inputFile << " does not exist.";
+        return 1;
+    }
+
+    // outpout
+    QString outputFile = parser.value(outputOption);
     
     /*QString filename = "../../../images_ecrans/new/Squaretips-smile-3.2.jpg";
     QImage image(filename);
@@ -83,5 +112,5 @@ int main(int argc, char *argv[])
         exportimg(image, dir.path() + "/" + file.replace(".jpg",""));
     }*/
     
-    exportimg(QImage(filename), filename);
+    exportimg(QImage(inputFile), outputFile);
 }
