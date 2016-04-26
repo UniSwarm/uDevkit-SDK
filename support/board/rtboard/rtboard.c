@@ -38,8 +38,8 @@ int init_io()
 		RPOR2bits.RP69R = 0b00001; // TX ==> RP69
 		
 		// uart debug
-		RPOR4bits.RP80R = 0b00011; // TX ==> RP80 AnP1
-		RPINR19bits.U2RXR = 81; // RX ==> RP81 AnP2
+		RPOR4bits.RP80R = 0b00011; // TX ==> RP80 As1
+		RPINR19bits.U2RXR = 81; // RX ==> RP81 As2
 		
 		// QEI1 pins (coder 1)
 		RPINR14bits.QEA1R = 119; // C1A ==> RPI119
