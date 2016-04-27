@@ -11,9 +11,12 @@ int main(void)
 	unsigned int i,j;
 	uint8_t uart;
 	
-	setSystemClock(60000000);
+	setSystemClock(120000000);
 	init_board();
+	
+	// warning keep this init order before remap support
 	esp_init();
+	ax12_init();
 	
 	// uart init
 	uart = uart_getFreeDevice();
@@ -23,11 +26,13 @@ int main(void)
 	
 	while(1)
 	{
-		for(j=0;j<50;j++) for(i=0;i<65000;i++);
+		for(j=0;j<60;j++) for(i=0;i<65000;i++);
 		LED = 0;
-		for(j=0;j<10;j++) for(i=0;i<65000;i++);
+		uart_putc(uart, 'C');
+		ax12_send_3_short(1, P_GOAL_POSITION_L, 256, 512, 512);
+		for(j=0;j<60;j++) for(i=0;i<65000;i++);
 		LED = 1;
-		printf("test");
+		ax12_send_3_short(1, P_GOAL_POSITION_L, 512, 512, 512);
 	}
 	
 	return 0;

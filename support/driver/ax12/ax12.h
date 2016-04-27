@@ -13,22 +13,16 @@
 
 #include <stdint.h>
 
-//ON LES DECLARE ?
-void axSendMode();
-void axReceiveMode();
-//OU PAS ?
+void ax12_init(void);
 
-void setup_AX(void);
-void setup_uart_AX(void);
+void ax12_send_char(uint8_t addr, uint8_t param, uint8_t val);
+void ax12_send_1_short(uint8_t addr, uint8_t param, uint16_t val);
+void ax12_send_2_short(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2);
+void ax12_send_3_short(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2, uint16_t val3);
 
-void send_char_ax(uint8_t addr, uint8_t param, uint8_t val);
-void send_1_short_ax(uint8_t addr, uint8_t param, uint16_t val);
-void send_2_short_ax(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2);
-void send_3_short_ax(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2, uint16_t val3);
-
-void read_param_ax(uint8_t addr, uint8_t param, uint8_t nbParam);
+/*void read_param_ax(uint8_t addr, uint8_t param, uint8_t nbParam);
 uint8_t parseResponse6(uint8_t addr, uint16_t *pos, uint16_t *speed, uint16_t *load);
-void clearAxResponse(void);
+void clearAxResponse(void);*/
 
 //--- Control Table Address ---
 //EEPROM AREA
