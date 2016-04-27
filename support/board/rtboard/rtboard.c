@@ -30,16 +30,22 @@ int init_io()
 	TRISBbits.TRISB10 = 0;		// M4A pin as output
 	TRISBbits.TRISB11 = 0;		// M4B pin as output
 	
+	TRISBbits.TRISB3 = 0;		// AX12_TXEN pin as output
+	
 	// Unlock configuration pin
 	OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 0;
 		
 		// UART1 pins (wifi)
-		RPINR18bits.U1RXR = 71; // RX ==> RP71
-		RPOR2bits.RP69R = 0b00001; // TX ==> RP69
+		RPINR18bits.U1RXR = 71; // RX1 ==> RP71
+		RPOR2bits.RP69R = 0b000001; // TX1 ==> RP69
 		
-		// uart debug
-		RPOR4bits.RP80R = 0b00011; // TX ==> RP80 As1
-		RPINR19bits.U2RXR = 81; // RX ==> RP81 As2
+		// UART2 pins (AX12)
+		RPINR19bits.U2RXR = 97; // RX2 ==> RP97 AXrx
+		RPOR14bits.RP120R = 0b000011; // TX2 ==> RP120 AXtx
+		
+		// UART3 pins (debug)
+		RPINR27bits.U3RXR = 71; // RX3 ==> RP71 As2
+		RPOR4bits.RP80R = 0b011011; // TX3 ==> RP80 As1
 		
 		// QEI1 pins (coder 1)
 		RPINR14bits.QEA1R = 119; // C1A ==> RPI119

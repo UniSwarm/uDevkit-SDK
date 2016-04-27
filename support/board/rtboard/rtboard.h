@@ -37,4 +37,6 @@ int init_board();
 #define M4B LATBbits.LATB11
 #define M4en LATFbits.LATF4
 
+#define AX12_TXEN LATBbits.LATB3
+
 #endif // RTBOARD_H

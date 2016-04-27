@@ -5,7 +5,7 @@
 #pragma config GSSK = OFF           // General Segment Key bits (General Segment Write Protection and Code Protection is Disabled)
 
 // FOSCSEL
-#pragma config FNOSC = FRCPLL        // Initial Oscillator Source Selection Bits (Internal Fast RC (FRC))
+#pragma config FNOSC = PRIPLL        // Initial Oscillator Source Selection Bits (Internal Fast RC (FRC))
 #pragma config IESO = OFF           // Two-speed Oscillator Start-up Enable bit (Start up with user-selected oscillator source)
 
 // FOSC
