@@ -1,11 +1,12 @@
 
 RTPROG := $(dir $(lastword $(MAKEFILE_LIST)))
 
-include $(RTPROG)/support/support.mk
-
 ifndef OUT_PWD
  OUT_PWD = .
 endif
+
+include $(RTPROG)/support/support.mk
+
 OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=.o)))
 -include $(OBJECTS:.o=.d)
 

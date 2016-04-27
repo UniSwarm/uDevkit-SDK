@@ -8,6 +8,8 @@ DRIVERS += uart lcd
 
 SRC += main.c
 
+PICTURES += picture.jpg
+
 include $(RTPROG)/rtprog.mk
 
 all : FORCE
@@ -16,3 +18,4 @@ all : FORCE
 	@echo "BADDRIVERS sorted     :" $(sort $(BADDRIVERS))
 	@echo DEVICE: $(DEVICE), ARCHI: $(ARCHI), CC: $(CC), DEFINES: $(DEFINES)
 	@echo OBJECTS: $(OBJECTS)
+	@echo SRC: $(SRC)

@@ -75,6 +75,7 @@ int main(int argc, char *argv[])
         return 1;
     }
     QString inputFile = parser.value(inputOption);
+        qDebug()<<inputFile;
     if(!QFile::exists(inputFile))
     {
         qDebug()<<"File " << inputFile << " does not exist.";
@@ -111,6 +112,7 @@ int main(int argc, char *argv[])
         QImage image(dir.path() + "/" + file);
         exportimg(image, dir.path() + "/" + file.replace(".jpg",""));
     }*/
+    QImage image(inputFile);
     
-    exportimg(QImage(inputFile), outputFile);
+    exportimg(image, outputFile);
 }
