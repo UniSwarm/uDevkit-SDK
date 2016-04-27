@@ -34,7 +34,7 @@ prog : $(OUT_PWD)/$(PROJECT).hex
 	ipecmd -P33EP256MU806 -TPPK3 -F$(OUT_PWD)/$(PROJECT).hex -M
 
 clean: FORCE
-	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d
+	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c
 	rm -f $(OUT_PWD)/$(PROJECT).elf
 
 # generate list of used drivers modules

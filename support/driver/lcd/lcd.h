@@ -34,9 +34,20 @@
 #define GRAM_ADR_COL_S 0x0021 /* init to 319 , UPDATE LAST */
 #define GRAMWR 			    0x0022 // memory write
 
-void init_lcd();
+#define LCD_WIDTH 480
+#define LCD_HEIGHT 320
 
-void fill_screen(uint16_t bColor);
-void affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, __prog__ const uint16_t *img);
+void lcd_init();
+
+void lcd_fillScreen(uint16_t bColor);
+void lcd_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, __prog__ const uint16_t *img);
+
+void lcd_drawPoint(uint16_t x, uint16_t y);
+void lcd_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
+void lcd_drawRect(uint16_t x1, uint16_t y1, uint16_t sizeX, uint16_t sizeY);
+void lcd_drawFillRect(uint16_t x1, uint16_t y1, uint16_t sizeX, uint16_t sizeY);
+
+void lcd_drawText(uint16_t x1, uint16_t y1, const char *txt);
+//void lcd_setFont();
 
 #endif // LCD_H

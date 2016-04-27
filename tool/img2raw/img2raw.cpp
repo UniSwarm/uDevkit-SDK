@@ -26,7 +26,8 @@ void exportimg(QImage image, QString filename)
 
     QTextStream stream(&file);
 
-    stream << "__prog__ const unsigned short " << finfo.baseName() << "[] __attribute__((space(prog))) ={";
+	stream << "#include <stdint.h>" << endl;
+    stream << "__prog__ const uint16_t " << finfo.baseName() << "[] __attribute__((space(prog))) ={";
 
     QImage mirored = image.mirrored(false,true);
 
@@ -115,4 +116,5 @@ int main(int argc, char *argv[])
     QImage image(inputFile);
     
     exportimg(image, outputFile);
+	return 0;
 }

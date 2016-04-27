@@ -6,6 +6,8 @@
 #include "board.h"
 #include "archi.h"
 
+#include "pictures.h"
+
 int main(void)
 {
 	unsigned int i,j;
@@ -22,6 +24,7 @@ int main(void)
 	
 	lcd_init();
 	lcd_fillScreen(Blue2);
+	lcd_affImage(0, 0, 480, 320, picture);
 	
 	while(1);
 	
