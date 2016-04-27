@@ -26,7 +26,7 @@ uint8_t uart_getFreeDevice()
 {
     uint8_t i;
 
-    for (i = 0; i < UART_COUNT; i++)
+    for (i = 1; i < UART_COUNT; i++)
         if (baudSpeeds[i] == 0)
             break;
 
@@ -209,20 +209,20 @@ uint32_t uart_baudSpeed(uint8_t device)
         break;
 #if UART_COUNT>=2
     case 2:
-        hs = U1MODEbits.BRGH;
-        uBrg = U1BRG + 1;
+        hs = U2MODEbits.BRGH;
+        uBrg = U2BRG + 1;
         break;
 #endif
 #if UART_COUNT>=3
     case 3:
-        hs = U1MODEbits.BRGH;
-        uBrg = U1BRG + 1;
+        hs = U3MODEbits.BRGH;
+        uBrg = U3BRG + 1;
         break;
 #endif
 #if UART_COUNT>=4
     case 4:
-        hs = U1MODEbits.BRGH;
-        uBrg = U1BRG + 1;
+        hs = U4MODEbits.BRGH;
+        uBrg = U4BRG + 1;
         break;
 #endif
     }
@@ -365,20 +365,20 @@ uint8_t uart_bitParity(uint8_t device)
         break;
 #if UART_COUNT>=2
     case 2:
-        if (U1MODEbits.PDSEL != 0b11)
-            parity = U1MODEbits.PDSEL;
+        if (U2MODEbits.PDSEL != 0b11)
+            parity = U2MODEbits.PDSEL;
         break;
 #endif
 #if UART_COUNT>=3
     case 3:
-        if (U1MODEbits.PDSEL != 0b11)
-            parity = U1MODEbits.PDSEL;
+        if (U3MODEbits.PDSEL != 0b11)
+            parity = U3MODEbits.PDSEL;
         break;
 #endif
 #if UART_COUNT>=4
     case 4:
-        if (U1MODEbits.PDSEL != 0b11)
-            parity = U1MODEbits.PDSEL;
+        if (U4MODEbits.PDSEL != 0b11)
+            parity = U4MODEbits.PDSEL;
         break;
 #endif
     }

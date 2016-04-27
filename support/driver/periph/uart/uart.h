@@ -18,30 +18,34 @@
 #define UART_BIT_PARITY_EVEN 1
 #define UART_BIT_PARITY_ODD 2
 
-// device assignation
+// ====== device assignation ======
 uint8_t uart_getFreeDevice();
 void uart_releaseDevice(uint8_t device);
 
-// device enable/disable
+// ==== device enable/disable =====
 int uart_enable(uint8_t device);
 int uart_disable(uint8_t device);
 
-// device settings
+// ======== device settings =======
 int uart_setBaudSpeed(uint8_t device, uint32_t baudSpeed);
 uint32_t uart_baudSpeed(uint8_t device);
 uint32_t uart_effectiveBaudSpeed(uint8_t device);
 
-int uart_setBitConfig(uint8_t device, uint8_t bitLenght, uint8_t bitParity, uint8_t bitStop);
+int uart_setBitConfig(uint8_t device, uint8_t bitLenght,
+                                      uint8_t bitParity,
+                                      uint8_t bitStop);
 uint8_t uart_bitLenght(uint8_t device);
 uint8_t uart_bitParity(uint8_t device);
 uint8_t uart_bitStop(uint8_t device);
 
-// device write
+// ========= device write ========
 int uart_putc(uint8_t device, const char c);
 int uart_putw(uint8_t device, const uint16_t word);
-int uart_wrire(uint8_t device, const char *data, size_t size);
 
-// device read
+int uart_write(uint8_t device, const char *data, size_t size);
+int uart_flush(uint8_t device);
+
+// ========= device read =========
 char uart_getc(uint8_t device);
 uint16_t uart_getw(uint8_t device);
 uint8_t uart_datardy(uint8_t device);
