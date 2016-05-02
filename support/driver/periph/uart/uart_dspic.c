@@ -229,9 +229,9 @@ uint32_t uart_baudSpeed(uint8_t device)
 
     baudSpeed = getSystemClockPeriph() / uBrg;
     if (hs == 1)
-        baudSpeed >> 2;
+        baudSpeed = baudSpeed >> 2;
     else
-        baudSpeed >> 4;
+        baudSpeed = baudSpeed >> 4;
 
     return baudSpeed;
 }
@@ -302,6 +302,7 @@ int uart_setBitConfig(uint8_t device, uint8_t bitLenght,
         break;
 #endif
     }
+    return 0;
 }
 
 /**
@@ -427,12 +428,14 @@ int uart_1_putw(uint16_t word)
 {
     while (U1STAbits.UTXBF);
     U1TXREG = word;
+    return 0;
 }
 
 int uart_1_putc(char c)
 {
     while (U1STAbits.UTXBF);
     U1TXREG = c;
+    return 0;
 }
 char uart_1_getc();
 uint16_t uart_1_getw();
@@ -443,12 +446,14 @@ int uart_2_putw(uint16_t word)
 {
     while (U2STAbits.UTXBF);
     U2TXREG = word;
+    return 0;
 }
 
 int uart_2_putc(char c)
 {
     while (U2STAbits.UTXBF);
     U2TXREG = c;
+    return 0;
 }
 uint16_t uart_2_getw(uint16_t word);
 #endif
@@ -459,12 +464,14 @@ int uart_3_putw(uint16_t word)
 {
     while (U3STAbits.UTXBF);
     U3TXREG = word;
+    return 0;
 }
 
 int uart_3_putc(char c)
 {
     while (U3STAbits.UTXBF);
     U3TXREG = c;
+    return 0;
 }
 uint16_t uart_3_getw(uint16_t word);
 #endif
@@ -475,12 +482,14 @@ int uart_4_putw(uint16_t word)
 {
     while (U4STAbits.UTXBF);
     U4TXREG = word;
+    return 0;
 }
 
 int uart_4_putc(char c)
 {
     while (U4STAbits.UTXBF);
     U4TXREG = c;
+    return 0;
 }
 uint16_t uart_4_getw(uint16_t word);
 #endif
@@ -555,6 +564,44 @@ int uart_putw(uint8_t device, const uint16_t word)
     }
 
     return 0;
+}
+
+int uart_write(uint8_t device, const char *data, size_t size)
+{
+	size_t i;
+	int (*uart_putc_fn)(const char);
+	
+	if (device > UART_COUNT)
+        return -1;
+
+    switch (device)
+    {
+    case 1:
+        uart_putc_fn = &uart_1_putc;
+        break;
+#if UART_COUNT>=2
+    case 2:
+        uart_putc_fn = &uart_2_putc;
+        break;
+#endif
+#if UART_COUNT>=3
+    case 3:
+        uart_putc_fn = &uart_3_putc;
+        break;
+#endif
+#if UART_COUNT>=4
+    case 4:
+        uart_putc_fn = &uart_4_putc;
+        break;
+#endif
+    }
+	
+	for(i=0; i<size; i++)
+	{
+		uart_putc_fn(data[i]);
+	}
+	
+	return 0;
 }
 
 /**
