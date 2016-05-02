@@ -18,25 +18,38 @@ int init_board();
 #define BOARD_NAME "rtboard"
 #define SYSCLOCK_XTAL 8000000
 
-// pins define
+// ==== pins define ====
+// leds
 #define LED LATDbits.LATD11
 
-#define M1A LATBbits.LATB14
-#define M1B LATBbits.LATB15
-#define M1en LATDbits.LATD0
+// voltage measurement
+#define BOARD_VOLT_IN 2 // RB2		// analog board voltage channel
 
-#define M2A LATBbits.LATB12
-#define M2B LATBbits.LATB13
-#define M2en LATFbits.LATF3
+// motors pins
+#define M1A LATBbits.LATB14			// A pin direction
+#define M1B LATBbits.LATB15			// B pin direction
+#define M1en LATDbits.LATD0			// pwm/en pin
+#define M1I 1	// RB1				// analog current channel
 
-#define M3A LATBbits.LATB8
-#define M3B LATBbits.LATB9
-#define M3en LATFbits.LATF5
+#define M2A LATBbits.LATB12			// A pin direction
+#define M2B LATBbits.LATB13			// B pin direction
+#define M2en LATFbits.LATF3			// pwm/en pin
+#define M2I 0	// RB0				// analog current channel
 
-#define M4A LATBbits.LATB10
-#define M4B LATBbits.LATB11
-#define M4en LATFbits.LATF4
+#define M3A LATBbits.LATB8			// A pin direction
+#define M3B LATBbits.LATB9			// B pin direction
+#define M3en LATFbits.LATF5			// pwm/en pin
+#define M3I 6	// RB6				// analog current channel
 
-#define AX12_TXEN LATBbits.LATB3
+#define M4A LATBbits.LATB10			// A pin direction
+#define M4B LATBbits.LATB11			// B pin direction
+#define M4en LATFbits.LATF4			// pwm/en pin
+#define M4I 7	// RB7				// analog current channel
+
+// AX12
+#define AX12_TXEN LATBbits.LATB3	// AX12 buffer direction
+
+// A6
+#define A6_RW LATDbits.LATD1		// A6 trancever direction
 
 #endif // RTBOARD_H

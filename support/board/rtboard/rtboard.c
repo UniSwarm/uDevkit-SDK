@@ -12,10 +12,19 @@
 
 int init_io()
 {
+	// analog inputs
 	ANSELB = 0x0000;	// all analog inputs of port B as digital buffer
 	ANSELD = 0x0000;	// all analog inputs of port D as digital buffer
+	ANSELE = 0x0007;	// all analog inputs of port E as digital buffer
 	ANSELG = 0x0000;	// all analog inputs of port G as digital buffer
 	
+	ANSELBbits.ANSB2 = 1;		// BOARD_VOLT_IN as analog
+	ANSELBbits.ANSB1 = 1;		// M1I as analog
+	ANSELBbits.ANSB0 = 1;		// M2I as analog
+	ANSELBbits.ANSB6 = 1;		// M3I as analog
+	ANSELBbits.ANSB6 = 1;		// M4I as analog
+	
+	// digitals outputs
 	TRISDbits.TRISD11 = 0;		// LED pin as output
 	
 	TRISBbits.TRISB14 = 0;		// M1A pin as output
@@ -32,6 +41,7 @@ int init_io()
 	
 	TRISBbits.TRISB3 = 0;		// AX12_TXEN pin as output
 	
+	// remappable pins
 	// Unlock configuration pin
 	OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 0;
 		
@@ -44,8 +54,8 @@ int init_io()
 		RPOR14bits.RP120R = 0b000011; // TX2 ==> RP120 AXtx
 		
 		// UART3 pins (debug)
-		RPINR27bits.U3RXR = 71; // RX3 ==> RP71 As2
-		RPOR4bits.RP80R = 0b011011; // TX3 ==> RP80 As1
+		RPINR27bits.U3RXR = 86; // RX3 ==> RPI86 AS7
+		RPOR6bits.RP85R = 0b011011; // TX3 ==> RP85 AS6
 		
 		// QEI1 pins (coder 1)
 		RPINR14bits.QEA1R = 119; // C1A ==> RPI119
