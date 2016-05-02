@@ -56,18 +56,18 @@ void ax12_init(void)
 
 /**
  * @brief Send a char (8 bits) to the specified device
- * @param addr the device address
+ * @param ax_id the device address
  * @param param
  * @param val
  */
-void ax12_send_char(uint8_t addr, uint8_t param, uint8_t val)
+void ax12_send_char(uint8_t ax_id, uint8_t param, uint8_t val)
 {
     int p;
 	char trame[20];
     ax12_sendMode();
     trame[0]=0xFF;
     trame[1]=0xFF;
-    trame[2]=addr;
+    trame[2]=ax_id;
     trame[3]=4;
     trame[4]=INST_WRITE;
     trame[5]=param;
@@ -80,16 +80,16 @@ void ax12_send_char(uint8_t addr, uint8_t param, uint8_t val)
 
 /**
  * @brief Send a short (16 bits) to the specified device
- * @param addr the device address
+ * @param ax_id the device address
  */
-void ax12_send_1_short(uint8_t addr, uint8_t param, uint16_t val)
+void ax12_send_1_short(uint8_t ax_id, uint8_t param, uint16_t val)
 {
     int p;
 	char trame[20];
     ax12_sendMode();
     trame[0]=0xFF;
     trame[1]=0xFF;
-    trame[2]=addr;
+    trame[2]=ax_id;
     trame[3]=5;
     trame[4]=INST_WRITE;
     trame[5]=param;
@@ -103,16 +103,16 @@ void ax12_send_1_short(uint8_t addr, uint8_t param, uint16_t val)
 
 /**
  * @brief Send a two shorts (16 bits) to the specified device
- * @param addr the device address
+ * @param ax_id the device address
  */
-void ax12_send_2_short(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2)
+void ax12_send_2_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2)
 {
     int p;
 	char trame[20];
     ax12_sendMode();
     trame[0]=0xFF;
     trame[1]=0xFF;
-    trame[2]=addr;
+    trame[2]=ax_id;
     trame[3]=7;
     trame[4]=INST_WRITE;
     trame[5]=param;
@@ -128,16 +128,16 @@ void ax12_send_2_short(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2)
 
 /**
  * @brief Send three shorts (16 bits) to the specified device
- * @param addr the device address
+ * @param ax_id the device address
  */
-void ax12_send_3_short(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2, uint16_t val3)
+void ax12_send_3_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2, uint16_t val3)
 {
     int p;
 	char trame[20];
     ax12_sendMode();
     trame[0]=0xFF;
     trame[1]=0xFF;
-    trame[2]=addr;
+    trame[2]=ax_id;
     trame[3]=9;
     trame[4]=INST_WRITE;
     trame[5]=param;
@@ -155,15 +155,15 @@ void ax12_send_3_short(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2,
 
 /**
  * @brief Read parameters of the device
- * @param addr the device address
+ * @param ax_id the device address
  */
-/*void ax12_read_param_ax(uint8_t addr, uint8_t param, uint8_t nbParam)
+/*void ax12_read_param_ax(uint8_t ax_id, uint8_t param, uint8_t nbParam)
 {
     int p;
     axSendMode();
     trame[0]=0xFF;
     trame[1]=0xFF;
-    trame[2]=addr;
+    trame[2]=ax_id;
     trame[3]=4;
     trame[4]=INST_READ;
     trame[5]=param;
@@ -183,12 +183,12 @@ void ax12_send_3_short(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2,
  * @brief foo
  * @return 1 if ok, 0 in case of error
  */
-/*uint8_t parseResponse6(uint8_t addr, uint16_t *pos, uint16_t *speed, uint16_t *load)
+/*uint8_t parseResponse6(uint8_t ax_id, uint16_t *pos, uint16_t *speed, uint16_t *load)
 {
     uint8_t sum,i;
     for(i=6;i<20;i++) if(buffr[i]==0xFF && buffr[i+1]==0xFF) break;
     if(buffr[i+1]!=0xFF) return 0;
-    if(buffr[i+2]!=addr) return 0;
+    if(buffr[i+2]!=ax_id) return 0;
     sum=~(uint8_t)(buffr[i+2]+buffr[i+3]+buffr[i+4]+buffr[i+5]+buffr[i+6]+buffr[i+7]+buffr[i+8]+buffr[i+9]+buffr[i+10]);
     if(buffr[i+11]!=sum) return 0;
     *pos=(uint16_t)buffr[i+6]*256+buffr[i+5];
@@ -279,3 +279,28 @@ void ax12_send_3_short(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2,
     }
     IFS5bits.U3RXIF = 0;
 }*/
+
+void ax12_moveTo(uint8_t ax_id, uint16_t position, uint16_t speed, uint16_t torque)
+{
+	ax12_send_3_short(ax_id, P_GOAL_POSITION_L, position, speed, torque);
+}
+
+void ax12_setPosition(uint8_t ax_id, uint16_t position)
+{
+	ax12_send_1_short(ax_id, P_GOAL_POSITION_L, position);
+}
+
+void ax12_setSpeed(uint8_t ax_id, uint16_t speed)
+{
+	ax12_send_1_short(ax_id, P_GOAL_SPEED_L, speed);
+}
+
+void ax12_setTorque(uint8_t ax_id, uint16_t torque)
+{
+	ax12_send_1_short(ax_id, P_TORQUE_LIMIT_L, torque);
+}
+
+void ax12_setLed(uint8_t ax_id, uint8_t led)
+{
+	ax12_send_char(ax_id, P_LED, led);
+}

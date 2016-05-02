@@ -15,14 +15,20 @@
 
 void ax12_init(void);
 
-void ax12_send_char(uint8_t addr, uint8_t param, uint8_t val);
-void ax12_send_1_short(uint8_t addr, uint8_t param, uint16_t val);
-void ax12_send_2_short(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2);
-void ax12_send_3_short(uint8_t addr, uint8_t param, uint16_t val, uint16_t val2, uint16_t val3);
+void ax12_send_char(uint8_t ax_id, uint8_t param, uint8_t val);
+void ax12_send_1_short(uint8_t ax_id, uint8_t param, uint16_t val);
+void ax12_send_2_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2);
+void ax12_send_3_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2, uint16_t val3);
 
-/*void read_param_ax(uint8_t addr, uint8_t param, uint8_t nbParam);
-uint8_t parseResponse6(uint8_t addr, uint16_t *pos, uint16_t *speed, uint16_t *load);
+/*void read_param_ax(uint8_t ax_id, uint8_t param, uint8_t nbParam);
+uint8_t parseResponse6(uint8_t ax_id, uint16_t *pos, uint16_t *speed, uint16_t *load);
 void clearAxResponse(void);*/
+
+void ax12_moveTo(uint8_t ax_id, uint16_t position, uint16_t speed, uint16_t torque);
+void ax12_setPosition(uint8_t ax_id, uint16_t position);
+void ax12_setSpeed(uint8_t ax_id, uint16_t speed);
+void ax12_setTorque(uint8_t ax_id, uint16_t torque);
+void ax12_setLed(uint8_t ax_id, uint8_t led);
 
 //--- Control Table Address ---
 //EEPROM AREA
