@@ -13,13 +13,13 @@
 
 #include <stdint.h>
 
-int adc_initchannel(uint8_t channel);
-int adc_closechannel(uint8_t channel);
+int adc_init();
+//int adc_initchannel(uint8_t channel);
+//int adc_closechannel(uint8_t channel);
 
 uint16_t adc_getValue(uint8_t channel);
-int adc_setSamplingPeriod(uint16_t priodMs);
+//int adc_setSamplingPeriod(uint16_t priodMs);
 
-#include "board.h"
 #if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33fj)
  #include "adc_dspic.h"
 #else
