@@ -115,6 +115,7 @@ int qei_disable(uint8_t device)
         QEI2CONbits.QEIEN = 0;
 #    endif
 #endif
+    return 0;
 }
 
 /**
