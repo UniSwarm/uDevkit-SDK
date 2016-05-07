@@ -22,7 +22,7 @@ $(OUT_PWD)/%.o : %.c modules.h
 
 # rule to link OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
-	$(CC) $(CCFLAGS) -o $(OUT_PWD)/$(notdir $@) $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -legacy-libc -lc -T p$(DEVICE).gld
+	$(CC) $(CCFLAGS) -o $(OUT_PWD)/$(notdir $@) $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -T p$(DEVICE).gld
 
 $(OUT_PWD)/$(PROJECT).hex : build/$(PROJECT).elf
 	$(HX) $(OUT_PWD)/$(PROJECT).elf
@@ -31,7 +31,7 @@ elf : $(OUT_PWD)/$(PROJECT).elf
 hex : $(OUT_PWD)/$(PROJECT).hex
 
 prog : $(OUT_PWD)/$(PROJECT).hex
-	ipecmd -P33EP256MU806 -TPPK3 -F$(OUT_PWD)/$(PROJECT).hex -M
+	ipecmd -P$(DEVICE) -TPPK3 -F$(OUT_PWD)/$(PROJECT).hex -M
 
 clean: FORCE
 	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c
