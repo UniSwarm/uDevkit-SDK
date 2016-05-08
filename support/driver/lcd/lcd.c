@@ -6,6 +6,7 @@
 
 Color _lcd_penColor;
 Color _lcd_brushColor;
+uint16_t _lcd_x, _lcd_y;
 
 // <TODO write this functions correctly
 void delay_ms(uint16_t ms)
@@ -33,7 +34,7 @@ void lcd_write_command(uint16_t cmd)
 	SCREEN_RS = 1;
 }
 
-void write_data_lcd(uint16_t data)
+void lcd_write_data(uint16_t data)
 {
 	SCREEN_PORT_OUTPUT;
 	SCREEN_CS = 0;
@@ -46,7 +47,7 @@ void write_data_lcd(uint16_t data)
 void lcd_write_command_data (uint8_t cmd, uint16_t data)
 {
 	lcd_write_command(cmd);
-	write_data_lcd(data);
+	lcd_write_data(data);
 }
 
 void lcd_init(void)
@@ -64,7 +65,7 @@ void lcd_init(void)
 	
 	lcd_write_command_data(0x0001, 0x003C);
 	lcd_write_command_data(0x0002, 0x0100);
-	lcd_write_command_data(0x0003, 0x1020);
+	lcd_write_command_data(0x0003, 0x1030);
 	lcd_write_command_data(0x0008, 0x0808);
 	lcd_write_command_data(0x000A, 0x0500);
 	lcd_write_command_data(0x000B, 0x0000);
@@ -116,22 +117,22 @@ void lcd_init(void)
 	lcd_write_command_data(0x0007, 0x0017);
 }
 
-static void lcd_setRectScreen(uint16_t x0, uint16_t x1, uint16_t y0, uint16_t y1)
+static void lcd_setRectScreen(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 {
-	lcd_write_command_data(WINDOW_XADDR_START, x0);
-	lcd_write_command_data(WINDOW_XADDR_END, x1);
-	lcd_write_command_data(WINDOW_YADDR_START, y0);
-	lcd_write_command_data(WINDOW_YADDR_END, y1);
-	lcd_write_command_data(GRAM_ADR_ROW_S, y0);
-	lcd_write_command_data(GRAM_ADR_COL_S, x0);
+	lcd_write_command_data(WINDOW_XADDR_START, y);
+	lcd_write_command_data(WINDOW_XADDR_END, y+h-1);
+	lcd_write_command_data(WINDOW_YADDR_START, x);
+	lcd_write_command_data(WINDOW_YADDR_END, x+w-1);
+	lcd_write_command_data(GRAM_ADR_ROW_S, x);
+	lcd_write_command_data(GRAM_ADR_COL_S, y);
 	
 	lcd_write_command(0x22);
 }
 
 static void lcd_setPos(uint16_t x, uint16_t y)
 {
-	lcd_write_command_data(GRAM_ADR_ROW_S, y);
-	lcd_write_command_data(GRAM_ADR_COL_S, x);
+	lcd_write_command_data(GRAM_ADR_ROW_S, x);
+	lcd_write_command_data(GRAM_ADR_COL_S, y);
 	
 	lcd_write_command(0x22);
 }
@@ -139,11 +140,11 @@ static void lcd_setPos(uint16_t x, uint16_t y)
 void lcd_fillScreen(uint16_t color)
 {
 	uint16_t i,j;
-	lcd_setRectScreen(0, LCD_HEIGHT-1, 0, LCD_WIDTH-1);
+	lcd_setRectScreen(0, 0, LCD_WIDTH, LCD_HEIGHT);
 	
 	for (i=0; i<LCD_WIDTH; i++)
-		for (j=0;j<LCD_HEIGHT;j++)
-			write_data_lcd(color);
+		for (j=0; j<LCD_HEIGHT; j++)
+			lcd_write_data(color);
 }
 
 void lcd_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, __prog__ const uint16_t *img)
@@ -152,19 +153,19 @@ void lcd_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, __prog__ const
 	unsigned long addr=0;
 	
 	// set rect image area space address
-	lcd_setRectScreen(y, y+h-1, x, x+w-1);
+	lcd_setRectScreen(x, y, w, h);
 	
 	for (i=0; i<w; i++)
 	{
 		for (j=0; j<h; j++)
 		{
-			write_data_lcd(img[addr]);
+			lcd_write_data(img[addr]);
 			addr++;
 		}
 	}
 	
 	// restore full draw screen
-	lcd_setRectScreen(0, LCD_HEIGHT-1, 0, LCD_WIDTH-1);
+	lcd_setRectScreen(0, 0, LCD_WIDTH, LCD_HEIGHT);
 }
 
 void lcd_setPenColor(uint16_t color)
@@ -191,7 +192,8 @@ void lcd_drawPoint(uint16_t x, uint16_t y)
 {
 	lcd_setPos(x, y);
 	
-	write_data_lcd(_lcd_penColor);
+	lcd_write_data(_lcd_penColor);
+	lcd_write_data(_lcd_brushColor);
 }
 
 void lcd_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
@@ -270,6 +272,8 @@ void lcd_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 
 void lcd_drawRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 {
+	int i;
+	
 	lcd_drawLine(x,   y,   x+w,  y);
     lcd_drawLine(x+w, y,   x+w,  y+h);
     lcd_drawLine(x+w, y+h, x,    y+h);
@@ -281,15 +285,15 @@ void lcd_drawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 	uint16_t i,j;
 	
 	// set rect image area space address
-	lcd_setRectScreen(y, y+h-1, x, x+w-1);
+	lcd_setRectScreen(x, y, w, h);
 	
 	// fill this rect with brush color
 	for (i=0; i<h; i++)
 		for (j=0;j<w;j++)
-			write_data_lcd(_lcd_brushColor);
+			lcd_write_data(_lcd_brushColor);
 	
 	// restore full draw screen
-	lcd_setRectScreen(0, LCD_HEIGHT-1, 0, LCD_WIDTH-1);
+	lcd_setRectScreen(0, 0, LCD_WIDTH, LCD_HEIGHT);
 	
 	// draw border with pen color
 	lcd_drawRect(x, y, w, h);
