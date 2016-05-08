@@ -4,6 +4,9 @@
 
 #include <xc.h>
 
+Color _lcd_penColor;
+Color _lcd_brushColor;
+
 // <TODO write this functions correctly
 void delay_ms(uint16_t ms)
 {
@@ -32,7 +35,7 @@ void lcd_write_command(uint16_t cmd)
 
 void write_data_lcd(uint16_t data)
 {
-	SCREEN_PORT_INPUT;
+	SCREEN_PORT_OUTPUT;
 	SCREEN_CS = 0;
 	SCREEN_PORT = data;
 	SCREEN_RW = 0;
@@ -46,7 +49,7 @@ void lcd_write_command_data (uint8_t cmd, uint16_t data)
 	write_data_lcd(data);
 }
 
-void lcd_init()
+void lcd_init(void)
 {
 	SCREEN_CS = 1;
 	SCREEN_RS = 1;
@@ -113,33 +116,43 @@ void lcd_init()
 	lcd_write_command_data(0x0007, 0x0017);
 }
 
-static void lcd_setPos(uint16_t x0, uint16_t x1, uint16_t y0, uint16_t y1)
+static void lcd_setRectScreen(uint16_t x0, uint16_t x1, uint16_t y0, uint16_t y1)
 {
-	lcd_write_command_data(WINDOW_XADDR_START,x0);
-	lcd_write_command_data(WINDOW_XADDR_END,x1);
-	lcd_write_command_data(WINDOW_YADDR_START,y0);
-	lcd_write_command_data(WINDOW_YADDR_END,y1);
-	lcd_write_command_data(GRAM_ADR_ROW_S,y0);
-	lcd_write_command_data(GRAM_ADR_COL_S,x0);
+	lcd_write_command_data(WINDOW_XADDR_START, x0);
+	lcd_write_command_data(WINDOW_XADDR_END, x1);
+	lcd_write_command_data(WINDOW_YADDR_START, y0);
+	lcd_write_command_data(WINDOW_YADDR_END, y1);
+	lcd_write_command_data(GRAM_ADR_ROW_S, y0);
+	lcd_write_command_data(GRAM_ADR_COL_S, x0);
 	
 	lcd_write_command(0x22);
 }
 
-void lcd_fillScreen(uint16_t bColor)
+static void lcd_setPos(uint16_t x, uint16_t y)
+{
+	lcd_write_command_data(GRAM_ADR_ROW_S, y);
+	lcd_write_command_data(GRAM_ADR_COL_S, x);
+	
+	lcd_write_command(0x22);
+}
+
+void lcd_fillScreen(uint16_t color)
 {
 	uint16_t i,j;
-	lcd_setPos(0, 319, 0, 479);
+	lcd_setRectScreen(0, LCD_HEIGHT-1, 0, LCD_WIDTH-1);
 	
-	for (i=0; i<320; i++)
-		for (j=0;j<480;j++) write_data_lcd(bColor);
+	for (i=0; i<LCD_WIDTH; i++)
+		for (j=0;j<LCD_HEIGHT;j++)
+			write_data_lcd(color);
 }
 
 void lcd_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, __prog__ const uint16_t *img)
 {
 	uint16_t i,j;
 	unsigned long addr=0;
-	//setPos_lcd(0+x,239+x,0+y,319+y);//320x240
-	lcd_setPos(y, y+h-1, x, x+w-1);
+	
+	// set rect image area space address
+	lcd_setRectScreen(y, y+h-1, x, x+w-1);
 	
 	for (i=0; i<w; i++)
 	{
@@ -149,4 +162,140 @@ void lcd_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, __prog__ const
 			addr++;
 		}
 	}
+	
+	// restore full draw screen
+	lcd_setRectScreen(0, LCD_HEIGHT-1, 0, LCD_WIDTH-1);
+}
+
+void lcd_setPenColor(uint16_t color)
+{
+	_lcd_penColor = color;
+}
+
+uint16_t lcd_penColor()
+{
+	return _lcd_penColor;
+}
+
+void lcd_setBrushColor(uint16_t color)
+{
+	_lcd_brushColor = color;
+}
+
+uint16_t lcd_brushColor()
+{
+	return _lcd_brushColor;
+}
+
+void lcd_drawPoint(uint16_t x, uint16_t y)
+{
+	lcd_setPos(x, y);
+	
+	write_data_lcd(_lcd_penColor);
+}
+
+void lcd_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
+{
+	int dx = x2 - x1;
+	int dy = y2 - y1;
+	int ratioX = dx;
+	int ratioY = dy;
+	float m, b;
+	/*void (*pixelPtr)(unsigned short,unsigned short,char);
+	
+	// Si la ligne ne sort pas de l ecran, on affiche les pixels sans les controler
+	pixelPtr = ( (x1 >= 0 && y1 >= 0 && x1 < PIXEL_NUMBER_X && y1 < PIXEL_NUMBER_Y) &&
+				 (x2 >= 0 && y2 >= 0 && x2 < PIXEL_NUMBER_X && y2 < PIXEL_NUMBER_Y) )
+		? &point : &drawPoint;*/
+
+	if (dx == 0)
+    {
+		lcd_drawPoint(x1, y1);
+		dy = (y2 > y1) ? 1 : -1;
+        while (y1 != y2)
+        {
+            y1 = y1 + dy;
+			lcd_drawPoint(x1, y1);
+        }
+		return;
+    }
+	if (dy == 0)
+	{
+		lcd_drawPoint(x1, y1);
+		dx = (x2 > x1) ? 1 : -1;
+	    while (x1 != x2)
+	    {
+	        x1 = x1 + dx;
+			lcd_drawPoint(x1, y1);
+	    }
+		return;
+	}
+	
+	if (ratioX < 0) ratioX = -ratioX;
+	if (ratioY < 0) ratioY = -ratioY;
+	
+	if (ratioX >= ratioY)
+	{
+        m = (float)dy / (float)dx;
+        b = y1 - m*x1;
+
+        dx = (x2 > x1) ? 1 : -1;
+
+        lcd_drawPoint(x1, y1);
+        while (x1 != x2)
+        {
+            x1 += dx;
+            y1 = (int)((m*x1 + b)+0.5);
+			lcd_drawPoint(x1, y1);
+        }
+		return;
+	}
+	if (ratioX < ratioY)
+	{
+        m = (float)dx / (float)dy;
+        b = x1 - m*y1;
+
+        dy = (y2 > y1) ? 1 : -1;
+
+        lcd_drawPoint(x1, y1);
+        while (y1 != y2)
+        {
+            y1 += dy;
+            x1 = (int)((m*y1 + b)+0.5);
+			lcd_drawPoint(x1, y1);
+        }
+		return;
+	}
+}
+
+void lcd_drawRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
+{
+	lcd_drawLine(x,   y,   x+w,  y);
+    lcd_drawLine(x+w, y,   x+w,  y+h);
+    lcd_drawLine(x+w, y+h, x,    y+h);
+    lcd_drawLine(x,   y+h, x,    y);
+}
+
+void lcd_drawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
+{
+	uint16_t i,j;
+	
+	// set rect image area space address
+	lcd_setRectScreen(y, y+h-1, x, x+w-1);
+	
+	// fill this rect with brush color
+	for (i=0; i<h; i++)
+		for (j=0;j<w;j++)
+			write_data_lcd(_lcd_brushColor);
+	
+	// restore full draw screen
+	lcd_setRectScreen(0, LCD_HEIGHT-1, 0, LCD_WIDTH-1);
+	
+	// draw border with pen color
+	lcd_drawRect(x, y, w, h);
+}
+
+void lcd_drawText(uint16_t x1, uint16_t y1, const char *txt)
+{
+	
 }
