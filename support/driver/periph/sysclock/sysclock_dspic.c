@@ -95,13 +95,17 @@ int setSystemClockWPLL(uint32_t fosc)
     PLLFBD = multiplier - 2;
 
     if (frc_mode == 1)
+    {
         __builtin_write_OSCCONH(0x01); // frc input
+    	__builtin_write_OSCCONL(OSCCON | 0x01);
+    }
     else
+    {
         __builtin_write_OSCCONH(0x03); // primariry osc input
-    __builtin_write_OSCCONL(OSCCON | 0x01);
-
-    // Wait for Clock switch to occur
-    while (OSCCONbits.COSC != 0b011);
+    	__builtin_write_OSCCONL(OSCCON | 0x01);
+	    // Wait for Clock switch to occur
+	    while (OSCCONbits.COSC != 0b011);
+    }
 
     // Wait for PLL to lock
     while (OSCCONbits.LOCK != 1);
