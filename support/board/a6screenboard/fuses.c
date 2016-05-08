@@ -6,13 +6,13 @@
 
 // FOSCSEL
 #pragma config FNOSC = FRCPLL        // Initial Oscillator Source Selection Bits (Internal Fast RC (FRC))
-#pragma config IESO = OFF           // Two-speed Oscillator Start-up Enable bit (Start up with user-selected oscillator source)
+#pragma config IESO = ON           // Two-speed Oscillator Start-up Enable bit (Start up with user-selected oscillator source)
 
 // FOSC
-#pragma config POSCMD = HS              // Primary Oscillator Mode Select bits (HS Crystal Oscillator Mode)
-#pragma config OSCIOFNC = ON            // OSC2 Pin Function bit (OSC2 is general purpose digital I/O pin)
-#pragma config IOL1WAY = OFF        // Peripheral pin select configuration (Allow multiple reconfigurations)
-#pragma config FCKSM = CSECMD       // Clock Switching Mode bits (Clock switching is enabled,Fail-safe Clock Monitor is disabled)
+#pragma config POSCMD = NONE              // Primary Oscillator Mode Select bits (HS Crystal Oscillator Mode)
+#pragma config OSCIOFNC = OFF            // OSC2 Pin Function bit (OSC2 is general purpose digital I/O pin)
+#pragma config IOL1WAY = ON        // Peripheral pin select configuration (Allow multiple reconfigurations)
+#pragma config FCKSM = CSDCMD       // Clock Switching Mode bits (Clock switching is enabled,Fail-safe Clock Monitor is disabled)
 
 // FWDT
 #pragma config WDTPOST = PS32768    // Watchdog Timer Postscaler Bits (1:32,768)
