@@ -27,7 +27,7 @@ void lcd_write_command(uint16_t cmd)
 	SCREEN_PORT_OUTPUT;
 	SCREEN_RS = 0;
 	SCREEN_CS = 0;
-	SCREEN_PORT = cmd;
+	SCREEN_PORT_OUT = cmd;
 	SCREEN_RW = 0;
 	SCREEN_RW = 1;
 	SCREEN_CS = 1;
@@ -38,10 +38,23 @@ void lcd_write_data(uint16_t data)
 {
 	SCREEN_PORT_OUTPUT;
 	SCREEN_CS = 0;
-	SCREEN_PORT = data;
+	SCREEN_PORT_OUT = data;
 	SCREEN_RW = 0;
 	SCREEN_RW = 1;
 	SCREEN_CS = 1;
+}
+
+uint16_t lcd_read_data()
+{
+	uint16_t data;
+	SCREEN_PORT_INPUT;
+	SCREEN_CS = 0;
+	SCREEN_RD = 0;
+	asm("NOP");
+	data = SCREEN_PORT_IN;
+	SCREEN_RD = 1;
+	SCREEN_CS = 1;
+	return data;
 }
 
 void lcd_write_command_data (uint8_t cmd, uint16_t data)
@@ -190,10 +203,15 @@ uint16_t lcd_brushColor()
 
 void lcd_drawPoint(uint16_t x, uint16_t y)
 {
+	uint16_t data;
 	lcd_setPos(x, y);
 	
 	lcd_write_data(_lcd_penColor);
-	lcd_write_data(_lcd_brushColor);
+	/*data=lcd_read_data();
+	data=lcd_read_data();*/
+	
+	// warning fixme double pixel send
+	lcd_write_data(_lcd_penColor);
 }
 
 void lcd_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
@@ -296,7 +314,7 @@ void lcd_drawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 	lcd_setRectScreen(0, 0, LCD_WIDTH, LCD_HEIGHT);
 	
 	// draw border with pen color
-	lcd_drawRect(x, y, w, h);
+	//lcd_drawRect(x, y, w, h);
 }
 
 void lcd_drawText(uint16_t x1, uint16_t y1, const char *txt)
