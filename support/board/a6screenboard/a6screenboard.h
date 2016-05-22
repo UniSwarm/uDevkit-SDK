@@ -15,10 +15,14 @@ int init_board();
 
 #define BOARD_NAME "a6screenboard"
 
-// pins define
-#define SCREEN_PORT		LATB
-#define SCREEN_PORT_INPUT		(TRISB = 1)
+// ==== pins define ====
+// screen
+#define SCREEN_PORT_OUT			LATB
 #define SCREEN_PORT_OUTPUT		(TRISB = 0)
+
+#define SCREEN_PORT_IN			PORTB
+#define SCREEN_PORT_INPUT		(TRISB = 1)
+
 #define SCREEN_RD		LATDbits.LATD3
 #define SCREEN_RW		LATDbits.LATD2
 #define SCREEN_RS		LATDbits.LATD1
@@ -26,6 +30,7 @@ int init_board();
 #define SCREEN_RST		LATDbits.LATD4
 #define SCREEN_LEDBL	LATEbits.LATE4
 
+// A6
 #define A6_RW			LATFbits.LATF1
 
 #endif // A6SCREENBOARD_H
