@@ -8,7 +8,7 @@ DRIVERS += uart lcd
 
 SRC += main.c
 
-PICTURES += picture.jpg
+#PICTURES += picture.jpg
 
 include $(RTPROG)/rtprog.mk
 

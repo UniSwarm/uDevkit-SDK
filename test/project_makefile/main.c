@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdint.h>
 #include <xc.h>
 
@@ -9,7 +10,9 @@
 int main(void)
 {
 	unsigned int i,j;
-	uint8_t uart;
+	uint8_t uartDbg;
+	uint16_t value;
+	char buff[100];
 	
 	setSystemClock(120000000);
 	init_board();
@@ -17,22 +20,28 @@ int main(void)
 	// warning keep this init order before remap support
 	esp_init();
 	ax12_init();
+	adc_init();
 	
-	// uart init
-	uart = uart_getFreeDevice();
-	uart_setBaudSpeed(uart, 115200);
-	uart_setBitConfig(uart, 8, UART_BIT_PARITY_NONE, 1);
-	uart_enable(uart);
+	// uart debug init
+	uartDbg = uart_getFreeDevice();
+	uart_setBaudSpeed(uartDbg, 115200);
+	uart_setBitConfig(uartDbg, 8, UART_BIT_PARITY_NONE, 1);
+	uart_enable(uartDbg);
 	
 	while(1)
 	{
-		for(j=0;j<60;j++) for(i=0;i<65000;i++);
+		for(j=0;j<10;j++) for(i=0;i<65000;i++);
 		LED = 0;
-		uart_putc(uart, 'C');
-		ax12_send_3_short(1, P_GOAL_POSITION_L, 256, 512, 512);
-		for(j=0;j<60;j++) for(i=0;i<65000;i++);
+		for(j=0;j<10;j++) for(i=0;i<65000;i++);
 		LED = 1;
-		ax12_send_3_short(1, P_GOAL_POSITION_L, 512, 512, 512);
+		
+		/*value = adc_getValue(24);	// AnS1
+		value = adc_getValue(25);	// AnS2*/
+		value = adc_getValue(26);	// AnS3
+		ax12_moveTo(1, value, 512, 512);
+		
+		sprintf(buff, "value: %d\n", sharp_convert(value, FarSharp));
+		uart_write(uartDbg, buff, strlen(buff));
 	}
 	
 	return 0;
