@@ -16,6 +16,11 @@
 #include "usb_device.h"
 #include "usb_device_cdc.h"
 
+// API
+void usbserial_init();
+void usbserial_task();
+
+// declaration of internal callback
 bool USER_USB_CALLBACK_EVENT_HANDLER(USB_EVENT event, void *pdata, uint16_t size);
 
 #endif // USB_SERIAL_H

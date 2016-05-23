@@ -10,6 +10,27 @@
 
 #include "usb-serial.h"
 
+void usbserial_init()
+{
+	SYSTEM_Initialize(SYSTEM_STATE_USB_START);
+    USBDeviceInit();
+    USBDeviceAttach();
+}
+
+void usbserial_task()
+{
+	if( USBGetDeviceState() < CONFIGURED_STATE )
+		return;
+	if( USBIsDeviceSuspended() == true )
+		return;
+	
+	if( USBUSARTIsTxTrfReady() == true)
+	{
+		putsUSBUSART("ABC...");
+	}
+	CDCTxService();
+}
+
 bool USER_USB_CALLBACK_EVENT_HANDLER(USB_EVENT event, void *pdata, uint16_t size)
 {
     switch( (int) event )

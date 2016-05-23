@@ -1,7 +1,7 @@
 ifndef USB-SERIAL_DRIVER
 USB-SERIAL_DRIVER=
 
-DRIVERS += usb
+DRIVERS += usb-hal
 
 vpath %.c $(DRIVERPATH)
 
