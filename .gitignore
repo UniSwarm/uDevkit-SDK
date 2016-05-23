@@ -38,10 +38,13 @@ build/
 *.mcp
 *.mcs
 *.mcw
-modules.h
 log.*
 *.xml.lck
 *Log.xml
 
 # doc generated
 build-doc/
+
+# rtprog generated files
+modules.h
+pictures.h
