@@ -30,8 +30,14 @@ $(OUT_PWD)/$(PROJECT).hex : build/$(PROJECT).elf
 elf : $(OUT_PWD)/$(PROJECT).elf
 hex : $(OUT_PWD)/$(PROJECT).hex
 
+ifeq ($(OS),Windows_NT)
+ IPE_EXE := ipecmd
+else
+ IPE_EXE := ipecmd.sh
+endif
+
 prog : $(OUT_PWD)/$(PROJECT).hex
-	ipecmd -P$(DEVICE) -TPPK3 -F$(OUT_PWD)/$(PROJECT).hex -M
+	$(IPE_EXE) -P$(DEVICE) -TPPK3 -F$(OUT_PWD)/$(PROJECT).hex -M
 
 clean: FORCE
 	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c
