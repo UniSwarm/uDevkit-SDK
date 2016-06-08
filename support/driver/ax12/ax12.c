@@ -17,7 +17,7 @@
 //uint8_t idr=255;
 //uint8_t buffr[30];
 uint8_t trame[20];
-uint8_t ax12_uart;
+dev_t ax12_uart;
 
 /**
  * @brief Set the device the send mode

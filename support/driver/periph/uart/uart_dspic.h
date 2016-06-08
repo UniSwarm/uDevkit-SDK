@@ -30,10 +30,12 @@
 #warning "No uart on the current device"
 #endif
 
+#if UART_COUNT>=1
 int uart_1_putw(uint16_t word);
 int uart_1_putc(char c);
 char uart_1_getc();
 uint16_t uart_1_getw();
+#endif
 
 #if UART_COUNT>=2
 int uart_2_putw(uint16_t word);

@@ -11,7 +11,7 @@
 #ifndef QEI_H
 #define QEI_H
 
-#include <stdint.h>
+#include "driver/device.h"
 
 #if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33fj)
 #include "qei_dspic.h"
@@ -19,20 +19,20 @@
 #error Unsuported ARCHI
 #endif
 
-uint8_t qei_getFreeDevice();
-void qei_releaseDevice(uint8_t device);
+dev_t qei_getFreeDevice();
+void qei_releaseDevice(dev_t device);
 
-int qei_enable(uint8_t device);
-int qei_disable(uint8_t device);
+int qei_enable(dev_t device);
+int qei_disable(dev_t device);
 
-int qei_setConfig(uint8_t device, uint16_t config);
+int qei_setConfig(dev_t device, uint16_t config);
 
 #ifdef QEI_32B
-uint32_t qei_getValue(uint8_t device);
-int qei_setHomeValue(uint8_t device, uint32_t config);
+uint32_t qei_getValue(dev_t device);
+int qei_setHomeValue(dev_t device, uint32_t config);
 #else
-uint16_t qei_getValue(uint8_t device);
-int qei_setHomeValue(uint8_t device, uint16_t config);
+uint16_t qei_getValue(dev_t device);
+int qei_setHomeValue(dev_t device, uint16_t config);
 #endif
 
 #endif // QEI_H

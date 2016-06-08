@@ -13,7 +13,7 @@
 #include "driver/sysclock.h"
 
 #if !defined (UART_COUNT) || UART_COUNT==0
-//#    error No device
+#    error No device
 #endif
 
 uint32_t baudSpeeds[UART_COUNT + 1] = {0};
@@ -22,7 +22,7 @@ uint32_t baudSpeeds[UART_COUNT + 1] = {0};
  * @brief Gives a free uart device number
  * @return uart device number
  */
-uint8_t uart_getFreeDevice()
+dev_t uart_getFreeDevice()
 {
     uint8_t i;
 
@@ -31,23 +31,24 @@ uint8_t uart_getFreeDevice()
             break;
 
     if (i == UART_COUNT)
-        return 0;
+        return NULLDEV;
 
     baudSpeeds[i] = 1;
 
-    return i;
+    return MKDEV(DEV_CLASS_UART, i);
 }
 
 /**
  * @brief Release an uart
  * @param device uart device number
  */
-void uart_releaseDevice(uint8_t device)
+void uart_releaseDevice(dev_t device)
 {
-    if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return;
 
-    baudSpeeds[device] = 0;
+    baudSpeeds[uart] = 0;
 }
 
 /**
@@ -55,12 +56,13 @@ void uart_releaseDevice(uint8_t device)
  * @param device uart device number
  * @return 0 if ok, -1 in case of error
  */
-int uart_enable(uint8_t device)
+int uart_enable(dev_t device)
 {
-    if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return -1;
 
-    switch (device)
+    switch (uart)
     {
     case 1:
         U1MODEbits.UARTEN = 1;
@@ -94,12 +96,13 @@ int uart_enable(uint8_t device)
  * @param device uart device number
  * @return 0 if ok, -1 in case of error
  */
-int uart_disable(uint8_t device)
+int uart_disable(dev_t device)
 {
-    if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return -1;
 
-    switch (device)
+    switch (uart)
     {
     case 1:
         U1MODEbits.UARTEN = 0;
@@ -130,19 +133,20 @@ int uart_disable(uint8_t device)
  * @param baudSpeed speed of receive and transmit in bauds (bits / s)
  * @return 0 if ok, -1 in case of error
  */
-int uart_setBaudSpeed(uint8_t device, uint32_t baudSpeed)
+int uart_setBaudSpeed(dev_t device, uint32_t baudSpeed)
 {
     uint32_t systemClockPeriph;
     uint16_t uBrg;
     uint8_t hs = 0;
 
-    if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return -1;
 
     if (baudSpeed == 0)
         return -1;
 
-    baudSpeeds[device] = baudSpeed;
+    baudSpeeds[uart] = baudSpeed;
 
     systemClockPeriph = getSystemClockPeriph();
     uBrg = systemClockPeriph / baudSpeed;
@@ -158,7 +162,7 @@ int uart_setBaudSpeed(uint8_t device, uint32_t baudSpeed)
         uBrg = uBrg >> 2;
     }
 
-    switch (device)
+    switch (uart)
     {
     case 1:
         U1MODEbits.BRGH = hs;
@@ -192,16 +196,17 @@ int uart_setBaudSpeed(uint8_t device, uint32_t baudSpeed)
  * @param device uart device number
  * @return speed of receive and transmit in bauds (bits / s)
  */
-uint32_t uart_baudSpeed(uint8_t device)
+uint32_t uart_baudSpeed(dev_t device)
 {
     uint32_t baudSpeed;
     uint16_t uBrg;
     uint8_t hs;
 
-    if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return 0;
 
-    switch (device)
+    switch (uart)
     {
     case 1:
         hs = U1MODEbits.BRGH;
@@ -241,12 +246,13 @@ uint32_t uart_baudSpeed(uint8_t device)
  * @param device uart device number
  * @return speed of receive and transmit in bauds (bits / s)
  */
-uint32_t uart_effectiveBaudSpeed(uint8_t device)
+uint32_t uart_effectiveBaudSpeed(dev_t device)
 {
-    if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return 0;
 
-    return baudSpeeds[device];
+    return baudSpeeds[uart];
 }
 
 /**
@@ -258,12 +264,13 @@ uint32_t uart_effectiveBaudSpeed(uint8_t device)
  * @param bitStop
  * @return 0 if ok, -1 in case of error
  */
-int uart_setBitConfig(uint8_t device, uint8_t bitLenght,
+int uart_setBitConfig(dev_t device, uint8_t bitLenght,
                       uint8_t bitParity, uint8_t bitStop)
 {
     uint8_t bit = 0, stop = 0;
 
-    if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return -1;
 
     if (bitLenght == 9)
@@ -277,7 +284,7 @@ int uart_setBitConfig(uint8_t device, uint8_t bitLenght,
     if (bitStop == 2)
         stop = 1;
 
-    switch (device)
+    switch (uart)
     {
     case 1:
         U1MODEbits.STSEL = stop;
@@ -310,14 +317,15 @@ int uart_setBitConfig(uint8_t device, uint8_t bitLenght,
  * @param device uart device number
  * @return lenght of bytes in bits
  */
-uint8_t uart_bitLenght(uint8_t device)
+uint8_t uart_bitLenght(dev_t device)
 {
     uint8_t lenght = 8;
 
-    if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return -1;
 
-    switch (device)
+    switch (uart)
     {
     case 1:
         if (U1MODEbits.PDSEL == 0b11)
@@ -351,14 +359,15 @@ uint8_t uart_bitLenght(uint8_t device)
  * @param device uart device number
  * @return parity mode
  */
-uint8_t uart_bitParity(uint8_t device)
+uint8_t uart_bitParity(dev_t device)
 {
     uint8_t parity = UART_BIT_PARITY_NONE;
 
-    if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return -1;
 
-    switch (device)
+    switch (uart)
     {
     case 1:
         if (U1MODEbits.PDSEL != 0b11)
@@ -392,14 +401,15 @@ uint8_t uart_bitParity(uint8_t device)
  * @param device uart device number
  * @return number of stop bit
  */
-uint8_t uart_bitStop(uint8_t device)
+uint8_t uart_bitStop(dev_t device)
 {
     uint8_t stop;
 
-    if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return -1;
 
-    switch (device)
+    switch (uart)
     {
     case 1:
         stop = U1MODEbits.STSEL;
@@ -500,12 +510,13 @@ uint16_t uart_4_getw(uint16_t word);
  * @param c char to send
  * @return 0 if ok, -1 in case of error
  */
-int uart_putc(uint8_t device, const char c)
+int uart_putc(dev_t device, const char c)
 {
-    if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return -1;
 
-    switch (device)
+    switch (uart)
     {
     case 1:
         uart_1_putc(c);
@@ -536,12 +547,13 @@ int uart_putc(uint8_t device, const char c)
  * @param word word to send
  * @return 0 if ok, -1 in case of error
  */
-int uart_putw(uint8_t device, const uint16_t word)
+int uart_putw(dev_t device, const uint16_t word)
 {
-    if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return -1;
 
-    switch (device)
+    switch (uart)
     {
     case 1:
         uart_1_putw(word);
@@ -566,15 +578,16 @@ int uart_putw(uint8_t device, const uint16_t word)
     return 0;
 }
 
-int uart_write(uint8_t device, const char *data, size_t size)
+int uart_write(dev_t device, const char *data, size_t size)
 {
 	size_t i;
 	int (*uart_putc_fn)(const char);
 	
-	if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return -1;
 
-    switch (device)
+    switch (uart)
     {
     case 1:
         uart_putc_fn = &uart_1_putc;
@@ -609,14 +622,14 @@ int uart_write(uint8_t device, const char *data, size_t size)
  * @param device
  * @return
  */
-char uart_getc(uint8_t device);
+char uart_getc(dev_t device);
 
 /**
  * @brief
  * @param device uart device number
  * @return
  */
-uint16_t uart_getw(uint8_t device)
+uint16_t uart_getw(dev_t device)
 {
 	return 0;
 }
@@ -626,15 +639,16 @@ uint16_t uart_getw(uint8_t device)
  * @param device
  * @return
  */
-uint8_t uart_datardy(uint8_t device)
+uint8_t uart_datardy(dev_t device)
 {
 	return 0;
 }
 
 #ifdef UART_RP
-int uart_setRxPin(uint8_t device, uint16_t rxPin)
+int uart_setRxPin(dev_t device, uint16_t rxPin)
 {
-    if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return -1;
 
     // Unlock configuration pin
@@ -642,7 +656,7 @@ int uart_setRxPin(uint8_t device, uint16_t rxPin)
     OSCCONL = 0x57;
     OSCCONbits.IOLOCK = 0;
 
-    switch (device)
+    switch (uart)
     {
     case 1:
         RPINR18bits.U1RXR = rxPin; // UART1 RX ==> RPn
@@ -672,7 +686,7 @@ int uart_setRxPin(uint8_t device, uint16_t rxPin)
     return 0;
 }
 
-int uart_setTxPin(uint8_t device, uint16_t txPin)
+int uart_setTxPin(dev_t device, uint16_t txPin)
 {
     // Unlock configuration pin
     OSCCONL = 0x46;
@@ -688,9 +702,10 @@ int uart_setTxPin(uint8_t device, uint16_t txPin)
     OSCCONbits.IOLOCK = 1;
 }
 
-int uart_setCtsPin(uint8_t device, uint16_t ctsPin)
+int uart_setCtsPin(dev_t device, uint16_t ctsPin)
 {
-    if (device > UART_COUNT)
+    uint8_t uart = MINOR(device);
+    if (uart > UART_COUNT)
         return -1;
 
     // Unlock configuration pin
@@ -698,7 +713,7 @@ int uart_setCtsPin(uint8_t device, uint16_t ctsPin)
     OSCCONL = 0x57;
     OSCCONbits.IOLOCK = 0;
 
-    switch (device)
+    switch (uart)
     {
     case 1:
         RPINR18bits.U1CTSR = ctsPin; // UART1 CTS ==> RPn
@@ -728,7 +743,7 @@ int uart_setCtsPin(uint8_t device, uint16_t ctsPin)
     return 0;
 }
 
-int uart_setRtsPin(uint8_t device, uint16_t rtsPin)
+int uart_setRtsPin(dev_t device, uint16_t rtsPin)
 {
 
 }

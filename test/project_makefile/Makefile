@@ -6,6 +6,8 @@ OUT_PWD = build
 # DEVICE = 33EP256MU806
 # ARCHI = dspic33ep
 
+# CCFLAGS += -pedantic
+
 DRIVERS += timer uart qei esp8266 ax12 adc sharp
 
 SRC += main.c

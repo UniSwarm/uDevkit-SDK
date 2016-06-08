@@ -12,7 +12,7 @@
 #include "qei.h"
 
 #if !defined (QEI_COUNT) || QEI_COUNT==0
-//#    error No device
+#    error No device
 #endif
 
 uint8_t qei_state = 0;
@@ -24,7 +24,7 @@ uint8_t qei_config[QEI_COUNT + 1] = {0};
  * @brief Gives a free QEI device number
  * @return QEI device number
  */
-uint8_t qei_getFreeDevice()
+dev_t qei_getFreeDevice()
 {
     if (qei_state & 0x01)
     {
@@ -32,7 +32,7 @@ uint8_t qei_getFreeDevice()
 #ifdef QEI_V1
         qei_config[1] = 0b0000011100000000;
 #endif
-        return 1;
+        return MKDEV(DEV_CLASS_QEI, 1);
     }
 #if QEI_COUNT>=2
     if (qei_state & 0x02)
@@ -41,23 +41,24 @@ uint8_t qei_getFreeDevice()
 #    ifdef QEI_V1
         qei_config[2] = 0b0000011100000000;
 #    endif
-        return 2;
+        return MKDEV(DEV_CLASS_QEI, 2);
     }
 #endif
 
-    return 0;
+    return NULLDEV;
 }
 
 /**
  * @brief Release a QEI
  * @param device QEI device number
  */
-void qei_releaseDevice(uint8_t device)
+void qei_releaseDevice(dev_t device)
 {
-    if (device == 1)
+    uint8_t qei = MINOR(device);
+    if (qei == 1)
         qei_state = qei_state & 0xFE;
 #if QEI_COUNT>=2
-    if (device == 2)
+    if (qei == 2)
         qei_state = qei_state & 0xFD;
 #endif
 }
@@ -67,23 +68,24 @@ void qei_releaseDevice(uint8_t device)
  * @param device QEI device number
  * @return 0 if ok, -1 in case of error
  */
-int qei_enable(uint8_t device)
+int qei_enable(dev_t device)
 {
-    if (device > QEI_COUNT)
+    uint8_t qei = MINOR(device);
+    if (qei > QEI_COUNT)
         return -1;
 
 #ifdef QEI_V1
-    if (device == 1)
+    if (qei == 1)
         QEI1CON = qei_config[1];
 #    if QEI_COUNT>=2
-    if (device == 2)
+    if (qei == 2)
         QEI2CON = qei_config[2];
 #    endif
 #else
-    if (device == 1)
+    if (qei == 1)
         QEI1CONbits.QEIEN = 1;
 #    if QEI_COUNT>=2
-    if (device == 2)
+    if (qei == 2)
         QEI2CONbits.QEIEN = 1;
 #    endif
 #endif
@@ -95,23 +97,24 @@ int qei_enable(uint8_t device)
  * @param device QEI device number
  * @return 0 if ok, -1 in case of error
  */
-int qei_disable(uint8_t device)
+int qei_disable(dev_t device)
 {
-    if (device > QEI_COUNT)
+    uint8_t qei = MINOR(device);
+    if (qei > QEI_COUNT)
         return -1;
 
 #ifdef QEI_V1
-    if (device == 1)
+    if (qei == 1)
         QEI1CONbits.QEIM = 0b000;
 #    if QEI_COUNT>=2
-    if (device == 2)
+    if (qei == 2)
         QEI2CONbits.QEIM = 0b000;
 #    endif
 #else
-    if (device == 1)
+    if (qei == 1)
         QEI1CONbits.QEIEN = 0;
 #    if QEI_COUNT>=2
-    if (device == 2)
+    if (qei == 2)
         QEI2CONbits.QEIEN = 0;
 #    endif
 #endif
@@ -124,12 +127,13 @@ int qei_disable(uint8_t device)
  * @param config config bit
  * @return 0 if ok, -1 in case of error
  */
-int qei_setConfig(uint8_t device, uint16_t config)
+int qei_setConfig(dev_t device, uint16_t config)
 {
+    uint8_t qei = MINOR(device);
 #ifdef QEI_V1
     // TODO implement me
 #else
-    if (device == 1)
+    if (qei == 1)
     {
         INDX1CNTH = 0xFFFF;
         INDX1CNTL = 0xFFFF;
@@ -143,7 +147,7 @@ int qei_setConfig(uint8_t device, uint16_t config)
         return 0;
     }
 #    if QEI_COUNT>=2
-    if (device == 2)
+    if (qei == 2)
     {
         INDX2CNTH = 0xFFFF;
         INDX2CNTL = 0xFFFF;
@@ -168,15 +172,16 @@ int qei_setConfig(uint8_t device, uint16_t config)
  * @param device QEI device number
  * @return position
  */
-uint32_t qei_getValue(uint8_t device)
+uint32_t qei_getValue(dev_t device)
 {
+    uint8_t qei = MINOR(device);
     uint32_t tmp32 = 0;
-    if (device == 1)
+    if (qei == 1)
     {
         tmp32 = (uint32_t) POS1CNTL;
         tmp32 += (uint32_t) POS1HLD << 16;
     }
-    if (device == 2)
+    if (qei == 2)
     {
         tmp32 = (uint32_t) POS2CNTL;
         tmp32 += (uint32_t) POS2HLD << 16;
@@ -184,7 +189,7 @@ uint32_t qei_getValue(uint8_t device)
     return tmp32;
 }
 
-int qei_setHomeValue(uint8_t device, uint32_t home)
+int qei_setHomeValue(dev_t device, uint32_t home)
 {
     // TODO implement me
     return 0;
@@ -196,16 +201,17 @@ int qei_setHomeValue(uint8_t device, uint32_t home)
  * @param device QEI device number
  * @return position
  */
-uint16_t qei_getValue(uint8_t device)
+uint16_t qei_getValue(dev_t device)
 {
-    if (device == 1)
+    uint8_t qei = MINOR(device);
+    if (qei == 1)
         return POS1CNT;
-    if (device == 2)
+    if (qei == 2)
         return POS2CNT;
     return 0;
 }
 
-int qei_setHomeValue(uint8_t device, uint16_t home)
+int qei_setHomeValue(dev_t device, uint16_t home)
 {
     // TODO implement me
     return 0;
