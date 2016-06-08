@@ -21,11 +21,16 @@ typedef uint16_t dev_t;
 #define MKDEV(ma,mi)    (((ma) << 8) | (mi))
 #define NULLDEV         (0)
 
-// device classes
-#define DEV_CLASS_UART  0x02
-#define DEV_CLASS_I2C   0x03
-#define DEV_CLASS_SPI   0x04
+// ===== device classes =====
+// base communication classes
+#define DEV_CLASS_UART          0x02
+#define DEV_CLASS_UART_SOFT     (DEV_CLASS_UART+1)
+#define DEV_CLASS_I2C           0x04
+#define DEV_CLASS_I2C_SOFT      (DEV_CLASS_I2C+1)
+#define DEV_CLASS_SPI           0x06
+#define DEV_CLASS_SPI_SOFT      (DEV_CLASS_SPI+1)
 
-#define DEV_CLASS_QEI   0x11
+// special classes
+#define DEV_CLASS_QEI           0x11
 
 #endif // DEVICE_H
