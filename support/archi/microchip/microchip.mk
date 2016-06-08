@@ -11,7 +11,8 @@ prog : $(OUT_PWD)/$(PROJECT).hex
 
 # special cmd for hex creation
 $(OUT_PWD)/$(PROJECT).hex : build/$(PROJECT).elf
-	$(HX) $(OUT_PWD)/$(PROJECT).elf
+	@printf "HX %-30s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@$(HX) $(OUT_PWD)/$(PROJECT).elf
 
 elf : $(OUT_PWD)/$(PROJECT).elf
 hex : $(OUT_PWD)/$(PROJECT).hex
