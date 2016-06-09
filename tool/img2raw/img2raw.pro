@@ -4,7 +4,7 @@ QT += core gui
 
 CONFIG += c++11
 
-DESTDIR = ../../bin
+DESTDIR = ../../../bin
 TARGET = img2raw
 #CONFIG += console
 #CONFIG -= app_bundle

@@ -1,7 +1,13 @@
 
-all: img2raw
+TOOLS = $(sort $(dir $(wildcard */Makefile)))
 
-img2raw: FORCE
-	cd img2raw && make all
+all: $(TOOLS)
+
+%/: FORCE
+	@echo
+	@echo ======================= Building $@ : ========================
+	cd $@ && make all
+	@echo ======================== Tool built ==========================
+	@echo
 
 FORCE:

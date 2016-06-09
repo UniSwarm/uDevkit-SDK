@@ -8,20 +8,31 @@ SRC += lcd.c
 
 CCFLAGS += -mlarge-code -mlarge-arrays -mlarge-data
 
+# IMG2RAW_EXE cmd
+ifeq ($(OS),Windows_NT)
+ IMG2RAW_EXE := $(RTPROG)/bin/img2raw.exe
+else
+ IMG2RAW_EXE := $(RTPROG)/bin/img2raw
+endif
+
 # rule to build image to OUT_PWD/*.c
 $(OUT_PWD)/%.png.c : %.png pictures.h
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	$(RTPROG)/bin/img2raw -i  $< -o  $(OUT_PWD)/$(notdir $@)
+	@printf "IMG %-29s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
 $(OUT_PWD)/%.jpg.c : %.jpg pictures.h
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	$(RTPROG)/bin/img2raw -i  $< -o  $(OUT_PWD)/$(notdir $@)
+	@printf "IMG %-29s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
 $(OUT_PWD)/%.bmp.c : %.bmp pictures.h
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	$(RTPROG)/bin/img2raw -i  $< -o  $(OUT_PWD)/$(notdir $@)
+	@printf "IMG %-29s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
 
 # rule to build images *.<img>.c to OUT_PWD/*.o
 $(OUT_PWD)/%.o : $(OUT_PWD)/%.c
-	$(CC) $(CCFLAGS) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
+	@printf "CC %-30s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@$(CC) $(CCFLAGS) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 
 PICTURES_C := $(PICTURES)
 PICTURES_NAME := $(PICTURES)

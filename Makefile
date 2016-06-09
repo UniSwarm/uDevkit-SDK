@@ -1,4 +1,6 @@
 
 tools:
-	@test -d build/ || mkdir -p build/
 	cd tool && make all
+
+tests:
+	cd test && make all
