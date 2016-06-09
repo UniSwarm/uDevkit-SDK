@@ -42,8 +42,10 @@ log.*
 *.xml.lck
 *Log.xml
 
-# doc generated
+# generated
 build-doc/
+*.pro.user
+bin/*
 
 # rtprog generated files
 modules.h
