@@ -48,26 +48,29 @@ echo -e "" >> ${DRIVER}/${DRIVER}.h
 echo -e "#ifndef ${DRIVER_UPPER}_H" >> ${DRIVER}/${DRIVER}.h
 echo -e "#define ${DRIVER_UPPER}_H" >> ${DRIVER}/${DRIVER}.h
 echo -e "" >> ${DRIVER}/${DRIVER}.h
-echo -e "#include \"board.h\"" >> ${DRIVER}/${DRIVER}.h
+echo -e "#include \"driver/device.h\"" >> ${DRIVER}/${DRIVER}.h
+echo -e "" >> ${DRIVER}/${DRIVER}.h
 echo -e "#if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33fj)" >> ${DRIVER}/${DRIVER}.h
 echo -e " #include \"${DRIVER}_dspic.h\"" >> ${DRIVER}/${DRIVER}.h
 echo -e "#else" >> ${DRIVER}/${DRIVER}.h
 echo -e " #error Unsuported ARCHI" >> ${DRIVER}/${DRIVER}.h
 echo -e "#endif" >> ${DRIVER}/${DRIVER}.h
 echo -e "" >> ${DRIVER}/${DRIVER}.h
+echo -e "" >> ${DRIVER}/${DRIVER}.h
+echo -e "" >> ${DRIVER}/${DRIVER}.h
 echo -e "#endif // ${DRIVER_UPPER}_H" >> ${DRIVER}/${DRIVER}.h
 
 # _dspic.c
-echo -e "/**" > ${DRIVER}/${DRIVER}.c
-echo -e " * @file ${DRIVER}_dspic.c" >> ${DRIVER}/${DRIVER}.c
-echo -e " * @author Sebastien CAUX (sebcaux)" >> ${DRIVER}/${DRIVER}.c
-echo -e " * @copyright Robotips 2016" >> ${DRIVER}/${DRIVER}.c
-echo -e " *" >> ${DRIVER}/${DRIVER}.c
-echo -e " * @date ${DATE} " >> ${DRIVER}/${DRIVER}.c
-echo -e " * " >> ${DRIVER}/${DRIVER}.c
-echo -e " * @brief ${DESC}" >> ${DRIVER}/${DRIVER}.c
-echo -e " */" >> ${DRIVER}/${DRIVER}.c
-echo -e "" >> ${DRIVER}/${DRIVER}.c
+echo -e "/**" > ${DRIVER}/${DRIVER}_dspic.c
+echo -e " * @file ${DRIVER}_dspic.c" >> ${DRIVER}/${DRIVER}_dspic.c
+echo -e " * @author Sebastien CAUX (sebcaux)" >> ${DRIVER}/${DRIVER}_dspic.c
+echo -e " * @copyright Robotips 2016" >> ${DRIVER}/${DRIVER}_dspic.c
+echo -e " *" >> ${DRIVER}/${DRIVER}_dspic.c
+echo -e " * @date ${DATE} " >> ${DRIVER}/${DRIVER}_dspic.c
+echo -e " * " >> ${DRIVER}/${DRIVER}_dspic.c
+echo -e " * @brief ${DESC}" >> ${DRIVER}/${DRIVER}_dspic.c
+echo -e " */" >> ${DRIVER}/${DRIVER}_dspic.c
+echo -e "" >> ${DRIVER}/${DRIVER}_dspic.c
 echo -e "#include \"${DRIVER}_dspic.h\"" >> ${DRIVER}/${DRIVER}_dspic.c
 
 # _dspic.h
@@ -83,6 +86,9 @@ echo -e " */" >> ${DRIVER}/${DRIVER}_dspic.h
 echo -e "" >> ${DRIVER}/${DRIVER}_dspic.h
 echo -e "#ifndef ${DRIVER_UPPER}_DSPIC_H" >> ${DRIVER}/${DRIVER}_dspic.h
 echo -e "#define ${DRIVER_UPPER}_DSPIC_H" >> ${DRIVER}/${DRIVER}_dspic.h
+echo -e "" >> ${DRIVER}/${DRIVER}_dspic.h
+echo -e "#include \"${DRIVER}_dspic.h\"" >> ${DRIVER}/${DRIVER}_dspic.h
+echo -e "" >> ${DRIVER}/${DRIVER}_dspic.h
 echo -e "" >> ${DRIVER}/${DRIVER}_dspic.h
 echo -e "" >> ${DRIVER}/${DRIVER}_dspic.h
 echo -e "#endif // ${DRIVER_UPPER}_DSPIC_H" >> ${DRIVER}/${DRIVER}_dspic.h
