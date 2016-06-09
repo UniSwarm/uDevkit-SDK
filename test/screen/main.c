@@ -44,7 +44,8 @@ int main(void)
 	
 	lcd_drawLine(50, 50, 420, 270);
 	lcd_drawLine(50, 270, 420, 50);
-	//lcd_affImage(0, 0, 480, 320, picture);
+	
+	lcd_affImage(0, 0, 480, 320, picture);
 	
 	while(1);
 	

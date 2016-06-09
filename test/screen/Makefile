@@ -8,11 +8,11 @@ DRIVERS += uart lcd
 
 SRC += main.c
 
-#PICTURES += picture.jpg
+PICTURES += picture.jpg
 
 include $(RTPROG)/rtprog.mk
 
-all : FORCE
+all : hex FORCE
 	@echo "DRIVERS asked         :" $(sort $(DRIVERS) $(BADDRIVERS))
 	@echo "DRIVERS implemented   :" $(DRIVERS)
 	@echo "BADDRIVERS sorted     :" $(sort $(BADDRIVERS))

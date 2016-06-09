@@ -10,8 +10,8 @@
 int main(void)
 {
 	unsigned int i,j;
-	uint16_t uartDbg;
-	dev_t value;
+	dev_t uartDbg;
+	uint16_t value;
 	char buff[100];
 	
 	setSystemClock(120000000);

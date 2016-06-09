@@ -10,5 +10,5 @@ SRC += main.c
 
 include $(RTPROG)/rtprog.mk
 
-all:
-	echo $(DRIVERS)
+all: hex
+	@echo $(DRIVERS)
