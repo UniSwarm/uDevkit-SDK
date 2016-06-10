@@ -49,18 +49,6 @@ char uart_getc(dev_t device);
 uint16_t uart_getw(dev_t device);
 uint8_t uart_datardy(dev_t device);
 
-#ifdef UART_RP
-int uart_setRxPin(dev_t device, uint16_t rxPin);
-int uart_setTxPin(dev_t device, uint16_t txPin);
-int uart_setCtsPin(dev_t device, uint16_t ctsPin);
-int uart_setRtsPin(dev_t device, uint16_t rtsPin);
-#else
-#define uart_setRxPin(device, param) 0
-#define uart_setTxPin(device, param) 0
-#define uart_setCtsPin(device, param) 0
-#define uart_setRtsPin(device, param) 0
-#endif
-
 #if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33fj)
 #include "uart_dspic.h"
 #else

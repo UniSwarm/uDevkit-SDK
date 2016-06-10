@@ -83,12 +83,12 @@ int uart_enable(dev_t device)
     switch (uart)
     {
     case 0:
-		U1MODEbits.UARTEN = 1;  // enable transmiter
+        U1MODEbits.UARTEN = 1;  // enable transmiter
         U1STAbits.UTXEN = 1;    // enable uart
         break;
 #if UART_COUNT>=2
     case 1:
-		U2MODEbits.UARTEN = 1;  // enable transmiter
+        U2MODEbits.UARTEN = 1;  // enable transmiter
         U2STAbits.UTXEN = 1;    // enable uart
         break;
 #endif
@@ -661,108 +661,3 @@ uint8_t uart_datardy(dev_t device)
 {
     return 0;
 }
-
-#ifdef UART_RP
-int uart_setRxPin(dev_t device, uint16_t rxPin)
-{
-    uint8_t uart = MINOR(device);
-    if (uart > UART_COUNT)
-        return -1;
-
-    // Unlock configuration pin
-    OSCCONL = 0x46;
-    OSCCONL = 0x57;
-    OSCCONbits.IOLOCK = 0;
-
-    switch (uart)
-    {
-    case 1:
-        RPINR18bits.U1RXR = rxPin; // UART1 RX ==> RPn
-        break;
-#if UART_COUNT>=2
-    case 2:
-        RPINR19bits.U2RXR = rxPin; // UART2 RX ==> RPn
-        break;
-#endif
-#if UART_COUNT>=3
-    case 3:
-        RPINR27bits.U3RXR = rxPin; // UART3 RX ==> RPn
-        break;
-#endif
-#if UART_COUNT>=4
-    case 4:
-        RPINR28bits.U4RXR = rxPin; // UART4 RX ==> RPn
-        break;
-#endif
-    }
-
-    // Lock configuration pin
-    OSCCONL = 0x46;
-    OSCCONL = 0x57;
-    OSCCONbits.IOLOCK = 1;
-
-    return 0;
-}
-
-int uart_setTxPin(dev_t device, uint16_t txPin)
-{
-    // Unlock configuration pin
-    OSCCONL = 0x46;
-    OSCCONL = 0x57;
-    OSCCONbits.IOLOCK = 0;
-
-    // UART1 pins
-    RPOR4bits.RP80R = 0b00001; // TX ==> RP80 AnP1
-
-    // Lock configuration pin
-    OSCCONL = 0x46;
-    OSCCONL = 0x57;
-    OSCCONbits.IOLOCK = 1;
-}
-
-int uart_setCtsPin(dev_t device, uint16_t ctsPin)
-{
-    uint8_t uart = MINOR(device);
-    if (uart > UART_COUNT)
-        return -1;
-
-    // Unlock configuration pin
-    OSCCONL = 0x46;
-    OSCCONL = 0x57;
-    OSCCONbits.IOLOCK = 0;
-
-    switch (uart)
-    {
-    case 1:
-        RPINR18bits.U1CTSR = ctsPin; // UART1 CTS ==> RPn
-        break;
-#if UART_COUNT>=2
-    case 2:
-        RPINR19bits.U2CTSR = ctsPin; // UART2 CTS ==> RPn
-        break;
-#endif
-#if UART_COUNT>=3
-    case 3:
-        RPINR27bits.U3CTSR = ctsPin; // UART3 CTS ==> RPn
-        break;
-#endif
-#if UART_COUNT>=4
-    case 4:
-        RPINR28bits.U4CTSR = ctsPin; // UART4 CTS ==> RPn
-        break;
-#endif
-    }
-
-    // Lock configuration pin
-    OSCCONL = 0x46;
-    OSCCONL = 0x57;
-    OSCCONbits.IOLOCK = 1;
-
-    return 0;
-}
-
-int uart_setRtsPin(dev_t device, uint16_t rtsPin)
-{
-
-}
-#endif
