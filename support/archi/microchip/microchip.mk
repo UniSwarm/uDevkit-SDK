@@ -7,7 +7,7 @@ else
 endif
 
 prog : $(OUT_PWD)/$(PROJECT).hex
-	$(IPE_EXE) -P$(DEVICE) -TPPK3 -F$(OUT_PWD)/$(PROJECT).hex -M
+	$(IPE_EXE) -P$(DEVICE) -TPPK3 -F$(OUT_PWD)/$(PROJECT).hex -M -OL
 
 # special cmd for hex creation
 $(OUT_PWD)/$(PROJECT).hex : build/$(PROJECT).elf
