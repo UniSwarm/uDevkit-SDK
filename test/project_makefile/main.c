@@ -40,8 +40,12 @@ int main(void)
 		value = adc_getValue(26);	// AnS3
 		ax12_moveTo(1, value, 512, 512);
 		
-		sprintf(buff, "value: %d\n", sharp_convert(value, FarSharp));
+		sprintf(buff, "value: %dmm\r\n", sharp_convert(value, FarSharp));
 		uart_write(uartDbg, buff, strlen(buff));
+		
+		value = uart_read(uartDbg, buff, 100);
+		if(value>0)
+			uart_write(uartDbg, buff, value);
 	}
 	
 	return 0;
