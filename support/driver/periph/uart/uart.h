@@ -48,6 +48,7 @@ int uart_flush(dev_t device);
 char uart_getc(dev_t device);
 uint16_t uart_getw(dev_t device);
 uint8_t uart_datardy(dev_t device);
+size_t uart_read(dev_t device, char *data, size_t size_max);
 
 #if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33fj)
 #include "uart_dspic.h"
