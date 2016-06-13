@@ -708,13 +708,14 @@ uint8_t uart_datardy(dev_t device)
 
 size_t uart_read(dev_t device, char *data, size_t size_max)
 {
+	size_t size_read;
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return 0;
     
-    fifo_pop(&uarts[uart].buffRx, data, size_max);
+    size_read = fifo_pop(&uarts[uart].buffRx, data, size_max);
     
-    return size_max;
+    return size_read;
 }
 
 #if UART_COUNT>=1
