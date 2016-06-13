@@ -21,9 +21,17 @@ void ar1000_send(uint8_t cmd, uint8_t size);
 void ar1000_received(uint8_t cmd, uint8_t size);
 void ar1000_send_cmd(uint8_t cmd, uint8_t size, char* data);
 
+//AR1000 Commands
 void ar1000_get_version();
 void ar1000_enable_touch();
 void ar1000_disable_touch();
-
+void ar1000_calibrate_mode();
+void ar1000_register_read();
+void ar1000_register_write();
+void ar1000_register_start_address_request();
+void ar1000_registers_write_to_eeprom();
+void ar1000_eeprom_read();
+void ar1000_eeprom_write();
+void ar1000_eeprom_write_to_regiters();
 
 #endif //AR1000_H
