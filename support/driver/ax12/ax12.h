@@ -57,6 +57,7 @@ void ax12_setLed(uint8_t ax_id, uint8_t led);
 #define P_UP_CALIBRATION_L 22
 #define P_UP_CALIBRATION_H 23
 
+//RAM AREA
 #define P_TORQUE_ENABLE (24)
 #define P_LED (25)
 #define P_CW_COMPLIANCE_MARGIN (26)
