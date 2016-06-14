@@ -4,3 +4,7 @@ tools:
 
 tests:
 	cd test && make all
+
+doc:
+	doxygen > /dev/null
+
