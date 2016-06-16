@@ -19,6 +19,7 @@ clean: FORCE
 	rm -f $(OUT_PWD)/$(PROJECT).elf
 
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
+$(OUT_PWD)/$(SIM_EXE) : $(SIM_OBJECTS)
 
 # generate list of used drivers modules
 modules.h : Makefile
