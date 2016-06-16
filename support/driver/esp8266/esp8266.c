@@ -24,7 +24,7 @@ volatile WIFIstatus wifistatus = FSM_UNKNOW;
 volatile WIFI_STATE pendingState = WIFI_STATE_NONE;
 volatile WIFI_STATE state = WIFI_STATE_NONE;
 
-uint8_t esp_uart;
+dev_t esp_uart;
 
 void esp_uart_init()
 {
@@ -63,7 +63,7 @@ void esp_send_cmd(char data[])
 	U1TXREG = data[0];
 	IEC0bits.U1TXIE = 1;
 }
-
+/*
 void __attribute__ ((interrupt,no_auto_psv)) _U1TXInterrupt(void)
 {
 	if(idSend<sizeSend)
@@ -76,8 +76,9 @@ void __attribute__ ((interrupt,no_auto_psv)) _U1TXInterrupt(void)
 		IEC0bits.U1TXIE = 0;
 	}	
 	IFS0bits.U1TXIF = 0;
-}
+}*/
 
+/*
 void __attribute__ ((interrupt,no_auto_psv)) _U1RXInterrupt(void)
 {
 	char rec = U1RXREG;
@@ -249,7 +250,7 @@ void __attribute__ ((interrupt,no_auto_psv)) _U1RXInterrupt(void)
 	}
 	
 	IFS0bits.U1RXIF = 0;
-}
+}*/
 
 void wait_ok()
 {
