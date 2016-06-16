@@ -14,21 +14,11 @@ INCLUDEPATH += -I. -I$(RTPROG)/include
 
 .PHONY : all
 
-# rule to build OBJECTS to OUT_PWD and give dependencies
-$(OUT_PWD)/%.o : %.c modules.h
-	@printf "CC %-30s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@$(CC) $(CCFLAGS) -c  $< $(DEFINES) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@)
-	@$(CC) $(CCFLAGS) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
-
-# rule to link OBJECTS to an elf in OUT_PWD
-$(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
-	@printf "LD %-30s => %s\n" "*.o" $(OUT_PWD)/$(notdir $@)
-	@$(CC) $(CCFLAGS) -o $(OUT_PWD)/$(notdir $@) $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -T p$(DEVICE).gld
-
 clean: FORCE
 	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c
 	rm -f $(OUT_PWD)/$(PROJECT).elf
+
+$(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 
 # generate list of used drivers modules
 modules.h : Makefile
