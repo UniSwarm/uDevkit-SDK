@@ -7,7 +7,7 @@ endif
 
 include $(RTPROG)/support/support.mk
 
-OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=.o)))
+OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=.o)) $(notdir $(ARCHI_SRC:.c=.o)))
 -include $(OBJECTS:.o=.d)
 
 INCLUDEPATH += -I. -I$(RTPROG)/include

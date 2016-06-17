@@ -8,7 +8,7 @@ DRIVERS += sysclock
 HEADER += uart.h
 
 ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ep dspic33fj))
- SRC += uart_dspic.c
+ ARCHI_SRC += uart_dspic.c
  HEADER += uart_dspic.h
 endif
 
