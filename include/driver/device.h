@@ -32,6 +32,6 @@ typedef uint8_t rt_dev_t_class;
 #define DEV_CLASS_SPI_SOFT      ((rt_dev_t_class) (DEV_CLASS_SPI+1))
 
 // special classes
-#define DEV_CLASS_QEI           ((rt_dev_t_class) (0x11)
+#define DEV_CLASS_QEI           ((rt_dev_t_class) (0x11))
 
 #endif // DEVICE_H
