@@ -18,37 +18,37 @@
 #define UART_BIT_PARITY_ODD 2
 
 // ====== device assignation ======
-dev_t uart_getFreeDevice();
-void uart_releaseDevice(dev_t device);
+rt_dev_t uart_getFreeDevice();
+void uart_releaseDevice(rt_dev_t device);
 
 // ==== device enable/disable =====
-int uart_enable(dev_t device);
-int uart_disable(dev_t device);
+int uart_enable(rt_dev_t device);
+int uart_disable(rt_dev_t device);
 
 // ======== device settings =======
-int uart_setBaudSpeed(dev_t device, uint32_t baudSpeed);
-uint32_t uart_baudSpeed(dev_t device);
-uint32_t uart_effectiveBaudSpeed(dev_t device);
+int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed);
+uint32_t uart_baudSpeed(rt_dev_t device);
+uint32_t uart_effectiveBaudSpeed(rt_dev_t device);
 
-int uart_setBitConfig(dev_t device, uint8_t bitLenght,
+int uart_setBitConfig(rt_dev_t device, uint8_t bitLenght,
                                       uint8_t bitParity,
                                       uint8_t bitStop);
-uint8_t uart_bitLenght(dev_t device);
-uint8_t uart_bitParity(dev_t device);
-uint8_t uart_bitStop(dev_t device);
+uint8_t uart_bitLenght(rt_dev_t device);
+uint8_t uart_bitParity(rt_dev_t device);
+uint8_t uart_bitStop(rt_dev_t device);
 
 // ========= device write ========
-int uart_putc(dev_t device, const char c);
-int uart_putw(dev_t device, const uint16_t word);
+int uart_putc(rt_dev_t device, const char c);
+int uart_putw(rt_dev_t device, const uint16_t word);
 
-int uart_write(dev_t device, const char *data, size_t size);
-int uart_flush(dev_t device);
+int uart_write(rt_dev_t device, const char *data, size_t size);
+int uart_flush(rt_dev_t device);
 
 // ========= device read =========
-char uart_getc(dev_t device);
-uint16_t uart_getw(dev_t device);
-uint8_t uart_datardy(dev_t device);
-size_t uart_read(dev_t device, char *data, size_t size_max);
+char uart_getc(rt_dev_t device);
+uint16_t uart_getw(rt_dev_t device);
+uint8_t uart_datardy(rt_dev_t device);
+size_t uart_read(rt_dev_t device, char *data, size_t size_max);
 
 #if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33fj)
 #include "uart_dspic.h"

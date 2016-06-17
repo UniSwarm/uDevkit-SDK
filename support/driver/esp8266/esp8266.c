@@ -24,7 +24,7 @@ volatile WIFIstatus wifistatus = FSM_UNKNOW;
 volatile WIFI_STATE pendingState = WIFI_STATE_NONE;
 volatile WIFI_STATE state = WIFI_STATE_NONE;
 
-dev_t esp_uart;
+rt_dev_t esp_uart;
 
 void esp_uart_init()
 {

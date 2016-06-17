@@ -19,20 +19,20 @@
 #error Unsuported ARCHI
 #endif
 
-dev_t qei_getFreeDevice();
-void qei_releaseDevice(dev_t device);
+rt_dev_t qei_getFreeDevice();
+void qei_releaseDevice(rt_dev_t device);
 
-int qei_enable(dev_t device);
-int qei_disable(dev_t device);
+int qei_enable(rt_dev_t device);
+int qei_disable(rt_dev_t device);
 
-int qei_setConfig(dev_t device, uint16_t config);
+int qei_setConfig(rt_dev_t device, uint16_t config);
 
 #ifdef QEI_32B
-uint32_t qei_getValue(dev_t device);
-int qei_setHomeValue(dev_t device, uint32_t config);
+uint32_t qei_getValue(rt_dev_t device);
+int qei_setHomeValue(rt_dev_t device, uint32_t config);
 #else
-uint16_t qei_getValue(dev_t device);
-int qei_setHomeValue(dev_t device, uint16_t config);
+uint16_t qei_getValue(rt_dev_t device);
+int qei_setHomeValue(rt_dev_t device, uint16_t config);
 #endif
 
 #endif // QEI_H

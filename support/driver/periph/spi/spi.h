@@ -20,31 +20,29 @@
 #endif
 
 // ====== device assignation ======
-dev_t spi_getFreeDevice();
-void spi_releaseDevice(dev_t device);
+rt_dev_t spi_getFreeDevice();
+void spi_releaseDevice(rt_dev_t device);
 
 // ==== device enable/disable =====
-int spi_enable(dev_t device);
-int spi_disable(dev_t device);
+int spi_enable(rt_dev_t device);
+int spi_disable(rt_dev_t device);
 
 // ======== device settings =======
-int spi_setBaudSpeed(dev_t device, uint32_t baudSpeed);
-uint32_t spi_baudSpeed(dev_t device);
-uint32_t spi_effectiveBaudSpeed(dev_t device);
+int spi_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed);
+uint32_t spi_baudSpeed(rt_dev_t device);
+uint32_t spi_effectiveBaudSpeed(rt_dev_t device);
 
-int spi_setBitConfig(dev_t device, uint8_t bitLenght);
-uint8_t spi_bitLenght(dev_t device);
+int spi_setBitConfig(rt_dev_t device, uint8_t bitLenght);
+uint8_t spi_bitLenght(rt_dev_t device);
 
 // ========= device write ========
-int spi_putc(dev_t device, const char c);
-int spi_putw(dev_t device, const uint16_t word);
-
-int spi_write(dev_t device, const char *data, size_t size);
-int spi_flush(dev_t device);
+int spi_write(rt_dev_t device, const char *data, size_t size);
+int spi_flush(rt_dev_t device);
 
 // ========= device read =========
-char spi_getc(dev_t device);
-uint16_t spi_getw(dev_t device);
-uint8_t spi_datardy(dev_t device);
+char spi_getc(rt_dev_t device);
+uint16_t spi_getw(rt_dev_t device);
+uint8_t spi_datardy(rt_dev_t device);
+size_t spi_read(rt_dev_t device, char *data, size_t size_max);
 
 #endif // SPI_H

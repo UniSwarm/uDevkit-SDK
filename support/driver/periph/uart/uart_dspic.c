@@ -8,10 +8,12 @@
  * @brief Uart support for rtprog
  */
 
-#include "uart_dspic.h"
+#include "uart.h"
 
 #include "driver/sysclock.h"
 #include "sys/fifo.h"
+
+#include <xc.h>
 
 #if !defined (UART_COUNT) || UART_COUNT==0
     #error No device
@@ -43,7 +45,7 @@ struct uart_dev uarts[] = {
  * @brief Gives a free uart device number
  * @return uart device number
  */
-dev_t uart_getFreeDevice()
+rt_dev_t uart_getFreeDevice()
 {
     uint8_t i;
 
@@ -64,7 +66,7 @@ dev_t uart_getFreeDevice()
  * @brief Release an uart
  * @param device uart device number
  */
-void uart_releaseDevice(dev_t device)
+void uart_releaseDevice(rt_dev_t device)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
@@ -78,7 +80,7 @@ void uart_releaseDevice(dev_t device)
  * @param device uart device number
  * @return 0 if ok, -1 in case of error
  */
-int uart_enable(dev_t device)
+int uart_enable(rt_dev_t device)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
@@ -150,7 +152,7 @@ int uart_enable(dev_t device)
  * @param device uart device number
  * @return 0 if ok, -1 in case of error
  */
-int uart_disable(dev_t device)
+int uart_disable(rt_dev_t device)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
@@ -195,7 +197,7 @@ int uart_disable(dev_t device)
  * @param baudSpeed speed of receive and transmit in bauds (bits / s)
  * @return 0 if ok, -1 in case of error
  */
-int uart_setBaudSpeed(dev_t device, uint32_t baudSpeed)
+int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 {
     uint32_t systemClockPeriph;
     uint16_t uBrg;
@@ -258,7 +260,7 @@ int uart_setBaudSpeed(dev_t device, uint32_t baudSpeed)
  * @param device uart device number
  * @return speed of receive and transmit in bauds (bits / s)
  */
-uint32_t uart_baudSpeed(dev_t device)
+uint32_t uart_baudSpeed(rt_dev_t device)
 {
     uint32_t baudSpeed;
     uint16_t uBrg;
@@ -308,7 +310,7 @@ uint32_t uart_baudSpeed(dev_t device)
  * @param device uart device number
  * @return speed of receive and transmit in bauds (bits / s)
  */
-uint32_t uart_effectiveBaudSpeed(dev_t device)
+uint32_t uart_effectiveBaudSpeed(rt_dev_t device)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
@@ -326,7 +328,7 @@ uint32_t uart_effectiveBaudSpeed(dev_t device)
  * @param bitStop
  * @return 0 if ok, -1 in case of error
  */
-int uart_setBitConfig(dev_t device, uint8_t bitLenght,
+int uart_setBitConfig(rt_dev_t device, uint8_t bitLenght,
                       uint8_t bitParity, uint8_t bitStop)
 {
     uint8_t bit = 0, stop = 0;
@@ -379,7 +381,7 @@ int uart_setBitConfig(dev_t device, uint8_t bitLenght,
  * @param device uart device number
  * @return lenght of bytes in bits
  */
-uint8_t uart_bitLenght(dev_t device)
+uint8_t uart_bitLenght(rt_dev_t device)
 {
     uint8_t lenght = 8;
 
@@ -421,7 +423,7 @@ uint8_t uart_bitLenght(dev_t device)
  * @param device uart device number
  * @return parity mode
  */
-uint8_t uart_bitParity(dev_t device)
+uint8_t uart_bitParity(rt_dev_t device)
 {
     uint8_t parity = UART_BIT_PARITY_NONE;
 
@@ -463,7 +465,7 @@ uint8_t uart_bitParity(dev_t device)
  * @param device uart device number
  * @return number of stop bit
  */
-uint8_t uart_bitStop(dev_t device)
+uint8_t uart_bitStop(rt_dev_t device)
 {
     uint8_t stop;
 
@@ -572,7 +574,7 @@ uint16_t uart_4_getw(uint16_t word);
  * @param c char to send
  * @return 0 if ok, -1 in case of error
  */
-int uart_putc(dev_t device, const char c)
+int uart_putc(rt_dev_t device, const char c)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
@@ -609,7 +611,7 @@ int uart_putc(dev_t device, const char c)
  * @param word word to send
  * @return 0 if ok, -1 in case of error
  */
-int uart_putw(dev_t device, const uint16_t word)
+int uart_putw(rt_dev_t device, const uint16_t word)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
@@ -640,7 +642,7 @@ int uart_putw(dev_t device, const uint16_t word)
     return 0;
 }
 
-int uart_write(dev_t device, const char *data, size_t size)
+int uart_write(rt_dev_t device, const char *data, size_t size)
 {
     size_t i;
     int (*uart_putc_fn)(const char);
@@ -684,14 +686,14 @@ int uart_write(dev_t device, const char *data, size_t size)
  * @param device
  * @return
  */
-char uart_getc(dev_t device);
+char uart_getc(rt_dev_t device);
 
 /**
  * @brief
  * @param device uart device number
  * @return
  */
-uint16_t uart_getw(dev_t device)
+uint16_t uart_getw(rt_dev_t device)
 {
     return 0;
 }
@@ -701,12 +703,12 @@ uint16_t uart_getw(dev_t device)
  * @param device
  * @return
  */
-uint8_t uart_datardy(dev_t device)
+uint8_t uart_datardy(rt_dev_t device)
 {
     return 0;
 }
 
-size_t uart_read(dev_t device, char *data, size_t size_max)
+size_t uart_read(rt_dev_t device, char *data, size_t size_max)
 {
 	size_t size_read;
     uint8_t uart = MINOR(device);
