@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <xc.h>
+//#include <xc.h>
 
 #include "driver/uart.h"
 
@@ -35,10 +35,10 @@ void esp_uart_init()
 	uart_enable(esp_uart);
 	
 	// Uart Interrupt
-	IPC2bits.U1RXIP = 6;		// Interrupt priority for receptor
+	/*IPC2bits.U1RXIP = 6;		// Interrupt priority for receptor
 	IPC3bits.U1TXIP = 5;		// Interrupt priority for transmitor
 	IEC0bits.U1TXIE = 1;
-    IEC0bits.U1RXIE = 1;
+    IEC0bits.U1RXIE = 1;*/
 }
 
 void esp_init()
@@ -51,7 +51,7 @@ void esp_send_cmd(char data[])
 	uint16_t i=0;
 	idSend=1;
 	
-	while(data[i]!=0)
+	/*while(data[i]!=0)
 	{
 		dataSend[i]=data[i];
 		i++;
@@ -61,7 +61,7 @@ void esp_send_cmd(char data[])
 	sizeSend=i;
 	
 	U1TXREG = data[0];
-	IEC0bits.U1TXIE = 1;
+	IEC0bits.U1TXIE = 1;*/
 }
 /*
 void __attribute__ ((interrupt,no_auto_psv)) _U1TXInterrupt(void)
@@ -417,7 +417,7 @@ void esp_write_socket(uint8_t sock, char data[], uint16_t size)
 	(*(ptbuff++))=sock+'0';
 	(*(ptbuff++))=',';
 	
-	itoa(ptbuff, size, 10);
+	//itoa(ptbuff, size, 10);
 	
 	esp_send_cmd(buff);
 	
@@ -448,6 +448,6 @@ void esp_write(char data[], uint16_t size)
 	}
 	sizeSend=size;
 	
-	U1TXREG = data[0];
-	IEC0bits.U1TXIE = 1;
+	/*U1TXREG = data[0];
+	IEC0bits.U1TXIE = 1;*/
 }

@@ -11,7 +11,7 @@
 #include "ax12.h"
 
 #include "driver/uart.h"
-#include <xc.h>
+//#include <xc.h>
 #include "board.h"
 
 //uint8_t idr=255;
@@ -24,7 +24,7 @@ rt_dev_t ax12_uart;
  */
 void ax12_sendMode()
 {
-    AX12_TXEN = 0;
+    //AX12_TXEN = 0;
     //idr=0;
 }
 
@@ -34,7 +34,7 @@ void ax12_sendMode()
 void ax12_receiveMode()
 {
     //idr = 0;
-    AX12_TXEN = 0;
+    //AX12_TXEN = 0;
 }
 
 /**
