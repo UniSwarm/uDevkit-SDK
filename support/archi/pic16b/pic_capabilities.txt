@@ -1,0 +1,4 @@
+awk -v FS='","|^"|"$' '{print $2" "$45}' mcph_pic30.csv |sort -n -k2 > support/driver/periph/qei/pic16.txt
+
+(PIC|dsPIC)([a-zA-Z0-9]*) [0-9]\n(PIC|dsPIC)([a-zA-Z0-9]*) [0-9]\n(PIC|dsPIC)([a-zA-Z0-9]*) [0-9]\n
+ || defined(DEVICE_\2) || defined(DEVICE_\4) || defined(DEVICE_\6) \\\n
