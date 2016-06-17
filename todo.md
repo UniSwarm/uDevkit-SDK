@@ -1,6 +1,5 @@
 # TODO
 
-- [ ] Find a solution for fuses
 - [ ] Find a solution for interrupts (call back?)
 - [ ] Find a solution for pins mapping and declaration
 
@@ -14,6 +13,20 @@
 - [x] device assignation
 - [x] config
 - [x] send
+- [x] receive
+
+### I2C
+- [ ] prototypes
+- [ ] device assignation
+- [ ] config
+- [ ] send
+- [ ] receive
+
+### SPI
+- [x] prototypes
+- [ ] device assignation
+- [ ] config
+- [ ] send
 - [ ] receive
 
 ### QEI
@@ -37,19 +50,25 @@
 ### ADC
 - [x] prototypes
 - [ ] config
-- [ ] read data
+- [x] read data
 - [ ] interrupt
 
 ## Others drivers
 ### AX12
-- [ ] porting
+- [x] porting
+- [x] send command
+- [ ] receive data
 
 ### ESP8266 wifi
-- [ ] porting
+- [x] porting
 - [ ] complete API
 - [ ] debug emit
+- [ ] interrupt parser
 
 ## Boards
 ### RTBoard
 - [x] init io
-- [ ] adc static, motors...
+- [x] adc static, motors...
+
+### screenBoard
+- [x] init io
