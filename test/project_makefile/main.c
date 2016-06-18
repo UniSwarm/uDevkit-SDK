@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
-#include <xc.h>
 
 #include "modules.h"
 #include "board.h"
@@ -10,7 +9,7 @@
 int main(void)
 {
 	unsigned int i,j;
-	dev_t uartDbg;
+	rt_dev_t uartDbg;
 	uint16_t value;
 	char buff[100];
 	
