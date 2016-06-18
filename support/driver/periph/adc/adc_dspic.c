@@ -10,6 +10,8 @@
 
 #include "adc_dspic.h"
 
+#include <xc.h>
+
 int adc_init()
 {
 	AD1CON1 = 0;

@@ -12,6 +12,5 @@
 #define ADC_DSPIC_H
 
 #include "adc.h"
-#include <xc.h>
 
 #endif // ADC_DSPIC_H
