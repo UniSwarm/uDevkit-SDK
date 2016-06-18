@@ -7,6 +7,7 @@
 Color _lcd_penColor;
 Color _lcd_brushColor;
 uint16_t _lcd_x, _lcd_y;
+Font *_lcd_font;
 
 // <TODO write this functions correctly
 void delay_ms(uint16_t ms)
@@ -203,7 +204,7 @@ uint16_t lcd_brushColor()
 
 void lcd_drawPoint(uint16_t x, uint16_t y)
 {
-	uint16_t data;
+	//uint16_t data;
 	lcd_setPos(x, y);
 	
 	lcd_write_data(_lcd_penColor);
@@ -290,8 +291,6 @@ void lcd_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
 
 void lcd_drawRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 {
-	int i;
-	
 	lcd_drawLine(x,   y,   x+w,  y);
     lcd_drawLine(x+w, y,   x+w,  y+h);
     lcd_drawLine(x+w, y+h, x,    y+h);
@@ -319,5 +318,37 @@ void lcd_drawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 
 void lcd_drawText(uint16_t x1, uint16_t y1, const char *txt)
 {
-	
+	int i, j, octet;
+	char bit;
+	const Letter *letter;
+	int c=0;
+	while (txt[c] != '\0')
+	{
+		if (txt[c]>=_lcd_font->first && txt[c]<=_lcd_font->last)
+		{
+			octet=-1;
+			letter = _lcd_font->letters[txt[c]-_lcd_font->first];
+			for(j = 0; j < letter->width; j++)
+			{
+				for(i = 0; i < _lcd_font->height; i++)
+				{
+					if (i%8==0)
+					{
+						bit=1;
+                        octet++;
+					}
+					if ((letter->data[octet]) & bit)
+						//point(x1+j, y1+i, 1);
+					bit = bit<<1;
+				}
+			}
+			x1 += letter->width;
+		}
+		c++;
+	}
+}
+
+void lcd_setFont(Font *font)
+{
+    _lcd_font = font;
 }

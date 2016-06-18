@@ -13,6 +13,8 @@
 
 #include <stdint.h>
 
+#include "gui/font.h"
+
 // color 565 format
 typedef uint16_t Color;
 #define White          0xFFFF
@@ -54,6 +56,6 @@ void lcd_drawRect(uint16_t x1, uint16_t y1, uint16_t sizeX, uint16_t sizeY);
 void lcd_drawFillRect(uint16_t x1, uint16_t y1, uint16_t sizeX, uint16_t sizeY);
 
 void lcd_drawText(uint16_t x1, uint16_t y1, const char *txt);
-//void lcd_setFont();
+void lcd_setFont(Font *font);
 
 #endif // LCD_H
