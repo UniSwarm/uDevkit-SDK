@@ -3,8 +3,8 @@
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
- * @date April 25, 2016, 18:39 PM 
- * 
+ * @date April 25, 2016, 18:39 PM
+ *
  * @brief Tool to transform image in const C raw data (xc16 format)
  */
 
@@ -19,6 +19,7 @@
 #include <QImage>
 
 #include <QFont>
+#include <QFontDatabase>
 #include <QFontMetrics>
 #include <QPainter>
 #include <QRegExp>
@@ -31,7 +32,7 @@ void exportimg(QImage image, QString filename)
 
     QTextStream stream(&file);
 
-	stream << "#include <stdint.h>" << endl;
+    stream << "#include <stdint.h>" << endl;
     stream << "__prog__ const uint16_t " << finfo.baseName() << "[] __attribute__((space(prog))) ={";
 
     QImage mirored = image.mirrored(false,false);
@@ -60,8 +61,8 @@ void exportfont(QFont font, QString outFileName )
 {
     char c;
     unsigned value;
-    int x,y,height,nb,width;
-    char first=' ',last='z';
+    int x, y, height, nb, width, wl;
+    char first=' ', last='z';
     bool prem;
 
     QFile file(outFileName);
@@ -87,8 +88,13 @@ void exportfont(QFont font, QString outFileName )
     stream << QString("#define _")+fontName+QString("_font_") << endl << endl;
     stream << QString("#include \"gui/font.h\"") << endl << endl;
 
-    QImage letter(50,50,QImage::Format_Mono);
+    QImage letter(50,50,QImage::Format_ARGB32);
+    QImage letters(2000,50,QImage::Format_ARGB32);
     QPainter paint;
+    QPainter paint2(&letters);
+    paint2.setFont(font);
+    paint2.drawRect(-1, -1, 2002, 52);
+    wl = 0;
     for (c=first;c<=last;c++)
     {
         if (c!='\\')
@@ -100,11 +106,15 @@ void exportfont(QFont font, QString outFileName )
         stream << fontName << "_data_" << QString::number(c) << "[] = {";
 
         paint.begin(&letter);
+        paint.setBrush(Qt::white);
         paint.setFont(font);
-        paint.drawRect(QRect(-1,-1,50,50));
-        paint.drawText(QRect(0,0,20,20),Qt::AlignLeft|Qt::AlignTop,QString(c));
+        paint.drawRect(QRect(-1,-1,52,52));
+        paint.drawText(QRect(0,0,50,50),Qt::AlignLeft|Qt::AlignTop,QString(c));
         paint.end();
+
         width=metric.width(c);
+        paint2.drawText(QRect(wl,0,50,50),Qt::AlignLeft|Qt::AlignTop,QString(c));
+        wl+=width;
         prem = true;
         for(x=0;x<width;x++)
         {
@@ -123,22 +133,25 @@ void exportfont(QFont font, QString outFileName )
                     stream << QString::number(value,16).toUpper();
                     value=0;
                 }
-                if(letter.pixel(x,y)==qRgb(0,0,0))
+                if(qGray(letter.pixel(x,y)) == 0)
                 {
                     value=value+(1<<(y%8));
                     nb++;
                 }
             }
-            if((y%8)!=0)
+            if((y%8+1)!=0)
             {
-                stream << ", 0x";
+                if(!prem)
+                    stream << ", ";
+                prem = false;
+                stream << "0x";
                 if(QString::number(value,16).size()<2)
                     stream << '0';
                 stream << QString::number(value,16).toUpper();
                 value=0;
             }
         }
-        stream << " };" << endl;
+        stream << "};" << endl;
         stream << "const Letter " << fontName << "_letter_" << QString::number(c) << " = {" << QString::number(width) << ", " << fontName << "_data_" << QString::number(c) << "};" << endl;
     }
     stream << endl << "// Table of letter struct" << endl;
@@ -153,6 +166,9 @@ void exportfont(QFont font, QString outFileName )
     stream << "const Font " << fontName << " = {" << QString::number(height) << ", " << QString::number(first) << ", " << QString::number(last) << ", " << fontName << "_letters" << "};";
 
     stream << endl << "#endif";
+
+    paint2.end();
+    letters.save(outFileName+".png");
 }
 
 int main(int argc, char *argv[])
@@ -161,7 +177,7 @@ int main(int argc, char *argv[])
     QApplication::setApplicationName("img2raw");
     QApplication::setApplicationVersion("1.0");
     QTextStream out(stdout);
-    
+
     QCommandLineParser parser;
     parser.setApplicationDescription("Test helper");
     parser.addHelpOption();
@@ -173,6 +189,10 @@ int main(int argc, char *argv[])
     parser.addOption(outputOption);
 
     parser.process(app);
+
+    /*QFontDatabase db;
+    foreach(QString family, db.families())
+        out << family << endl;*/
 
     // check input
     if(!parser.isSet(inputOption))
@@ -214,6 +234,7 @@ int main(int argc, char *argv[])
         bool italic = fontStyle.contains('i');
 
         QFont font(fontName, fontSize, bold, italic);
+        out << "fontSize: " << fontSize << " family: " << font.family() << endl;
         exportfont(font, outputFile);
 
         return 0;
