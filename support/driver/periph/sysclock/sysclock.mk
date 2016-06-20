@@ -10,4 +10,6 @@ ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ep dspic33fj))
  HEADER += sysclock_dspic.h
 endif
 
+SIM_SRC += sysclock_sim.c
+
 endif

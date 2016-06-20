@@ -12,4 +12,6 @@ ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ep dspic33fj))
  HEADER += uart_dspic.h
 endif
 
+SIM_SRC += uart_sim.c
+
 endif

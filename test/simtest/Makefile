@@ -1,0 +1,16 @@
+RTPROG = ../..
+
+PROJECT = testproj
+BOARD = rtboard
+# DEVICE = 33EP256MU806
+# ARCHI = dspic33ep
+OUT_PWD = build
+
+DRIVERS += uart
+
+SRC += main.c
+
+include $(RTPROG)/rtprog.mk
+
+all : hex FORCE
+	@echo OBJECTS: $(OBJECTS)
