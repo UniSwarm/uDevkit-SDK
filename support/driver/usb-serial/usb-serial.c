@@ -10,6 +10,9 @@
 
 #include "usb-serial.h"
 
+#include "usb_device.h"
+#include "usb_device_cdc.h"
+
 void usbserial_init()
 {
 	SYSTEM_Initialize(SYSTEM_STATE_USB_START);
@@ -23,12 +26,49 @@ void usbserial_task()
 		return;
 	if( USBIsDeviceSuspended() == true )
 		return;
-	
-	if( USBUSARTIsTxTrfReady() == true)
-	{
-		putsUSBUSART("ABC...");
-	}
+    
+    // send service
 	CDCTxService();
+    
+    // receive service
+    /*numBytes = getsUSBUSART(buffer,sizeof(buffer));
+    if(numBytes > 0)
+    {
+        // TODO
+    }*/
+    
+}
+
+size_t usbserial_write(const char *data, const size_t size)
+{
+    uint8_t *ptrData;
+    size_t sizeToWrite;
+    if( USBGetDeviceState() < CONFIGURED_STATE )
+		return 0;
+	if( USBIsDeviceSuspended() == true )
+		return 0;
+	
+    sizeToWrite = size;
+    ptrData = (uint8_t *)data;
+    while(sizeToWrite > 0)
+    {
+        if( USBUSARTIsTxTrfReady() == true)
+        {
+            size_t size_packet = sizeToWrite;
+            if(size_packet > 255)
+                size_packet = 255;
+            putUSBUSART(ptrData, size);
+            sizeToWrite -= size_packet;
+            ptrData += size_packet;
+        }
+        usbserial_task();
+    }
+    return size;
+}
+
+size_t usbserial_read(char *data, const size_t max_size)
+{
+    return 0;
 }
 
 bool USER_USB_CALLBACK_EVENT_HANDLER(USB_EVENT event, void *pdata, uint16_t size)
@@ -41,12 +81,10 @@ bool USER_USB_CALLBACK_EVENT_HANDLER(USB_EVENT event, void *pdata, uint16_t size
         case EVENT_SOF:
             /* We are using the SOF as a timer to time the LED indicator.  Call
              * the LED update function here. */
-           // APP_LEDUpdateUSBStatus();
             break;
 
         case EVENT_SUSPEND:
             /* Update the LED status for the suspend event. */
-            //APP_LEDUpdateUSBStatus();
 
             //Call the hardware platform specific handler for suspend events for
             //possible further action (like optionally going reconfiguring the application
@@ -59,7 +97,6 @@ bool USER_USB_CALLBACK_EVENT_HANDLER(USB_EVENT event, void *pdata, uint16_t size
 
         case EVENT_RESUME:
             /* Update the LED status for the resume event. */
-            //APP_LEDUpdateUSBStatus();
 
             //Call the hardware platform specific resume from suspend handler (ex: to
             //restore I/O pins to higher power states if they were changed during the 
