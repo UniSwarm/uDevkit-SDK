@@ -1,16 +1,7 @@
 #include "ar.h"
 
-/**
- * @Brief ar1000_send_cmd
- */
-void ar1000_send_cmd(uint8_t cmd, uint8_t size, char* data)
-{
-	ar1000_disable_touch();
-	ar1000_send(cmd, size, data);
-	// wait 50ms;
-	ar1000_receive(cmd, size);
-	ar1000_enable_touch();
-}
+
+//PROTECTED FUNCTIONS
 
 /**
  * @Brief ar1000_send
@@ -41,6 +32,21 @@ void ar1000_receive(uint8_t cmd, uint8_t size)
 
 	//FAIRE UN TRUC POUR ENVOYER LA TRAME
 }
+
+/**
+ * @Brief ar1000_send_cmd
+ */
+void ar1000_send_cmd(uint8_t cmd, uint8_t size, char* data)
+{
+	ar1000_disable_touch();
+	ar1000_send(cmd, size, data);
+	// wait 50ms; (cf doc)
+	ar1000_receive(cmd, size);
+	ar1000_enable_touch();
+}
+
+
+//PUBLIC FUNCTIONS
 
 /**
  * @brief ar1000_init Setup the device
@@ -94,7 +100,7 @@ void ar1000_disable_touch()
  */
 void ar1000_calibrate_mode()
 {
-	// ar1000_send(0x14, 1, data_vide!);
+	ar1000_send(0x14, 1, data_vide!);
 }
 
 /**
@@ -102,7 +108,7 @@ void ar1000_calibrate_mode()
  */
 void ar1000_register_read()
 {
-
+	ar1000_send(0x20, 1, data_vide!);
 }
 
 /**
@@ -110,6 +116,7 @@ void ar1000_register_read()
  */
 void ar1000_register_write()
 {
+	ar1000_send(0x21, 1, data_vide!);
 
 }
 
@@ -118,6 +125,7 @@ void ar1000_register_write()
  */
 void ar1000_register_start_address_request()
 {
+	ar1000_send(0x22, 1, data_vide!);
 
 }
 
@@ -126,6 +134,7 @@ void ar1000_register_start_address_request()
  */
 void ar1000_registers_write_to_eeprom()
 {
+	ar1000_send(0x23, 1, data_vide!);
 
 }
 
@@ -134,6 +143,7 @@ void ar1000_registers_write_to_eeprom()
  */
 void ar1000_eeprom_read()
 {
+	ar1000_send(0x28, 1, data_vide!);
 
 }
 
@@ -142,6 +152,7 @@ void ar1000_eeprom_read()
  */
 void ar1000_eeprom_write()
 {
+	ar1000_send(0x29, 1, data_vide!);
 
 }
 
@@ -150,5 +161,6 @@ void ar1000_eeprom_write()
  */
 void ar1000_eeprom_write_to_regiters()
 {
+	ar1000_send(0x2B, 1, data_vide!);
 
 }

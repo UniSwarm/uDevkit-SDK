@@ -14,12 +14,6 @@
 #include <stdint.h>
 
 void ar1000_init(void);
-// char ar1000_status_value(); //BULLSHIT
-
-//TODO: a cacher dans .c
-void ar1000_send(uint8_t cmd, uint8_t size);
-void ar1000_received(uint8_t cmd, uint8_t size);
-void ar1000_send_cmd(uint8_t cmd, uint8_t size, char* data);
 
 //AR1000 Commands
 void ar1000_get_version();
