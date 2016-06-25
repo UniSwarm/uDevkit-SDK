@@ -53,9 +53,13 @@ int init_io()
 		RPINR19bits.U2RXR = 97; // RX2 ==> RP97 AXrx
 		RPOR14bits.RP120R = 0b000011; // TX2 ==> RP120 AXtx
 		
-		// UART3 pins (debug)
-		RPINR27bits.U3RXR = 86; // RX3 ==> RPI86 AS7
-		RPOR6bits.RP85R = 0b011011; // TX3 ==> RP85 AS6
+		// UART3 pins (A6)
+		RPINR27bits.U3RXR = 72; // RX3 ==> RPI72 A6rx
+		RPOR1bits.RP66R = 0b011011; // TX3 ==> RP66 A6tx
+		
+		// UART4 pins (debug)
+		RPINR28bits.U4RXR = 86; // RX4 ==> RPI86 AS7
+		RPOR6bits.RP85R = 0b011101; // TX4 ==> RP85 AS6
 		
 		// QEI1 pins (coder 1)
 		RPINR14bits.QEA1R = 119; // C1A ==> RPI119
