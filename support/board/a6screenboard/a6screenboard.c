@@ -16,6 +16,7 @@ int init_io()
 {
 	ANSELB = 0x0000;	// all analog inputs of port B as digital buffer
 	ANSELD = 0x0000;	// all analog inputs of port D as digital buffer
+	ANSELE = 0x0000;	// all analog inputs of port E as digital buffer
 	ANSELG = 0x0000;	// all analog inputs of port G as digital buffer
 	
 	TRISDbits.TRISD3 = 0;		// SCREEN_RD pin as output

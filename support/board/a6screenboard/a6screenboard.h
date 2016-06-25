@@ -31,6 +31,8 @@ int init_board();
 #define SCREEN_LEDBL	LATEbits.LATE4
 
 // A6
-#define A6_RW			LATFbits.LATF1
+#define A6_RW			LATFbits.LATF1		// A6 trancever direction
+#define A6_WRITE 1
+#define A6_READ 0
 
 #endif // A6SCREENBOARD_H
