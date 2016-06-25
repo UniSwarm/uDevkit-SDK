@@ -7,6 +7,11 @@
  * 
  * @brief Support for motor control with positionning
  */
+ 
+#include <xc.h>
+
+#include "driver/qei.h"
+#include "driver/motor.h"
 
 void setup_timer1()
 {
@@ -36,10 +41,28 @@ int xi, yi;
 long int err, preverr=0;
 long int pid;
 
-void locTask()
+rt_dev_t coder1;
+rt_dev_t coder2;
+
+int asserv_init()
 {
-	c1 = getCoder1();
-	c2 = getCoder2();
+    coder1 = qei_getFreeDevice();
+    qei_setConfig(coder1, 0);
+    qei_enable(coder1);
+    
+    coder2 = qei_getFreeDevice();
+    qei_setConfig(coder2, 0);
+    qei_enable(coder2);
+    
+    setup_timer1();
+    
+    return 0;
+}
+
+void asserv_locTask()
+{
+	c1 = qei_getValue(coder1);
+	c2 = qei_getValue(coder2);
 	
 	// loc
 	v1=c1-ancc1;
@@ -65,7 +88,7 @@ void locTask()
 unsigned short k = 8, p = 4;
 void __attribute__ ((interrupt,no_auto_psv)) _T1Interrupt(void)
 {
-	locTask();
+	asserv_locTask();
 	
 	// log
 	if(i<1000)
@@ -84,23 +107,23 @@ void __attribute__ ((interrupt,no_auto_psv)) _T1Interrupt(void)
 	pid = err * k + (err - preverr) * p;
 	
 	if(pid<1000 && pid>-1000) pid=0;
-	setMotor1(pid/4);
+	motor_setPower(1, pid/4);
 	
 	preverr = err;
 	IFS0bits.T1IF = 0;
 }
 
-int getXPos()
+int asserv_getXPos()
 {
 	return (int)x;
 }
 
-int getYPos()
+int asserv_getYPos()
 {
 	return (int)y;
 }
 
-int getTPos()
+int asserv_getTPos()
 {
 	return (int)(180.0*t/3.1415);
 }

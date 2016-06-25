@@ -3,11 +3,9 @@ ASSERV_DRIVER=
 
 vpath %.c $(DRIVERPATH)
 
-HEADER += asserv.h
+DRIVERS += qei motor
 
-ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ep dspic33fj))
- SRC += asserv_dspic.c
- HEADER += asserv_dspic.h
-endif
+HEADER += asserv.h
+SRC += asserv.c
 
 endif
