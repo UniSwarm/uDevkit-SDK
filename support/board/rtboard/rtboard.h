@@ -51,5 +51,7 @@ int init_board();
 
 // A6
 #define A6_RW LATDbits.LATD1		// A6 trancever direction
+#define A6_WRITE 1
+#define A6_READ 0
 
 #endif // RTBOARD_H

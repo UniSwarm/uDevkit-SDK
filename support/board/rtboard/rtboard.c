@@ -40,6 +40,7 @@ int init_io()
 	TRISBbits.TRISB11 = 0;		// M4B pin as output
 	
 	TRISBbits.TRISB3 = 0;		// AX12_TXEN pin as output
+	TRISDbits.TRISD1 = 0;		// A6_RW pin as output
 	
 	// remappable pins
 	// Unlock configuration pin
