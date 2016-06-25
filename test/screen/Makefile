@@ -4,9 +4,9 @@ PROJECT = testproj
 BOARD = a6screenboard
 OUT_PWD = build
 
-DRIVERS += uart lcd
+DRIVERS += a6 lcd
 
-SRC += main.c
+SRC += main.c courier8b.c
 
 PICTURES += picture.jpg
 

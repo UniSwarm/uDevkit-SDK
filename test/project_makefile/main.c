@@ -19,7 +19,10 @@ int main(void)
 	// warning keep this init order before remap support
 	esp_init();
 	ax12_init();
+    a6_init();
+    
 	adc_init();
+    asserv_init();
 	
 	// uart debug init
 	uartDbg = uart_getFreeDevice();
@@ -29,9 +32,9 @@ int main(void)
 	
 	while(1)
 	{
-		for(j=0;j<10;j++) for(i=0;i<65000;i++);
+		for(j=0;j<20;j++) for(i=0;i<65000;i++);
 		LED = 0;
-		for(j=0;j<10;j++) for(i=0;i<65000;i++);
+		for(j=0;j<20;j++) for(i=0;i<65000;i++);
 		LED = 1;
 		
 		/*value = adc_getValue(24);	// AnS1
@@ -39,8 +42,14 @@ int main(void)
 		value = adc_getValue(26);	// AnS3
 		ax12_moveTo(1, value, 512, 512);
 		
-		sprintf(buff, "value: %dmm\r\n", sharp_convert(value, FarSharp));
+		sprintf(buff, "value: %dmm x: %d y:%d\r\n",
+				sharp_convert(value, FarSharp),
+				asserv_getXPos(),
+				asserv_getYPos()
+				);
+		
 		uart_write(uartDbg, buff, strlen(buff));
+		a6_write(buff, strlen(buff));
 		
 		value = uart_read(uartDbg, buff, 100);
 		if(value>0)
