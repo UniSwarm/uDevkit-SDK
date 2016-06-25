@@ -7,19 +7,14 @@
  * 
  * @brief Support for motors control
  */
+ 
+#include <xc.h>
 
 #include "motor.h"
 #include "driver/adc.h"
+#include "board.h"
 
 // <TODO replace theses functions by pwm support
-
-// seems to be useless, oc module can directly takes clock from sysclock
-void setup_timer2()
-{
-	T2CON  = 0b1000000000000000;	// FCY / 1
-	PR2 = 500;			// 15kHz
-}
-
 void setup_PWM1(void)
 {
 	M1A=0;
@@ -63,7 +58,6 @@ void setup_PWM4(void)
 
 int motor_init()
 {
-	//setup_timer2();
 	setup_PWM1();
 	setup_PWM2();
 	setup_PWM3();
