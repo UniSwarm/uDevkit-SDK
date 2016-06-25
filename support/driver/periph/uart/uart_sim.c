@@ -174,7 +174,7 @@ uint8_t uart_bitStop(rt_dev_t device)
     return stop << 1;
 }
 
-int uart_write(rt_dev_t device, const char *data, size_t size)
+ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 {
     size_t i;
 
@@ -188,7 +188,7 @@ int uart_write(rt_dev_t device, const char *data, size_t size)
     return 0;
 }
 
-size_t uart_read(rt_dev_t device, char *data, size_t size_max)
+ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
 {
 	size_t size_read;
     uint8_t uart = MINOR(device);

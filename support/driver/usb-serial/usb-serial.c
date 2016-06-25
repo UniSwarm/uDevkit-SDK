@@ -39,7 +39,7 @@ void usbserial_task()
     
 }
 
-size_t usbserial_write(const char *data, const size_t size)
+ssize_t usbserial_write(const char *data, const size_t size)
 {
     uint8_t *ptrData;
     size_t sizeToWrite;
@@ -66,7 +66,7 @@ size_t usbserial_write(const char *data, const size_t size)
     return size;
 }
 
-size_t usbserial_read(char *data, const size_t max_size)
+ssize_t usbserial_read(char *data, const size_t max_size)
 {
     return 0;
 }

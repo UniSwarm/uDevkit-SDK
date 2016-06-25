@@ -13,6 +13,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <sys/types.h>
 
 // dev_t definition and macro helpers
 typedef uint16_t rt_dev_t;

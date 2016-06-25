@@ -36,13 +36,13 @@ int spi_setBitConfig(rt_dev_t device, uint8_t bitLenght);
 uint8_t spi_bitLenght(rt_dev_t device);
 
 // ========= device write ========
-int spi_write(rt_dev_t device, const char *data, size_t size);
+ssize_t spi_write(rt_dev_t device, const char *data, size_t size);
 int spi_flush(rt_dev_t device);
 
 // ========= device read =========
 char spi_getc(rt_dev_t device);
 uint16_t spi_getw(rt_dev_t device);
 uint8_t spi_datardy(rt_dev_t device);
-size_t spi_read(rt_dev_t device, char *data, size_t size_max);
+ssize_t spi_read(rt_dev_t device, char *data, size_t size_max);
 
 #endif // SPI_H

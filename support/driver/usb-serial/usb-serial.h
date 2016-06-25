@@ -18,7 +18,7 @@
 void usbserial_init();
 void usbserial_task();
 
-size_t usbserial_write(const char *data, const size_t size);
-size_t usbserial_read(char *data, const size_t max_size);
+ssize_t usbserial_write(const char *data, const size_t size);
+ssize_t usbserial_read(char *data, const size_t max_size);
 
 #endif // USB_SERIAL_H
