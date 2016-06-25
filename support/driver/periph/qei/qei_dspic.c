@@ -27,7 +27,7 @@ uint8_t qei_config[QEI_COUNT + 1] = {0};
  */
 rt_dev_t qei_getFreeDevice()
 {
-    if (qei_state & 0x01)
+    if (!(qei_state & 0x01))
     {
         qei_state = qei_state | 0x01;
 #ifdef QEI_V1
@@ -36,7 +36,7 @@ rt_dev_t qei_getFreeDevice()
         return MKDEV(DEV_CLASS_QEI, 1);
     }
 #if QEI_COUNT>=2
-    if (qei_state & 0x02)
+    if (!(qei_state & 0x02))
     {
         qei_state = qei_state | 0x02;
 #    ifdef QEI_V1
