@@ -8,7 +8,7 @@ UART driver support for hardware abstraction layer
 	uart_setBaudSpeed(uart, 115200);
 	uart_setBitConfig(uart, 8, UART_BIT_PARITY_NONE, 1);
 	uart_enable(uart);
-	
+
 	// send data
 	uart_putc(uart, 'A');
 
