@@ -22,9 +22,9 @@ int a6_init()
 	a6_uart = uart_getFreeDevice();
 	uart_setBaudSpeed(a6_uart, 1000000);
 	uart_setBitConfig(a6_uart, 8, UART_BIT_PARITY_NONE, 1);
-    
+
     A6_RW = A6_READ;
-    
+
 	uart_enable(a6_uart);
 	return 0;
 }
