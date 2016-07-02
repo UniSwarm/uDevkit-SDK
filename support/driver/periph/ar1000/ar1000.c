@@ -1,6 +1,6 @@
 #include "ar.h"
 
-
+rt_dev_t ar1000_uart;
 //PROTECTED FUNCTIONS
 
 /**
@@ -51,10 +51,17 @@ void ar1000_send_cmd(uint8_t cmd, uint8_t size, char* data)
 /**
  * @brief ar1000_init Setup the device
  */
-void ar1000_init(void)
+void ar1000_init()
 {
 	//set uart mode
 	//set microcontroller M1 pin to 1... cf doc
+	ar1000_uart = uart_getFreeDevice(); //WARNING: remapable pin ?
+	uart_setBaudSpeed(ar1000_uart, 9600); //WARNING: baud rate unit ??? 
+	//some other stuff ??
+	uart_enable(ar1000_uart); //connected to pin 1 ????
+
+	//TODO: set i2c mode
+	//TODO: set spi mode
 }
 
 /**
@@ -68,7 +75,7 @@ void ar1000_get_version()
 	// Recommended Values: <4, 8, 16>
 
 	uint8_t type = 0x00001010;
-	7-6bits: 00: 8bits; 01: 10bits; 10: 12bits
+	// 7-6bits: 00: 8bits; 01: 10bits; 10: 12bits
 
 	ar1000_send(cmd, size, data_vide!);
 	ar1000_receive(cmd, size, data_vide!);
