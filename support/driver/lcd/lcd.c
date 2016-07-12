@@ -316,28 +316,70 @@ void lcd_drawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 	//lcd_drawRect(x, y, w, h);
 }
 
-void lcd_drawText(uint16_t x1, uint16_t y1, const char *txt)
+void lcd_drawText(uint16_t x, uint16_t y, const char *txt)
 {
-	int i, j, octet;
+    lcd_drawTextRect(x, y, lcd_getFontTextWidth(txt), lcd_getFontHeight(), txt, LCD_FONT_ALIGN_VLEFT | LCD_FONT_ALIGN_HTOP);
+}
+
+void lcd_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char *txt, uint8_t flags)
+{
+	int16_t octet;
+	uint16_t i, j;
 	char bit;
 	const Letter *letter;
     const char *c;
-    uint16_t width;
+    uint16_t width, xstartdec, xenddec;
+    uint16_t height, ystartdec, yenddec;
+    
+    if(x>=LCD_WIDTH || y>=LCD_HEIGHT)
+        return;
     
     // width calculation
-    width = 0;
-    c = txt;
-	while (*c != '\0')
-	{
-        if (*c >= _lcd_font->first && *c <= _lcd_font->last)
-            width += _lcd_font->letters[*c - _lcd_font->first]->width;
-        c++;
-    }   
-    if(width > LCD_WIDTH - x1)
-        width = LCD_WIDTH - x1;
+    width = lcd_getFontTextWidth(txt);
+    if((flags&0x03) == LCD_FONT_ALIGN_VLEFT)
+    {
+        xstartdec = 0;
+        xenddec = w - width;
+    }
+    else if((flags&0x03) == LCD_FONT_ALIGN_VRIGHT)
+    {
+        xstartdec = w - width;
+        xenddec = 0;
+    }
+    else
+    {
+        xstartdec = (w - width)>>1;
+        xenddec = w - width - xstartdec;
+    }
+    
+    if(width > LCD_WIDTH - x)
+        width = LCD_WIDTH - x;
+    
+    // height calculation
+    height = lcd_getFontHeight();
+    if((flags&0x0C) == LCD_FONT_ALIGN_HTOP)
+    {
+        ystartdec = 0;
+        yenddec = h - height;
+    }
+    else if((flags&0x0C) == LCD_FONT_ALIGN_HBOTTOM)
+    {
+        ystartdec = h - height;
+        yenddec = 0;
+    }
+    else
+    {
+        ystartdec = (h - height)>>1;
+        yenddec = h - height - ystartdec;
+    }
     
     // windows text size
-	lcd_setRectScreen(x1, y1, width, _lcd_font->height);
+	lcd_setRectScreen(x, y, w, h);
+    
+    // xstartdec
+    for(j = 0; j < xstartdec; j++)
+        for(i = 0; i < h; i++)
+            lcd_write_data(_lcd_brushColor);
     
     // writting pixels chars
     c = txt;
@@ -349,9 +391,11 @@ void lcd_drawText(uint16_t x1, uint16_t y1, const char *txt)
 			letter = _lcd_font->letters[*c - _lcd_font->first];
 			for(j = 0; j < letter->width; j++)
 			{
+                for(i = 0; i < ystartdec; i++)
+                    lcd_write_data(_lcd_brushColor);
 				for(i = 0; i < _lcd_font->height; i++)
 				{
-					if (i%8 == 0)
+					if ((i&0x0007) == 0)
 					{
 						bit = 1;
                         octet++;
@@ -362,13 +406,47 @@ void lcd_drawText(uint16_t x1, uint16_t y1, const char *txt)
 						lcd_write_data(_lcd_brushColor);
 					bit = bit << 1;
 				}
+                for(i = 0; i < yenddec; i++)
+                    lcd_write_data(_lcd_brushColor);
 			}
 		}
 		c++;
     }
+    
+    // xenddec
+    for(j = 0; j < xenddec; j++)
+        for(i = 0; i < h; i++)
+            lcd_write_data(_lcd_brushColor);
+	
+	// restore full draw screen
+	lcd_setRectScreen(0, 0, LCD_WIDTH, LCD_HEIGHT);
 }
 
 void lcd_setFont(const Font *font)
 {
     _lcd_font = font;
+}
+
+uint8_t lcd_getFontHeight()
+{
+    return _lcd_font->height;
+}
+
+uint8_t lcd_getFontWidth(const char c)
+{
+    return _lcd_font->letters[c - _lcd_font->first]->width;
+}
+
+uint16_t lcd_getFontTextWidth(const char *txt)
+{
+    uint16_t width = 0;
+    const char *c = txt;
+	while (*c != '\0')
+	{
+        if (*c >= _lcd_font->first && *c <= _lcd_font->last)
+            width += _lcd_font->letters[*c - _lcd_font->first]->width;
+        c++;
+    }
+    
+    return width;
 }

@@ -45,17 +45,31 @@ void lcd_init(void);
 void lcd_fillScreen(uint16_t bColor);
 void lcd_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, __prog__ const uint16_t *img);
 
+// color
 void lcd_setPenColor(Color color);
 Color lcd_penColor(void);
 void lcd_setBrushColor(Color color);
 Color lcd_brushColor(void);
 
+// geometry paint
 void lcd_drawPoint(uint16_t x, uint16_t y);
 void lcd_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);
-void lcd_drawRect(uint16_t x1, uint16_t y1, uint16_t sizeX, uint16_t sizeY);
-void lcd_drawFillRect(uint16_t x1, uint16_t y1, uint16_t sizeX, uint16_t sizeY);
+void lcd_drawRect(uint16_t x1, uint16_t y1, uint16_t w, uint16_t h);
+void lcd_drawFillRect(uint16_t x1, uint16_t y1, uint16_t w, uint16_t h);
 
+// font support
+#define LCD_FONT_ALIGN_VLEFT     0x01   // |TXT        |
+#define LCD_FONT_ALIGN_VRIGHT    0x02   // |        TXT|
+#define LCD_FONT_ALIGN_VMIDDLE   0x03   // |    TXT    |
+                                        // _____________
+#define LCD_FONT_ALIGN_HTOP      0x04   //      TOP
+#define LCD_FONT_ALIGN_HMIDDLE   0x0C   //    MIDDLE
+#define LCD_FONT_ALIGN_HBOTTOM   0x08   //    BOTTOM
 void lcd_drawText(uint16_t x1, uint16_t y1, const char *txt);
+void lcd_drawTextRect(uint16_t x1, uint16_t y1, uint16_t w, uint16_t h, const char *txt, uint8_t flags);
 void lcd_setFont(const Font *font);
+uint8_t lcd_getFontHeight();
+uint8_t lcd_getFontWidth(const char c);
+uint16_t lcd_getFontTextWidth(const char *txt);
 
 #endif // LCD_H
