@@ -11,7 +11,11 @@
 #ifndef AR1000_H
 #define AR1000_H
 
-#include <stdint.h>
+#include "driver/device.h"
+
+#define AR1000_UART 1
+#define AR1000_SPI  2
+#define AR1000_I2C  2
 
 void ar1000_init(void);
 

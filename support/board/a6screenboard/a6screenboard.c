@@ -35,6 +35,10 @@ int init_io()
 		RPINR18bits.U1RXR = 80; // RX ==> RP80
 		RPOR7bits.RP96R = 0b00001; // TX ==> RP96
 		
+		// UART2 pins (AR1000)
+		RPINR19bits.U2RXR = 118; // RX2 ==> RP118 AXrx
+		RPOR14bits.RP120R = 0b000011; // TX2 ==> RP120 AXtx
+		
 		// OC PWM luminosity
 		RPOR0bits.RP64R = 0b010000; // OC1 ==> RP64
 		

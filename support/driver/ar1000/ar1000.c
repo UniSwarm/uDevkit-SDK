@@ -1,18 +1,26 @@
-#include "ar.h"
+#include "ar1000.h"
 
-rt_dev_t ar1000_uart;
+#include <xc.h>
+#include <string.h>
+
+#include "driver/uart.h"
+#include "board.h"
+
+#if AR1021_MODE == AR1021_UART
+ rt_dev_t ar1000_uart;
+#endif
+
 //PROTECTED FUNCTIONS
-
 /**
  * @Brief ar1000_send
  */
-ssize_t ar1000_send(uint8_t cmd, uint8_t size, char* data)
+ssize_t ar1000_send(uint8_t cmd, const char *data, size_t size)
 {
 	char trame[20];
 	trame[0]=0x55;
 	trame[1]=size;
 	trame[2]=cmd;
-	trame[3]= data; //TODO: it that it?
+    memcpy(trame+3, data, size);
 
 	return uart_write(ar1000_uart, trame, size);
 }
@@ -20,16 +28,14 @@ ssize_t ar1000_send(uint8_t cmd, uint8_t size, char* data)
 /**
  * @Brief ar1000_receive
  */
-ssize_t ar1000_receive(uint8_t cmd, uint8_t size, char* data)
+ssize_t ar1000_receive(uint8_t cmd, char* data, uint8_t size)
 {
 	char trame[20];
-	trame[0]=0x55;
-	trame[1]=size;
-	trame[2]= ???; //VALUE ?
-	trame[3]=cmd;
-	trame[4]=data; //TODO: it that it?
+    size_t sizeRx = uart_read(ar1000_uart, trame, 20);
+    
+    // TODO process return
 
-	return uart_read(ar1000_uart, trame, size);
+	return 0;
 }
 
 /**
@@ -38,12 +44,12 @@ ssize_t ar1000_receive(uint8_t cmd, uint8_t size, char* data)
 void ar1000_send_cmd(uint8_t cmd, uint8_t size, char* data)
 {
 	ar1000_disable_touch();
-	ssize_t status = ar1000_send(cmd, size, data);
+	ssize_t status = ar1000_send(cmd, data, size);
 	
 	//TODO: evaluate "status" value ??
 	//TODO: wait 50ms; (cf doc)
 	
-	ar1000_receive(cmd, size, data);
+	ar1000_receive(cmd, data, size);
 	ar1000_enable_touch();
 }
 
@@ -56,11 +62,13 @@ void ar1000_send_cmd(uint8_t cmd, uint8_t size, char* data)
 void ar1000_init()
 {
 	//set uart mode
-	//set microcontroller M1 pin to 1... cf doc
-	ar1000_uart = uart_getFreeDevice(); //WARNING: remapable pin ?
-	uart_setBaudSpeed(ar1000_uart, 9600); //WARNING: baud rate unit ??? 
-	//some other stuff like uart_setBitConfig() ??
-	uart_enable(ar1000_uart); //connected to pin 1 ????
+    #if AR1021_MODE == AR1021_UART
+        AR1021_M1 = 1;
+        AR1021_SDO = 0;
+        ar1000_uart = uart_getFreeDevice();
+        uart_setBaudSpeed(ar1000_uart, 9600);
+        uart_enable(ar1000_uart);
+    #endif
 
 	//TODO: set i2c mode
 	//TODO: set spi mode
@@ -79,8 +87,8 @@ void ar1000_get_version()
 	uint8_t type = 0x00001010;
 	// 7-6bits: 00: 8bits; 01: 10bits; 10: 12bits
 
-	ar1000_send(cmd, size, data_vide!);
-	ar1000_receive(cmd, size, data_vide!);
+	//ar1000_send(cmd, size, data_vide!);
+	//ar1000_receive(cmd, data_vide, size);
 }
 
 /**

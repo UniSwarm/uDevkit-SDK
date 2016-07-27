@@ -30,6 +30,12 @@ int init_board();
 #define SCREEN_RST		LATDbits.LATD4
 #define SCREEN_LEDBL	LATEbits.LATE4
 
+// AR1021
+#define AR1000_MODE		AR1021_UART
+#define AR1000_M1		LATEbits.LATE6
+#define AR1000_INT		PORTEbits.RE7
+#define AR1000_SDO		LATGbits.LATG8
+
 // A6
 #define A6_RW			LATFbits.LATF1		// A6 trancever direction
 #define A6_WRITE 1
