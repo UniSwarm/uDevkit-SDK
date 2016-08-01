@@ -715,6 +715,37 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
     return size;
 }
 
+int uart_flush(rt_dev_t device)
+{
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+        return -1;
+
+    switch (uart)
+    {
+    case 0:
+        while (U1STAbits.TRMT);
+        break;
+#if UART_COUNT>=2
+    case 1:
+        while (U2STAbits.TRMT);
+        break;
+#endif
+#if UART_COUNT>=3
+    case 2:
+        while (U3STAbits.TRMT);
+        break;
+#endif
+#if UART_COUNT>=4
+    case 3:
+        while (U4STAbits.TRMT);
+        break;
+#endif
+    }
+
+    return 0;
+}
+
 /**
  * @brief
  * @param device
