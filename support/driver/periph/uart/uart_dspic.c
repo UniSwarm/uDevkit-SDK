@@ -220,6 +220,20 @@ int uart_disable(rt_dev_t device)
         U4MODEbits.UARTEN = 0;  // disable uart
         break;
 #endif
+#if UART_COUNT>=5
+    case 4:
+        IEC6bits.U5RXIE = 0;    // disable receive interrupt
+        IEC7bits.U5TXIE = 0;    // disable transmit interrupt
+        U5MODEbits.UARTEN = 0;  // disable uart
+        break;
+#endif
+#if UART_COUNT>=6
+    case 5:
+        IEC7bits.U6RXIE = 0;    // disable receive interrupt
+        IEC7bits.U6TXIE = 0;    // disable transmit interrupt
+        U6MODEbits.UARTEN = 0;  // disable uart
+        break;
+#endif
     }
 
     return 0;
@@ -284,6 +298,18 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
         U4BRG = uBrg - 1;
         break;
 #endif
+#if UART_COUNT>=5
+    case 4:
+        U5MODEbits.BRGH = hs;
+        U5BRG = uBrg - 1;
+        break;
+#endif
+#if UART_COUNT>=6
+    case 5:
+        U6MODEbits.BRGH = hs;
+        U6BRG = uBrg - 1;
+        break;
+#endif
     }
 
     return 0;
@@ -326,6 +352,18 @@ uint32_t uart_baudSpeed(rt_dev_t device)
     case 3:
         hs = U4MODEbits.BRGH;
         uBrg = U4BRG + 1;
+        break;
+#endif
+#if UART_COUNT>=5
+    case 4:
+        hs = U5MODEbits.BRGH;
+        uBrg = U5BRG + 1;
+        break;
+#endif
+#if UART_COUNT>=6
+    case 5:
+        hs = U6MODEbits.BRGH;
+        uBrg = U6BRG + 1;
         break;
 #endif
     }
@@ -406,6 +444,18 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLenght,
         U4MODEbits.PDSEL = bit;
         break;
 #endif
+#if UART_COUNT>=5
+    case 4:
+        U5MODEbits.STSEL = stop;
+        U5MODEbits.PDSEL = bit;
+        break;
+#endif
+#if UART_COUNT>=6
+    case 5:
+        U6MODEbits.STSEL = stop;
+        U6MODEbits.PDSEL = bit;
+        break;
+#endif
     }
     return 0;
 }
@@ -444,6 +494,18 @@ uint8_t uart_bitLenght(rt_dev_t device)
 #if UART_COUNT>=4
     case 3:
         if (U4MODEbits.PDSEL == 0b11)
+            lenght = 9;
+        break;
+#endif
+#if UART_COUNT>=5
+    case 3:
+        if (U5MODEbits.PDSEL == 0b11)
+            lenght = 9;
+        break;
+#endif
+#if UART_COUNT>=6
+    case 3:
+        if (U6MODEbits.PDSEL == 0b11)
             lenght = 9;
         break;
 #endif
@@ -489,6 +551,18 @@ uint8_t uart_bitParity(rt_dev_t device)
             parity = U4MODEbits.PDSEL;
         break;
 #endif
+#if UART_COUNT>=5
+    case 4:
+        if (U5MODEbits.PDSEL != 0b11)
+            parity = U5MODEbits.PDSEL;
+        break;
+#endif
+#if UART_COUNT>=6
+    case 5:
+        if (U6MODEbits.PDSEL != 0b11)
+            parity = U6MODEbits.PDSEL;
+        break;
+#endif
     }
 
     return parity;
@@ -525,6 +599,16 @@ uint8_t uart_bitStop(rt_dev_t device)
 #if UART_COUNT>=4
     case 3:
         stop = U4MODEbits.STSEL;
+        break;
+#endif
+#if UART_COUNT>=5
+    case 4:
+        stop = U5MODEbits.STSEL;
+        break;
+#endif
+#if UART_COUNT>=6
+    case 5:
+        stop = U6MODEbits.STSEL;
         break;
 #endif
     }
@@ -602,6 +686,42 @@ int uart_4_putc(char c)
 uint16_t uart_4_getw(uint16_t word);
 #endif
 
+#if UART_COUNT>=5
+
+int uart_5_putw(uint16_t word)
+{
+    while (U5STAbits.UTXBF);
+    U5TXREG = word;
+    return 0;
+}
+
+int uart_5_putc(char c)
+{
+    while (U5STAbits.UTXBF);
+    U5TXREG = c;
+    return 0;
+}
+uint16_t uart_5_getw(uint16_t word);
+#endif
+
+#if UART_COUNT>=6
+
+int uart_6_putw(uint16_t word)
+{
+    while (U6STAbits.UTXBF);
+    U6TXREG = word;
+    return 0;
+}
+
+int uart_6_putc(char c)
+{
+    while (U6STAbits.UTXBF);
+    U6TXREG = c;
+    return 0;
+}
+uint16_t uart_6_getw(uint16_t word);
+#endif
+
 /**
  * @brief Puts a char to the specified uart device
  * @param device uart device number
@@ -632,6 +752,16 @@ int uart_putc(rt_dev_t device, const char c)
 #if UART_COUNT>=4
     case 3:
         uart_4_putc(c);
+        break;
+#endif
+#if UART_COUNT>=5
+    case 4:
+        uart_5_putc(c);
+        break;
+#endif
+#if UART_COUNT>=6
+    case 5:
+        uart_6_putc(c);
         break;
 #endif
     }
@@ -671,6 +801,16 @@ int uart_putw(rt_dev_t device, const uint16_t word)
         uart_4_putw(word);
         break;
 #endif
+#if UART_COUNT>=5
+    case 4:
+        uart_5_putw(word);
+        break;
+#endif
+#if UART_COUNT>=6
+    case 5:
+        uart_6_putw(word);
+        break;
+#endif
     }
 
     return 0;
@@ -703,6 +843,16 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 #if UART_COUNT>=4
     case 3:
         uart_putc_fn = &uart_4_putc;
+        break;
+#endif
+#if UART_COUNT>=5
+    case 4:
+        uart_putc_fn = &uart_5_putc;
+        break;
+#endif
+#if UART_COUNT>=6
+    case 5:
+        uart_putc_fn = &uart_6_putc;
         break;
 #endif
     }
@@ -739,6 +889,16 @@ int uart_flush(rt_dev_t device)
 #if UART_COUNT>=4
     case 3:
         while (U4STAbits.TRMT);
+        break;
+#endif
+#if UART_COUNT>=5
+    case 4:
+        while (U5STAbits.TRMT);
+        break;
+#endif
+#if UART_COUNT>=6
+    case 5:
+        while (U6STAbits.TRMT);
         break;
 #endif
     }
@@ -854,5 +1014,41 @@ void __attribute__((interrupt, no_auto_psv)) _U4RXInterrupt(void)
     fifo_push(&uarts[3].buffRx, rec, 1);
 
     IFS5bits.U4RXIF = 0;
+}
+#endif
+
+#if UART_COUNT>=5
+void __attribute__((interrupt, no_auto_psv)) _U5TXInterrupt(void)
+{
+    //
+    IFS7bits.U5TXIF = 0;
+}
+
+void __attribute__((interrupt, no_auto_psv)) _U5RXInterrupt(void)
+{
+    char rec[4];
+    rec[0] = U5RXREG;
+
+    fifo_push(&uarts[4].buffRx, rec, 1);
+
+    IFS6bits.U5RXIF = 0;
+}
+#endif
+
+#if UART_COUNT>=6
+void __attribute__((interrupt, no_auto_psv)) _U6TXInterrupt(void)
+{
+    //
+    IFS7bits.U6TXIF = 0;
+}
+
+void __attribute__((interrupt, no_auto_psv)) _U4RXInterrupt(void)
+{
+    char rec[4];
+    rec[0] = U6RXREG;
+
+    fifo_push(&uarts[5].buffRx, rec, 1);
+
+    IFS7bits.U6RXIF = 0;
 }
 #endif
