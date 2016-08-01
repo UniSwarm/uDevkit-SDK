@@ -194,4 +194,18 @@ char uart_4_getc();
 uint16_t uart_4_getw();
 #endif
 
+#if UART_COUNT>=5
+int uart_5_putw(uint16_t word);
+int uart_5_putc(char c);
+char uart_5_getc();
+uint16_t uart_5_getw();
+#endif
+
+#if UART_COUNT>=6
+int uart_6_putw(uint16_t word);
+int uart_6_putc(char c);
+char uart_6_getc();
+uint16_t uart_6_getw();
+#endif
+
 #endif // UART_DSPIC_H

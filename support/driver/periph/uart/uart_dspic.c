@@ -39,6 +39,12 @@ struct uart_dev uarts[] = {
 #if UART_COUNT>=4
     {.baudSpeed=0},
 #endif
+#if UART_COUNT>=5
+    {.baudSpeed=0},
+#endif
+#if UART_COUNT>=6
+    {.baudSpeed=0},
+#endif
 };
 
 /**
@@ -140,6 +146,34 @@ int uart_enable(rt_dev_t device)
 
         U4MODEbits.UARTEN = 1;  // enable transmiter
         U4STAbits.UTXEN = 1;    // enable uart
+        break;
+#endif
+#if UART_COUNT>=5
+    case 4:
+        IPC27bits.U5RXIP = 6;   // interrupt priority for receptor
+        IFS6bits.U5RXIF = 0;    // clear receive Flag
+        IEC6bits.U5RXIE = 1;    // enable receive interrupt
+
+        IPC28bits.U5TXIP = 5;   // interrupt priority for transmitor
+        IFS7bits.U5TXIF = 0;    // clear transmit Flag
+        IEC7bits.U5TXIE = 0;    // disable transmit interrupt
+
+        U5MODEbits.UARTEN = 1;  // enable transmiter
+        U5STAbits.UTXEN = 1;    // enable uart
+        break;
+#endif
+#if UART_COUNT>=6
+    case 5:
+        IPC28bits.U6RXIP = 6;   // interrupt priority for receptor
+        IFS7bits.U6RXIF = 0;    // clear receive Flag
+        IEC7bits.U6RXIE = 1;    // enable receive interrupt
+
+        IPC28bits.U6TXIP = 5;   // interrupt priority for transmitor
+        IFS7bits.U6TXIF = 0;    // clear transmit Flag
+        IEC7bits.U6TXIE = 0;    // disable transmit interrupt
+
+        U6MODEbits.UARTEN = 1;  // enable transmiter
+        U6STAbits.UTXEN = 1;    // enable uart
         break;
 #endif
     }
