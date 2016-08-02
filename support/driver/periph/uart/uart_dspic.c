@@ -498,13 +498,13 @@ uint8_t uart_bitLenght(rt_dev_t device)
         break;
 #endif
 #if UART_COUNT>=5
-    case 3:
+    case 4:
         if (U5MODEbits.PDSEL == 0b11)
             lenght = 9;
         break;
 #endif
 #if UART_COUNT>=6
-    case 3:
+    case 5:
         if (U6MODEbits.PDSEL == 0b11)
             lenght = 9;
         break;
