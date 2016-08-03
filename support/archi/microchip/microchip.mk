@@ -1,7 +1,7 @@
 
 # IPE_EXE cmd
 ifeq ($(OS),Windows_NT)
- IPE_EXE := ipecmd
+ IPE_EXE := ipecmd.exe
 else
  IPE_EXE := ipecmd.sh
 endif
