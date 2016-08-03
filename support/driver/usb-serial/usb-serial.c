@@ -13,15 +13,24 @@
 #include "usb_device.h"
 #include "usb_device_cdc.h"
 
+#include "sys/fifo.h"
+
+#define UARTSERIAL_BUFFRX_SIZE 512
+STATIC_FIFO(usbserial_buffrx, UARTSERIAL_BUFFRX_SIZE);
+uint8_t buffer[64];
+
 void usbserial_init()
 {
 	SYSTEM_Initialize(SYSTEM_STATE_USB_START);
     USBDeviceInit();
     USBDeviceAttach();
+    STATIC_FIFO_INIT(usbserial_buffrx, UARTSERIAL_BUFFRX_SIZE);
 }
 
 void usbserial_task()
 {
+    uint16_t size_rec;
+    
 	if( USBGetDeviceState() < CONFIGURED_STATE )
 		return;
 	if( USBIsDeviceSuspended() == true )
@@ -31,12 +40,11 @@ void usbserial_task()
 	CDCTxService();
     
     // receive service
-    /*numBytes = getsUSBUSART(buffer,sizeof(buffer));
-    if(numBytes > 0)
+    size_rec = getsUSBUSART(buffer, sizeof(buffer));
+    if(size_rec > 0)
     {
-        // TODO
-    }*/
-    
+        fifo_push(&usbserial_buffrx, (char*)buffer, size_rec);
+    }
 }
 
 ssize_t usbserial_write(const char *data, const size_t size)
@@ -68,7 +76,7 @@ ssize_t usbserial_write(const char *data, const size_t size)
 
 ssize_t usbserial_read(char *data, const size_t max_size)
 {
-    return 0;
+    return fifo_pop(&usbserial_buffrx, data, max_size);
 }
 
 bool USER_USB_CALLBACK_EVENT_HANDLER(USB_EVENT event, void *pdata, uint16_t size)

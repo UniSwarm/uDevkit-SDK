@@ -11,8 +11,7 @@
 #ifndef USB_SERIAL_H
 #define USB_SERIAL_H
 
-#include <stdint.h>
-#include <stdlib.h>
+#include "driver/device.h"
 
 // API
 void usbserial_init();

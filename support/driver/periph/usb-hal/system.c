@@ -64,7 +64,7 @@ void SYSTEM_Initialize( SYSTEM_STATE state )
             //official USB compliance isn't critical), nothing strictly needs
             //to be done during USB suspend.
 
-            USBSleepOnSuspend();
+            //USBSleepOnSuspend();
             break;
 
         case SYSTEM_STATE_USB_RESUME:
