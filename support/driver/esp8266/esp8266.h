@@ -28,6 +28,9 @@ void esp_close_socket(uint8_t sock);
 void esp_write_socket(uint8_t sock, char *data, uint16_t size);
 void esp_write_socket_string(uint8_t sock, char *str);
 
+void esp_server_create(uint16_t port);
+void esp_server_destroy();
+
 typedef enum
 {
     FSM_UNKNOW = 0,

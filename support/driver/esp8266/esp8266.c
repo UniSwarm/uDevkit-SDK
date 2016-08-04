@@ -39,6 +39,10 @@ void esp_init()
     
     // buffer cmd construction init
     STATIC_BUFFER_INIT(buff, 100);
+    
+    // esp config cmd
+    esp_send_cmd("ATE0\r\n");
+    esp_send_cmd("AT+CIPMUX=1\r\n");
 }
 
 void esp_send_cmd(char cmd[])
@@ -317,7 +321,7 @@ uint8_t esp_open_udp_socket(char *ip_domain, uint16_t port, uint16_t localPort, 
 void esp_set_mode(ESP_MODE mode)
 {
     buffer_clear(&buff);
-    buffer_astring(&buff, "AT+CWMODE=");
+    buffer_astring(&buff, "AT+CWMODE_CUR=");
 
     if(mode==ESP_MODE_AP) buffer_achar(&buff, '2');
     else if(mode==ESP_MODE_STA_AP) buffer_achar(&buff, '3');
@@ -333,7 +337,7 @@ uint8_t esp_connect_ap(char *ssid, char *pw)        // warning, be careful to sp
     char protected[64];
     
     buffer_clear(&buff);
-    buffer_astring(&buff, "AT+CWJAP=\"");
+    buffer_astring(&buff, "AT+CWJAP_CUR=\"");
     
     esp_protectstr(protected, ssid);
     buffer_astring(&buff, protected);
@@ -391,4 +395,19 @@ void esp_write_socket_string(uint8_t sock, char *str)
 void esp_write(char *data, uint16_t size)
 {
     uart_write(esp_uart, data, size);
+}
+
+void esp_server_create(uint16_t port)
+{
+    buffer_clear(&buff);
+    buffer_astring(&buff, "AT+CIPSERVER=1,");
+    buffer_aint(&buff, (int)port);
+    buffer_astring(&buff, "\r\n");
+    esp_send_cmddat(buff.data, buff.size);
+}
+
+void esp_server_destroy()
+{
+    esp_send_cmd("AT+CIPSERVER=0\r\n");
+    return 0;
 }
