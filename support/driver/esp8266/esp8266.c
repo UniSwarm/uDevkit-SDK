@@ -7,24 +7,22 @@
 //#include <xc.h>
 
 #include "driver/uart.h"
-
-// data/commands to send to esp
-/*uint16_t idSend=0;
-uint16_t sizeSend=0;
-unsigned __attribute__((far)) char dataSend[2049];*/
+#include "sys/buffer.h"
 
 // data receive from esp
 uint8_t socket = 0;
 uint16_t sizeRecPacket = 0;
 uint16_t idRecPacket = 0;
 uint8_t recPacketFlag = 0;
-char __attribute__((far)) recPacket[2049];
+char /*__attribute__((far))*/ recPacket[2049];
 volatile WIFIstatus wifistatus = FSM_UNKNOW;
 
 volatile WIFI_STATE pendingState = WIFI_STATE_NONE;
 volatile WIFI_STATE state = WIFI_STATE_NONE;
 
 rt_dev_t esp_uart;
+
+STATIC_BUFFER(buff, 100);
 
 void esp_uart_init()
 {
@@ -33,15 +31,14 @@ void esp_uart_init()
     uart_setBaudSpeed(esp_uart, 115200);
     uart_setBitConfig(esp_uart, 8, UART_BIT_PARITY_NONE, 1);
     uart_enable(esp_uart);
-
-    // Uart Interrupt
-    /*IPC2bits.U1RXIP = 6;      // Interrupt priority for receptor
-    IPC3bits.U1TXIP = 5;        // Interrupt priority for transmitor*/
 }
 
 void esp_init()
 {
     esp_uart_init();
+    
+    // buffer cmd construction init
+    STATIC_BUFFER_INIT(buff, 100);
 }
 
 void esp_send_cmd(char cmd[])
@@ -223,24 +220,26 @@ void __attribute__ ((interrupt,no_auto_psv)) _U1RXInterrupt(void)
     IFS0bits.U1RXIF = 0;
 }*/
 
-char * esp_strcat_protected(char * destination, const char * source)
+char * esp_protectstr(char * destination, const char * source)
 {
     char *ptr, *ptrsource;
-    ptr = destination + strlen(destination);
+    ptr = destination;
     ptrsource = (char *)source;
 
     while(*ptrsource!=0)
     {
-        if(*ptrsource=='"' || *ptrsource==',' || *ptrsource=='\\') (*(ptr++))='\\';
+        if(*ptrsource=='"' || *ptrsource==',' || *ptrsource=='\\')
+            (*(ptr++))='\\';
         (*(ptr++))=*ptrsource;
         ptrsource++;
     }
+    (*ptr) = 0;
     return destination;
 }
 
 void wait_ok()
 {
-    while(state != WIFI_STATE_OK);
+    //while(state != WIFI_STATE_OK);
     state = WIFI_STATE_NONE;
 }
 
@@ -276,44 +275,73 @@ uint8_t getRec()
 
 uint8_t esp_open_tcp_socket(char *ip_domain, uint16_t port)
 {
-    // TODO implement with args
-    esp_send_cmd("AT+CIPSTART=0,\"TCP\",\"robotips.fr\",80\r\n");
+    char protected[64];
+    
+    buffer_clear(&buff);
+    buffer_astring(&buff, "AT+CIPSTART=\"TCP\",\"");
+    
+    esp_protectstr(protected, ip_domain);
+    buffer_astring(&buff, protected);
+    buffer_astring(&buff, "\",");
+    buffer_aint(&buff, port);
+
+    esp_send_cmd(buff.data);
     wait_ok();
     return 0;
 }
 
 uint8_t esp_open_udp_socket(char *ip_domain, uint16_t port, uint16_t localPort, uint8_t mode)
 {
-    // TODO implement me
+    char protected[64];
+    
+    buffer_clear(&buff);
+    buffer_astring(&buff, "AT+CIPSTART=\"UDP\",\"");
+    
+    esp_protectstr(protected, ip_domain);
+    buffer_astring(&buff, protected);
+    buffer_astring(&buff, "\",");
+    buffer_aint(&buff, (int)port);
+    buffer_achar(&buff, ',');
+    buffer_aint(&buff, (int)localPort);
+    buffer_achar(&buff, ',');
+    buffer_aint(&buff, (int)mode);
+
+    esp_send_cmd(buff.data);
+    wait_ok();
     return 0;
 }
 
 void esp_set_mode(ESP_MODE mode)
 {
-    char buff[20];
-    strcpy(buff, "AT+CWMODE=");
+    buffer_clear(&buff);
+    buffer_astring(&buff, "AT+CWMODE=");
 
-    if(mode==ESP_MODE_AP) strcat(buff, "2");
-    else if(mode==ESP_MODE_STA_AP) strcat(buff, "3");
-    else strcat(buff, "1");
+    if(mode==ESP_MODE_AP) buffer_achar(&buff, '2');
+    else if(mode==ESP_MODE_STA_AP) buffer_achar(&buff, '3');
+    else buffer_achar(&buff, '1');
 
-    strcat(buff, "\r\n");
+    buffer_astring(&buff, "\r\n");
 
-    esp_send_cmd(buff);
+    esp_send_cmd(buff.data);
     wait_ok();
 }
 
 uint8_t esp_connect_ap(char *ssid, char *pw)        // warning, be careful to special car, protect with backslash
 {
-    char buff[100];
+    char protected[64];
+    
+    buffer_clear(&buff);
+    buffer_astring(&buff, "AT+CWJAP=\"");
+    
+    esp_protectstr(protected, ssid);
+    buffer_astring(&buff, protected);
+    buffer_astring(&buff, "\",\"");
+    
+    esp_protectstr(protected, pw);
+    buffer_astring(&buff, protected);
+    buffer_astring(&buff, "\"\r\n");
 
-    strcpy(buff, "AT+CWJAP=\"");
-    esp_strcat_protected(buff, ssid);
-    strcat(buff, "\",\"");
-    esp_strcat_protected(buff, ssid);
-    strcat(buff, "\"\r\n");
-
-    esp_send_cmd(buff);
+    esp_send_cmd(buff.data);
     wait_ok();
     return 0;
 }
@@ -327,21 +355,27 @@ uint8_t esp_disconnect_ap()
 
 void esp_close_socket(uint8_t sock)
 {
-    char buff[20];
-    strcpy(buff, "AT+CIPCLOSE=%\r\n");
-    (*strstr(buff, "%")) = sock + '0';
-    esp_send_cmd(buff);
+    if(sock > 4)
+        return;
+    
+    buffer_clear(&buff);
+    buffer_astring(&buff, "AT+CIPCLOSE=");
+    buffer_aint(&buff, sock);
+    buffer_astring(&buff, "\r\n");
+    
+    esp_send_cmd(buff.data);
     wait_ok();
 }
 
 void esp_write_socket(uint8_t sock, char *data, uint16_t size)
 {
-    char buff[20];
-    strcpy(buff, "AT+CIPSEND=%,");
-    (*strstr(buff, "%")) = sock + '0';
-    itoa(buff + strlen(buff), size, 10);
-    strcat(buff, "\r\n");
-    esp_send_cmd(buff);
+    buffer_clear(&buff);
+    buffer_astring(&buff, "AT+CIPSEND=");
+    buffer_aint(&buff, (int)sock);
+    buffer_achar(&buff, ',');
+    buffer_aint(&buff, (int)size);
+    buffer_astring(&buff, "\r\n");
+    esp_send_cmd(buff.data);
 
     while(state != WIFI_STATE_SEND_DATA);
     state = WIFI_STATE_NONE;
@@ -352,24 +386,10 @@ void esp_write_socket(uint8_t sock, char *data, uint16_t size)
 
 void esp_write_socket_string(uint8_t sock, char *str)
 {
-    uint16_t size=0;
-
-    while(str[size]!=0) size++;
-    esp_write_socket(sock, str, size);
+    esp_write_socket(sock, str, strlen(str)+1);
 }
 
 void esp_write(char *data, uint16_t size)
 {
-    /*uint16_t i=0;
-    idSend=1;
-
-    while(i<size)
-    {
-        dataSend[i]=data[i];
-        i++;
-    }
-    sizeSend=size;*/
-
-    /*U1TXREG = data[0];
-    IEC0bits.U1TXIE = 1;*/
+    uart_write(esp_uart, data, size);
 }
