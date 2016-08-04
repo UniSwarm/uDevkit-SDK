@@ -3,6 +3,6 @@ SYS_FILE=
 
 vpath %.c $(RTPROG)/support/sys/
 
-SRC += fifo.c
+SRC += fifo.c buffer.c
 
 endif
