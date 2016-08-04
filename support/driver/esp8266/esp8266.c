@@ -46,6 +46,11 @@ void esp_send_cmd(char cmd[])
     uart_write(esp_uart, cmd, strlen(cmd));
 }
 
+void esp_send_cmddat(char cmd[], size_t size)
+{
+    uart_write(esp_uart, cmd, size);
+}
+
 /*
 void __attribute__ ((interrupt,no_auto_psv)) _U1RXInterrupt(void)
 {
@@ -239,7 +244,7 @@ char * esp_protectstr(char * destination, const char * source)
 
 void wait_ok()
 {
-    //while(state != WIFI_STATE_OK);
+    while(state != WIFI_STATE_OK);
     state = WIFI_STATE_NONE;
 }
 
@@ -285,8 +290,7 @@ uint8_t esp_open_tcp_socket(char *ip_domain, uint16_t port)
     buffer_astring(&buff, "\",");
     buffer_aint(&buff, port);
 
-    esp_send_cmd(buff.data);
-    wait_ok();
+    esp_send_cmddat(buff.data, buff.size);
     return 0;
 }
 
@@ -306,8 +310,7 @@ uint8_t esp_open_udp_socket(char *ip_domain, uint16_t port, uint16_t localPort, 
     buffer_achar(&buff, ',');
     buffer_aint(&buff, (int)mode);
 
-    esp_send_cmd(buff.data);
-    wait_ok();
+    esp_send_cmddat(buff.data, buff.size);
     return 0;
 }
 
@@ -322,8 +325,7 @@ void esp_set_mode(ESP_MODE mode)
 
     buffer_astring(&buff, "\r\n");
 
-    esp_send_cmd(buff.data);
-    wait_ok();
+    esp_send_cmddat(buff.data, buff.size);
 }
 
 uint8_t esp_connect_ap(char *ssid, char *pw)        // warning, be careful to special car, protect with backslash
@@ -341,15 +343,13 @@ uint8_t esp_connect_ap(char *ssid, char *pw)        // warning, be careful to sp
     buffer_astring(&buff, protected);
     buffer_astring(&buff, "\"\r\n");
 
-    esp_send_cmd(buff.data);
-    wait_ok();
+    esp_send_cmddat(buff.data, buff.size);
     return 0;
 }
 
 uint8_t esp_disconnect_ap()
 {
     esp_send_cmd("AT+CWQAP\r\n");
-    wait_ok();
     return 0;
 }
 
@@ -363,8 +363,7 @@ void esp_close_socket(uint8_t sock)
     buffer_aint(&buff, sock);
     buffer_astring(&buff, "\r\n");
     
-    esp_send_cmd(buff.data);
-    wait_ok();
+    esp_send_cmddat(buff.data, buff.size);
 }
 
 void esp_write_socket(uint8_t sock, char *data, uint16_t size)
@@ -375,7 +374,7 @@ void esp_write_socket(uint8_t sock, char *data, uint16_t size)
     buffer_achar(&buff, ',');
     buffer_aint(&buff, (int)size);
     buffer_astring(&buff, "\r\n");
-    esp_send_cmd(buff.data);
+    esp_send_cmddat(buff.data, buff.size);
 
     while(state != WIFI_STATE_SEND_DATA);
     state = WIFI_STATE_NONE;
