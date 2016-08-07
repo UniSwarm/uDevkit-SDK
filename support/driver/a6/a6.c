@@ -34,7 +34,8 @@ ssize_t a6_write(const char *data, size_t size)
     ssize_t byte;
     A6_RW = A6_WRITE;
     byte = uart_write(a6_uart, data, size);
-    // flush
+    uart_flush(a6_uart);
+    A6_RW = A6_READ;
     return byte;
 }
 
