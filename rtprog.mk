@@ -37,7 +37,7 @@ empty:=
 space:= \n $(empty)
 modules.h : Makefile
 	@echo "generate module.h..."
-	@printf "\\n// include all modules in project\n$(subst $(space),\n,$(foreach DRIVER,$(sort $(DRIVERS)),#include \"driver/$(DRIVER).h\"\n))\n// defines use of modules\n$(subst $(space),\n,$(foreach DRIVER,$(sort $(DRIVERS)),#define USE_$(DRIVER)\n))" > modules.h
+	@printf "\n// defines use of modules\n$(subst $(space),\n,$(foreach DRIVER,$(sort $(DRIVERS)),#define USE_$(DRIVER)\n))\n// include all modules in project\n$(subst $(space),\n,$(foreach DRIVER,$(sort $(DRIVERS)),#include \"driver/$(DRIVER).h\"\n))" > modules.h
 
 FORCE : 
 	
