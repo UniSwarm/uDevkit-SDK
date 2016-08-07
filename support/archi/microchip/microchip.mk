@@ -18,11 +18,14 @@ elf : $(OUT_PWD)/$(PROJECT).elf
 hex : $(OUT_PWD)/$(PROJECT).hex
 
 # rule to build OBJECTS to OUT_PWD and give dependencies
-$(OUT_PWD)/%.o : %.c modules.h
-	@printf "µCC %-30s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+$(OUT_PWD)/%.d : %.c
+	@test -e modules.h || touch -t 197001010101 modules.h
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@$(CC) -mcpu=$(DEVICE) $(CCFLAGS) -c  $< $(DEFINES) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@)
 	@$(CC) -mcpu=$(DEVICE) $(CCFLAGS) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
+
+$(OUT_PWD)/%.o : %.c $(OUT_PWD)/%.d
+	@printf "µCC %-30s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@$(CC) -mcpu=$(DEVICE) $(CCFLAGS) -c  $< $(DEFINES) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@)
 
 # rule to link OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
