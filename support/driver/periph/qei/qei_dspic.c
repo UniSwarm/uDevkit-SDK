@@ -13,12 +13,12 @@
 #include <xc.h>
 
 #if !defined (QEI_COUNT) || QEI_COUNT==0
-  #error No device
+  #warning No device QEI periph on the current device
 #endif
 
 uint8_t qei_state = 0;
 #ifdef QEI_V1
-uint8_t qei_config[QEI_COUNT + 1] = {0};
+uint16_t qei_config[QEI_COUNT + 1] = {0};
 #endif
 
 /**
@@ -27,21 +27,23 @@ uint8_t qei_config[QEI_COUNT + 1] = {0};
  */
 rt_dev_t qei_getFreeDevice()
 {
+#if QEI_COUNT>=1
     if (!(qei_state & 0x01))
     {
         qei_state = qei_state | 0x01;
-#ifdef QEI_V1
+    #ifdef QEI_V1
         qei_config[1] = 0b0000011100000000;
-#endif
+    #endif
         return MKDEV(DEV_CLASS_QEI, 1);
     }
+#endif
 #if QEI_COUNT>=2
     if (!(qei_state & 0x02))
     {
         qei_state = qei_state | 0x02;
-#    ifdef QEI_V1
+    #ifdef QEI_V1
         qei_config[2] = 0b0000011100000000;
-#    endif
+    #endif
         return MKDEV(DEV_CLASS_QEI, 2);
     }
 #endif
@@ -55,9 +57,11 @@ rt_dev_t qei_getFreeDevice()
  */
 void qei_releaseDevice(rt_dev_t device)
 {
+#if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei == 1)
         qei_state = qei_state & 0xFE;
+#endif
 #if QEI_COUNT>=2
     if (qei == 2)
         qei_state = qei_state & 0xFD;
@@ -71,26 +75,37 @@ void qei_releaseDevice(rt_dev_t device)
  */
 int qei_enable(rt_dev_t device)
 {
+#if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei > QEI_COUNT)
         return -1;
+#else
+    return -1;
+#endif
 
 #ifdef QEI_V1
+  #if QEI_COUNT>=1
     if (qei == 1)
         QEI1CON = qei_config[1];
-#    if QEI_COUNT>=2
+  #endif
+  #if QEI_COUNT>=2
     if (qei == 2)
         QEI2CON = qei_config[2];
-#    endif
+  #endif
 #else
+  #if QEI_COUNT>=1
     if (qei == 1)
         QEI1CONbits.QEIEN = 1;
-#    if QEI_COUNT>=2
+  #endif
+  #if QEI_COUNT>=2
     if (qei == 2)
         QEI2CONbits.QEIEN = 1;
-#    endif
+  #endif
 #endif
+  
+#if QEI_COUNT>=1
     return 0;
+#endif
 }
 
 /**
@@ -100,26 +115,37 @@ int qei_enable(rt_dev_t device)
  */
 int qei_disable(rt_dev_t device)
 {
+#if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei > QEI_COUNT)
         return -1;
+#else
+    return -1;
+#endif
 
 #ifdef QEI_V1
+  #if QEI_COUNT>=1
     if (qei == 1)
         QEI1CONbits.QEIM = 0b000;
-#    if QEI_COUNT>=2
+  #endif
+  #if QEI_COUNT>=2
     if (qei == 2)
         QEI2CONbits.QEIM = 0b000;
-#    endif
+  #endif
 #else
+  #if QEI_COUNT>=1
     if (qei == 1)
         QEI1CONbits.QEIEN = 0;
-#    if QEI_COUNT>=2
+  #endif
+  #if QEI_COUNT>=2
     if (qei == 2)
         QEI2CONbits.QEIEN = 0;
-#    endif
+  #endif
 #endif
+  
+#if QEI_COUNT>=1
     return 0;
+#endif
 }
 
 /**
@@ -130,10 +156,11 @@ int qei_disable(rt_dev_t device)
  */
 int qei_setConfig(rt_dev_t device, uint16_t config)
 {
-    uint8_t qei = MINOR(device);
 #ifdef QEI_V1
     // TODO implement me
 #else
+  #if QEI_COUNT>=1
+    uint8_t qei = MINOR(device);
     if (qei == 1)
     {
         INDX1CNTH = 0xFFFF;
@@ -147,7 +174,8 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
 
         return 0;
     }
-#    if QEI_COUNT>=2
+  #endif
+  #if QEI_COUNT>=2
     if (qei == 2)
     {
         INDX2CNTH = 0xFFFF;
@@ -161,7 +189,7 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
 
         return 0;
     }
-#    endif
+  #endif
 #endif
     return -1;
 }
@@ -175,18 +203,22 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
  */
 uint32_t qei_getValue(rt_dev_t device)
 {
-    uint8_t qei = MINOR(device);
     uint32_t tmp32 = 0;
+  #if QEI_COUNT>=1
+    uint8_t qei = MINOR(device);
     if (qei == 1)
     {
         tmp32 = (uint32_t) POS1CNTL;
         tmp32 += (uint32_t) POS1HLD << 16;
     }
+  #endif
+  #if QEI_COUNT>=2
     if (qei == 2)
     {
         tmp32 = (uint32_t) POS2CNTL;
         tmp32 += (uint32_t) POS2HLD << 16;
     }
+  #endif
     return tmp32;
 }
 
@@ -204,11 +236,15 @@ int qei_setHomeValue(rt_dev_t device, uint32_t home)
  */
 uint16_t qei_getValue(rt_dev_t device)
 {
+  #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei == 1)
         return POS1CNT;
+  #endif
+  #if QEI_COUNT>=2
     if (qei == 2)
         return POS2CNT;
+  #endif
     return 0;
 }
 
