@@ -21,13 +21,13 @@ hex : $(OUT_PWD)/$(PROJECT).hex
 $(OUT_PWD)/%.d : %.c
 	@test -e modules.h || touch -t 197001010101 modules.h
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@$(CC) -mcpu=$(DEVICE) $(CCFLAGS) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
+	@$(CC) -mcpu=$(DEVICE) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
 $(OUT_PWD)/%.o : %.c $(OUT_PWD)/%.d
 	@printf "µCC %-30s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	@$(CC) -mcpu=$(DEVICE) $(CCFLAGS) -c  $< $(DEFINES) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@)
+	@$(CC) -mcpu=$(DEVICE) $(CCFLAGS) $(CCFLAGS_XC) -c  $< $(DEFINES) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@)
 
 # rule to link OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	@printf "µLD %-30s => %s\n" "*.o" $(OUT_PWD)/$(PROJECT).elf
-	@$(CC) $(CCFLAGS) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -T p$(DEVICE).gld
+	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -T p$(DEVICE).gld

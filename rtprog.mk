@@ -27,6 +27,7 @@ INCLUDEPATH += -I. -I$(RTPROG)/include
 clean: FORCE
 	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c
 	rm -f $(OUT_PWD)/$(PROJECT).elf
+	rm -f modules.h
 
 # dependencies
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)

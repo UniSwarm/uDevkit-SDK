@@ -5,7 +5,7 @@
  *
  * @date April 13, 2016, 11:49 AM
  *
- * @brief Uart support for rtprog
+ * @brief Uart simulator support for rtprog
  */
 
 #include "uart.h"
@@ -18,10 +18,6 @@
 #endif
 
 #include <stdio.h>
-#include <QApplication>
-#include <QMainWindow>
-#include <QPushButton>
-#include <pthread.h>
 
 #define UART_BUFFRX_SIZE 64
 
@@ -71,32 +67,11 @@ void uart_releaseDevice(rt_dev_t device)
     uarts[uart].baudSpeed = 0;
 }
 
-void *StartQAppThread(void *threadArg)
-{
-    int i=1;
-    char arg[]="app";
-    QApplication app(i,(char **)arg);
-    
-    QMainWindow w;
-    w.show();
-    w.setCentralWidget(new QPushButton("NewButton"));
-    
-    app.exec();
-    pthread_exit(NULL);
-    return 0;
-}
-
 int uart_enable(rt_dev_t device)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return -1;
-    
-    if(QApplication::instance()==NULL)
-    {
-        pthread_t thread1;  
-        int rc = pthread_create(&thread1, NULL, StartQAppThread, (void*)NULL);
-    }
 
     return 0;
 }
@@ -183,7 +158,7 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
         return -1;
 
     // TODO
-    // printf("%s", data); fflush(stdout);
+    printf("%s", data); fflush(stdout);
 
     return 0;
 }
