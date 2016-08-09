@@ -722,100 +722,6 @@ int uart_6_putc(char c)
 uint16_t uart_6_getw(uint16_t word);
 #endif
 
-/**
- * @brief Puts a char to the specified uart device
- * @param device uart device number
- * @param c char to send
- * @return 0 if ok, -1 in case of error
- */
-int uart_putc(rt_dev_t device, const char c)
-{
-    uint8_t uart = MINOR(device);
-    if (uart >= UART_COUNT)
-        return -1;
-
-    switch (uart)
-    {
-    case 0:
-        uart_1_putc(c);
-        break;
-#if UART_COUNT>=2
-    case 1:
-        uart_2_putc(c);
-        break;
-#endif
-#if UART_COUNT>=3
-    case 2:
-        uart_3_putc(c);
-        break;
-#endif
-#if UART_COUNT>=4
-    case 3:
-        uart_4_putc(c);
-        break;
-#endif
-#if UART_COUNT>=5
-    case 4:
-        uart_5_putc(c);
-        break;
-#endif
-#if UART_COUNT>=6
-    case 5:
-        uart_6_putc(c);
-        break;
-#endif
-    }
-
-    return 0;
-}
-
-/**
- * @brief Puts a word to the specified uart device
- * @param device uart device number
- * @param word word to send
- * @return 0 if ok, -1 in case of error
- */
-int uart_putw(rt_dev_t device, const uint16_t word)
-{
-    uint8_t uart = MINOR(device);
-    if (uart >= UART_COUNT)
-        return -1;
-
-    switch (uart)
-    {
-    case 0:
-        uart_1_putw(word);
-        break;
-#if UART_COUNT>=2
-    case 1:
-        uart_2_putw(word);
-        break;
-#endif
-#if UART_COUNT>=3
-    case 2:
-        uart_3_putw(word);
-        break;
-#endif
-#if UART_COUNT>=4
-    case 3:
-        uart_4_putw(word);
-        break;
-#endif
-#if UART_COUNT>=5
-    case 4:
-        uart_5_putw(word);
-        break;
-#endif
-#if UART_COUNT>=6
-    case 5:
-        uart_6_putw(word);
-        break;
-#endif
-    }
-
-    return 0;
-}
-
 ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 {
     size_t i;
@@ -903,23 +809,6 @@ int uart_flush(rt_dev_t device)
 #endif
     }
 
-    return 0;
-}
-
-/**
- * @brief
- * @param device
- * @return
- */
-char uart_getc(rt_dev_t device);
-
-/**
- * @brief
- * @param device uart device number
- * @return
- */
-uint16_t uart_getw(rt_dev_t device)
-{
     return 0;
 }
 
@@ -1042,7 +931,7 @@ void __attribute__((interrupt, no_auto_psv)) _U6TXInterrupt(void)
     IFS7bits.U6TXIF = 0;
 }
 
-void __attribute__((interrupt, no_auto_psv)) _U4RXInterrupt(void)
+void __attribute__((interrupt, no_auto_psv)) _U6RXInterrupt(void)
 {
     char rec[4];
     rec[0] = U6RXREG;

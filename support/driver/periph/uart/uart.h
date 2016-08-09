@@ -38,19 +38,14 @@ uint8_t uart_bitParity(rt_dev_t device);
 uint8_t uart_bitStop(rt_dev_t device);
 
 // ========= device write ========
-int uart_putc(rt_dev_t device, const char c);
-int uart_putw(rt_dev_t device, const uint16_t word);
-
 ssize_t uart_write(rt_dev_t device, const char *data, size_t size);
 int uart_flush(rt_dev_t device);
 
 // ========= device read =========
-char uart_getc(rt_dev_t device);
-uint16_t uart_getw(rt_dev_t device);
 uint8_t uart_datardy(rt_dev_t device);
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max);
 
-#if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33fj)
+#if defined(ARCHI_dspic30) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33fj)
 #include "uart_dspic.h"
 #else
 #error "Unsupported ARCHI"
