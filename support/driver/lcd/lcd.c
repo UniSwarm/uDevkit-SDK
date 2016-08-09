@@ -151,7 +151,7 @@ static void lcd_setPos(uint16_t x, uint16_t y)
 	lcd_write_command(0x22);
 }
 
-void lcd_fillScreen(uint16_t color)
+void lcd_fillScreen(Color color)
 {
 	uint16_t i,j;
 	lcd_setRectScreen(0, 0, LCD_WIDTH, LCD_HEIGHT);
@@ -427,6 +427,11 @@ void lcd_setFont(const Font *font)
     _lcd_font = font;
 }
 
+const Font *lcd_font()
+{
+    return _lcd_font;
+}
+
 uint8_t lcd_getFontHeight()
 {
     return _lcd_font->height;
@@ -434,6 +439,8 @@ uint8_t lcd_getFontHeight()
 
 uint8_t lcd_getFontWidth(const char c)
 {
+    if(c < _lcd_font->first || c > _lcd_font->last)
+        return 0;
     return _lcd_font->letters[c - _lcd_font->first]->width;
 }
 

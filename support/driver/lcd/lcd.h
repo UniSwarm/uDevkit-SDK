@@ -27,22 +27,20 @@ typedef uint16_t Color;
 #define Cyan           0x7FFF
 #define Yellow         0xFFE0
 
-#define WINDOW_XADDR_START	0x0045 // Horizontal Start Address Set
-#define WINDOW_XADDR_END	0x0044 // Horizontal End Address Set
+#define WINDOW_XADDR_START  0x0045 // Horizontal Start Address Set
+#define WINDOW_XADDR_END    0x0044 // Horizontal End Address Set
 #define WINDOW_YADDR_START	0x0047 // Vertical Start Address Set
-#define WINDOW_YADDR_END	0x0046 // Vertical End Address Set
-/*#define GRAM_XADDR		    0x0020 // GRAM Horizontal Address Set
-#define GRAM_YADDR		    0x0021 // GRAM Vertical Address Set*/
-#define GRAM_ADR_ROW_S 0x0020 /* init to 0 , UPDATE FIRST */
-#define GRAM_ADR_COL_S 0x0021 /* init to 319 , UPDATE LAST */
-#define GRAMWR 			    0x0022 // memory write
+#define WINDOW_YADDR_END    0x0046 // Vertical End Address Set
+#define GRAM_ADR_ROW_S      0x0020 // init to 0 , UPDATE FIRST
+#define GRAM_ADR_COL_S      0x0021 // init to 319 , UPDATE LAST
+#define GRAMWR              0x0022 // memory write
 
 #define LCD_WIDTH 480
 #define LCD_HEIGHT 320
 
 void lcd_init(void);
 
-void lcd_fillScreen(uint16_t bColor);
+void lcd_fillScreen(Color bColor);
 void lcd_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, __prog__ const uint16_t *img);
 
 // color
@@ -65,9 +63,13 @@ void lcd_drawFillRect(uint16_t x1, uint16_t y1, uint16_t w, uint16_t h);
 #define LCD_FONT_ALIGN_HTOP      0x04   //      TOP
 #define LCD_FONT_ALIGN_HMIDDLE   0x0C   //    MIDDLE
 #define LCD_FONT_ALIGN_HBOTTOM   0x08   //    BOTTOM
+
 void lcd_drawText(uint16_t x1, uint16_t y1, const char *txt);
 void lcd_drawTextRect(uint16_t x1, uint16_t y1, uint16_t w, uint16_t h, const char *txt, uint8_t flags);
+
 void lcd_setFont(const Font *font);
+const Font *lcd_font();
+
 uint8_t lcd_getFontHeight();
 uint8_t lcd_getFontWidth(const char c);
 uint16_t lcd_getFontTextWidth(const char *txt);
