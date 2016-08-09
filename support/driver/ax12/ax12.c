@@ -46,12 +46,6 @@ void ax12_init(void)
 	uart_setBaudSpeed(ax12_uart, 1000000);
 	uart_setBitConfig(ax12_uart, 8, UART_BIT_PARITY_NONE, 1);
 	uart_enable(ax12_uart);
-	
-    // Uart setup waiting interrupt support
-    /*IPC20bits.U3RXIP = 5;     // Interrupt priority for receptor
-    IPC20bits.U3TXIP = 6;     // Interrupt priority for transmitor
-    IEC5bits.U3TXIE = 0;
-    IEC5bits.U3RXIE = 1;*/
 }
 
 /**
@@ -62,7 +56,6 @@ void ax12_init(void)
  */
 void ax12_send_char(uint8_t ax_id, uint8_t param, uint8_t val)
 {
-    int p;
 	char trame[20];
     ax12_sendMode();
     trame[0]=0xFF;
@@ -74,8 +67,7 @@ void ax12_send_char(uint8_t ax_id, uint8_t param, uint8_t val)
     trame[6]=val;
     trame[7]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]);
 	
-    for(p=0;p<8;p++)
-		uart_putc(ax12_uart, trame[p]);
+    uart_write(ax12_uart, trame, 8);
 }
 
 /**
@@ -84,7 +76,6 @@ void ax12_send_char(uint8_t ax_id, uint8_t param, uint8_t val)
  */
 void ax12_send_1_short(uint8_t ax_id, uint8_t param, uint16_t val)
 {
-    int p;
 	char trame[20];
     ax12_sendMode();
     trame[0]=0xFF;
@@ -96,9 +87,8 @@ void ax12_send_1_short(uint8_t ax_id, uint8_t param, uint16_t val)
     trame[6]=(char)val;
     trame[7]=(char)((short)val>>8);
     trame[8]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]);
-	
-    for(p=0;p<9;p++)
-		uart_putc(ax12_uart, trame[p]);
+
+    uart_write(ax12_uart, trame, 9);
 }
 
 /**
@@ -107,7 +97,6 @@ void ax12_send_1_short(uint8_t ax_id, uint8_t param, uint16_t val)
  */
 void ax12_send_2_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2)
 {
-    int p;
 	char trame[20];
     ax12_sendMode();
     trame[0]=0xFF;
@@ -121,9 +110,8 @@ void ax12_send_2_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2
     trame[8]=(char)val2;
     trame[9]=(char)((short)val2>>8);
     trame[10]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]+trame[8]+trame[9]);
-	
-    for(p=0;p<11;p++)
-		uart_putc(ax12_uart, trame[p]);
+
+    uart_write(ax12_uart, trame, 11);
 }
 
 /**
@@ -132,7 +120,6 @@ void ax12_send_2_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2
  */
 void ax12_send_3_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2, uint16_t val3)
 {
-    int p;
 	char trame[20];
     ax12_sendMode();
     trame[0]=0xFF;
@@ -148,9 +135,8 @@ void ax12_send_3_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2
     trame[10]=(char)val3;
     trame[11]=(char)((short)val3>>8);
     trame[12]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]+trame[7]+trame[8]+trame[9]+trame[10]+trame[11]);
-	
-    for(p=0;p<13;p++)
-		uart_putc(ax12_uart, trame[p]);
+
+    uart_write(ax12_uart, trame, 13);
 }
 
 /**
