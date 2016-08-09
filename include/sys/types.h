@@ -13,7 +13,14 @@
 
 #include <stdint.h>
 
-typedef uint16_t size_t;
-typedef int16_t ssize_t;
+#ifndef _SIZE_T_DEFINED
+#define _SIZE_T_DEFINED
+ typedef uint16_t size_t;
+#endif
+
+#ifndef _SSIZE_T_DEFINED
+#define _SSIZE_T_DEFINED
+ typedef int16_t ssize_t;
+#endif
 
 #endif // TYPES_H
