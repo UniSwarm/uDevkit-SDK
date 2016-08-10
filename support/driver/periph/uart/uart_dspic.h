@@ -12,10 +12,7 @@
 #define UART_DSPIC_H
 
 // calculate UART count on the device
-#if defined (DEVICE_30F1010) || defined (DEVICE_30F2010) || defined (DEVICE_30F2011) \
- || defined (DEVICE_30F2012) || defined (DEVICE_30F2020) || defined (DEVICE_30F2023) \
- || defined (DEVICE_30F3010) || defined (DEVICE_30F3012) || defined (DEVICE_30F4012) \
- || defined (DEVICE_30F5015) || defined (DEVICE_30F5016) || defined (DEVICE_33EP16GS202) \
+#if defined (DEVICE_33EP16GS202) \
  || defined (DEVICE_33EP32GS202) || defined (DEVICE_33FJ06GS001) || defined (DEVICE_33FJ06GS101) \
  || defined (DEVICE_33FJ06GS101A) || defined (DEVICE_33FJ06GS102) || defined (DEVICE_33FJ06GS102A) \
  || defined (DEVICE_33FJ06GS202) || defined (DEVICE_33FJ06GS202A) || defined (DEVICE_33FJ09GS302) \
@@ -35,11 +32,7 @@
  || defined (DEVICE_24HJ12GP201) || defined (DEVICE_24HJ12GP202) || defined (DEVICE_24HJ16GP304) \
  || defined (DEVICE_24HJ32GP202) || defined (DEVICE_24HJ32GP204)
   #define UART_COUNT 1
-#elif defined (DEVICE_30F3011) || defined (DEVICE_30F3013) || defined (DEVICE_30F3014) \
- || defined (DEVICE_30F4011) || defined (DEVICE_30F4013) || defined (DEVICE_30F5011) \
- || defined (DEVICE_30F5013) || defined (DEVICE_30F6010A) || defined (DEVICE_30F6011A) \
- || defined (DEVICE_30F6012A) || defined (DEVICE_30F6013A) || defined (DEVICE_30F6014A) \
- || defined (DEVICE_30F6015) || defined (DEVICE_33EP128GP502) || defined (DEVICE_33EP128GP504) \
+#elif defined (DEVICE_33EP128GP502) || defined (DEVICE_33EP128GP504) \
  || defined (DEVICE_33EP128GP506) || defined (DEVICE_33EP128MC202) || defined (DEVICE_33EP128MC204) \
  || defined (DEVICE_33EP128MC206) || defined (DEVICE_33EP128MC502) || defined (DEVICE_33EP128MC504) \
  || defined (DEVICE_33EP128MC506) || defined (DEVICE_33EP16GS502) || defined (DEVICE_33EP16GS504) \
@@ -163,7 +156,27 @@
   #define UART_COUNT 6
 #else
   #define UART_COUNT 0
-  #warning "No uart on the current device"
+#endif
+
+// theses device need a bit activation for enable receive mode
+#if defined(DEVICE_24FJ1024GA606) || defined(DEVICE_24FJ1024GA610) || defined(DEVICE_24FJ1024GB606) \
+ || defined(DEVICE_24FJ1024GB610) || defined(DEVICE_24FJ128GA202) || defined(DEVICE_24FJ128GA204) \
+ || defined(DEVICE_24FJ128GA406) || defined(DEVICE_24FJ128GA410) || defined(DEVICE_24FJ128GA412) \
+ || defined(DEVICE_24FJ128GA606) || defined(DEVICE_24FJ128GA610) || defined(DEVICE_24FJ128GA702) \
+ || defined(DEVICE_24FJ128GA704) || defined(DEVICE_24FJ128GA705) || defined(DEVICE_24FJ128GB202) \
+ || defined(DEVICE_24FJ128GB204) || defined(DEVICE_24FJ128GB406) || defined(DEVICE_24FJ128GB410) \
+ || defined(DEVICE_24FJ128GB412) || defined(DEVICE_24FJ128GB606) || defined(DEVICE_24FJ128GB610) \
+ || defined(DEVICE_24FJ256GA406) || defined(DEVICE_24FJ256GA410) || defined(DEVICE_24FJ256GA412) \
+ || defined(DEVICE_24FJ256GA606) || defined(DEVICE_24FJ256GA610) || defined(DEVICE_24FJ256GA702) \
+ || defined(DEVICE_24FJ256GA704) || defined(DEVICE_24FJ256GA705) || defined(DEVICE_24FJ256GB406) \
+ || defined(DEVICE_24FJ256GB410) || defined(DEVICE_24FJ256GB412) || defined(DEVICE_24FJ256GB606) \
+ || defined(DEVICE_24FJ256GB610) || defined(DEVICE_24FJ512GA606) || defined(DEVICE_24FJ512GA610) \
+ || defined(DEVICE_24FJ512GB606) || defined(DEVICE_24FJ512GB610) || defined(DEVICE_24FJ64GA202) \
+ || defined(DEVICE_24FJ64GA204) || defined(DEVICE_24FJ64GA406) || defined(DEVICE_24FJ64GA410) \
+ || defined(DEVICE_24FJ64GA412) || defined(DEVICE_24FJ64GA702) || defined(DEVICE_24FJ64GA704) \
+ || defined(DEVICE_24FJ64GA705) || defined(DEVICE_24FJ64GB202) || defined(DEVICE_24FJ64GB204) \
+ || defined(DEVICE_24FJ64GB406) || defined(DEVICE_24FJ64GB410) || defined(DEVICE_24FJ64GB412)
+  #define UART_RXEN
 #endif
 
 #if UART_COUNT>=1
