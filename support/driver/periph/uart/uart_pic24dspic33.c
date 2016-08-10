@@ -1,5 +1,5 @@
 /**
- * @file uart_dspic.c
+ * @file uart_pic24dspic33.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
