@@ -8,7 +8,7 @@
  * @brief USB serial support
  */
 
-#include "usb-serial.h"
+#include "usb_serial.h"
 
 #include "usb_device.h"
 #include "usb_device_cdc.h"
@@ -16,18 +16,18 @@
 #include "sys/fifo.h"
 
 #define UARTSERIAL_BUFFRX_SIZE 512
-STATIC_FIFO(usbserial_buffrx, UARTSERIAL_BUFFRX_SIZE);
+STATIC_FIFO(usb_serial_buffrx, UARTSERIAL_BUFFRX_SIZE);
 uint8_t buffer[64];
 
-void usbserial_init()
+void usb_serial_init()
 {
 	SYSTEM_Initialize(SYSTEM_STATE_USB_START);
     USBDeviceInit();
     USBDeviceAttach();
-    STATIC_FIFO_INIT(usbserial_buffrx, UARTSERIAL_BUFFRX_SIZE);
+    STATIC_FIFO_INIT(usb_serial_buffrx, UARTSERIAL_BUFFRX_SIZE);
 }
 
-void usbserial_task()
+void usb_serial_task()
 {
     uint16_t size_rec;
     
@@ -43,11 +43,11 @@ void usbserial_task()
     size_rec = getsUSBUSART(buffer, sizeof(buffer));
     if(size_rec > 0)
     {
-        fifo_push(&usbserial_buffrx, (char*)buffer, size_rec);
+        fifo_push(&usb_serial_buffrx, (char*)buffer, size_rec);
     }
 }
 
-ssize_t usbserial_write(const char *data, const size_t size)
+ssize_t usb_serial_write(const char *data, const size_t size)
 {
     uint8_t *ptrData;
     size_t sizeToWrite;
@@ -69,14 +69,14 @@ ssize_t usbserial_write(const char *data, const size_t size)
             sizeToWrite -= size_packet;
             ptrData += size_packet;
         }
-        usbserial_task();
+        usb_serial_task();
     }
     return size;
 }
 
-ssize_t usbserial_read(char *data, const size_t max_size)
+ssize_t usb_serial_read(char *data, const size_t max_size)
 {
-    return fifo_pop(&usbserial_buffrx, data, max_size);
+    return fifo_pop(&usb_serial_buffrx, data, max_size);
 }
 
 bool USER_USB_CALLBACK_EVENT_HANDLER(USB_EVENT event, void *pdata, uint16_t size)
