@@ -10,7 +10,6 @@ DEFINES_SIM := -D SIMULATOR
 
 # simulator support
 SIM_OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=_sim.o) $(SIM_SRC:.c=_sim.o)))
--include $(SIM_OBJECTS:.o=.d)
 
 # QT_BASE_INCLUDES = $(shell qmake -query QT_INSTALL_HEADERS)
 # SIM_INCLUDES := -I$(QT_BASE_INCLUDES) -I$(QT_BASE_INCLUDES)/QtCore -I$(QT_BASE_INCLUDES)/QtGui -I$(QT_BASE_INCLUDES)/QtWidgets

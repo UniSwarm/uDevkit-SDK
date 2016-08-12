@@ -1,3 +1,5 @@
+MAKEFLAGS += --no-builtin-rules
+.SUFFIXES:
 
 # variable that contain the root directory of rtprog
 RTPROG := $(dir $(lastword $(MAKEFILE_LIST)))
@@ -18,13 +20,14 @@ include $(RTPROG)/support/support.mk
 
 # construction of list of OBJECTS to build and include dependencies files if exist
 OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=.o)) $(notdir $(ARCHI_SRC:.c=.o)))
--include $(OBJECTS:.o=.d)
+-include $(wildcard $(OUT_PWD)/*.d)
 
 # include path set to the local project and rtprog include path
 INCLUDEPATH += -I. -I$(RTPROG)/include
 
 # cleaning rule project
-clean: FORCE
+.PHONY: clean
+clean:
 	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c
 	rm -f $(OUT_PWD)/$(PROJECT).elf
 	rm -f modules.h
@@ -34,11 +37,9 @@ $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 $(OUT_PWD)/$(SIM_EXE) : $(SIM_OBJECTS)
 
 # generate list of used drivers modules
+main.c: modules.h
 empty:=
 space:= \n $(empty)
 modules.h : Makefile
 	@echo "generate module.h..."
 	@printf "\n// defines use of modules\n$(subst $(space),\n,$(foreach DRIVER,$(sort $(DRIVERS)),#define USE_$(DRIVER)\n))\n// include all modules in project\n$(subst $(space),\n,$(foreach DRIVER,$(sort $(DRIVERS)),#include \"driver/$(DRIVER).h\"\n))" > modules.h
-
-FORCE : 
-	
