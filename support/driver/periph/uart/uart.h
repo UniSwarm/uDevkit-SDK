@@ -45,8 +45,9 @@ int uart_flush(rt_dev_t device);
 uint8_t uart_datardy(rt_dev_t device);
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max);
 
-#if defined(ARCHI_dspic24fj) || defined(ARCHI_dspic24ep) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep)
-  #include "uart_pic24dspic33.h"
+#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
+ || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
+  #include "uart_pic24_dspic33.h"
 #elif defined(ARCHI_dspic30)
   #include "uart_dspic30.h"
 #else
