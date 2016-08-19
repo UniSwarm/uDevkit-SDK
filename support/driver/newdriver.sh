@@ -10,7 +10,7 @@ if [ -z "$2" ]; then
 	exit
 fi
 
-mkdir $1
+mkdir periph/$1
 
 DATE=$(LANG="en_US.utf8" TZ="Etc/GMT-2" date +'%B %d, %Y, %H:%M %p')
 echo $DATE
@@ -20,82 +20,81 @@ DRIVER_UPPER=$(echo $DRIVER | tr '[:lower:]' '[:upper:]')
 echo ${DRIVER_UPPER}
 
 # mk
-FILE_NAME = periph/${DRIVER}/${DRIVER}.mk
-echo -e "ifndef ${DRIVER_UPPER}_DRIVER" > ${FILE_NAME}
-echo -e "${DRIVER_UPPER}_DRIVER=" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "vpath %.c \$(DRIVERPATH)" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "HEADER += ${DRIVER}.h" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "ifeq (\$(ARCHI),\$(filter \$(ARCHI),pic24ep pic24f pic24fj pic24hj dspic30f dspic33ep dspic33ev dspic33fj))" >> ${FILE_NAME}
-echo -e " SRC += ${DRIVER}_pic24dspic33.c" >> ${FILE_NAME}
-echo -e " HEADER += ${DRIVER}_pic24dspic33.h" >> ${FILE_NAME}
-echo -e "endif" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "endif" >> ${FILE_NAME}
+FILENAME=periph/${DRIVER}/${DRIVER}.mk
+echo -e "ifndef ${DRIVER_UPPER}_DRIVER" > ${FILENAME}
+echo -e "${DRIVER_UPPER}_DRIVER=" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "vpath %.c \$(DRIVERPATH)" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "HEADER += ${DRIVER}.h" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "ifeq (\$(ARCHI),\$(filter \$(ARCHI),pic24ep pic24f pic24fj pic24hj dspic30f dspic33ep dspic33ev dspic33fj))" >> ${FILENAME}
+echo -e " ARCHI_SRC += ${DRIVER}_pic24dspic33.c" >> ${FILENAME}
+echo -e " HEADER += ${DRIVER}_pic24dspic33.h" >> ${FILENAME}
+echo -e "endif" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "endif" >> ${FILENAME}
 
 # .h
-FILE_NAME = periph/${DRIVER}/${DRIVER}.h
-echo -e "/**" > ${FILE_NAME}
-echo -e " * @file ${DRIVER}.h" >> ${FILE_NAME}
-echo -e " * @author Sebastien CAUX (sebcaux)" >> ${FILE_NAME}
-echo -e " * @copyright Robotips 2016" >> ${FILE_NAME}
-echo -e " *" >> ${FILE_NAME}
-echo -e " * @date ${DATE} " >> ${FILE_NAME}
-echo -e " * " >> ${FILE_NAME}
-echo -e " * @brief ${DESC}" >> ${FILE_NAME}
-echo -e " */" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "#ifndef ${DRIVER_UPPER}_H" >> ${FILE_NAME}
-echo -e "#define ${DRIVER_UPPER}_H" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "#include \"driver/device.h\"" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "#if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33fj)" >> ${FILE_NAME}
-echo -e " #include \"${DRIVER}_pic24dspic33.h\"" >> ${FILE_NAME}
-echo -e "#else" >> ${FILE_NAME}
-echo -e " #error Unsuported ARCHI" >> ${FILE_NAME}
-echo -e "#endif" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "#endif // ${DRIVER_UPPER}_H" >> ${FILE_NAME}
+FILENAME=periph/${DRIVER}/${DRIVER}.h
+echo -e "/**" > ${FILENAME}
+echo -e " * @file ${DRIVER}.h" >> ${FILENAME}
+echo -e " * @author Sebastien CAUX (sebcaux)" >> ${FILENAME}
+echo -e " * @copyright Robotips 2016" >> ${FILENAME}
+echo -e " *" >> ${FILENAME}
+echo -e " * @date ${DATE} " >> ${FILENAME}
+echo -e " * " >> ${FILENAME}
+echo -e " * @brief ${DESC}" >> ${FILENAME}
+echo -e " */" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "#ifndef ${DRIVER_UPPER}_H" >> ${FILENAME}
+echo -e "#define ${DRIVER_UPPER}_H" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "#include \"driver/device.h\"" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) defined(ARCHI_pic24fj) || defined(ARCHI_pic24fv) || defined(ARCHI_pic24hj) \\" >> ${FILENAME}
+echo -e " || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) defined(ARCHI_dspic33fj)" >> ${FILENAME}
+echo -e " #include \"${DRIVER}_pic24dspic33.h\"" >> ${FILENAME}
+echo -e "#else" >> ${FILENAME}
+echo -e " #error Unsuported ARCHI" >> ${FILENAME}
+echo -e "#endif" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "#endif // ${DRIVER_UPPER}_H" >> ${FILENAME}
 
 # _dspic.c
-FILE_NAME = periph/${DRIVER}/${DRIVER}_pic24dspic33.c
-echo -e "/**" > ${FILE_NAME}
-echo -e " * @file ${DRIVER}_pic24dspic33.c" >> ${FILE_NAME}
-echo -e " * @author Sebastien CAUX (sebcaux)" >> ${FILE_NAME}
-echo -e " * @copyright Robotips 2016" >> ${FILE_NAME}
-echo -e " *" >> ${FILE_NAME}
-echo -e " * @date ${DATE} " >> ${FILE_NAME}
-echo -e " * " >> ${FILE_NAME}
-echo -e " * @brief ${DESC}" >> ${FILE_NAME}
-echo -e " */" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "#include \"${DRIVER}_pic24dspic33.h\"" >> ${FILE_NAME}
+FILENAME=periph/${DRIVER}/${DRIVER}_pic24dspic33.c
+echo -e "/**" > ${FILENAME}
+echo -e " * @file ${DRIVER}_pic24dspic33.c" >> ${FILENAME}
+echo -e " * @author Sebastien CAUX (sebcaux)" >> ${FILENAME}
+echo -e " * @copyright Robotips 2016" >> ${FILENAME}
+echo -e " *" >> ${FILENAME}
+echo -e " * @date ${DATE} " >> ${FILENAME}
+echo -e " * " >> ${FILENAME}
+echo -e " * @brief ${DESC}" >> ${FILENAME}
+echo -e " */" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "#include \"${DRIVER}.h\"" >> ${FILENAME}
 
 # _dspic.h
-FILE_NAME = periph/${DRIVER}/${DRIVER}_pic24dspic33.h
-echo -e "/**" > ${FILE_NAME}
-echo -e " * @file ${DRIVER}_dspic.h" >> ${FILE_NAME}
-echo -e " * @author Sebastien CAUX (sebcaux)" >> ${FILE_NAME}
-echo -e " * @copyright Robotips 2016" >> ${FILE_NAME}
-echo -e " *" >> ${FILE_NAME}
-echo -e " * @date ${DATE} " >> ${FILE_NAME}
-echo -e " * " >> ${FILE_NAME}
-echo -e " * @brief ${DESC}" >> ${FILE_NAME}
-echo -e " */" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "#ifndef ${DRIVER_UPPER}_DSPIC_H" >> ${FILE_NAME}
-echo -e "#define ${DRIVER_UPPER}_DSPIC_H" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "#include \"${DRIVER}_pic24dspic33.h\"" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "" >> ${FILE_NAME}
-echo -e "#endif // ${DRIVER_UPPER}_DSPIC_H" >> ${FILE_NAME}
+FILENAME=periph/${DRIVER}/${DRIVER}_pic24dspic33.h
+echo -e "/**" > ${FILENAME}
+echo -e " * @file ${DRIVER}_dspic.h" >> ${FILENAME}
+echo -e " * @author Sebastien CAUX (sebcaux)" >> ${FILENAME}
+echo -e " * @copyright Robotips 2016" >> ${FILENAME}
+echo -e " *" >> ${FILENAME}
+echo -e " * @date ${DATE} " >> ${FILENAME}
+echo -e " * " >> ${FILENAME}
+echo -e " * @brief ${DESC}" >> ${FILENAME}
+echo -e " */" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "#ifndef ${DRIVER_UPPER}_DSPIC_H" >> ${FILENAME}
+echo -e "#define ${DRIVER_UPPER}_DSPIC_H" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "" >> ${FILENAME}
+echo -e "#endif // ${DRIVER_UPPER}_DSPIC_H" >> ${FILENAME}
 
 # include.h
 echo -e "#include \"../../support/driver/periph/${DRIVER}/${DRIVER}.h\"" > ../../include/driver/${DRIVER}.h
