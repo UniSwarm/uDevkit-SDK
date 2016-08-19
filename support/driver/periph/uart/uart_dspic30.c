@@ -5,7 +5,7 @@
  *
  * @date August 09, 2016, 11:44 AM
  *
- * @brief Uart support for rtprog (dspic30 family)
+ * @brief Uart support for rtprog (dsPIC30F family)
  */
 
 #include "uart.h"
@@ -21,17 +21,39 @@
 
 #define UART_BUFFRX_SIZE 64
 
+#define UART_FLAG_UNUSED  0x00
+typedef struct {
+    union {
+        struct {
+            unsigned used : 1;
+            unsigned enabled : 1;
+            unsigned bit9 : 1;
+            unsigned parity : 2;
+            unsigned stop : 1;
+            unsigned : 2;
+        };
+        uint8_t val;
+    };
+} uart_status;
+
 struct uart_dev
 {
     uint32_t baudSpeed;
+    uart_status flags;
 
     STATIC_FIFO(buffRx, UART_BUFFRX_SIZE);
 };
 
 struct uart_dev uarts[] = {
-    {.baudSpeed=0},
+    {
+        .baudSpeed = 0,
+        .flags = {{.val = UART_FLAG_UNUSED}}
+    },
 #if UART_COUNT>=2
-    {.baudSpeed=0},
+    {
+        .baudSpeed = 0,
+        .flags = {{.val = UART_FLAG_UNUSED}}
+    },
 #endif
 };
 
@@ -50,7 +72,7 @@ rt_dev_t uart_getFreeDevice()
     if (i == UART_COUNT)
         return NULLDEV;
 
-    uarts[i].baudSpeed = 1;
+    uarts[i].flags.used = 1;
     STATIC_FIFO_INIT(uarts[i].buffRx, UART_BUFFRX_SIZE);
 
     return MKDEV(DEV_CLASS_UART, i);
@@ -66,7 +88,7 @@ void uart_releaseDevice(rt_dev_t device)
     if (uart >= UART_COUNT)
         return;
 
-    uarts[uart].baudSpeed = 0;
+    uarts[uart].flags.val = UART_FLAG_UNUSED;
 }
 
 /**
@@ -79,6 +101,8 @@ int uart_enable(rt_dev_t device)
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return -1;
+
+    uarts[uart].flags.enabled = 1;
 
     switch (uart)
     {
@@ -129,6 +153,8 @@ int uart_disable(rt_dev_t device)
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return -1;
+
+    uarts[uart].flags.enabled = 0;
 
     switch (uart)
     {
@@ -248,21 +274,40 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLenght,
                       uint8_t bitParity, uint8_t bitStop)
 {
     uint8_t bit = 0, stop = 0;
+    uart_status flags;
 
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return -1;
 
+    flags = uarts[uart].flags;
     if (bitLenght == 9)
+    {
+        flags.bit9 = 1;
+        flags.parity = UART_BIT_PARITY_NONE;
         bit = 0b11;
+    }
     else
     {
+        flags.bit9 = 0;
+        if (bitParity == UART_BIT_PARITY_EVEN)
+            flags.parity = UART_BIT_PARITY_EVEN;
+        if (bitParity == UART_BIT_PARITY_ODD)
+            flags.parity = UART_BIT_PARITY_ODD;
         if (bitParity != UART_BIT_PARITY_NONE)
             bit = bitParity;
     }
 
     if (bitStop == 2)
+    {
         stop = 1;
+        flags.stop = 1;
+    }
+    else
+        flags.stop = 0;
+
+    // update flags
+    uarts[uart].flags = flags;
 
     switch (uart)
     {
@@ -291,23 +336,11 @@ uint8_t uart_bitLenght(rt_dev_t device)
 
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
-        return -1;
+        return 0;
 
-    switch (uart)
-    {
-    case 0:
-        if (U1MODEbits.PDSEL == 0b11)
-            lenght = 9;
-        break;
-#if UART_COUNT>=2
-    case 1:
-        if (U2MODEbits.PDSEL == 0b11)
-            lenght = 9;
-        break;
-#endif
-    }
-
-    return lenght;
+    if (uarts[uart].flags.bit9 == 1)
+        return 9;
+    return 8;
 }
 
 /**
@@ -323,21 +356,7 @@ uint8_t uart_bitParity(rt_dev_t device)
     if (uart >= UART_COUNT)
         return -1;
 
-    switch (uart)
-    {
-    case 0:
-        if (U1MODEbits.PDSEL != 0b11)
-            parity = U1MODEbits.PDSEL;
-        break;
-#if UART_COUNT>=2
-    case 1:
-        if (U2MODEbits.PDSEL != 0b11)
-            parity = U2MODEbits.PDSEL;
-        break;
-#endif
-    }
-
-    return parity;
+    return uarts[uart].flags.parity;
 }
 
 /**
@@ -353,19 +372,9 @@ uint8_t uart_bitStop(rt_dev_t device)
     if (uart >= UART_COUNT)
         return -1;
 
-    switch (uart)
-    {
-    case 0:
-        stop = U1MODEbits.STSEL;
-        break;
-#if UART_COUNT>=2
-    case 1:
-        stop = U2MODEbits.STSEL;
-        break;
-#endif
-    }
-
-    return stop << 1;
+    if (uarts[uart].flags.stop == 1)
+        return 2;
+    return 1;
 }
 
 int uart_1_putw(uint16_t word)
@@ -424,9 +433,7 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
     }
 
     for (i = 0; i < size; i++)
-    {
         uart_putc_fn(data[i]);
-    }
 
     return size;
 }
@@ -464,13 +471,13 @@ uint8_t uart_datardy(rt_dev_t device)
 
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
 {
-	size_t size_read;
+    size_t size_read;
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return 0;
-    
+
     size_read = fifo_pop(&uarts[uart].buffRx, data, size_max);
-    
+
     return size_read;
 }
 

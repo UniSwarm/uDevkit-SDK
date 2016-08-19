@@ -5,7 +5,7 @@
  *
  * @date April 13, 2016, 11:49 AM
  *
- * @brief Uart support for rtprog
+ * @brief Uart support for rtprog for dsPIC33FJ, PIC24F, PIC24FJ, PIC24FV and PIC24HJ
  */
 
 #ifndef UART_DSPIC_H
@@ -182,43 +182,31 @@
 #if UART_COUNT>=1
 int uart_1_putw(uint16_t word);
 int uart_1_putc(char c);
-char uart_1_getc();	
-uint16_t uart_1_getw();
 #endif
 
 #if UART_COUNT>=2
 int uart_2_putw(uint16_t word);
 int uart_2_putc(char c);
-char uart_2_getc();
-uint16_t uart_2_getw();
 #endif
 
 #if UART_COUNT>=3
 int uart_3_putw(uint16_t word);
 int uart_3_putc(char c);
-char uart_3_getc();
-uint16_t uart_3_getw();
 #endif
 
 #if UART_COUNT>=4
 int uart_4_putw(uint16_t word);
 int uart_4_putc(char c);
-char uart_4_getc();
-uint16_t uart_4_getw();
 #endif
 
 #if UART_COUNT>=5
 int uart_5_putw(uint16_t word);
 int uart_5_putc(char c);
-char uart_5_getc();
-uint16_t uart_5_getw();
 #endif
 
 #if UART_COUNT>=6
 int uart_6_putw(uint16_t word);
 int uart_6_putc(char c);
-char uart_6_getc();
-uint16_t uart_6_getw();
 #endif
 
 #endif // UART_DSPIC_H

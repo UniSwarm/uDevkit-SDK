@@ -5,7 +5,7 @@
  *
  * @date August 09, 2016, 11:44 AM
  *
- * @brief Uart support for rtprog (dspic30 family)
+ * @brief Uart support for rtprog (dsPIC30F family)
  */
 
 #ifndef UART_DSPIC30_H
@@ -30,15 +30,11 @@
 #if UART_COUNT>=1
 int uart_1_putw(uint16_t word);
 int uart_1_putc(char c);
-char uart_1_getc();	
-uint16_t uart_1_getw();
 #endif
 
 #if UART_COUNT>=2
 int uart_2_putw(uint16_t word);
 int uart_2_putc(char c);
-char uart_2_getc();
-uint16_t uart_2_getw();
 #endif
 
 #endif // UART_DSPIC30_H
