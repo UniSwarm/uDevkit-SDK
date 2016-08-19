@@ -22,20 +22,33 @@ int i2c_enable(rt_dev_t device);
 int i2c_disable(rt_dev_t device);
 
 // ======== device settings =======
+#define I2C_BAUD_100K 100000
+#define I2C_BAUD_400K 400000
+#define I2C_BAUD_1M 1000000
 int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed);
 uint32_t i2c_baudSpeed(rt_dev_t device);
 uint32_t i2c_effectiveBaudSpeed(rt_dev_t device);
 
+int i2c_setAddressWidth(rt_dev_t device, uint8_t addressWidth);
+uint8_t i2c_addressWidth(rt_dev_t device);
+
 // ======== device control ========
-void i2c_start(rt_dev_t device);
-void i2c_restart(rt_dev_t device);
-void i2c_stop(rt_dev_t device);
-void i2c_idle(rt_dev_t device);
-void i2c_ack(rt_dev_t device);
+int i2c_start(rt_dev_t device);
+int i2c_restart(rt_dev_t device);
+int i2c_stop(rt_dev_t device);
+int i2c_idle(rt_dev_t device);
+int i2c_ack(rt_dev_t device);
+int i2c_nack(rt_dev_t device);
+
+// ======= device write/read ======
+int i2c_putc(rt_dev_t device, const char data);
+char i2c_getc(rt_dev_t device);
+ssize_t i2c_write(rt_dev_t device, const char *data, size_t size);
+ssize_t i2c_read(rt_dev_t device, char *data, size_t size_max);
 
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
  || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
- #include "i2c_dspic.h"
+ #include "i2c_pic24f_dspic33f_dspic30f.h"
 #else
  #error Unsuported ARCHI
 #endif

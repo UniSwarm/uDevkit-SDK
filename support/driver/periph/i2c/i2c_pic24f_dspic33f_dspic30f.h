@@ -1,11 +1,12 @@
 /**
- * @file i2c_dspic.h
+ * @file i2c_pic24f_dspic33f_dspic30f.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
  * @date June 09, 2016, 18:47 PM
  * 
- * @brief I2C communication support driver
+ * @brief I2C communication support driver for dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV,
+ * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
  */
 
 #ifndef I2C_DSPIC_H
@@ -224,6 +225,13 @@
  || defined(DEVICE_24FJ64GB204) || defined(DEVICE_24FJ64GB406) || defined(DEVICE_24FJ64GB410) \
  || defined(DEVICE_24FJ64GB412)
  #define ENHANCED_I2C
+#endif
+
+#if defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
+ || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj)
+ #define I2C_FPGD 7692307 // 130ns
+#elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
+ #define I2C_FPGD 15384615 // 65ns
 #endif
 
 #endif // I2C_DSPIC_H

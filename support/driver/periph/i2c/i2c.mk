@@ -3,6 +3,8 @@ I2C_DRIVER=
 
 vpath %.c $(DRIVERPATH)
 
+DRIVERS += sysclock
+
 HEADER += i2c.h
 
 ifeq ($(ARCHI),$(filter $(ARCHI),pic24fj pic24ep dspic33fj dspic33ep))
