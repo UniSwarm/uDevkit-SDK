@@ -107,13 +107,13 @@ int uart_enable(rt_dev_t device)
     switch (uart)
     {
     case 0:
-        IPC2bits.U1RXIP = 6;    // interrupt priority for receptor
-        IFS0bits.U1RXIF = 0;    // clear receive Flag
-        IEC0bits.U1RXIE = 1;    // enable receive interrupt
+        _U1RXIP = 6;    // interrupt priority for receptor
+        _U1RXIF = 0;    // clear receive Flag
+        _U1RXIE = 1;    // enable receive interrupt
 
-        IPC2bits.U1TXIP = 5;    // interrupt priority for transmitor
-        IFS0bits.U1TXIF = 0;    // clear transmit Flag
-        IEC0bits.U1TXIE = 0;    // disable transmit interrupt
+        _U1TXIP = 5;    // interrupt priority for transmitor
+        _U1TXIF = 0;    // clear transmit Flag
+        _U1TXIE = 0;    // disable transmit interrupt
 
         U1MODEbits.UARTEN = 1;  // enable uart module
     #ifdef UART_RXEN
@@ -123,13 +123,13 @@ int uart_enable(rt_dev_t device)
         break;
 #if UART_COUNT>=2
     case 1:
-        IPC6bits.U2RXIP = 6;    // interrupt priority for receptor
-        IFS1bits.U2RXIF = 0;    // clear receive Flag
-        IEC1bits.U2RXIE = 1;    // enable receive interrupt
+        _U2RXIP = 6;    // interrupt priority for receptor
+        _U2RXIF = 0;    // clear receive Flag
+        _U2RXIE = 1;    // enable receive interrupt
 
-        IPC6bits.U2TXIP = 5;    // interrupt priority for transmitor
-        IFS1bits.U2TXIF = 0;    // clear transmit Flag
-        IEC1bits.U2TXIE = 0;    // disable transmit interrupt
+        _U2TXIP = 5;    // interrupt priority for transmitor
+        _U2TXIF = 0;    // clear transmit Flag
+        _U2TXIE = 0;    // disable transmit interrupt
 
         U2MODEbits.UARTEN = 1;  // enable uart module
     #ifdef UART_RXEN
@@ -159,14 +159,14 @@ int uart_disable(rt_dev_t device)
     switch (uart)
     {
     case 0:
-        IEC0bits.U1RXIE = 0;    // disable receive interrupt
-        IEC0bits.U1TXIE = 0;    // disable transmit interrupt
+        _U1RXIE = 0;            // disable receive interrupt
+        _U1TXIE = 0;            // disable transmit interrupt
         U1MODEbits.UARTEN = 0;  // disable uart
         break;
 #if UART_COUNT>=2
     case 1:
-        IEC1bits.U2RXIE = 0;    // disable receive interrupt
-        IEC1bits.U2TXIE = 0;    // disable transmit interrupt
+        _U2RXIE = 0;            // disable receive interrupt
+        _U2TXIE = 0;            // disable transmit interrupt
         U2MODEbits.UARTEN = 0;  // disable uart
         break;
 #endif
@@ -485,7 +485,7 @@ ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
 void __attribute__((interrupt, no_auto_psv)) _U1TXInterrupt(void)
 {
     //
-    IFS0bits.U1TXIF = 0;
+    _U1TXIF = 0;
 }
 
 void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
@@ -495,7 +495,7 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
 
     fifo_push(&uarts[0].buffRx, rec, 1);
 
-    IFS0bits.U1RXIF = 0;
+    _U1RXIF = 0;
 }
 #endif
 
@@ -503,7 +503,7 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
 void __attribute__((interrupt, no_auto_psv)) _U2TXInterrupt(void)
 {
     //
-    IFS1bits.U2TXIF = 0;
+    _U2TXIF = 0;
 }
 
 void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
@@ -513,6 +513,6 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
 
     fifo_push(&uarts[1].buffRx, rec, 1);
 
-    IFS1bits.U2RXIF = 0;
+    _U2RXIF = 0;
 }
 #endif
