@@ -42,7 +42,7 @@ int i2c_nack(rt_dev_t device);
 
 // ======= device write/read ======
 int i2c_putc(rt_dev_t device, const char data);
-char i2c_getc(rt_dev_t device);
+uint8_t i2c_getc(rt_dev_t device);
 ssize_t i2c_write(rt_dev_t device, const char *data, size_t size);
 ssize_t i2c_read(rt_dev_t device, char *data, size_t size_max);
 

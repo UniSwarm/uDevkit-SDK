@@ -592,6 +592,7 @@ uint8_t i2c_getc(rt_dev_t device)
         return I2C3RCV;
 #endif
     }
+    return 0;
 }
 
 ssize_t i2c_write(rt_dev_t device, const char *data, size_t size);
