@@ -5,12 +5,12 @@
 #pragma config GSSK = OFF           // General Segment Key bits (General Segment Write Protection and Code Protection is Disabled)
 
 // FOSCSEL
-#pragma config FNOSC = PRIPLL        // Initial Oscillator Source Selection Bits (Internal Fast RC (FRC))
+#pragma config FNOSC = PRIPLL       // Initial Oscillator Source Selection Bits (Internal Fast RC (FRC))
 #pragma config IESO = OFF           // Two-speed Oscillator Start-up Enable bit (Start up with user-selected oscillator source)
 
 // FOSC
-#pragma config POSCMD = HS              // Primary Oscillator Mode Select bits (HS Crystal Oscillator Mode)
-#pragma config OSCIOFNC = ON            // OSC2 Pin Function bit (OSC2 is general purpose digital I/O pin)
+#pragma config POSCMD = HS          // Primary Oscillator Mode Select bits (HS Crystal Oscillator Mode)
+#pragma config OSCIOFNC = ON        // OSC2 Pin Function bit (OSC2 is general purpose digital I/O pin)
 #pragma config IOL1WAY = OFF        // Peripheral pin select configuration (Allow multiple reconfigurations)
 #pragma config FCKSM = CSECMD       // Clock Switching Mode bits (Clock switching is enabled,Fail-safe Clock Monitor is disabled)
 
@@ -22,9 +22,9 @@
 #pragma config FWDTEN = OFF         // Watchdog Timer Enable bit (Watchdog timer enabled/disabled by user software)
 
 // FPOR
-#pragma config FPWRT = PWR128           // Power-on Reset Timer Value Select bits (128ms)
-#pragma config BOREN = ON              // Brown-out Reset (BOR) Detection Enable bit (BOR is disabled)
-#pragma config ALTI2C1 = OFF            // Alternate I2C pins for I2C1 (SDA1/SCK1 pins are selected as the I/O pins for I2C1)
+#pragma config FPWRT = PWR128       // Power-on Reset Timer Value Select bits (128ms)
+#pragma config BOREN = ON           // Brown-out Reset (BOR) Detection Enable bit (BOR is disabled)
+#pragma config ALTI2C1 = ON         // Alternate I2C pins for I2C1 (SDA1/SCK1 pins are selected as the I/O pins for I2C1)
 
 // FICD
 #pragma config ICS = PGD2           // ICD Communication Channel Select bits (Communicate on PGEC1 and PGED1)

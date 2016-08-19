@@ -12,6 +12,7 @@
 
 int init_io()
 {
+#ifndef SIMULATOR
 	// analog inputs
 	ANSELB = 0x0000;	// all analog inputs of port B as digital buffer
 	ANSELD = 0x0000;	// all analog inputs of port D as digital buffer
@@ -78,7 +79,7 @@ int init_io()
 		
 	// Lock configuration pin
 	OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 1;
-	
+#endif
 	return 0;
 }
 

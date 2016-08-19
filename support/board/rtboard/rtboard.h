@@ -11,8 +11,10 @@
 #ifndef RTBOARD_H
 #define RTBOARD_H
 
-#include <xc.h>
-
+#ifndef SIMULATOR
+ #include <xc.h>
+#endif
+ 
 int init_board();
 
 #define BOARD_NAME "rtboard"
