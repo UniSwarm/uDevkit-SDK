@@ -28,3 +28,7 @@ $(OUT_PWD)/%.o : %.c
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	@printf "µLD %-30s => %s\n" "*.o" $(OUT_PWD)/$(PROJECT).elf
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -T p$(DEVICE).gld
+
+.PHONY : showmem
+showmem :
+	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -T p$(DEVICE).gld -Wl,--report-mem
