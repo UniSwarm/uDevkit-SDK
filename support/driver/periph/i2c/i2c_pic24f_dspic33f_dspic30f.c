@@ -609,3 +609,47 @@ uint8_t i2c_getc(rt_dev_t device)
     }
     return 0;
 }
+/**
+ * @brief Read a register at address 'reg' in i2c chip with address 'address'
+ * @param device i2c bus device number
+ * @param address i2c chip address
+ * @param reg reg address to read
+ * @param flags flags to configure the request frame
+ * @return data received
+ */
+uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t flags)
+{
+    uint16_t value=0;
+    i2c_start(device);
+    i2c_putc(device, (uint8_t)(address & 0xF8));
+    if (flags & I2C_REGADDR16)
+        i2c_putc(device, (uint8_t)(reg>>8));
+    i2c_putc(device, (uint8_t)reg);
+    if (flags & I2C_READ_STOPSTART)
+    {
+        i2c_stop(device);
+        i2c_start(device);
+    }
+    else
+        i2c_restart(device);
+    i2c_putc(device, address | 0x01);
+    if (flags & I2C_REG16)
+        value = i2c_getc(device)<<8;
+    value += i2c_getc(device);
+    i2c_nack(device);
+    i2c_stop(device);
+    return value;
+}
+
+int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value, uint8_t flags)
+{
+    i2c_start(device);
+    i2c_putc(device, (uint8_t)(address & 0xF8));
+    if (flags & I2C_REGADDR16)
+        i2c_putc(device, (uint8_t)(reg>>8));
+    if (flags & I2C_REG16)
+        i2c_putc(device, (uint8_t)(value>>8));
+    i2c_putc(device, (uint8_t)value);
+    i2c_stop(device);
+    return 0;
+}
