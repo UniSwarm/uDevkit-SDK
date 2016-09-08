@@ -15,18 +15,18 @@ int main(void)
 	rt_dev_t i2c;
 	uint16_t value, value2;
 	char buff[100];
-	
+
 	setSystemClock(120000000);
 	init_board();
-	
+
 	// warning keep this init order before remap support
 	esp_init();
 	ax12_init();
     a6_init();
-    
+
 	adc_init();
     asserv_init();
-	
+
 	// uart debug init
 	uartDbg = uart_getFreeDevice();
 	uart_setBaudSpeed(uartDbg, 115200);
@@ -36,43 +36,31 @@ int main(void)
     i2c = i2c_getFreeDevice();
     i2c_setBaudSpeed(i2c, I2C_BAUD_400K);
     i2c_enable(i2c);
-    
+
     i2c_start(i2c);
-    i2c_idle(i2c);
     i2c_putc(i2c, 0x38);
-    i2c_idle(i2c);
     i2c_putc(i2c, 0x0D);
-    i2c_idle(i2c);
     i2c_restart(i2c);
-    i2c_idle(i2c);
     i2c_putc(i2c, 0x39);
-    i2c_idle(i2c);
     value = i2c_getc(i2c);
     i2c_nack(i2c);
-    i2c_idle(i2c);
     i2c_stop(i2c);
-    i2c_idle(i2c);
 
 	for(j=0;j<20;j++) for(i=0;i<65000;i++);
     i2c_start(i2c);
-    i2c_idle(i2c);
     i2c_putc(i2c, 0x38);
-    i2c_idle(i2c);
     i2c_putc(i2c, 0x2A);
-    i2c_idle(i2c);
     i2c_putc(i2c, 0x01);
-    i2c_idle(i2c);
     i2c_stop(i2c);
-    i2c_idle(i2c);
 
     motor_setPower(1, -700);
     motor_setPower(2, 700);
 
 	while(1)
 	{
-		for(j=0;j<20;j++) for(i=0;i<65000;i++);
+		for(j=0;j<5;j++) for(i=0;i<65000;i++);
 		LED = 0;
-		for(j=0;j<20;j++) for(i=0;i<65000;i++);
+		for(j=0;j<5;j++) for(i=0;i<65000;i++);
 		LED = 1;
 
 		/*value = adc_getValue(24);	// AnS1
@@ -81,35 +69,28 @@ int main(void)
 		ax12_moveTo(1, value, 512, 512);
 
         i2c_start(i2c);
-        i2c_idle(i2c);
         i2c_putc(i2c, 0x38);
-        i2c_idle(i2c);
         i2c_putc(i2c, 0x01);
-        i2c_idle(i2c);
         i2c_restart(i2c);
-        i2c_idle(i2c);
         i2c_putc(i2c, 0x39);
-        i2c_idle(i2c);
         value2 = i2c_getc(i2c);
         i2c_nack(i2c);
-        i2c_idle(i2c);
         i2c_stop(i2c);
-        i2c_idle(i2c);
 
-		sprintf(buff, "dist: %dmm x: %d y:%d ac:%d",
+		sprintf(buff, "dist: %dmm x: %d y:%d ac:%d\n",
 				sharp_convert(value, FarSharp),
 				asserv_getXPos(),
 				asserv_getYPos(),
                 value2
 				);
-		
+
 		a6_write(buff, strlen(buff)+1);
 		uart_write(uartDbg, buff, strlen(buff)+1);
-		
+
 		value = uart_read(uartDbg, buff, 100);
 		if(value>0)
 			uart_write(uartDbg, buff, value);
 	}
-	
+
 	return 0;
 }

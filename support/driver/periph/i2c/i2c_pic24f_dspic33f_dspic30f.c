@@ -178,7 +178,7 @@ int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 
     systemClockPeriph = getSystemClockPeriph();
     uBrg = (systemClockPeriph / baudSpeed) - (systemClockPeriph / I2C_FPGD) - 2;
-    
+
     if (uBrg <= 1)
         uBrg = 2;
 
@@ -327,15 +327,18 @@ int i2c_start(rt_dev_t device)
     {
     case 0:
         I2C1CONbits.SEN = 1;
+        while (I2C1CONbits.SEN);
         break;
 #if I2C_COUNT>=2
     case 1:
         I2C2CONbits.SEN = 1;
+        while (I2C2CONbits.SEN);
         break;
 #endif
 #if I2C_COUNT>=3
     case 2:
         I2C3CONbits.SEN = 1;
+        while (I2C3CONbits.SEN);
         break;
 #endif
     }
@@ -358,15 +361,18 @@ int i2c_restart(rt_dev_t device)
     {
     case 0:
         I2C1CONbits.RSEN = 1;
+        while (I2C1CONbits.RSEN);
         break;
 #if I2C_COUNT>=2
     case 1:
         I2C2CONbits.RSEN = 1;
+        while (I2C2CONbits.RSEN);
         break;
 #endif
 #if I2C_COUNT>=3
     case 2:
         I2C3CONbits.RSEN = 1;
+        while (I2C3CONbits.RSEN);
         break;
 #endif
     }
@@ -389,15 +395,18 @@ int i2c_stop(rt_dev_t device)
     {
     case 0:
         I2C1CONbits.PEN = 1;
+        while (I2C1CONbits.PEN);
         break;
 #if I2C_COUNT>=2
     case 1:
         I2C2CONbits.PEN = 1;
+        while (I2C2CONbits.PEN);
         break;
 #endif
 #if I2C_COUNT>=3
     case 2:
         I2C3CONbits.PEN = 1;
+        while (I2C3CONbits.PEN);
         break;
 #endif
     }
@@ -419,18 +428,18 @@ int i2c_idle(rt_dev_t device)
     switch (i2c)
     {
     case 0:
-        while (I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN || 
+        while (I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN ||
           I2C1CONbits.RSEN || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT);
         break;
 #if I2C_COUNT>=2
     case 1:
-        while (I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN || 
+        while (I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN ||
           I2C2CONbits.RSEN || I2C2CONbits.ACKEN || I2C2STATbits.TRSTAT);
         break;
 #endif
 #if I2C_COUNT>=3
     case 2:
-        while (I2C3CONbits.SEN || I2C3CONbits.PEN || I2C3CONbits.RCEN || 
+        while (I2C3CONbits.SEN || I2C3CONbits.PEN || I2C3CONbits.RCEN ||
           I2C3CONbits.RSEN || I2C3CONbits.ACKEN || I2C3STATbits.TRSTAT);
         break;
 #endif
@@ -455,17 +464,20 @@ int i2c_ack(rt_dev_t device)
     case 0:
         I2C1CONbits.ACKDT = 0;
         I2C1CONbits.ACKEN = 1;
+        while (I2C1CONbits.ACKEN);
         break;
 #if I2C_COUNT>=2
     case 1:
         I2C2CONbits.ACKDT = 0;
         I2C2CONbits.ACKEN = 1;
+        while (I2C2CONbits.ACKEN);
         break;
 #endif
 #if I2C_COUNT>=3
     case 2:
         I2C3CONbits.ACKDT = 0;
         I2C3CONbits.ACKEN = 1;
+        while (I2C3CONbits.ACKEN);
         break;
 #endif
     }
@@ -489,17 +501,20 @@ int i2c_nack(rt_dev_t device)
     case 0:
         I2C1CONbits.ACKDT = 1;
         I2C1CONbits.ACKEN = 1;
+        while (I2C1CONbits.ACKEN);
         break;
 #if I2C_COUNT>=2
     case 1:
         I2C2CONbits.ACKDT = 1;
         I2C2CONbits.ACKEN = 1;
+        while (I2C2CONbits.ACKEN);
         break;
 #endif
 #if I2C_COUNT>=3
     case 2:
         I2C3CONbits.ACKDT = 1;
         I2C3CONbits.ACKEN = 1;
+        while (I2C3CONbits.ACKEN);
         break;
 #endif
     }
@@ -524,7 +539,7 @@ int i2c_putc(rt_dev_t device, const char data)
         I2C1TRN = data;
         if (I2C1STATbits.IWCOL)       // write collision detection
             return -1;
-        while (I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN || 
+        while (I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN ||
           I2C1CONbits.RSEN || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT); // wait iddle
 
         if (I2C1STATbits.ACKSTAT)   // test for ACK received
@@ -535,7 +550,7 @@ int i2c_putc(rt_dev_t device, const char data)
         I2C2TRN = data;
         if (I2C2STATbits.IWCOL)       // write collision detection
             return -1;
-        while (I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN || 
+        while (I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN ||
           I2C2CONbits.RSEN || I2C2CONbits.ACKEN || I2C2STATbits.TRSTAT); // wait iddle
 
         if (I2C2STATbits.ACKSTAT)   // test for ACK received
@@ -547,7 +562,7 @@ int i2c_putc(rt_dev_t device, const char data)
         I2C3TRN = data;
         if (I2C3STATbits.IWCOL)       // write collision detection
             return -1;
-        while (I2C3CONbits.SEN || I2C3CONbits.PEN || I2C3CONbits.RCEN || 
+        while (I2C3CONbits.SEN || I2C3CONbits.PEN || I2C3CONbits.RCEN ||
           I2C3CONbits.RSEN || I2C3CONbits.ACKEN || I2C3STATbits.TRSTAT); // wait iddle
 
         if (I2C3STATbits.ACKSTAT)   // test for ACK received
@@ -594,6 +609,3 @@ uint8_t i2c_getc(rt_dev_t device)
     }
     return 0;
 }
-
-ssize_t i2c_write(rt_dev_t device, const char *data, size_t size);
-ssize_t i2c_read(rt_dev_t device, char *data, size_t size_max);

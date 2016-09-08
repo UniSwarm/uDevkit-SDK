@@ -43,8 +43,6 @@ int i2c_nack(rt_dev_t device);
 // ======= device write/read ======
 int i2c_putc(rt_dev_t device, const char data);
 uint8_t i2c_getc(rt_dev_t device);
-ssize_t i2c_write(rt_dev_t device, const char *data, size_t size);
-ssize_t i2c_read(rt_dev_t device, char *data, size_t size_max);
 
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
  || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
