@@ -647,6 +647,7 @@ int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value
     i2c_putc(device, (uint8_t)(address & 0xF8));
     if (flags & I2C_REGADDR16)
         i2c_putc(device, (uint8_t)(reg>>8));
+    i2c_putc(device, (uint8_t)reg);
     if (flags & I2C_REG16)
         i2c_putc(device, (uint8_t)(value>>8));
     i2c_putc(device, (uint8_t)value);
