@@ -72,3 +72,7 @@
 
 ### screenBoard
 - [x] init io
+
+### tactil
+- [ ] Ask for number ar1000 or ar1021 ???
+- [ ] add i2c and spi communication
