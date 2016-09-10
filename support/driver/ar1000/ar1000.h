@@ -20,7 +20,7 @@
 void ar1000_init(void);
 
 //AR1000 Commands
-void ar1000_get_version();
+ssize_t ar1000_get_version();
 void ar1000_enable_touch();
 void ar1000_disable_touch();
 void ar1000_calibrate_mode();
