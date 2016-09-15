@@ -642,12 +642,13 @@ uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t fl
     return value;
 }
 /**
- * @brief Read a register at address 'reg' in i2c chip with address 'address'
+ * @brief Read 'size' registers begining at address 'reg' in i2c chip with address 'address'
  * @param device i2c bus device number
  * @param address i2c chip address
- * @param reg reg address to read
+ * @param reg reg address to start read
+ * @param size number of reg to read
  * @param flags flags to configure the request frame
- * @return data received
+ * @return 0 if success
  */
 ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[], size_t size, uint8_t flags)
 {
@@ -689,6 +690,15 @@ ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t re
     return 0;
 }
 
+/**
+ * @brief Write 'value' in register at address 'reg' in i2c chip with address 'address'
+ * @param device i2c bus device number
+ * @param address i2c chip address
+ * @param reg reg address to write
+ * @param value value to write
+ * @param flags flags to configure the request frame
+ * @return 0 if success
+ */
 int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value, uint8_t flags)
 {
     i2c_start(device);
@@ -703,6 +713,17 @@ int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value
     return 0;
 }
 
+/**
+ * @brief Write 'regs' in registers that start at address 'reg' in i2c chip
+ * with address 'address'
+ * @param device i2c bus device number
+ * @param address i2c chip address
+ * @param reg reg address to write
+ * @param regs values to write
+ * @param size number of reg to write
+ * @param flags flags to configure the request frame
+ * @return 0 if success
+ */
 int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[], size_t size, uint8_t flags)
 {
     size_t id;
