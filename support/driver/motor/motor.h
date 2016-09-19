@@ -11,7 +11,7 @@
 #ifndef MOTOR_H
 #define MOTOR_H
 
-#include <stdint.h>
+#include "driver/device.h"
 
 int motor_init();
 
