@@ -365,20 +365,6 @@ void asserv_controlTask()
         if(err2 == 0)
             motor_setPower(2, 0);
     }
-
-    if(i++>100)
-    {
-        char buff[200];
-        i=0;
-        sprintf(buff, "d: %d ds: %d dt: %d err:%d cons:%d\n",
-				(int)distance,
-				(int)consds,
-				(int)consdt,
-				(int)err1,
-				(int)consV1
-                );
-        usb_serial_write(buff, strlen(buff));
-    }
 }
 
 // <TODO replace theses functions by time/tasks support
