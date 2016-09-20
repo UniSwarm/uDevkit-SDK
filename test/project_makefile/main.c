@@ -27,6 +27,8 @@ int main(void)
 	adc_init();
     asserv_init();
 
+    LED2 = 1;
+
 	// uart debug init
 	uartDbg = uart_getFreeDevice();
 	uart_setBaudSpeed(uartDbg, 115200);
@@ -60,8 +62,10 @@ int main(void)
 	{
 		for(j=0;j<5;j++) for(i=0;i<65000;i++);
 		LED = 0;
+    LED3 = 1;
 		for(j=0;j<5;j++) for(i=0;i<65000;i++);
 		LED = 1;
+    LED3 = 0;
 
 		/*value = adc_getValue(24);	// AnS1
 		value = adc_getValue(25);	// AnS2*/

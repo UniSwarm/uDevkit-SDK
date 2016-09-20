@@ -1,7 +1,7 @@
 RTPROG = ../..
 
 PROJECT = testproj
-BOARD = rtboard
+BOARD = rtboard1_1
 OUT_PWD = build
 # DEVICE = 33EP256MU806
 # ARCHI = dspic33ep
@@ -14,7 +14,7 @@ SRC += main.c
 
 include $(RTPROG)/rtprog.mk
 
-all : hex FORCE
+all : hex
 	@echo "DRIVERS asked         :" $(sort $(DRIVERS) $(BADDRIVERS))
 	@echo "DRIVERS implemented   :" $(DRIVERS)
 	@echo "BADDRIVERS sorted     :" $(sort $(BADDRIVERS))
