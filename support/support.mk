@@ -1,8 +1,11 @@
 
+# include robot definition file
+include $(RTPROG)/support/robot/robot.mk
+
 # include board definition file
 include $(RTPROG)/support/board/board.mk
 
-# include board definition file
+# include archi definition file
 include $(RTPROG)/support/archi/archi.mk
 
 # include all drivers files
