@@ -8,6 +8,9 @@ include $(RTPROG)/support/board/board.mk
 # include archi definition file
 include $(RTPROG)/support/archi/archi.mk
 
+# include module definition file
+include $(RTPROG)/support/module/module.mk
+
 # include all drivers files
 include $(RTPROG)/support/driver/driver.mk
 
