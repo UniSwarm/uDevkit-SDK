@@ -82,3 +82,10 @@
 ### Touchscreen
 - [ ] Ask for number ar1000 or ar1021 ???
 - [ ] add i2c and spi communication
+
+## Tools
+### README
+ - [] do a readme
+
+### image
+- [] include meta information of the image (size, encodage or other...) in the MyImage.ext.c ->struct !
