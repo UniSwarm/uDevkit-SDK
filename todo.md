@@ -16,11 +16,11 @@
 - [x] receive
 
 ### I2C
-- [ ] prototypes
-- [ ] device assignation
-- [ ] config
-- [ ] send
-- [ ] receive
+- [x] prototypes
+- [x] device assignation
+- [x] config
+- [x] send
+- [x] receive
 
 ### SPI
 - [x] prototypes
@@ -42,7 +42,7 @@
 - [ ] read data
 
 ### PWM
-- [ ] prototypes
+- [x] prototypes
 - [ ] device assignation
 - [ ] config
 - [ ] set pwm
@@ -65,6 +65,12 @@
 - [ ] debug emit
 - [ ] interrupt parser
 
+### Screen
+- [x] character draw
+- [ ] multiline draw
+- [x] pixel vector picture draw
+- [ ] 2D picture header
+
 ## Boards
 ### RTBoard
 - [x] init io
@@ -73,6 +79,6 @@
 ### screenBoard
 - [x] init io
 
-### tactil
+### Touchscreen
 - [ ] Ask for number ar1000 or ar1021 ???
 - [ ] add i2c and spi communication
