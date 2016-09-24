@@ -1,6 +1,9 @@
 # RTprog
 A tool to simplify module inclusions in embedded systems.
 
+## To compile Tools
+	make tools
+
 ## dependencies
 ### MPLAB
 To program and debug the device
