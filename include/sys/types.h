@@ -13,7 +13,7 @@
 
 #include <stdint.h>
 
-#if !defined(_SIZE_T_DEFINED) && !defined(_SIZE_T) && !defined(_SIZET)&& !defined(_BSD_SIZE_T_DEFINED_)
+#if !defined(_SIZE_T_DEFINED) &&  !defined(__SIZE_TYPE__) && !defined(_SIZE_T) && !defined(_SIZET)&& !defined(_BSD_SIZE_T_DEFINED_)
 #define _SIZE_T_DEFINED
 #define _SIZE_T
 #define _SIZET
