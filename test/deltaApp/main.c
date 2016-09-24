@@ -10,12 +10,13 @@
 
 int main(void)
 {
-	unsigned int i, j, byte_read;
+	unsigned int i, j, byte_read, end=0;
     uint16_t status, value_x, value_y, value_z;
 	rt_dev_t uartDbg;
 	rt_dev_t i2c;
 	uint16_t value, value2;
 	char buff[200];
+	char buffread[200];
 	uint8_t acc[8];
 
 	setSystemClock(120000000);
@@ -61,10 +62,15 @@ int main(void)
 		usb_serial_task();
 		for(i=0;i<65000;i++);
 
-		value = adc_getValue(24);	// AnS1
+		value = sharp_convert(adc_getValue(24), FarSharp);	// AnS1
 		/*value = adc_getValue(25);	// AnS2*/
-		value2 = adc_getValue(26);	// AnS3
+		value2 = sharp_convert(adc_getValue(26), FarSharp);	// AnS3
 		ax12_moveTo(1, value, 512, 512);
+
+        if(value < 150 || value2 < 150)
+            asserv_setSpeed(0);
+        else
+            asserv_setSpeed(20);
 
         i2c_readregs(i2c, 0x38, 0x00, acc, 7, I2C_REG8 | I2C_REGADDR8);
         if(acc[0] & 0x08)
@@ -75,8 +81,8 @@ int main(void)
         }
 
 		sprintf(buff, "d1: %d d2: %d x: %d y:%d t:%d acx:%d acy:%d acz:%d\n",
-				sharp_convert(value, FarSharp),
-				sharp_convert(value2, FarSharp),
+				value,
+				value2,
 				(int)asserv_getXPos(),
 				(int)asserv_getYPos(),
 				(int)asserv_getTPos(),
@@ -85,9 +91,9 @@ int main(void)
 
         if(j++>5)
         {
-            //a6_write(buff, strlen(buff));
+            a6_write(buff, strlen(buff)-1);
             //uart_write(uartDbg, buff, strlen(buff));
-            usb_serial_write(buff, strlen(buff));
+            //usb_serial_write(buff, strlen(buff));
         }
 
 		/*value = uart_read(uartDbg, buff, 100);
@@ -96,11 +102,38 @@ int main(void)
 
 		byte_read = uart_read(uartDbg, buff, 256);
 		if(byte_read > 0)
-			usb_serial_write(buff, byte_read);
+			usb_serial_write(buff, byte_read);*/
 
-		byte_read = usb_serial_read(buff, 256);
+		byte_read = usb_serial_read(buffread + end, 200);
 		if(byte_read > 0)
-			uart_write(uartDbg, buff, byte_read);*/
+        {
+            int i;
+            int valid = 0;
+            for (i=end; i<end+byte_read; i++)
+            {
+                if(buffread[i]=='\n')
+                {
+                    valid = 1;
+                    break;
+                }
+            }
+            if(valid==0)
+                end+=byte_read;
+
+            if(valid==1)
+            {
+                uint8_t motor = buffread[0]-'0';
+                if(buffread[1]==':')
+                {
+                    LED = ~LED;
+                    int16_t pwm = strtol (buffread+2, NULL, 10);
+                    motor_setPower(motor, pwm);
+                }
+                buffread[end]='\n';
+                usb_serial_write(buffread, end+1);
+                end=0;
+            }
+        }
 	}
 
 	return 0;

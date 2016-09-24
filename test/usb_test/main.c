@@ -19,7 +19,7 @@ int main(void)
 	setSystemClock(120000000);
 	init_board();
 	
-	usbserial_init();
+	usb_serial_init();
     
 	// warning keep this init order before remap support
 	esp_init();
@@ -36,13 +36,13 @@ int main(void)
 	
 	while(1)
 	{
-		usbserial_task();
+		usb_serial_task();
         
 		byte_read = uart_read(esp_uart, buff, 256);
 		if(byte_read > 0)
-			usbserial_write(buff, byte_read);
+			usb_serial_write(buff, byte_read);
         
-		byte_read = usbserial_read(buff, 256);
+		byte_read = usb_serial_read(buff, 256);
 		if(byte_read > 0)
 			uart_write(esp_uart, buff, byte_read);
 	}

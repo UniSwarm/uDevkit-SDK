@@ -6,7 +6,7 @@ OUT_PWD = build
 
 # CCFLAGS += -pedantic
 
-DRIVERS += uart esp8266 adc
+DRIVERS += uart esp8266 adc i2c
 
 SRC += main.c
 

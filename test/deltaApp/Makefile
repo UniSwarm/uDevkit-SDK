@@ -1,7 +1,7 @@
 RTPROG = ../..
 
 PROJECT = deltaApp
-BOARD = rtboard
+ROBOT = deltatips
 OUT_PWD = build
 
 # CCFLAGS += -pedantic
