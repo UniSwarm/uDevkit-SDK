@@ -11,24 +11,28 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-uint8_t timer_getFreeDevice();
-void timer_releaseDevice(uint8_t device);
+#include "driver/device.h"
 
-int timer_enable(uint8_t device);
-int timer_disable(uint8_t device);
+rt_dev_t timer_getFreeDevice();
+void timer_releaseDevice(rt_dev_t device);
+
+int timer_enable(rt_dev_t device);
+int timer_disable(rt_dev_t device);
 
 // timer mode
-int timer_setPeriod(uint8_t device, uint32_t periodMs);
-uint32_t timer_periodMs(uint8_t device);
+int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs);
+uint32_t timer_periodMs(rt_dev_t device);
 
 // counter mode
-int timer_setCounter(uint8_t device, uint16_t diviser);
-uint16_t timer_counter(uint8_t device);
+int timer_setCounter(rt_dev_t device, uint16_t diviser);
+uint16_t timer_counter(rt_dev_t device);
 
-uint16_t timer_getValue16();
+#define timer_clearValue(device) timer_setValue((device), 0)
+int timer_setValue(rt_dev_t device, uint16_t value);
+uint16_t timer_getValue(rt_dev_t device);
 
 #if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33fj)
-#include "timer_dspic.h"
+#include "timer_pic24f_dspic33f_dspic30f.h"
 #else
 #error "Unsupported ARCHI"
 #endif

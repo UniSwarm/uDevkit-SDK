@@ -24,6 +24,7 @@ typedef uint8_t rt_dev_t_class;
 #define NULLDEV         ((rt_dev_t_class) (0))
 
 // ===== device classes =====
+#define DEV_CLASS_TIMER         ((rt_dev_t_class) (0x01))
 // base communication classes
 #define DEV_CLASS_UART          ((rt_dev_t_class) (0x02))
 #define DEV_CLASS_UART_SOFT     ((rt_dev_t_class) (DEV_CLASS_UART+1))
