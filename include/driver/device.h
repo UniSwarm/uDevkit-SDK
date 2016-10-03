@@ -35,5 +35,8 @@ typedef uint8_t rt_dev_t_class;
 
 // special classes
 #define DEV_CLASS_QEI           ((rt_dev_t_class) (0x11))
+#define DEV_CLASS_OC            ((rt_dev_t_class) (0x12))
+#define DEV_CLASS_IC            ((rt_dev_t_class) (0x13))
+#define DEV_CLASS_PWM           ((rt_dev_t_class) (0x14))
 
 #endif // DEVICE_H
