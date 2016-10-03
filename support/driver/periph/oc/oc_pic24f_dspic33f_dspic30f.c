@@ -170,7 +170,7 @@ int oc_setInternalMode(rt_dev_t device, uint8_t mode)
         break;
 #endif
     }
-    
+
     return 0;
 }
 
@@ -186,7 +186,7 @@ int oc_enable(rt_dev_t device)
         return -1;
 
     ocs[oc].flags.enabled = 1;
-    
+
     return oc_setInternalMode(device, ocs[oc].flags.imode);
 }
 
@@ -202,7 +202,7 @@ int oc_disable(rt_dev_t device)
         return -1;
 
     ocs[oc].flags.enabled = 0;
-    
+
     return oc_setInternalMode(device, OC_PIC24F_dsPIC33F_dsPIC30F_DISABLE);
 }
 
@@ -220,7 +220,7 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
         return -1;
 
     ocs[oc].flags.mode = mode;
-    
+
     switch (mode)
     {
     case OC_MODE_PWM:
@@ -328,7 +328,7 @@ int oc_setRVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
  * @param device OC device number
  * @return curent rVal value
  */
-int oc_rVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
+uint32_t oc_rVal(rt_dev_t device)
 {
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
@@ -342,7 +342,7 @@ int oc_rVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
  * @param device OC device number
  * @return curent rVal value
  */
-int oc_rsVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
+uint32_t oc_rsVal(rt_dev_t device)
 {
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
