@@ -59,7 +59,7 @@ int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[
 // ======= specific include =======
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
  || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
- #include "i2c_pic24f_dspic33f_dspic30f.h"
+ #include "i2c_pic24_dspic30_dspic33.h"
 #elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
  #include "i2c_pic32.h"
 #else

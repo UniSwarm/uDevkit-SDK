@@ -1,5 +1,5 @@
 /**
- * @file i2c_pic24f_dspic33f_dspic30f.c
+ * @file i2c_pic24_dspic30_dspic33.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
@@ -176,7 +176,7 @@ int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 
     i2cs[i2c].baudSpeed = baudSpeed;
 
-    systemClockPeriph = getSystemClockPeriph();
+    systemClockPeriph = sysclock_getPeriphClock();
     uBrg = (systemClockPeriph / baudSpeed) - (systemClockPeriph / I2C_FPGD) - 2;
 
     if (uBrg <= 1)
@@ -234,7 +234,7 @@ uint32_t i2c_baudSpeed(rt_dev_t device)
 #endif
     }
 
-    systemClockPeriph = getSystemClockPeriph();
+    systemClockPeriph = sysclock_getPeriphClock();
     baudSpeed = systemClockPeriph / (uBrg + 2); // TODO add PGD period to be exact
 
     return baudSpeed;

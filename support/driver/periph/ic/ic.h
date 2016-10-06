@@ -13,7 +13,19 @@
 
 #include "driver/device.h"
 
+// ====== device assignation ======
+rt_dev_t ic_getFreeDevice();
+void ic_releaseDevice(rt_dev_t device);
 
+// ==== device enable/disable =====
+int ic_enable(rt_dev_t device);
+int ic_disable(rt_dev_t device);
+
+// ======== device settings =======
+#define IC_MODE_INVALID    0x00
+#define IC_MODE_PWM        0x01
+int ic_setMode(rt_dev_t device, uint8_t mode);
+uint8_t ic_mode(rt_dev_t device);
 
 // ======= specific include =======
 #if defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)

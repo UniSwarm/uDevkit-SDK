@@ -7,9 +7,9 @@ DRIVERS += sysclock
 
 HEADER += i2c.h
 
-ifeq ($(ARCHI),$(filter $(ARCHI),pic24fj pic24ep dspic33fj dspic33ep))
- ARCHI_SRC += i2c_pic24f_dspic33f_dspic30f.c
- HEADER += i2c_pic24f_dspic33f_dspic30f.h
+ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic30 dspic33fj dspic33ep dspic33ev))
+ ARCHI_SRC += i2c_pic24_dspic30_dspic33.c
+ HEADER += i2c_pic24_dspic30_dspic33.h
 endif
 ifeq ($(ARCHI),$(filter $(ARCHI),pic32mm pic32mx pic32mzec pic32mzef))
  ARCHI_SRC += i2c_pic32.c

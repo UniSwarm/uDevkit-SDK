@@ -1,5 +1,5 @@
 /**
- * @file i2c_pic24f_dspic33f_dspic30f.h
+ * @file i2c_pic24_dspic30_dspic33.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
@@ -9,8 +9,8 @@
  * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
  */
 
-#ifndef I2C_DSPIC_H
-#define I2C_DSPIC_H
+#ifndef I2C_PIC24_DSPIC30_DSPIC33_H
+#define I2C_PIC24_DSPIC30_DSPIC33_H
 
 #if defined(DEVICE_30F1010) || defined(DEVICE_30F2010) || defined(DEVICE_30F2010E) \
  || defined(DEVICE_30F2011) || defined(DEVICE_30F2011E) || defined(DEVICE_30F2012) \
@@ -234,4 +234,4 @@
  #define I2C_FPGD 15384615 // 65ns
 #endif
 
-#endif // I2C_DSPIC_H
+#endif // I2C_PIC24_DSPIC30_DSPIC33_H
