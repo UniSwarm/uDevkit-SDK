@@ -1,5 +1,5 @@
 /**
- * @file sysclock_dspic.c
+ * @file sysclock_pic24_dspic30_dspic33.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
@@ -8,7 +8,7 @@
  * @brief System clock support for rtprog
  */
 
-#include "sysclock_dspic.h"
+#include "sysclock_pic24_dspic30_dspic33.h"
 
 #include <stdint.h>
 
@@ -22,9 +22,9 @@ uint32_t sysfreq;
  * @param fosc desirate system frequency in Hz
  * @return 0 if ok, -1 in case of error
  */
-int setSystemClock(uint32_t fosc)
+int sysclock_setClock(uint32_t fosc)
 {
-    return setSystemClockWPLL(fosc);
+    return sysclock_setClockWPLL(fosc);
 }
 
 /**
@@ -32,7 +32,7 @@ int setSystemClock(uint32_t fosc)
  * @param fosc desirate system frequency in Hz
  * @return 0 if ok, -1 in case of error
  */
-int setSystemClockWPLL(uint32_t fosc)
+int sysclock_setClockWPLL(uint32_t fosc)
 {
     uint32_t fin, fplli, fsys;
     uint16_t multiplier;
@@ -119,7 +119,7 @@ int setSystemClockWPLL(uint32_t fosc)
  * @brief Gets system frequency in Hz
  * @return system frequency in Hz
  */
-uint32_t getSystemClock()
+uint32_t sysclock_getClock()
 {
     return sysfreq;
 }
@@ -128,7 +128,7 @@ uint32_t getSystemClock()
  * @brief Gets peripherical clock frequency in Hz
  * @return system frequency in Hz
  */
-uint32_t getSystemClockPeriph()
+uint32_t sysclock_getPeriphClock()
 {
     return sysfreq >> 1;
 }
@@ -137,7 +137,7 @@ uint32_t getSystemClockPeriph()
  * @brief Gets CPU clock frequency in Hz
  * @return system frequency in Hz
  */
-uint32_t getSystemClockCPU()
+uint32_t sysclock_getCPUClock()
 {
     return sysfreq >> 1;
 }

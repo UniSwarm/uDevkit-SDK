@@ -14,15 +14,17 @@
 #include <stdint.h>
 
 #include "board.h"
-#if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33fj)
-#include "sysclock_dspic.h"
+// ======= specific include =======
+#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
+ || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
+ #include "sysclock_pic24_dspic30_dspic33.h"
 #else
-#error Unsuported ARCHI
+ #error Unsuported ARCHI
 #endif
 
-int setSystemClock(uint32_t freq);
-uint32_t getSystemClock();
-uint32_t getSystemClockPeriph();
-uint32_t getSystemClockCPU();
+int sysclock_setClock(uint32_t freq);
+uint32_t sysclock_getClock();
+uint32_t sysclock_getPeriphClock();
+uint32_t sysclock_getCPUClock();
 
 #endif // SYSCLOCK_H

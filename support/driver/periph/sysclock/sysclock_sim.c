@@ -12,23 +12,23 @@
 
 uint32_t sysfreq;
 
-int setSystemClock(uint32_t fosc)
+int sysclock_setClock(uint32_t fosc)
 {
     sysfreq = fosc;
     return 0;
 }
 
-uint32_t getSystemClock()
+uint32_t sysclock_getClock()
 {
     return sysfreq;
 }
 
-uint32_t getSystemClockPeriph()
+uint32_t sysclock_getPeriphClock()
 {
     return sysfreq >> 1;
 }
 
-uint32_t getSystemClockCPU()
+uint32_t sysclock_getCPUSystemClock()
 {
     return sysfreq >> 1;
 }
