@@ -19,7 +19,7 @@ int main(void)
 	char buffread[200];
 	uint8_t acc[8];
 
-	setSystemClock(120000000);
+	sysclock_setClock(120000000);
 	init_board();
 
 	usb_serial_init();

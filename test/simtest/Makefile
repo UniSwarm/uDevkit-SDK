@@ -12,5 +12,5 @@ SRC += main.c
 
 include $(RTPROG)/rtprog.mk
 
-all : hex FORCE
+all : hex
 	@echo OBJECTS: $(OBJECTS)

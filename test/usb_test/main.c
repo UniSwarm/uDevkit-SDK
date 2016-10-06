@@ -16,7 +16,7 @@ int main(void)
 	uint16_t byte_read;
 	char buff[256];
 	
-	setSystemClock(120000000);
+	sysclock_setClock(120000000);
 	init_board();
 	
 	usb_serial_init();

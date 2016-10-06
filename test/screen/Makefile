@@ -12,7 +12,7 @@ PICTURES += picture.jpg
 
 include $(RTPROG)/rtprog.mk
 
-all : hex FORCE
+all : hex
 	@echo "DRIVERS asked         :" $(sort $(DRIVERS) $(BADDRIVERS))
 	@echo "DRIVERS implemented   :" $(DRIVERS)
 	@echo "BADDRIVERS sorted     :" $(sort $(BADDRIVERS))

@@ -15,7 +15,7 @@ int main(void)
 	char buff[101];
     size_t size;
 
-	setSystemClock(120000000);
+	sysclock_setClock(120000000);
 	init_board();
 
 	// a6 init
