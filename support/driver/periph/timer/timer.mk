@@ -7,9 +7,9 @@ DRIVERS += sysclock
 
 HEADER += timer.h
 
-ifeq ($(ARCHI),$(filter $(ARCHI),pic24fj pic24ep dspic33fj dspic33ep))
- ARCHI_SRC += timer_pic24f_dspic33f_dspic30f.c
- HEADER += timer_pic24f_dspic33f_dspic30f.h
+ifeq ($(ARCHI),$(filter $(ARCHI),pic24ep dspic33ep dspic33ev pic24f pic24fj pic24hj dspic33fj))
+ ARCHI_SRC += timer_pic24_dspic30_dspic33.c
+ HEADER += timer_pic24_dspic30_dspic33.h
 endif
 ifeq ($(ARCHI),$(filter $(ARCHI),pic32mm pic32mx pic32mzec pic32mzef))
  ARCHI_SRC += timer_pic32.c

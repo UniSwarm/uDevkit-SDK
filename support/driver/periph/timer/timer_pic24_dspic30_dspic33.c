@@ -1,5 +1,5 @@
 /**
- * @file timer_pic24f_dspic33f_dspic30f.c
+ * @file timer_pic24_dspic30_dspic33.c
  * @author Sebastien CAUX (sebcaux) \
  * @copyright Robotips 2016
  *
@@ -298,7 +298,7 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 
     timers[timer].periodMs = periodMs;
 
-    prvalue = getSystemClockPeriph() / 1000 * periodMs;
+    prvalue = sysclock_getPeriphClock() / 1000 * periodMs;
     if(prvalue > 65535)
     {
         div = 0b11;

@@ -1,5 +1,5 @@
 /**
- * @file timer_pic24f_dspic33f_dspic30f.h
+ * @file timer_pic24_dspic30_dspic33.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
@@ -9,8 +9,8 @@
  * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
  */
 
-#ifndef TIMER_DSPIC_H
-#define TIMER_DSPIC_H
+#ifndef TIMER_PIC24_DSPIC30_DSPIC33_H
+#define TIMER_PIC24_DSPIC30_DSPIC33_H
 
 #if defined(DEVICE_33EP128GM304) || defined(DEVICE_33EP128GM306) || defined(DEVICE_33EP128GM310) \
  || defined(DEVICE_33EP128GM604) || defined(DEVICE_33EP128GM706) || defined(DEVICE_33EP128GM710) \
@@ -221,4 +221,4 @@
  #define TIMER_COUNT 0
 #endif
 
-#endif // TIMER_DSPIC_H
+#endif // TIMER_PIC24_DSPIC30_DSPIC33_H
