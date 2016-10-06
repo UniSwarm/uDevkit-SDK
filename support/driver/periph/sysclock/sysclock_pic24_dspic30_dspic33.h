@@ -58,6 +58,6 @@
  #error Unsuported ARCHI
 #endif
 
-int sysclock_setSystemClockWPLL(uint32_t freq);
+int sysclock_setClockWPLL(uint32_t freq);
 
 #endif // SYSCLOCK_PIC24_DSPIC30_DSPIC33_H
