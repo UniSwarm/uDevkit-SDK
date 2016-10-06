@@ -13,5 +13,9 @@ ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24hj dspic30f dspic33fj))
  ARCHI_SRC += oc_pic24f_dspic33f_dspic30f.c
  HEADER += oc_pic24f_dspic33f_dspic30f.h
 endif
+ifeq ($(ARCHI),$(filter $(ARCHI),pic32mm pic32mx pic32mzec pic32mzef))
+ ARCHI_SRC += oc_pic32.c
+ HEADER += oc_pic32.h
+endif
 
 endif

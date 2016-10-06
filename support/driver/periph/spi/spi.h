@@ -13,12 +13,6 @@
 
 #include "driver/device.h"
 
-#if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33fj)
- #include "spi_dspic.h"
-#else
- #error Unsuported ARCHI
-#endif
-
 // ====== device assignation ======
 rt_dev_t spi_getFreeDevice();
 void spi_releaseDevice(rt_dev_t device);
@@ -44,5 +38,15 @@ char spi_getc(rt_dev_t device);
 uint16_t spi_getw(rt_dev_t device);
 uint8_t spi_datardy(rt_dev_t device);
 ssize_t spi_read(rt_dev_t device, char *data, size_t size_max);
+
+// ======= specific include =======
+#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
+ || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
+ #include "spi_dspic.h"
+#elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
+ #include "spi_pic32.h"
+#else
+ #error Unsuported ARCHI
+#endif
 
 #endif // SPI_H

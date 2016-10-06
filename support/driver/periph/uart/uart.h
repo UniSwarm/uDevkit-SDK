@@ -50,6 +50,8 @@ ssize_t uart_read(rt_dev_t device, char *data, size_t size_max);
   #include "uart_pic24_dspic33.h"
 #elif defined(ARCHI_dspic30f)
   #include "uart_dspic30.h"
+#elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
+ #include "uart_pic32.h"
 #else
   #error "Unsupported ARCHI"
 #endif
