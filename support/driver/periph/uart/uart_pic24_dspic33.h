@@ -1,5 +1,5 @@
 /**
- * @file uart_pic24dspic33.h
+ * @file uart_pic24_dspic33.h
  * @author Sebastien CAUX (sebcaux) \
  * @copyright Robotips 2016
  *
@@ -8,8 +8,8 @@
  * @brief Uart support for rtprog for dsPIC33FJ, PIC24F, PIC24FJ, PIC24FV and PIC24HJ
  */
 
-#ifndef UART_DSPIC_H
-#define UART_DSPIC_H
+#ifndef UART_PIC24_DSPIC33_H
+#define UART_PIC24_DSPIC33_H
 
 // calculate UART count on the device
 #if defined (DEVICE_33EP16GS202) \
@@ -209,4 +209,4 @@ int uart_6_putw(uint16_t word);
 int uart_6_putc(char c);
 #endif
 
-#endif // UART_DSPIC_H
+#endif // UART_PIC24_DSPIC33_H

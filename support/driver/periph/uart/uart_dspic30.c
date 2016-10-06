@@ -1,5 +1,5 @@
 /**
- * @file uart_dspic30.h
+ * @file uart_dspic30.c
  * @author Sebastien CAUX (sebcaux) \
  * @copyright Robotips 2016
  *
@@ -195,7 +195,7 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 
     uarts[uart].baudSpeed = baudSpeed;
 
-    systemClockPeriph = getSystemClockPeriph();
+    systemClockPeriph = sysclock_getPeriphClock();
     uBrg = systemClockPeriph / baudSpeed;
 
     uBrg = uBrg >> 4;
@@ -241,7 +241,7 @@ uint32_t uart_baudSpeed(rt_dev_t device)
 #endif
     }
 
-    baudSpeed = getSystemClockPeriph() / uBrg;
+    baudSpeed = sysclock_getPeriphClock() / uBrg;
     baudSpeed = baudSpeed >> 4;
 
     return baudSpeed;
