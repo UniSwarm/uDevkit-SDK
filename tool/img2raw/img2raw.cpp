@@ -35,21 +35,21 @@ void exportimg(QImage image, QString filename)
     stream << "#include <stdint.h>" << endl;
     stream << "__prog__ const uint16_t " << finfo.baseName() << "[] __attribute__((space(prog))) ={";
 
-    QImage mirored = image.mirrored(false,false);
+    QImage mirrored = image.mirrored(false,false);
 
-    for(int x=0; x<mirored.width(); x++)
+    for(int x=0; x<mirrored.width(); x++)
     {
         stream << endl;
-        for(int y=0; y<mirored.height(); y++)
+        for(int y=0; y<mirrored.height(); y++)
         {
-            QRgb color = mirored.pixel(x,y);
+            QRgb color = mirrored.pixel(x,y);
 
             unsigned short syscolor = 0;
             syscolor |= (qRed(color)&0xF8)<<8;
             syscolor |= (qGreen(color)&0xFC)<<3;
             syscolor |= (qBlue(color)&0xF8)>>3;
             stream << "0x" << QString::number(syscolor,16);
-            if(x!=mirored.width()-1 || y!=mirored.height()-1) stream << ", ";
+            if(x!=mirrored.width()-1 || y!=mirrored.height()-1) stream << ", ";
         }
     }
     stream << endl << "};";
