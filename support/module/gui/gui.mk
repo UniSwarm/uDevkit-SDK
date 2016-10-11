@@ -6,13 +6,18 @@ vpath %.c $(MODULEPATH)
 HEADER += gui.h
 SRC += gui.c
 
-CCFLAGS += -mlarge-code -mlarge-arrays -mlarge-data
+ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic30 dspic33fj dspic33ep dspic33ev))
+ CCFLAGS += -mlarge-code -mlarge-arrays -mlarge-data
+endif
 
 # IMG2RAW_EXE cmd
 ifeq ($(OS),Windows_NT)
  IMG2RAW_EXE := $(RTPROG)/bin/img2raw.exe
 else
  IMG2RAW_EXE := $(RTPROG)/bin/img2raw
+endif
+ifeq "$(wildcard $(IMG2RAW_EXE))" ""
+ $(error You need to build $(IMG2RAW_EXE) before using gui module: 'make tools' in $(RTPROG) directory)
 endif
 
 # rule to build image to OUT_PWD/*.c
