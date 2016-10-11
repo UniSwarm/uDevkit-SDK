@@ -38,26 +38,21 @@ typedef uint16_t Color;
 #define GUI_WIDTH 480
 #define GUI_HEIGHT 320
 
-// typedef struct Picture Picture;
+typedef struct
+{
+	//metadata
+	// size_t width, heigth;
 
-// struct Picture{
-// 	// Picture();
-// 	// ~Picture();
+	//data
+	// uint16_t data[] __attribute__((space(prog)));
+	__prog__ const uint16_t *data __attribute__((space(prog)));
 
-// 	//metadata
-// 	size_t width, heigth;
-
-// 	//data
-// 	// uint16_t data[] __attribute__((space(prog)));
-// 	uint16_t data[];
-
-// };
+} Picture;
 
 void gui_init(void);
 
 void gui_fillScreen(Color bColor);
-void gui_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, __prog__ const uint16_t *img);
-// void gui_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, Picture* pic);
+void gui_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const Picture *pic);
 
 // color
 void gui_setPenColor(Color color);

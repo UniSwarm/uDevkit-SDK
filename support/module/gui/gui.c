@@ -161,7 +161,7 @@ void gui_fillScreen(Color color)
 			gui_write_data(color);
 }
 
-void gui_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, __prog__ const uint16_t *img)
+void gui_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const Picture *pic)
 {
 	uint16_t i,j;
 	unsigned long addr=0;
@@ -173,7 +173,7 @@ void gui_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, __prog__ const
 	{
 		for (j=0; j<h; j++)
 		{
-			gui_write_data(img[addr]);
+			gui_write_data(pic->data[addr]);
 			addr++;
 		}
 	}
@@ -181,27 +181,6 @@ void gui_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, __prog__ const
 	// restore full draw screen
 	gui_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
 }
-
-// void gui_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, Picture* pic)
-// {
-// 	uint16_t i,j;
-// 	unsigned long addr=0;
-	
-// 	// set rect image area space address
-// 	gui_setRectScreen(x, y, w, h);
-	
-// 	for (i=0; i<w; i++)
-// 	{
-// 		for (j=0; j<h; j++)
-// 		{
-// 			gui_write_data(pic.data[addr]);
-// 			addr++;
-// 		}
-// 	}
-	
-// 	// restore full draw screen
-// 	gui_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
-// }
 
 void gui_setPenColor(uint16_t color)
 {
