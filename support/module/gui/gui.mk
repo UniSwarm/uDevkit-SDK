@@ -51,6 +51,7 @@ PICTURES_C := $(addprefix $(OUT_PWD)/, $(PICTURES_C))
 SRC += $(PICTURES_C)
 
 # generate list of used pictures
+main.c: pictures.h
 pictures.h: Makefile
 	@echo "generate pictures.h..."
 	@printf "#include <stdint.h>\n$(foreach PICTURE,$(PICTURES_NAME),extern __prog__ const uint16_t $(PICTURE)[] __attribute__((space(prog)));\n)" > pictures.h
