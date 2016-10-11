@@ -37,9 +37,11 @@
 
 ### Timers
 - [x] prototypes
-- [ ] device assignation
-- [ ] config
-- [ ] read data
+- [x] device assignation
+- [x] config
+- [x] read data
+- [ ] 32 bits mode
+- [ ] counter mode
 
 ### PWM
 - [x] prototypes
@@ -89,7 +91,7 @@
 
 ## Tools
 ### README
- - [] do a readme
+ - [ ] do a readme
 
 ### image
-- [] include meta information of the image (size, encodage or other...) in the MyImage.ext.c ->struct !
+- [ ] include meta information of the image (size, encodage or other...) in the MyImage.ext.c ->struct !
