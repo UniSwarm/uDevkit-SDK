@@ -29,6 +29,7 @@ int main(void)
 
 	// gui_affImage(0, 0, 480, 320, picture);
 	Picture pic;
+	pic.data = picture;
 	gui_affImage(0, 0, 480, 320, &pic);
 
 	gui_setPenColor(Yellow);
