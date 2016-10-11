@@ -71,6 +71,10 @@
 - [x] pixel vector picture draw
 - [ ] 2D picture header
 
+## Module
+###GUI
+ - [] bouger les fonctions bas niveau dans driver/lcd
+
 ## Boards
 ### RTBoard
 - [x] init io
