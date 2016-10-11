@@ -9,7 +9,7 @@ MODULES += gui
 
 SRC += main.c courier8b.c
 
-PICTURES += picture.jpg
+PICTURES += picture.png
 
 include $(RTPROG)/rtprog.mk
 

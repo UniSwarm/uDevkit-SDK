@@ -24,30 +24,32 @@ int main(void)
 
 	SCREEN_LEDBL = 1;
 
-	lcd_init();
-	lcd_fillScreen(Blue2);
+	gui_init();
+	gui_fillScreen(Blue2);
 
-//	lcd_affImage(0, 0, 480, 320, picture);
+	// gui_affImage(0, 0, 480, 320, picture);
+	Picture pic;
+	gui_affImage(0, 0, 480, 320, &pic);
 
-	lcd_setPenColor(Yellow);
-	lcd_setBrushColor(0x2965);
+	gui_setPenColor(Yellow);
+	gui_setBrushColor(0x2965);
 
-	/*lcd_drawFillRect(50, 50, 50, 50);
+	/*gui_drawFillRect(50, 50, 50, 50);
 
 	for(i=51;i<100;i++)
-		lcd_drawPoint(50, i);
+		gui_drawPoint(50, i);
 
-	lcd_setBrushColor(Yellow);
-	lcd_drawFillRect(51, 51, 50, 50);
+	gui_setBrushColor(Yellow);
+	gui_drawFillRect(51, 51, 50, 50);
 
-	lcd_setBrushColor(Blue);
-	lcd_drawFillRect(52, 52, 50, 50);
+	gui_setBrushColor(Blue);
+	gui_drawFillRect(52, 52, 50, 50);
 
-	lcd_drawLine(50, 50, 420, 270);
-	lcd_drawLine(50, 270, 420, 50);*/
+	gui_drawLine(50, 50, 420, 270);
+	gui_drawLine(50, 270, 420, 50);*/
 
-    lcd_setFont(&core12b);
-    lcd_drawText(100, 100, "It seems to work !!! <3");
+    // gui_setFont(&core12b);
+    // gui_drawText(100, 100, "It seems to work !!! <3");
 
 	while(1)
     {
@@ -56,7 +58,7 @@ int main(void)
 		size = a6_read(buff, 100);
 		if(size>0)
         {
-            lcd_drawTextRect(188, 273, 282, 30, buff, LCD_FONT_ALIGN_VLEFT | LCD_FONT_ALIGN_HTOP);
+            gui_drawTextRect(188, 273, 282, 30, buff, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
         }
     }
 
