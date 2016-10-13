@@ -17,11 +17,11 @@
 #define AR1000_SPI  2
 #define AR1000_I2C  2
 
-void ar1000_init(void);
+int ar1000_init(void);
 
 //AR1000 Commands
 ssize_t ar1000_get_version();
-void ar1000_enable_touch();
+ssize_t ar1000_enable_touch();
 void ar1000_disable_touch();
 void ar1000_calibrate_mode();
 void ar1000_register_read();
