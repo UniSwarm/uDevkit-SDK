@@ -20,20 +20,26 @@ int main(void)
 
 	// a6 init
     a6_init();
-    //ar1000_init();
 
 	SCREEN_LEDBL = 1;
 
 	gui_init();
 	gui_fillScreen(Blue2);
 
-	// gui_affImage(0, 0, 480, 320, picture);
+	//display an image
 	Picture pic;
 	pic.data = picture;
 	gui_affImage(0, 0, 480, 320, &pic);
 
 	gui_setPenColor(Yellow);
 	gui_setBrushColor(0x2965);
+
+	//initialize tactil
+	int init = ar1000_init();
+	ssize_t response = 42;
+	response = ar1000_enable_touch();
+
+
 
 	/*gui_drawFillRect(50, 50, 50, 50);
 
@@ -49,8 +55,22 @@ int main(void)
 	gui_drawLine(50, 50, 420, 270);
 	gui_drawLine(50, 270, 420, 50);*/
 
-    // gui_setFont(&core12b);
-    // gui_drawText(100, 100, "It seems to work !!! <3");
+    gui_setFont(&core12b);
+    gui_drawText(100, 100, "It seems to work !!! <3");
+
+    // gui_drawText(100, 150, "response: ");
+    // char to_disp[100];
+    // // gui_drawText(200, 150, response);
+    // sprintf(to_disp, "%d", response);
+    // gui_drawText(200, 150, to_disp);
+
+
+    gui_drawText(100, 150, "init: ");
+    char to_disp[100];
+    // gui_drawText(200, 150, response);
+    sprintf(to_disp, "%d", init);
+    gui_drawText(200, 150, to_disp);
+
 
 	while(1)
     {
