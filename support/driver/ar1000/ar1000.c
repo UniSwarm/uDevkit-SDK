@@ -1,3 +1,13 @@
+/**
+ * @file ar1000.c
+ * @author Charles-Antoine NOURY (CharlyBigoud)
+ * @copyright Robotips 2016
+ *
+ * @date June 6, 2016, 9:10 PM 
+ * 
+ * @brief AR driver support
+ */
+ 
 #include "ar1000.h"
 
 #include <xc.h>
@@ -10,19 +20,36 @@
  rt_dev_t ar1000_uart;
 #endif
 
+#define AR1000_CMD_ENABLE  0x12
+#define AR1000_CMD_DISABLE 0x13
+
 //PROTECTED FUNCTIONS
 /**
  * @Brief ar1000_send
  */
-ssize_t ar1000_send(uint8_t cmd, const char *data, uint8_t size)
+ssize_t ar1000_send(uint8_t cmd, const char *data, size_t size)
 {
     char trame[20];
     trame[0]=0x55;
-    trame[1]=size;
+    trame[1]=size+1;
     trame[2]=cmd;
-    memcpy(trame+3, data, size);
+    if(data != NULL)
+        memcpy(trame+3, data, size);
 
-    return uart_write(ar1000_uart, trame, size);
+    //set uart mode
+    #if AR1021_MODE == AR1021_UART
+    return uart_write(ar1000_uart, trame, size+3);
+    #endif
+
+    //TODO: set i2c mode
+    #if AR1021_MODE == AR1021_I2C
+    return 0;
+    #endif
+    
+    //TODO: set spi mode
+    #if AR1021_MODE == AR1021_SPI
+    return 0;
+    #endif
 }
 
 /**
@@ -36,17 +63,17 @@ ssize_t ar1000_receive(uint8_t cmd, char *data, uint8_t size)
 /**
  * @Brief ar1000_send_cmd
  */
-// void ar1000_send_cmd(uint8_t cmd, uint8_t size, char* data)
-// {
-//     ar1000_disable_touch();
-//     ssize_t status = ar1000_send(cmd, data, size);
+void ar1000_send_cmd(uint8_t cmd, uint8_t size, char* data)
+{
+    ar1000_disable_touch();
+    ar1000_send(cmd, data, size);
 
-//     //TODO: evaluate "status" value ??
-//     //TODO: wait 50ms; (cf doc)
+    //TODO: evaluate "status" value ??
+    //TODO: wait 50ms; (cf doc)
 
-//     ar1000_receive(cmd, data, size);
-//     ar1000_enable_touch();
-// }
+    ar1000_receive(cmd, data, size);
+    ar1000_enable_touch();
+}
 
 
 //PUBLIC FUNCTIONS
@@ -56,17 +83,19 @@ ssize_t ar1000_receive(uint8_t cmd, char *data, uint8_t size)
  */
 int ar1000_init()
 {
+	int status;
 	//set uart mode
     #if AR1021_MODE == AR1021_UART
         AR1000_M1 = 1;
         AR1000_SDO = 0;
         ar1000_uart = uart_getFreeDevice();
         uart_setBaudSpeed(ar1000_uart, 9600);
-        int test= uart_enable(ar1000_uart);
+        status = uart_enable(ar1000_uart);
     #endif
-        return test;
+
 	//TODO: set i2c mode
 	//TODO: set spi mode
+	return status;
 }
 
 /**
@@ -90,31 +119,23 @@ int ar1000_init()
 // }
 
 /**
- * @Brief ar1000_enable_touch
+ * @Brief enable the touch screen
  */
 ssize_t ar1000_enable_touch()
 {
-	uint8_t size = 1;
-    uint8_t cmd = 0x12;
-    char data[0];
-
-	ar1000_send(cmd, data, size);
-	size = 2;
-	return ar1000_receive(cmd, data, size);
+    char data[20];
+    ar1000_send(AR1000_CMD_ENABLE, NULL, 0);
+    return uart_read(ar1000_uart, data, 20);
 }
 
 /**
- * @Brief ar1000_disable_touch
+ * @Brief disable the touch screen
  */
-void ar1000_disable_touch()
+ssize_t ar1000_disable_touch()
 {
-	uint8_t size = 1;
-	uint8_t cmd = 0x13;
-    char data[0];
-	
-	ar1000_send(cmd, data, size);
-	size = 2;
-	ar1000_receive(cmd, data, size);
+    char data[20];
+    ar1000_send(AR1000_CMD_DISABLE, NULL, 0);
+    return uart_read(ar1000_uart, data, 20);
 }
 
 // /**

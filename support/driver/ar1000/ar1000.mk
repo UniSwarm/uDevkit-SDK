@@ -6,10 +6,6 @@ vpath %.c $(DRIVERPATH)
 DRIVERS += sysclock
 
 HEADER += ar1000.h
-
-ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ep dspic33fj))
- SRC += ar1000.c
- HEADER += ar1000.h
-endif
+SRC += ar1000.c
 
 endif
