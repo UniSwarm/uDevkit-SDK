@@ -13,9 +13,9 @@
 
 #include "driver/device.h"
 
-#define AR1000_UART 1
-#define AR1000_SPI  2
-#define AR1000_I2C  2
+#define AR1021_UART 1
+#define AR1021_I2C  2
+#define AR1021_SPI  3
 
 int ar1000_init(void);
 

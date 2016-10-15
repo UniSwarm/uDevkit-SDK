@@ -20,6 +20,14 @@
  rt_dev_t ar1000_uart;
 #endif
 
+#if AR1021_MODE == AR1021_I2C
+ rt_dev_t ar1000_i2c;
+#endif
+
+#if AR1021_MODE == AR1021_SPI
+ rt_dev_t ar1000_spi;
+#endif
+
 #define AR1000_CMD_ENABLE  0x12
 #define AR1000_CMD_DISABLE 0x13
 
@@ -83,8 +91,10 @@ void ar1000_send_cmd(uint8_t cmd, uint8_t size, char* data)
  */
 int ar1000_init()
 {
-	int status;
-	//set uart mode
+    int status = -1;
+
+    //set uart mode
+    //TODO a degade car ne devrait pas exister (au moins pour AR1021)
     #if AR1021_MODE == AR1021_UART
         AR1000_M1 = 1;
         AR1000_SDO = 0;
@@ -93,9 +103,22 @@ int ar1000_init()
         status = uart_enable(ar1000_uart);
     #endif
 
-	//TODO: set i2c mode
-	//TODO: set spi mode
-	return status;
+    //TODO: set i2c mode
+    #if AR1021_MODE == AR1021_I2C
+        // AR1000_M1 = 1;
+        // AR1000_INT = ???
+        // AR1000_SDO = 0;
+        ar1000_i2c = i2c_getFreeDevice();
+        i2c_setBaudSpeed(ar1000_i2c, 9600);
+        status = i2c_enable(ar1000_i2c);
+    #endif
+
+    //TODO: set spi mode
+    #if AR1021_MODE == AR1021_SPI
+        return -1;
+    #endif
+
+    return status;
 }
 
 /**
