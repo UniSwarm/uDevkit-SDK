@@ -23,20 +23,20 @@ endif
 # rule to build image to OUT_PWD/*.c
 $(OUT_PWD)/%.png.c : %.png pictures.h
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "IMG %-30s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	@$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
 $(OUT_PWD)/%.jpg.c : %.jpg pictures.h
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "IMG %-30s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	@$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
 $(OUT_PWD)/%.bmp.c : %.bmp pictures.h
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "IMG %-30s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	@$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
 
 # rule to build images *.<img>.c to OUT_PWD/*.o
 $(OUT_PWD)/%.o : $(OUT_PWD)/%.c
-	@printf "µCC %-30s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@printf "µCC %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	@$(CC) $(CCFLAGS) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 
 PICTURES_C := $(PICTURES)
