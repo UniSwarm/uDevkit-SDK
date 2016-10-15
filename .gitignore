@@ -40,7 +40,7 @@ build/
 *.mcw
 log.*
 *.xml.lck
-*Log.xml
+**/*Log.xml*
 
 # generated
 build-doc/
