@@ -31,7 +31,7 @@ int init_board();
 #define SCREEN_LEDBL	LATEbits.LATE4
 
 // AR1021
-#define AR1000_MODE		AR1021_UART
+#define AR1000_MODE		AR1021_I2C
 #define AR1000_M1		LATEbits.LATE6
 #define AR1000_INT		PORTEbits.RE7
 #define AR1000_SDO		LATGbits.LATG8
