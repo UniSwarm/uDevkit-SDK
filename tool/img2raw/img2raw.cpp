@@ -1,11 +1,11 @@
 /**
  * @file img2raw.c
- * @author Sebastien CAUX (sebcaux)
+ * @author Sebastien CAUX (sebcaux) / Charles-Antoine NOURY (CharlyBigoud)
  * @copyright Robotips 2016
  *
  * @date April 25, 2016, 18:39 PM
  *
- * @brief Tool to transform image in const C raw data (xc16 format)
+ * @brief Tool to transform image in const C raw data (xc16 format) and storing its metadata
  */
 
 #include <QCommandLineParser>
@@ -24,7 +24,7 @@
 #include <QPainter>
 #include <QRegExp>
 
-void exportimg(QImage image, QString filename)
+void exportImage(QImage image, QString filename)
 {
     QFileInfo finfo(filename);
     QFile file(filename);
@@ -33,6 +33,10 @@ void exportimg(QImage image, QString filename)
     QTextStream stream(&file);
 
     stream << "#include <stdint.h>" << endl;
+    //adding metadata to the file
+    stream << "const uint16_t " << finfo.baseName() << "_width = " << image.width() << ";" << endl;
+    stream << "const uint16_t " << finfo.baseName() << "_height = " << image.height() << ";" << endl;
+    //adding data to the file
     stream << "__prog__ const uint16_t " << finfo.baseName() << "[] __attribute__((space(prog))) ={";
 
     QImage mirrored = image.mirrored(false,false);
@@ -202,10 +206,11 @@ int main(int argc, char *argv[])
     }
     QString inputFile = parser.value(inputOption);
 
-    // outpout
+    // output
     QString outputFile = parser.value(outputOption);
 
     QFileInfo fileInfo(inputFile);
+
     // image mode
     QStringList imageExts;
     imageExts << "jpg" << "jpeg" << "png" << "bmp";
@@ -217,7 +222,7 @@ int main(int argc, char *argv[])
             return 1;
         }
         QImage image(inputFile);
-        exportimg(image, outputFile);
+        exportImage(image, outputFile);
 
         return 0;
     }
