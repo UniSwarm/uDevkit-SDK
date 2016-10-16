@@ -54,7 +54,7 @@ SRC += $(PICTURES_C)
 main.c: pictures.h
 pictures.h: Makefile
 	@echo "generate pictures.h..."
-	@printf "#include <stdint.h>\n$(foreach PICTURE,$(PICTURES_NAME),extern __prog__ const uint16_t $(PICTURE)[] __attribute__((space(prog)));\n)" > pictures.h
+	@printf "#include <stdint.h>\n$(foreach PICTURE,$(PICTURES_NAME),extern const uint16_t $(PICTURE)_width;\nextern const uint16_t $(PICTURE)_height;\nextern __prog__ const uint16_t $(PICTURE)[] __attribute__((space(prog)));\n)" > pictures.h
 
 $(OUT_PWD)/%.o : pictures.h
 
