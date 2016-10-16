@@ -19,6 +19,7 @@ int init_io()
     ANSELE = 0x0000;            // all analog inputs of port E as digital buffer
     ANSELG = 0x0000;            // all analog inputs of port G as digital buffer
 
+    // screen pins
     TRISDbits.TRISD3 = 0;       // SCREEN_RD pin as output
     TRISDbits.TRISD2 = 0;       // SCREEN_RW pin as output
     TRISDbits.TRISD1 = 0;       // SCREEN_RS pin as output
@@ -32,15 +33,20 @@ int init_io()
     OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 0;
 
         // UART1 pins (A6)
-        RPINR18bits.U1RXR = 80; // RX ==> RP80
-        RPOR7bits.RP96R = 0b00001; // TX ==> RP96
+        _U1RXR = 80; // RX ==> RP80 AXrx
+        _RP96R = _RPOUT_U1TX; // TX ==> RP96 AXtx
 
-        // UART2 pins (AR1000)
-        RPINR19bits.U2RXR = 118; // RX2 ==> RP118 AXrx
-        RPOR14bits.RP120R = 0b000011; // TX2 ==> RP120 AXtx
+        // SPI1 pins (AR1000)
+        _SDI1R = 119;
+        _RP120R = _RPOUT_SDO1;
+        _RP118R = _RPOUT_SCK1;
+        _RP85R = _RPOUT_SS1;
+
+        _U2RXR = 118; // RX2 ==> RP118
+        _RP120R = _RPOUT_U2TX; // TX2 ==> RP120
 
         // OC PWM luminosity
-        RPOR0bits.RP64R = 0b010000; // OC1 ==> RP64
+        _RP64R = _RPOUT_OC1; // OC1 ==> RP64
 
     // Lock configuration pin
     OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 1;
