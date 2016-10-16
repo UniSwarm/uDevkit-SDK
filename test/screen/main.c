@@ -27,11 +27,11 @@ int main(void)
 	gui_fillScreen(Blue2);
 
 	//display an image
-	Picture pic;
-	pic.data = picture;
-	pic.width = 480;
-	pic.height = 320;
-	gui_dispImage(0, 0, &pic);
+	Picture pic1;
+	pic1.data = picture;
+	pic1.width = picture_width;
+	pic1.height = picture_height;
+	gui_dispImage(0, 0, &pic1);
 
 	gui_setPenColor(Yellow);
 	gui_setBrushColor(0x2965);
