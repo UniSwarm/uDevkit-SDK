@@ -4,7 +4,7 @@
  * @copyright Robotips 2016
  *
  * @date April 49, 2016, 08:49 AM
- * 
+ *
  * @brief Code for A6screenboard from Robotips
  */
 
@@ -14,44 +14,44 @@
 
 int init_io()
 {
-	ANSELB = 0x0000;	// all analog inputs of port B as digital buffer
-	ANSELD = 0x0000;	// all analog inputs of port D as digital buffer
-	ANSELE = 0x0000;	// all analog inputs of port E as digital buffer
-	ANSELG = 0x0000;	// all analog inputs of port G as digital buffer
-	
-	TRISDbits.TRISD3 = 0;		// SCREEN_RD pin as output
-	TRISDbits.TRISD2 = 0;		// SCREEN_RW pin as output
-	TRISDbits.TRISD1 = 0;		// SCREEN_RS pin as output
-	TRISDbits.TRISD0 = 0;		// SCREEN_CS pin as output
-	TRISDbits.TRISD4 = 0;		// SCREEN_RST pin as output
-	TRISEbits.TRISE4 = 0;		// SCREEN_LEDBL pin as output
-	
-	TRISFbits.TRISF1 = 0;		// A6_RW pin as output
-	
-	// Unlock configuration pin
-	OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 0;
-		
-		// UART1 pins (A6)
-		RPINR18bits.U1RXR = 80; // RX ==> RP80
-		RPOR7bits.RP96R = 0b00001; // TX ==> RP96
-		
-		// UART2 pins (AR1000)
-		RPINR19bits.U2RXR = 118; // RX2 ==> RP118 AXrx
-		RPOR14bits.RP120R = 0b000011; // TX2 ==> RP120 AXtx
-		
-		// OC PWM luminosity
-		RPOR0bits.RP64R = 0b010000; // OC1 ==> RP64
-		
-	// Lock configuration pin
-	OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 1;
-	
-	return 0;
+    ANSELB = 0x0000;            // all analog inputs of port B as digital buffer
+    ANSELD = 0x0000;            // all analog inputs of port D as digital buffer
+    ANSELE = 0x0000;            // all analog inputs of port E as digital buffer
+    ANSELG = 0x0000;            // all analog inputs of port G as digital buffer
+
+    TRISDbits.TRISD3 = 0;       // SCREEN_RD pin as output
+    TRISDbits.TRISD2 = 0;       // SCREEN_RW pin as output
+    TRISDbits.TRISD1 = 0;       // SCREEN_RS pin as output
+    TRISDbits.TRISD0 = 0;       // SCREEN_CS pin as output
+    TRISDbits.TRISD4 = 0;       // SCREEN_RST pin as output
+    TRISEbits.TRISE4 = 0;       // SCREEN_LEDBL pin as output
+
+    TRISFbits.TRISF1 = 0;       // A6_RW pin as output
+
+    // Unlock configuration pin
+    OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 0;
+
+        // UART1 pins (A6)
+        RPINR18bits.U1RXR = 80; // RX ==> RP80
+        RPOR7bits.RP96R = 0b00001; // TX ==> RP96
+
+        // UART2 pins (AR1000)
+        RPINR19bits.U2RXR = 118; // RX2 ==> RP118 AXrx
+        RPOR14bits.RP120R = 0b000011; // TX2 ==> RP120 AXtx
+
+        // OC PWM luminosity
+        RPOR0bits.RP64R = 0b010000; // OC1 ==> RP64
+
+    // Lock configuration pin
+    OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 1;
+
+    return 0;
 }
 
 int init_board()
 {
-	init_io();
-	
-	return 0;
+    init_io();
+
+    return 0;
 }
 
