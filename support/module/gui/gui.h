@@ -29,7 +29,7 @@ typedef uint16_t Color;
 
 #define WINDOW_XADDR_START  0x0045 // Horizontal Start Address Set
 #define WINDOW_XADDR_END    0x0044 // Horizontal End Address Set
-#define WINDOW_YADDR_START	0x0047 // Vertical Start Address Set
+#define WINDOW_YADDR_START  0x0047 // Vertical Start Address Set
 #define WINDOW_YADDR_END    0x0046 // Vertical End Address Set
 #define GRAM_ADR_ROW_S      0x0020 // init to 0 , UPDATE FIRST
 #define GRAM_ADR_COL_S      0x0021 // init to 319 , UPDATE LAST
@@ -38,21 +38,25 @@ typedef uint16_t Color;
 #define GUI_WIDTH 480
 #define GUI_HEIGHT 320
 
+/**
+ * @brief Picture struct
+ * contains data and metadata (width, height...)
+ */
 typedef struct
 {
-	//metadata
-	// size_t width, heigth;
+    //metadata
+    uint16_t width;
+    uint16_t height;
 
-	//data
-	// uint16_t data[] __attribute__((space(prog)));
-	__prog__ const uint16_t *data __attribute__((space(prog)));
+    //data
+    __prog__ const uint16_t *data __attribute__((space(prog)));
 
 } Picture;
 
 void gui_init(void);
 
 void gui_fillScreen(Color bColor);
-void gui_affImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const Picture *pic);
+void gui_dispImage(uint16_t x, uint16_t y, const Picture *pic);
 
 // color
 void gui_setPenColor(Color color);
