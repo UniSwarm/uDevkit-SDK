@@ -29,6 +29,7 @@ private:
 
 protected:
     void run();
+    void connect_serial();
 
 signals:
     void dataRec(QString buff);
@@ -40,6 +41,7 @@ signals:
 private slots:
     void timer_tick();
     void receive();
+    void error(QSerialPort::SerialPortError errorCode);
 };
 
 #endif // PROTOCOLE_H

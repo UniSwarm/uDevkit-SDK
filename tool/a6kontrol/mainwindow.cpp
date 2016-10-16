@@ -31,6 +31,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->plot->yAxis->setRange(-128, 128);
 
     //this->setGeometry(2500,300,500,600);
+
+    connect(port, SIGNAL(sensor1Changed(int)), ui->horizontalSlider, SLOT(setValue(int)));
+    connect(port, SIGNAL(sensor2Changed(int)), ui->horizontalSlider_2, SLOT(setValue(int)));
 }
 
 MainWindow::~MainWindow()

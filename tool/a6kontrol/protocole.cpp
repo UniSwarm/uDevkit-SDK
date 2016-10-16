@@ -8,33 +8,22 @@ Protocole::Protocole()
 {
     for(int i=0;i<21;i++) data[i]=0;
 
-    foreach (QSerialPortInfo info, QSerialPortInfo::availablePorts())
-    {
-        qDebug()<<info.description()<<info.manufacturer();
-        if(info.manufacturer().contains("Microchip"))
-            _port =new QSerialPort(info.portName());
-    }
-    if(_port!=NULL)
-    {
-        _port->open(QIODevice::ReadWrite);
-        _port->setDataBits(QSerialPort::Data8);
-        _port->setBaudRate(QSerialPort::Baud57600);
-        _port->setParity(QSerialPort::NoParity);
-        _port->setStopBits(QSerialPort::OneStop);
-        _port->setFlowControl(QSerialPort::NoFlowControl);
-    }
+    _port = NULL;
+    connect_serial();
+
     //port->setTimeout(0, 10);
 
-    timer = new QTimer;
-    connect(_port,SIGNAL(readyRead()),this,SLOT(receive()));
-    timer->start(1);
+    //timer = new QTimer;
+    //connect(_port,SIGNAL(readyRead()),this,SLOT(receive()));
+    //timer->start(1);
 
     this->start();
 }
 
 Protocole::~Protocole()
 {
-    if(_port!=NULL) _port->close();
+    if(_port!=NULL)
+        _port->close();
     this->terminate();
     delete _port;
 }
@@ -48,6 +37,11 @@ void Protocole::receive()
     /*char buffr[1024];
     port->readLine(buffr,1024);
     emit dataRec(QString(buffr));*/
+}
+
+void Protocole::error(QSerialPort::SerialPortError errorCode)
+{
+    qDebug()<<"error!!"<<errorCode;
 }
 
 void Protocole::setVal(unsigned short adr, unsigned short val)
@@ -68,16 +62,29 @@ void Protocole::setInt(unsigned char val,unsigned char val2,unsigned char val3,u
 void Protocole::run()
 {
     char buff[1024];
-    QRegExp rx("d1: ([0-9]*).*d2: ([0-9]*).*x: ([0-9]*).*y:([0-9]*).*t:(-*[0-9]*).*acx:(-*[0-9]*).*acy:(-*[0-9]*).*acz:(-*[0-9]*)");
-    if(_port==NULL)
-        return;
+    QRegExp rx("d1: ([0-9]+).*d2: ([0-9]+).*x: ([0-9]+).*y:([0-9]+).*t:(-*[0-9]+).*acx:(-*[0-9]+).*acy:(-*[0-9]+).*acz:(-*[0-9]+)");
+
     while(1)
     {
-        //QThread::msleep(1);
+        if(_port==NULL)
+        {
+            connect_serial();
+            QThread::msleep(100);
+            continue;
+        }
+
+        if(_port->error() != QSerialPort::NoError)
+        {
+            qDebug()<<"disconnected";
+            _port->deleteLater();
+            _port = NULL;
+            continue;
+        }
+
         if(_port->bytesAvailable()>=20)
         {
-            emit dataRec(QString(buff));
             _port->readLine(buff,150);
+            emit dataRec(QString(buff));
             if(rx.indexIn(buff)!=-1 && rx.captureCount()==8)
             {
                 emit posChanged(rx.cap(3).toInt(), rx.cap(4).toInt(), rx.cap(5).toInt());
@@ -92,7 +99,26 @@ void Protocole::run()
                 emit sensor2Changed(rx.cap(2).toInt());
             }
         }
+    }
+}
 
-        //port->putChar(0);
+void Protocole::connect_serial()
+{
+    foreach (QSerialPortInfo info, QSerialPortInfo::availablePorts())
+    {
+        //qDebug()<<info.description()<<info.manufacturer();
+        if(info.manufacturer().contains("Microchip"))
+            _port =new QSerialPort(info.portName());
+    }
+    if(_port!=NULL)
+    {
+        qDebug()<<"connected";
+        _port->open(QIODevice::ReadWrite);
+        _port->setDataBits(QSerialPort::Data8);
+        _port->setBaudRate(QSerialPort::Baud57600);
+        _port->setParity(QSerialPort::NoParity);
+        _port->setStopBits(QSerialPort::OneStop);
+        _port->setFlowControl(QSerialPort::NoFlowControl);
+        connect(_port, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(error(QSerialPort::SerialPortError)));
     }
 }
