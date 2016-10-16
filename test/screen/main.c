@@ -29,15 +29,20 @@ int main(void)
 	//display an image
 	Picture pic;
 	pic.data = picture;
-	gui_affImage(0, 0, 480, 320, &pic);
+	pic.width = 480;
+	pic.height = 320;
+	gui_dispImage(0, 0, &pic);
 
 	gui_setPenColor(Yellow);
 	gui_setBrushColor(0x2965);
 
-	//initialize tactil
-	int init = ar1000_init();
-	ssize_t response = 42;
-	response = ar1000_enable_touch();
+	//initialize touch
+	// ssize_t response = 42;
+	// response = ar1000_init();
+	// response = ar1000_enable_touch();
+
+
+
 
 
 
@@ -55,22 +60,19 @@ int main(void)
 	gui_drawLine(50, 50, 420, 270);
 	gui_drawLine(50, 270, 420, 50);*/
 
+
+
+
+
+	//Drawing text
     gui_setFont(&core12b);
     gui_drawText(100, 100, "It seems to work !!! <3");
 
+    //displaying ar1000 responses
     // gui_drawText(100, 150, "response: ");
     // char to_disp[100];
-    // // gui_drawText(200, 150, response);
     // sprintf(to_disp, "%d", response);
     // gui_drawText(200, 150, to_disp);
-
-
-    gui_drawText(100, 150, "init: ");
-    char to_disp[100];
-    // gui_drawText(200, 150, response);
-    sprintf(to_disp, "%d", init);
-    gui_drawText(200, 150, to_disp);
-
 
 	while(1)
     {
