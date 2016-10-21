@@ -23,10 +23,10 @@ int spi_disable(rt_dev_t device);
 
 // ======== device settings =======
 int spi_setfreq(rt_dev_t device, uint32_t freq);
-uint32_t spi_freq(rt_dev_t device);
-uint32_t spi_effectivefreq(rt_dev_t device);
+uint32_t spi_Freq(rt_dev_t device);
+uint32_t spi_effectiveFreq(rt_dev_t device);
 
-int spi_setBitConfig(rt_dev_t device, uint8_t bitLenght);
+int spi_setBitLenght(rt_dev_t device, uint8_t bitLenght);
 uint8_t spi_bitLenght(rt_dev_t device);
 
 // ========= device write ========
@@ -42,7 +42,7 @@ ssize_t spi_read(rt_dev_t device, char *data, size_t size_max);
 #elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
  #include "spi_pic24e_dspic33e.h"
 #elif defined(ARCHI_dspic30f)
-  #include "uart_dspic30.h"
+ #include "spi_dspic30.h"
 #elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
  #include "spi_pic32.h"
 #else
