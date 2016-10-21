@@ -1,6 +1,6 @@
 PROJECT_NAME           = "RTprog"
 PROJECT_BRIEF          = "A tool to simplify module inclusions in embeded systems"
-OUTPUT_DIRECTORY       = build-doc/
+OUTPUT_DIRECTORY       = doc/
 OPTIMIZE_OUTPUT_FOR_C  = YES
 
 INPUT                  = ./support/

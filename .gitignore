@@ -46,7 +46,12 @@ log.*
 build-doc/
 *.pro.user
 bin/*
+doc/*
 
 # rtprog generated files
 modules.h
 pictures.h
+
+# proc file
+support/archi/pic16b/*.txt
+support/archi/pic32/*.txt
