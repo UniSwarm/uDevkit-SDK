@@ -8,7 +8,6 @@
 
 #include "pictures.h"
 extern const Font core12b;
-extern const Picture picture;
 
 int main(void)
 {
