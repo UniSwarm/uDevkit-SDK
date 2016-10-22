@@ -28,7 +28,7 @@
  * @Brief exportImage convert an image to a structure containing metadata and data
  * To read the arguments list of the Picture struc, see "/module/gui.gui.h" 
  */
-void exportImage(QImage image, QString filename)
+void exportImage(const QImage& image, const QString& filename)
 {
     QFileInfo finfo(filename);
     QFile file(filename);
