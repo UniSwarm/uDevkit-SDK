@@ -94,4 +94,5 @@
  - [ ] do a readme
 
 ### image
-- [ ] include meta information of the image (size, encodage or other...) in the MyImage.ext.c ->struct !
+- [x] include meta information of the image (size, encodage or other...) in the MyImage.ext.c ->struct !
+- [ ] FIX: warning: 30Fxxxx architecture of input file `build/pictureName.extentsion.o' is incompatible with 33EP512GP806 output
