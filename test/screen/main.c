@@ -8,6 +8,7 @@
 
 #include "pictures.h"
 extern const Font core12b;
+extern const Picture picture;
 
 int main(void)
 {
@@ -27,11 +28,7 @@ int main(void)
 	gui_fillScreen(Blue2);
 
 	//display an image
-	Picture pic1;
-	pic1.data = picture;
-	pic1.width = picture_width;
-	pic1.height = picture_height;
-	gui_dispImage(0, 0, &pic1);
+	gui_dispImage(0, 0, &picture);
 
 	gui_setPenColor(Yellow);
 	gui_setBrushColor(0x2965);
