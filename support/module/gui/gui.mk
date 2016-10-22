@@ -54,7 +54,7 @@ SRC += $(PICTURES_C)
 main.c: pictures.h
 pictures.h: Makefile
 	@echo "generate pictures.h..."
-	@printf "#ifndef _PICTURE_\n#define _PICTURE_\n\n#include <stdint.h>\n#include </home/charly/robotips/rtprog/support/module/gui/gui.h>\n\n$(foreach PICTURE,$(PICTURES_NAME),extern const Picture $(PICTURE);\n)\n#endif //_PICTURE_" > pictures.h
+	@printf "#ifndef _PICTURE_\n#define _PICTURE_\n\n#include <stdint.h>\n#include <module/gui.h>\n$(foreach PICTURE,$(PICTURES_NAME),\nextern const Picture $(PICTURE);)\n\n#endif //_PICTURE_" > pictures.h
 
 $(OUT_PWD)/%.o : pictures.h
 
