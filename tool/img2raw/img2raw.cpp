@@ -32,12 +32,16 @@ void exportImage(QImage image, QString filename)
 
     QTextStream stream(&file);
 
-    stream << "#include <stdint.h>" << endl;
+    stream << "#ifndef " << finfo.baseName() << "_PICTURE_" << endl;
+    stream << "#define " << finfo.baseName() << "_PICTURE_" << endl;
+    stream << endl;
+
+    // stream << "#include <stdint.h>" << endl;
     stream << "#include <pictures.h>" << endl;
     stream << endl;
 
     //starting image data array
-    stream << "__prog__ const uint16_t data[] __attribute__((space(prog))) = {";
+    stream << "__prog__ const uint16_t " << finfo.baseName() << "_data[] __attribute__((space(prog))) = {";
 
     QImage mirrored = image.mirrored(false,false);
 
@@ -59,7 +63,11 @@ void exportImage(QImage image, QString filename)
     stream << endl << "};\n" << endl;
 
     //initializing the structure
-    stream << "const Picture " << finfo.baseName() << " = {" << image.width() << ", " << image.height() << ", data};" << endl;
+    stream << "const Picture " << finfo.baseName() << " = {" << image.width() << ", " << image.height() << ", " << finfo.baseName() << "_data};" << endl;
+    
+    //ending file
+    stream << endl;
+    stream << "#endif //" << finfo.baseName() << "_PICTURE_" << endl;
 
     file.close();
 }
