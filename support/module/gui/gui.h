@@ -49,7 +49,7 @@ typedef struct
     uint16_t height;
 
     //data
-    __prog__ const uint16_t *data __attribute__((space(prog)));
+    __prog__ const uint16_t *data;
 
 } Picture;
 
