@@ -24,6 +24,10 @@
 #include <QPainter>
 #include <QRegExp>
 
+/**
+ * @Brief exportImage convert an image to a structure containing metadata and data
+ * To read the arguments list of the Picture struc, see "/module/gui.gui.h" 
+ */
 void exportImage(QImage image, QString filename)
 {
     QFileInfo finfo(filename);
@@ -32,47 +36,50 @@ void exportImage(QImage image, QString filename)
 
     QTextStream stream(&file);
 
+    //starting preprocessor instructions
     stream << "#ifndef " << finfo.baseName() << "_PICTURE_" << endl;
     stream << "#define " << finfo.baseName() << "_PICTURE_" << endl;
     stream << endl;
-
-    // stream << "#include <stdint.h>" << endl;
     stream << "#include <pictures.h>" << endl;
     stream << endl;
 
-    //starting image data array
+    //creating an array containnig the image data
+    stream << "//an array containnig the image data" << endl;
     stream << "__prog__ const uint16_t " << finfo.baseName() << "_data[] __attribute__((space(prog))) = {";
 
     QImage mirrored = image.mirrored(false,false);
 
-    for(int x=0; x<mirrored.width(); x++)
+    for(int x=0; x<mirrored.width(); ++x)
     {
         stream << endl;
-        for(int y=0; y<mirrored.height(); y++)
+        for(int y=0; y<mirrored.height(); ++y)
         {
             QRgb color = mirrored.pixel(x,y);
 
             unsigned short syscolor = 0;
-            syscolor |= (qRed(color)&0xF8)<<8;
-            syscolor |= (qGreen(color)&0xFC)<<3;
-            syscolor |= (qBlue(color)&0xF8)>>3;
+            syscolor |= (qRed(color)&0xF8)   << 8;
+            syscolor |= (qGreen(color)&0xFC) << 3;
+            syscolor |= (qBlue(color)&0xF8)  >> 3;
             stream << "0x" << QString::number(syscolor,16);
             if(x!=mirrored.width()-1 || y!=mirrored.height()-1) stream << ", ";
         }
     }
     stream << endl << "};\n" << endl;
 
-    //initializing the structure
-    stream << "const Picture " << finfo.baseName() << " = {" << image.width() << ", " << image.height() << ", " << finfo.baseName() << "_data};" << endl;
+    //creating the Picture structure
+    stream << "//the image structure {width, height, data}" << endl;
+    stream << "const Picture " << finfo.baseName() << " = {" << image.width() << ", " << image.height() << ", " << finfo.baseName() << "_data};\n" << endl;
     
-    //ending file
-    stream << endl;
+    //ending file with preprocessor instructions
     stream << "#endif //" << finfo.baseName() << "_PICTURE_" << endl;
 
     file.close();
 }
 
-void exportfont(QFont font, QString outFileName )
+/**
+ * @Brief exportFont
+ */
+void exportFont(QFont font, QString outFileName )
 {
     char c;
     unsigned value;
@@ -110,7 +117,7 @@ void exportfont(QFont font, QString outFileName )
     paint2.setFont(font);
     paint2.drawRect(-1, -1, 2002, 52);
     wl = 0;
-    for (c=first;c<=last;c++)
+    for(c=first; c<=last; ++c)
     {
         if (c!='\\')
             stream << "// " << c << endl;
@@ -131,11 +138,11 @@ void exportfont(QFont font, QString outFileName )
         paint2.drawText(QRect(wl,0,50,50),Qt::AlignLeft|Qt::AlignTop,QString(c));
         wl+=width;
         prem = true;
-        for(x=0;x<width;x++)
+        for(x=0; x<width; ++x)
         {
             nb=0;
             value=0;
-            for(y=0;y<height;y++)
+            for(y=0; y<height; ++y)
             {
                 if((y%8)==0 && y!=0)
                 {
@@ -172,7 +179,7 @@ void exportfont(QFont font, QString outFileName )
     stream << endl << "// Table of letter struct" << endl;
     QString declareTable = "const Letter* " + fontName + "_letters[] = {";
     stream << declareTable << endl;
-    for (c=first; c<=last; c++)
+    for(c=first; c<=last; ++c)
     {
         stream << QString(" ").repeated(declareTable.size()) << "&" << fontName << "_letter_" << QString::number(c) << ", " << endl;
     }
@@ -251,7 +258,7 @@ int main(int argc, char *argv[])
 
         QFont font(fontName, fontSize, bold, italic);
         out << "fontSize: " << fontSize << " family: " << font.family() << endl;
-        exportfont(font, outputFile);
+        exportFont(font, outputFile);
 
         return 0;
     }
