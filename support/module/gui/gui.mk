@@ -54,11 +54,7 @@ SRC += $(PICTURES_C)
 main.c: pictures.h
 pictures.h: Makefile
 	@echo "generate pictures.h..."
-	# @printf "#include <stdint.h>\n$(foreach PICTURE,$(PICTURES_NAME),extern const uint16_t $(PICTURE)_width;\nextern const uint16_t $(PICTURE)_height;\nextern __prog__ const uint16_t $(PICTURE)[] __attribute__((space(prog)));\n)" > pictures.h
-	# @printf "#include <stdint.h>\n$(foreach PICTURE,$(PICTURES_NAME),typedef struct\n{\n\tuint16_t width;\n\tuint16_t height;\n\t__prog__ const uint16_t *data __attribute__((space(prog)));\n} $(PICTURE);)" > pictures.h
-
-	@printf "#include <stdint.h>\n#include </home/charly/robotips/rtprog/support/module/gui/gui.h>" > pictures.h
-
+	@printf "#ifndef _PICTURE_\n#define _PICTURE_\n\n#include <stdint.h>\n#include </home/charly/robotips/rtprog/support/module/gui/gui.h>\n\n$(foreach PICTURE,$(PICTURES_NAME),extern const Picture $(PICTURE);\n)\n#endif //_PICTURE_" > pictures.h
 
 $(OUT_PWD)/%.o : pictures.h
 
