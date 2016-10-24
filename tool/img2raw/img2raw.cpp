@@ -37,9 +37,6 @@ void exportImage(const QImage& image, const QString& filename)
     QTextStream stream(&file);
 
     //starting preprocessor instructions
-    stream << "#ifndef " << finfo.baseName() << "_PICTURE_" << endl;
-    stream << "#define " << finfo.baseName() << "_PICTURE_" << endl;
-    stream << endl;
     stream << "#include <pictures.h>" << endl;
     stream << endl;
 
@@ -68,10 +65,7 @@ void exportImage(const QImage& image, const QString& filename)
 
     //creating the Picture structure
     stream << "//the image structure {width, height, data}" << endl;
-    stream << "const Picture " << finfo.baseName() << " = {" << image.width() << ", " << image.height() << ", " << finfo.baseName() << "_data};\n" << endl;
-    
-    //ending file with preprocessor instructions
-    stream << "#endif //" << finfo.baseName() << "_PICTURE_" << endl;
+    stream << "const Picture " << finfo.baseName() << " = {" << image.width() << ", " << image.height() << ", " << finfo.baseName() << "_data};";
 
     file.close();
 }
