@@ -54,10 +54,10 @@ SRC += $(PICTURES_C)
 main.c: pictures.h
 pictures.h: Makefile
 	@echo "generate pictures.h..."
-	@printf "#ifndef _PICTURE_\n#define _PICTURE_\n\n\
+	@printf "#ifndef _PICTURES_\n#define _PICTURES_\n\n\
 	#include <stdint.h>\n#include <module/gui.h>\n\
 	$(foreach PICTURE,$(PICTURES_NAME),\nextern const Picture $(PICTURE);)\n\n\
-	#endif //_PICTURE_\
+	#endif //_PICTURES_\
 	" > pictures.h
 
 $(OUT_PWD)/%.o : pictures.h
