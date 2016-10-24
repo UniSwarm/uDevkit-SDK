@@ -11,5 +11,7 @@ endif
 	@test -d ../../build/img2raw/ || mkdir -p ../../build/img2raw/
 	cd ../../build/img2raw && qmake ../../tool/img2raw/img2raw.pro
 
-../../bin/img2raw: ../../build/img2raw/Makefile
+../../bin/img2raw: ../../build/img2raw/Makefile FORCE
 	cd ../../build/img2raw && make $(TARGET_EXE)
+
+FORCE:
