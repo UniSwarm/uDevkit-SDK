@@ -16,20 +16,20 @@ ifeq ($(OS),Windows_NT)
 else
  IMG2RAW_EXE := $(RTPROG)/bin/img2raw
 endif
-ifeq "$(wildcard $(IMG2RAW_EXE))" ""
- $(error You need to build $(IMG2RAW_EXE) before using gui module: 'make tools' in $(RTPROG) directory)
-endif
+$(IMG2RAW_EXE): $(RTPROG)/tool/img2raw/img2raw.cpp $(RTPROG)/tool/img2raw/img2raw.pro
+	@echo "Building img2raw..."
+	cd $(RTPROG)/tool/img2raw/ && make
 
 # rule to build image to OUT_PWD/*.c
-$(OUT_PWD)/%.png.c : %.png pictures.h
+$(OUT_PWD)/%.png.c : %.png pictures.h $(IMG2RAW_EXE)
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	@$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
-$(OUT_PWD)/%.jpg.c : %.jpg pictures.h
+$(OUT_PWD)/%.jpg.c : %.jpg pictures.h $(IMG2RAW_EXE)
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	@$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
-$(OUT_PWD)/%.bmp.c : %.bmp pictures.h
+$(OUT_PWD)/%.bmp.c : %.bmp pictures.h $(IMG2RAW_EXE)
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	@$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
