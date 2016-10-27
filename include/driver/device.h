@@ -40,4 +40,8 @@ typedef uint8_t rt_dev_t_class;
 #define DEV_CLASS_IC            ((rt_dev_t_class) (0x13))
 #define DEV_CLASS_PWM           ((rt_dev_t_class) (0x14))
 
+// ===== device functions =====
+ssize_t device_write(rt_dev_t device, const char *data, size_t size);
+ssize_t device_read(rt_dev_t device, char *data, size_t size_max);
+
 #endif // DEVICE_H
