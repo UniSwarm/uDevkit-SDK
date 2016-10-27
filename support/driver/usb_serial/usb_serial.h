@@ -3,8 +3,8 @@
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
- * @date May 01, 2016, 08:31 AM 
- * 
+ * @date May 01, 2016, 08:31 AM
+ *
  * @brief USB serial support
  */
 
@@ -14,10 +14,10 @@
 #include "driver/device.h"
 
 // API
-void usb_serial_init();
+rt_dev_t usb_serial_getFreeDevice();
 void usb_serial_task();
 
-ssize_t usb_serial_write(const char *data, const size_t size);
-ssize_t usb_serial_read(char *data, const size_t max_size);
+ssize_t usb_serial_write(rt_dev_t device, const char *data, size_t size);
+ssize_t usb_serial_read(rt_dev_t device, char *data, size_t max_size);
 
 #endif // USB_SERIAL_H

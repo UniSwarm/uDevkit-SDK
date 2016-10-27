@@ -32,6 +32,7 @@ typedef uint8_t rt_dev_t_class;
 #define DEV_CLASS_I2C_SOFT      ((rt_dev_t_class) (DEV_CLASS_I2C+1))
 #define DEV_CLASS_SPI           ((rt_dev_t_class) (0x06))
 #define DEV_CLASS_SPI_SOFT      ((rt_dev_t_class) (DEV_CLASS_SPI+1))
+#define DEV_CLASS_USB_SERIAL    ((rt_dev_t_class) (0x08))
 
 // special classes
 #define DEV_CLASS_QEI           ((rt_dev_t_class) (0x11))

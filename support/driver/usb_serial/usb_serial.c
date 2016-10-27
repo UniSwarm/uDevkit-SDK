@@ -3,8 +3,8 @@
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
- * @date May 01, 2016, 08:31 AM 
- * 
+ * @date May 01, 2016, 08:31 AM
+ *
  * @brief USB serial support
  */
 
@@ -27,18 +27,25 @@ void usb_serial_init()
     STATIC_FIFO_INIT(usb_serial_buffrx, UARTSERIAL_BUFFRX_SIZE);
 }
 
+rt_dev_t usb_serial_getFreeDevice()
+{
+    usb_serial_init();
+
+    return MKDEV(DEV_CLASS_USB_SERIAL, 0);
+}
+
 void usb_serial_task()
 {
     uint16_t size_rec;
-    
+
 	if( USBGetDeviceState() < CONFIGURED_STATE )
 		return;
 	if( USBIsDeviceSuspended() == true )
 		return;
-    
+
     // send service
 	CDCTxService();
-    
+
     // receive service
     size_rec = getsUSBUSART(buffer, sizeof(buffer));
     if(size_rec > 0)
@@ -47,7 +54,7 @@ void usb_serial_task()
     }
 }
 
-ssize_t usb_serial_write(const char *data, const size_t size)
+ssize_t usb_serial_write(rt_dev_t device, const char *data, size_t size)
 {
     uint8_t *ptrData;
     size_t sizeToWrite;
@@ -55,7 +62,7 @@ ssize_t usb_serial_write(const char *data, const size_t size)
 		return 0;
 	if( USBIsDeviceSuspended() == true )
 		return 0;
-	
+
     sizeToWrite = size;
     ptrData = (uint8_t *)data;
     while(sizeToWrite > 0)
@@ -74,7 +81,7 @@ ssize_t usb_serial_write(const char *data, const size_t size)
     return size;
 }
 
-ssize_t usb_serial_read(char *data, const size_t max_size)
+ssize_t usb_serial_read(rt_dev_t device, char *data, size_t max_size)
 {
     return fifo_pop(&usb_serial_buffrx, data, max_size);
 }
@@ -107,14 +114,14 @@ bool USER_USB_CALLBACK_EVENT_HANDLER(USB_EVENT event, void *pdata, uint16_t size
             /* Update the LED status for the resume event. */
 
             //Call the hardware platform specific resume from suspend handler (ex: to
-            //restore I/O pins to higher power states if they were changed during the 
+            //restore I/O pins to higher power states if they were changed during the
             //preceding SYSTEM_Initialize(SYSTEM_STATE_USB_SUSPEND) call at the start
             //of the suspend condition.
             SYSTEM_Initialize(SYSTEM_STATE_USB_RESUME);
             break;
 
         case EVENT_CONFIGURED:
-            /* When the device is configured, we can (re)initialize the 
+            /* When the device is configured, we can (re)initialize the
              * demo code. */
             CDCInitEP();
             break;
