@@ -24,14 +24,16 @@ $(OUT_PWD)/%.o : %.c
 	@$(CC) -mcpu=$(DEVICE) $(CCFLAGS) $(CCFLAGS_XC) -c  $< $(DEFINES) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@)
 	@$(CC) -mcpu=$(DEVICE) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
+HEAP=1000
+
 # rule to link OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	@printf "µLD %-35s => %s\n" "*.o" $(OUT_PWD)/$(PROJECT).elf
-	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -T p$(DEVICE).gld
+	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -Wl,--heap=$(HEAP),-Tp$(DEVICE).gld
 
 .PHONY : showmem dbg.% dbg
 showmem :
-	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -T p$(DEVICE).gld -Wl,--report-mem
+	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -Wl,--heap=$(HEAP),-Tp$(DEVICE).gld,--report-mem
 
 dbg.% : $(OUT_PWD)/$(PROJECT).elf
 	xc16-objdump -S $(OUT_PWD)/$(PROJECT).elf |sed -n -e '/<_*$*>/,/<_.*>/ p'
