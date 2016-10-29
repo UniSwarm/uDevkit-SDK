@@ -5,7 +5,8 @@
  *
  * @date April 13, 2016, 11:49 AM
  *
- * @brief Uart support for rtprog for dsPIC33FJ, PIC24F, PIC24FJ, PIC24FV and PIC24HJ
+ * @brief Uart communication support driver for dsPIC33FJ, dsPIC33EP, dsPIC33EV,
+ * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
  */
 
 #ifndef UART_PIC24_DSPIC33_H
@@ -158,7 +159,7 @@
   #define UART_COUNT 0
 #endif
 
-// theses device need a bit activation for enable receive mode
+// theses devices need a bit activation for enable receive mode
 #if defined(DEVICE_24FJ1024GA606) || defined(DEVICE_24FJ1024GA610) || defined(DEVICE_24FJ1024GB606) \
  || defined(DEVICE_24FJ1024GB610) || defined(DEVICE_24FJ128GA202) || defined(DEVICE_24FJ128GA204) \
  || defined(DEVICE_24FJ128GA406) || defined(DEVICE_24FJ128GA410) || defined(DEVICE_24FJ128GA412) \
@@ -177,36 +178,6 @@
  || defined(DEVICE_24FJ64GA705) || defined(DEVICE_24FJ64GB202) || defined(DEVICE_24FJ64GB204) \
  || defined(DEVICE_24FJ64GB406) || defined(DEVICE_24FJ64GB410) || defined(DEVICE_24FJ64GB412)
   #define UART_RXEN
-#endif
-
-#if UART_COUNT>=1
-int uart_1_putw(uint16_t word);
-int uart_1_putc(char c);
-#endif
-
-#if UART_COUNT>=2
-int uart_2_putw(uint16_t word);
-int uart_2_putc(char c);
-#endif
-
-#if UART_COUNT>=3
-int uart_3_putw(uint16_t word);
-int uart_3_putc(char c);
-#endif
-
-#if UART_COUNT>=4
-int uart_4_putw(uint16_t word);
-int uart_4_putc(char c);
-#endif
-
-#if UART_COUNT>=5
-int uart_5_putw(uint16_t word);
-int uart_5_putc(char c);
-#endif
-
-#if UART_COUNT>=6
-int uart_6_putw(uint16_t word);
-int uart_6_putc(char c);
 #endif
 
 #endif // UART_PIC24_DSPIC33_H
