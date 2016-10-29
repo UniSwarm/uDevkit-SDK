@@ -19,4 +19,7 @@ typedef struct
 
 int cmd_exec(char *line);
 
+void cmd_puts(const char *str);
+int cmd_printf(const char *format, ...);
+
 #endif // CMD_H

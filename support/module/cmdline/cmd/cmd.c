@@ -10,13 +10,22 @@
 
 #include "cmd.h"
 #include "cmds.h"
+#include "../cmdline_curses.h"
 
 #include <string.h>
+#include <stdarg.h>
+#include <stdio.h>
+
+#include "driver/device.h"
 
 Cmd cmds[] = {
     {.name="ls", cmd_ls},
+    {.name="uart", cmd_uart},
     {.name="", NULL}
 };
+
+extern rt_dev_t cmdline_device_in;
+extern rt_dev_t cmdline_device_out;
 
 #define CMDLINE_ARGC_MAX 10
 
@@ -64,4 +73,33 @@ int cmd_exec(char *line)
         return (*cmd->cmdFnPtr)(argc, argv);
     else
         return -1;
+}
+
+void cmd_puts(const char *str)
+{
+    char cmd[10];
+    device_write(cmdline_device_out, str, strlen(str));
+    device_write(cmdline_device_out, "\n", 1);
+
+    // move cursor 200 column before
+    cmdline_curses_left(cmd, 200);
+    device_write(cmdline_device_out, cmd, strlen(cmd));
+}
+
+int cmd_printf(const char *format, ...)
+{
+    va_list arg;
+    int done;
+    char buff[100];
+
+    va_start (arg, format);
+    done = vsprintf(buff, format, arg);
+    va_end (arg);
+
+    device_write(cmdline_device_out, buff, strlen(buff));
+    device_write(cmdline_device_out, "\r\n", 1);
+    cmdline_curses_left(buff, 200);
+    device_write(cmdline_device_out, buff, strlen(buff));
+
+    return done;
 }

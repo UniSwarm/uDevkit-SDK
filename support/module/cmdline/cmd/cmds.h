@@ -12,5 +12,6 @@
 #define CMDS_H
 
 int cmd_ls(int argc, char **argv);
+int cmd_uart(int argc, char **argv);
 
 #endif // CMDS_H
