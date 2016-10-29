@@ -43,16 +43,6 @@ char cmdline_oldline[LINE_SIZ];
 unsigned int cmdline_id, cmdline_end;
 char cmdline_escape = 0;
 
-void cmdline_up()
-{
-
-}
-
-void cmdline_down()
-{
-
-}
-
 void cmdline_endofline()
 {
     char cmd[10];
@@ -66,6 +56,8 @@ void cmdline_endofline()
 void cmdline_startofline()
 {
     char cmd[10];
+    if(cmdline_id==0)
+        return;
     cmdline_curses_left(cmd, cmdline_id);
     device_write(cmdline_device_out, cmd, strlen(cmd)); // move cursor cmdline_id to the left
     cmdline_id = 0;
@@ -93,6 +85,27 @@ void cmdline_left()
     device_write(cmdline_device_out, cmd, strlen(cmd)); // move cursor 1 line right
 }
 
+void cmdline_up()
+{
+    // clear line
+    cmdline_startofline();
+    memset(cmdline_line, ' ', cmdline_end);
+    device_write(cmdline_device_out, cmdline_line, cmdline_end);
+    cmdline_id = cmdline_end;
+
+    // get old line
+    cmdline_startofline();
+    strcpy(cmdline_line, cmdline_oldline);
+    cmdline_end = strlen(cmdline_line);
+    cmdline_id = cmdline_end;
+    if(cmdline_end>0)
+        device_write(cmdline_device_out, cmdline_line, cmdline_end);
+}
+
+void cmdline_down()
+{
+}
+
 void cmdline_clear()
 {
     char cmd[10];
@@ -113,6 +126,7 @@ void cmdline_reset()
 
 void cmdline_init()
 {
+    cmdline_oldline[0] = 0;
     cmdline_clear();
     cmdline_reset();
 }
@@ -147,7 +161,7 @@ void cmdline_pushchar(char c)
         bf[0] = c;
         device_write(cmdline_device_out, bf, 1);
     }
-    else                            // middle of line (insert)
+    else    // middle of line (insert)
     {
         char cmd[10];
         int i;
@@ -160,7 +174,28 @@ void cmdline_pushchar(char c)
         for(i = cmdline_end - 1; i > cmdline_id; i--)
             cmdline_line[i] = cmdline_line[i-1];
         cmdline_line[cmdline_id] = c;
+        cmdline_id++;
     }
+}
+
+void cmdline_backspace()
+{
+    int i;
+    char cmd[10];
+    if(cmdline_id==0)
+        return;
+
+    cmdline_curses_left(cmd, 1);
+    device_write(cmdline_device_out, cmd, strlen(cmd)); // move cursor 1 line right
+    cmdline_line[cmdline_end]=' ';
+    device_write(cmdline_device_out, cmdline_line + cmdline_id, cmdline_end - cmdline_id + 1);
+    cmdline_id--;
+    for(i = cmdline_id+1; i < cmdline_end; i++)
+        cmdline_line[i-1] = cmdline_line[i];
+
+    cmdline_curses_left(cmd, cmdline_end - cmdline_id);
+    device_write(cmdline_device_out, cmd, strlen(cmd)); // move cursor 1 line right
+    cmdline_end--;
 }
 
 uint8_t cmdline_getLine()
@@ -182,6 +217,7 @@ uint8_t cmdline_getLine()
                 exit(0);
 #else
                 {
+                    device_write(cmdline_device_out, "^C\n\r", 4);
                     cmdline_reset();
                     continue;
                 }
@@ -196,6 +232,13 @@ uint8_t cmdline_getLine()
             if(c==5)
             {
                 cmdline_endofline();
+                continue;
+            }
+
+            // backspace (clear previous char)
+            if(c==127)
+            {
+                cmdline_backspace();
                 continue;
             }
 
@@ -247,7 +290,7 @@ uint8_t cmdline_getLine()
                 char cmd[10];
                 cmdline_curses_left(cmd, 200);
                 device_write(cmdline_device_out, cmd, strlen(cmd)); // move cursor 200 column before
-                device_write(cmdline_device_out, "\n\r", 1);
+                device_write(cmdline_device_out, "\n\r", 2);
                 valid = 1;
                 break;
             }
@@ -262,6 +305,8 @@ uint8_t cmdline_getLine()
 
         // process line
         cmdline_line[cmdline_end] = 0;
+        if(cmdline_end!=0)
+            strcpy(cmdline_oldline, cmdline_line);
 
         return 1;
     }
