@@ -8,22 +8,30 @@
 
 #include "driver/motor.h"
 
+unsigned int pos[] = {
+    1500, 1000,
+    2000, 1000,
+    2000, 1500,
+    1500, 1500
+};
+unsigned char step = 2;
+
 int main(void)
 {
 	unsigned int i, j, byte_read, end=0;
     uint16_t status, value_x, value_y, value_z;
 	rt_dev_t uartDbg;
 	rt_dev_t i2c;
+    rt_dev_t usb_serial;
 	uint16_t value, value2;
 	char buff[200];
-	char buffread[200];
 	uint8_t acc[8];
 
 	sysclock_setClock(120000000);
 	init_board();
 
-	usb_serial_init();
-    LED = 0;
+	usb_serial = usb_serial_getFreeDevice();
+    LED = 1;
 
 	// warning keep this init order before remap support
 	esp_init();
@@ -42,6 +50,11 @@ int main(void)
 	uart_setBitConfig(uartDbg, 8, UART_BIT_PARITY_NONE, 1);
 	uart_enable(uartDbg);
 
+    // console init
+    cmdline_init();
+    cmdline_setDevice(usb_serial, usb_serial);
+
+    // i2c init
     i2c = i2c_getFreeDevice();
     i2c_setBaudSpeed(i2c, I2C_BAUD_400K);
     i2c_enable(i2c);
@@ -49,18 +62,27 @@ int main(void)
     i2c_writereg(i2c, 0x38, 0x2A, 0x01, I2C_REG8 | I2C_REGADDR8);
 
     asserv_setPos(1500, 1000, 0);
-    asserv_goTo(2000, 1000);
     asserv_setSpeed(20);
     asserv_setMode(Asserv_Mode_Linear);
 
     /*motor_setPower(1, 200);
     motor_setPower(2, 200);*/
+    asserv_goTo(pos[0], pos[1]);
 
     j=0;
 	while(1)
 	{
 		usb_serial_task();
-		for(i=0;i<65000;i++);
+        for(i=0;i<65000;i++);
+
+        if(asserv_getDistance() <= 15.0)
+        {
+            for(j=0;j<10;j++) for(i=0;i<65000;i++);
+            step += 2;
+            if(step > 6)
+                step = 0;
+            asserv_goTo(pos[step], pos[step+1]);
+        }
 
 		value = sharp_convert(adc_getValue(24), FarSharp);	// AnS1
 		/*value = adc_getValue(25);	// AnS2*/
@@ -80,7 +102,7 @@ int main(void)
             value_z = acc[5];
         }
 
-		sprintf(buff, "d1: %d d2: %d x: %d y:%d t:%d acx:%d acy:%d acz:%d\n",
+		sprintf(buff, "d1:%d\td2:%d\tx: %d\ty:%d\tt:%d\tacx:%d\tacy:%d\tacz:%d\r\n",
 				value,
 				value2,
 				(int)asserv_getXPos(),
@@ -89,51 +111,14 @@ int main(void)
                 value_x, value_y, value_z
 				);
 
-        if(j++>5)
+        if(j++>10)
         {
-            a6_write(buff, strlen(buff)-1);
+            //a6_write(buff, strlen(buff)-1);
             //uart_write(uartDbg, buff, strlen(buff));
-            //usb_serial_write(buff, strlen(buff));
+            //usb_serial_write(usb_serial, buff, strlen(buff));
         }
 
-		/*value = uart_read(uartDbg, buff, 100);
-		if(value>0)
-			uart_write(uartDbg, buff, value);
-
-		byte_read = uart_read(uartDbg, buff, 256);
-		if(byte_read > 0)
-			usb_serial_write(buff, byte_read);*/
-
-		byte_read = usb_serial_read(buffread + end, 200);
-		if(byte_read > 0)
-        {
-            int i;
-            int valid = 0;
-            for (i=end; i<end+byte_read; i++)
-            {
-                if(buffread[i]=='\n')
-                {
-                    valid = 1;
-                    break;
-                }
-            }
-            if(valid==0)
-                end+=byte_read;
-
-            if(valid==1)
-            {
-                uint8_t motor = buffread[0]-'0';
-                if(buffread[1]==':')
-                {
-                    LED = ~LED;
-                    int16_t pwm = strtol (buffread+2, NULL, 10);
-                    motor_setPower(motor, pwm);
-                }
-                buffread[end]='\n';
-                usb_serial_write(buffread, end+1);
-                end=0;
-            }
-        }
+        cmdline_task();
 	}
 
 	return 0;
