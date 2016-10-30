@@ -380,6 +380,13 @@ uint8_t uart_bitStop(rt_dev_t device)
     return 1;
 }
 
+/**
+ * @brief Writes data to uart device
+ * @param device uart device number
+ * @param data data to write
+ * @param size number of data to write
+ * @return number of data written (could be less than 'data' if sw buffer full)
+ */
 ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 {
     size_t availfifo, sizeToWrite, written, fifoWritten;
@@ -448,11 +455,11 @@ int uart_flush(rt_dev_t device)
 }
 
 /**
- *
- * @param device
- * @return
+ * @brief Gets number of data that could be read (in sw buffer)
+ * @param device uart device number
+ * @return number of data ready to read
  */
-uint8_t uart_datardy(rt_dev_t device)
+size_t uart_datardy(rt_dev_t device)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
@@ -461,6 +468,13 @@ uint8_t uart_datardy(rt_dev_t device)
     return fifo_len(&uarts[uart].buffRx);
 }
 
+/**
+ * @brief Gets all the data readden by uart device
+ * @param device uart device number
+ * @param data output buffer where data will be copy
+ * @param size_max maximum number of data to read (size of the buffer 'data')
+ * @return number data read
+ */
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
 {
     size_t size_read;

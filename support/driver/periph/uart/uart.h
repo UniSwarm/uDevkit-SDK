@@ -42,7 +42,7 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size);
 
 // ========= device read =========
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max);
-uint8_t uart_datardy(rt_dev_t device);
+size_t uart_datardy(rt_dev_t device);
 
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
  || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)

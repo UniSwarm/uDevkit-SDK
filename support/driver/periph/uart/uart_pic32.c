@@ -611,6 +611,13 @@ uint8_t uart_bitStop(rt_dev_t device)
     return 1;
 }
 
+/**
+ * @brief Writes data to uart device
+ * @param device uart device number
+ * @param data data to write
+ * @param size number of data to write
+ * @return number of data written (could be less than 'data' if sw buffer full)
+ */
 ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 {
     size_t availfifo, sizeToWrite, written, fifoWritten;
@@ -717,58 +724,12 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
     return fifoWritten;
 }
 
-int uart_flush(rt_dev_t device)
-{
-    uint8_t uart = MINOR(device);
-    if (uart >= UART_COUNT)
-        return -1;
-
-    switch (uart)
-    {
-    case 0:
-        while (U1STAbits.TRMT);
-        break;
-#if UART_COUNT>=2
-    case 1:
-        while (U2STAbits.TRMT);
-        break;
-#endif
-#if UART_COUNT>=3
-    case 2:
-        while (U3STAbits.TRMT);
-        break;
-#endif
-#if UART_COUNT>=4
-    case 3:
-        while (U4STAbits.TRMT);
-        break;
-#endif
-#if UART_COUNT>=5
-    case 4:
-        while (U5STAbits.TRMT);
-        break;
-#endif
-#if UART_COUNT>=6
-    case 5:
-        while (U6STAbits.TRMT);
-        break;
-#endif
-#if UART_COUNT>=7
-    case 6:
-        while (U6STAbits.TRMT);
-        break;
-#endif
-    }
-
-    return 0;
-}
-
 /**
- *
- * @param device
- * @return
+ * @brief Gets number of data that could be read (in sw buffer)
+ * @param device uart device number
+ * @return number of data ready to read
  */
-uint8_t uart_datardy(rt_dev_t device)
+size_t uart_datardy(rt_dev_t device)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
@@ -777,6 +738,13 @@ uint8_t uart_datardy(rt_dev_t device)
     return fifo_len(&uarts[uart].buffRx);
 }
 
+/**
+ * @brief Gets all the data readden by uart device
+ * @param device uart device number
+ * @param data output buffer where data will be copy
+ * @param size_max maximum number of data to read (size of the buffer 'data')
+ * @return number data read
+ */
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
 {
     size_t size_read;
