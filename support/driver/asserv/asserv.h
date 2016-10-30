@@ -47,8 +47,11 @@ typedef enum
 void asserv_setMode(Asserv_Mode mode);
 
 void asserv_goTo(int32_t x, int32_t y);
+int32_t asserv_xDest();
+int32_t asserv_yDest();
 float asserv_getDistance();
 void asserv_setSpeed(int16_t speed);
+int16_t asserv_speed();
 // http://stackoverflow.com/questions/1472138/c-default-arguments
 
 // ====== localisation status ======

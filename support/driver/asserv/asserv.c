@@ -44,7 +44,7 @@ Asserv_Mode masserv_mode = Asserv_Mode_Stop;
 float dt,ds,tand;
 float asserv_x = 1500, asserv_y = 1000, asserv_t = 0;
 int32_t xf = 1500, yf = 1000;
-int16_t asserv_speed = 10;
+int16_t asserv_mspeed = 10;
 
 typedef enum {
     Asserv_Way_Forward,
@@ -124,18 +124,36 @@ void asserv_goTo(int32_t asserv_x, int32_t asserv_y)
     yf = asserv_y;
 }
 
+int32_t asserv_xDest()
+{
+    return asserv_x;
+}
+
+int32_t asserv_yDest()
+{
+    return asserv_y;
+}
+
 void asserv_setSpeed(int16_t speed)
 {
     if(speed >= 0)
     {
         asserv_way = Asserv_Way_Forward;
-        asserv_speed = speed;
+        asserv_mspeed = speed;
     }
     else
     {
         asserv_way = Asserv_Way_Back;
-        asserv_speed = -speed;
+        asserv_mspeed = -speed;
     }
+}
+
+int16_t asserv_speed()
+{
+    if(asserv_way == Asserv_Way_Back)
+        return -asserv_mspeed;
+    else
+        return asserv_mspeed;
 }
 
 void asserv_setPid(uint16_t kp, uint16_t ki, uint16_t kd)
@@ -193,8 +211,8 @@ void asserv_controlTask()
     case Asserv_Mode_Fixe:                                                  // =================== Fixe
         // distance reference
         consds = distance / 10;
-        if(consds > asserv_speed)
-            consds = asserv_speed;
+        if(consds > asserv_mspeed)
+            consds = asserv_mspeed;
 
         // angle reference
         if(asserv_y - yf <= 0)
@@ -238,8 +256,8 @@ void asserv_controlTask()
     case Asserv_Mode_Linear:                                                // =================== Linear
         // distance reference
         consds = distance / 40;
-        if(consds > asserv_speed)
-            consds = asserv_speed;
+        if(consds > asserv_mspeed)
+            consds = asserv_mspeed;
 
         // angle reference
         if(asserv_y - yf <= 0)
@@ -315,13 +333,13 @@ void asserv_controlTask()
     // compute motor command
     tand = (asserv_loc_coderentrax * tan(consdt)) / (asserv_loc_coderstep * 20);
     if(consdt >= M_PI / 2)
-        tand = asserv_speed;
+        tand = asserv_mspeed;
     if(consdt <= -M_PI / 2)
-        tand = -asserv_speed;
-    if(tand > asserv_speed / 2)
-        tand = asserv_speed / 2;
-    if(tand < -asserv_speed / 2)
-        tand = -asserv_speed / 2;
+        tand = -asserv_mspeed;
+    if(tand > asserv_mspeed / 2)
+        tand = asserv_mspeed / 2;
+    if(tand < -asserv_mspeed / 2)
+        tand = -asserv_mspeed / 2;
     consV1 = consds - tand;
     consV2 = consds + tand;
 
