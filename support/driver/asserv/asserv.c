@@ -53,20 +53,19 @@ typedef enum {
 Asserv_Way asserv_way = Asserv_Way_Forward;
 
 float distance = 0, angle = 0;
-short kd1=-0, ki1=0, kp1=45;
-short kd2=-0, ki2=0, kp2=45;
+int16_t asserv_kd = -0, asserv_ki = 0, asserv_kp = 45;
 
 // loc variables
 rt_dev_t coder1;
 rt_dev_t coder2;
 float asserv_loc_coderentrax = 100;
 float asserv_loc_coderstep = 1;
-float last_t=0, td=0;
+float last_t = 0, td = 0;
 float xr, yr;
 
-long int ancv1=0,ancv2=0;
-long int ancc1=0,ancc2=0;
-long int v1,v2;
+long int ancv1 = 0, ancv2 = 0;
+long int ancc1 = 0, ancc2 = 0;
+long int v1, v2;
 
 int asserv_init()
 {
@@ -137,7 +136,13 @@ void asserv_setSpeed(int16_t speed)
         asserv_way = Asserv_Way_Back;
         asserv_speed = -speed;
     }
+}
 
+void asserv_setPid(uint16_t kp, uint16_t ki, uint16_t kd)
+{
+    asserv_kp = kp;
+    asserv_ki = ki;
+    asserv_kd = kd;
 }
 
 Asserv_State asserv_state()
@@ -311,8 +316,8 @@ void asserv_controlTask()
         ev1 = consV1;
     if(consV1 < 0 && v1 < consV1)
         ev1 = consV1;
-    errp1 = kp1 * consV1;
-    errd1 = kd1 * (ev1 - consV1);
+    errp1 = asserv_kp * consV1;
+    errd1 = asserv_kd * (ev1 - consV1);
     err1 = (short)errp1 + (short)errd1;
     if(err1 > PWM_MAX)
         err1 = PWM_MAX;
@@ -327,8 +332,8 @@ void asserv_controlTask()
         ev2 = consV2;
     if(consV2 < 0 && v2 < consV2)
         ev2 = consV2;
-    errp2 = kp2 * consV2;
-    errd2 = kd2 * (ev2 - consV2);
+    errp2 = asserv_kp * consV2;
+    errd2 = asserv_kd * (ev2 - consV2);
     err2 = (short)errp2 + (short)errd2;
     if(err2 > PWM_MAX)
         err2 = PWM_MAX;
