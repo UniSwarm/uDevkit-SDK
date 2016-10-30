@@ -107,39 +107,4 @@
  #define UART_COUNT 0
 #endif
 
-#if UART_COUNT>=1
-int uart_1_putw(uint16_t word);
-int uart_1_putc(char c);
-#endif
-
-#if UART_COUNT>=2
-int uart_2_putw(uint16_t word);
-int uart_2_putc(char c);
-#endif
-
-#if UART_COUNT>=3
-int uart_3_putw(uint16_t word);
-int uart_3_putc(char c);
-#endif
-
-#if UART_COUNT>=4
-int uart_4_putw(uint16_t word);
-int uart_4_putc(char c);
-#endif
-
-#if UART_COUNT>=5
-int uart_5_putw(uint16_t word);
-int uart_5_putc(char c);
-#endif
-
-#if UART_COUNT>=6
-int uart_6_putw(uint16_t word);
-int uart_6_putc(char c);
-#endif
-
-#if UART_COUNT>=7
-int uart_7_putw(uint16_t word);
-int uart_7_putc(char c);
-#endif
-
 #endif // UART_PIC32_H
