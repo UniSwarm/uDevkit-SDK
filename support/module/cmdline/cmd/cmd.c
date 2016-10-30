@@ -22,6 +22,7 @@ Cmd cmds[] = {
     {.name="ls", cmd_ls},
     {.name="uart", cmd_uart},
     {.name="i2c", cmd_i2c},
+    {.name="asserv", cmd_asserv},
     {.name="", NULL}
 };
 

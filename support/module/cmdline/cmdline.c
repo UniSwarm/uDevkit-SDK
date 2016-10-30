@@ -137,11 +137,17 @@ void cmdline_processline(char *line)
     if(line[0]!=0)
     {
         ret = cmd_exec(line);
-        if(ret != 0)
+        if(ret < 0)
         {
             device_write(cmdline_device_out, "Invalid command '", 17);
             device_write(cmdline_device_out, cmdline_line, strlen(cmdline_line));
             device_write(cmdline_device_out, "'\r\n", 3);
+        }
+        else if(ret > 0)
+        {
+            device_write(cmdline_device_out, "'", 1);
+            device_write(cmdline_device_out, cmdline_line, strlen(cmdline_line));
+            device_write(cmdline_device_out, "' failed to exec\r\n", 18);
         }
     }
 

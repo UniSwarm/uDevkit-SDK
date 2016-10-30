@@ -98,9 +98,10 @@ int cmd_uart(int argc, char **argv)
         uint32_t baudSpeed;
         baudSpeed = atol(argv[3]);
         uart_setBaudSpeed(uart_dev, baudSpeed);
+        puts("ok");
         return 0;
     }
 
-    return 0;
+    return 1;
 #endif
 }
