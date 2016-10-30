@@ -9,6 +9,13 @@ ifndef OUT_PWD
  OUT_PWD = build
 endif
 
+# VERBOSE variable to set the verbosity if VERBOSE=1
+ifeq ($(VERBOSE),1)
+  VERB :=
+else
+  VERB := @
+endif
+
 # make all as default rule
 all:
 

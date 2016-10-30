@@ -24,20 +24,20 @@ $(IMG2RAW_EXE): $(RTPROG)/tool/img2raw/img2raw.cpp $(RTPROG)/tool/img2raw/img2ra
 $(OUT_PWD)/%.png.c : %.png pictures.h $(IMG2RAW_EXE)
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	@$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
+	$(VERB)$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
 $(OUT_PWD)/%.jpg.c : %.jpg pictures.h $(IMG2RAW_EXE)
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	@$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
+	$(VERB)$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
 $(OUT_PWD)/%.bmp.c : %.bmp pictures.h $(IMG2RAW_EXE)
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	@$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
+	$(VERB)$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
 
 # rule to build images *.<img>.c to OUT_PWD/*.o
 $(OUT_PWD)/%.o : $(OUT_PWD)/%.c
 	@printf "µCC %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	@$(CC) $(CCFLAGS) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
+	$(VERB)$(CC) $(CCFLAGS) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 
 PICTURES_C := $(PICTURES)
 PICTURES_NAME := $(PICTURES)
