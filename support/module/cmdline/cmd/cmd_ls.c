@@ -1,7 +1,5 @@
 
-#define puts(str) cmd_puts((str))
-#define printf(format, ...) cmd_printf((format), __VA_ARGS__)
-#include "cmd.h"
+#include "cmd_stdio.h"
 
 int cmd_ls(int argc, char **argv)
 {

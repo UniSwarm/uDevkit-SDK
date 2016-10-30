@@ -1,13 +1,7 @@
 
 #include "driver/uart.h"
 
-#include <ctype.h>
-#include <stdio.h>
-#include <string.h>
-
-#define puts(str) cmd_puts((str))
-#define printf(format, ...) cmd_printf((format), ##__VA_ARGS__)
-#include "cmd.h"
+#include "cmd_stdio.h"
 
 int cmd_uart(int argc, char **argv)
 {

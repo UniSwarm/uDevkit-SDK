@@ -1,13 +1,7 @@
 
 #include "driver/i2c.h"
 
-#include <ctype.h>
-#include <stdio.h>
-#include <string.h>
-
-#define puts(str) cmd_puts((str))
-#define printf(format, ...) cmd_printf((format), ##__VA_ARGS__)
-#include "cmd.h"
+#include "cmd_stdio.h"
 
 int cmd_i2c(int argc, char **argv)
 {
