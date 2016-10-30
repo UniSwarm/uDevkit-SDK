@@ -145,6 +145,21 @@ void asserv_setPid(uint16_t kp, uint16_t ki, uint16_t kd)
     asserv_kd = kd;
 }
 
+uint16_t asserv_getP()
+{
+    return asserv_kp;
+}
+
+uint16_t asserv_getI()
+{
+    return asserv_ki;
+}
+
+uint16_t asserv_getD()
+{
+    return asserv_kd;
+}
+
 Asserv_State asserv_state()
 {
     return masserv_state;
@@ -417,8 +432,8 @@ void asserv_setPos(float x, float y, float t)
 {
     asserv_x = x;
     asserv_y = y;
-    asserv_t = t;
-    td = t;
+    asserv_t = t / 180.0 * M_PI;
+    td = asserv_t;
 }
 
 float asserv_getXPos()

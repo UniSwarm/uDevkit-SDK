@@ -18,7 +18,11 @@ int asserv_init();
 void asserv_setCoderEntrax(float entrax);
 void asserv_setCoderStep(float stepLenght);
 void asserv_setCoders();
+
 void asserv_setPid(uint16_t kp, uint16_t ki, uint16_t kd);
+uint16_t asserv_getP();
+uint16_t asserv_getI();
+uint16_t asserv_getD();
 //void asserv_setMotors();
 
 // ============ tasks ==============
