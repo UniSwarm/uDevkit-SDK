@@ -32,10 +32,14 @@ $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -Wl,--heap=$(HEAP),-Tp$(DEVICE).gld
 
 .PHONY : showmem dbg.% dbg
-showmem :
+# prints memory report
+showmem : $(OBJECTS)
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -Wl,--heap=$(HEAP),-Tp$(DEVICE).gld,--report-mem
 
-dbg.% : $(OUT_PWD)/$(PROJECT).elf
-	xc16-objdump -S $(OUT_PWD)/$(PROJECT).elf |sed -n -e '/<_*$*>/,/<_.*>/ p'
+# lists symbol present in final elf
 dbg : $(OUT_PWD)/$(PROJECT).elf
-	xc16-objdump -t $(OUT_PWD)/$(PROJECT).elf |grep "F .text" |sort -k6
+	@xc16-objdump -t $(OUT_PWD)/$(PROJECT).elf |grep "F .text" |sort -k6
+
+# shows a disassembly listing of the symbol after the dot
+dbg.% : $(OUT_PWD)/$(PROJECT).elf
+	@xc16-objdump -S $(OUT_PWD)/$(PROJECT).elf |sed -n -e '/<_*$*>:/,/<_.*>/ p'
