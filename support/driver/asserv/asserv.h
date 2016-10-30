@@ -42,6 +42,7 @@ typedef enum
 void asserv_setMode(Asserv_Mode mode);
 
 void asserv_goTo(int32_t x, int32_t y);
+float asserv_getDistance();
 void asserv_setSpeed(int16_t speed);
 // http://stackoverflow.com/questions/1472138/c-default-arguments
 

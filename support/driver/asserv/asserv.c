@@ -23,7 +23,7 @@
 void setup_timer1()
 {
     T1CON  = 0b1000000000100000;    // FCY / 64
-    PR1 = 625;          // 1kHz
+    PR1 = 938;          // 500Hz
     IEC0bits.T1IE = 1;
 }
 // TODO/>
@@ -34,7 +34,7 @@ void setup_timer1()
 #define ANGLE_MAX	M_PI/10
 #define ERR_MINI 100
 #define PWM_MINI 100
-#define PWM_MAX  1500
+#define PWM_MAX  800
 
 unsigned char asserv_stop = 0;
 
@@ -53,8 +53,8 @@ typedef enum {
 Asserv_Way asserv_way = Asserv_Way_Forward;
 
 float distance = 0, angle = 0;
-short kd1=0, ki1=0, kp1=10;
-short kd2=0, ki2=0, kp2=10;
+short kd1=-0, ki1=0, kp1=45;
+short kd2=-0, ki2=0, kp2=45;
 
 // loc variables
 rt_dev_t coder1;
@@ -93,10 +93,9 @@ void asserv_setCoderStep(float stepLenght)
     asserv_loc_coderstep = stepLenght;
 }
 
+long int c1, c2;
 void asserv_locTask()
 {
-    static long int c1, c2;
-
     c1 = qei_getValue(coder1);
     c2 = qei_getValue(coder2);
 
@@ -116,6 +115,8 @@ void asserv_locTask()
 
     ancc1 = c1;
     ancc2 = c2;
+    ancv1 = v1;
+    ancv2 = v2;
 }
 
 void asserv_goTo(int32_t asserv_x, int32_t asserv_y)
@@ -157,6 +158,7 @@ void asserv_controlTask()
     float errp1, errd1;
     float errp2, errd2;
     short err1, err2;
+    long int ev1, ev2;
 
     distance = sqrt((asserv_x - xf)*(asserv_x - xf) + (asserv_y-yf) * (asserv_y - yf));
 
@@ -170,7 +172,7 @@ void asserv_controlTask()
 
     case Asserv_Mode_Fixe:                                                  // =================== Fixe
         // distance reference
-        consds = distance / 4;
+        consds = distance / 10;
         if(consds > asserv_speed)
             consds = asserv_speed;
 
@@ -215,7 +217,7 @@ void asserv_controlTask()
         break;
     case Asserv_Mode_Linear:                                                // =================== Linear
         // distance reference
-        consds = distance / 4;
+        consds = distance / 40;
         if(consds > asserv_speed)
             consds = asserv_speed;
 
@@ -272,8 +274,6 @@ void asserv_controlTask()
     case Asserv_Mode_Rotate:                                                // =================== Rotate
         // distance reference
         consds = 0;
-        if(consds > asserv_speed)
-            consds = asserv_speed;
 
         // angle reference
         consdt = -td - asserv_t;
@@ -282,7 +282,7 @@ void asserv_controlTask()
         if(consdt < -M_PI)
             consdt += 2 * M_PI;
 
-        if((consdt < ANGLE_MAX) & (consdt > -ANGLE_MAX))
+        if((consdt < ANGLE_MAX) && (consdt > -ANGLE_MAX))
             masserv_mode = Asserv_Mode_Linear;
         break;
     }
@@ -306,8 +306,13 @@ void asserv_controlTask()
     consV2 = consds + tand;
 
     // pid motor 1
-    errp1 = kp1 * (consV1 - v1);
-    errd1 = kd1 * ((consV1 - v1) - (consV1 - ancv1));
+    ev1 = v1;
+    if(consV1 > 0 && v1 > consV1)
+        ev1 = consV1;
+    if(consV1 < 0 && v1 < consV1)
+        ev1 = consV1;
+    errp1 = kp1 * consV1;
+    errd1 = kd1 * (ev1 - consV1);
     err1 = (short)errp1 + (short)errd1;
     if(err1 > PWM_MAX)
         err1 = PWM_MAX;
@@ -317,8 +322,13 @@ void asserv_controlTask()
         err1 = 0;
 
     // pid motor 2
-    errp2 = kp2 * (consV2 - v2);
-    errd2 = kd2 * ((consV2 - v2) - (consV2 - ancv2));
+    ev2 = v2;
+    if(consV2 > 0 && v2 > consV2)
+        ev2 = consV2;
+    if(consV2 < 0 && v2 < consV2)
+        ev2 = consV2;
+    errp2 = kp2 * consV2;
+    errd2 = kd2 * (ev2 - consV2);
     err2 = (short)errp2 + (short)errd2;
     if(err2 > PWM_MAX)
         err2 = PWM_MAX;
@@ -352,19 +362,40 @@ void asserv_controlTask()
     else
     {
         if(err1 > 0)
-            motor_setPower(1, err1/* + PWM_MINI*/);
+            motor_setPower(1, err1 + PWM_MINI);
         if(err1 < 0)
-            motor_setPower(1, err1/* - PWM_MINI*/);
+            motor_setPower(1, err1 - PWM_MINI);
         if(err1 == 0)
             motor_setPower(1, 0);
 
         if(err2 > 0)
-            motor_setPower(2, -err2/* + PWM_MINI*/);
+            motor_setPower(2, -err2 - PWM_MINI);
         if(err2 < 0)
-            motor_setPower(2, -err2/* - PWM_MINI*/);
+            motor_setPower(2, -err2 + PWM_MINI);
         if(err2 == 0)
             motor_setPower(2, 0);
     }
+
+    /*if(i++>100)
+    {
+        char buff[200];
+        i=0;
+        sprintf(buff, "x:%d y:%d t:%d d:%d ds:%d dt:%d v1:%d c1:%d e1:%d v2:%d c2:%d e2:%d\n",
+				(int)asserv_x,
+				(int)asserv_y,
+				(int)(180.0 * asserv_t / M_PI),
+				(int)distance,
+				(int)consds,
+				(int)(180.0 * consdt / M_PI),
+				(int)v1,
+				(int)consV1,
+				(int)err1,
+				(int)v2,
+				(int)consV2,
+				(int)err2
+                );
+        //usb_serial_write(buff, strlen(buff));
+    }*/
 }
 
 // <TODO replace theses functions by time/tasks support
@@ -372,7 +403,6 @@ void __attribute__ ((interrupt,no_auto_psv)) _T1Interrupt(void)
 {
     asserv_locTask();
     asserv_controlTask();
-    LED = ~LED;
 
     IFS0bits.T1IF = 0;
 }
@@ -383,6 +413,7 @@ void asserv_setPos(float x, float y, float t)
     asserv_x = x;
     asserv_y = y;
     asserv_t = t;
+    td = t;
 }
 
 float asserv_getXPos()
@@ -398,4 +429,9 @@ float asserv_getYPos()
 float asserv_getTPos()
 {
     return (180.0 * asserv_t / M_PI);
+}
+
+float asserv_getDistance()
+{
+    return distance;
 }
