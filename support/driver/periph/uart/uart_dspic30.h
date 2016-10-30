@@ -27,14 +27,4 @@
   #define UART_COUNT 0
 #endif
 
-#if UART_COUNT>=1
-int uart_1_putw(uint16_t word);
-int uart_1_putc(char c);
-#endif
-
-#if UART_COUNT>=2
-int uart_2_putw(uint16_t word);
-int uart_2_putc(char c);
-#endif
-
 #endif // UART_DSPIC30_H

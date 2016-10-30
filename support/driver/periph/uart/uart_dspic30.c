@@ -20,6 +20,7 @@
 #endif
 
 #define UART_BUFFRX_SIZE 64
+#define UART_BUFFTX_SIZE 64
 
 #define UART_FLAG_UNUSED  0x00
 typedef struct {
@@ -42,6 +43,7 @@ struct uart_dev
     uart_status flags;
 
     STATIC_FIFO(buffRx, UART_BUFFRX_SIZE);
+    STATIC_FIFO(buffTx, UART_BUFFTX_SIZE);
 };
 
 struct uart_dev uarts[] = {
@@ -74,6 +76,7 @@ rt_dev_t uart_getFreeDevice()
 
     uarts[i].flags.used = 1;
     STATIC_FIFO_INIT(uarts[i].buffRx, UART_BUFFRX_SIZE);
+    STATIC_FIFO_INIT(uarts[i].buffTx, UART_BUFFTX_SIZE);
 
     return MKDEV(DEV_CLASS_UART, i);
 }
@@ -113,7 +116,7 @@ int uart_enable(rt_dev_t device)
 
         _U1TXIP = 5;    // interrupt priority for transmitor
         _U1TXIF = 0;    // clear transmit Flag
-        _U1TXIE = 0;    // disable transmit interrupt
+        _U1TXIE = 1;    // disable transmit interrupt
 
         U1MODEbits.UARTEN = 1;  // enable uart module
     #ifdef UART_RXEN
@@ -129,7 +132,7 @@ int uart_enable(rt_dev_t device)
 
         _U2TXIP = 5;    // interrupt priority for transmitor
         _U2TXIF = 0;    // clear transmit Flag
-        _U2TXIE = 0;    // disable transmit interrupt
+        _U2TXIE = 1;    // disable transmit interrupt
 
         U2MODEbits.UARTEN = 1;  // enable uart module
     #ifdef UART_RXEN
@@ -377,65 +380,50 @@ uint8_t uart_bitStop(rt_dev_t device)
     return 1;
 }
 
-int uart_1_putw(uint16_t word)
-{
-    while (U1STAbits.UTXBF);
-    U1TXREG = word;
-    return 0;
-}
-
-int uart_1_putc(char c)
-{
-    while (U1STAbits.UTXBF);
-    U1TXREG = c;
-    return 0;
-}
-char uart_1_getc();
-uint16_t uart_1_getw();
-
-#if UART_COUNT>=2
-
-int uart_2_putw(uint16_t word)
-{
-    while (U2STAbits.UTXBF);
-    U2TXREG = word;
-    return 0;
-}
-
-int uart_2_putc(char c)
-{
-    while (U2STAbits.UTXBF);
-    U2TXREG = c;
-    return 0;
-}
-uint16_t uart_2_getw(uint16_t word);
-#endif
-
 ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 {
-    size_t i;
-    int (*uart_putc_fn)(const char);
-
+    size_t availfifo, sizeToWrite, written, fifoWritten;
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return -1;
 
+    sizeToWrite = size;
+    written = 0;
+    availfifo = fifo_avail(&uarts[uart].buffTx);
+    if(sizeToWrite > availfifo)
+        sizeToWrite = availfifo;
+
     switch (uart)
     {
     case 0:
-        uart_putc_fn = &uart_1_putc;
+        if (U1STAbits.TRMT)
+            written = 1;
         break;
 #if UART_COUNT>=2
     case 1:
-        uart_putc_fn = &uart_2_putc;
+        if (U2STAbits.TRMT)
+            written = 1;
         break;
 #endif
     }
 
-    for (i = 0; i < size; i++)
-        uart_putc_fn(data[i]);
+    fifoWritten = fifo_push(&uarts[uart].buffTx, data + written, sizeToWrite - written) + written;
 
-    return size;
+    // send the first data if no data is currently sended
+    switch (uart)
+    {
+    case 0:
+        if (written==1)
+            U1TXREG = *data;
+        break;
+#if UART_COUNT>=2
+    case 1:
+        if (written==1)
+            U2TXREG = *data;
+        break;
+#endif
+    }
+    return fifoWritten;
 }
 
 int uart_flush(rt_dev_t device)
@@ -466,7 +454,11 @@ int uart_flush(rt_dev_t device)
  */
 uint8_t uart_datardy(rt_dev_t device)
 {
-    return 0;
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+        return -1;
+
+    return fifo_len(&uarts[uart].buffRx);
 }
 
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
@@ -484,7 +476,11 @@ ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
 #if UART_COUNT>=1
 void __attribute__((interrupt, no_auto_psv)) _U1TXInterrupt(void)
 {
-    //
+    char uart_tmpchar[1];
+    while (!U1STAbits.UTXBF && fifo_pop(&uarts[0].buffTx, uart_tmpchar, 1) == 1)
+    {
+        U1TXREG = uart_tmpchar[0];
+    }
     _U1TXIF = 0;
 }
 
@@ -502,7 +498,11 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
 #if UART_COUNT>=2
 void __attribute__((interrupt, no_auto_psv)) _U2TXInterrupt(void)
 {
-    //
+    char uart_tmpchar[1];
+    while (!U2STAbits.UTXBF && fifo_pop(&uarts[1].buffTx, uart_tmpchar, 1) == 1)
+    {
+        U2TXREG = uart_tmpchar[0];
+    }
     _U2TXIF = 0;
 }
 
