@@ -17,5 +17,6 @@ int cmd_i2c(int argc, char **argv);
 int cmd_asserv(int argc, char **argv);
 int cmd_adc(int argc, char **argv);
 int cmd_ax(int argc, char **argv);
+int cmd_led(int argc, char **argv);
 
 #endif // CMDS_H
