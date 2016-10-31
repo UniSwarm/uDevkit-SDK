@@ -43,7 +43,7 @@ Asserv_State masserv_state = Asserv_State_Stopped;
 Asserv_Mode masserv_mode = Asserv_Mode_Stop;
 float dt,ds,tand;
 float asserv_x = 1500, asserv_y = 1000, asserv_t = 0;
-int32_t xf = 1500, yf = 1000;
+int32_t asserv_xf = 1500, asserv_yf = 1000;
 int16_t asserv_mspeed = 10;
 
 typedef enum {
@@ -118,20 +118,20 @@ void asserv_locTask()
     ancv2 = v2;
 }
 
-void asserv_goTo(int32_t asserv_x, int32_t asserv_y)
+void asserv_goTo(int32_t x, int32_t y)
 {
-    xf = asserv_x;
-    yf = asserv_y;
+    asserv_xf = x;
+    asserv_yf = y;
 }
 
 int32_t asserv_xDest()
 {
-    return asserv_x;
+    return asserv_xf;
 }
 
 int32_t asserv_yDest()
 {
-    return asserv_y;
+    return asserv_yf;
 }
 
 void asserv_setSpeed(int16_t speed)
@@ -198,7 +198,7 @@ void asserv_controlTask()
     short err1, err2;
     long int ev1, ev2;
 
-    distance = sqrt((asserv_x - xf)*(asserv_x - xf) + (asserv_y-yf) * (asserv_y - yf));
+    distance = sqrt((asserv_x - asserv_xf)*(asserv_x - asserv_xf) + (asserv_y-asserv_yf) * (asserv_y - asserv_yf));
 
 // FSM
     switch(masserv_mode)
@@ -215,19 +215,19 @@ void asserv_controlTask()
             consds = asserv_mspeed;
 
         // angle reference
-        if(asserv_y - yf <= 0)
+        if(asserv_y - asserv_yf <= 0)
         {
-            if(asserv_x - xf <= 0)
-                consdt = asin((yf - asserv_y) / distance);
+            if(asserv_x - asserv_xf <= 0)
+                consdt = asin((asserv_yf - asserv_y) / distance);
             else
-                consdt = -M_PI - asin((yf - asserv_y) / distance);
+                consdt = -M_PI - asin((asserv_yf - asserv_y) / distance);
         }
         else
         {
-            if(asserv_x - xf <= 0)
-                consdt = asin((yf - asserv_y) / distance);
+            if(asserv_x - asserv_xf <= 0)
+                consdt = asin((asserv_yf - asserv_y) / distance);
             else
-                consdt = M_PI - asin((yf - asserv_y) / distance);
+                consdt = M_PI - asin((asserv_yf - asserv_y) / distance);
         }
         consdt = -consdt-asserv_t;
         if(consdt >= M_PI / 2 || consdt <= -M_PI / 2)
@@ -260,19 +260,19 @@ void asserv_controlTask()
             consds = asserv_mspeed;
 
         // angle reference
-        if(asserv_y - yf <= 0)
+        if(asserv_y - asserv_yf <= 0)
         {
-            if(asserv_x - xf <= 0)
-                angle = asin((yf - asserv_y) / distance);
+            if(asserv_x - asserv_xf <= 0)
+                angle = asin((asserv_yf - asserv_y) / distance);
             else
-                angle = -M_PI - asin((yf - asserv_y) / distance);
+                angle = -M_PI - asin((asserv_yf - asserv_y) / distance);
         }
         else
         {
-            if(asserv_x - xf <= 0)
-                angle = asin((yf - asserv_y) / distance);
+            if(asserv_x - asserv_xf <= 0)
+                angle = asin((asserv_yf - asserv_y) / distance);
             else
-                angle = M_PI - asin((yf - asserv_y) / distance);
+                angle = M_PI - asin((asserv_yf - asserv_y) / distance);
         }
 
         consdt = -angle - asserv_t;

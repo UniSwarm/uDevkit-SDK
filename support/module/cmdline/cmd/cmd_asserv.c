@@ -13,7 +13,7 @@ int cmd_asserv(int argc, char **argv)
             asserv_getXPos(),
             asserv_getYPos(),
             asserv_getTPos());
-        printf("dest: %d %d dist %.2f (mm)\r\n",
+        printf("dest: %ld %ld dist %.2f (mm)\r\n",
             asserv_xDest(),
             asserv_yDest(),
             asserv_getDistance());
