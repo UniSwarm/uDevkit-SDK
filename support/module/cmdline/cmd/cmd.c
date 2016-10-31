@@ -25,7 +25,7 @@ Cmd cmds[] = {
     {.name="asserv", cmd_asserv},
     {.name="adc", cmd_adc},
     {.name="ax", cmd_ax},
-    {.name="led", cmd_ax},
+    {.name="led", cmd_led},
     {.name="", NULL}
 };
 

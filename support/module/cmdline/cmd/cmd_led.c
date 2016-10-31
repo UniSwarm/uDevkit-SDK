@@ -83,6 +83,7 @@ int cmd_led(int argc, char **argv)
         break;
 #endif
     }
+    puts("ok");
 
     return 0;
 }

@@ -28,6 +28,7 @@ int cmd_ax(int argc, char **argv)
     if(argc > 4)
         torque = atoi(argv[4]);
     ax12_moveTo(axid, pos, speed, torque);
+    puts("ok");
 
     return 0;
 }
