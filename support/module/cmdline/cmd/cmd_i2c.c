@@ -38,6 +38,7 @@ int cmd_i2c(int argc, char **argv)
     i2c_dev = MKDEV(DEV_CLASS_I2C, i2c);
 
     // if no more arg, print properties of i2c
+    // > i2c <bus-id>
     if(argc == 2)
     {
         printf("Config: %d bits address %luHz (%luHz)\r\n",

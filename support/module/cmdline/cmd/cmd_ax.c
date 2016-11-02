@@ -15,6 +15,7 @@ int cmd_ax(int argc, char **argv)
     axid = atoi(argv[1]);
 
     // if no more arg, print properties of ax
+    // > ax <ax-id>
     if(argc == 2)
     {
         // TODO read ax values when ax12 driver will be abble
@@ -22,6 +23,7 @@ int cmd_ax(int argc, char **argv)
         return 0;
     }
 
+    // > ax <ax-id> <pos> [<speed>] [<torque>]
     pos = atoi(argv[2]);
     if(argc > 3)
         speed = atoi(argv[3]);

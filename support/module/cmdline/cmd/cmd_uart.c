@@ -37,6 +37,7 @@ int cmd_uart(int argc, char **argv)
     uart_dev = MKDEV(DEV_CLASS_UART, uart);
 
     // if no more arg, print properties of uart
+    // > uart <uart-id>
     if(argc == 2)
     {
         char parity;
@@ -67,16 +68,9 @@ int cmd_uart(int argc, char **argv)
 
     // parse argv 2
 
-    if(argc < 4)
+    if(argc < 3)
         return 1;
-    // == write
-    if(strcmp(argv[2], "write")==0)
-    {
-        uart_write(uart_dev, argv[3], strlen(argv[3]));
-        puts("ok");
-        return 0;
-    }
-    // == read
+    // == read > uart <uart-id> read
     if(strcmp(argv[2], "read")==0)
     {
         char buff[100];
@@ -86,7 +80,16 @@ int cmd_uart(int argc, char **argv)
         puts(buff);
         return 0;
     }
-    // == setbs
+    if(argc < 4)
+        return 1;
+    // == write > uart <uart-id> write <data-to-write>
+    if(strcmp(argv[2], "write")==0)
+    {
+        uart_write(uart_dev, argv[3], strlen(argv[3]));
+        puts("ok");
+        return 0;
+    }
+    // == setbs > uart <uart-id> setbs <baud-speed>
     if(strcmp(argv[2], "setbs")==0)
     {
         uint32_t baudSpeed;
