@@ -3,9 +3,11 @@ A tool to simplify module inclusions in embedded systems.
 
 Currently works for all 16 bits Microchip devices (608 devices including
 dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV, PIC24F, PIC24FJ, PIC24EP and PIC24HJ).
+[Complete list of 16bits devices](support/archi/pic16b/README.md)
 
 Porting to all 32 bits devices in fews weeks (254 devices including
 PIC32MM, PIC32MX, PIC32MZEC and PIC32MZEF).
+[Complete list of 32bits devices](support/archi/pic32/README.md)
 
 ## How to use ?
 RTprog want to be very easy to use with no non-standard system. To manage your
