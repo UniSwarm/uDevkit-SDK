@@ -1,6 +1,32 @@
 # drivers support
 
+Low level driver dependant (periph/) or not of the processor.
+
 Each driver must have a particular directory with the same name of the driver which contains a 'driver-name'.mk file.
+
+## Actual drivers supported
+
+|Driver name|Description|
+|-----------|-----------|
+|[a6](a6/README.md)|a6 communication driver|
+|[ar1000](ar1000/README.md)|resistive touch controller driver|
+|[asserv](asserv/README.md)|motor control for robot movements|
+|[ax12](ax12/README.md)|ax12 servo motor driver|
+|[esp8266](esp8266/README.md)|ESP8266 wifi module driver|
+|[motor](motor/README.md)|motor abstraction drivers|
+|[adc](periph/adc/README.md)|ADC analog converters driver|
+|[i2c](periph/i2c/README.md)|I2C communication driver|
+|[ic](periph/ic/README.md)|Input compare driver|
+|[oc](periph/oc/README.md)|Output compare driver|
+|[pwm](periph/pwm/README.md)|PWM driver|
+|[qei](periph/qei/README.md)|Quadrature encoder driver|
+|[spi](periph/spi/README.md)|SPI communication driver|
+|[sysclock](periph/sysclock/README.md)|System clock|
+|[timer](periph/timer/README.md)|Timer driver|
+|[uart](periph/uart/README.md)|UART (serial) communication driver|
+|[usb_hal](periph/usb_hal/README.md)|USB low layer driver|
+|[sharp](sharp/README.md)|sharp sensor drivers|
+|[usb_serial](usb_serial/README.md)|USB CDC driver|
 
 ## How to add a driver support?
 Create a directory with the name of the driver in this directory :
@@ -35,11 +61,11 @@ You just need to add header and source code files :
 And for specific architecture :
 
 	ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ep dspic33fj))
-	 SRC += timer_dspic.c
+	 ARCHI_SRC += timer_dspic.c
 	 HEADER += timer_dspic.h
 	endif
 	else ifeq ($(ARCHI), pic24))
-	 SRC += timer_pic24.c
+	 ARCHI_SRC += timer_pic24.c
 	 HEADER += timer_pic24.h
 	endif
 
