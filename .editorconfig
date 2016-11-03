@@ -1,7 +1,9 @@
+# editorconfig (http://editorconfig.org/)
 
 # Tab indentation (no size specified)
-[Makefile]
+[{Makefile,*.mk,*.md}]
 indent_style = tab
+trim_trailing_whitespace = false
 
 # 4 space indentation
 [*{.c,.h}]
@@ -9,8 +11,8 @@ indent_style = space
 indent_size = 4
 end_of_line = crlf
 charset = utf-8
+trim_trailing_whitespace = true
 
 # trims trailing whitespace for all files
 [*]
-trim_trailing_whitespace = true
 insert_final_newline = true
