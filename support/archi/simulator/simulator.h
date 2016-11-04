@@ -3,15 +3,16 @@
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
- * @date November 3, 2016, 22:44 PM 
- * 
+ * @date November 3, 2016, 22:44 PM
+ *
  * @brief Simulator for debug purpose
  */
 
 #ifndef SIMULATOR_H
 #define SIMULATOR_H
 
-#include "simulator_socket.h"
+#include <stdint.h>
+#include <driver/device.h>
 
 void simulator_init();
 void simulator_end();

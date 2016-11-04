@@ -3,21 +3,24 @@
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
- * @date November 3, 2016, 22:44 PM 
- * 
+ * @date November 3, 2016, 22:44 PM
+ *
  * @brief Simulator for debug purpose
  */
 
 #include "simulator.h"
 
+#include "simulator_socket.h"
+
 #include <signal.h>
+#include <string.h>
 
 void simulator_init()
 {
     atexit(simulator_end);
     signal(SIGTERM, simulator_end);
     signal(SIGKILL, simulator_end);
-    
+
     simulator_socket_init();
 }
 

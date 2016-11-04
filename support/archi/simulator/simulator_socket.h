@@ -3,10 +3,10 @@
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
- * @date November 3, 2016, 22:44 PM 
- * 
+ * @date November 3, 2016, 22:44 PM
+ *
  * @brief Communication by sockets for testing purpose (windows and linux cross-platforms)
- * 
+ *
  * Widely inspired by http://broux.developpez.com/articles/c/sockets/
  */
 
@@ -15,9 +15,9 @@
 
 #ifdef WIN32
 
-  #include <winsock2.h> 
+  #include <winsock2.h>
 
-#elif defined (linux)
+#elif defined (linux) || defined (unix)
 
   #include <sys/types.h>
   #include <sys/socket.h>
@@ -25,7 +25,7 @@
   #include <arpa/inet.h>
   #include <unistd.h>
   #include <stdio.h>
-  #include <stdlib.h> 
+  #include <stdlib.h>
 
   #define INVALID_SOCKET -1
   #define SOCKET_ERROR -1
@@ -40,6 +40,8 @@
   #error socket not supported for your platform
 
 #endif
+
+#define SIM_SOCKET_PORT 1064
 
 void simulator_socket_init();
 void simulator_socket_end();

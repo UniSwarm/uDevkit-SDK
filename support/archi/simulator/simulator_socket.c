@@ -3,16 +3,14 @@
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
- * @date November 3, 2016, 22:44 PM 
- * 
+ * @date November 3, 2016, 22:44 PM
+ *
  * @brief Communication by sockets for testing purpose (windows and linux cross-platforms)
  */
 
 #include "simulator_socket.h"
 
 SOCKET simulator_sock;
-
-#define SIM_SOCKET_PORT 1064
 
 void simulator_socket_init()
 {
@@ -47,7 +45,7 @@ void simulator_socket_end()
     #if defined (WIN32)
         WSACleanup();
     #endif
-    
+
     closesocket(simulator_sock);
 }
 
