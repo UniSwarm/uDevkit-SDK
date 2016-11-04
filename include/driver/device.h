@@ -13,7 +13,23 @@
 
 #include <stdint.h>
 #include <stdlib.h>
-#include <sys/types.h>
+
+#if !defined(_SIZE_T_DEFINED) &&  !defined(__SIZE_TYPE__) && !defined(_SIZE_T) && !defined(_SIZET) && !defined(_BSD_SIZE_T_DEFINED_)
+#define _SIZE_T_DEFINED
+#define _SIZE_T
+#define _SIZET
+#define _BSD_SIZE_T_DEFINED_
+ typedef uint16_t size_t;
+#endif
+
+#if !defined(_SSIZE_T_DEFINED) && !defined(_SSIZE_T) && !defined(_SSIZET) && !defined(_BSD_SSIZE_T_DEFINED_) && !defined(__ssize_t_defined)
+#define _SSIZE_T_DEFINED
+#define __ssize_t_defined
+#define _SSIZE_T
+#define _SSIZET
+#define _BSD_SSIZE_T_DEFINED_
+ typedef int16_t ssize_t;
+#endif
 
 // dev_t definition and macro helpers
 typedef uint16_t rt_dev_t;
