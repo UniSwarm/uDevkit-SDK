@@ -14,12 +14,12 @@
 
 #include <signal.h>
 #include <string.h>
+#include <stdio.h>
 
 void simulator_init()
 {
     atexit(simulator_end);
     signal(SIGTERM, simulator_end);
-    signal(SIGKILL, simulator_end);
 
     simulator_socket_init();
 }

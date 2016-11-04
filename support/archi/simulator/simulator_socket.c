@@ -10,6 +10,8 @@
 
 #include "simulator_socket.h"
 
+#include <stdio.h>
+
 SOCKET simulator_sock;
 
 void simulator_socket_init()

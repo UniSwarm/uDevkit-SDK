@@ -3,8 +3,8 @@
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
- * @date April 12, 2016, 08:33 AM 
- * 
+ * @date April 12, 2016, 08:33 AM
+ *
  * @brief Architecture low level definitions for all supported architectures
  */
 
@@ -42,6 +42,12 @@
  #include "../support/archi/pic32mm/pic32mm.h"
 #else
  #error Unsuported ARCHI
+#endif
+
+#if defined(SIMULATOR)
+ #include "../support/archi/simulator/simulator.h"
+
+ #define init_board() init_board(); simulator_init()
 #endif
 
 #endif // ARCHI_H

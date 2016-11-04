@@ -2,12 +2,13 @@
 # SIM_EXE cmd
 ifeq ($(OS),Windows_NT)
  SIM_EXE := $(PROJECT).exe
+ DEFINES_SIM += -lws2_32
 else
  SIM_EXE := $(PROJECT)
 endif
 
 SIMULATOR_PATH := $(RTPROG)/support/archi/simulator
-DEFINES_SIM := -D SIMULATOR -I $(SIMULATOR_PATH)
+DEFINES_SIM += -D SIMULATOR -I $(SIMULATOR_PATH)
 
 vpath %.c $(SIMULATOR_PATH)
 SIM_SRC += simulator.c simulator_socket.c
@@ -29,7 +30,7 @@ $(OUT_PWD)/%_sim.o : %.c
 # rule to link SIM_OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(SIM_EXE) : $(SIM_OBJECTS)
 	@printf "LD %-36s => %s\n" "*.o" $(OUT_PWD)/$(PROJECT).elf
-	@gcc $(CCFLAGS) -o $(OUT_PWD)/$(SIM_EXE) $(addprefix $(OUT_PWD)/,$(notdir $(SIM_OBJECTS))) -lm
+	$(VERB)gcc $(CCFLAGS) -o $(OUT_PWD)/$(SIM_EXE) $(addprefix $(OUT_PWD)/,$(notdir $(SIM_OBJECTS))) $(DEFINES_SIM) -lm
 
 sim : $(OUT_PWD)/$(SIM_EXE)
 	./$(OUT_PWD)/$(SIM_EXE)
