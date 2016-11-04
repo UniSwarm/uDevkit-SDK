@@ -9,6 +9,7 @@
  */
 
 #include "uart.h"
+#include "simulator.h"
 
 #include "driver/sysclock.h"
 #include "sys/fifo.h"
@@ -151,14 +152,13 @@ uint8_t uart_bitStop(rt_dev_t device)
 
 ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 {
-    size_t i;
-
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return -1;
 
     // TODO
-    printf("%s", data); fflush(stdout);
+    //printf("%s", data); fflush(stdout);
+    simulator_send(DEV_CLASS_UART, 0x20, data, size);
 
     return 0;
 }

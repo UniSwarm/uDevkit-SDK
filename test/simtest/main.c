@@ -7,6 +7,8 @@
 #include "board.h"
 #include "archi.h"
 
+#include "simulator.h"
+
 int main(void)
 {
 	unsigned int i,j;
@@ -16,7 +18,8 @@ int main(void)
 	char buff[100];
 	
 	sysclock_setClock(120000000);
-	//init_board();
+    init_board();
+    simulator_init();
 	
 	// uart debug init
 	uartDbg = uart_getFreeDevice();

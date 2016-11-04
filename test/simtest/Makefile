@@ -1,6 +1,6 @@
 RTPROG = ../..
 
-PROJECT = testproj
+PROJECT = simtest
 BOARD = rtboard
 # DEVICE = 33EP256MU806
 # ARCHI = dspic33ep

@@ -6,7 +6,11 @@ else
  SIM_EXE := $(PROJECT)
 endif
 
-DEFINES_SIM := -D SIMULATOR
+SIMULATOR_PATH := $(RTPROG)/support/archi/simulator
+DEFINES_SIM := -D SIMULATOR -I $(SIMULATOR_PATH)
+
+vpath %.c $(SIMULATOR_PATH)
+SIM_SRC += simulator.c simulator_socket.c
 
 # simulator support
 SIM_OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=_sim.o) $(SIM_SRC:.c=_sim.o)))
@@ -17,19 +21,15 @@ SIM_OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=_sim.o) $(SIM_SRC:.c=_
 # SIM_LIBS = -L$(shell qmake -query QT_INSTALL_LIBEXECS) -lQt5Core -lQt5Gui -lQt5Widgets
 
 # rule to build OBJECTS to OUT_PWD and give dependencies
-$(OUT_PWD)/%_sim.d : %.c
-	@test -e modules.h || touch -t 197001010101 modules.h
-	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
+$(OUT_PWD)/%_sim.o : %.c
+	@printf "CC %-36s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	$(VERB)gcc $(CCFLAGS) -c  $< $(DEFINES) $(DEFINES_SIM) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@)
 	@gcc $(CCFLAGS) -MM $< $(DEFINES) $(DEFINES_SIM) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*_sim.d
-
-$(OUT_PWD)/%_sim.o : %.c $(OUT_PWD)/%_sim.d
-	@printf "CC %-31s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	@gcc $(CCFLAGS) -c  $< $(DEFINES) $(DEFINES_SIM) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@)
 
 # rule to link SIM_OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(SIM_EXE) : $(SIM_OBJECTS)
-	@printf "LD %-30s => %s\n" "*.o" $(OUT_PWD)/$(PROJECT).elf
-	@gcc $(CCFLAGS) -o $(OUT_PWD)/$(SIM_EXE) $(addprefix $(OUT_PWD)/,$(notdir $(SIM_OBJECTS)))
+	@printf "LD %-36s => %s\n" "*.o" $(OUT_PWD)/$(PROJECT).elf
+	@gcc $(CCFLAGS) -o $(OUT_PWD)/$(SIM_EXE) $(addprefix $(OUT_PWD)/,$(notdir $(SIM_OBJECTS))) -lm
 
 sim : $(OUT_PWD)/$(SIM_EXE)
 	./$(OUT_PWD)/$(SIM_EXE)
