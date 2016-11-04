@@ -1,17 +1,22 @@
 
-all: ../../bin/a6kontrol
+NPROC:=$(shell nproc || echo 2)
+TOOL_NAME := a6kontrol
 
 ifeq ($(OS),Windows_NT)
  TARGET_EXE := release
+ TARGET_NAME := $(TOOL_NAME)
 else
  TARGET_EXE := all
+ TARGET_NAME := $(TOOL_NAME).exe
 endif
 
-../../build/a6kontrol/Makefile: a6kontrol.pro
-	@test -d ../../build/a6kontrol/ || mkdir -p ../../build/a6kontrol/
-	cd ../../build/a6kontrol && qmake ../../tool/a6kontrol/a6kontrol.pro
+all: ../../bin/$(TARGET_NAME)
 
-../../bin/a6kontrol: ../../build/a6kontrol/Makefile FORCE
-	cd ../../build/a6kontrol && make $(TARGET_EXE)
+../../build/$(TOOL_NAME)/Makefile:
+	@test -d ../../build/$(TOOL_NAME)/ || mkdir -p ../../build/$(TOOL_NAME)/
+	cd ../../build/$(TOOL_NAME) && qmake ../../tool/$(TOOL_NAME)/$(TOOL_NAME).pro
+
+../../bin/$(TARGET_NAME): ../../build/$(TOOL_NAME)/Makefile FORCE
+	cd ../../build/$(TOOL_NAME) && make $(TARGET_EXE) -j$(NPROC)
 
 FORCE:

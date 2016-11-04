@@ -1,17 +1,22 @@
 
-all: ../../bin/img2raw
+NPROC:=$(shell nproc || echo 2)
+TOOL_NAME := img2raw
 
 ifeq ($(OS),Windows_NT)
  TARGET_EXE := release
+ TARGET_NAME := $(TOOL_NAME)
 else
  TARGET_EXE := all
+ TARGET_NAME := $(TOOL_NAME).exe
 endif
 
-../../build/img2raw/Makefile:
-	@test -d ../../build/img2raw/ || mkdir -p ../../build/img2raw/
-	cd ../../build/img2raw && qmake ../../tool/img2raw/img2raw.pro
+all: ../../bin/$(TARGET_NAME)
 
-../../bin/img2raw: ../../build/img2raw/Makefile FORCE
-	cd ../../build/img2raw && make $(TARGET_EXE)
+../../build/$(TOOL_NAME)/Makefile:
+	@test -d ../../build/$(TOOL_NAME)/ || mkdir -p ../../build/$(TOOL_NAME)/
+	cd ../../build/$(TOOL_NAME) && qmake ../../tool/$(TOOL_NAME)/$(TOOL_NAME).pro
+
+../../bin/$(TARGET_NAME): ../../build/$(TOOL_NAME)/Makefile FORCE
+	cd ../../build/$(TOOL_NAME) && make $(TARGET_EXE) -j$(NPROC)
 
 FORCE:
