@@ -4,6 +4,7 @@
 MainWindow::MainWindow(QStringList args) :
     ui(new Ui::MainWindow)
 {
+    Q_UNUSED(args)
     ui->setupUi(this);
 
     _simServer = new SimServer();

@@ -12,7 +12,10 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     simserver.cpp \
-    simclient.cpp
+    simclient.cpp \
+    simmodules/simmodule.cpp \
+    simmodules/simmodulefactory.cpp \
+    simmodules/simmoduleuart.cpp
 
 FORMS += \
     mainwindow.ui
@@ -20,4 +23,9 @@ FORMS += \
 HEADERS += \
     mainwindow.h \
     simserver.h \
-    simclient.h
+    simclient.h \
+    simmodules/simmodule.h \
+    simmodules/simmodulefactory.h \
+    simmodules/simmoduleuart.h
+
+INCLUDEPATH += ../../include ../../support
