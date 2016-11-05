@@ -4,6 +4,17 @@
 
 #include <xc.h>
 
+#define WINDOW_XADDR_START  0x0045 // Horizontal Start Address Set
+#define WINDOW_XADDR_END    0x0044 // Horizontal End Address Set
+#define WINDOW_YADDR_START  0x0047 // Vertical Start Address Set
+#define WINDOW_YADDR_END    0x0046 // Vertical End Address Set
+#define GRAM_ADR_ROW_S      0x0020 // init to 0 , UPDATE FIRST
+#define GRAM_ADR_COL_S      0x0021 // init to 319 , UPDATE LAST
+#define GRAMWR              0x0022 // memory write
+
+#define GUI_WIDTH 480
+#define GUI_HEIGHT 320
+
 Color _gui_penColor;
 Color _gui_brushColor;
 uint16_t _gui_x, _gui_y;
@@ -76,7 +87,7 @@ void gui_init(void)
     delay_ms(5);
     SCREEN_RST = 1;
     delay_ms(5);
-    
+
     gui_write_command_data(0x0001, 0x003C);
     gui_write_command_data(0x0002, 0x0100);
     gui_write_command_data(0x0003, 0x1030);
@@ -118,12 +129,12 @@ void gui_init(void)
     delay_ms(160);  // delay 160 ms
     gui_write_command_data(0x0012, 0x2003);
     delay_ms(40);  // delay 40 ms
-    
+
     gui_write_command_data(WINDOW_XADDR_END, 0x013F);
     gui_write_command_data(WINDOW_XADDR_START, 0x0000);
     gui_write_command_data(WINDOW_YADDR_END, 0x01DF);
     gui_write_command_data(WINDOW_YADDR_START, 0x0000);
-        
+
     gui_write_command_data(GRAM_ADR_ROW_S, 0x0000);
     gui_write_command_data(GRAM_ADR_COL_S, 0x013F);
     gui_write_command_data(0x0007, 0x0012);
@@ -139,7 +150,7 @@ static void gui_setRectScreen(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
     gui_write_command_data(WINDOW_YADDR_END, x+w-1);
     gui_write_command_data(GRAM_ADR_ROW_S, x);
     gui_write_command_data(GRAM_ADR_COL_S, y);
-    
+
     gui_write_command(0x22);
 }
 
@@ -147,7 +158,7 @@ static void gui_setPos(uint16_t x, uint16_t y)
 {
     gui_write_command_data(GRAM_ADR_ROW_S, x);
     gui_write_command_data(GRAM_ADR_COL_S, y);
-    
+
     gui_write_command(0x22);
 }
 
@@ -155,7 +166,7 @@ void gui_fillScreen(Color color)
 {
     uint16_t i,j;
     gui_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
-    
+
     for (i=0; i<GUI_WIDTH; i++)
         for (j=0; j<GUI_HEIGHT; j++)
             gui_write_data(color);
@@ -169,12 +180,12 @@ void gui_dispImage(uint16_t x, uint16_t y, const Picture *pic)
 {
     uint16_t i,j;
     unsigned long addr=0;
-    
+
     //TODO: create warning if the image is too big
 
     // set rect image area space address
     gui_setRectScreen(x, y, pic->width, pic->height);
-    
+
     for (i=0; i<pic->width; i++)
     {
         for (j=0; j<pic->height; j++)
@@ -183,7 +194,7 @@ void gui_dispImage(uint16_t x, uint16_t y, const Picture *pic)
             ++addr;
         }
     }
-    
+
     // restore full draw screen
     gui_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
 }
@@ -213,11 +224,11 @@ void gui_drawPoint(uint16_t x, uint16_t y)
 {
     //uint16_t data;
     gui_setPos(x, y);
-    
+
     gui_write_data(_gui_penColor);
     /*data=gui_read_data();
     data=gui_read_data();*/
-    
+
     // warning fixme double pixel send
     gui_write_data(_gui_penColor);
 }
@@ -230,7 +241,7 @@ void gui_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
     int ratioY = dy;
     float m, b;
     /*void (*pixelPtr)(unsigned short,unsigned short,char);
-    
+
     // Si la ligne ne sort pas de l ecran, on affiche les pixels sans les controler
     pixelPtr = ( (x1 >= 0 && y1 >= 0 && x1 < PIXEL_NUMBER_X && y1 < PIXEL_NUMBER_Y) &&
                  (x2 >= 0 && y2 >= 0 && x2 < PIXEL_NUMBER_X && y2 < PIXEL_NUMBER_Y) )
@@ -258,10 +269,10 @@ void gui_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
         }
         return;
     }
-    
+
     if (ratioX < 0) ratioX = -ratioX;
     if (ratioY < 0) ratioY = -ratioY;
-    
+
     if (ratioX >= ratioY)
     {
         m = (float)dy / (float)dx;
@@ -307,18 +318,18 @@ void gui_drawRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 void gui_drawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 {
     uint16_t i,j;
-    
+
     // set rect image area space address
     gui_setRectScreen(x, y, w, h);
-    
+
     // fill this rect with brush color
     for (i=0; i<h; i++)
         for (j=0;j<w;j++)
             gui_write_data(_gui_brushColor);
-    
+
     // restore full draw screen
     gui_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
-    
+
     // draw border with pen color
     //gui_drawRect(x, y, w, h);
 }
@@ -337,10 +348,10 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
     const char *c;
     uint16_t width, xstartdec, xenddec;
     uint16_t height, ystartdec, yenddec;
-    
+
     if(x>=GUI_WIDTH || y>=GUI_HEIGHT)
         return;
-    
+
     // width calculation
     width = gui_getFontTextWidth(txt);
     if((flags&0x03) == GUI_FONT_ALIGN_VLEFT)
@@ -358,10 +369,10 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
         xstartdec = (w - width)>>1;
         xenddec = w - width - xstartdec;
     }
-    
+
     if(width > GUI_WIDTH - x)
         width = GUI_WIDTH - x;
-    
+
     // height calculation
     height = gui_getFontHeight();
     if((flags&0x0C) == GUI_FONT_ALIGN_HTOP)
@@ -379,15 +390,15 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
         ystartdec = (h - height)>>1;
         yenddec = h - height - ystartdec;
     }
-    
+
     // windows text size
     gui_setRectScreen(x, y, w, h);
-    
+
     // xstartdec
     for(j = 0; j < xstartdec; j++)
         for(i = 0; i < h; i++)
             gui_write_data(_gui_brushColor);
-    
+
     // writting pixels chars
     c = txt;
     while (*c != '\0')
@@ -419,12 +430,12 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
         }
         c++;
     }
-    
+
     // xenddec
     for(j = 0; j < xenddec; j++)
         for(i = 0; i < h; i++)
             gui_write_data(_gui_brushColor);
-    
+
     // restore full draw screen
     gui_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
 }
@@ -461,6 +472,16 @@ uint16_t gui_getFontTextWidth(const char *txt)
             width += _gui_font->letters[*c - _gui_font->first]->width;
         c++;
     }
-    
+
     return width;
+}
+
+uint16_t gui_screenWidth(uint8_t screen)
+{
+    return GUI_WIDTH;
+}
+
+uint16_t gui_screenHeight(uint8_t screen)
+{
+    return GUI_HEIGHT;
 }
