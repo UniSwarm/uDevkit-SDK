@@ -1,5 +1,5 @@
 /**
- * @file uart.h
+ * @file uart_sim.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
@@ -11,14 +11,14 @@
 #ifndef UART_SIM_H
 #define UART_SIM_H
 
-struct uart_dev
+typedef struct
 {
     uint32_t baudSpeed;
     uint8_t bitStop;
     uint8_t bitParity;
     uint8_t bitLenght;
     uint8_t enabled;
-};
+} uart_dev;
 
 #define UART_SIM_MODULE 0x0010
 

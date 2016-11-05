@@ -1,4 +1,4 @@
-#include "simmoduleuart.h"
+#include "simmodule_uart.h"
 
 #include <QDebug>
 

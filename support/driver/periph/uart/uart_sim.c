@@ -21,7 +21,7 @@
 
 #include <stdio.h>
 
-struct uart_dev uarts[] = {
+uart_dev uarts[] = {
     {.baudSpeed=0},
 #if UART_COUNT>=2
     {.baudSpeed=0},
@@ -36,7 +36,7 @@ struct uart_dev uarts[] = {
 
 void uart_sendconfig(uint8_t uart)
 {
-    simulator_send(UART_SIM_MODULE, UART_SIM_CONFIG, (char*)&uarts[uart], sizeof(struct uart_dev));
+    simulator_send(UART_SIM_MODULE, UART_SIM_CONFIG, (char*)&uarts[uart], sizeof(uart_dev));
 }
 
 rt_dev_t uart_getFreeDevice()

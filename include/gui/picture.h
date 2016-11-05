@@ -13,6 +13,10 @@
 
 #include <stdint.h>
 
+#ifndef XC16
+  #define __prog__
+#endif
+
 /**
  * @brief Picture struct
  * contains data and metadata (width, height...)

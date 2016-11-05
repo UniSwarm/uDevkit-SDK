@@ -20,20 +20,6 @@ Color _gui_brushColor;
 uint16_t _gui_x, _gui_y;
 const Font *_gui_font;
 
-// <TODO write this functions correctly
-void delay_ms(uint16_t ms)
-{
-    int i, j;
-    for(j=0; j<ms; j++) for(i=0; i<6210; i++) asm("NOP");
-}
-
-void delay_us(uint16_t us)
-{
-    int i, j;
-    for(j=0; j<us; j++) for(i=0; i<6; i++) asm("NOP");
-}
-// TODO/>
-
 void gui_write_command(uint16_t cmd)
 {
     SCREEN_PORT_OUTPUT;
@@ -198,7 +184,6 @@ void gui_dispImage(uint16_t x, uint16_t y, const Picture *pic)
     // restore full draw screen
     gui_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
 }
-
 
 void gui_setPenColor(uint16_t color)
 {

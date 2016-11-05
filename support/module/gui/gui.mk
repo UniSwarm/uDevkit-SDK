@@ -4,10 +4,11 @@ GUI_MODULE=
 vpath %.c $(MODULEPATH)
 
 HEADER += gui.h
-SRC += gui.c
+ARCHI_SRC += gui.c
+SIM_SRC += gui_sim.c
 
 ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic30 dspic33fj dspic33ep dspic33ev))
- CCFLAGS += -mlarge-code -mlarge-arrays -mlarge-data
+ CCFLAGS_XC += -mlarge-code -mlarge-arrays -mlarge-data
 endif
 
 # IMG2RAW_EXE cmd
@@ -37,7 +38,7 @@ $(OUT_PWD)/%.bmp.c : %.bmp pictures.h $(IMG2RAW_EXE)
 # rule to build images *.<img>.c to OUT_PWD/*.o
 $(OUT_PWD)/%.o : $(OUT_PWD)/%.c
 	@printf "µCC %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	$(VERB)$(CC) $(CCFLAGS) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 
 PICTURES_C := $(PICTURES)
 PICTURES_NAME := $(PICTURES)
