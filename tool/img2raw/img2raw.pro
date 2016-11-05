@@ -4,10 +4,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
 
-DESTDIR = ../../bin
+DESTDIR = $$PWD/../../bin
+
 TARGET = img2raw
-#CONFIG += console
-#CONFIG -= app_bundle
 
 TEMPLATE = app
 

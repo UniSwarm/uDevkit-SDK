@@ -3,7 +3,7 @@ QT       += core gui widgets serialport printsupport
 TARGET = a6kontrol
 TEMPLATE = app
 
-DESTDIR = ../../bin
+DESTDIR = $$PWD/../../bin
 
 SOURCES += main.cpp \
         mainwindow.cpp \

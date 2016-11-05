@@ -228,12 +228,12 @@ int main(int argc, char *argv[])
     imageExts << "jpg" << "jpeg" << "png" << "bmp";
     if(imageExts.contains(fileInfo.suffix(), Qt::CaseInsensitive))
     {
-        if(!QFile::exists(inputFile))
+        if(!QFile::exists(fileInfo.absoluteFilePath()))
         {
             out << "File " << inputFile << " does not exist.";
             return 1;
         }
-        QImage image(inputFile);
+        QImage image(fileInfo.absoluteFilePath());
         exportImage(image, outputFile);
 
         return 0;
