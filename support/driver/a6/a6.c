@@ -3,12 +3,14 @@
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
- * @date June 25, 2016, 15:30 PM 
- * 
+ * @date June 25, 2016, 15:30 PM
+ *
  * @brief A6 communication support
  */
 
-#include <xc.h>
+#ifdef XC16
+  #include <xc.h>
+#endif
 
 #include "a6.h"
 
@@ -23,7 +25,9 @@ int a6_init()
 	uart_setBaudSpeed(a6_uart, 1000000);
 	uart_setBitConfig(a6_uart, 8, UART_BIT_PARITY_NONE, 1);
 
+#ifndef SIMULATOR
     A6_RW = A6_READ;
+#endif
 
 	uart_enable(a6_uart);
 	return 0;
@@ -32,7 +36,9 @@ int a6_init()
 ssize_t a6_write(const char *data, size_t size)
 {
     ssize_t byte;
+#ifndef SIMULATOR
     A6_RW = A6_WRITE;
+#endif
     byte = uart_write(a6_uart, data, size);
     //uart_flush(a6_uart);
     //A6_RW = A6_READ;
