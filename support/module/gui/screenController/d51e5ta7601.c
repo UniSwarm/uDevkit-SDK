@@ -9,6 +9,7 @@
  */
 
 #include "board.h"
+#include "screenController.h"
 
 #include <xc.h>
 

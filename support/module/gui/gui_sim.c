@@ -3,6 +3,9 @@
 #include "board.h"
 #include "gui_sim.h"
 #include "simulator.h"
+#include <math.h>
+
+#include "screenController/screenController.h"
 
 #define GUI_WIDTH 480
 #define GUI_HEIGHT 320
@@ -12,133 +15,55 @@ Color _gui_brushColor;
 uint16_t _gui_x, _gui_y;
 const Font *_gui_font;
 
-void gui_init(void)
+#define BUFFPIXSIZE 200
+uint16_t buffPix[BUFFPIXSIZE];
+int idPix = 0;
+
+void gui_ctrl_init(void)
 {
     GuiConfig config =
     {
         .width = GUI_WIDTH,
         .height = GUI_HEIGHT
     };
-    printf("mowisjgfoi\n");
-    simulator_send(GUI_SIM_MODULE, GUI_SIM_CONFIG, (char*)&config, 4);
+    simulator_send(GUI_SIM_MODULE, GUI_SIM_CONFIG, (char*)&config, sizeof(GuiConfig));
 }
 
-static void gui_setRectScreen(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
+void gui_ctrl_flush_data()
 {
-
+    simulator_send(GUI_SIM_MODULE, GUI_SIM_WRITEDATA, (char*)buffPix, (idPix)*sizeof(uint16_t));
+    idPix = 0;
 }
 
-static void gui_setPos(uint16_t x, uint16_t y)
+void gui_ctrl_setRectScreen(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 {
-
-}
-
-void gui_fillScreen(Color color)
-{
-
-}
-
-/**
- * @brief gui_dispImage
- * display an Picture at the (x,y) poisiton on the screen
- */
-void gui_dispImage(uint16_t x, uint16_t y, const Picture *pic)
-{
-
-}
-
-void gui_setPenColor(uint16_t color)
-{
-    _gui_penColor = color;
-}
-
-uint16_t gui_penColor()
-{
-    return _gui_penColor;
-}
-
-void gui_setBrushColor(uint16_t color)
-{
-    _gui_brushColor = color;
-}
-
-uint16_t gui_brushColor()
-{
-    return _gui_brushColor;
-}
-
-void gui_drawPoint(uint16_t x, uint16_t y)
-{
-
-}
-
-void gui_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
-{
-
-}
-
-void gui_drawRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
-{
-
-}
-
-void gui_drawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
-{
-
-}
-
-void gui_drawText(uint16_t x, uint16_t y, const char *txt)
-{
-
-}
-
-void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char *txt, uint8_t flags)
-{
-
-}
-
-void gui_setFont(const Font *font)
-{
-    _gui_font = font;
-}
-
-const Font *gui_font()
-{
-    return _gui_font;
-}
-
-uint8_t gui_getFontHeight()
-{
-    return _gui_font->height;
-}
-
-uint8_t gui_getFontWidth(const char c)
-{
-    if(c < _gui_font->first || c > _gui_font->last)
-        return 0;
-    return _gui_font->letters[c - _gui_font->first]->width;
-}
-
-uint16_t gui_getFontTextWidth(const char *txt)
-{
-    uint16_t width = 0;
-    const char *c = txt;
-    while (*c != '\0')
+    gui_ctrl_flush_data();
+    GuiRect rect =
     {
-        if (*c >= _gui_font->first && *c <= _gui_font->last)
-            width += _gui_font->letters[*c - _gui_font->first]->width;
-        c++;
-    }
-
-    return width;
+        .x = x,
+        .y = y,
+        .width = w,
+        .height = h
+    };
+    simulator_send(GUI_SIM_MODULE, GUI_SIM_SETRECT, (char*)&rect, sizeof(GuiRect));
 }
 
-uint16_t gui_screenWidth(uint8_t screen)
+void gui_ctrl_setPos(uint16_t x, uint16_t y)
 {
-    return GUI_WIDTH;
+    gui_ctrl_flush_data();
+    GuiPoint point =
+    {
+        .x = x,
+        .y = y
+    };
+    simulator_send(GUI_SIM_MODULE, GUI_SIM_SETPOS, (char*)&point, sizeof(GuiPoint));
 }
 
-uint16_t gui_screenHeight(uint8_t screen)
+void gui_ctrl_write_data(uint16_t data)
 {
-    return GUI_HEIGHT;
+    buffPix[idPix] = data;
+    idPix++;
+
+    if(idPix == BUFFPIXSIZE)
+		gui_ctrl_flush_data();
 }

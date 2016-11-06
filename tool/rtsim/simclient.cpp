@@ -18,19 +18,34 @@ SimModule *SimClient::module(uint16_t idModule) const
 
 void SimClient::readData()
 {
-    QByteArray dataReceive = _socket->readAll();
-    short moduleId = *((short*)dataReceive.mid(0,2).data());
-    short functionId = *((short*)dataReceive.mid(2,2).data());
-    QByteArray data = dataReceive.mid(4);
-
-    SimModule *modulePtr = module(moduleId);
-    if(!modulePtr)
+    _dataReceive.append(_socket->readAll());
+    while(_dataReceive.size()>6)
     {
-        modulePtr = SimModuleFactory::getSimModule(moduleId);
-        if(!modulePtr)
+        unsigned short sizePacket = *((short*)_dataReceive.mid(0,2).data());
+
+        if(sizePacket>_dataReceive.size())
             return;
 
-        _modules.insert(moduleId, modulePtr);
+        unsigned short moduleId = *((short*)_dataReceive.mid(2,2).data());
+        unsigned short functionId = *((short*)_dataReceive.mid(4,2).data());
+        QByteArray data = _dataReceive.mid(6, sizePacket-6);
+
+        SimModule *modulePtr = module(moduleId);
+        if(!modulePtr)
+        {
+            modulePtr = SimModuleFactory::getSimModule(moduleId);
+            if(!modulePtr)
+            {
+                qDebug()<<"Unknow module"<<moduleId<<sizePacket;
+                _dataReceive = _dataReceive.mid(sizePacket);
+                continue;
+            }
+
+            _modules.insert(moduleId, modulePtr);
+        }
+
+        modulePtr->pushData(functionId, data);
+
+        _dataReceive = _dataReceive.mid(sizePacket);
     }
-    modulePtr->pushData(functionId, data);
 }

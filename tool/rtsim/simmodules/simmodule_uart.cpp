@@ -9,5 +9,5 @@ SimModuleUart::SimModuleUart()
 
 void SimModuleUart::pushData(uint16_t functionId, const QByteArray &data)
 {
-    qDebug()<<"I am UART sim!"<<functionId<<data<<data.size();
+    qDebug()<<"I am UART sim!"<<functionId<<data.toHex()<<data.size();
 }

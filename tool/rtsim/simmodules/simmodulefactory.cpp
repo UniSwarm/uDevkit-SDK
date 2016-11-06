@@ -5,14 +5,18 @@
 
 SimModule *SimModuleFactory::getSimModule(uint16_t idModule)
 {
+    SimModule *module;
     switch (idModule)
     {
     case UART_SIM_MODULE:
-        return new SimModuleUart();
+        module = new SimModuleUart();
+        break;
     case GUI_SIM_MODULE:
-        return new SimModuleGui();
+        module = new SimModuleGui();
+        break;
     default:
+        module = NULL;
         break;
     }
-    return NULL;
+    return module;
 }

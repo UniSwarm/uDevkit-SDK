@@ -15,7 +15,9 @@ SOURCES += main.cpp \
     simclient.cpp \
     simmodules/simmodule.cpp \
     simmodules/simmodulefactory.cpp \
-    simmodules/simmoduleuart.cpp
+    simmodules/simmodule_gui.cpp \
+    widgets/screenwidget.cpp \
+    simmodules/simmodule_uart.cpp
 
 FORMS += \
     mainwindow.ui
@@ -26,6 +28,8 @@ HEADERS += \
     simclient.h \
     simmodules/simmodule.h \
     simmodules/simmodulefactory.h \
-    simmodules/simmoduleuart.h
+    simmodules/simmodule_gui.h \
+    widgets/screenwidget.h \
+    simmodules/simmodule_uart.h
 
 INCLUDEPATH += ../../include ../../support

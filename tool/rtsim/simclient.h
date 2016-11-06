@@ -23,6 +23,7 @@ protected slots:
 protected:
     QTcpSocket *_socket;
     QMap<uint16_t, SimModule*> _modules;
+    QByteArray _dataReceive;
 };
 
 #endif // SIMCLIENT_H

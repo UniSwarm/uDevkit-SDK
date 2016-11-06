@@ -4,7 +4,7 @@ PROJECT = testproj
 BOARD = a6screenboard
 OUT_PWD = build
 
-DRIVERS += a6 ar1000
+DRIVERS += a6
 MODULES += gui
 
 SRC += main.c courier8b.c

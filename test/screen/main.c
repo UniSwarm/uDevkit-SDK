@@ -4,7 +4,6 @@
 
 #include <stdio.h>
 #include <stdint.h>
-#include <xc.h>
 
 #include "pictures.h"
 extern const Font core12b;
@@ -21,15 +20,13 @@ int main(void)
 	// a6 init
     a6_init();
 
-	SCREEN_LEDBL = 1;
-
 	gui_init();
-	gui_fillScreen(Blue2);
+	gui_fillScreen(Gui_Blue2);
 
 	//display an image
 	gui_dispImage(0, 0, &picture);
 
-	gui_setPenColor(Yellow);
+	gui_setPenColor(Gui_Yellow);
 	gui_setBrushColor(0x2965);
 
 	//initialize touch

@@ -11,15 +11,11 @@ SIMULATOR_PATH := $(RTPROG)/support/archi/simulator
 DEFINES_SIM += -D SIMULATOR -I $(SIMULATOR_PATH)
 
 vpath %.c $(SIMULATOR_PATH)
+vpath %.c $(OUT_PWD)
 SIM_SRC += simulator.c simulator_socket.c
 
 # simulator support
 SIM_OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=_sim.o) $(SIM_SRC:.c=_sim.o)))
-
-# QT_BASE_INCLUDES = $(shell qmake -query QT_INSTALL_HEADERS)
-# SIM_INCLUDES := -I$(QT_BASE_INCLUDES) -I$(QT_BASE_INCLUDES)/QtCore -I$(QT_BASE_INCLUDES)/QtGui -I$(QT_BASE_INCLUDES)/QtWidgets
-
-# SIM_LIBS = -L$(shell qmake -query QT_INSTALL_LIBEXECS) -lQt5Core -lQt5Gui -lQt5Widgets
 
 # rule to build OBJECTS to OUT_PWD and give dependencies
 $(OUT_PWD)/%_sim.o : %.c
