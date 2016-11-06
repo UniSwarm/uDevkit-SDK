@@ -1,16 +1,15 @@
+/**
+ * @file gui.c
+ * @author Sebastien CAUX (sebcaux) / Charles-Antoine NOURY (CharlyBigoud)
+ * @copyright Robotips 2016
+ *
+ * @date April 25, 2016, 18:35 AM
+ *
+ * @brief GUI support driver
+ */
+
 #include "gui.h"
-
-#include "board.h"
-
-#include <xc.h>
-
-#define WINDOW_XADDR_START  0x0045 // Horizontal Start Address Set
-#define WINDOW_XADDR_END    0x0044 // Horizontal End Address Set
-#define WINDOW_YADDR_START  0x0047 // Vertical Start Address Set
-#define WINDOW_YADDR_END    0x0046 // Vertical End Address Set
-#define GRAM_ADR_ROW_S      0x0020 // init to 0 , UPDATE FIRST
-#define GRAM_ADR_COL_S      0x0021 // init to 319 , UPDATE LAST
-#define GRAMWR              0x0022 // memory write
+#include "screenController/screenController.h"
 
 #define GUI_WIDTH 480
 #define GUI_HEIGHT 320
@@ -20,142 +19,19 @@ Color _gui_brushColor;
 uint16_t _gui_x, _gui_y;
 const Font *_gui_font;
 
-void gui_write_command(uint16_t cmd)
-{
-    SCREEN_PORT_OUTPUT;
-    SCREEN_RS = 0;
-    SCREEN_CS = 0;
-    SCREEN_PORT_OUT = cmd;
-    SCREEN_RW = 0;
-    SCREEN_RW = 1;
-    SCREEN_CS = 1;
-    SCREEN_RS = 1;
-}
-
-void gui_write_data(uint16_t data)
-{
-    SCREEN_PORT_OUTPUT;
-    SCREEN_CS = 0;
-    SCREEN_PORT_OUT = data;
-    SCREEN_RW = 0;
-    SCREEN_RW = 1;
-    SCREEN_CS = 1;
-}
-
-uint16_t gui_read_data()
-{
-    uint16_t data;
-    SCREEN_PORT_INPUT;
-    SCREEN_CS = 0;
-    SCREEN_RD = 0;
-    asm("NOP");
-    data = SCREEN_PORT_IN;
-    SCREEN_RD = 1;
-    SCREEN_CS = 1;
-    return data;
-}
-
-void gui_write_command_data(uint8_t cmd, uint16_t data)
-{
-    gui_write_command(cmd);
-    gui_write_data(data);
-}
-
 void gui_init(void)
 {
-    SCREEN_CS = 1;
-    SCREEN_RS = 1;
-    SCREEN_RW = 1;
-    SCREEN_RD = 1;
-    SCREEN_RST = 1;
-    delay_ms(5);
-    SCREEN_RST = 0;
-    delay_ms(5);
-    SCREEN_RST = 1;
-    delay_ms(5);
-
-    gui_write_command_data(0x0001, 0x003C);
-    gui_write_command_data(0x0002, 0x0100);
-    gui_write_command_data(0x0003, 0x1030);
-    gui_write_command_data(0x0008, 0x0808);
-    gui_write_command_data(0x000A, 0x0500);
-    gui_write_command_data(0x000B, 0x0000);
-    gui_write_command_data(0x000C, 0x0770);
-    gui_write_command_data(0x000D, 0x0000);
-    gui_write_command_data(0x000E, 0x0001);
-    gui_write_command_data(0x0011, 0x0406);
-    gui_write_command_data(0x0012, 0x000E);
-    gui_write_command_data(0x0013, 0x0222);
-    gui_write_command_data(0x0014, 0x0015);
-    gui_write_command_data(0x0015, 0x4277);
-    gui_write_command_data(0x0016, 0x0000);
-    gui_write_command_data(0x0030, 0x6A50);
-    gui_write_command_data(0x0031, 0x00C9);
-    gui_write_command_data(0x0032, 0xC7BE);
-    gui_write_command_data(0x0033, 0x0003);
-    gui_write_command_data(0x0036, 0x3443);
-    gui_write_command_data(0x003B, 0x0000);
-    gui_write_command_data(0x003C, 0x0000);
-    gui_write_command_data(0x002C, 0x6A50);
-    gui_write_command_data(0x002D, 0x00C9);
-    gui_write_command_data(0x002E, 0xC7BE);
-    gui_write_command_data(0x002F, 0x0003);
-    gui_write_command_data(0x0035, 0x3443);
-    gui_write_command_data(0x0039, 0x0000);
-    gui_write_command_data(0x003A, 0x0000);
-    gui_write_command_data(0x0028, 0x6A50);
-    gui_write_command_data(0x0029, 0x00C9);
-    gui_write_command_data(0x002A, 0xC7BE);
-    gui_write_command_data(0x002B, 0x0003);
-    gui_write_command_data(0x0034, 0x3443);
-    gui_write_command_data(0x0037, 0x0000);
-    gui_write_command_data(0x0038, 0x0000);
-    delay_ms(20);  // delay 20 ms
-    gui_write_command_data(0x0012, 0x200E);
-    delay_ms(160);  // delay 160 ms
-    gui_write_command_data(0x0012, 0x2003);
-    delay_ms(40);  // delay 40 ms
-
-    gui_write_command_data(WINDOW_XADDR_END, 0x013F);
-    gui_write_command_data(WINDOW_XADDR_START, 0x0000);
-    gui_write_command_data(WINDOW_YADDR_END, 0x01DF);
-    gui_write_command_data(WINDOW_YADDR_START, 0x0000);
-
-    gui_write_command_data(GRAM_ADR_ROW_S, 0x0000);
-    gui_write_command_data(GRAM_ADR_COL_S, 0x013F);
-    gui_write_command_data(0x0007, 0x0012);
-    delay_ms(40);  // delay 40 ms
-    gui_write_command_data(0x0007, 0x0017);
-}
-
-static void gui_setRectScreen(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
-{
-    gui_write_command_data(WINDOW_XADDR_START, y);
-    gui_write_command_data(WINDOW_XADDR_END, y+h-1);
-    gui_write_command_data(WINDOW_YADDR_START, x);
-    gui_write_command_data(WINDOW_YADDR_END, x+w-1);
-    gui_write_command_data(GRAM_ADR_ROW_S, x);
-    gui_write_command_data(GRAM_ADR_COL_S, y);
-
-    gui_write_command(0x22);
-}
-
-static void gui_setPos(uint16_t x, uint16_t y)
-{
-    gui_write_command_data(GRAM_ADR_ROW_S, x);
-    gui_write_command_data(GRAM_ADR_COL_S, y);
-
-    gui_write_command(0x22);
+    gui_ctrl_init();
 }
 
 void gui_fillScreen(Color color)
 {
     uint16_t i,j;
-    gui_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
+    gui_ctrl_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
 
     for (i=0; i<GUI_WIDTH; i++)
         for (j=0; j<GUI_HEIGHT; j++)
-            gui_write_data(color);
+            gui_ctrl_write_data(color);
 }
 
 /**
@@ -170,19 +46,19 @@ void gui_dispImage(uint16_t x, uint16_t y, const Picture *pic)
     //TODO: create warning if the image is too big
 
     // set rect image area space address
-    gui_setRectScreen(x, y, pic->width, pic->height);
+    gui_ctrl_setRectScreen(x, y, pic->width, pic->height);
 
     for (i=0; i<pic->width; i++)
     {
         for (j=0; j<pic->height; j++)
         {
-            gui_write_data(pic->data[addr]);
+            gui_ctrl_write_data(pic->data[addr]);
             ++addr;
         }
     }
 
     // restore full draw screen
-    gui_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
+    gui_ctrl_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
 }
 
 void gui_setPenColor(uint16_t color)
@@ -208,14 +84,14 @@ uint16_t gui_brushColor()
 void gui_drawPoint(uint16_t x, uint16_t y)
 {
     //uint16_t data;
-    gui_setPos(x, y);
+    gui_ctrl_setPos(x, y);
 
-    gui_write_data(_gui_penColor);
+    gui_ctrl_write_data(_gui_penColor);
     /*data=gui_read_data();
     data=gui_read_data();*/
 
     // warning fixme double pixel send
-    gui_write_data(_gui_penColor);
+    gui_ctrl_write_data(_gui_penColor);
 }
 
 void gui_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
@@ -305,15 +181,15 @@ void gui_drawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
     uint16_t i,j;
 
     // set rect image area space address
-    gui_setRectScreen(x, y, w, h);
+    gui_ctrl_setRectScreen(x, y, w, h);
 
     // fill this rect with brush color
     for (i=0; i<h; i++)
         for (j=0;j<w;j++)
-            gui_write_data(_gui_brushColor);
+            gui_ctrl_write_data(_gui_brushColor);
 
     // restore full draw screen
-    gui_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
+    gui_ctrl_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
 
     // draw border with pen color
     //gui_drawRect(x, y, w, h);
@@ -377,12 +253,12 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
     }
 
     // windows text size
-    gui_setRectScreen(x, y, w, h);
+    gui_ctrl_setRectScreen(x, y, w, h);
 
     // xstartdec
     for(j = 0; j < xstartdec; j++)
         for(i = 0; i < h; i++)
-            gui_write_data(_gui_brushColor);
+            gui_ctrl_write_data(_gui_brushColor);
 
     // writting pixels chars
     c = txt;
@@ -395,7 +271,7 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
             for(j = 0; j < letter->width; j++)
             {
                 for(i = 0; i < ystartdec; i++)
-                    gui_write_data(_gui_brushColor);
+                    gui_ctrl_write_data(_gui_brushColor);
                 for(i = 0; i < _gui_font->height; i++)
                 {
                     if ((i&0x0007) == 0)
@@ -404,13 +280,13 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
                         octet++;
                     }
                     if ((letter->data[octet]) & bit)
-                        gui_write_data(_gui_penColor);
+                        gui_ctrl_write_data(_gui_penColor);
                     else
-                        gui_write_data(_gui_brushColor);
+                        gui_ctrl_write_data(_gui_brushColor);
                     bit = bit << 1;
                 }
                 for(i = 0; i < yenddec; i++)
-                    gui_write_data(_gui_brushColor);
+                    gui_ctrl_write_data(_gui_brushColor);
             }
         }
         c++;
@@ -419,10 +295,10 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
     // xenddec
     for(j = 0; j < xenddec; j++)
         for(i = 0; i < h; i++)
-            gui_write_data(_gui_brushColor);
+            gui_ctrl_write_data(_gui_brushColor);
 
     // restore full draw screen
-    gui_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
+    gui_ctrl_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
 }
 
 void gui_setFont(const Font *font)

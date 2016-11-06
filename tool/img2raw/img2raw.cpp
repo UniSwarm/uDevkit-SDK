@@ -37,12 +37,12 @@ void exportImage(const QImage& image, const QString& filename)
     QTextStream stream(&file);
 
     //starting preprocessor instructions
-    stream << "#include <pictures.h>" << endl;
+    stream << "#include <gui/picture.h>" << endl;
     stream << endl;
 
     //creating an array containnig the image data
     stream << "//an array containnig the image data" << endl;
-    stream << "__prog__ const uint16_t " << finfo.baseName() << "_data[] __attribute__((space(prog))) = {";
+    stream << "__prog__ const uint16_t " << finfo.baseName() << "_data[] __space_prog__ = {";
 
     QImage mirrored = image.mirrored(false,false);
 

@@ -2,9 +2,11 @@ ifndef GUI_MODULE
 GUI_MODULE=
 
 vpath %.c $(MODULEPATH)
+vpath %.c $(MODULEPATH)/screenController
 
 HEADER += gui.h
-ARCHI_SRC += gui.c
+SRC += gui.c
+ARCHI_SRC += screenController/d51e5ta7601.c
 SIM_SRC += gui_sim.c
 
 ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic30 dspic33fj dspic33ep dspic33ev))
