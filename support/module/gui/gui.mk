@@ -81,12 +81,10 @@ fonts.h: Makefile
 
 #.PHONY : $(FONTS_C)
 $(OUT_PWD)/%.font.o : $(OUT_PWD)/%.font.c
-$(OUT_PWD)/%.font.c : FORCE $(IMG2RAW_EXE)
+$(OUT_PWD)/%.font.c : $(IMG2RAW_EXE)
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(IMG2RAW_EXE) -i $* -o  $(OUT_PWD)/$(notdir $@)
-
-FORCE : 
 	
 .SECONDARY: $(PICTURES_C) $(FONTS_C)
 
