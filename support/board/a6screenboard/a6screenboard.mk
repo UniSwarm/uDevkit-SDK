@@ -4,4 +4,5 @@ ARCHI = dspic33ep
 
 vpath %.c $(dir $(lastword $(MAKEFILE_LIST)))
 
-SRC += fuses.c a6screenboard.c
+SRC += a6screenboard.c
+ARCHI_SRC += fuses.c

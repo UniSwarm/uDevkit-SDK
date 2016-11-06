@@ -11,6 +11,10 @@
 #ifndef A6SCREENBOARD_H
 #define A6SCREENBOARD_H
 
+#ifndef SIMULATOR
+ #include <xc.h>
+#endif
+
 int init_board();
 
 #define BOARD_NAME "a6screenboard"

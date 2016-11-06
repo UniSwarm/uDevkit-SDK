@@ -10,10 +10,9 @@
 
 #include "a6screenboard.h"
 
-#include <xc.h>
-
 int init_io()
 {
+#ifndef SIMULATOR
     ANSELB = 0x0000;            // all analog inputs of port B as digital buffer
     ANSELD = 0x0000;            // all analog inputs of port D as digital buffer
     ANSELE = 0x0000;            // all analog inputs of port E as digital buffer
@@ -50,7 +49,7 @@ int init_io()
 
     // Lock configuration pin
     OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 1;
-
+#endif
     return 0;
 }
 
