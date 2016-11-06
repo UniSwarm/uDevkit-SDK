@@ -7,7 +7,8 @@ OUT_PWD = build
 DRIVERS += a6
 MODULES += gui
 
-SRC += main.c courier8b.c
+SRC += main.c
+FONTS += courier12b
 
 PICTURES += picture.png
 

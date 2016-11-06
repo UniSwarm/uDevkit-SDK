@@ -23,6 +23,7 @@ $(IMG2RAW_EXE): $(RTPROG)/tool/img2raw/img2raw.cpp $(RTPROG)/tool/img2raw/img2ra
 	@echo "Building img2raw..."
 	cd $(RTPROG)/tool/img2raw/ && make
 
+################ IMAGE SUPPORT ################
 # rule to build image to OUT_PWD/*.c
 $(OUT_PWD)/%.png.c : %.png pictures.h $(IMG2RAW_EXE)
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
@@ -65,6 +66,28 @@ pictures.h: Makefile
 
 $(OUT_PWD)/%.o : pictures.h
 
-.SECONDARY: $(PICTURES_C)
+################ FONT SUPPORT ################
+FONTS_C := $(addprefix $(OUT_PWD)/, $(addsuffix .font.c, $(FONTS)))
+SRC += $(FONTS_C)
+
+main.c: fonts.h
+fonts.h: Makefile
+	@echo "generate fonts.h..."
+	@printf "#ifndef _FONTS_\n#define _FONTS_\n\n\
+	#include <stdint.h>\n#include <gui/font.h>\n\
+	$(foreach FONT,$(FONTS),\nextern const Font $(FONT);)\n\n\
+	#endif //_FONTS_\
+	" > fonts.h
+
+#.PHONY : $(FONTS_C)
+$(OUT_PWD)/%.font.o : $(OUT_PWD)/%.font.c
+$(OUT_PWD)/%.font.c : FORCE $(IMG2RAW_EXE)
+	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
+	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	$(VERB)$(IMG2RAW_EXE) -i $* -o  $(OUT_PWD)/$(notdir $@)
+
+FORCE : 
+	
+.SECONDARY: $(PICTURES_C) $(FONTS_C)
 
 endif

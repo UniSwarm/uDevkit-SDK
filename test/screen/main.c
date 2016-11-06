@@ -6,7 +6,7 @@
 #include <stdint.h>
 
 #include "pictures.h"
-extern const Font core12b;
+#include "fonts.h"
 
 int main(void)
 {
@@ -58,7 +58,7 @@ int main(void)
 
 
 	//Drawing text
-    gui_setFont(&core12b);
+    gui_setFont(&courier12b);
     gui_drawText(100, 100, "It seems to work !!! <3");
 
     //displaying ar1000 responses
