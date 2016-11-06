@@ -13,8 +13,11 @@
 
 #include <stdint.h>
 
-#ifndef XC16
+#ifdef XC16
+  #define __space_prog__ __attribute__((space(prog)))
+#else
   #define __prog__
+  #define __space_prog__
 #endif
 
 /**
