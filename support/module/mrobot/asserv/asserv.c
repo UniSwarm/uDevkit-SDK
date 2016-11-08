@@ -23,7 +23,7 @@
 void setup_timer1()
 {
     T1CON  = 0b1000000000100000;    // FCY / 64
-    PR1 = 938;          // 500Hz
+    PR1 = 938;          // 1kHz
     IEC0bits.T1IE = 1;
 }
 // TODO/>
