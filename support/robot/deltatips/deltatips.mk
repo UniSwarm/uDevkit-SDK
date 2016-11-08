@@ -3,5 +3,6 @@
 BOARD ?= rtboard
 
 vpath %.c $(dir $(lastword $(MAKEFILE_LIST)))
+MODULES += mrobot
 
 SRC += deltatips.c

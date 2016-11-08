@@ -8,7 +8,8 @@ OUT_PWD = build
 
 # CCFLAGS += -pedantic
 
-DRIVERS += timer uart esp8266 ax12 adc sharp a6 asserv i2c pwm
+DRIVERS += timer uart esp8266 ax12 adc sharp a6 i2c pwm
+MODULES += mrobot
 
 SRC += main.c
 

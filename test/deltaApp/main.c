@@ -18,8 +18,8 @@ unsigned char step = 2;
 
 int main(void)
 {
-	unsigned int i, j, byte_read, end=0;
-    uint16_t status, value_x, value_y, value_z;
+	unsigned int i, j;
+    uint16_t value_x, value_y, value_z;
 	rt_dev_t uartDbg;
 	rt_dev_t i2c;
     rt_dev_t usb_serial;
@@ -37,12 +37,10 @@ int main(void)
 	esp_init();
 	ax12_init();
     a6_init();
+    
+    mrobot_init();
 
 	adc_init();
-    asserv_init();
-    motor_init();
-    asserv_setCoderEntrax(195.0);
-    asserv_setCoderStep(0.00849123461395001864975755315181); // 72.5mm wheel
 
 	// uart debug init
 	uartDbg = uart_getFreeDevice();
@@ -67,7 +65,7 @@ int main(void)
 
     /*motor_setPower(1, 200);
     motor_setPower(2, 200);*/
-    asserv_goTo(pos[0], pos[1]);
+    //asserv_goTo(pos[0], pos[1]);
 
     j=0;
 	while(1)
@@ -75,19 +73,19 @@ int main(void)
 		usb_serial_task();
         for(i=0;i<65000;i++);
 
-        if(asserv_getDistance() <= 15.0)
+        /*if(asserv_getDistance() <= 15.0)
         {
             for(j=0;j<10;j++) for(i=0;i<65000;i++);
             step += 2;
             if(step > 6)
                 step = 0;
             asserv_goTo(pos[step], pos[step+1]);
-        }
+        }*/
 
 		value = sharp_convert(adc_getValue(24), FarSharp);	// AnS1
 		/*value = adc_getValue(25);	// AnS2*/
 		value2 = sharp_convert(adc_getValue(26), FarSharp);	// AnS3
-		ax12_moveTo(1, value, 512, 512);
+		//ax12_moveTo(1, value, 512, 512);
 
         if(value < 150 || value2 < 150)
             asserv_setSpeed(0);
