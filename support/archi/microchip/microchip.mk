@@ -17,6 +17,8 @@ $(OUT_PWD)/$(PROJECT).hex : build/$(PROJECT).elf
 elf : $(OUT_PWD)/$(PROJECT).elf
 hex : $(OUT_PWD)/$(PROJECT).hex
 
+CCFLAGS_XC += -mno-eds-warn
+
 # rule to build OBJECTS to OUT_PWD and give dependencies
 $(OUT_PWD)/%.o : %.c
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
@@ -42,4 +44,4 @@ dbg : $(OUT_PWD)/$(PROJECT).elf
 
 # shows a disassembly listing of the symbol after the dot
 dbg.% : $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)xc16-objdump -S $(OUT_PWD)/$(PROJECT).elf |sed -n -e '/<_*$*>:/,/<_.*>/ p'
+	$(VERB)xc16-objdump -S $(OUT_PWD)/$(PROJECT).elf |sed -n -e '/^[a-f0-9]\+ <_*$*>:/,/^[a-f0-9]\+ <_.*>:/ p'
