@@ -8,6 +8,6 @@ vpath %.c $(DRIVERPATH)
 INCLUDEPATH:= $(INCLUDEPATH) -I$(DRIVERPATH)
 
 HEADER += usb_serial.h
-SRC += usb_serial.c usb_descriptors.c usb_device_cdc.c
+ARCHI_SRC += usb_serial.c usb_descriptors.c usb_device_cdc.c
 
 endif
