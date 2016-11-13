@@ -13,20 +13,27 @@
 
 #include "driver/device.h"
 
-#if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33fj)
-#include "qei_dspic.h"
+// ======= specific include =======
+#if defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj)
+ #include "qei_pic24f_dspic30f_dspic33f.h"
+#elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
+ #include "qei_pic24e_dspic33e.h"
 #else
-#error Unsuported ARCHI
+ #warning Unsuported ARCHI
 #endif
 
+// ====== device assignation ======
 rt_dev_t qei_getFreeDevice();
 void qei_releaseDevice(rt_dev_t device);
 
+// ==== device enable/disable =====
 int qei_enable(rt_dev_t device);
 int qei_disable(rt_dev_t device);
 
+// ======== device settings =======
 int qei_setConfig(rt_dev_t device, uint16_t config);
 
+// ======= device write/read ======
 #ifdef QEI_32B
 uint32_t qei_getValue(rt_dev_t device);
 int qei_setHomeValue(rt_dev_t device, uint32_t config);
