@@ -12,7 +12,6 @@
 
 #include "motor.h"
 #include "driver/adc.h"
-#include "board.h"
 
 // <TODO replace theses functions by pwm support
 #ifdef M1A
@@ -79,9 +78,13 @@ int motor_init()
     return 0;
 }
 
-int motor_setPower(uint8_t motor, int16_t power)
+int motor_setPower(rt_dev_t device, int16_t power)
 {
     int16_t pwm = power;
+    uint8_t motor = MINOR(device);
+    if (motor >= MOTOR_COUNT)
+        return -1;
+
     if(pwm>1500)
         pwm = 1500;
     if(pwm<-1500)
@@ -160,10 +163,13 @@ int motor_setPower(uint8_t motor, int16_t power)
     return 0;
 }
 
-int16_t motor_getCurrent(uint8_t motor)
+int16_t motor_getCurrent(rt_dev_t device)
 {
     int8_t channel;
     int16_t value;
+    uint8_t motor = MINOR(device);
+    if (motor >= MOTOR_COUNT)
+        return -1;
 
     switch(motor)
     {
