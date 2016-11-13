@@ -15,11 +15,16 @@
  #include <xc.h>
 #endif
 
-int init_board();
+int board_init();
 
 #define BOARD_NAME "a6screenboard"
 
 // ==== pins define ====
+// leds
+#define LED_COUNT 0
+#define board_setLed(led, state) (-1)
+#define board_getLed(led) (-1)
+
 // screen
 #define SCREEN_PORT_OUT     LATB
 #define SCREEN_PORT_OUTPUT  (TRISB = 0)

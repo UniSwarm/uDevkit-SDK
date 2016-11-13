@@ -14,8 +14,10 @@
 #ifndef SIMULATOR
  #include <xc.h>
 #endif
+
+#include <stdint.h>
  
-int init_board();
+int board_init();
 
 #define BOARD_NAME "swarmtips"
 
@@ -25,8 +27,11 @@ int init_board();
 #define BOARD_VOLT_IN 8 // RB8		// analog board voltage channel
 
 // leds
-#define LED LATBbits.LATB3
+#define LED_COUNT 3
+#define LED1 LATBbits.LATB3
 #define LED2 LATDbits.LATD11
+int board_setLed(uint8_t led, uint8_t state);
+int8_t board_getLed(uint8_t led);
 
 // motors pins
 #define M1A LATEbits.LATE4          // A pin direction

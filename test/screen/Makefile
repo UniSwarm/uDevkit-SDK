@@ -8,7 +8,7 @@ DRIVERS += a6
 MODULES += gui
 
 SRC += main.c
-FONTS += courier12b
+FONTS += core12b core18b
 
 PICTURES += picture.png
 

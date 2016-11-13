@@ -17,7 +17,7 @@ int main(void)
 	char buff[100];
 
 	sysclock_setClock(120000000);
-	init_board();
+	board_init();
 
 	// warning keep this init order before remap support
 	esp_init();
@@ -27,7 +27,7 @@ int main(void)
 	adc_init();
     asserv_init();
 
-    LED2 = 1;
+    board_setLed(1, 1);
 
 	// uart debug init
 	uartDbg = uart_getFreeDevice();
@@ -61,11 +61,12 @@ int main(void)
 	while(1)
 	{
 		for(j=0;j<5;j++) for(i=0;i<65000;i++);
-		LED = 0;
+        board_setLed(0, 0);
+    board_setLed(2, 1);
     LED3 = 1;
 		for(j=0;j<5;j++) for(i=0;i<65000;i++);
-		LED = 1;
-    LED3 = 0;
+        board_setLed(0, 1);
+    board_setLed(2, 0);
 
 		/*value = adc_getValue(24);	// AnS1
 		value = adc_getValue(25);	// AnS2*/

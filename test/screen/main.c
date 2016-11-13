@@ -8,6 +8,8 @@
 #include "pictures.h"
 #include "fonts.h"
 
+#include <gui/widget.h>
+
 int main(void)
 {
 	unsigned int i,j;
@@ -15,7 +17,7 @@ int main(void)
     size_t size;
 
 	sysclock_setClock(120000000);
-	init_board();
+	board_init();
 
 	// a6 init
     a6_init();
@@ -58,8 +60,12 @@ int main(void)
 
 
 	//Drawing text
-    gui_setFont(&courier12b);
+    gui_setFont(&core12b);
     gui_drawText(100, 100, "It seems to work !!! <3");
+    gui_setFont(&core18b);
+    gui_drawText(100, 150, "It seems to work !!! <3");
+
+    //widget_addButton(50, 200, 150, 50);
 
     //displaying ar1000 responses
     // gui_drawText(100, 150, "response: ");

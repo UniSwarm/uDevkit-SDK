@@ -28,16 +28,16 @@ int main(void)
 	uint8_t acc[8];
 
 	sysclock_setClock(120000000);
-	init_board();
+	board_init();
 
 	usb_serial = usb_serial_getFreeDevice();
-    LED = 1;
+    board_setLed(0, 1);
 
 	// warning keep this init order before remap support
 	esp_init();
 	ax12_init();
     a6_init();
-    
+
     mrobot_init();
 
 	adc_init();

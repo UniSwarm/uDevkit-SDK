@@ -3,20 +3,10 @@
 
 #include "cmd_stdio.h"
 
-#if   defined(LED3)
-    #define LED_COUNT 3
-#elif defined(LED2)
-    #define LED_COUNT 2
-#elif defined(LED)
-    #define LED_COUNT 1
-#else
-    #define LED_COUNT 0
-#endif
-
 int cmd_led(int argc, char **argv)
 {
     char ledid = 255;
-    char status;
+    char status = 0;
 
     if(argc < 2)
         return 1;
@@ -33,24 +23,7 @@ int cmd_led(int argc, char **argv)
     // led status > led <led-id>
     if(argc == 2)
     {
-        switch(ledid)
-        {
-#if LED_COUNT>=1
-        case 0:
-            status = LED;
-            break;
-#endif
-#if LED_COUNT>=2
-        case 1:
-            status = LED2;
-            break;
-#endif
-#if LED_COUNT>=3
-        case 2:
-            status = LED3;
-            break;
-#endif
-        }
+        status = board_getLed(ledid);
         if(status == 1)
             puts("LED is on");
         else
@@ -65,25 +38,10 @@ int cmd_led(int argc, char **argv)
     else
         status = 0;
 
-    switch(ledid)
-    {
-#if LED_COUNT>=1
-    case 0:
-        LED = status;
-        break;
-#endif
-#if LED_COUNT>=2
-    case 1:
-        LED2 = status;
-        break;
-#endif
-#if LED_COUNT>=3
-    case 2:
-        LED3 = status;
-        break;
-#endif
-    }
-    puts("ok");
+    if(board_setLed(ledid, status) == 0)
+        puts("ok");
+    else
+        puts("invalid");
 
     return 0;
 }

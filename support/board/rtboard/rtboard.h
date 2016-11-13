@@ -4,7 +4,7 @@
  * @copyright Robotips 2016
  *
  * @date April 11, 2016, 06:07 PM
- * 
+ *
  * @brief Definitions for RTboard from Robotips
  */
 
@@ -14,15 +14,20 @@
 #ifndef SIMULATOR
  #include <xc.h>
 #endif
- 
-int init_board();
+
+#include <stdint.h>
+
+int board_init();
 
 #define BOARD_NAME "rtboard"
 #define SYSCLOCK_XTAL 8000000
 
 // ==== pins define ====
 // leds
-#define LED LATDbits.LATD11
+#define LED_COUNT 1
+#define LED1 LATDbits.LATD11
+int board_setLed(uint8_t led, uint8_t state);
+int8_t board_getLed(uint8_t led);
 
 // voltage measurement
 #define BOARD_VOLT_IN 2 // RB2		// analog board voltage channel

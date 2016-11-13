@@ -10,7 +10,11 @@
 
 #include "rtboard1_1.h"
 
-int init_io()
+#ifdef SIMULATOR
+uint8_t board_led_state = 0;
+#endif
+
+int board_init_io()
 {
 #ifndef SIMULATOR
     // analog inputs
@@ -75,10 +79,42 @@ int init_io()
     return 0;
 }
 
-int init_board()
+int board_init()
 {
-    init_io();
+    board_init_io();
 
     return 0;
 }
 
+int board_setLed(uint8_t led, uint8_t state)
+{
+    if(led >= LED_COUNT)
+        return -1;
+#ifndef SIMULATOR
+    if(led == 0)
+        LED1 = state;
+#else
+    if(state == 1)
+    {
+        printf("LED %d on", led);
+        board_led_state |= (1 << led)
+    }
+    else
+    {
+        printf("LED %d off", led);
+        board_led_state &= !(1 << led)
+    }
+#endif
+    return 0;
+}
+
+int8_t board_getLed(uint8_t led)
+{
+    if(led >= LED_COUNT)
+        return -1;
+#ifndef SIMULATOR
+    return LED1;
+#else
+    return board_led_state & (!(1 << led));
+#endif
+}

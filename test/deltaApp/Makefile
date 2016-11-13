@@ -6,8 +6,8 @@ OUT_PWD = build
 
 # CCFLAGS += -pedantic
 
-DRIVERS += uart esp8266 ax12 adc sharp a6 i2c usb_serial spi
-MODULES += cmdline
+DRIVERS += uart esp8266 ax12 adc sharp a6 i2c usb_serial spi nvm
+MODULES += cmdline # fs
 
 SRC += main.c
 

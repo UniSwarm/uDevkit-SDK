@@ -10,7 +10,7 @@
 
 #include "a6screenboard.h"
 
-int init_io()
+int board_init_io()
 {
 #ifndef SIMULATOR
     ANSELB = 0x0000;            // all analog inputs of port B as digital buffer
@@ -53,9 +53,9 @@ int init_io()
     return 0;
 }
 
-int init_board()
+int board_init()
 {
-    init_io();
+    board_init_io();
 
     return 0;
 }

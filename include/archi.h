@@ -47,7 +47,8 @@
 #if defined(SIMULATOR)
  #include "../support/archi/simulator/simulator.h"
 
- #define init_board() init_board(); simulator_init()
+ #define board_init() board_init(); simulator_init()
+ #define robot_init() robot_init(); simulator_init()
 #endif
 
 #endif // ARCHI_H

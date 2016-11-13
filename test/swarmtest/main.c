@@ -204,11 +204,11 @@ int main(void)
 	char buff[100];
 
 	sysclock_setClock(120000000);
-	init_board();
+	board_init();
 
 	// warning keep this init order before remap support
 	esp_init();
-    LED2 = 1;
+    board_setLed(1, 1);
 
 	adc_init();
 
@@ -309,12 +309,12 @@ int main(void)
         writeReg(0x0015, 0x07);
         if(value > 50)
         {
-            LED2 = 1;
+            board_setLed(1, 1);
             _T1IE = 1;
         }
         else
         {
-            LED2 = 0;
+            board_setLed(1, 0);
             _T1IE = 0;
         }
 
@@ -340,7 +340,7 @@ void __attribute__((__interrupt__, __auto_psv__)) _T1Interrupt(void)
     switch(step)
     {
     case 0:
-		LED = 0;
+        board_setLed(0, 0);
         setM1A(MMAX2);
         setM1B(MMAX2);
         setM2A(MMAX2);
@@ -369,7 +369,7 @@ void __attribute__((__interrupt__, __auto_psv__)) _T1Interrupt(void)
         break;
 
     case 4:
-		LED = 1;
+        board_setLed(0, 1);
         setM1A(-MMAX2);
         setM1B(-MMAX2);
         setM2A(-MMAX2);

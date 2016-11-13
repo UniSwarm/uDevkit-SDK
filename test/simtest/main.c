@@ -15,7 +15,7 @@ int main(void)
 	char buff[100];
 
 	sysclock_setClock(120000000);
-    init_board();
+    board_init();
 
 	// uart debug init
 	uartDbg = uart_getFreeDevice();

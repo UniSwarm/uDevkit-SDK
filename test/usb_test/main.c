@@ -18,7 +18,7 @@ int main(void)
 	char buff[256];
 
 	sysclock_setClock(120000000);
-	init_board();
+	board_init();
 
 	usb_serial = usb_serial_getFreeDevice();
 

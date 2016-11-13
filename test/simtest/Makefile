@@ -1,7 +1,7 @@
 RTPROG = ../..
 
 PROJECT = simtest
-BOARD = rtboard
+BOARD = a6screenboard
 OUT_PWD = build
 
 DRIVERS += uart
