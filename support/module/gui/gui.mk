@@ -5,7 +5,7 @@ vpath %.c $(MODULEPATH)
 vpath %.c $(MODULEPATH)/screenController
 
 HEADER += gui.h
-SRC += gui.c
+SRC += gui.c widget.c
 ARCHI_SRC += screenController/d51e5ta7601.c
 SIM_SRC += gui_sim.c
 
