@@ -3,10 +3,8 @@
 #include <stdint.h>
 
 #include "modules.h"
-#include "board.h"
+#include "robot.h"
 #include "archi.h"
-
-#include "driver/motor.h"
 
 unsigned int pos[] = {
     1500, 1000,
@@ -26,9 +24,10 @@ int main(void)
 	uint16_t value, value2;
 	char buff[200];
 	uint8_t acc[8];
+    MrobotPose pose;
 
 	sysclock_setClock(120000000);
-	board_init();
+	robot_init();
 
 	usb_serial = usb_serial_getFreeDevice();
     board_setLed(0, 1);
@@ -37,8 +36,6 @@ int main(void)
 	esp_init();
 	ax12_init();
     a6_init();
-
-    mrobot_init();
 
 	adc_init();
 
@@ -59,12 +56,12 @@ int main(void)
 
     i2c_writereg(i2c, 0x38, 0x2A, 0x01, I2C_REG8 | I2C_REGADDR8);
 
-    asserv_setPos(1500, 1000, 0);
-    asserv_setSpeed(20);
-    asserv_setMode(Asserv_Mode_Linear);
+    pose.x = 1500;
+    pose.y = 1000;
+    pose.t = 0;
+    mrobot_setPose(pose);
+    //mrobot_setMode(Asserv_Mode_Linear);
 
-    /*motor_setPower(1, 200);
-    motor_setPower(2, 200);*/
     //asserv_goTo(pos[0], pos[1]);
 
     j=0;
@@ -88,9 +85,9 @@ int main(void)
 		//ax12_moveTo(1, value, 512, 512);
 
         if(value < 150 || value2 < 150)
-            asserv_setSpeed(0);
+            mrobot_pause();
         else
-            asserv_setSpeed(20);
+            mrobot_restart();
 
         i2c_readregs(i2c, 0x38, 0x00, acc, 7, I2C_REG8 | I2C_REGADDR8);
         if(acc[0] & 0x08)
@@ -100,12 +97,13 @@ int main(void)
             value_z = acc[5];
         }
 
+        pose = mrobot_pose();
 		sprintf(buff, "d1:%d\td2:%d\tx: %d\ty:%d\tt:%d\tacx:%d\tacy:%d\tacz:%d\r\n",
 				value,
 				value2,
-				(int)asserv_getXPos(),
-				(int)asserv_getYPos(),
-				(int)asserv_getTPos(),
+				(int)pose.x,
+				(int)pose.y,
+				(int)pose.t,
                 value_x, value_y, value_z
 				);
 

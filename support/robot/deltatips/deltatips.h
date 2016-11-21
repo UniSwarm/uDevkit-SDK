@@ -8,14 +8,14 @@
  * @brief Definitions for deltaTips robot from Robotips
  */
 
-#ifndef RTBOARD_H
-#define RTBOARD_H
+#ifndef DELTATIPS_H
+#define DELTATIPS_H
 
 #include "board.h"
 
-int init_robot();
+int robot_init();
 
 #define ROBOT_NAME "deltaTips"
 
 
-#endif // RTBOARD_H
+#endif // DELTATIPS_H

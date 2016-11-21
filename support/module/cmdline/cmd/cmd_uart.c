@@ -85,8 +85,8 @@ int cmd_uart(int argc, char **argv)
     // == write > uart <uart-id> write <data-to-write>
     if(strcmp(argv[2], "write")==0)
     {
-        uart_write(uart_dev, argv[3], strlen(argv[3]));
-        puts("ok");
+        size_t written = uart_write(uart_dev, argv[3], strlen(argv[3]));
+        printf("ok %d data written\r\n", written);
         return 0;
     }
     // == setbs > uart <uart-id> setbs <baud-speed>

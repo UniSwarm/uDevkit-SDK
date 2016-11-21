@@ -8,7 +8,11 @@
  * @brief Support for motor control with positionning
  */
 
-#include <xc.h>
+#ifndef SIMULATOR
+  #include <xc.h>
+#else
+  #include "simulator.h"
+#endif
 
 #include "board.h"
 #include "asserv.h"
@@ -20,12 +24,21 @@
 #include <string.h>
 
 // <TODO replace theses functions by time/tasks support
-void setup_timer1()
+#ifndef SIMULATOR
+void setup_timer()
 {
     T1CON  = 0b1000000000100000;    // FCY / 64
     PR1 = 938;          // 1kHz
     IEC0bits.T1IE = 1;
 }
+#else
+pthread_t thread_asserv_timer;
+static void * asserv_timer (void * p_data);
+void setup_timer()
+{
+    pthread_create (&thread_asserv_timer, NULL, asserv_timer, NULL );
+}
+#endif
 // TODO/>
 
 #include <math.h>
@@ -69,27 +82,36 @@ long int v1, v2;
 
 int asserv_init()
 {
-    coder1 = qei_getFreeDevice();
-    qei_setConfig(coder1, 0);
-    qei_enable(coder1);
-
-    coder2 = qei_getFreeDevice();
-    qei_setConfig(coder2, 0);
-    qei_enable(coder2);
-
-    setup_timer1();
+    setup_timer();
 
     return 0;
 }
 
-void asserv_setCoderEntrax(float entrax)
+void asserv_setCoderGeometry(float entrax, float stepLenght)
 {
     asserv_loc_coderentrax = entrax;
+    asserv_loc_coderstep = stepLenght;
 }
 
-void asserv_setCoderStep(float stepLenght)
+float asserv_entrax()
 {
-    asserv_loc_coderstep = stepLenght;
+    return asserv_loc_coderentrax;
+}
+
+float asserv_stepLenght()
+{
+    return asserv_loc_coderstep;
+}
+
+void asserv_setCoderDev(rt_dev_t leftCoder_dev, rt_dev_t rightCoder_dev)
+{
+    coder1 = leftCoder_dev;
+    qei_setConfig(coder1, 0);
+    qei_enable(coder1);
+
+    coder2 = rightCoder_dev;
+    qei_setConfig(coder2, 0);
+    qei_enable(coder2);
 }
 
 long int c1, c2;
@@ -118,7 +140,7 @@ void asserv_locTask()
     ancv2 = v2;
 }
 
-void asserv_goTo(int32_t x, int32_t y)
+void asserv_setDest(int32_t x, int32_t y)
 {
     asserv_xf = x;
     asserv_yf = y;
@@ -154,6 +176,11 @@ int16_t asserv_speed()
         return -asserv_mspeed;
     else
         return asserv_mspeed;
+}
+
+int16_t asserv_currentSpeed()
+{
+    return (v1 + v2) / 2;
 }
 
 void asserv_setPid(uint16_t kp, uint16_t ki, uint16_t kd)
@@ -437,6 +464,7 @@ void asserv_controlTask()
 }
 
 // <TODO replace theses functions by time/tasks support
+#ifndef SIMULATOR
 void __attribute__ ((interrupt,no_auto_psv)) _T1Interrupt(void)
 {
     asserv_locTask();
@@ -444,13 +472,25 @@ void __attribute__ ((interrupt,no_auto_psv)) _T1Interrupt(void)
 
     IFS0bits.T1IF = 0;
 }
+#else
+static void * asserv_timer (void * p_data)
+{
+    while (1)
+    {
+        psleep(100);
+        asserv_locTask();
+        asserv_controlTask();
+    }
+    return NULL;
+}
+#endif
 // TODO/>
 
 void asserv_setPos(float x, float y, float t)
 {
     asserv_x = x;
     asserv_y = y;
-    asserv_t = t / 180.0 * M_PI;
+    asserv_t = t;
     td = asserv_t;
 }
 
@@ -466,7 +506,7 @@ float asserv_getYPos()
 
 float asserv_getTPos()
 {
-    return (180.0 * asserv_t / M_PI);
+    return asserv_t;
 }
 
 float asserv_getDistance()

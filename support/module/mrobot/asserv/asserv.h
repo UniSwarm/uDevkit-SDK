@@ -15,9 +15,10 @@
 
 // ======= init and settings =======
 int asserv_init();
-void asserv_setCoderEntrax(float entrax);
-void asserv_setCoderStep(float stepLenght);
-void asserv_setCoders();
+void asserv_setCoderGeometry(float entrax, float stepLenght);
+float asserv_entrax();
+float asserv_stepLenght();
+void asserv_setCoderDev(rt_dev_t leftCoder_dev, rt_dev_t rightCoder_dev);
 
 void asserv_setPid(uint16_t kp, uint16_t ki, uint16_t kd);
 uint16_t asserv_getP();
@@ -46,12 +47,13 @@ typedef enum
 } Asserv_Mode;
 void asserv_setMode(Asserv_Mode mode);
 
-void asserv_goTo(int32_t x, int32_t y);
+void asserv_setDest(int32_t x, int32_t y);
 int32_t asserv_xDest();
 int32_t asserv_yDest();
 float asserv_getDistance();
 void asserv_setSpeed(int16_t speed);
 int16_t asserv_speed();
+int16_t asserv_currentSpeed();
 // http://stackoverflow.com/questions/1472138/c-default-arguments
 
 // ====== localisation status ======
