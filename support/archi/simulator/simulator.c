@@ -11,6 +11,7 @@
 #include "simulator.h"
 
 #include "simulator_socket.h"
+#include "simulator_pthread.h"
 
 #include <signal.h>
 #include <string.h>
@@ -22,6 +23,7 @@ void simulator_init()
     signal(SIGTERM, simulator_end);
 
     simulator_socket_init();
+    simulator_pthread_init();
 }
 
 void simulator_end()

@@ -14,6 +14,9 @@
 #include <stdint.h>
 #include <driver/device.h>
 
+#include "simulator_socket.h"
+#include "simulator_pthread.h"
+
 void simulator_init();
 void simulator_end();
 void simulator_send(uint16_t moduleId, uint16_t functionId, const char *data, size_t size);

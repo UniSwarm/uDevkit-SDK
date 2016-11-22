@@ -2,10 +2,11 @@
 # SIM_EXE cmd
 ifeq ($(OS),Windows_NT)
   SIM_EXE := $(PROJECT).exe
-  DEFINES_SIM += -lws2_32
+  LIBS_SIM += -lws2_32
   RTSIM_EXE := $(RTPROG)/bin/rtsim.exe
 else
   SIM_EXE := $(PROJECT)_sim
+  LIBS_SIM += -pthread
   RTSIM_EXE := $(RTPROG)/bin/rtsim
 endif
 
@@ -18,7 +19,7 @@ DEFINES_SIM += -D SIMULATOR -I $(SIMULATOR_PATH)
 
 vpath %.c $(SIMULATOR_PATH)
 vpath %.c $(OUT_PWD)
-SIM_SRC += simulator.c simulator_socket.c
+SIM_SRC += simulator.c simulator_socket.c simulator_pthread.c
 
 # simulator support
 SIM_OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=_simo.o) $(SIM_SRC:.c=_simo.o)))
@@ -32,7 +33,7 @@ $(OUT_PWD)/%_simo.o : %.c
 # rule to link SIM_OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(SIM_EXE) : $(SIM_OBJECTS)
 	@printf "LD %-36s => %s\n" "*.o" $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)gcc $(CCFLAGS) -o $(OUT_PWD)/$(SIM_EXE) $(addprefix $(OUT_PWD)/,$(notdir $(SIM_OBJECTS))) $(DEFINES_SIM) -lm
+	$(VERB)gcc $(CCFLAGS) $(LIBS_SIM) -o $(OUT_PWD)/$(SIM_EXE) $(addprefix $(OUT_PWD)/,$(notdir $(SIM_OBJECTS))) $(DEFINES_SIM) -lm
 
 sim : $(OUT_PWD)/$(SIM_EXE) $(RTSIM_EXE)
 	$(RTSIM_EXE) &

@@ -1,0 +1,38 @@
+/**
+ * @file simulator_pthread.h
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016
+ *
+ * @date November 12, 2016, 22:11 PM
+ *
+ * @brief PThread support for testing purpose (windows and linux cross-platforms)
+ *
+ * Widely inspired by http://franckh.developpez.com/tutoriels/posix/pthreads/
+ */
+
+#ifndef SIMULATOR_PTHREAD_H
+#define SIMULATOR_PTHREAD_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+
+#ifdef WIN32
+
+  #include <windows.h>
+  #define psleep(m_sec) Sleep ((m_sec))
+
+#elif defined (linux) || defined (unix)
+
+  #include <unistd.h>
+  #define psleep(m_sec) usleep ((m_sec * 1000))
+
+#else
+
+  #error pthread not supported for your platform
+
+#endif
+
+void simulator_pthread_init();
+
+#endif // SIMULATOR_PTHREAD_H

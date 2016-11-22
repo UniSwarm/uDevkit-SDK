@@ -12,6 +12,7 @@
 
 #ifdef SIMULATOR
 uint8_t board_led_state = 0;
+#include <stdio.h>
 #endif
 
 int board_init_io()
@@ -97,12 +98,12 @@ int board_setLed(uint8_t led, uint8_t state)
     if(state == 1)
     {
         printf("LED %d on", led);
-        board_led_state |= (1 << led)
+        board_led_state |= (1 << led);
     }
     else
     {
         printf("LED %d off", led);
-        board_led_state &= !(1 << led)
+        board_led_state &= !(1 << led);
     }
 #endif
     return 0;
