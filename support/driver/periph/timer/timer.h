@@ -19,6 +19,8 @@ void timer_releaseDevice(rt_dev_t device);
 int timer_enable(rt_dev_t device);
 int timer_disable(rt_dev_t device);
 
+int timer_setHandler(rt_dev_t device, void (*handler)(void));
+
 // timer mode
 int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs);
 uint32_t timer_periodMs(rt_dev_t device);
