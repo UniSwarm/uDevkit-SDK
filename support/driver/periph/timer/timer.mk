@@ -16,4 +16,6 @@ ifeq ($(ARCHI),$(filter $(ARCHI),pic32mm pic32mx pic32mzec pic32mzef))
  HEADER += timer_pic32.h
 endif
 
+SIM_SRC += timer_sim.c
+
 endif

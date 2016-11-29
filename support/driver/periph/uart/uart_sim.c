@@ -32,6 +32,12 @@ uart_dev uarts[] = {
 #if UART_COUNT>=4
     {.baudSpeed=0},
 #endif
+#if UART_COUNT>=5
+    {.baudSpeed=0},
+#endif
+#if UART_COUNT>=6
+    {.baudSpeed=0},
+#endif
 };
 
 void uart_sendconfig(uint8_t uart)

@@ -16,4 +16,6 @@ ifeq ($(ARCHI),$(filter $(ARCHI),pic32mm pic32mx pic32mzec pic32mzef))
  HEADER += i2c_pic32.h
 endif
 
+SIM_SRC += i2c_sim.c
+
 endif

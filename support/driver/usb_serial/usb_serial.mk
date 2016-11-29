@@ -10,4 +10,6 @@ INCLUDEPATH:= $(INCLUDEPATH) -I$(DRIVERPATH)
 HEADER += usb_serial.h
 ARCHI_SRC += usb_serial.c usb_descriptors.c usb_device_cdc.c
 
+SIM_SRC += usb_serial_sim.c
+
 endif

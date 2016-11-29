@@ -14,4 +14,6 @@ ifeq ($(ARCHI),$(filter $(ARCHI),pic24ep dspic33ep dspic33ev))
  HEADER += qei_pic24e_dspic33e.h
 endif
 
+SIM_SRC += qei_sim.c
+
 endif

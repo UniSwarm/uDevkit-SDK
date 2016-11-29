@@ -10,4 +10,6 @@ ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ep dspic33fj))
  HEADER += adc_dspic.h
 endif
 
+SIM_SRC += adc_sim.c
+
 endif
