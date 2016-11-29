@@ -11,29 +11,35 @@
 #include "simulator_socket.h"
 
 #include <stdio.h>
+#include <errno.h>
 
 SOCKET simulator_sock;
 
 void simulator_socket_init()
 {
-    #if defined (WIN32)
+    SOCKADDR_IN ssin;
+
+    #if defined (WIN32) || defined (_WIN32)
         WSADATA WSAData;
         WSAStartup(MAKEWORD(2,2), &WSAData);
     #endif
 
-    SOCKADDR_IN sin;
-
     // socket creation
     simulator_sock = socket(AF_INET, SOCK_STREAM, 0);
+    if(simulator_sock == INVALID_SOCKET)
+    {
+        perror("socket()");
+        exit(errno);
+    }
 
     // socket config
-    sin.sin_addr.s_addr = inet_addr("127.0.0.1");
-    sin.sin_family = AF_INET;
-    sin.sin_port = htons(SIM_SOCKET_PORT);
+    ssin.sin_addr.s_addr = inet_addr("127.0.0.1");
+    ssin.sin_family = AF_INET;
+    ssin.sin_port = htons(SIM_SOCKET_PORT);
 
     // socket connection to host
-    if(connect(simulator_sock, (SOCKADDR*)&sin, sizeof(sin)) != SOCKET_ERROR)
-        printf("Connected successfully to port %s %d\n", inet_ntoa(sin.sin_addr), htons(sin.sin_port));
+    if(connect(simulator_sock, (SOCKADDR*)&ssin, sizeof(ssin)) != SOCKET_ERROR)
+        printf("Connected successfully to port %s %d\n", inet_ntoa(ssin.sin_addr), htons(ssin.sin_port));
     else
     {
         printf("Cannot connect to port %d\n", SIM_SOCKET_PORT);

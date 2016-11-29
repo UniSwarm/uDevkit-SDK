@@ -13,31 +13,33 @@
 #ifndef SIMULATOR_SOCKET_H
 #define SIMULATOR_SOCKET_H
 
-#ifdef WIN32
+#if   defined (WIN32) || defined (_WIN32)
 
-  #include <winsock2.h>
+    #include <winsock2.h>
 
-#elif defined (linux) || defined (unix)
+#elif defined (linux) || defined (LINUX) || defined (__linux__) \
+   || defined (unix) || defined (UNIX) || defined (__unix__)
 
-  #include <sys/types.h>
-  #include <sys/socket.h>
-  #include <netinet/in.h>
-  #include <arpa/inet.h>
-  #include <unistd.h>
-  #include <stdio.h>
-  #include <stdlib.h>
+    #include <sys/types.h>
+    #include <sys/socket.h>
+    #include <netinet/in.h>
+    #include <arpa/inet.h>
+    #include <unistd.h>
+    #include <netdb.h>
+    #include <stdio.h>
+    #include <stdlib.h>
 
-  #define INVALID_SOCKET -1
-  #define SOCKET_ERROR -1
-  #define closesocket(param) close(param)
+    #define INVALID_SOCKET -1
+    #define SOCKET_ERROR -1
+    #define closesocket(param) close(param)
 
-  typedef int SOCKET;
-  typedef struct sockaddr_in SOCKADDR_IN;
-  typedef struct sockaddr SOCKADDR;
+    typedef int SOCKET;
+    typedef struct sockaddr_in SOCKADDR_IN;
+    typedef struct sockaddr SOCKADDR;
 
 #else
 
-  #error socket not supported for your platform
+    #error socket not supported for your platform
 
 #endif
 

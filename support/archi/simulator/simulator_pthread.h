@@ -22,7 +22,8 @@
   #include <windows.h>
   #define psleep(m_sec) Sleep ((m_sec))
 
-#elif defined (linux) || defined (unix)
+#elif defined (linux) || defined (LINUX) || defined (__linux__) \
+   || defined (unix) || defined (UNIX) || defined (__unix__)
 
   #include <unistd.h>
   #define psleep(m_sec) usleep ((m_sec * 1000))

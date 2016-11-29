@@ -12,21 +12,7 @@
 
 #include <stdio.h>
 
-pthread_t thread_store;
-
-static void * fn_store (void * p_data)
-{
-   while (1)
-   {
-      psleep(100);
-      printf ("Remplissage du stock de articles !\n");
-   }
-   return NULL;
-}
-
 void simulator_pthread_init()
 {
-    pthread_create (&thread_store, NULL, fn_store, NULL );
-    //pthread_join (thread_store, NULL);
 }
 
