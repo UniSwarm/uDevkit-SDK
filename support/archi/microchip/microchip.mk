@@ -26,7 +26,7 @@ $(OUT_PWD)/%.o : %.c
 	$(VERB)$(CC) -mcpu=$(DEVICE) $(CCFLAGS) $(CCFLAGS_XC) -c  $< $(DEFINES) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@)
 	@$(CC) -mcpu=$(DEVICE) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
-HEAP=1000
+HEAP?=1000
 
 # rule to link OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
@@ -35,7 +35,7 @@ $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 
 .PHONY : showmem dbg.% dbg
 # prints memory report
-showmem : $(OBJECTS)
+showmem : $(OUT_PWD)/$(PROJECT).elf
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -Wl,--heap=$(HEAP),-Tp$(DEVICE).gld,--report-mem
 
 # lists symbol present in final elf
