@@ -10,7 +10,7 @@
 #include "sys/buffer.h"
 
 // data receive from esp
-uint8_t socket = 0;
+uint8_t esp_socket = 0;
 uint16_t sizeRecPacket = 0;
 uint16_t idRecPacket = 0;
 uint8_t recPacketFlag = 0;
@@ -33,6 +33,10 @@ void esp_uart_init()
     uart_enable(esp_uart);
 }
 
+#define esp_write(data, size) uart_write(esp_uart, (data), (size))
+#define esp_send_cmd(cmd) uart_write(esp_uart, (cmd), strlen(cmd))
+#define esp_send_cmddat(cmd, size) uart_write(esp_uart, (cmd), (size))
+
 void esp_init()
 {
     esp_uart_init();
@@ -45,21 +49,8 @@ void esp_init()
     esp_send_cmd("AT+CIPMUX=1\r\n");
 }
 
-void esp_send_cmd(char cmd[])
+void esp_parse(char rec)
 {
-    uart_write(esp_uart, cmd, strlen(cmd));
-}
-
-void esp_send_cmddat(char cmd[], size_t size)
-{
-    uart_write(esp_uart, cmd, size);
-}
-
-/*
-void __attribute__ ((interrupt,no_auto_psv)) _U1RXInterrupt(void)
-{
-    char rec = U1RXREG;
-
     switch(wifistatus)
     {
         case FSM_UNKNOW:
@@ -179,7 +170,7 @@ void __attribute__ ((interrupt,no_auto_psv)) _U1RXInterrupt(void)
             if (rec >= '0' && rec <= '9')
             {
                 wifistatus = FSM_IPD_SOCKET_DIGIT;
-                socket = rec - '0';
+                esp_socket = rec - '0';
             }
             else
                 wifistatus = FSM_UNKNOW;
@@ -225,9 +216,7 @@ void __attribute__ ((interrupt,no_auto_psv)) _U1RXInterrupt(void)
         default:
             wifistatus = FSM_UNKNOW;
     }
-
-    IFS0bits.U1RXIF = 0;
-}*/
+}
 
 char * esp_protectstr(char * destination, const char * source)
 {
@@ -259,7 +248,7 @@ WIFI_STATE get_state()
 
 uint8_t getRecSocket()
 {
-    return socket;
+    return esp_socket;
 }
 
 char *getRecData()
@@ -392,11 +381,6 @@ void esp_write_socket_string(uint8_t sock, char *str)
     esp_write_socket(sock, str, strlen(str)+1);
 }
 
-void esp_write(char *data, uint16_t size)
-{
-    uart_write(esp_uart, data, size);
-}
-
 void esp_server_create(uint16_t port)
 {
     buffer_clear(&buff);
@@ -409,5 +393,4 @@ void esp_server_create(uint16_t port)
 void esp_server_destroy()
 {
     esp_send_cmd("AT+CIPSERVER=0\r\n");
-    return 0;
 }
