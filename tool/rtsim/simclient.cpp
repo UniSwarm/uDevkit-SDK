@@ -8,9 +8,9 @@ SimClient::SimClient(QTcpSocket *socket)
     connect(_socket, SIGNAL(readyRead()), this, SLOT(readData()));
 }
 
-SimModule *SimClient::module(uint16_t idModule) const
+SimModule *SimClient::module(uint16_t idModule, uint16_t idPeriph) const
 {
-    QMap<uint16_t, SimModule*>::const_iterator localConstFind = _modules.constFind(idModule);
+    QMap<uint32_t, SimModule*>::const_iterator localConstFind = _modules.constFind((uint32_t)((idModule<<16) + idPeriph));
     if(localConstFind != _modules.constEnd())
         return *localConstFind;
     return NULL;
@@ -27,13 +27,14 @@ void SimClient::readData()
             return;
 
         unsigned short moduleId = *((short*)_dataReceive.mid(2,2).data());
-        unsigned short functionId = *((short*)_dataReceive.mid(4,2).data());
-        QByteArray data = _dataReceive.mid(6, sizePacket-6);
+        unsigned short periphId = *((short*)_dataReceive.mid(4,2).data());
+        unsigned short functionId = *((short*)_dataReceive.mid(6,2).data());
+        QByteArray data = _dataReceive.mid(8, sizePacket-8);
 
-        SimModule *modulePtr = module(moduleId);
+        SimModule *modulePtr = module(moduleId, periphId);
         if(!modulePtr)
         {
-            modulePtr = SimModuleFactory::getSimModule(moduleId);
+            modulePtr = SimModuleFactory::getSimModule(moduleId, periphId);
             if(!modulePtr)
             {
                 qDebug()<<"Unknow module"<<moduleId<<sizePacket;
@@ -41,7 +42,7 @@ void SimClient::readData()
                 continue;
             }
 
-            _modules.insert(moduleId, modulePtr);
+            _modules.insert((uint32_t)((moduleId<<16) + periphId), modulePtr);
         }
 
         modulePtr->pushData(functionId, data);

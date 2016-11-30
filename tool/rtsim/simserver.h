@@ -13,12 +13,15 @@ class SimServer : public QObject
 public:
     explicit SimServer(QObject *parent = 0);
 
+    bool isConnected() const;
+
 signals:
 
 public slots:
 
 protected slots:
     void newClient();
+    void deleteClient();
 
 protected:
     QTcpServer *_server;

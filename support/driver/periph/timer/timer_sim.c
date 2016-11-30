@@ -108,8 +108,8 @@ static void * timer1_handler (void * p_data)
     while (1)
     {
         psleep(timers[0].periodMs);
-        /*if(timers[0].handler)
-            (*timers[0].handler)();*/
+        if(timers[0].handler)
+            (*timers[0].handler)();
     }
     return NULL;
 }

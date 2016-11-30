@@ -6,7 +6,7 @@
 class SimModuleFactory
 {
 public:
-    static SimModule *getSimModule(uint16_t idModule);
+    static SimModule *getSimModule(uint16_t idModule, uint16_t idPeriph);
 };
 
 #endif // SIMMODULEFACTORY_H

@@ -32,13 +32,14 @@ void simulator_end()
     puts("end simulator execution\n");
 }
 
-void simulator_send(uint16_t moduleId, uint16_t functionId, const char *data, size_t size)
+void simulator_send(uint16_t moduleId, uint16_t periphId, uint16_t functionId, const char *data, size_t size)
 {
-    char *simDat = malloc(size + 6);
-    ((unsigned short*)simDat)[0] = size + 6;
+    char *simDat = malloc(size + 8);
+    ((unsigned short*)simDat)[0] = size + 8;
     ((unsigned short*)simDat)[1] = moduleId;
-    ((unsigned short*)simDat)[2] = functionId;
-    memcpy(simDat+6, data, size);
-    simulator_socket_send(simDat, size + 6);
+    ((unsigned short*)simDat)[2] = periphId;
+    ((unsigned short*)simDat)[3] = functionId;
+    memcpy(simDat+8, data, size);
+    simulator_socket_send(simDat, size + 8);
     free(simDat);
 }

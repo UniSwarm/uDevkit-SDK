@@ -10,10 +10,13 @@
 class SimModuleUart : public SimModule
 {
 public:
-    SimModuleUart();
+    SimModuleUart(uint16_t idPeriph);
 
 public slots:
     void pushData(uint16_t functionId, const QByteArray &data);
+
+protected:
+    uart_dev _config_uart;
 };
 
 #endif // SIMMODULEUART_H

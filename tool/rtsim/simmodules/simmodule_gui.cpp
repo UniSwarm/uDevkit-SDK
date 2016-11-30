@@ -2,7 +2,8 @@
 
 #include <QDebug>
 
-SimModuleGui::SimModuleGui()
+SimModuleGui::SimModuleGui(uint16_t idPeriph)
+    : SimModule(idPeriph)
 {
     _screenWidget = NULL;
 }

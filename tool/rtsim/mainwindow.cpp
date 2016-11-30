@@ -8,6 +8,8 @@ MainWindow::MainWindow(QStringList args) :
     ui->setupUi(this);
 
     _simServer = new SimServer();
+    if(!_simServer->isConnected())
+        exit(0);
 }
 
 MainWindow::~MainWindow()

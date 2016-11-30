@@ -19,6 +19,6 @@
 
 void simulator_init();
 void simulator_end();
-void simulator_send(uint16_t moduleId, uint16_t functionId, const char *data, size_t size);
+void simulator_send(uint16_t moduleId, uint16_t periphId, uint16_t functionId, const char *data, size_t size);
 
 #endif // SIMULATOR_H

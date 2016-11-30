@@ -42,7 +42,7 @@ uart_dev uarts[] = {
 
 void uart_sendconfig(uint8_t uart)
 {
-    simulator_send(UART_SIM_MODULE, UART_SIM_CONFIG, (char*)&uarts[uart], sizeof(uart_dev));
+    simulator_send(UART_SIM_MODULE, uart, UART_SIM_CONFIG, (char*)&uarts[uart], sizeof(uart_dev));
 }
 
 rt_dev_t uart_getFreeDevice()
@@ -177,7 +177,7 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
     if (uart >= UART_COUNT)
         return -1;
 
-    simulator_send(UART_SIM_MODULE, UART_SIM_WRITE, data, size);
+    simulator_send(UART_SIM_MODULE, uart, UART_SIM_WRITE, data, size);
 
     return 0;
 }
@@ -190,7 +190,7 @@ ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
         return 0;
 
     // TODO
-    //simulator_send(UART_SIM_MODULE, UART_SIM_READ, data, size);
+    //simulator_send(UART_SIM_MODULE, uart, UART_SIM_READ, data, size);
     size_read = 0;
 
     return size_read;

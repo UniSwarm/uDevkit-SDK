@@ -13,7 +13,7 @@ class SimClient : public QObject
 public:
     SimClient(QTcpSocket *socket);
 
-    SimModule *module(uint16_t idModule) const;
+    SimModule *module(uint16_t idModule, uint16_t idPeriph) const;
 
 signals:
 
@@ -22,7 +22,7 @@ protected slots:
 
 protected:
     QTcpSocket *_socket;
-    QMap<uint16_t, SimModule*> _modules;
+    QMap<uint32_t, SimModule*> _modules;
     QByteArray _dataReceive;
 };
 

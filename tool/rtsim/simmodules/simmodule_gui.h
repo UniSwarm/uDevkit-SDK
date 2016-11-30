@@ -13,7 +13,7 @@
 class SimModuleGui : public SimModule
 {
 public:
-    SimModuleGui();
+    SimModuleGui(uint16_t idPeriph);
 
 public slots:
     void pushData(uint16_t functionId, const QByteArray &data);
