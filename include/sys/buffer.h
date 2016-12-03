@@ -26,9 +26,9 @@ typedef struct
 #define STATIC_BUFFER(x,y) char x##_data[y]; Buffer x
 #define STATIC_BUFFER_INIT(x,y) x.data_size = y; x.size = 0; x.tail = x##_data; x.data = x##_data; x.data[0] = 0;
 
-inline void buffer_init(Buffer *buffer, char *data, size_t size);
-inline size_t buffer_size(Buffer *buffer);
-inline void buffer_clear(Buffer *buffer);
+void buffer_init(Buffer *buffer, char *data, size_t size);
+size_t buffer_size(Buffer *buffer);
+void buffer_clear(Buffer *buffer);
 
 void buffer_aint(Buffer *buffer, const int i);
 void buffer_achar(Buffer *buffer, const char c);
