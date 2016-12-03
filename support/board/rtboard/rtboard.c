@@ -105,12 +105,12 @@ int board_setLed(uint8_t led, uint8_t state)
 #else
     if(state == 1)
     {
-        printf("LED %d on", led);
+        printf("LED %d on\n", led);
         board_led_state |= (1 << led);
     }
     else
     {
-        printf("LED %d off", led);
+        printf("LED %d off\n", led);
         board_led_state &= !(1 << led);
     }
 #endif
