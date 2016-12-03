@@ -312,7 +312,7 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
  */
 int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 {
-    uint64_t prvalue;
+    uint32_t prvalue;
     uint8_t div = 0;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
