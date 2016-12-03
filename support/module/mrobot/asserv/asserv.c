@@ -19,27 +19,12 @@
 
 #include "driver/qei.h"
 #include "driver/motor.h"
+#include "driver/timer.h"
 
 #include <stdio.h>
 #include <string.h>
 
-// <TODO replace theses functions by time/tasks support
-#ifndef SIMULATOR
-void setup_timer()
-{
-    T1CON  = 0b1000000000100000;    // FCY / 64
-    PR1 = 938;          // 1kHz
-    IEC0bits.T1IE = 1;
-}
-#else
-pthread_t thread_asserv_timer;
-static void * asserv_timer (void * p_data);
-void setup_timer()
-{
-    pthread_create (&thread_asserv_timer, NULL, asserv_timer, NULL );
-}
-#endif
-// TODO/>
+rt_dev_t asserv_timer;
 
 #include <math.h>
 #define M_PI        3.14159265358979323846
@@ -80,9 +65,16 @@ long int ancv1 = 0, ancv2 = 0;
 long int ancc1 = 0, ancc2 = 0;
 long int v1, v2;
 
+void asserv_task();
+void asserv_locTask();
+void asserv_controlTask();
+
 int asserv_init()
 {
-    setup_timer();
+    asserv_timer = timer_getFreeDevice();
+    timer_setPeriodMs(asserv_timer, 1);
+    timer_setHandler(asserv_timer, asserv_task);
+    timer_enable(asserv_timer);
 
     return 0;
 }
@@ -112,6 +104,12 @@ void asserv_setCoderDev(rt_dev_t leftCoder_dev, rt_dev_t rightCoder_dev)
     coder2 = rightCoder_dev;
     qei_setConfig(coder2, 0);
     qei_enable(coder2);
+}
+
+void asserv_task()
+{
+    asserv_locTask();
+    asserv_controlTask();
 }
 
 long int c1, c2;
@@ -440,51 +438,7 @@ void asserv_controlTask()
         if(err2 == 0)
             motor_setPower(2, 0);
     }
-
-    /*if(i++>100)
-    {
-        char buff[200];
-        i=0;
-        sprintf(buff, "x:%d y:%d t:%d d:%d ds:%d dt:%d v1:%d c1:%d e1:%d v2:%d c2:%d e2:%d\n",
-				(int)asserv_x,
-				(int)asserv_y,
-				(int)(180.0 * asserv_t / M_PI),
-				(int)distance,
-				(int)consds,
-				(int)(180.0 * consdt / M_PI),
-				(int)v1,
-				(int)consV1,
-				(int)err1,
-				(int)v2,
-				(int)consV2,
-				(int)err2
-                );
-        //usb_serial_write(buff, strlen(buff));
-    }*/
 }
-
-// <TODO replace theses functions by time/tasks support
-#ifndef SIMULATOR
-void __attribute__ ((interrupt,no_auto_psv)) _T1Interrupt(void)
-{
-    asserv_locTask();
-    asserv_controlTask();
-
-    IFS0bits.T1IF = 0;
-}
-#else
-static void * asserv_timer (void * p_data)
-{
-    while (1)
-    {
-        psleep(100);
-        asserv_locTask();
-        asserv_controlTask();
-    }
-    return NULL;
-}
-#endif
-// TODO/>
 
 void asserv_setPos(float x, float y, float t)
 {
