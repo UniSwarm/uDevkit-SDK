@@ -19,12 +19,21 @@
 #include "driver/device.h"
 
 Cmd cmds[] = {
-    {.name="ls", cmd_ls},
+  #ifdef USE_uart
     {.name="uart", cmd_uart},
+  #endif
+  #ifdef USE_i2c
     {.name="i2c", cmd_i2c},
-    {.name="mrobot", cmd_mrobot},
+  #endif
+  #ifdef USE_adc
     {.name="adc", cmd_adc},
+  #endif
+  #ifdef USE_ax
     {.name="ax", cmd_ax},
+  #endif
+  #ifdef USE_MODULE_mrobot
+    {.name="mrobot", cmd_mrobot},
+  #endif
     {.name="led", cmd_led},
     {.name="", NULL}
 };
