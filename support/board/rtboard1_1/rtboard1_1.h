@@ -56,4 +56,15 @@ int8_t board_getLed(uint8_t led);
 #define A6_READ 0
 #define A6_DE LATAbits.LATA6
 
+// Analog ports
+#define ANS0 24
+#define ANS1 25
+#define ANS2 26
+#define ANS3 27
+#define ANS4 28
+#define ANS5 29
+#define ANS6 30
+#define ANS7 31
+#define ANS8 1
+
 #endif // RTBOARD_H
