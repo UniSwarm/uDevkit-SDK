@@ -5,12 +5,14 @@
 
 #include "simmodule.h"
 
-#include "driver/periph/uart/uart_sim.h"
+#include "module/mrobot/mrobot.h"
+#include "module/mrobot/mrobot_sim.h"
 
 class SimModuleMRobot : public SimModule
 {
+    Q_OBJECT
 public:
-    SimModuleMRobot(uint16_t idPeriph);
+    SimModuleMRobot(SimClient *client, uint16_t idPeriph);
 
 public slots:
     void pushData(uint16_t functionId, const QByteArray &data);

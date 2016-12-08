@@ -22,12 +22,12 @@ void SimServer::newClient()
 {
     qDebug()<<"new connection";
     QTcpSocket *socket = _server->nextPendingConnection();
-    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(deleteClient()));
+    connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(deleteClient(QAbstractSocket::SocketError)));
     _simClients.append(new SimClient(socket));
 }
 
-void SimServer::deleteClient()
+void SimServer::deleteClient(QAbstractSocket::SocketError error)
 {
-    qDebug()<<"end connection";
-
+    if(error == QAbstractSocket::RemoteHostClosedError)
+        qDebug()<<"end connection";
 }

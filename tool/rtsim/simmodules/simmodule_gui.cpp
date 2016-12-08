@@ -2,10 +2,10 @@
 
 #include <QDebug>
 
-SimModuleGui::SimModuleGui(uint16_t idPeriph)
-    : SimModule(idPeriph)
+SimModuleGui::SimModuleGui(SimClient *client, uint16_t idPeriph)
+    : SimModule(client, GUI_SIM_MODULE, idPeriph)
 {
-    _screenWidget = NULL;
+    _guiWidget = NULL;
 }
 
 void SimModuleGui::pushData(uint16_t functionId, const QByteArray &data)
@@ -15,24 +15,25 @@ void SimModuleGui::pushData(uint16_t functionId, const QByteArray &data)
     if(functionId == GUI_SIM_CONFIG)
     {
         GuiConfig *config = (GuiConfig *)data.data();
-        if(_screenWidget == NULL)
+        if(_guiWidget == NULL)
         {
-            _screenWidget = new ScreenWidget((int)config->width, (int)config->height);
-            _screenWidget->show();
+            QSize size = QSize((int)config->width, (int)config->height);
+            _guiWidget = new GuiWidget(_idPeriph, size);
+            _guiWidget->show();
         }
     }
     if(functionId == GUI_SIM_SETPOS)
     {
         GuiPoint *point = (GuiPoint *)data.data();
-        _screenWidget->setPos(point->x, point->y);
+        _guiWidget->setPos(point->x, point->y);
     }
     if(functionId == GUI_SIM_SETRECT)
     {
         GuiRect *rect = (GuiRect *)data.data();
-        _screenWidget->setRect(rect->x, rect->y, rect->width, rect->height);
+        _guiWidget->setRect(rect->x, rect->y, rect->width, rect->height);
     }
     if(functionId == GUI_SIM_WRITEDATA)
     {
-        _screenWidget->writeData((uint16_t *)data.data(), data.size()/2);
+        _guiWidget->writeData((uint16_t *)data.data(), data.size()/2);
     }
 }

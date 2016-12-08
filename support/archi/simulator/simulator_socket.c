@@ -1,5 +1,5 @@
 /**
- * @file simulator_socket.c
+ * @file simulator_socket.cpp
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
@@ -31,6 +31,7 @@ void simulator_socket_init()
         perror("socket()");
         exit(errno);
     }
+    //fcntl(simulator_sock, F_SETFL, fcntl(simulator_sock, F_GETFL) | O_NONBLOCK);
 
     // socket config
     ssin.sin_addr.s_addr = inet_addr("127.0.0.1");
@@ -62,5 +63,13 @@ void simulator_socket_send(char *data, size_t size)
     if(simulator_sock != 0)
     {
         send(simulator_sock, data, size, 0);
+    }
+}
+
+int simulator_socket_read(char *data, size_t size)
+{
+    if(simulator_sock != 0)
+    {
+        return recv(simulator_sock, data, size, MSG_DONTWAIT);
     }
 }

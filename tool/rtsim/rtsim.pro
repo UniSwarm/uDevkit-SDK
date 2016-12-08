@@ -16,9 +16,11 @@ SOURCES += main.cpp \
     simmodules/simmodule.cpp \
     simmodules/simmodulefactory.cpp \
     simmodules/simmodule_gui.cpp \
-    widgets/screenwidget.cpp \
+    widgets/guiwidget/screenwidget.cpp \
     simmodules/simmodule_uart.cpp \
-    simmodules/simmodule_mrobot.cpp
+    simmodules/simmodule_mrobot.cpp \
+    widgets/uartwidget/uartwidget.cpp \
+    widgets/guiwidget/guiwidget.cpp
 
 FORMS += \
     mainwindow.ui
@@ -30,8 +32,10 @@ HEADERS += \
     simmodules/simmodule.h \
     simmodules/simmodulefactory.h \
     simmodules/simmodule_gui.h \
-    widgets/screenwidget.h \
+    widgets/guiwidget/screenwidget.h \
     simmodules/simmodule_uart.h \
-    simmodules/simmodule_mrobot.h
+    simmodules/simmodule_mrobot.h \
+    widgets/uartwidget/uartwidget.h \
+    widgets/guiwidget/guiwidget.h
 
 INCLUDEPATH += ../../include ../../support

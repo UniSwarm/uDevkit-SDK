@@ -8,18 +8,19 @@
 #include "module/gui/gui.h"
 #include "module/gui/gui_sim.h"
 
-#include "widgets/screenwidget.h"
+#include "widgets/guiwidget/guiwidget.h"
 
 class SimModuleGui : public SimModule
 {
+    Q_OBJECT
 public:
-    SimModuleGui(uint16_t idPeriph);
+    SimModuleGui(SimClient *client, uint16_t idPeriph);
 
 public slots:
     void pushData(uint16_t functionId, const QByteArray &data);
 
 protected:
-    ScreenWidget *_screenWidget;
+    GuiWidget *_guiWidget;
 };
 
 #endif // SIMMODULEGUI_H

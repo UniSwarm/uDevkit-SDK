@@ -21,7 +21,7 @@ public slots:
 
 protected slots:
     void newClient();
-    void deleteClient();
+    void deleteClient(QAbstractSocket::SocketError error);
 
 protected:
     QTcpServer *_server;

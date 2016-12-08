@@ -184,14 +184,16 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
 {
-	size_t size_read;
+	ssize_t size_read;
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return 0;
 
     // TODO
-    //simulator_send(UART_SIM_MODULE, uart, UART_SIM_READ, data, size);
-    size_read = 0;
+    simulator_rec_task();
+    size_read = simulator_recv(UART_SIM_MODULE, uart, UART_SIM_READ, data, size_max);
+    if(size_read<0)
+        size_read = 0;
 
     return size_read;
 }

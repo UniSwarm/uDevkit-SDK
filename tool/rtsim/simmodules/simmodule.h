@@ -3,13 +3,19 @@
 
 #include <QObject>
 
+class SimClient;
+
 class SimModule : public QObject
 {
     Q_OBJECT
 public:
-    explicit SimModule(uint16_t idPeriph);
+    explicit SimModule(SimClient *client, uint16_t idModule, uint16_t idPeriph);
 
+    SimClient *client() const;
+    uint16_t idModule() const;
     uint16_t idPeriph() const;
+
+    void writeData(uint16_t functionId, const QByteArray &data);
 
 signals:
 
@@ -17,6 +23,8 @@ public slots:
     virtual void pushData(uint16_t functionId, const QByteArray &data) =0;
 
 protected:
+    SimClient *_client;
+    uint16_t _idModule;
     uint16_t _idPeriph;
 };
 

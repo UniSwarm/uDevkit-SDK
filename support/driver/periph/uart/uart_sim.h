@@ -11,6 +11,8 @@
 #ifndef UART_SIM_H
 #define UART_SIM_H
 
+#include <stdint.h>
+
 typedef struct
 {
     uint32_t baudSpeed;

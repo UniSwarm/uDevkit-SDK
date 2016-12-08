@@ -25,6 +25,7 @@
     #include <netinet/in.h>
     #include <arpa/inet.h>
     #include <unistd.h>
+    #include <fcntl.h>
     #include <netdb.h>
     #include <stdio.h>
     #include <stdlib.h>
@@ -48,5 +49,6 @@
 void simulator_socket_init();
 void simulator_socket_end();
 void simulator_socket_send(char *data, size_t size);
+int simulator_socket_read(char *data, size_t size);
 
 #endif // SIMULATOR_SOCKET_H

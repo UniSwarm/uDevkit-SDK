@@ -51,8 +51,6 @@ size_t uart_datardy(rt_dev_t device);
   #include "uart_dspic30.h"
 #elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
  #include "uart_pic32.h"
-#else
-  #error "Unsupported ARCHI"
 #endif
 
 #endif // UART_H

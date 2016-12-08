@@ -2,8 +2,8 @@
 
 #include <QDebug>
 
-SimModuleMRobot::SimModuleMRobot(uint16_t idPeriph)
-    : SimModule(idPeriph)
+SimModuleMRobot::SimModuleMRobot(SimClient *client, uint16_t idPeriph)
+    : SimModule(client, MROBOT_SIM_MODULE, idPeriph)
 {
 
 }
