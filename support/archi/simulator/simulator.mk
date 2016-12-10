@@ -43,7 +43,7 @@ $(OUT_PWD)/%_simcppo.o : %.cpp
 # rule to link SIM_OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(SIM_EXE) : $(SIM_OBJECTS)
 	@printf "LD %-36s => %s\n" "*.o" $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(CPPC_SIM) $(CCFLAGS) $(LIBS_SIM) -o $(OUT_PWD)/$(SIM_EXE) $(addprefix $(OUT_PWD)/,$(notdir $(SIM_OBJECTS))) $(DEFINES_SIM) -lm
+	$(VERB)$(CPPC_SIM) $(CCFLAGS) -o $(OUT_PWD)/$(SIM_EXE) $(addprefix $(OUT_PWD)/,$(notdir $(SIM_OBJECTS))) $(LIBS_SIM) $(DEFINES_SIM) -lm
 
 sim : $(OUT_PWD)/$(SIM_EXE) $(RTSIM_EXE)
 	killall rtsim || true

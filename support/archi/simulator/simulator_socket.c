@@ -31,7 +31,6 @@ void simulator_socket_init()
         perror("socket()");
         exit(errno);
     }
-    //fcntl(simulator_sock, F_SETFL, fcntl(simulator_sock, F_GETFL) | O_NONBLOCK);
 
     // socket config
     ssin.sin_addr.s_addr = inet_addr("127.0.0.1");
@@ -70,6 +69,12 @@ int simulator_socket_read(char *data, size_t size)
 {
     if(simulator_sock != 0)
     {
-        return recv(simulator_sock, data, size, MSG_DONTWAIT);
+        u_long ret;
+        #if defined (WIN32) || defined (_WIN32)
+            ioctlsocket(simulator_sock, FIONREAD, &ret);
+            if(ret==0)
+                return 0;
+        #endif
+        return recv(simulator_sock, data, size, SOCKET_MODE);
     }
 }

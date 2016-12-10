@@ -16,6 +16,7 @@
 #if   defined (WIN32) || defined (_WIN32)
 
     #include <winsock2.h>
+    #define SOCKET_MODE 0
 
 #elif defined (linux) || defined (LINUX) || defined (__linux__) \
    || defined (unix) || defined (UNIX) || defined (__unix__)
@@ -32,6 +33,7 @@
 
     #define INVALID_SOCKET -1
     #define SOCKET_ERROR -1
+    #define SOCKET_MODE MSG_DONTWAIT
     #define closesocket(param) close(param)
 
     typedef int SOCKET;
