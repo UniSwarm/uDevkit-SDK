@@ -15,6 +15,7 @@ int main(void)
 {
     unsigned int i,j;
     char buff[101];
+    rt_dev_t uartDbg;
     size_t size;
 
     sysclock_setClock(120000000);
@@ -22,6 +23,7 @@ int main(void)
 
     // a6 init
     a6_init();
+    uartDbg = uart_getFreeDevice();
 
     gui_init();
     gui_fillScreen(Gui_Blue2);
@@ -49,55 +51,18 @@ int main(void)
     // console_write(&cmd, "Terminal successfully opened\nTerminal successfully opened!");
     // console_write(&cmd, "Je suis sur que je vais depasser de la ligne!");
     console_write(&cmd, "Je suis sur que je vais depasser de la ligne mais on s en fou parce qu on va regler cela!");
-    // console_write(&cmd, "Je suis sur que je vais depasser de la ligne\nTerminal successfully opened!");
 
-    // console_write(&cmd, "bab");
-    // console_write(&cmd, "prout");
-    // console_write(&cmd, "caca");
-
-
-
-
-
-    /*gui_drawFillRect(50, 50, 50, 50);
-
-    for(i=51;i<100;i++)
-        gui_drawPoint(50, i);
-
-    gui_setBrushColor(Yellow);
-    gui_drawFillRect(51, 51, 50, 50);
-
-    gui_setBrushColor(Blue);
-    gui_drawFillRect(52, 52, 50, 50);
-
-    gui_drawLine(50, 50, 420, 270);
-    gui_drawLine(50, 270, 420, 50);*/
-
-
-
-
-
-    //Drawing text
-    // gui_setFont(&core12b);
-    // gui_drawText(100, 100, "It seems to work !!! <3");
-    // gui_setFont(&core18b);
-    // gui_drawText(100, 150, "It seems to work !!! <3");
-
-    //widget_addButton(50, 200, 150, 50);
-
-    //displaying ar1000 responses
-    // gui_drawText(100, 150, "response: ");
-    // char to_disp[100];
-    // sprintf(to_disp, "%d", response);
-    // gui_drawText(200, 150, to_disp);
-
-    char prout[100];
+    uart_write(uartDbg, "Type a word to add: ", 20);
     while(1)
     {
-        printf("Type a word to add: ");
-        scanf("%s", &prout);
-        console_write(&cmd, prout);
-
+        size = uart_read(uartDbg, buff, 100);
+		if(size > 0)
+        {
+            buff[size]=0;
+            console_write(&cmd, buff);
+            uart_write(uartDbg, buff, size);
+            uart_write(uartDbg, "Type a word to add: ", 20);
+        }
 
         for(j=0;j<10;j++) for(i=0;i<65000;i++);
 
