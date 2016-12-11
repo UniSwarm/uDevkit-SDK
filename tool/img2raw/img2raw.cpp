@@ -90,8 +90,8 @@ void exportFont(QFont font, QString outFileName )
     QFontMetrics metric(font);
     height=metric.height();
 
-    fontName=font.family().replace(" ","");
-    if (fontName.size()>10) fontName = fontName.mid(0,10);
+    fontName=font.family().replace(" ","_");
+    //if (fontName.size()>10) fontName = fontName.mid(0,10);
     if(font.pixelSize()!=-1)
         fontName.append(QString::number(font.pixelSize()));
     else
@@ -240,10 +240,10 @@ int main(int argc, char *argv[])
     }
 
     // font mode
-    QRegExp regPolice("([a-zA-Z]+)([0-9]+)([bui]*)");
+    QRegExp regPolice("([a-zA-Z_]+)([0-9]+)([bui]*)");
     if(regPolice.indexIn(inputFile) == 0)
     {
-        QString fontName = regPolice.cap(1);
+        QString fontName = regPolice.cap(1).replace('_'," ");
         int fontSize = regPolice.cap(2).toUInt();
         QString fontStyle = regPolice.cap(3);
 
