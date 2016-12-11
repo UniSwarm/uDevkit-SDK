@@ -22,7 +22,7 @@ struct Terminal
     int x_pose, y_pose;
 
     // BUFFER
-    char buffer[200];
+    char buffer[500];
 
     Font* font;
     Color font_color;
@@ -57,44 +57,49 @@ uint8_t console_howManyLinesItTakes(const Console* cmd, const char* txt)
 {
     if (cmd->width > 0)
     {
-        uint8_t nbr_carriage_return = 0;
+        //computing number of carriage returns
+        uint8_t carriage_return_nbr = 0;
         int i = 0;
         while (txt[i] != '\0')
         {
             if (txt[i] == '\n')
             {
-                ++nbr_carriage_return;
+                ++carriage_return_nbr;
             }
             ++i;
         }
 
         //if there is not carriage_return then we just work on the txt
-        if (nbr_carriage_return == 0 )
+        if ( carriage_return_nbr == 0 )
         {
             return (1 + (gui_getFontTextWidth(txt) / cmd->width) );
         }
-        else //if not then we ahve to work on each part of the txt
+        else //if not then we have to work on each part of the txt
         {
-            int lines_nbr = 0;
+            int nbr_of_too_large_lines = 0;
+            // int nbr_of_too_large_lines = 1; //there is at least one line
 
             //iterating through txt
             int j=0;
             while (txt[j] != '\0')
             {
-                char tmp_str [100];
-
-                //copying each txt part into a tmp_str
+                //copying each txt character into a tmp_str
+                //unitl we meet a carriage_return
+                char tmp_str [200];
                 int i = 0;
                 while (txt[i] != '\n')
                 {
                     tmp_str[i++] = txt[j++];
                 }
 
-                //then check if tmp_str can be written ointo one line 
-                lines_nbr += (gui_getFontTextWidth(tmp_str) / cmd->width);
+                //then check if tmp_str can be written into one line 
+                // nbr_of_too_large_lines += 1 + (gui_getFontTextWidth(tmp_str) / cmd->width);
+                nbr_of_too_large_lines += (gui_getFontTextWidth(tmp_str) / cmd->width);
             }
 
-            return (1 + nbr_carriage_return + lines_nbr);
+            printf("carriage_return_nbr: %d\n", carriage_return_nbr);
+            printf("nbr_of_too_large_lines: %d\n", nbr_of_too_large_lines);
+            return (1 + carriage_return_nbr + nbr_of_too_large_lines);
         }
     }
     else
@@ -135,7 +140,7 @@ void console_open(Console *cmd, const int x, const int y)
         cmd->buffer[0] = '\0';
         cmd->status = 1;
 
-        console_write(cmd, "Terminal successfully opened!");
+        // console_write(cmd, "Terminal successfully opened!");
     }
 }
 
@@ -163,7 +168,7 @@ void console_treatNewMessage(const Console* cmd, char* txt)
     {
         //TODO: maybe there will be more than one \n to add
         //so we have to adapt the size of txt resize
-        printf("\n\n\nTODO: Regler le probleme du character parasite a été temporairement réglé avec NEW_STR[strlen(txt) + nbr_of_lines_2_add + 10]\n\n\n");
+        // printf("\n\n\nTODO: Regler le probleme du character parasite a été temporairement réglé avec NEW_STR[strlen(txt) + nbr_of_lines_2_add + 10]\n\n\n");
         char new_str [strlen(txt) + 10];
 
         //it's a counter taking care of non go over the cmd width
@@ -208,48 +213,84 @@ void console_treatNewMessage(const Console* cmd, char* txt)
     // else we just do nothing and continue our lives
 }
 
+void remove_element(char* array, const int index, const int array_length)
+{
+    int i;
+    for(i = index; i < array_length - 1; ++i)
+        array[i] = array[i + 1];
+}
+
 //verifying if the message is heighter than the console height
 //if the buffer DEPASSE then we forget the buffer
 void console_verifyBufferHeight(Console* cmd)
 {
-    // int total_message_height = 0;
-    // const uint8_t nbr_of_lines_2_add = console_howManyLinesItTakes(cmd, txt);
-
     //si il n'y a plus de ligne disponible alors on coupe le nombre de lignes pour que ça passe
-    
     printf("console_verifyBufferHeight: console_howManyLinesItTakes: %d\n", console_howManyLinesItTakes(cmd, cmd->buffer));
 
-    // uint8_t nbr_max_line_in_cmd = 10;
-    uint8_t nbr_max_line_in_cmd = cmd->height / cmd->font->height;
+    const uint8_t nbr_max_line_in_cmd = cmd->height / cmd->font->height;
     printf("nbr_max_line_in_cmd: %d\n", nbr_max_line_in_cmd);
 
-    //if there is too much text then we delete the first of the buffer
-    if (console_howManyLinesItTakes(cmd, cmd->buffer) > nbr_max_line_in_cmd )
+    //if there is too much text then we will have to cut the text
+    int counter = 0;
+    // while ( console_howManyLinesItTakes(cmd, cmd->buffer)-counter > nbr_max_line_in_cmd )
+    while ( console_howManyLinesItTakes(cmd, cmd->buffer) > nbr_max_line_in_cmd )
     {
-        char bumped_txt [strlen(cmd->buffer)];
-        // memset(bumped_txt, 0, strlen(cmd->buffer));
+        printf("current nbr of lines: %d\n", console_howManyLinesItTakes(cmd, cmd->buffer));
 
-        int line_is_suppr = 0;
+        // char bumped_txt [strlen(cmd->buffer)];
 
-        int i = 0;
-        int j = 0;
-        while ( cmd->buffer[i] != '\0')
-        {
-            if (line_is_suppr == 1)
-            {
-                bumped_txt[j] = cmd->buffer[i];
-                ++j;
-            }
-            else
-            {
-                if (cmd->buffer[i] == '\n') line_is_suppr = 1;
-            }
-            ++i;
-        }
+        //iterate through the buffer until we go over the first line 
+        // int i = 0;
+        // while ( cmd->buffer[i] != '\n' )
+        // {
+        //     printf("cmd->buffer: %c\n", cmd->buffer[i]);
+        //     ++i;
+        // }
+        // printf("i: %d\n", i);
 
-        strcpy(cmd->buffer, bumped_txt);
+
+
+
+
+        // int for_counter;
+        // for(for_counter = 0; for_counter < i; ++for_counter)
+        // {
+        //     printf("for_counter: %d\n", for_counter);
+        //     cmd->buffer[for_counter] = cmd->buffer[for_counter + 1];
+        // }
+
+        // int iterate = 0;
+        // while ( cmd->buffer[iterate] != '\0' )
+        // {
+        //     printf("after: %c\n", cmd->buffer[iterate++]);
+        // }
+
+
+        // ++counter;
+
+
+        // int line_is_suppr = 0;
+
+        // int i = 0;
+        // int j = 0;
+        // while ( cmd->buffer[i] != '\0')
+        // {
+        //     if (line_is_suppr == 1)
+        //     {
+        //         bumped_txt[j] = cmd->buffer[i];
+        //         ++j;
+        //     }
+        //     else
+        //     {
+        //         if (cmd->buffer[i] == '\n') line_is_suppr = 1;
+        //     }
+        //     ++i;
+        // }
+
+    //     strcpy(cmd->buffer, bumped_txt);
 
     }
+    // if not then we continue to live our lives 
 
 }
 
@@ -268,15 +309,19 @@ void console_write(Console* cmd, const char* txt)
         char txt_2_work_on[strlen(txt)];
         strcpy(txt_2_work_on, txt);
 
-        printf("current text: %s\n", txt);
-        console_treatNewMessage(cmd, txt_2_work_on);
-        printf("console_treatNewMessage: %s\n", txt_2_work_on);
-        // printf("console_howManyLinesItTakes: %d\n", console_howManyLinesItTakes(cmd, txt_2_work_on) );
+        // printf("current text: %s\n", txt);
+        // console_treatNewMessage(cmd, txt_2_work_on);
+        // printf("console_treatNewMessage: %s\n", txt_2_work_on);
 
         console_addNewEntryToBuffer(cmd, txt_2_work_on);
-        // printf("console_howManyLinesItTakes: %d\n", console_howManyLinesItTakes(cmd, cmd->buffer) );
+        printf("\n\n");
+        printf("lines of txt: %d\n", console_howManyLinesItTakes(cmd, txt_2_work_on) );
+        printf("\n\n");
+        printf("lines of buffer: %d\n", console_howManyLinesItTakes(cmd, cmd->buffer) );
+        // printf("\nbuffer: %s\n", cmd->buffer );
 
         // console_verifyBufferHeight(cmd);
+        // printf("console_howManyLinesItTakes: %d\n", console_howManyLinesItTakes(cmd, cmd->buffer) );
 
 
         // // char src[] = "hi";
@@ -309,7 +354,6 @@ void console_write(Console* cmd, const char* txt)
             {
                 ++j;
                 ++i;
-            //     gui_drawText(cmd->x_pose, cmd->font->height*(line_index++)+cmd->y_pose, "yo");
             }
         }
 

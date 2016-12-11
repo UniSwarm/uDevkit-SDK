@@ -45,11 +45,63 @@ int main(void)
     cmd.font_color = Gui_White;
     cmd.background_color = Gui_Black;
     console_open(&cmd, 100, 50);
+
+    //various tests without carriage returns
+    // console_write(&cmd, "line0"); //ok
+    // console_write(&cmd, "line0"); //ok
+    // console_write(&cmd, "line0"); //ok
+    // console_write(&cmd, "line0"); //ok
+    // console_write(&cmd, "line0"); //ok
+    // console_write(&cmd, "line0"); //ok
+
+    //OK
+    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
+    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
+    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
+    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
+    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
+
+    //OK
+    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
+    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
+    // console_write(&cmd, "line0"); //ok
+    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
+    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
+    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
+
+    //NON ok
+    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0");
+    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0");
+    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0");
+    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0");
+
+    //various tests without carriage returns
+
+    //ok
     // console_write(&cmd, "line0\nline1");
+    // console_write(&cmd, "line0\nline1");
+    // console_write(&cmd, "line0\nline1");
+    // console_write(&cmd, "line0\nline1");
+
+    //OK
+    // console_write(&cmd, "line0line0line0line0line0\nline0line0line0line0line0"); //non ok
+    // console_write(&cmd, "line0line0line0line0line0\nline0line0line0line0line0"); //non ok
+    // console_write(&cmd, "line0line0line0line0line0\nline0line0line0line0line0"); //non ok
+    // console_write(&cmd, "line0line0line0line0line0\nline0line0line0line0line0"); //non ok
+
+    //ok
+    console_write(&cmd, "line0line0line0line0line0\nline0line0line0line0line0"); //non ok
+    console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
+    console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0");
+
+    // ->normally the nbr_of_too_large_lines is equal to 5 or sth but here its equal to 0
+
+
     // console_write(&cmd, "Terminal successfully opened\nTerminal successfully opened!");
     // console_write(&cmd, "Je suis sur que je vais depasser de la ligne!");
-    console_write(&cmd, "Je suis sur que je vais depasser de la ligne mais on s en fou parce qu on va regler cela!");
-    // console_write(&cmd, "Je suis sur que je vais depasser de la ligne\nTerminal successfully opened!");
+    // console_write(&cmd, "Je suis sur que je vais depasser de la ligne mais on s en fou parce qu on va regler cela!");
+    // console_write(&cmd, "Je suis sur que je vais depasser de la ligne\nmais on s en fou parce qu on va regler cela!");
+    // console_write(&cmd, "lig\nne");
 
     // console_write(&cmd, "bab");
     // console_write(&cmd, "prout");
