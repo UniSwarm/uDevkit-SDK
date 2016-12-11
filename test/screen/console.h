@@ -1,4 +1,4 @@
-#include <gui/widget.h>
+#include <string.h>
 
 /*
 TODO:
@@ -8,6 +8,8 @@ console.moveToLastPlan()
 
 create a banner up to the display window around the console ?
     -> create a cross button to close console
+
+take other special caracters into account like \t
 */
 
 //WORKING ON GUI_CONSOLE
@@ -35,7 +37,7 @@ typedef struct Terminal Console;
 void console_addNewEntryToBuffer(Console* cmd, const char* txt)
 {
     //at each new entry we add the ending line character
-    if ( strlen(cmd->buffer) != 0 )
+    if (strlen(cmd->buffer) != 0)
     {
         strcat(cmd->buffer, "\n");
     }
@@ -44,60 +46,22 @@ void console_addNewEntryToBuffer(Console* cmd, const char* txt)
     strcat(cmd->buffer, txt);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-//NOT STABLE FUNCTIONS
-////////////////////////////////////////////////////////////////////////////////
-void console_write(Console*, const char*);
 
-//kinda constructor
-//TODO: fonctions createContext? display? hide?
-void console_open(Console *cmd, const int x, const int y)
-{
-    if ( cmd->status == 1) //cmd is already opened
-    {
-        printf("Error: console_open: the current console is already opened.\n");
-    }
-    else
-    {
-        gui_setFont(cmd->font);
-        gui_setPenColor(cmd->font_color);
-        gui_setBrushColor(cmd->background_color);
-
-        cmd->x_pose = x;
-        cmd->y_pose = y;
-        gui_drawFillRect(cmd->x_pose, cmd->y_pose, cmd->width, cmd->height);
-
-        cmd->buffer[0] = '\0';
-        cmd->status = 1;
-
-        console_write(cmd, "Terminal successfully opened!");
-        // console_write(cmd, "Terminal successfully opened!Terminal successfully opened!");
-        // console_write(cmd, "Je suis sur que je vais depasser de la \nligne! Encore et encore!\nAnd again and again!");
-    }
-}
-
-//closing the Console
-void console_close(Console *cmd)
-{
-    if (cmd->status == 0) //cmd is already closed
-    {
-        printf("Error: console_open: the current console is already closed.\n");
-    }
-    else
-    {
-        cmd->status = 0;
-    }
-}
-
-uint8_t console_howManyLinesAreUsed(const Console* cmd, const char* txt)
+/**
+ * @Brief console_howManyLinesItTakes compute the number of lines
+ *        a txt is taking in the console
+ * @params cmd the console 
+ * @params txt the text
+  */
+uint8_t console_howManyLinesItTakes(const Console* cmd, const char* txt)
 {
     if (cmd->width > 0)
     {
         uint8_t nbr_carriage_return = 0;
         int i = 0;
-        while ( txt[i] != '\0')
+        while (txt[i] != '\0')
         {
-            if ( txt[i] == '\n')
+            if (txt[i] == '\n')
             {
                 ++nbr_carriage_return;
             }
@@ -105,7 +69,7 @@ uint8_t console_howManyLinesAreUsed(const Console* cmd, const char* txt)
         }
 
         //if there is not carriage_return then we just work on the txt
-        if ( nbr_carriage_return == 0 )
+        if (nbr_carriage_return == 0 )
         {
             return (1 + (gui_getFontTextWidth(txt) / cmd->width) );
         }
@@ -134,48 +98,113 @@ uint8_t console_howManyLinesAreUsed(const Console* cmd, const char* txt)
         }
     }
     else
-        printf("Error: console_howManyLinesAreUsed: Console width has a wrong value (%d).\n",cmd->width);
+        printf("Error: console_howManyLinesItTakes: Console width has a wrong value (%d).\n",cmd->width);
 }
 
-//verifying if the message is longer than the console width
-//if not then add \n in the message
-void console_verifyMessageLenth(const Console* cmd, char* txt)
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+//NOT STABLE FUNCTIONS
+////////////////////////////////////////////////////////////////////////////////
+void console_write(Console*, const char*);
+
+//kinda constructor
+//TODO: fonctions createContext? display? hide?
+void console_open(Console *cmd, const int x, const int y)
 {
-    //verifying if the new entry is not longer than the terminal width
-    const uint8_t nbr_of_line_2_add = console_howManyLinesAreUsed(cmd, txt);
-    printf("nbr_of_line_2_add: %d \n", nbr_of_line_2_add);
-
-    if (nbr_of_line_2_add > 0)
+    if (cmd->status == 1) //cmd is already opened
     {
-        //TODO: maybe there will be more than one \0 added
-        printf("\n\n\nTODO: Regler le probleme du character parasite, a été réglé avec NEW_STR[strlen(txt) + nbr_of_line_2_add + 10]\n\n\n");
-        char new_str [strlen(txt) + nbr_of_line_2_add + 10];
+        printf("Error: console_open: the current console is already opened.\n");
+    }
+    else
+    {
+        gui_setFont(cmd->font);
+        gui_setPenColor(cmd->font_color);
+        gui_setBrushColor(cmd->background_color);
 
-        int i,j = 0;
-        int counter = 0; //it's a counter taking care of non go over the cmd width
-        for (i = 0; i < strlen(txt); ++i)
+        cmd->x_pose = x;
+        cmd->y_pose = y;
+        gui_drawFillRect(cmd->x_pose, cmd->y_pose, cmd->width, cmd->height);
+
+        cmd->buffer[0] = '\0';
+        cmd->status = 1;
+
+        console_write(cmd, "Terminal successfully opened!");
+    }
+}
+
+//closing the Console
+void console_close(Console *cmd)
+{
+    if (cmd->status == 0) //cmd is already closed
+    {
+        printf("Error: console_open: the current console is already closed.\n");
+    }
+    else
+    {
+        cmd->status = 0;
+    }
+}
+
+/**
+ * @Brief console_treatNewMessage verify if the message is longer than the console width
+ *                                if not then add split the message
+ */
+void console_treatNewMessage(const Console* cmd, char* txt)
+{
+    //if txt is taking more than 1 line
+    if (console_howManyLinesItTakes(cmd, txt) > 1)
+    {
+        //TODO: maybe there will be more than one \n to add
+        //so we have to adapt the size of txt resize
+        printf("\n\n\nTODO: Regler le probleme du character parasite a été temporairement réglé avec NEW_STR[strlen(txt) + nbr_of_lines_2_add + 10]\n\n\n");
+        char new_str [strlen(txt) + 10];
+
+        //it's a counter taking care of non go over the cmd width
+        int counter = 0;
+
+        int
+        i = 0,
+        j = 0;
+        while (txt[i] != '\0')
         {
             counter += gui_getFontWidth(txt[i]);
-            if (counter > cmd->width)   //if we are at the edge of the screen then we add '\n' in new_str
+
+            //if the txt has a \n character, add the carriage_return character
+            if (txt[i] == '\n')
             {
                 new_str[j] = '\n';
-                --i;          // i stays at its position
-                counter = 0;  //reseting the counter
+                counter = 0;
+                ++i;
             }
-            else    //else we just copy the txt to new_str
+            else //else we continue to evaluate the lenth of the message
             {
-                new_str[j] = txt[i];
+                //if we are at the edge of the screen then we add '\n' in new_str
+                if (counter > cmd->width)
+                {
+                    //adding a carriage return to the new_str
+                    new_str[j] = '\n';
+                    counter = 0;  //reseting the counter
+                }
+                else    //else we just copy the txt to new_str
+                {
+                    new_str[j] = txt[i];
+                    ++i;
+                }
             }
-
             ++j;
         }
 
         //at the end of you copy the new_str in the txt
-        // printf("txt: %s\n", txt);
         strcpy(txt, new_str);
-        // printf("new_str: %s\n", new_str);
-        // printf("txt: %s\n", txt);
     }
+
     // else we just do nothing and continue our lives
 }
 
@@ -184,18 +213,18 @@ void console_verifyMessageLenth(const Console* cmd, char* txt)
 void console_verifyBufferHeight(Console* cmd)
 {
     // int total_message_height = 0;
-    // const uint8_t nbr_of_line_2_add = console_howManyLinesAreUsed(cmd, txt);
+    // const uint8_t nbr_of_lines_2_add = console_howManyLinesItTakes(cmd, txt);
 
     //si il n'y a plus de ligne disponible alors on coupe le nombre de lignes pour que ça passe
     
-    printf("console_howManyLinesAreUsed: %d\n", console_howManyLinesAreUsed(cmd, cmd->buffer));
+    printf("console_verifyBufferHeight: console_howManyLinesItTakes: %d\n", console_howManyLinesItTakes(cmd, cmd->buffer));
 
     // uint8_t nbr_max_line_in_cmd = 10;
     uint8_t nbr_max_line_in_cmd = cmd->height / cmd->font->height;
     printf("nbr_max_line_in_cmd: %d\n", nbr_max_line_in_cmd);
 
     //if there is too much text then we delete the first of the buffer
-    if ( console_howManyLinesAreUsed(cmd, cmd->buffer) > nbr_max_line_in_cmd )
+    if (console_howManyLinesItTakes(cmd, cmd->buffer) > nbr_max_line_in_cmd )
     {
         char bumped_txt [strlen(cmd->buffer)];
         // memset(bumped_txt, 0, strlen(cmd->buffer));
@@ -238,14 +267,14 @@ void console_write(Console* cmd, const char* txt)
         //copy the txt to another to zork on it 
         char txt_2_work_on[strlen(txt)];
         strcpy(txt_2_work_on, txt);
-        console_verifyMessageLenth(cmd, txt_2_work_on);
 
-
-        // printf("current text: %s\n", txt_2_work_on);
-        // printf("console_howManyLinesAreUsed: %d\n", console_howManyLinesAreUsed(cmd, txt_2_work_on) );
-
+        printf("current text: %s\n", txt);
+        console_treatNewMessage(cmd, txt_2_work_on);
+        printf("console_treatNewMessage: %s\n", txt_2_work_on);
+        // printf("console_howManyLinesItTakes: %d\n", console_howManyLinesItTakes(cmd, txt_2_work_on) );
 
         console_addNewEntryToBuffer(cmd, txt_2_work_on);
+        // printf("console_howManyLinesItTakes: %d\n", console_howManyLinesItTakes(cmd, cmd->buffer) );
 
         // console_verifyBufferHeight(cmd);
 
@@ -269,7 +298,7 @@ void console_write(Console* cmd, const char* txt)
         {
             new_str[j] = cmd->buffer[i];
 
-            if ( cmd->buffer[i+1] == '\n' || cmd->buffer[i+1] == '\0')
+            if (cmd->buffer[i+1] == '\n' || cmd->buffer[i+1] == '\0')
             {
                 gui_drawText(cmd->x_pose, cmd->font->height*(line_index++)+cmd->y_pose, new_str);
                 memset(new_str, 0, 100);
