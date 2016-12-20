@@ -3,4 +3,4 @@
 	url = https://github.com/MicrochipTech/mla_usb.git
 [submodule "contrib/fatfs"]
 	path = contrib/fatfs
-	url = git@github.com:Robotips/FatFs.git
+	url = https://github.com/Robotips/FatFs.git
