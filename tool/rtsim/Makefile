@@ -5,9 +5,11 @@ TOOL_NAME := rtsim
 ifeq ($(OS),Windows_NT)
  TARGET_EXE := release
  TARGET_NAME := $(TOOL_NAME)
+ TOOL_DEPLOY := windeployqt.exe .
 else
  TARGET_EXE := all
  TARGET_NAME := $(TOOL_NAME).exe
+ TOOL_DEPLOY := 
 endif
 
 all: ../../bin/$(TARGET_NAME)
@@ -18,5 +20,6 @@ all: ../../bin/$(TARGET_NAME)
 
 ../../bin/$(TARGET_NAME): ../../build/$(TOOL_NAME)/Makefile FORCE
 	cd ../../build/$(TOOL_NAME) && make $(TARGET_EXE) -j$(NPROC)
+	cd ../../bin/ && $(TOOL_DEPLOY)
 
 FORCE:

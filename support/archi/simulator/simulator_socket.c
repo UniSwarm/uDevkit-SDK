@@ -69,12 +69,13 @@ int simulator_socket_read(char *data, size_t size)
 {
     if(simulator_sock != 0)
     {
-        u_long ret;
         #if defined (WIN32) || defined (_WIN32)
+            u_long ret;
             ioctlsocket(simulator_sock, FIONREAD, &ret);
             if(ret==0)
                 return 0;
         #endif
         return recv(simulator_sock, data, size, SOCKET_MODE);
     }
+    return 0;
 }
