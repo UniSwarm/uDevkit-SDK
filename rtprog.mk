@@ -10,7 +10,7 @@ ifndef OUT_PWD
 endif
 
 # VERBOSE variable to set the verbosity if VERBOSE=1
-ifeq ($(VERBOSE),1)
+ifdef VERBOSE
   VERB :=
 else
   VERB := @
@@ -34,7 +34,7 @@ INCLUDEPATH += -I. -I$(RTPROG)/include
 
 # cleaning rule project
 .PHONY: clean
-clean:
+clean: sim-clean
 	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c
 	rm -f $(OUT_PWD)/$(PROJECT).elf
 	rm -f modules.h pictures.h fonts.h

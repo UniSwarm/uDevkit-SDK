@@ -50,3 +50,7 @@ sim : $(OUT_SIM_PWD)/$(SIM_EXE) $(RTSIM_EXE)
 	killall rtsim || true
 	$(RTSIM_EXE) &
 	sleep 1 && ./$(OUT_SIM_PWD)/$(SIM_EXE)
+
+sim-clean :
+	rm -f $(OUT_SIM_PWD)/*.o $(OUT_SIM_PWD)/*.d $(OUT_SIM_PWD)/*.c
+	rm -f $(OUT_SIM_PWD)/$(SIM_EXE)
