@@ -23,8 +23,9 @@ int cmd_mrobot(int argc, char **argv)
             mrobot_motorGetP(),
             mrobot_motorGetI(),
             mrobot_motorGetD());
-        printf("speed: %.1f mm/s\r\n",
-            mrobot_speed());
+        printf("speed: %.1f mm/s (target %.1f mm/s)\r\n",
+            mrobot_speed(),
+            mrobot_targetSpeed());
 
         return 0;
     }

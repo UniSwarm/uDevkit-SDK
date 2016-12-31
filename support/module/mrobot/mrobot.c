@@ -6,7 +6,7 @@
 #include <math.h>
 #define M_PI        3.14159265358979323846
 
-int16_t mrobot_lastSpeed;
+int16_t mrobot_lastSpeed = 0;
 
 void mrobot_init()
 {
@@ -141,5 +141,10 @@ float mrobot_nextKeypointDistance()
 
 float mrobot_speed()
 {
-    return asserv_currentSpeed() * asserv_stepLenght();
+    return asserv_currentSpeed() * asserv_stepLenght() * 1000.0;
+}
+
+float mrobot_targetSpeed()
+{
+    return mrobot_lastSpeed * asserv_stepLenght() * 1000.0;
 }

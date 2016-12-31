@@ -60,6 +60,7 @@ MrobotPose mrobot_pose();
 MrobotPoint mrobot_nextKeypoint();
 float mrobot_nextKeypointDistance();
 float mrobot_speed();
+float mrobot_targetSpeed();
 
 
 #endif // MROBOT_H
