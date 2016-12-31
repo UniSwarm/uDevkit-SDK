@@ -3,8 +3,8 @@
  * @author Sebastien CAUX (sebcaux) / Charles-Antoine NOURY (CharlyBigoud)
  * @copyright Robotips 2016
  *
- * @date April 16, 2016, 14:41 PM 
- * 
+ * @date April 16, 2016, 14:41 PM
+ *
  * @brief AX12 servomotor support
  */
 
@@ -66,7 +66,7 @@ void ax12_send_char(uint8_t ax_id, uint8_t param, uint8_t val)
     trame[5]=param;
     trame[6]=val;
     trame[7]=~(uint8_t)(trame[2]+trame[3]+trame[4]+trame[5]+trame[6]);
-	
+
     uart_write(ax12_uart, trame, 8);
 }
 
@@ -227,7 +227,7 @@ void ax12_send_3_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2
 
         // axRecMode();                 //OLD NAME
         axReceiveMode();                //NEW NAME
-        
+
         return;
     }
     //for(p=0;p<50;p++);
@@ -289,4 +289,9 @@ void ax12_setTorque(uint8_t ax_id, uint16_t torque)
 void ax12_setLed(uint8_t ax_id, uint8_t led)
 {
 	ax12_send_char(ax_id, P_LED, led);
+}
+
+void ax12_setId(uint8_t ax_id, uint8_t newId)
+{
+    ax12_send_char(ax_id, P_ID, newId);
 }

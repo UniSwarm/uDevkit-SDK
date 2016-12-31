@@ -18,24 +18,26 @@
 
 #include "driver/device.h"
 
+#include "modules.h"
+
 Cmd cmds[] = {
   #ifdef USE_uart
-    {.name="uart", cmd_uart},
+    {"uart", cmd_uart},
   #endif
   #ifdef USE_i2c
-    {.name="i2c", cmd_i2c},
+    {"i2c", cmd_i2c},
   #endif
   #ifdef USE_adc
-    {.name="adc", cmd_adc},
+    {"adc", cmd_adc},
   #endif
-  #ifdef USE_ax
-    {.name="ax", cmd_ax},
+  #ifdef USE_ax12
+    {"ax", cmd_ax},
   #endif
   #ifdef USE_MODULE_mrobot
-    {.name="mrobot", cmd_mrobot},
+    {"mrobot", cmd_mrobot},
   #endif
-    {.name="led", cmd_led},
-    {.name="", NULL}
+    {"led", cmd_led},
+    {"", NULL}
 };
 
 extern rt_dev_t cmdline_device_in;
@@ -45,7 +47,7 @@ extern rt_dev_t cmdline_device_out;
 
 int cmd_exec(char *line)
 {
-    int i, argc;
+    uint16_t i, argc;
     Cmd *cmd;
     char *argv[CMDLINE_ARGC_MAX];
     char *sep;

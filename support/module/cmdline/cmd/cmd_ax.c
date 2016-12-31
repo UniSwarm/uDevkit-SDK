@@ -23,14 +23,32 @@ int cmd_ax(int argc, char **argv)
         return 0;
     }
 
-    // > ax <ax-id> <pos> [<speed>] [<torque>]
-    pos = atoi(argv[2]);
-    if(argc > 3)
-        speed = atoi(argv[3]);
-    if(argc > 4)
-        torque = atoi(argv[4]);
-    ax12_moveTo(axid, pos, speed, torque);
-    puts("ok");
+    if(argc < 4)
+        return 1;
+    pos = atoi(argv[3]);
+
+    // > ax <ax-id> move <pos> [<speed>] [<torque>]
+    if(strcmp(argv[2], "move")==0)
+    {
+        if(argc > 4)
+            speed = atoi(argv[4]);
+        if(argc > 5)
+            torque = atoi(argv[5]);
+        ax12_moveTo(axid, pos, speed, torque);
+        puts("ok");
+    }
+
+    // > ax <ax-id> setled <0:1>
+    if(strcmp(argv[2], "setled")==0)
+    {
+        ax12_setLed(axid, (uint8_t)pos);
+    }
+
+    // > ax <ax-id> setid <newid>
+    if(strcmp(argv[2], "setid")==0)
+    {
+        ax12_setId(axid, (uint8_t)pos);
+    }
 
     return 0;
 }

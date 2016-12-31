@@ -3,8 +3,8 @@
  * @author Sebastien CAUX (sebcaux) / Charles-Antoine NOURY (CharlyBigoud)
  * @copyright Robotips 2016
  *
- * @date April 16, 2016, 14:41 PM 
- * 
+ * @date April 16, 2016, 14:41 PM
+ *
  * @brief AX12 servomotor support
  */
 
@@ -29,6 +29,7 @@ void ax12_setPosition(uint8_t ax_id, uint16_t position);
 void ax12_setSpeed(uint8_t ax_id, uint16_t speed);
 void ax12_setTorque(uint8_t ax_id, uint16_t torque);
 void ax12_setLed(uint8_t ax_id, uint8_t led);
+void ax12_setId(uint8_t ax_id, uint8_t newId);
 
 //--- Control Table Address ---
 //EEPROM AREA
