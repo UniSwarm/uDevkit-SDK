@@ -18,36 +18,36 @@ int main(void)
 {
 	unsigned int i, j;
     uint16_t value_x, value_y, value_z;
-	rt_dev_t uartDbg;
-	rt_dev_t i2c;
+    rt_dev_t uartDbg;
+    rt_dev_t i2c;
     rt_dev_t usb_serial;
-	uint16_t value, value2;
-	char buff[200];
-	uint8_t acc[8];
+    uint16_t value, value2;
+    char buff[200];
+    uint8_t acc[8];
     MrobotPose pose;
 
-	sysclock_setClock(120000000);
-	robot_init();
+    sysclock_setClock(120000000);
+    robot_init();
 
-	usb_serial = usb_serial_getFreeDevice();
-    board_setLed(0, 1);
+    usb_serial = usb_serial_getFreeDevice();
 
-	// warning keep this init order before remap support
-	esp_init();
-	ax12_init();
+    // warning keep this init order before remap support
+    esp_init();
+    ax12_init();
     a6_init();
 
-	adc_init();
+    adc_init();
 
-	// uart debug init
-	uartDbg = uart_getFreeDevice();
-	uart_setBaudSpeed(uartDbg, 115200);
-	uart_setBitConfig(uartDbg, 8, UART_BIT_PARITY_NONE, 1);
-	uart_enable(uartDbg);
+    // uart debug init
+    uartDbg = uart_getFreeDevice();
+    uart_setBaudSpeed(uartDbg, 115200);
+    uart_setBitConfig(uartDbg, 8, UART_BIT_PARITY_NONE, 1);
+    uart_enable(uartDbg);
 
     // console init
     cmdline_init();
     cmdline_setDevice(usb_serial, usb_serial);
+    board_setLed(0, 1);
 
     // i2c init
     i2c = i2c_getFreeDevice();
@@ -65,9 +65,10 @@ int main(void)
     //asserv_goTo(pos[0], pos[1]);
 
     j=0;
-	while(1)
-	{
-		usb_serial_task();
+    while(1)
+    {
+		//esp_task();
+        usb_serial_task();
         for(i=0;i<65000;i++);
 
         /*if(asserv_getDistance() <= 15.0)
@@ -79,33 +80,33 @@ int main(void)
             asserv_goTo(pos[step], pos[step+1]);
         }*/
 
-		value = sharp_convert(adc_getValue(24), FarSharp);	// AnS1
-		/*value = adc_getValue(25);	// AnS2*/
-		value2 = sharp_convert(adc_getValue(26), FarSharp);	// AnS3
-		//ax12_moveTo(1, value, 512, 512);
+        value = sharp_convert(adc_getValue(24), FarSharp);	// AnS1
+        /*value = adc_getValue(25);	// AnS2*/
+        value2 = sharp_convert(adc_getValue(26), FarSharp);	// AnS3
+        //ax12_moveTo(1, value, 512, 512);
 
         if(value < 150 || value2 < 150)
             mrobot_pause();
         else
             mrobot_restart();
 
-        i2c_readregs(i2c, 0x38, 0x00, acc, 7, I2C_REG8 | I2C_REGADDR8);
+        /*i2c_readregs(i2c, 0x38, 0x00, acc, 7, I2C_REG8 | I2C_REGADDR8);
         if(acc[0] & 0x08)
         {
             value_x = acc[1];
             value_y = acc[3];
             value_z = acc[5];
-        }
+        }*/
 
         pose = mrobot_pose();
-		sprintf(buff, "d1:%d\td2:%d\tx: %d\ty:%d\tt:%d\tacx:%d\tacy:%d\tacz:%d\r\n",
-				value,
-				value2,
-				(int)pose.x,
-				(int)pose.y,
-				(int)pose.t,
-                value_x, value_y, value_z
-				);
+        sprintf(buff, "d1:%d\td2:%d\tx: %d\ty:%d\tt:%d\tacx:%d\tacy:%d\tacz:%d\r\n",
+                        value,
+                        value2,
+                        (int)pose.x,
+                        (int)pose.y,
+                        (int)pose.t,
+        value_x, value_y, value_z
+        );
 
         if(j++>10)
         {
@@ -115,7 +116,8 @@ int main(void)
         }
 
         cmdline_task();
-	}
+        board_setLed(0, 0);
+    }
 
-	return 0;
+    return 0;
 }

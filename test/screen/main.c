@@ -43,62 +43,10 @@ int main(void)
     Console cmd = Terminal_default;
     cmd.width = 300;
     cmd.height = 100;
-    cmd.font = &core12b;
+    cmd.font = &Lucida_Console10;
     cmd.font_color = Gui_White;
     cmd.background_color = Gui_Black;
-    console_open(&cmd, 100, 50);
-
-
-    //various tests without carriage returns
-    // console_write(&cmd, "line0"); //ok
-    // console_write(&cmd, "line0"); //ok
-    // console_write(&cmd, "line0"); //ok
-    // console_write(&cmd, "line0"); //ok
-    // console_write(&cmd, "line0"); //ok
-    // console_write(&cmd, "line0"); //ok
-
-    //OK
-    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
-    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
-    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
-    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
-    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
-
-    //OK
-    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
-    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
-    // console_write(&cmd, "line0"); //ok
-    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
-    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
-    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
-
-    //NON ok
-    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0");
-    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0");
-    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0");
-    // console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0");
-
-    //various tests without carriage returns
-
-    //ok
-    // console_write(&cmd, "line0\nline1");
-    // console_write(&cmd, "line0\nline1");
-    // console_write(&cmd, "line0\nline1");
-    // console_write(&cmd, "line0\nline1");
-
-    //OK
-    // console_write(&cmd, "line0line0line0line0line0\nline0line0line0line0line0"); //non ok
-    // console_write(&cmd, "line0line0line0line0line0\nline0line0line0line0line0"); //non ok
-    // console_write(&cmd, "line0line0line0line0line0\nline0line0line0line0line0"); //non ok
-    // console_write(&cmd, "line0line0line0line0line0\nline0line0line0line0line0"); //non ok
-
-    //ok
-    console_write(&cmd, "line0line0line0line0line0\nline0line0line0line0line0"); //non ok
-    console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0"); //non ok
-    console_write(&cmd, "line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0line0");
-
-
-
+    // console_open(&cmd, 100, 50);
 
     uart_write(uartDbg, "Type a word to add: ", 20);
     while(1)
