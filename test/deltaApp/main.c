@@ -6,6 +6,8 @@
 #include "robot.h"
 #include "archi.h"
 
+#include "a6channels.h"
+
 unsigned int pos[] = {
     1500, 1000,
     2000, 1000,
@@ -21,10 +23,14 @@ int main(void)
     rt_dev_t uartDbg;
     rt_dev_t i2c;
     rt_dev_t usb_serial;
-    uint16_t value, value2;
+    uint16_t value, value2, percent, volt;
     char buff[200];
     uint8_t acc[8];
     MrobotPose pose;
+    float valueF;
+    char led=0;
+
+    uint8_t a6Chan=0;
 
     sysclock_setClock(120000000);
     robot_init();
@@ -80,10 +86,10 @@ int main(void)
             asserv_goTo(pos[step], pos[step+1]);
         }*/
 
-        value = sharp_convert(adc_getValue(24), FarSharp);	// AnS1
+        value = sharp_convert(adc_getValue(ANS0), FarSharp);
         /*value = adc_getValue(25);	// AnS2*/
-        value2 = sharp_convert(adc_getValue(26), FarSharp);	// AnS3
-        //ax12_moveTo(1, value, 512, 512);
+        value2 = sharp_convert(adc_getValue(ANS2), FarSharp);
+        ax12_moveTo(1, value, 512, 512);
 
         if(value < 150 || value2 < 150)
             mrobot_pause();
@@ -100,23 +106,67 @@ int main(void)
 
         pose = mrobot_pose();
         sprintf(buff, "d1:%d\td2:%d\tx: %d\ty:%d\tt:%d\tacx:%d\tacy:%d\tacz:%d\r\n",
-                        value,
-                        value2,
-                        (int)pose.x,
-                        (int)pose.y,
-                        (int)pose.t,
-        value_x, value_y, value_z
+                value,
+                value2,
+                (int)pose.x,
+                (int)pose.y,
+                (int)pose.t,
+                value_x, value_y, value_z
         );
 
-        if(j++>10)
+        if(j++>20)
         {
-            //a6_write(buff, strlen(buff)-1);
+            uint16_t *ptr;
+            ptr = buff;
+            *ptr = 0xA6;
+
+            ptr++;
+            volt = adc_getValue(BOARD_VOLT_IN);
+            percent = (volt - 305) * 2;
+            *ptr = percent;
+
+            ptr++;
+            valueF = (float)volt * 35.6;
+            *ptr = (uint16_t)valueF;
+
+            ptr++;
+            *ptr = value;
+
+            ptr++;
+            *ptr = value2;
+
+            ptr++;
+            *ptr = pose.x;
+
+            ptr++;
+            *ptr = pose.y;
+
+            ptr++;
+            *ptr = pose.t;
+
+            a6_write(buff, 16);
+            j=0;
+            board_setLed(0, led);
+            led++;
             //uart_write(uartDbg, buff, strlen(buff));
             //usb_serial_write(usb_serial, buff, strlen(buff));
         }
 
         cmdline_task();
-        board_setLed(0, 0);
+
+        /*switch(a6Chan)
+        {
+        case 0:
+            // batt level and voltage
+            value = (adc_getValue(BOARD_VOLT_IN) - 305) * 2;
+            a6_writeShort(A6_BATT_LEVEL, value);
+            break;
+        case 1:
+            // batt level and voltage
+            valueF = (float)adc_getValue(BOARD_VOLT_IN) * 35.6;
+            a6_writeShort(A6_BATT_MVOLT, (uint16_t)valueF);
+            break;
+        }*/
     }
 
     return 0;
