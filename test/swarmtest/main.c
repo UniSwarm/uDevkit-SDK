@@ -196,28 +196,133 @@ uint8_t readReg(uint16_t addr)
     return value;
 }
 
+rt_dev_t uartLed;
+
+void sendLed(uint8_t r, uint8_t g, uint8_t b, char *bufLed)
+{
+    uint32_t grb;
+    uint8_t idLed;
+    grb = (((uint32_t)g)<<16) + (((uint32_t)r)<<8) + b;
+
+    for(idLed=0; idLed<12; idLed++)
+    {
+        bufLed[idLed] = 0x00;
+        if((grb & 0x800000) == 0)
+            bufLed[idLed] |= 0x07;
+        if((grb & 0x400000) == 0)
+            bufLed[idLed] |= 0xF0;
+        grb = grb << 2;
+    }
+}
+
+void stepper_handler()
+{
+    static uint8_t step = 0;
+    switch(step)
+    {
+    case 0:
+        board_setLed(0, 0);
+        setM1A(MMAX2);
+        setM1B(MMAX2);
+        setM2A(MMAX2);
+        setM2B(MMAX2);
+        break;
+
+    case 1:
+        setM1A(0);
+        setM1B(MMAX);
+        setM2A(0);
+        setM2B(MMAX);
+        break;
+
+    case 2:
+        setM1A(-MMAX2);
+        setM1B(MMAX2);
+        setM2A(-MMAX2);
+        setM2B(MMAX2);
+        break;
+
+    case 3:
+        setM1A(-MMAX);
+        setM1B(0);
+        setM2A(-MMAX);
+        setM2B(0);
+        break;
+
+    case 4:
+        board_setLed(0, 1);
+        setM1A(-MMAX2);
+        setM1B(-MMAX2);
+        setM2A(-MMAX2);
+        setM2B(-MMAX2);
+        break;
+
+    case 5:
+        setM1A(0);
+        setM1B(-MMAX);
+        setM2A(0);
+        setM2B(-MMAX);
+        break;
+
+    case 6:
+        setM1A(MMAX2);
+        setM1B(-MMAX2);
+        setM2A(MMAX2);
+        setM2B(-MMAX2);
+        break;
+
+    case 7:
+        setM1A(MMAX);
+        setM1B(0);
+        setM2A(MMAX);
+        setM2B(0);
+        break;
+    }
+
+    step++;
+    if(step>=8)
+        step=0;
+}
+
 int main(void)
 {
 	unsigned int i,j;
-	rt_dev_t uartDbg;
 	uint16_t value;
 	char buff[100];
+    rt_dev_t stepper_timer;
 
 	sysclock_setClock(120000000);
 	board_init();
 
 	// warning keep this init order before remap support
 	esp_init();
+
+    // uart debug init
+    uartLed = uart_getFreeDevice();
+    uart_setBaudSpeed(uartLed, 4000000);
+    uart_setBitConfig(uartLed, 8, UART_BIT_PARITY_NONE, 1);
+    U2STAbits.UTXINV = 1;
+    uart_enable(uartLed);
+
     board_setLed(1, 1);
+    for(j=0;j<2;j++) for(i=0;i<65000;i++);
+    sendLed(64, 0, 128, buff);
+    sendLed(0, 128, 64, buff+12);
+    uart_write(uartLed, buff, 24);
 
 	adc_init();
 
     setup_PWM();
 
+    // stepper
+    stepper_timer = timer_getFreeDevice();
+    timer_setPeriodMs(stepper_timer, 200);
+    timer_setHandler(stepper_timer, stepper_handler);
+    timer_enable(stepper_timer);
+
     i2c = i2c_getFreeDevice();
     i2c_setBaudSpeed(i2c, I2C_BAUD_400K);
     i2c_enable(i2c);
-
 
     i2c_start(i2c);
     i2c_putc(i2c, 0x38);
@@ -291,14 +396,14 @@ int main(void)
     writeReg(0x0018, 0x01); // start
 
 	// uart debug init
-	uartDbg = uart_getFreeDevice();
-	uart_setBaudSpeed(uartDbg, 115200);
-	uart_setBitConfig(uartDbg, 8, UART_BIT_PARITY_NONE, 1);
-	uart_enable(uartDbg);
+	uartLed = uart_getFreeDevice();
+	uart_setBaudSpeed(uartLed, 115200);
+	uart_setBitConfig(uartLed, 8, UART_BIT_PARITY_NONE, 1);
+	uart_enable(uartLed);
 
     T1CON = 0;
     T1CONbits.TCKPS = 3;
-    PR1 = 10000;
+    PR1 = 1000;
     T1CONbits.TON = 1;
 
 	while(1)
@@ -311,94 +416,30 @@ int main(void)
         {
             board_setLed(1, 1);
             _T1IE = 1;
+
+            sendLed(128, 0, 0, buff);
+            sendLed(0, 0, 0, buff+12);
+            uart_write(uartLed, buff, 24);
         }
         else
         {
             board_setLed(1, 0);
             _T1IE = 0;
+
+            sendLed(0, 0, 0, buff);
+            sendLed(0, 0, 128, buff+12);
+            uart_write(uartLed, buff, 24);
         }
 
 		value = adc_getValue(BOARD_VOLT_IN);	// BOARD_VOLT_IN
 		sprintf(buff, "value: %dv", value);
 
-		uart_write(uartDbg, buff, strlen(buff)+1);
+		uart_write(uartLed, buff, strlen(buff)+1);
 
-		value = uart_read(uartDbg, buff, 100);
+		value = uart_read(uartLed, buff, 100);
 		if(value>0)
-			uart_write(uartDbg, buff, value);
+			uart_write(uartLed, buff, value);
 	}
 
 	return 0;
-}
-
-uint8_t step = 0;
-void __attribute__((__interrupt__, __auto_psv__)) _T1Interrupt(void)
-{
-    // Clear Timer 1 interrupt flag
-    _T1IF = 0;
-
-    switch(step)
-    {
-    case 0:
-        board_setLed(0, 0);
-        setM1A(MMAX2);
-        setM1B(MMAX2);
-        setM2A(MMAX2);
-        setM2B(MMAX2);
-        break;
-
-    case 1:
-        setM1A(0);
-        setM1B(MMAX);
-        setM2A(0);
-        setM2B(MMAX);
-        break;
-
-    case 2:
-        setM1A(-MMAX2);
-        setM1B(MMAX2);
-        setM2A(-MMAX2);
-        setM2B(MMAX2);
-        break;
-
-    case 3:
-        setM1A(-MMAX);
-        setM1B(0);
-        setM2A(-MMAX);
-        setM2B(0);
-        break;
-
-    case 4:
-        board_setLed(0, 1);
-        setM1A(-MMAX2);
-        setM1B(-MMAX2);
-        setM2A(-MMAX2);
-        setM2B(-MMAX2);
-        break;
-
-    case 5:
-        setM1A(0);
-        setM1B(-MMAX);
-        setM2A(0);
-        setM2B(-MMAX);
-        break;
-
-    case 6:
-        setM1A(MMAX2);
-        setM1B(-MMAX2);
-        setM2A(MMAX2);
-        setM2B(-MMAX2);
-        break;
-
-    case 7:
-        setM1A(MMAX);
-        setM1B(0);
-        setM2A(MMAX);
-        setM2B(0);
-        break;
-    }
-
-    step++;
-    if(step>=8)
-        step=0;
 }
