@@ -159,43 +159,6 @@ void setM2B(short v)
     }
 }
 
-void writeReg(uint16_t addr, uint8_t data)
-{
-    i2c_start(i2c);
-    i2c_putc(i2c, 0x52); // address write
-    i2c_putc(i2c, addr>>8); // reg high
-    i2c_putc(i2c, addr&0x00FF); // reg low
-    i2c_putc(i2c, data); // data to write
-    i2c_stop(i2c);
-}
-
-void writeReg16(uint16_t addr, uint16_t data)
-{
-    i2c_start(i2c);
-    i2c_putc(i2c, 0x52); // address write
-    i2c_putc(i2c, addr>>8); // reg high
-    i2c_putc(i2c, addr&0x00FF); // reg low
-    i2c_putc(i2c, data>>8); // data to write
-    i2c_putc(i2c, data&0x00FF); // data to write
-    i2c_stop(i2c);
-}
-
-uint8_t readReg(uint16_t addr)
-{
-    uint8_t value;
-    i2c_start(i2c);
-    i2c_putc(i2c, 0x52); // address write
-    i2c_putc(i2c, addr>>8); // reg high
-    i2c_putc(i2c, addr&0x00FF); // reg low
-    i2c_stop(i2c);
-    i2c_start(i2c);
-    i2c_putc(i2c, 0x53); // address read
-    value = i2c_getc(i2c);
-    i2c_nack(i2c);
-    i2c_stop(i2c);
-    return value;
-}
-
 rt_dev_t uartLed;
 
 void sendLed(uint8_t r, uint8_t g, uint8_t b, char *bufLed)
@@ -324,76 +287,66 @@ int main(void)
     i2c_setBaudSpeed(i2c, I2C_BAUD_400K);
     i2c_enable(i2c);
 
-    i2c_start(i2c);
-    i2c_putc(i2c, 0x38);
-    i2c_putc(i2c, 0x0D);
-    i2c_restart(i2c);
-    i2c_putc(i2c, 0x39);
-    value = i2c_getc(i2c);
-    i2c_nack(i2c);
-    i2c_stop(i2c);
-
 	for(j=0;j<2;j++) for(i=0;i<65000;i++);
-    writeReg(0x0207, 0x01);
-    writeReg(0x0208, 0x01);
-    writeReg(0x0096, 0x00);
-    writeReg(0x0097, 0xfd);
-    writeReg(0x00e3, 0x00);
-    writeReg(0x00e4, 0x04);
-    writeReg(0x00e5, 0x02);
-    writeReg(0x00e6, 0x01);
-    writeReg(0x00e7, 0x03);
-    writeReg(0x00f5, 0x02);
-    writeReg(0x00d9, 0x05);
-    writeReg(0x00db, 0xce);
-    writeReg(0x00dc, 0x03);
-    writeReg(0x00dd, 0xf8);
-    writeReg(0x009f, 0x00);
-    writeReg(0x00a3, 0x3c);
-    writeReg(0x00b7, 0x00);
-    writeReg(0x00bb, 0x3c);
-    writeReg(0x00b2, 0x09);
-    writeReg(0x00ca, 0x09);
-    writeReg(0x0198, 0x01);
-    writeReg(0x01b0, 0x17);
-    writeReg(0x01ad, 0x00);
-    writeReg(0x00ff, 0x05);
-    writeReg(0x0100, 0x05);
-    writeReg(0x0199, 0x05);
-    writeReg(0x01a6, 0x1b);
-    writeReg(0x01ac, 0x3e);
-    writeReg(0x01a7, 0x1f);
-    writeReg(0x0030, 0x00);
+    i2c_writereg(i2c, 0x52, 0x0207, 0x01, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x0208, 0x01, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x0096, 0x00, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x0097, 0xfd, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00e3, 0x00, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00e4, 0x04, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00e5, 0x02, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00e6, 0x01, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00e7, 0x03, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00f5, 0x02, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00d9, 0x05, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00db, 0xce, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00dc, 0x03, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00dd, 0xf8, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x009f, 0x00, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00a3, 0x3c, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00b7, 0x00, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00bb, 0x3c, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00b2, 0x09, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00ca, 0x09, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x0198, 0x01, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x01b0, 0x17, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x01ad, 0x00, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x00ff, 0x05, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x0100, 0x05, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x0199, 0x05, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x01a6, 0x1b, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x01ac, 0x3e, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x01a7, 0x1f, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, 0x0030, 0x00, I2C_REGADDR16);
 
     //Enable Interrupts on Conversion Complete (any source)
-    writeReg(VL6180X_SYSTEM_INTERRUPT_CONFIG_GPIO, (4 << 3)|(4) ); // Set GPIO1 high when sample complete
+    i2c_writereg(i2c, 0x52, VL6180X_SYSTEM_INTERRUPT_CONFIG_GPIO, (4 << 3)|(4) , I2C_REGADDR16); // Set GPIO1 high when sample complete
 
 
-    writeReg(VL6180X_SYSTEM_MODE_GPIO1, 0x10); // Set GPIO1 high when sample complete
-    writeReg(VL6180X_READOUT_AVERAGING_SAMPLE_PERIOD, 0x30); //Set Avg sample period
-    writeReg(VL6180X_SYSALS_ANALOGUE_GAIN, 0x46); // Set the ALS gain
-    writeReg(VL6180X_SYSRANGE_VHV_REPEAT_RATE, 0xFF); // Set auto calibration period (Max = 255)/(OFF = 0)
-    writeReg(VL6180X_SYSALS_INTEGRATION_PERIOD, 0x63); // Set ALS integration time to 100ms
-    writeReg(VL6180X_SYSRANGE_VHV_RECALIBRATE, 0x01); // perform a single temperature calibration
+    i2c_writereg(i2c, 0x52, VL6180X_SYSTEM_MODE_GPIO1, 0x10, I2C_REGADDR16); // Set GPIO1 high when sample complete
+    i2c_writereg(i2c, 0x52, VL6180X_READOUT_AVERAGING_SAMPLE_PERIOD, 0x30, I2C_REGADDR16); //Set Avg sample period
+    i2c_writereg(i2c, 0x52, VL6180X_SYSALS_ANALOGUE_GAIN, 0x46, I2C_REGADDR16); // Set the ALS gain
+    i2c_writereg(i2c, 0x52, VL6180X_SYSRANGE_VHV_REPEAT_RATE, 0xFF, I2C_REGADDR16); // Set auto calibration period (Max = 255)/(OFF = 0)
+    i2c_writereg(i2c, 0x52, VL6180X_SYSALS_INTEGRATION_PERIOD, 0x63, I2C_REGADDR16); // Set ALS integration time to 100ms
+    i2c_writereg(i2c, 0x52, VL6180X_SYSRANGE_VHV_RECALIBRATE, 0x01, I2C_REGADDR16); // perform a single temperature calibration
     //Optional settings from datasheet
     //http://www.st.com/st-web-ui/static/active/en/resource/technical/document/application_note/DM00122600.pdf
-    writeReg(VL6180X_SYSRANGE_INTERMEASUREMENT_PERIOD, 0x09); // Set default ranging inter-measurement period to 100ms
-    writeReg(VL6180X_SYSALS_INTERMEASUREMENT_PERIOD, 0x0A); // Set default ALS inter-measurement period to 100ms
-    writeReg(VL6180X_SYSTEM_INTERRUPT_CONFIG_GPIO, 0x24); // Configures interrupt on ‘New Sample Ready threshold event’
+    i2c_writereg(i2c, 0x52, VL6180X_SYSRANGE_INTERMEASUREMENT_PERIOD, 0x09, I2C_REGADDR16); // Set default ranging inter-measurement period to 100ms
+    i2c_writereg(i2c, 0x52, VL6180X_SYSALS_INTERMEASUREMENT_PERIOD, 0x0A, I2C_REGADDR16); // Set default ALS inter-measurement period to 100ms
+    i2c_writereg(i2c, 0x52, VL6180X_SYSTEM_INTERRUPT_CONFIG_GPIO, 0x24, I2C_REGADDR16); // Configures interrupt on ‘New Sample Ready threshold event’
     //Additional settings defaults from community
-    writeReg(VL6180X_SYSRANGE_MAX_CONVERGENCE_TIME, 0x32);
-    writeReg(VL6180X_SYSRANGE_RANGE_CHECK_ENABLES, 0x10 | 0x01);
-    writeReg16(VL6180X_SYSRANGE_EARLY_CONVERGENCE_ESTIMATE, 0x7B );
-    writeReg16(VL6180X_SYSALS_INTEGRATION_PERIOD, 0x64);
+    i2c_writereg(i2c, 0x52, VL6180X_SYSRANGE_MAX_CONVERGENCE_TIME, 0x32, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, VL6180X_SYSRANGE_RANGE_CHECK_ENABLES, 0x10 | 0x01, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, VL6180X_SYSRANGE_EARLY_CONVERGENCE_ESTIMATE, 0x7B , I2C_REGADDR16 | I2C_REG16);
+    i2c_writereg(i2c, 0x52, VL6180X_SYSALS_INTEGRATION_PERIOD, 0x64, I2C_REGADDR16 | I2C_REG16);
 
-    writeReg(VL6180X_READOUT_AVERAGING_SAMPLE_PERIOD,0x30);
-    writeReg(VL6180X_SYSALS_ANALOGUE_GAIN,0x40);
-    writeReg(VL6180X_FIRMWARE_RESULT_SCALER,0x01);
+    i2c_writereg(i2c, 0x52, VL6180X_READOUT_AVERAGING_SAMPLE_PERIOD,0x30, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, VL6180X_SYSALS_ANALOGUE_GAIN,0x40, I2C_REGADDR16);
+    i2c_writereg(i2c, 0x52, VL6180X_FIRMWARE_RESULT_SCALER,0x01, I2C_REGADDR16);
 
 	for(j=0;j<2;j++) for(i=0;i<65000;i++);
-    readReg(0x0000);
 
-    writeReg(0x0018, 0x01); // start
+    i2c_writereg(i2c, 0x52, 0x0018, 0x01, I2C_REGADDR16); // start
 
 	// uart debug init
 	uartLed = uart_getFreeDevice();
@@ -408,10 +361,10 @@ int main(void)
 
 	while(1)
 	{
-        writeReg(0x0018, 0x01); // start
+        i2c_writereg(i2c, 0x52, 0x0018, 0x01, I2C_REGADDR16); // start
 		for(j=0;j<3;j++) for(i=0;i<65000;i++);
-        value = readReg(0x0062);
-        writeReg(0x0015, 0x07);
+        value = i2c_readreg(i2c, 0x52, 0x0062, I2C_REGADDR16 | I2C_READ_STOPSTART | I2C_REG16);
+        i2c_writereg(i2c, 0x52, 0x0015, 0x07, I2C_REGADDR16);
         if(value > 50)
         {
             board_setLed(1, 1);
