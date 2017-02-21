@@ -7,6 +7,7 @@ OUT_PWD = build
 # CCFLAGS += -pedantic
 
 DRIVERS += uart esp8266 adc i2c timer
+MODULES += sensor
 
 SRC += main.c
 

@@ -11,6 +11,8 @@
 #ifndef SENSOR_H
 #define SENSOR_H
 
+#include "driver/VL6180X.h"
+
 #define SENSOR_TYPE_DISTANCE
 #define SENSOR_TYPE_LIGHT
 #define SENSOR_TYPE_SOUND
