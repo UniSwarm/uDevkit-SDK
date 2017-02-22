@@ -78,7 +78,7 @@ uint16_t VL6180X_getDistance(rt_dev_t i2c_bus, uint8_t i2c_addr)
     uint16_t i;
     i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSRANGE_START, 0x01, I2C_REGADDR16); // start
     for(i=0;i<65000;i++);
-    value = i2c_readreg(i2c_bus, i2c_addr, VL6180X_RESULT_RANGE_VAL, I2C_REGADDR16 | I2C_READ_STOPSTART | I2C_REG16);
+    value = i2c_readreg(i2c_bus, i2c_addr, VL6180X_RESULT_RANGE_VAL, I2C_REGADDR16 | I2C_READ_STOPSTART);
     i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSTEM_INTERRUPT_CLEAR, 0x07, I2C_REGADDR16);
     return value;
 }
