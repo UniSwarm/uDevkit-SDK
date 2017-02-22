@@ -8,11 +8,8 @@ Each driver must have a particular directory with the same name of the driver wh
 
 |Driver name|Description|
 |-----------|-----------|
-|[a6](a6/README.md)|a6 communication driver|
-|[ar1000](ar1000/README.md)|resistive touch controller driver|
 |[asserv](asserv/README.md)|motor control for robot movements|
 |[ax12](ax12/README.md)|ax12 servo motor driver|
-|[esp8266](esp8266/README.md)|ESP8266 wifi module driver|
 |[motor](motor/README.md)|motor abstraction drivers|
 |[adc](periph/adc/README.md)|ADC analog converters driver|
 |[i2c](periph/i2c/README.md)|I2C communication driver|
@@ -25,7 +22,6 @@ Each driver must have a particular directory with the same name of the driver wh
 |[timer](periph/timer/README.md)|Timer driver|
 |[uart](periph/uart/README.md)|UART (serial) communication driver|
 |[usb_hal](periph/usb_hal/README.md)|USB low layer driver|
-|[sharp](sharp/README.md)|sharp sensor drivers|
 |[usb_serial](usb_serial/README.md)|USB CDC driver|
 
 ## How to add a driver support?
@@ -68,5 +64,9 @@ And for specific architecture :
 	 ARCHI_SRC += timer_pic24.c
 	 HEADER += timer_pic24.h
 	endif
+
+To implement a simulator interface :
+
+	SIM_SRC += timer_sim.c
 
 And for global inclusion of the driver, add a header file that include needed include files of the support in include/driver/.
