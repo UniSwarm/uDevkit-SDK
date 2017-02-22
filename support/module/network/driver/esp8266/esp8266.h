@@ -5,6 +5,8 @@
 
 void esp_init();
 
+void esp_task();
+
 void esp_send_cmd(char data[]);
 void esp_write(char data[], uint16_t size);
 
@@ -33,44 +35,8 @@ void esp_server_destroy();
 
 typedef enum
 {
-    FSM_UNKNOW = 0,
-    FSM_WAITING_VALIDATE,
-    FSM_START,
-
-    FSM_OK_O,
-    FSM_OK_K,
-
-    FSM_SENDOK_S,
-    FSM_SENDOK_E,
-    FSM_SENDOK_N,
-    FSM_SENDOK_D,
-    FSM_SENDOK_Sp,
-    FSM_SENDOK_O,
-    FSM_SENDOK_K,
-
-    FSM_ERROR_E,
-    FSM_ERROR_R1,
-    FSM_ERROR_R2,
-    FSM_ERROR_O,
-    FSM_ERROR_R3,
-
-    FSM_PLUS,
-
-    FSM_IPD_I,
-    FSM_IPD_P,
-    FSM_IPD_D,
-    FSM_IPD_COMMA_1,
-    FSM_IPD_SOCKET_DIGIT,
-    FSM_IPD_COMMA_2,
-    FSM_IPD_SIZE_DIGITS,
-    FSM_PACKET_RX,
-    FSM_RX_COMPLETE
-
-} WIFIstatus;
-
-typedef enum
-{
     WIFI_STATE_NONE = 0,
+    WIFI_STATE_READY,
     WIFI_STATE_OK,
     WIFI_STATE_ERROR,
     WIFI_STATE_RECEIVE_DATA,

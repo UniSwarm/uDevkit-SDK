@@ -49,3 +49,14 @@ ssize_t a6_read(char *data, size_t size_max)
 {
     return uart_read(a6_uart, data, size_max);
 }
+
+void a6_writeShort(uint16_t channel, uint16_t value)
+{
+    char data[6];
+    data[0]=0xA6;
+    data[1]=(char)(channel>>8);
+    data[2]=(char)(channel&0x00FF);
+    data[3]=(char)(value>>8);
+    data[4]=(char)(value&0x00FF);
+    data[5]=0x6A;
+}

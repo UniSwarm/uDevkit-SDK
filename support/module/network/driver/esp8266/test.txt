@@ -1,0 +1,120 @@
+@ 3000
+$ ATE0\r\n
+>
+>
+$ AT\r\n
+> OK
+$ AT+CWQAP\r\n
+@ 1000
+$ AT+CWMODE=3\r\n
+> OK
+$ AT+CWJAP="SSID","password"\r\n
+@ 5000
+$ AT+CIPSTART="TCP","192.168.100.1",28080\r\n
+@ 1000 
+> CONNECT
+> OK
+$ AT+CIPMODE=1\r\n
+> OK
+$ AT+CIPSEND\r\n
+> OK
+
+
+
+
+******** ESP8266 Demo ********
+AT+RST
+
+
+OK
+bBֆ@�RcN3�S����BjCRe��J�`AB�����F
+Ai-Thinker Technology Co. Ltd.
+
+ready
+Module is ready.
+
+AT+GMR
+
+AT version:0.21.0.0
+SDK version:0.9.5
+
+OK
+
+AT+CWMODE?
+
++CWMODE:1
+
+OK
+
+�AT+CWMODE=1
+
+
+
+
+OK
+
+AT+CIPMUX=1
+
+
+
+
+OK
+
+AT+CWJAP="Catch Herpies","afafafafaf"
+
+
+OK
+Connected to WiFi.
+
+
+AT+CIFSR
+
+
++CIFSR:STAIP,"192.168.1.86"
+
++CI��Q
+�)��V�,Y�
+
+-5
+��
+U*OK
+�H",��r�r0.61",80
+
+0,CONNECT
+
+OK
+***********************************************
+GET //esp8266.txt HTTP/1.1
+Host: www.coopx.org:80
+
+
+***********************************************
+
+AT+CIPSTATUS
+
+STATUS:3
++CIPSTATUS:0,"TCP","208.113.160.61",AT+CIPSEND=0,54
+
+
+OK
+>
+ GET //esp8266.txt HTTP/1.1
+Host: www.coopx.org:80
+
+
+busy s...
+
+SEND OK
+
+
++IPD,0,251:HTTP/1.1 200 OK
+Date: Wed, 14 Oct 2015 04:19:27 GMT
+Server: Apache
+Last-Modified: Tue, 13 Oct 2015 22:21:03 GMT
+ETag: "10-52203dc7da933"
+Accept-Ranges: bytes
+Content-Length: 16
+Vary: Accept-Encoding
+Content-Type: text/plain
+
+HXWM1111111111110,CLOSED

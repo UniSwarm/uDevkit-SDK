@@ -52,6 +52,7 @@ doc/*
 modules.h
 pictures.h
 fonts.h
+network_driver.h
 
 # proc file
 support/archi/pic16b/*.txt

@@ -4,7 +4,7 @@ PROJECT = simtest
 BOARD = a6screenboard
 OUT_PWD = build
 
-DRIVERS += uart
+DRIVERS += uart timer
 MODULES += gui
 
 SRC += main.c

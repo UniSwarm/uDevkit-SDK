@@ -4,8 +4,10 @@ PROJECT = testproj
 BOARD = a6screenboard
 OUT_PWD = build
 
-DRIVERS += a6 timer
-MODULES += gui
+DRIVERS += timer
+MODULES += gui network
+
+NETWORK_DRIVERS = a6
 
 SRC += main.c
 FONTS += core12b core18b Lucida_Console10
