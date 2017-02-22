@@ -33,7 +33,7 @@ int main(void)
 	uart_setBitConfig(uartDbg, 8, UART_BIT_PARITY_NONE, 1);
 	uart_enable(uartDbg);
 
-	LED = 1;
+	board_setLed(0, 1);
 
 	while(1)
 	{
