@@ -55,7 +55,6 @@ PICTURES_C := $(addprefix $(OUT_PWD)/, $(PICTURES_C))
 SRC += $(PICTURES_C)
 
 # generate list of used pictures
-main.c: pictures.h
 pictures.h: Makefile
 	@echo "generate pictures.h..."
 	@printf "#ifndef _PICTURES_\n#define _PICTURES_\n\n\
@@ -63,14 +62,12 @@ pictures.h: Makefile
 	$(foreach PICTURE,$(PICTURES_NAME),\nextern const Picture $(PICTURE);)\n\n\
 	#endif //_PICTURES_\
 	" > pictures.h
-
-$(OUT_PWD)/%.o : pictures.h
+CONFIG_HEADERS += pictures.h
 
 ################ FONT SUPPORT ################
 FONTS_C := $(addprefix $(OUT_PWD)/, $(addsuffix .font.c, $(FONTS)))
 SRC += $(FONTS_C)
 
-main.c: fonts.h
 fonts.h: Makefile
 	@echo "generate fonts.h..."
 	@printf "#ifndef _FONTS_\n#define _FONTS_\n\n\
@@ -78,6 +75,7 @@ fonts.h: Makefile
 	$(foreach FONT,$(FONTS),\nextern const Font $(FONT);)\n\n\
 	#endif //_FONTS_\
 	" > fonts.h
+CONFIG_HEADERS += fonts.h
 
 #.PHONY : $(FONTS_C)
 $(OUT_PWD)/%.font.o : $(OUT_PWD)/%.font.c

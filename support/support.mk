@@ -17,5 +17,5 @@ include $(RTPROG)/support/driver/driver.mk
 # include all sys files
 include $(RTPROG)/support/sys/sys.mk
 
-# include all sys files
+# include all simulator files
 include $(RTPROG)/support/archi/simulator/simulator.mk
