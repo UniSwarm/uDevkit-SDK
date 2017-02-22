@@ -19,6 +19,11 @@ hex : $(OUT_PWD)/$(PROJECT).hex
 
 CCFLAGS_XC += -mno-eds-warn
 
+# construction of list of OBJECTS to build and include dependencies files if exist
+OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=.o)) $(notdir $(ARCHI_SRC:.c=.o)))
+-include $(wildcard $(OUT_PWD)/*.d)
+$(OBJECTS) : $(CONFIG_HEADERS)
+
 # rule to build OBJECTS to OUT_PWD and give dependencies
 $(OUT_PWD)/%.o : %.c
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)

@@ -1,5 +1,6 @@
 MAKEFLAGS += --no-builtin-rules
 .SUFFIXES:
+	MAKEFLAGS += -r
 CONFIG_HEADERS = modules.h
 
 # variable that contain the root directory of rtprog
@@ -20,16 +21,11 @@ endif
 # make all as default rule
 all:
 
-# uncomment this line when all C includes will be in GPStudio
+# uncomment this line when all C includes will be in RTProg
 # CCFLAGS += -nostdinc
 
 # include all support needed
 include $(RTPROG)/support/support.mk
-
-# construction of list of OBJECTS to build and include dependencies files if exist
-OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=.o)) $(notdir $(ARCHI_SRC:.c=.o)))
--include $(wildcard $(OUT_PWD)/*.d)
-$(OBJECTS) : $(CONFIG_HEADERS)
 
 # include path set to the local project and rtprog include path
 INCLUDEPATH += -I. -I$(RTPROG)/include
@@ -40,10 +36,6 @@ clean: sim-clean
 	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c
 	rm -f $(OUT_PWD)/$(PROJECT).elf
 	rm -f $(CONFIG_HEADERS)
-
-# dependencies
-$(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
-$(OUT_PWD)/$(SIM_EXE) : $(SIM_OBJECTS)
 
 # generate list of used drivers modules
 empty:=

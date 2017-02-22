@@ -7,10 +7,7 @@ vpath %.c $(NETPATH)
 
 include $(foreach net_driver,$(NETWORK_DRIVERS),$(NETPATH)/driver/$(net_driver)/$(net_driver).mk)
 
-$(OUT_PWD)/%.o : network_driver.h
-
-.PHONY: network_driver.h
-network_driver.h :
+network_driver.h : Makefile
 	@echo "generate network_driver.h..."
 	@printf "\n// defines use of modules and drivers\n\
 $(subst $(space),\n,$(foreach NETWORK_DRIVER,$(sort $(NETWORK_DRIVERS)),#define USE_$(NETWORK_DRIVER)\n))\n\
