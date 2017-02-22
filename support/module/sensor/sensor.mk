@@ -1,11 +1,17 @@
 ifndef SENSOR_MODULE
 SENSOR_MODULE=
 
-vpath %.c $(MODULEPATH)
-vpath %.c $(MODULEPATH)/driver
+SENSOR_PATH := $(MODULEPATH)
 
-# SRC += sensor.c
+vpath %.c $(SENSOR_PATH)
 
-SRC += driver/VL6180X.c
+include $(foreach SENSOR_DRIVER,$(SENSOR_DRIVERS),$(SENSOR_PATH)/driver/$(SENSOR_DRIVER)/$(SENSOR_DRIVER).mk)
+
+sensor_driver.h : Makefile
+	@echo "generate sensor_driver.h..."
+	@printf "\n// defines use of sensors drivers\n\
+$(subst $(space),\n,$(foreach SENSOR_DRIVER,$(sort $(SENSOR_DRIVERS)),#define USE_$(SENSOR_DRIVER)\n))\n\
+" > sensor_driver.h
+CONFIG_HEADERS += sensor_driver.h
 
 endif

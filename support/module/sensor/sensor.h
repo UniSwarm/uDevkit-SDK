@@ -11,7 +11,13 @@
 #ifndef SENSOR_H
 #define SENSOR_H
 
-#include "driver/VL6180X.h"
+#include "sensor_driver.h"
+#ifdef USE_sharp
+  #include "driver/sharp/sharp.h"
+#endif
+#ifdef USE_VL6180X
+  #include "driver/VL6180X/VL6180X.h"
+#endif
 
 #define SENSOR_TYPE_DISTANCE
 #define SENSOR_TYPE_LIGHT

@@ -8,10 +8,14 @@ OUT_PWD = build
 
 # CCFLAGS += -pedantic
 
-DRIVERS += timer uart ax12 adc sharp i2c pwm
-MODULES += mrobot network
+DRIVERS += timer uart ax12 adc i2c pwm
+MODULES += mrobot
 
+MODULES += network
 NETWORK_DRIVERS = esp8266 a6
+
+MODULES += sensor
+SENSOR_DRIVERS = sharp
 
 SRC += main.c
 

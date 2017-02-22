@@ -7,9 +7,12 @@ OUT_PWD = build
 # CCFLAGS += -pedantic
 
 DRIVERS += uart adc i2c timer
-MODULES += sensor network
 
+MODULES += network
 NETWORK_DRIVERS = esp8266
+
+MODULES += sensor
+SENSOR_DRIVERS = VL6180X
 
 SRC += main.c
 
@@ -20,4 +23,12 @@ all : hex
 	@echo "DRIVERS implemented   :" $(DRIVERS)
 	@echo "BADDRIVERS sorted     :" $(sort $(BADDRIVERS))
 	@echo DEVICE: $(DEVICE), ARCHI: $(ARCHI), CC: $(CC), DEFINES: $(DEFINES)
+	@echo OBJECTS: $(OBJECTS)
+
+	
+echo:
+	@echo "DRIVERS implemented   :" $(DRIVERS)
+	@echo DEVICE: $(DEVICE), ARCHI: $(ARCHI), CC: $(CC), DEFINES: $(DEFINES)
+	@echo CCFLAGS: $(CCFLAGS)
+	@echo SRC: $(SRC)
 	@echo OBJECTS: $(OBJECTS)
