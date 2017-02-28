@@ -1,6 +1,8 @@
 # PIC32MZ EF support
 
-This architechture support file handle all PIC32MZ EF devices.
+This architecture support file handle all PIC32MZ EF devices.
+
+(48 devices on feb 2017)
 
 |Compatible devices|
 |---------|

@@ -1,6 +1,8 @@
 # PIC32MZ EC support
 
-This architechture support file handle all PIC32MZ EC devices.
+This architecture support file handle all PIC32MZ EC devices.
+
+(24 devices on feb 2017)
 
 |Compatible devices|
 |---------|

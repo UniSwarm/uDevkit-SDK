@@ -1,10 +1,14 @@
 # PIC 32 bits support
 
-This architechture support file handle all 32 bits famillies of Microchip.
+This architecture support file handle all 32 bits famillies of Microchip.
 
-|Famillies|List of devices|
-|---------|---------------|
-|PIC32MX|[list](../pic32mx/README.md)|
-|PIC32MZEC|[list](../pic32mzec/README.md)|
-|PIC32MZEF|[list](../pic32mzef/README.md)|
-|PIC32MM|[list](../pic32mm/README.md)|
+(264 devices on feb 2017)
+
+|Famillies|List of devices|Device count|
+|---------|---------------|------------|
+|PIC32MK|[list](../pic32mk/README.md)|9|
+|PIC32MM|[list](../pic32mm/README.md)|21|
+|PIC32MX|[list](../pic32mx/README.md)|120|
+|PIC32MZDA|[list](../pic32mzda/README.md)|42|
+|PIC32MZEC|[list](../pic32mzec/README.md)|24|
+|PIC32MZEF|[list](../pic32mzef/README.md)|48|
