@@ -1,6 +1,8 @@
 # dsPIC30F support
 
-This architechture support file handle all dsPIC30F devices.
+This architecture support file handle all dsPIC30F devices.
+
+(43 devices on feb 2017)
 
 |Compatible devices|
 |---------|

@@ -1,6 +1,8 @@
 # PIC24F support
 
-This architechture support file handle all PIC24F devices.
+This architecture support file handle all PIC24F devices.
+
+(30 devices on feb 2017)
 
 Warning do not mix with PIC24FJ or PIC24FV
 

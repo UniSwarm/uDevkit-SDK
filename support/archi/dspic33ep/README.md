@@ -1,6 +1,8 @@
 # dsPIC33EP support
 
-This architechture support file handle all dsPIC33EP devices.
+This architecture support file handle all dsPIC33EP devices.
+
+(101 devices on feb 2017)
 
 |Compatible devices|
 |---------|

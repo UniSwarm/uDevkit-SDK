@@ -1,5 +1,6 @@
 # PIC24FJ support
-This architechture support file handle all PIC24FJ devices.
+
+This architecture support file handle all PIC24FJ devices.
 
 (127 devices on feb 2017)
 
@@ -132,4 +133,3 @@ This architechture support file handle all PIC24FJ devices.
 |[PIC24FJ16MC102](http://microchip.com/PIC24FJ16MC102)|
 |[PIC24FJ32MC102](http://microchip.com/PIC24FJ32MC102)|
 |[PIC24FJ32MC104](http://microchip.com/PIC24FJ32MC104)|
-

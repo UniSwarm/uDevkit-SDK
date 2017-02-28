@@ -1,6 +1,8 @@
 # dsPIC33FJ support
 
-This architechture support file handle all dsPIC33FJ devices.
+This architecture support file handle all dsPIC33FJ devices.
+
+(114 devices on feb 2017)
 
 |Compatible devices|
 |---------|

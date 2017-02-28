@@ -1,6 +1,8 @@
 # PIC24EP support
 
-This architechture support file handle all PIC24EP devices.
+This architecture support file handle all PIC24EP devices.
+
+(37 devices on feb 2017)
 
 |Compatible devices|
 |---------|

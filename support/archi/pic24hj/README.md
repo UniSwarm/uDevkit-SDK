@@ -1,5 +1,8 @@
 # PIC24HJ support
-This architechture support file handle all PIC24HJ devices.
+
+This architecture support file handle all PIC24HJ devices.
+
+(41 devices on feb 2017)
 
 |Compatible devices|
 |---------|
