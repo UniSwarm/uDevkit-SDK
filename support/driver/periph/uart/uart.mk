@@ -15,7 +15,7 @@ ifeq ($(ARCHI),$(filter $(ARCHI),dspic30))
  ARCHI_SRC += uart_dspic30.c
  HEADER += uart_dspic30.h
 endif
-ifeq ($(ARCHI),$(filter $(ARCHI),pic32mm pic32mx pic32mzec pic32mzef))
+ifeq ($(ARCHI),$(filter $(ARCHI),pic32mm pic32mx pic32mzda pic32mzec pic32mzef))
  ARCHI_SRC += uart_pic32.c
  HEADER += uart_pic32.h
 endif
