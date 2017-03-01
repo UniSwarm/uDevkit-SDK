@@ -3,10 +3,10 @@
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
- * @date June 09, 2016, 18:47 PM
- *
- * @brief I2C communication support driver for dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV,
- * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
+ * @date March 01, 2016, 19:10 PM
+ * 
+ * @brief I2C communication support driver for PIC32MM, PIC32MK, PIC32MX,
+ * PIC32MZDA, PIC32MZEC and PIC32MZEF
  */
 
 #include "i2c.h"
@@ -50,6 +50,18 @@ struct i2c_dev i2cs[] = {
     },
 #endif
 #if I2C_COUNT>=3
+    {
+        .baudSpeed = 0,
+        .flags = {{.val = I2C_FLAG_UNUSED}}
+    },
+#endif
+#if I2C_COUNT>=4
+    {
+        .baudSpeed = 0,
+        .flags = {{.val = I2C_FLAG_UNUSED}}
+    },
+#endif
+#if I2C_COUNT>=5
     {
         .baudSpeed = 0,
         .flags = {{.val = I2C_FLAG_UNUSED}}
@@ -105,17 +117,29 @@ int i2c_enable(rt_dev_t device)
 
     switch (i2c)
     {
-    case 0:
+#ifdef I2C_NUM1
+    case I2C_NUM1:
         I2C1CONbits.I2CEN = 1;  // enable i2c module
         break;
-#if I2C_COUNT>=2
-    case 1:
+#endif
+#ifdef I2C_NUM2
+    case I2C_NUM2:
         I2C2CONbits.I2CEN = 1;  // enable i2c module
         break;
 #endif
-#if I2C_COUNT>=3
-    case 2:
+#ifdef I2C_NUM3
+    case I2C_NUM3:
         I2C3CONbits.I2CEN = 1;  // enable i2c module
+        break;
+#endif
+#ifdef I2C_NUM4
+    case I2C_NUM4:
+        I2C4CONbits.I2CEN = 1;  // enable i2c module
+        break;
+#endif
+#ifdef I2C_NUM5
+    case I2C_NUM5:
+        I2C5CONbits.I2CEN = 1;  // enable i2c module
         break;
 #endif
     }
@@ -138,20 +162,34 @@ int i2c_disable(rt_dev_t device)
 
     switch (i2c)
     {
-    case 0:
+#ifdef I2C_NUM1
+    case I2C_NUM1:
         I2C1CONbits.I2CEN = 0;  // disable i2c
-        _MI2C1IE = 0;
-        break;
-#if I2C_COUNT>=2
-    case 1:
-        I2C2CONbits.I2CEN = 0;  // disable i2c
-        _MI2C2IE = 0;
+        IEC3bits.I2C1MIE = 0;   // disable i2c master interrupt
         break;
 #endif
-#if I2C_COUNT>=3
-    case 2:
+#ifdef I2C_NUM2
+    case I2C_NUM2:
+        I2C2CONbits.I2CEN = 0;  // disable i2c
+        IEC4bits.I2C5MIE = 0;   // disable i2c master interrupt
+        break;
+#endif
+#ifdef I2C_NUM3
+    case I2C_NUM3:
         I2C3CONbits.I2CEN = 0;  // disable i2c
-        _MI2C3IE = 0;
+        IEC5bits.I2C3MIE = 0;   // disable i2c master interrupt
+        break;
+#endif
+#ifdef I2C_NUM4
+    case I2C_NUM4:
+        I2C4CONbits.I2CEN = 0;  // disable i2c
+        IEC5bits.I2C4MIE = 0;   // disable i2c master interrupt
+        break;
+#endif
+#ifdef I2C_NUM5
+    case I2C_NUM5:
+        I2C5CONbits.I2CEN = 0;  // disable i2c
+        IEC5bits.I2C5MIE = 0;   // disable i2c master interrupt
         break;
 #endif
     }
@@ -187,17 +225,29 @@ int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 
     switch (i2c)
     {
-    case 0:
+#ifdef I2C_NUM1
+    case I2C_NUM1:
         I2C1BRG = uBrg;
         break;
-#if I2C_COUNT>=2
-    case 1:
+#endif
+#ifdef I2C_NUM2
+    case I2C_NUM2:
         I2C2BRG = uBrg;
         break;
 #endif
-#if I2C_COUNT>=3
-    case 2:
+#ifdef I2C_NUM3
+    case I2C_NUM3:
         I2C3BRG = uBrg;
+        break;
+#endif
+#ifdef I2C_NUM4
+    case I2C_NUM4:
+        I2C4BRG = uBrg;
+        break;
+#endif
+#ifdef I2C_NUM5
+    case I2C_NUM5:
+        I2C5BRG = uBrg;
         break;
 #endif
     }
@@ -222,17 +272,29 @@ uint32_t i2c_baudSpeed(rt_dev_t device)
 
     switch (i2c)
     {
-    case 0:
+#ifdef I2C_NUM1
+    case I2C_NUM1:
         uBrg = I2C1BRG;
         break;
-#if I2C_COUNT>=2
-    case 1:
+#endif
+#ifdef I2C_NUM2
+    case I2C_NUM2:
         uBrg = I2C2BRG;
         break;
 #endif
-#if I2C_COUNT>=3
-    case 2:
+#ifdef I2C_NUM3
+    case I2C_NUM3:
         uBrg = I2C3BRG;
+        break;
+#endif
+#ifdef I2C_NUM4
+    case I2C_NUM4:
+        uBrg = I2C4BRG;
+        break;
+#endif
+#ifdef I2C_NUM5
+    case I2C_NUM5:
+        uBrg = I2C5BRG;
         break;
 #endif
     }
@@ -280,17 +342,29 @@ int i2c_setAddressWidth(rt_dev_t device, uint8_t addressWidth)
 
     switch (i2c)
     {
-    case 0:
+#ifdef I2C_NUM1
+    case I2C_NUM1:
         I2C1CONbits.A10M = addrW10;
         break;
-#if I2C_COUNT>=2
-    case 1:
+#endif
+#ifdef I2C_NUM2
+    case I2C_NUM2:
         I2C2CONbits.A10M = addrW10;
         break;
 #endif
-#if I2C_COUNT>=3
-    case 2:
+#ifdef I2C_NUM3
+    case I2C_NUM3:
         I2C3CONbits.A10M = addrW10;
+        break;
+#endif
+#ifdef I2C_NUM4
+    case I2C_NUM4:
+        I2C4CONbits.A10M = addrW10;
+        break;
+#endif
+#ifdef I2C_NUM5
+    case I2C_NUM5:
+        I2C5CONbits.A10M = addrW10;
         break;
 #endif
     }
@@ -328,20 +402,34 @@ int i2c_start(rt_dev_t device)
 
     switch (i2c)
     {
-    case 0:
+#ifdef I2C_NUM1
+    case I2C_NUM1:
         I2C1CONbits.SEN = 1;
         while (I2C1CONbits.SEN);
         break;
-#if I2C_COUNT>=2
-    case 1:
+#endif
+#ifdef I2C_NUM2
+    case I2C_NUM2:
         I2C2CONbits.SEN = 1;
         while (I2C2CONbits.SEN);
         break;
 #endif
-#if I2C_COUNT>=3
-    case 2:
+#ifdef I2C_NUM3
+    case I2C_NUM3:
         I2C3CONbits.SEN = 1;
         while (I2C3CONbits.SEN);
+        break;
+#endif
+#ifdef I2C_NUM4
+    case I2C_NUM4:
+        I2C4CONbits.SEN = 1;
+        while (I2C4CONbits.SEN);
+        break;
+#endif
+#ifdef I2C_NUM5
+    case I2C_NUM5:
+        I2C5CONbits.SEN = 1;
+        while (I2C5CONbits.SEN);
         break;
 #endif
     }
@@ -362,20 +450,34 @@ int i2c_restart(rt_dev_t device)
 
     switch (i2c)
     {
-    case 0:
+#ifdef I2C_NUM1
+    case I2C_NUM1:
         I2C1CONbits.RSEN = 1;
         while (I2C1CONbits.RSEN);
         break;
-#if I2C_COUNT>=2
-    case 1:
+#endif
+#ifdef I2C_NUM2
+    case I2C_NUM2:
         I2C2CONbits.RSEN = 1;
         while (I2C2CONbits.RSEN);
         break;
 #endif
-#if I2C_COUNT>=3
-    case 2:
+#ifdef I2C_NUM3
+    case I2C_NUM3:
         I2C3CONbits.RSEN = 1;
         while (I2C3CONbits.RSEN);
+        break;
+#endif
+#ifdef I2C_NUM4
+    case I2C_NUM4:
+        I2C4CONbits.RSEN = 1;
+        while (I2C4CONbits.RSEN);
+        break;
+#endif
+#ifdef I2C_NUM5
+    case I2C_NUM5:
+        I2C5CONbits.RSEN = 1;
+        while (I2C5CONbits.RSEN);
         break;
 #endif
     }
@@ -396,20 +498,34 @@ int i2c_stop(rt_dev_t device)
 
     switch (i2c)
     {
-    case 0:
+#ifdef I2C_NUM1
+    case I2C_NUM1:
         I2C1CONbits.PEN = 1;
         while (I2C1CONbits.PEN);
         break;
-#if I2C_COUNT>=2
-    case 1:
+#endif
+#ifdef I2C_NUM2
+    case I2C_NUM2:
         I2C2CONbits.PEN = 1;
         while (I2C2CONbits.PEN);
         break;
 #endif
-#if I2C_COUNT>=3
-    case 2:
+#ifdef I2C_NUM3
+    case I2C_NUM3:
         I2C3CONbits.PEN = 1;
         while (I2C3CONbits.PEN);
+        break;
+#endif
+#ifdef I2C_NUM4
+    case I2C_NUM4:
+        I2C4CONbits.PEN = 1;
+        while (I2C4CONbits.PEN);
+        break;
+#endif
+#ifdef I2C_NUM5
+    case I2C_NUM5:
+        I2C5CONbits.PEN = 1;
+        while (I2C5CONbits.PEN);
         break;
 #endif
     }
@@ -430,20 +546,34 @@ int i2c_idle(rt_dev_t device)
 
     switch (i2c)
     {
-    case 0:
+#ifdef I2C_NUM1
+    case I2C_NUM1:
         while (I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN ||
           I2C1CONbits.RSEN || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT);
         break;
-#if I2C_COUNT>=2
-    case 1:
+#endif
+#ifdef I2C_NUM2
+    case I2C_NUM2:
         while (I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN ||
           I2C2CONbits.RSEN || I2C2CONbits.ACKEN || I2C2STATbits.TRSTAT);
         break;
 #endif
-#if I2C_COUNT>=3
-    case 2:
+#ifdef I2C_NUM3
+    case I2C_NUM3:
         while (I2C3CONbits.SEN || I2C3CONbits.PEN || I2C3CONbits.RCEN ||
           I2C3CONbits.RSEN || I2C3CONbits.ACKEN || I2C3STATbits.TRSTAT);
+        break;
+#endif
+#ifdef I2C_NUM4
+    case I2C_NUM4:
+        while (I2C4CONbits.SEN || I2C4CONbits.PEN || I2C4CONbits.RCEN ||
+          I2C4CONbits.RSEN || I2C4CONbits.ACKEN || I2C4STATbits.TRSTAT);
+        break;
+#endif
+#ifdef I2C_NUM5
+    case I2C_NUM5:
+        while (I2C5CONbits.SEN || I2C5CONbits.PEN || I2C5CONbits.RCEN ||
+          I2C5CONbits.RSEN || I2C5CONbits.ACKEN || I2C5STATbits.TRSTAT);
         break;
 #endif
     }
@@ -464,23 +594,39 @@ int i2c_ack(rt_dev_t device)
 
     switch (i2c)
     {
-    case 0:
+#ifdef I2C_NUM1
+    case I2C_NUM1:
         I2C1CONbits.ACKDT = 0;
         I2C1CONbits.ACKEN = 1;
         while (I2C1CONbits.ACKEN);
         break;
-#if I2C_COUNT>=2
-    case 1:
+#endif
+#ifdef I2C_NUM2
+    case I2C_NUM2:
         I2C2CONbits.ACKDT = 0;
         I2C2CONbits.ACKEN = 1;
         while (I2C2CONbits.ACKEN);
         break;
 #endif
-#if I2C_COUNT>=3
-    case 2:
+#ifdef I2C_NUM3
+    case I2C_NUM3:
         I2C3CONbits.ACKDT = 0;
         I2C3CONbits.ACKEN = 1;
         while (I2C3CONbits.ACKEN);
+        break;
+#endif
+#ifdef I2C_NUM4
+    case I2C_NUM4:
+        I2C4CONbits.ACKDT = 0;
+        I2C4CONbits.ACKEN = 1;
+        while (I2C4CONbits.ACKEN);
+        break;
+#endif
+#ifdef I2C_NUM5
+    case I2C_NUM5:
+        I2C5CONbits.ACKDT = 0;
+        I2C5CONbits.ACKEN = 1;
+        while (I2C5CONbits.ACKEN);
         break;
 #endif
     }
@@ -501,23 +647,39 @@ int i2c_nack(rt_dev_t device)
 
     switch (i2c)
     {
-    case 0:
+#ifdef I2C_NUM1
+    case I2C_NUM1:
         I2C1CONbits.ACKDT = 1;
         I2C1CONbits.ACKEN = 1;
         while (I2C1CONbits.ACKEN);
         break;
-#if I2C_COUNT>=2
-    case 1:
+#endif
+#ifdef I2C_NUM2
+    case I2C_NUM2:
         I2C2CONbits.ACKDT = 1;
         I2C2CONbits.ACKEN = 1;
         while (I2C2CONbits.ACKEN);
         break;
 #endif
-#if I2C_COUNT>=3
-    case 2:
+#ifdef I2C_NUM3
+    case I2C_NUM3:
         I2C3CONbits.ACKDT = 1;
         I2C3CONbits.ACKEN = 1;
         while (I2C3CONbits.ACKEN);
+        break;
+#endif
+#ifdef I2C_NUM4
+    case I2C_NUM4:
+        I2C4CONbits.ACKDT = 1;
+        I2C4CONbits.ACKEN = 1;
+        while (I2C4CONbits.ACKEN);
+        break;
+#endif
+#ifdef I2C_NUM5
+    case I2C_NUM5:
+        I2C5CONbits.ACKDT = 1;
+        I2C5CONbits.ACKEN = 1;
+        while (I2C5CONbits.ACKEN);
         break;
 #endif
     }
@@ -538,7 +700,8 @@ int i2c_putc(rt_dev_t device, const char data)
 
     switch (i2c)
     {
-    case 0:
+#ifdef I2C_NUM1
+    case I2C_NUM1:
         I2C1TRN = data;
         if (I2C1STATbits.IWCOL)       // write collision detection
             return -1;
@@ -548,8 +711,9 @@ int i2c_putc(rt_dev_t device, const char data)
         if (I2C1STATbits.ACKSTAT)   // test for ACK received
             return -1;
         break;
-#if I2C_COUNT>=2
-    case 1:
+#endif
+#ifdef I2C_NUM2
+    case I2C_NUM2:
         I2C2TRN = data;
         if (I2C2STATbits.IWCOL)       // write collision detection
             return -1;
@@ -560,8 +724,8 @@ int i2c_putc(rt_dev_t device, const char data)
             return -1;
         break;
 #endif
-#if I2C_COUNT>=3
-    case 2:
+#ifdef I2C_NUM3
+    case I2C_NUM3:
         I2C3TRN = data;
         if (I2C3STATbits.IWCOL)       // write collision detection
             return -1;
@@ -569,6 +733,30 @@ int i2c_putc(rt_dev_t device, const char data)
           I2C3CONbits.RSEN || I2C3CONbits.ACKEN || I2C3STATbits.TRSTAT); // wait iddle
 
         if (I2C3STATbits.ACKSTAT)   // test for ACK received
+            return -1;
+        break;
+#endif
+#ifdef I2C_NUM4
+    case I2C_NUM4:
+        I2C4TRN = data;
+        if (I2C4STATbits.IWCOL)       // write collision detection
+            return -1;
+        while (I2C4CONbits.SEN || I2C4CONbits.PEN || I2C4CONbits.RCEN ||
+          I2C4CONbits.RSEN || I2C4CONbits.ACKEN || I2C4STATbits.TRSTAT); // wait iddle
+
+        if (I2C4STATbits.ACKSTAT)   // test for ACK received
+            return -1;
+        break;
+#endif
+#ifdef I2C_NUM5
+    case I2C_NUM5:
+        I2C5TRN = data;
+        if (I2C5STATbits.IWCOL)       // write collision detection
+            return -1;
+        while (I2C5CONbits.SEN || I2C5CONbits.PEN || I2C5CONbits.RCEN ||
+          I2C5CONbits.RSEN || I2C5CONbits.ACKEN || I2C5STATbits.TRSTAT); // wait iddle
+
+        if (I2C5STATbits.ACKSTAT)   // test for ACK received
             return -1;
         break;
 #endif
@@ -590,24 +778,40 @@ uint8_t i2c_getc(rt_dev_t device)
 
     switch (i2c)
     {
-    case 0:
+#ifdef I2C_NUM1
+    case I2C_NUM1:
         I2C1CONbits.RCEN = 1;
         while(I2C1CONbits.RCEN);
         I2C1STATbits.I2COV = 0;
         return I2C1RCV;
-#if I2C_COUNT>=2
-    case 1:
+#endif
+#ifdef I2C_NUM2
+    case I2C_NUM2:
         I2C2CONbits.RCEN = 1;
         while(I2C2CONbits.RCEN);
         I2C2STATbits.I2COV = 0;
         return I2C2RCV;
 #endif
-#if I2C_COUNT>=3
-    case 2:
+#ifdef I2C_NUM3
+    case I2C_NUM3:
         I2C3CONbits.RCEN = 1;
         while(I2C3CONbits.RCEN);
         I2C3STATbits.I2COV = 0;
         return I2C3RCV;
+#endif
+#ifdef I2C_NUM4
+    case I2C_NUM4:
+        I2C4CONbits.RCEN = 1;
+        while(I2C4CONbits.RCEN);
+        I2C4STATbits.I2COV = 0;
+        return I2C4RCV;
+#endif
+#ifdef I2C_NUM5
+    case I2C_NUM5:
+        I2C5CONbits.RCEN = 1;
+        while(I2C5CONbits.RCEN);
+        I2C5STATbits.I2COV = 0;
+        return I2C5RCV;
 #endif
     }
     return 0;
