@@ -59,5 +59,6 @@
 #endif
 
 int sysclock_setClockWPLL(uint32_t freq);
+uint32_t sysclock_getPeriphClock();
 
 #endif // SYSCLOCK_PIC24_DSPIC30_DSPIC33_H

@@ -217,7 +217,7 @@ int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 
     i2cs[i2c].baudSpeed = baudSpeed;
 
-    systemClockPeriph = sysclock_getPeriphClock();
+    systemClockPeriph = sysclock_getPeriphClock(SYSCLOCK_CLOCK_I2C);
     uBrg = (systemClockPeriph / baudSpeed) - (systemClockPeriph / I2C_FPGD) - 2;
 
     if (uBrg <= 1)
@@ -299,7 +299,7 @@ uint32_t i2c_baudSpeed(rt_dev_t device)
 #endif
     }
 
-    systemClockPeriph = sysclock_getPeriphClock();
+    systemClockPeriph = sysclock_getPeriphClock(SYSCLOCK_CLOCK_I2C);
     baudSpeed = systemClockPeriph / (uBrg + 2); // TODO add PGD period to be exact
 
     return baudSpeed;

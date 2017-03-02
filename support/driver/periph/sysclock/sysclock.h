@@ -18,13 +18,16 @@
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
  || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
  #include "sysclock_pic24_dspic30_dspic33.h"
+#elif defined(ARCHI_pic32mx)
+ #include "sysclock_pic32mx.h"
+#elif defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
+ #include "sysclock_pic32mz.h"
 #else
  #error Unsuported ARCHI
 #endif
 
 int sysclock_setClock(uint32_t freq);
 uint32_t sysclock_getClock();
-uint32_t sysclock_getPeriphClock();
 uint32_t sysclock_getCPUClock();
 
 #endif // SYSCLOCK_H

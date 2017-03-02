@@ -5,7 +5,8 @@
  *
  * @date October 06, 2016, 11:15 PM
  *
- * @brief Uart support for rtprog for PIC32MM, PIC32MX, PIC32MZEC and PIC32MZEF
+ * @brief Uart support for rtprog for PIC32MM, PIC32MK, PIC32MX,
+ * PIC32MZDA, PIC32MZEC and PIC32MZEF
  */
 
 #ifndef UART_PIC32_H

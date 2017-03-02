@@ -5,7 +5,8 @@
  *
  * @date October 06, 2016, 11:15 PM
  *
- * @brief Uart support for rtprog for PIC32MM, PIC32MX, PIC32MZEC and PIC32MZEF
+ * @brief Uart support for rtprog for PIC32MM, PIC32MK, PIC32MX,
+ * PIC32MZDA, PIC32MZEC and PIC32MZEF
  */
 
 #include "uart.h"
@@ -301,7 +302,7 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 
     uarts[uart].baudSpeed = baudSpeed;
 
-    systemClockPeriph = sysclock_getPeriphClock();
+    systemClockPeriph = sysclock_getPeriphClock(SYSCLOCK_CLOCK_UART);
     uBrg = systemClockPeriph / baudSpeed;
 
     if ((uBrg & 0x0F) == 0)
@@ -409,7 +410,7 @@ uint32_t uart_baudSpeed(rt_dev_t device)
 #endif
     }
 
-    baudSpeed = sysclock_getPeriphClock() / uBrg;
+    baudSpeed = sysclock_getPeriphClock(SYSCLOCK_CLOCK_UART) / uBrg;
     if (hs == 1)
         baudSpeed = baudSpeed >> 2;
     else
