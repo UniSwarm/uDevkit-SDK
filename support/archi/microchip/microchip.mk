@@ -27,19 +27,19 @@ $(OUT_PWD)/%.o : %.c
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "µCC %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c  $< $(DEFINES) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@)
-	@$(CC) -mcpu=$(DEVICE) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
+	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
 HEAP?=1000
 
 # rule to link OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	@printf "µLD %-35s => %s\n" "*.o" $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -Wl,--heap=$(HEAP),-Tp$(DEVICE).gld
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc $(LDFLAGS_XC)
 
 .PHONY : showmem dbg.% dbg
 # prints memory report
 showmem : $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc -Wl,--heap=$(HEAP),-Tp$(DEVICE).gld,--report-mem
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc $(LDFLAGS_XC) -Wl,--report-mem
 
 # lists symbol present in final elf
 dbg : $(OUT_PWD)/$(PROJECT).elf
