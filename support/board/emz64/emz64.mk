@@ -1,5 +1,5 @@
 
-DEVICE = 32MZ2048EFM064
+DEVICE = 32MZ2048EFH064
 ARCHI = pic32mzef
 
 vpath %.c $(dir $(lastword $(MAKEFILE_LIST)))

@@ -20,10 +20,10 @@ int board_init_io()
 #ifndef SIMULATOR
     // analog inputs
     ANSELB = 0x0000;         // all analog inputs of port B as digital buffer
-    
-    TRISBbits.TRISB8 = 0;    // LED1 
-    TRISBbits.TRISB9 = 0;    // LED2 
-    TRISBbits.TRISB10 = 0;   // LED3 
+
+    TRISBbits.TRISB8 = 0;    // LED1
+    TRISBbits.TRISB9 = 0;    // LED2
+    TRISBbits.TRISB10 = 0;   // LED3
 #endif
     return 0;
 }
@@ -42,6 +42,10 @@ int board_setLed(uint8_t led, uint8_t state)
 #ifndef SIMULATOR
     if(led == 0)
         LED1 = state;
+    if(led == 1)
+        LED2 = state;
+    if(led == 2)
+        LED3 = state;
 #else
     if(state == 1)
     {

@@ -8,11 +8,12 @@
 
 int main(void)
 {
+    uint16_t i, j;
 	rt_dev_t uartDbg;
 	uint16_t value;
 	char buff[100];
 
-	sysclock_setClock(120000000);
+	//sysclock_setClock(120000000);
 	board_init();
 
     board_setLed(1, 1);
@@ -28,6 +29,11 @@ int main(void)
 		value = uart_read(uartDbg, buff, 100);
 		if(value>0)
 			uart_write(uartDbg, buff, value);
+
+    board_setLed(2, 1);
+        for(j=0; j<20; j++) for(i=0; i<65000; i++);
+    board_setLed(2, 0);
+        for(j=0; j<20; j++) for(i=0; i<65000; i++);
 	}
 
 	return 0;
