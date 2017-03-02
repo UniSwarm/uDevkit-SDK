@@ -1,5 +1,6 @@
 RTPROG = ../..
 
+DEV_PROG = RICE
 PROJECT = testproj
 BOARD = emz64
 OUT_PWD = build
