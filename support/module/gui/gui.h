@@ -54,7 +54,7 @@ uint8_t gui_getFontWidth(const char c);
 uint16_t gui_getFontTextWidth(const char *txt);
 
 // screen driver properties
-uint16_t gui_screenWidth(uint8_t screen);
-uint16_t gui_screenHeight(uint8_t screen);
+uint16_t gui_screenWidth();
+uint16_t gui_screenHeight();
 
 #endif // GUI_H

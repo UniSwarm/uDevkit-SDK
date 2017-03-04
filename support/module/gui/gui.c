@@ -11,8 +11,6 @@
 #include "gui.h"
 #include "screenController/screenController.h"
 
-#define GUI_WIDTH 480
-#define GUI_HEIGHT 320
 
 Color _gui_penColor;
 Color _gui_brushColor;
@@ -337,12 +335,12 @@ uint16_t gui_getFontTextWidth(const char *txt)
     return width;
 }
 
-uint16_t gui_screenWidth(uint8_t screen)
+uint16_t gui_screenWidth()
 {
     return GUI_WIDTH;
 }
 
-uint16_t gui_screenHeight(uint8_t screen)
+uint16_t gui_screenHeight()
 {
     return GUI_HEIGHT;
 }
