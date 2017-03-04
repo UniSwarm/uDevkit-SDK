@@ -1,16 +1,16 @@
 /**
- * @file pic32mm.h
+ * @file pic32mzec.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
  *
  * @date March 12, 2017, 11:35 AM
  *
- * @brief Architecture low level definitions for PIC32MM
+ * @brief Architecture low level definitions for PIC32MZEC
  */
 
-#ifndef PIC32MM_H
-#define PIC32MM_H
+#ifndef PIC32MZEC_H
+#define PIC32MZEC_H
 
 #include "../pic32/pic32.h"
 
-#endif // PIC32MM_H
+#endif // PIC32MZEC_H

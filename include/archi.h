@@ -34,12 +34,16 @@
 // ======== Microchip 32 bits family =======
 #elif defined(ARCHI_pic32mx)
  #include "../support/archi/pic32mx/pic32mx.h"
+#elif defined(ARCHI_pic32mzda)
+ #include "../support/archi/pic32mzda/pic32mzda.h"
 #elif defined(ARCHI_pic32mzec)
  #include "../support/archi/pic32mzec/pic32mzec.h"
 #elif defined(ARCHI_pic32mzef)
  #include "../support/archi/pic32mzef/pic32mzef.h"
 #elif defined(ARCHI_pic32mm)
  #include "../support/archi/pic32mm/pic32mm.h"
+#elif defined(ARCHI_pic32mk)
+ #include "../support/archi/pic32mk/pic32mk.h"
 #else
  #error Unsuported ARCHI
 #endif
