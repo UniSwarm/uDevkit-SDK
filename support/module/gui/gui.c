@@ -204,8 +204,8 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
     char bit;
     const Letter *letter;
     const char *c;
-    uint16_t text_width, xstartdec, xenddec;
-    uint16_t text_height, ystartdec, yenddec;
+    uint16_t text_width, xstartmargin, xendmargin;
+    uint16_t text_height, ystartmargin, yendmargin;
     uint16_t wcurrent;
     uint8_t out_of_rect = 0;
 
@@ -223,45 +223,46 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
     if(text_width > GUI_WIDTH - x)
         text_width = GUI_WIDTH - x;
 
+    //computing margin parameters
     if((flags&0x03) == GUI_FONT_ALIGN_VLEFT)
     {
-        xstartdec = 0;
-        xenddec = w - text_width;
+        xstartmargin = 0;
+        xendmargin = w - text_width;
     }
     else if((flags&0x03) == GUI_FONT_ALIGN_VRIGHT)
     {
-        xstartdec = w - text_width;
-        xenddec = 0;
+        xstartmargin = w - text_width;
+        xendmargin = 0;
     }
     else
     {
-        xstartdec = (w - text_width)>>1;
-        xenddec = w - text_width - xstartdec;
+        xstartmargin = (w - text_width)>>1;
+        xendmargin = w - text_width - xstartmargin;
     }
 
     // height calculation
     text_height = gui_getFontHeight();
     if((flags&0x0C) == GUI_FONT_ALIGN_HTOP)
     {
-        ystartdec = 0;
-        yenddec = h - text_height;
+        ystartmargin = 0;
+        yendmargin = h - text_height;
     }
     else if((flags&0x0C) == GUI_FONT_ALIGN_HBOTTOM)
     {
-        ystartdec = h - text_height;
-        yenddec = 0;
+        ystartmargin = h - text_height;
+        yendmargin = 0;
     }
     else
     {
-        ystartdec = (h - text_height)>>1;
-        yenddec = h - text_height - ystartdec;
+        ystartmargin = (h - text_height)>>1;
+        yendmargin = h - text_height - ystartmargin;
     }
 
     // windows text size
     gui_ctrl_setRectScreen(x, y, w, h);
 
-    // xstartdec
-    for(j = 0; j < xstartdec; j++)
+    // xstartmargin
+    for(j = 0; j < xstartmargin; j++)
         for(i = 0; i < h; i++)
             gui_ctrl_write_data(_gui_brushColor);
 
@@ -283,7 +284,7 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
                     break;
                 }
 
-                for(i = 0; i < ystartdec; i++)
+                for(i = 0; i < ystartmargin; i++)
                     gui_ctrl_write_data(_gui_brushColor);
                 for(i = 0; i < _gui_font->height; i++)
                 {
@@ -298,7 +299,7 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
                         gui_ctrl_write_data(_gui_brushColor);
                     bit = bit << 1;
                 }
-                for(i = 0; i < yenddec; i++)
+                for(i = 0; i < yendmargin; i++)
                     gui_ctrl_write_data(_gui_brushColor);
                 
                 wcurrent++;
@@ -307,8 +308,8 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
         c++;
     }
 
-    // xenddec
-    for(j = 0; j < xenddec; j++)
+    // xendmargin
+    for(j = 0; j < xendmargin; j++)
         for(i = 0; i < h; i++)
             gui_ctrl_write_data(_gui_brushColor);
 
