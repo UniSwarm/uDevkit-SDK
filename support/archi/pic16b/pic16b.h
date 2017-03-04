@@ -11,7 +11,9 @@
 #ifndef PIC16B_H
 #define PIC16B_H
 
-#include <xc.h>
+#ifndef SIMULATOR
+ #include <xc.h>
+#endif
 
 #define nop() __builtin_nop()
 #define enable_interrupt() INTCON2bits.GIE=1

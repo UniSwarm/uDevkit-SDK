@@ -11,7 +11,9 @@
 #ifndef PIC32_H
 #define PIC32_H
 
-#include <xc.h>
+#ifndef SIMULATOR
+ #include <xc.h>
+#endif
 
 #define nop() _nop()
 #define enable_interrupt() __builtin_enable_interrupts()
