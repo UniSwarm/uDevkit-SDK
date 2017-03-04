@@ -11,7 +11,6 @@
 #include "gui.h"
 #include "screenController/screenController.h"
 
-
 Color _gui_penColor;
 Color _gui_brushColor;
 uint16_t _gui_x, _gui_y;
@@ -205,49 +204,57 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
     char bit;
     const Letter *letter;
     const char *c;
-    uint16_t width, xstartdec, xenddec;
-    uint16_t height, ystartdec, yenddec;
+    uint16_t text_width, xstartdec, xenddec;
+    uint16_t text_height, ystartdec, yenddec;
+    uint16_t wcurrent;
+    uint8_t out_of_rect = 0;
 
     if(x>=GUI_WIDTH || y>=GUI_HEIGHT)
         return;
 
     // width calculation
-    width = gui_getFontTextWidth(txt);
+    text_width = gui_getFontTextWidth(txt);
+
+    //testing if text is out box
+    if(text_width > w)
+        text_width = w;
+
+    //testing if text is out screen
+    if(text_width > GUI_WIDTH - x)
+        text_width = GUI_WIDTH - x;
+
     if((flags&0x03) == GUI_FONT_ALIGN_VLEFT)
     {
         xstartdec = 0;
-        xenddec = w - width;
+        xenddec = w - text_width;
     }
     else if((flags&0x03) == GUI_FONT_ALIGN_VRIGHT)
     {
-        xstartdec = w - width;
+        xstartdec = w - text_width;
         xenddec = 0;
     }
     else
     {
-        xstartdec = (w - width)>>1;
-        xenddec = w - width - xstartdec;
+        xstartdec = (w - text_width)>>1;
+        xenddec = w - text_width - xstartdec;
     }
 
-    if(width > GUI_WIDTH - x)
-        width = GUI_WIDTH - x;
-
     // height calculation
-    height = gui_getFontHeight();
+    text_height = gui_getFontHeight();
     if((flags&0x0C) == GUI_FONT_ALIGN_HTOP)
     {
         ystartdec = 0;
-        yenddec = h - height;
+        yenddec = h - text_height;
     }
     else if((flags&0x0C) == GUI_FONT_ALIGN_HBOTTOM)
     {
-        ystartdec = h - height;
+        ystartdec = h - text_height;
         yenddec = 0;
     }
     else
     {
-        ystartdec = (h - height)>>1;
-        yenddec = h - height - ystartdec;
+        ystartdec = (h - text_height)>>1;
+        yenddec = h - text_height - ystartdec;
     }
 
     // windows text size
@@ -260,7 +267,8 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
 
     // writting pixels chars
     c = txt;
-    while (*c != '\0')
+    wcurrent = 0;
+    while ((*c != '\0') && (out_of_rect != 1) )
     {
         if (*c >= _gui_font->first && *c <= _gui_font->last)
         {
@@ -268,6 +276,13 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
             letter = _gui_font->letters[*c - _gui_font->first];
             for(j = 0; j < letter->width; j++)
             {
+                //verifying if wcurrent is out of rect
+                if ( wcurrent >= text_width )
+                {
+                    out_of_rect = 1;
+                    break;
+                }
+
                 for(i = 0; i < ystartdec; i++)
                     gui_ctrl_write_data(_gui_brushColor);
                 for(i = 0; i < _gui_font->height; i++)
@@ -285,6 +300,8 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
                 }
                 for(i = 0; i < yenddec; i++)
                     gui_ctrl_write_data(_gui_brushColor);
+                
+                wcurrent++;
             }
         }
         c++;
