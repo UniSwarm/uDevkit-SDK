@@ -13,6 +13,8 @@
 
 #include <stdint.h>
 
+#include "d51e5ta7601.h"
+
 void gui_ctrl_init();
 void gui_ctrl_write_data(uint16_t data);
 //uint16_t gui_ctrl_read_data();
