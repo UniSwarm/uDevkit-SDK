@@ -28,6 +28,7 @@ SIM_SRC += simulator.cpp simulator_socket.c simulator_pthread.c
 
 # simulator support
 SIM_OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=_simo.o) $(patsubst %.cpp,%_simcppo.o,$(SIM_SRC:.c=_simo.o))))
+$(SIM_OBJECTS) : $(CONFIG_HEADERS)
 
 # rule to build OBJECTS to OUT_PWD and give dependencies
 $(OUT_PWD)/%_simo.o : %.c
