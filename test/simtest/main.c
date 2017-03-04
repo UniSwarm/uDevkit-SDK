@@ -6,6 +6,11 @@
 #include "board.h"
 #include "archi.h"
 
+void tt()
+{
+    puts("tt");
+}
+
 int main(void)
 {
 	unsigned int i,j;
@@ -13,6 +18,8 @@ int main(void)
     float f=0.23;
 	uint16_t value;
 	char buff[100];
+    
+    rt_dev_t asserv_timer;
 
 	sysclock_setClock(120000000);
     board_init();
@@ -22,6 +29,12 @@ int main(void)
 	uart_setBaudSpeed(uartDbg, 115200);
 	uart_setBitConfig(uartDbg, 8, UART_BIT_PARITY_NONE, 1);
 	uart_enable(uartDbg);
+    
+    // timer
+    asserv_timer = timer_getFreeDevice();
+    timer_setPeriodMs(asserv_timer, 1000);
+    timer_setHandler(asserv_timer, tt);
+    timer_enable(asserv_timer);
 
     // gui
     gui_init();

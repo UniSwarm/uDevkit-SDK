@@ -2,8 +2,8 @@
 
 /*
 TODO:
-console.resize() 
-console.moveToFirstPlan() 
+console.resize()
+console.moveToFirstPlan()
 console.moveToLastPlan()
 
 create a banner up to the display window around the console ?
@@ -24,7 +24,7 @@ struct Terminal
     // BUFFER
     char buffer[500];
 
-    Font* font;
+    const Font* font;
     Color font_color;
     Color background_color;
 } Terminal_default = {0, -1, -1};
@@ -33,7 +33,7 @@ typedef struct Terminal Console;
 
 //add a new entry to the buffer
 //when there is a new entry and buffer !empty
-//we add the \n character to the buffer 
+//we add the \n character to the buffer
 void console_addNewEntryToBuffer(Console* cmd, const char* txt)
 {
     //at each new entry we add the ending line character
@@ -50,7 +50,7 @@ void console_addNewEntryToBuffer(Console* cmd, const char* txt)
 /**
  * @Brief console_howManyLinesItTakes compute the number of lines
  *        a txt is taking in the console
- * @params cmd the console 
+ * @params cmd the console
  * @params txt the text
   */
 uint8_t console_howManyLinesItTakes(const Console* cmd, const char* txt)
@@ -92,7 +92,7 @@ uint8_t console_howManyLinesItTakes(const Console* cmd, const char* txt)
                     tmp_str[i++] = txt[j++];
                 }
 
-                //then check if tmp_str can be written into one line 
+                //then check if tmp_str can be written into one line
                 // nbr_of_too_large_lines += 1 + (gui_getFontTextWidth(tmp_str) / cmd->width);
                 nbr_of_too_large_lines += (gui_getFontTextWidth(tmp_str) / cmd->width);
             }
@@ -104,6 +104,8 @@ uint8_t console_howManyLinesItTakes(const Console* cmd, const char* txt)
     }
     else
         printf("Error: console_howManyLinesItTakes: Console width has a wrong value (%d).\n",cmd->width);
+
+    return 0;
 }
 
 
@@ -231,7 +233,7 @@ void console_verifyBufferHeight(Console* cmd)
     printf("nbr_max_line_in_cmd: %d\n", nbr_max_line_in_cmd);
 
     //if there is too much text then we will have to cut the text
-    int counter = 0;
+//    int counter = 0;
     // while ( console_howManyLinesItTakes(cmd, cmd->buffer)-counter > nbr_max_line_in_cmd )
     while ( console_howManyLinesItTakes(cmd, cmd->buffer) > nbr_max_line_in_cmd )
     {
@@ -239,7 +241,7 @@ void console_verifyBufferHeight(Console* cmd)
 
         // char bumped_txt [strlen(cmd->buffer)];
 
-        //iterate through the buffer until we go over the first line 
+        //iterate through the buffer until we go over the first line
         // int i = 0;
         // while ( cmd->buffer[i] != '\n' )
         // {
@@ -290,7 +292,7 @@ void console_verifyBufferHeight(Console* cmd)
     //     strcpy(cmd->buffer, bumped_txt);
 
     }
-    // if not then we continue to live our lives 
+    // if not then we continue to live our lives
 
 }
 
@@ -305,7 +307,7 @@ void console_write(Console* cmd, const char* txt)
     }
     else
     {
-        //copy the txt to another to zork on it 
+        //copy the txt to another to zork on it
         char txt_2_work_on[strlen(txt)];
         strcpy(txt_2_work_on, txt);
 
@@ -365,14 +367,14 @@ void console_write(Console* cmd, const char* txt)
 
 
 
-    // FOR DEBUG 
+    // FOR DEBUG
     //then write then the line
     // gui_drawText(cmd->x_pose, cmd->y_pose, cmd->buffer);
 
 
     //si le texte a afficher dépasse alors on le découpe
     // const size_t lenth = strlen(txt);
-    // // if (txt.nombre_of_characters*cmd->font.letters.width < cmd->width){ 
+    // // if (txt.nombre_of_characters*cmd->font.letters.width < cmd->width){
     // if (1){
     //     gui_drawText(0, 0, "trop grand");
     // }

@@ -54,30 +54,28 @@ void drawBattValue(uint16_t x, uint16_t y, uint16_t volt)
 
 void drawPos(uint16_t x, uint16_t y, uint16_t posx, uint16_t posy, uint16_t post)
 {
-    char text[20];
+    char text[60];
 
     sprintf(text, "x: %dmm", (int)posx);
-    gui_drawTextRect(x, y, 60, 20, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
+    gui_drawTextRect(x, y, 60, 30, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
 
     sprintf(text, "y: %dmm", (int)posy);
-    gui_drawTextRect(x, y+25, 60, 20, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
+    gui_drawTextRect(x, y+30, 150, 30, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
 
     sprintf(text, "t: %d", (int)post);
-    gui_drawTextRect(x, y+50, 60, 20, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
+    gui_drawTextRect(x, y+60, 150, 30, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
 }
 
 void drawMenuBar()
 {
-    char text[] = "deltaTips";
     gui_setBrushColor(BARCOLOR);
     gui_setPenColor(BARTEXTCOLOR);
     gui_drawFillRect(0, 293, 480, 27);
-    gui_drawTextRect(200, 295, 45, 20, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
+    gui_drawTextRect(100, 295, 280, 20, "deltaTips", GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HTOP);
 }
 
 void drawBar(uint16_t x, uint16_t y, uint16_t dist)
 {
-    int i;
     if(dist > 700)
         dist = 700;
 
@@ -151,13 +149,13 @@ int main(void)
             uart_write(uartDbg, "Type a word to add: ", 20);
         }
 
-        for(j=0;j<5;j++) for(i=0;i<65000;i++);
+        for(j=0;j<2;j++) for(i=0;i<65000;i++);
 
         size = a6_read(buff, 100);
         if(size==16)
         {
             uint16_t *ptr;
-            ptr = buff;
+            ptr = (uint16_t *)buff;
 
             if(*ptr==0xA6)
             {
