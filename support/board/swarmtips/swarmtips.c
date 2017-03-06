@@ -44,6 +44,9 @@ int board_init_io()
         _U1RXR = 47; // RX1 ==> RPI47
         _RP68R = _RPOUT_U1TX; // TX1 ==> RP68
 
+        // UART2 pins (LEDs RGB) TX only
+        _RP102R = _RPOUT_U2TX; // TX2 ==> RP102
+
         // OC PWM motors (motor 1-4)
         _RP85R = _RPOUT_OC1; // OC1 ==> RP85
         _RP87R = _RPOUT_OC2; // OC2 ==> RP87
@@ -70,6 +73,8 @@ int board_setLed(uint8_t led, uint8_t state)
 #ifndef SIMULATOR
     if(led == 0)
         LED1 = state;
+    if(led == 1)
+        LED2 = state;
 #else
     if(state == 1)
     {
