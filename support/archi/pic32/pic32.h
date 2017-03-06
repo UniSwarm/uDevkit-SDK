@@ -13,10 +13,16 @@
 
 #ifndef SIMULATOR
  #include <xc.h>
-#endif
+ #include <sys/attribs.h>
 
-#define nop() _nop()
-#define enable_interrupt() __builtin_enable_interrupts()
-#define disable_interrupt() __builtin_disable_interrupts()
+ #define nop() _nop()
+ #define enable_interrupt() __builtin_enable_interrupts()
+ #define disable_interrupt() __builtin_disable_interrupts()
+
+#else
+ #define nop() {}
+ #define enable_interrupt() {}
+ #define disable_interrupt() {}
+#endif
 
 #endif // PIC32_H

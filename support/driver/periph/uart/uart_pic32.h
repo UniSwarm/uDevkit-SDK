@@ -7,6 +7,9 @@
  *
  * @brief Uart support for rtprog for PIC32MM, PIC32MK, PIC32MX,
  * PIC32MZDA, PIC32MZEC and PIC32MZEF
+ *
+ * Implementation based on Microchip document DS61107G :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/61107G.pdf
  */
 
 #ifndef UART_PIC32_H
@@ -105,6 +108,120 @@
  #define UART_COUNT 6
 #else
  #define UART_COUNT 0
+#endif
+
+#ifndef _U1RXIP
+ #define _U1RXIP  IPC28bits.U1RXIP
+#endif
+#ifndef _U1RXIF
+ #define _U1RXIF  IFS3bits.U1RXIF
+#endif
+#ifndef _U1RXIE
+ #define _U1RXIE  IEC3bits.U1RXIE
+#endif
+#ifndef _U1TXIP
+ #define _U1TXIP  IPC28bits.U1TXIP
+#endif
+#ifndef _U1TXIF
+ #define _U1TXIF  IFS3bits.U1TXIF
+#endif
+#ifndef _U1TXIE
+ #define _U1TXIE  IEC3bits.U1TXIE
+#endif
+
+#ifndef _U2RXIP
+ #define _U2RXIP  IPC36bits.U2RXIP
+#endif
+#ifndef _U2RXIF
+ #define _U2RXIF  IFS4bits.U2RXIF
+#endif
+#ifndef _U2RXIE
+ #define _U2RXIE  IEC4bits.U2RXIE
+#endif
+#ifndef _U2TXIP
+ #define _U2TXIP  IPC36bits.U2TXIP
+#endif
+#ifndef _U2TXIF
+ #define _U2TXIF  IFS4bits.U2TXIF
+#endif
+#ifndef _U2TXIE
+ #define _U2TXIE  IEC4bits.U2TXIE
+#endif
+
+#ifndef _U3RXIP
+ #define _U3RXIP  IPC39bits.U3RXIP
+#endif
+#ifndef _U3RXIF
+ #define _U3RXIF  IFS4bits.U3RXIF
+#endif
+#ifndef _U3RXIE
+ #define _U3RXIE  IEC4bits.U3RXIE
+#endif
+#ifndef _U3TXIP
+ #define _U3TXIP  IPC39bits.U3TXIP
+#endif
+#ifndef _U3TXIF
+ #define _U3TXIF  IFS4bits.U3TXIF
+#endif
+#ifndef _U3TXIE
+ #define _U3TXIE  IEC4bits.U3TXIE
+#endif
+
+#ifndef _U4RXIP
+ #define _U4RXIP  IPC42bits.U4RXIP
+#endif
+#ifndef _U4RXIF
+ #define _U4RXIF  IFS5bits.U4RXIF
+#endif
+#ifndef _U4RXIE
+ #define _U4RXIE  IEC5bits.U4RXIE
+#endif
+#ifndef _U4TXIP
+ #define _U4TXIP  IPC43bits.U4TXIP
+#endif
+#ifndef _U4TXIF
+ #define _U4TXIF  IFS5bits.U4TXIF
+#endif
+#ifndef _U4TXIE
+ #define _U4TXIE  IEC5bits.U4TXIE
+#endif
+
+#ifndef _U5RXIP
+ #define _U5RXIP  IPC45bits.U5RXIP
+#endif
+#ifndef _U5RXIF
+ #define _U5RXIF  IFS5bits.U5RXIF
+#endif
+#ifndef _U5RXIE
+ #define _U5RXIE  IEC5bits.U5RXIE
+#endif
+#ifndef _U5TXIP
+ #define _U5TXIP  IPC45bits.U5TXIP
+#endif
+#ifndef _U5TXIF
+ #define _U5TXIF  IFS5bits.U5TXIF
+#endif
+#ifndef _U5TXIE
+ #define _U5TXIE  IEC5bits.U5TXIE
+#endif
+
+#ifndef _U6RXIP
+ #define _U6RXIP  IPC47bits.U6RXIP
+#endif
+#ifndef _U6RXIF
+ #define _U6RXIF  IFS5bits.U6RXIF
+#endif
+#ifndef _U6RXIE
+ #define _U6RXIE  IEC5bits.U6RXIE
+#endif
+#ifndef _U6TXIP
+ #define _U6TXIP  IPC47bits.U6TXIP
+#endif
+#ifndef _U6TXIF
+ #define _U6TXIF  IFS5bits.U6TXIF
+#endif
+#ifndef _U6TXIE
+ #define _U6TXIE  IEC5bits.U6TXIE
 #endif
 
 #endif // UART_PIC32_H
