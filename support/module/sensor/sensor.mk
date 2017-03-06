@@ -7,11 +7,12 @@ vpath %.c $(SENSOR_PATH)
 
 include $(foreach SENSOR_DRIVER,$(sort $(SENSOR_DRIVERS)),$(SENSOR_PATH)/driver/$(SENSOR_DRIVER)/$(SENSOR_DRIVER).mk)
 
-sensor_driver.h : Makefile
-	@echo "generate sensor_driver.h..."
+$(OUT_PWD)/sensor_driver.h : Makefile
+	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
+	@echo "$(YELLOW)generate sensor_driver.h...$(NORM)"
 	@printf "\n// defines use of sensors drivers\n\
 $(subst $(space),\n,$(foreach SENSOR_DRIVER,$(sort $(SENSOR_DRIVERS)),#define USE_$(SENSOR_DRIVER)\n))\n\
-" > sensor_driver.h
-CONFIG_HEADERS += sensor_driver.h
+" > $(OUT_PWD)/sensor_driver.h
+CONFIG_HEADERS += $(OUT_PWD)/sensor_driver.h
 
 endif

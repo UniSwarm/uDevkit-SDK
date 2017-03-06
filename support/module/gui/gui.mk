@@ -3,6 +3,7 @@ GUI_MODULE=
 
 vpath %.c $(MODULEPATH)
 vpath %.c $(MODULEPATH)/screenController
+vpath %.c $(OUT_PWD)
 
 HEADER += gui.h
 SRC += gui.c widget.c
@@ -25,22 +26,22 @@ $(IMG2RAW_EXE): $(RTPROG)/tool/img2raw/img2raw.cpp $(RTPROG)/tool/img2raw/img2ra
 
 ################ IMAGE SUPPORT ################
 # rule to build image to OUT_PWD/*.c
-$(OUT_PWD)/%.png.c : %.png pictures.h $(IMG2RAW_EXE)
+$(OUT_PWD)/%.png.c : %.png $(OUT_PWD)/pictures.h $(IMG2RAW_EXE)
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@printf "$(GREEN)IMG %-35s => %s$(NORM)\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
-$(OUT_PWD)/%.jpg.c : %.jpg pictures.h $(IMG2RAW_EXE)
+$(OUT_PWD)/%.jpg.c : %.jpg $(OUT_PWD)/pictures.h $(IMG2RAW_EXE)
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@printf "$(GREEN)IMG %-35s => %s$(NORM\n)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
-$(OUT_PWD)/%.bmp.c : %.bmp pictures.h $(IMG2RAW_EXE)
+$(OUT_PWD)/%.bmp.c : %.bmp $(OUT_PWD)/pictures.h $(IMG2RAW_EXE)
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@printf "$(GREEN)IMG %-35s => %s$(NORM)\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
 
 # rule to build images *.<img>.c to OUT_PWD/*.o
 $(OUT_PWD)/%.o : $(OUT_PWD)/%.c
-	@printf "µCC %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@printf "$(GREEN)µCC %-35s => %s$(NORM)\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 
 PICTURES_C := $(PICTURES)
@@ -55,21 +56,23 @@ PICTURES_C := $(addprefix $(OUT_PWD)/, $(PICTURES_C))
 SRC += $(PICTURES_C)
 
 # generate list of used pictures
-pictures.h: Makefile
-	@echo "generate pictures.h..."
-	@printf "#ifndef _PICTURES_\n#define _PICTURES_\n\n\
+$(OUT_PWD)/pictures.h: Makefile
+	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
+	@echo "$(YELLOW)generate pictures.h...$(NORM)"
+	@printf "#ifndef PICTURES_H\n#define PICTURES_H\n\n\
 	#include <stdint.h>\n#include <gui/picture.h>\n\
 	$(foreach PICTURE,$(PICTURES_NAME),\nextern const Picture $(PICTURE);)\n\n\
-	#endif //_PICTURES_\
-	" > pictures.h
-CONFIG_HEADERS += pictures.h
+	#endif //PICTURES_H\
+	" > $(OUT_PWD)/pictures.h
+CONFIG_HEADERS += $(OUT_PWD)/pictures.h
 
 ################ FONT SUPPORT ################
 FONTS_C := $(addprefix $(OUT_PWD)/, $(addsuffix .font.c, $(FONTS)))
 SRC += $(FONTS_C)
 
 fonts.h: Makefile
-	@echo "generate fonts.h..."
+	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
+	@echo "$(YELLOW)generate fonts.h...$(NORM)"
 	@printf "#ifndef _FONTS_\n#define _FONTS_\n\n\
 	#include <stdint.h>\n#include <gui/font.h>\n\
 	$(foreach FONT,$(FONTS),\nextern const Font $(FONT);)\n\n\
@@ -81,7 +84,7 @@ CONFIG_HEADERS += fonts.h
 $(OUT_PWD)/%.font.o : $(OUT_PWD)/%.font.c
 $(OUT_PWD)/%.font.c : $(IMG2RAW_EXE)
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "IMG %-35s => %s\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@printf "$(GREEN)IMG %-35s => %s$(NORM)\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(IMG2RAW_EXE) -i $* -o  $(OUT_PWD)/$(notdir $@)
 	
 .SECONDARY: $(PICTURES_C) $(FONTS_C)
