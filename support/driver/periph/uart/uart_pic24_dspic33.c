@@ -14,7 +14,7 @@
 #include "driver/sysclock.h"
 #include "sys/fifo.h"
 
-#include <xc.h>
+#include <archi.h>
 
 #if !defined (UART_COUNT) || UART_COUNT==0
   #warning "No uart on the current device or unknow device"
@@ -143,6 +143,9 @@ int uart_enable(rt_dev_t device)
         _U1TXIF = 0;    // clear transmit Flag
         _U1TXIE = 1;    // disable transmit interrupt
 
+        U1STAbits.UTXISEL1 = 1;
+        U1STAbits.UTXISEL0 = 0;
+
         U1MODEbits.UARTEN = 1;  // enable uart module
     #ifdef UART_RXEN
         U1STAbits.URXEN = 1;    // enable receiver
@@ -158,6 +161,9 @@ int uart_enable(rt_dev_t device)
         _U2TXIP = 5;    // interrupt priority for transmitor
         _U2TXIF = 0;    // clear transmit Flag
         _U2TXIE = 1;    // disable transmit interrupt
+
+        U2STAbits.UTXISEL1 = 1;
+        U2STAbits.UTXISEL0 = 0;
 
         U2MODEbits.UARTEN = 1;  // enable uart module
     #ifdef UART_RXEN
@@ -176,6 +182,9 @@ int uart_enable(rt_dev_t device)
         _U3TXIF = 0;    // clear transmit Flag
         _U3TXIE = 1;    // disable transmit interrupt
 
+        U3STAbits.UTXISEL1 = 1;
+        U3STAbits.UTXISEL0 = 0;
+
         U3MODEbits.UARTEN = 1;  // enable uart module
     #ifdef UART_RXEN
         U3STAbits.URXEN = 1;    // enable receiver
@@ -192,6 +201,9 @@ int uart_enable(rt_dev_t device)
         _U4TXIP = 5;    // interrupt priority for transmitor
         _U4TXIF = 0;    // clear transmit Flag
         _U4TXIE = 1;    // disable transmit interrupt
+
+        U4STAbits.UTXISEL1 = 1;
+        U4STAbits.UTXISEL0 = 0;
 
         U4MODEbits.UARTEN = 1;  // enable uart module
     #ifdef UART_RXEN
@@ -210,6 +222,9 @@ int uart_enable(rt_dev_t device)
         _U5TXIF = 0;    // clear transmit Flag
         _U5TXIE = 1;    // disable transmit interrupt
 
+        U5STAbits.UTXISEL1 = 1;
+        U5STAbits.UTXISEL0 = 0;
+
         U5MODEbits.UARTEN = 1;  // enable uart module
     #ifdef UART_RXEN
         U5STAbits.URXEN = 1;    // enable receiver
@@ -226,6 +241,9 @@ int uart_enable(rt_dev_t device)
         _U6TXIP = 5;    // interrupt priority for transmitor
         _U6TXIF = 0;    // clear transmit Flag
         _U6TXIE = 1;    // disable transmit interrupt
+
+        U6STAbits.UTXISEL1 = 1;
+        U6STAbits.UTXISEL0 = 0;
 
         U6MODEbits.UARTEN = 1;  // enable uart module
     #ifdef UART_RXEN
@@ -585,140 +603,6 @@ uint8_t uart_bitStop(rt_dev_t device)
     return 1;
 }
 
-/**
- * @brief Writes data to uart device
- * @param device uart device number
- * @param data data to write
- * @param size number of data to write
- * @return number of data written (could be less than 'data' if sw buffer full)
- */
-ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
-{
-    size_t availfifo, sizeToWrite, written, fifoWritten;
-    uint8_t uart = MINOR(device);
-    if (uart >= UART_COUNT)
-        return -1;
-
-    sizeToWrite = size;
-    written = 0;
-    availfifo = fifo_avail(&uarts[uart].buffTx);
-    if(sizeToWrite > availfifo)
-        sizeToWrite = availfifo;
-
-    switch (uart)
-    {
-    case 0:
-        if (U1STAbits.TRMT)
-            written = 1;
-        break;
-#if UART_COUNT>=2
-    case 1:
-        if (U2STAbits.TRMT)
-            written = 1;
-        break;
-#endif
-#if UART_COUNT>=3
-    case 2:
-        if (U3STAbits.TRMT)
-            written = 1;
-        break;
-#endif
-#if UART_COUNT>=4
-    case 3:
-        if (U4STAbits.TRMT)
-            written = 1;
-        break;
-#endif
-#if UART_COUNT>=5
-    case 4:
-        if (U5STAbits.TRMT)
-            written = 1;
-        break;
-#endif
-#if UART_COUNT>=6
-    case 5:
-        if (U6STAbits.TRMT)
-            written = 1;
-        break;
-#endif
-    }
-
-    fifoWritten = fifo_push(&uarts[uart].buffTx, data + written, sizeToWrite - written) + written;
-
-    // send the first data if no data is currently sended
-    switch (uart)
-    {
-    case 0:
-        if (written==1)
-            U1TXREG = *data;
-        break;
-#if UART_COUNT>=2
-    case 1:
-        if (written==1)
-            U2TXREG = *data;
-        break;
-#endif
-#if UART_COUNT>=3
-    case 2:
-        if (written==1)
-            U3TXREG = *data;
-        break;
-#endif
-#if UART_COUNT>=4
-    case 3:
-        if (written==1)
-            U4TXREG = *data;
-        break;
-#endif
-#if UART_COUNT>=5
-    case 4:
-        if (written==1)
-            U5TXREG = *data;
-        break;
-#endif
-#if UART_COUNT>=6
-    case 5:
-        if (written==1)
-            U6TXREG = *data;
-        break;
-#endif
-    }
-    return fifoWritten;
-}
-
-/**
- * @brief Gets number of data that could be read (in sw buffer)
- * @param device uart device number
- * @return number of data ready to read
- */
-size_t uart_datardy(rt_dev_t device)
-{
-    uint8_t uart = MINOR(device);
-    if (uart >= UART_COUNT)
-        return -1;
-
-    return fifo_len(&uarts[uart].buffRx);
-}
-
-/**
- * @brief Gets all the data readden by uart device
- * @param device uart device number
- * @param data output buffer where data will be copy
- * @param size_max maximum number of data to read (size of the buffer 'data')
- * @return number data read
- */
-ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
-{
-    size_t size_read;
-    uint8_t uart = MINOR(device);
-    if (uart >= UART_COUNT)
-        return 0;
-
-    size_read = fifo_pop(&uarts[uart].buffRx, data, size_max);
-
-    return size_read;
-}
-
 #if UART_COUNT>=1
 void __attribute__((interrupt, no_auto_psv)) _U1TXInterrupt(void)
 {
@@ -850,3 +734,130 @@ void __attribute__((interrupt, no_auto_psv)) _U6RXInterrupt(void)
     _U6RXIF = 0;
 }
 #endif
+
+/**
+ * @brief Writes data to uart device
+ * @param device uart device number
+ * @param data data to write
+ * @param size number of data to write
+ * @return number of data written (could be less than 'data' if sw buffer full)
+ */
+ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
+{
+    size_t fifoWritten;
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+        return -1;
+    switch (uart)
+    {
+    case 0:
+        _U1TXIE = 0;
+        break;
+#if UART_COUNT>=2
+    case 1:
+        _U2TXIE = 0;
+        break;
+#endif
+#if UART_COUNT>=3
+    case 2:
+        _U3TXIE = 0;
+        break;
+#endif
+#if UART_COUNT>=4
+    case 3:
+        _U4TXIE = 0;
+        break;
+#endif
+#if UART_COUNT>=5
+    case 4:
+        _U5TXIE = 0;
+        break;
+#endif
+#if UART_COUNT>=6
+    case 5:
+        _U6TXIE = 0;
+        break;
+#endif
+    }
+
+    fifoWritten = fifo_push(&uarts[uart].buffTx, data, size);
+
+    switch (uart)
+    {
+    case 0:
+        if (U1STAbits.TRMT)
+            _U1TXInterrupt();
+        _U1TXIE = 1;
+        break;
+#if UART_COUNT>=2
+    case 1:
+        if (U2STAbits.TRMT)
+            _U2TXInterrupt();
+        _U2TXIE = 1;
+        break;
+#endif
+#if UART_COUNT>=3
+    case 2:
+        if (U3STAbits.TRMT)
+            _U3TXInterrupt();
+        _U3TXIE = 1;
+        break;
+#endif
+#if UART_COUNT>=4
+    case 3:
+        if (U4STAbits.TRMT)
+            _U4TXInterrupt();
+        _U4TXIE = 1;
+        break;
+#endif
+#if UART_COUNT>=5
+    case 4:
+        if (U5STAbits.TRMT)
+            _U5TXInterrupt();
+        _U5TXIE = 1;
+        break;
+#endif
+#if UART_COUNT>=6
+    case 5:
+        if (U6STAbits.TRMT)
+           _U6TXInterrupt();
+        _U6TXIE = 1;
+        break;
+#endif
+    }
+
+    return fifoWritten;
+}
+
+/**
+ * @brief Gets number of data that could be read (in sw buffer)
+ * @param device uart device number
+ * @return number of data ready to read
+ */
+size_t uart_datardy(rt_dev_t device)
+{
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+        return -1;
+
+    return fifo_len(&uarts[uart].buffRx);
+}
+
+/**
+ * @brief Gets all the data readden by uart device
+ * @param device uart device number
+ * @param data output buffer where data will be copy
+ * @param size_max maximum number of data to read (size of the buffer 'data')
+ * @return number data read
+ */
+ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
+{
+    size_t size_read;
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+        return 0;
+
+    size_read = fifo_pop(&uarts[uart].buffRx, data, size_max);
+
+    return size_read;
+}
