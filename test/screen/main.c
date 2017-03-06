@@ -9,12 +9,21 @@
 #include "console.h"
 #include "fonts.h"
 
-// #include <gui/widget.h>
-
 #define BARCOLOR 0x2965
 #define BARTEXTCOLOR Gui_White
 
-#define BACKGROUND 0x51a4
+#ifdef BEAR
+  #define BACKGROUND 0x51a4
+  #define PICTURE    picture_bear
+#endif
+#ifdef RABBIT
+  #define BACKGROUND 0xe652
+  #define PICTURE    picture_rabbit
+#endif
+#ifdef INSECT
+  #define BACKGROUND 0xbea6
+  #define PICTURE    picture_insect
+#endif
 
 void drawBatt(uint16_t x, uint16_t y, uint16_t percent)
 {
@@ -57,13 +66,13 @@ void drawPos(uint16_t x, uint16_t y, uint16_t posx, uint16_t posy, uint16_t post
     char text[60];
 
     sprintf(text, "x: %dmm", (int)posx);
-    gui_drawTextRect(x, y, 60, 30, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
+    gui_drawTextRect(x, y, 130, 25, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
 
     sprintf(text, "y: %dmm", (int)posy);
-    gui_drawTextRect(x, y+30, 150, 30, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
+    gui_drawTextRect(x, y+25, 130, 25, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
 
     sprintf(text, "t: %d", (int)post);
-    gui_drawTextRect(x, y+60, 150, 30, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
+    gui_drawTextRect(x, y+50, 50, 25, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
 }
 
 void drawMenuBar()
@@ -110,7 +119,7 @@ int main(void)
     gui_fillScreen(Gui_Blue2);
 
     //display an image
-    gui_dispImage(0, 0, &picture);
+    gui_dispImage(0, 0, &PICTURE);
 
     gui_setPenColor(Gui_Yellow);
     gui_setBrushColor(0x2965);
