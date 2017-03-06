@@ -6,6 +6,9 @@
  * @date August 09, 2016, 11:44 AM
  *
  * @brief Uart support for rtprog (dsPIC30F family)
+ *
+ * Implementation based on Microchip document DS70000582E :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70000582e.pdf
  */
 
 #ifndef UART_DSPIC30_H
