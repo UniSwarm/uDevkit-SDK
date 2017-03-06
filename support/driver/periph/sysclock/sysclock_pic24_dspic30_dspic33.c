@@ -47,7 +47,7 @@ int sysclock_setClockWPLL(uint32_t fosc)
         return -1; // cannot generate fosc < SYSCLOCK_FSYS_MIN / 8
 
 #ifndef SYSCLOCK_XTAL
-    OSCTUN = 23; // ==> Fin = 8 MHz Internal clock
+    OSCTUN = 21; // ==> Fin = 8 MHz Internal clock
     fin = 8000000;
     frc_mode = 1;
 #else
