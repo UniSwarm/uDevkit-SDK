@@ -1,19 +1,21 @@
 /**
  * @file uart_pic24_dspic33.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date April 13, 2016, 11:49 AM
  *
  * @brief Uart communication support driver for dsPIC33FJ, dsPIC33EP, dsPIC33EV,
  * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
+ *
+ * Implementation based on Microchip document DS70000582E :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70000582e.pdf
  */
 
 #include "uart.h"
 
-#include "driver/sysclock.h"
-#include "sys/fifo.h"
-
+#include <driver/sysclock.h>
+#include <sys/fifo.h>
 #include <archi.h>
 
 #if !defined (UART_COUNT) || UART_COUNT==0
@@ -48,10 +50,12 @@ struct uart_dev
 };
 
 struct uart_dev uarts[] = {
+#if UART_COUNT>=1
     {
         .baudSpeed = 0,
         .flags = {{.val = UART_FLAG_UNUSED}}
     },
+#endif
 #if UART_COUNT>=2
     {
         .baudSpeed = 0,
@@ -90,6 +94,7 @@ struct uart_dev uarts[] = {
  */
 rt_dev_t uart_getFreeDevice()
 {
+#if UART_COUNT>=1
     uint8_t i;
 
     for (i = 0; i < UART_COUNT; i++)
@@ -104,6 +109,9 @@ rt_dev_t uart_getFreeDevice()
     STATIC_FIFO_INIT(uarts[i].buffTx, UART_BUFFRX_SIZE);
 
     return MKDEV(DEV_CLASS_UART, i);
+#else
+    return NULLDEV;
+#endif
 }
 
 /**
@@ -112,11 +120,13 @@ rt_dev_t uart_getFreeDevice()
  */
 void uart_releaseDevice(rt_dev_t device)
 {
+#if UART_COUNT>=1
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return;
 
     uarts[uart].flags.val = UART_FLAG_UNUSED;
+#endif
 }
 
 /**
@@ -126,6 +136,7 @@ void uart_releaseDevice(rt_dev_t device)
  */
 int uart_enable(rt_dev_t device)
 {
+#if UART_COUNT>=1
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return -1;
@@ -253,7 +264,7 @@ int uart_enable(rt_dev_t device)
         break;
 #endif
     }
-
+#endif
     return 0;
 }
 
@@ -264,6 +275,7 @@ int uart_enable(rt_dev_t device)
  */
 int uart_disable(rt_dev_t device)
 {
+#if UART_COUNT>=1
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return -1;
@@ -313,7 +325,7 @@ int uart_disable(rt_dev_t device)
         break;
 #endif
     }
-
+#endif
     return 0;
 }
 
@@ -325,6 +337,7 @@ int uart_disable(rt_dev_t device)
  */
 int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 {
+#if UART_COUNT>=1
     uint32_t systemClockPeriph;
     uint16_t uBrg;
     uint8_t hs = 0;
@@ -389,8 +402,10 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
         break;
 #endif
     }
-
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -400,6 +415,7 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
  */
 uint32_t uart_baudSpeed(rt_dev_t device)
 {
+#if UART_COUNT>=1
     uint32_t baudSpeed;
     uint16_t uBrg;
     uint8_t hs;
@@ -453,6 +469,9 @@ uint32_t uart_baudSpeed(rt_dev_t device)
         baudSpeed = baudSpeed >> 4;
 
     return baudSpeed;
+#else
+    return 0;
+#endif
 }
 
 /**
@@ -481,6 +500,7 @@ uint32_t uart_effectiveBaudSpeed(rt_dev_t device)
 int uart_setBitConfig(rt_dev_t device, uint8_t bitLenght,
                       uint8_t bitParity, uint8_t bitStop)
 {
+#if UART_COUNT>=1
     uint8_t bit = 0, stop = 0;
     uart_status flags;
 
@@ -555,6 +575,9 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLenght,
 #endif
     }
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -744,6 +767,7 @@ void __attribute__((interrupt, no_auto_psv)) _U6RXInterrupt(void)
  */
 ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 {
+#if UART_COUNT>=1
     size_t fifoWritten;
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
@@ -825,8 +849,10 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
         break;
 #endif
     }
-
     return fifoWritten;
+#else
+    return -1;
+#endif
 }
 
 /**

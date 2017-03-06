@@ -1,12 +1,15 @@
 /**
  * @file uart_pic24_dspic33.h
  * @author Sebastien CAUX (sebcaux) \
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date April 13, 2016, 11:49 AM
  *
  * @brief Uart communication support driver for dsPIC33FJ, dsPIC33EP, dsPIC33EV,
  * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
+ *
+ * Implementation based on Microchip document DS70000582E :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70000582e.pdf
  */
 
 #ifndef UART_PIC24_DSPIC33_H
