@@ -1,12 +1,17 @@
 /**
  * @file timer_pic24_dspic30_dspic33.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date September 27, 2016, 23:11 PM
  *
- * @brief timer support driver for dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV,
+ * @brief Timer support for rtprog dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV,
  * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
+ *
+ * Implementation based on Microchip document DS70362B, DS39704A, DS70059D :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/S11.pdf
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/39704a.pdf
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70059D.pdf
  */
 
 #ifndef TIMER_PIC24_DSPIC30_DSPIC33_H

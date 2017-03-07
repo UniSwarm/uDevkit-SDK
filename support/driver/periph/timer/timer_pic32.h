@@ -1,12 +1,15 @@
 /**
  * @file timer_pic32.h
- * @author Sebastien CAUX (sebcaux) \
+ * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
  *
  * @date October 06, 2016, 11:15 PM
  *
  * @brief Timer support for rtprog for PIC32MM, PIC32MK, PIC32MX,
  * PIC32MZDA, PIC32MZEC and PIC32MZEF
+ *
+ * Implementation based on Microchip document DS61105F :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/61105F.pdf
  */
 
 #ifndef TIMER_PIC32_H
@@ -107,6 +110,7 @@
  #define TIMER_COUNT 0
 #endif
 
+// interrupt bits helpers for Timer1
 #ifndef _T1IF
   #define _T1IF IFS0bits.T1IF
 #endif
@@ -114,6 +118,7 @@
   #define _T1IE IEC0bits.T1IE
 #endif
 
+// interrupt bits helpers for Timer2
 #ifndef _T2IF
   #define _T2IF IFS0bits.T2IF
 #endif
@@ -121,6 +126,7 @@
   #define _T2IE IEC0bits.T2IE
 #endif
 
+// interrupt bits helpers for Timer3
 #ifndef _T3IF
   #define _T3IF IFS0bits.T3IF
 #endif
@@ -128,6 +134,7 @@
   #define _T3IE IEC0bits.T3IE
 #endif
 
+// interrupt bits helpers for Timer4
 #ifndef _T4IF
   #define _T4IF IFS0bits.T4IF
 #endif
@@ -135,6 +142,7 @@
   #define _T4IE IEC0bits.T4IE
 #endif
 
+// interrupt bits helpers for Timer5
 #ifndef _T5IF
   #define _T5IF IFS0bits.T5IF
 #endif
@@ -142,6 +150,7 @@
   #define _T5IE IEC0bits.T5IE
 #endif
 
+// interrupt bits helpers for Timer6
 #ifndef _T6IF
   #define _T6IF IFS0bits.T6IF
 #endif
@@ -149,6 +158,7 @@
   #define _T6IE IEC0bits.T6IE
 #endif
 
+// interrupt bits helpers for Timer7
 #ifndef _T7IF
   #define _T7IF IFS1bits.T7IF
 #endif
@@ -156,6 +166,7 @@
   #define _T7IE IEC1bits.T7IE
 #endif
 
+// interrupt bits helpers for Timer8
 #ifndef _T8IF
   #define _T8IF IFS1bits.T8IF
 #endif
@@ -163,6 +174,7 @@
   #define _T8IE IEC1bits.T8IE
 #endif
 
+// interrupt bits helpers for Timer9
 #ifndef _T9IF
   #define _T9IF IFS1bits.T9IF
 #endif

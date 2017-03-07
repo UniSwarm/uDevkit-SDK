@@ -1,18 +1,23 @@
 /**
  * @file timer_pic24_dspic30_dspic33.c
- * @author Sebastien CAUX (sebcaux) \
- * @copyright Robotips 2016
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016-2017
  *
  * @date September 27, 2016, 11:37 AM
  *
- * @brief Timer support for rtprog (dsPIC33 family)
+ * @brief Timer support for rtprog dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV,
+ * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
+ *
+ * Implementation based on Microchip document DS70362B, DS39704A, DS70059D :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/S11.pdf
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/39704a.pdf
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70059D.pdf
  */
 
 #include "timer.h"
 
-#include "driver/sysclock.h"
-
-#include <xc.h>
+#include <driver/sysclock.h>
+#include <archi.h>
 
 #if !defined (TIMER_COUNT) || TIMER_COUNT==0
   #warning "No uart on the current device or unknow device"

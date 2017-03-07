@@ -1,20 +1,21 @@
 /**
  * @file timer_pic32.c
- * @author Sebastien CAUX (sebcaux) \
- * @copyright Robotips 2016
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016-2017
  *
  * @date March 01, 2016, 20:45 PM
  *
  * @brief Timer support for rtprog for PIC32MM, PIC32MK, PIC32MX,
  * PIC32MZDA, PIC32MZEC and PIC32MZEF
+ *
+ * Implementation based on Microchip document DS61105F :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/61105F.pdf
  */
 
 #include "timer.h"
 
-#include "driver/sysclock.h"
-
-#include <xc.h>
-#include <sys/attribs.h>
+#include <driver/sysclock.h>
+#include <archi.h>
 
 #if !defined (TIMER_COUNT) || TIMER_COUNT==0
   #warning "No uart on the current device or unknow device"
