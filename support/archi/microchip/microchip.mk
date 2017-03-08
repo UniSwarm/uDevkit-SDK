@@ -44,8 +44,8 @@ showmem : $(OUT_PWD)/$(PROJECT).elf
 
 # lists symbol present in final elf
 dbg : $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)xc16-objdump -t $(OUT_PWD)/$(PROJECT).elf |grep "F .text" |sort -k6
+	$(VERB)$(OBJDUMP) -t $(OUT_PWD)/$(PROJECT).elf |grep "F .text" |sort -k6
 
 # shows a disassembly listing of the symbol after the dot
 dbg.% : $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)xc16-objdump -S $(OUT_PWD)/$(PROJECT).elf |sed -n -e '/^[a-f0-9]\+ <_*$*>:/,/^[a-f0-9]\+ <_.*>:/ p'
+	$(VERB)$(OBJDUMP) -S $(OUT_PWD)/$(PROJECT).elf |sed -n -e '/^[a-f0-9]\+ <_*$*>:/,/^[a-f0-9]\+ <_.*>:/ p'
