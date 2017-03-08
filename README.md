@@ -5,12 +5,12 @@
 
 A tool to simplify module inclusions in embedded systems.
 
-Currently works for all 16 bits Microchip devices (608 devices including
+Currently works for all 16 bits Microchip devices (531 devices including
 dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV, PIC24F, PIC24FJ, PIC24EP and PIC24HJ).
 [Complete list of 16bits devices](support/archi/pic16b/README.md)
 
-Porting to all 32 bits devices in fews weeks (254 devices including
-PIC32MM, PIC32MX, PIC32MZEC and PIC32MZEF).
+Porting to all 32 bits devices in fews weeks (264 devices including
+PIC32MM, PIC32MK, PIC32MX, PIC32MZDA, PIC32MZEC and PIC32MZEF).
 [Complete list of 32bits devices](support/archi/pic32/README.md)
 
 ## How to use ?
@@ -32,13 +32,16 @@ Makefile example content :
 	
 	include $(RTPROG)/rtprog.mk
 
+## Prepare repository
 
-## To compile Tools
-	make tools
+To get all submodule used (USB and FatFS), please do not forget to init and update submodule :
+
+	git submodule init
+	git submodule update
 
 ## dependencies
 ### MPLAB
-To program and debug the device
+To program and debug the device (only IPE is needed to program)
 
 * windows : http://www.microchip.com/mplabx-ide-windows-installer
 * linux : http://www.microchip.com/mplabx-ide-linux-installer
