@@ -8,6 +8,11 @@ SimModuleGui::SimModuleGui(SimClient *client, uint16_t idPeriph)
     _guiWidget = NULL;
 }
 
+QWidget *SimModuleGui::widget() const
+{
+    return _guiWidget;
+}
+
 void SimModuleGui::pushData(uint16_t functionId, const QByteArray &data)
 {
     //qDebug()<<"I am Gui sim!"<<functionId<<data.toHex()<<data.size();

@@ -17,6 +17,8 @@ public:
 
     void writeData(uint16_t functionId, const QByteArray &data);
 
+    virtual QWidget *widget() const =0;
+
 signals:
 
 public slots:

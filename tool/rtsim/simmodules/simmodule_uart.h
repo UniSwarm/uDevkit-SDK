@@ -15,6 +15,8 @@ class SimModuleUart : public SimModule
 public:
     SimModuleUart(SimClient *client, uint16_t idPeriph);
 
+    QWidget *widget() const;
+
 public slots:
     void pushData(uint16_t functionId, const QByteArray &data);
 

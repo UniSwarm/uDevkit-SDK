@@ -10,6 +10,11 @@ SimModuleUart::SimModuleUart(SimClient *client, uint16_t idPeriph)
     _uartWidget->show();
 }
 
+QWidget *SimModuleUart::widget() const
+{
+    return _uartWidget;
+}
+
 void SimModuleUart::pushData(uint16_t functionId, const QByteArray &data)
 {
     switch (functionId)
@@ -29,6 +34,6 @@ void SimModuleUart::pushData(uint16_t functionId, const QByteArray &data)
 void SimModuleUart::sendData(QString str)
 {
     QByteArray data;
-    data.append(str);
+    data.append(str.replace("\\t","\t").replace("\\n","\n").replace("\\r","\r"));
     writeData(UART_SIM_READ, data);
 }

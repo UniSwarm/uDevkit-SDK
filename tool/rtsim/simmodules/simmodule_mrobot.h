@@ -14,6 +14,8 @@ class SimModuleMRobot : public SimModule
 public:
     SimModuleMRobot(SimClient *client, uint16_t idPeriph);
 
+    QWidget *widget() const;
+
 public slots:
     void pushData(uint16_t functionId, const QByteArray &data);
 };

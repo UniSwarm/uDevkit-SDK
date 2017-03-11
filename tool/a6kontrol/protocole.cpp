@@ -62,7 +62,7 @@ void Protocole::setInt(unsigned char val,unsigned char val2,unsigned char val3,u
 void Protocole::run()
 {
     char buff[1024];
-    QRegExp rx("d1: ([0-9]+).*d2: ([0-9]+).*x: ([0-9]+).*y:([0-9]+).*t:(-*[0-9]+).*acx:(-*[0-9]+).*acy:(-*[0-9]+).*acz:(-*[0-9]+)");
+    QRegExp rx("d1:.*([0-9]+).*d2:.*([0-9]+).*x:.*([0-9]+).*y:([0-9]+).*t:(-*[0-9]+).*acx:(-*[0-9]+).*acy:(-*[0-9]+).*acz:(-*[0-9]+)");
 
     while(1)
     {

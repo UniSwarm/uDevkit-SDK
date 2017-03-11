@@ -8,6 +8,11 @@ SimModuleMRobot::SimModuleMRobot(SimClient *client, uint16_t idPeriph)
 
 }
 
+QWidget *SimModuleMRobot::widget() const
+{
+    return NULL;
+}
+
 void SimModuleMRobot::pushData(uint16_t functionId, const QByteArray &data)
 {
     qDebug()<<"I am MROBOT sim!"<<functionId<<data.toHex()<<data.size();
