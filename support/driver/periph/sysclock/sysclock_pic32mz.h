@@ -1,11 +1,14 @@
 /**
  * @file sysclock_pic32mz.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2017
  *
- * @date April 11, 2016, 05:12 PM
+ * @date March 01, 2016, 22:10 PM
  *
  * @brief System clock support for rtprog for PIC32MZ family (DA, EC and EF)
+ *
+ * Implementation based on Microchip document DS60001250B :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/60001250B.pdf
  */
 
 #include "sysclock.h"
@@ -25,7 +28,8 @@ typedef enum {
     SYSCLOCK_CLOCK_PBCLK7,
     SYSCLOCK_CLOCK_PBCLK8
 } SYSCLOCK_CLOCK;
-uint32_t sysclock_getPeriphClock(uint8_t busClock);
+uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock);
+int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div);
 
 // periph clock assoc
 #define SYSCLOCK_CLOCK_USB    SYSCLOCK_CLOCK_USBCLK
@@ -38,15 +42,27 @@ uint32_t sysclock_getPeriphClock(uint8_t busClock);
 #define SYSCLOCK_CLOCK_OC     SYSCLOCK_CLOCK_PBCLK3
 #define SYSCLOCK_CLOCK_IC     SYSCLOCK_CLOCK_PBCLK3
 
+// clock source
+typedef enum {
+    SYSCLOCK_SRC_FRC   = 0b111, // sysclock from Fast RC Oscillator (FRC) divided by FRCDIV
+    SYSCLOCK_SRC_LPRC  = 0b101, // Low-Power RC (LPRC) Oscillator
+    SYSCLOCK_SRC_SOSC  = 0b100, // SOSC
+    SYSCLOCK_SRC_POSC  = 0b010, // Primary Oscillator (POSC) HS and EC
+    SYSCLOCK_SRC_SPLL  = 0b001, // System PLL (SPLL)
+    SYSCLOCK_SRC_FRC2  = 0b000
+} SYSCLOCK_SOURCE;
+SYSCLOCK_SOURCE sysclock_source();
+int sysclock_switchSourceTo(SYSCLOCK_SOURCE source);
+
+#define unlockClockConfig() SYSKEY = 0; SYSKEY = 0xAA996655; SYSKEY = 0x556699AA;
+#define lockClockConfig() SYSKEY = 0x33333333;
+
 /*  main PLL
- *               Fplli       Fvco        Fpllo
- *        _____   |   _______  |   _____   |
- *  Fin  |     |  v  |       | v  |     |  v
- * ----->| /Nx |---->|  x M  |--->| /Ny |---->
- *       |_____|     |_______|    |_____|
- *                      PLL
- *  Fin from
- *  Posc or FRC (PLLICLK to choose)
+ *        __         _____         _____         _____
+ * FRC-->|  \  Fin  |     | Fplli |     | Fvco  |     | Fpllo
+ *       |   |----->| /Nx |------>| x M |------>| /Ny |------>
+ * Posc->|__/       |_____|       |_____|       |_____|
+ *     PLLICLK
  *
  *  SYSCLOCK_FPLLI_MIN > Fplli > SYSCLOCK_FPLLI_MAX
  *  SYSCLOCK_FPLLO_MIN > Fpllo > SYSCLOCK_FPLLO_MAX

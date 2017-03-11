@@ -1,31 +1,125 @@
 /**
  * @file sysclock_pic32mz.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2017
  *
  * @date March 01, 2016, 22:10 PM
  *
  * @brief System clock support for rtprog for PIC32MZ family (DA, EC and EF)
+ *
+ * Implementation based on Microchip document DS60001250B :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/60001250B.pdf
  */
 
 #include "sysclock.h"
 
-
-#include <xc.h>
+#include <archi.h>
 
 uint32_t sysclock_sysfreq = 200000000;
 
-uint32_t sysclock_getPeriphClock(uint8_t busClock)
+/**
+ * @brief Gets the actual frequency on a particular peripherical bus clock
+ * @param busClock id of the bus clock (1 to 8 for PBCLK1 to PBCLK8), 0 for sysclock
+ * @return bus frequency in Hz
+ */
+uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock)
 {
     volatile uint32_t* divisorAddr;
     uint8_t divisor;
-    if(busClock == SYSCLOCK_CLOCK_SYSCLK)
+    if (busClock == SYSCLOCK_CLOCK_SYSCLK)
         return sysclock_sysfreq;
-    if(busClock > SYSCLOCK_CLOCK_PBCLK8)
+    if (busClock > SYSCLOCK_CLOCK_PBCLK8)
         return 1; // error, not return 0 to avoid divide by zero
-    divisorAddr = &PB1DIV + ((busClock - 1) << 8);
-    divisor = (*divisorAddr) & 0x000000FF;
+    divisorAddr = &PB1DIV + (((uint8_t)busClock - 1) << 8);
+    divisor = ((*divisorAddr) & 0x000000FF) + 1;
     return sysclock_sysfreq / divisor;
+}
+
+/**
+ * @brief Change the divisor of the busClock given as argument. This can take up to 60
+ * CPU cycles.
+ * @param busClock id of the bus clock (1 to 8 for PBCLK1 to PBCLK8), 0 for sysclock
+ * @param div divisor to set
+ * @return 0 if ok, -1 in case of error
+ */
+int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div)
+{
+    volatile __PB1DIVbits_t* divisorAddr;
+
+    if (OSCCONbits.CLKLOCK == 1)
+        return -1; // Clocks and PLL are locked, source cannot be changed
+    if (busClock == SYSCLOCK_CLOCK_SYSCLK) // cannot change sysclock
+        return -1;
+    if (busClock > SYSCLOCK_CLOCK_PBCLK8)  // bad index
+        return -1;
+    if (div == 0 || div > 128)
+        return -1; // bad divisor value
+
+    // get divisor bus value
+    divisorAddr = (volatile __PB1DIVbits_t*)&PB1DIV + (((uint8_t)busClock - 1) << 8);
+
+    // wait for divisor can be changed
+    while(divisorAddr->PBDIVRDY == 0)
+        nop();
+
+    // critical section, protected by lock on clock config
+    unlockClockConfig();
+    divisorAddr->PBDIV = div - 1;
+    lockClockConfig();
+
+    // wait for divisor setted
+    while(divisorAddr->PBDIVRDY == 0)
+        nop();
+
+    return 0;
+}
+
+/**
+ * @brief Return the actual clock source for system clock
+ * @return SYSCLOCK_SOURCE enum corresponding to actual clock source
+ */
+SYSCLOCK_SOURCE sysclock_source()
+{
+    SYSCLOCK_SOURCE source = (SYSCLOCK_SOURCE)OSCCONbits.COSC;
+    if (source == SYSCLOCK_SRC_FRC2)
+        return SYSCLOCK_SRC_FRC;
+    return source;
+}
+
+/**
+ * @brief Switch the source clock of sysclock to another one and wait for the change effective
+ * @param source id to switch to
+ * @return 0 if ok, -1 in case of error
+ */
+int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
+{
+    if (OSCCONbits.CLKLOCK == 1)
+        return -1; // Clocks and PLL are locked, source cannot be changed
+
+    // disable interrupts
+    disable_interrupt();
+
+    // unlock clock config (OSCCON is write protected)
+    unlockClockConfig();
+
+    // select the new source
+    OSCCONbits.NOSC = source;
+
+    // trigger change
+    OSCCONSET = _OSCCON_OSWEN_MASK;
+    nop();
+    nop();
+
+    // relock clock config
+    lockClockConfig();
+
+    while (OSCCONbits.OSWEN == 1)
+        nop();
+
+    // enable interrupts
+    enable_interrupt();
+
+    return 0;
 }
 
 /**
@@ -138,10 +232,10 @@ uint32_t sysclock_getClock()
 
 /**
  * @brief Gets CPU clock frequency in Hz
- * @return system frequency in Hz
+ * @return cpu frequency in Hz
  */
 uint32_t sysclock_getCPUClock()
 {
-    return sysclock_sysfreq >> 1;
+    return sysclock_sysfreq;
 }
 
