@@ -2,6 +2,7 @@ ifndef ADC_DRIVER
 ADC_DRIVER=
 
 vpath %.c $(DRIVERPATH)
+vpath %.h $(DRIVERPATH)
 
 HEADER += adc.h
 

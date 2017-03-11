@@ -2,6 +2,7 @@ ifndef UART_DRIVER
 UART_DRIVER=
 
 vpath %.c $(DRIVERPATH)
+vpath %.h $(DRIVERPATH)
 
 DRIVERS += sysclock
 

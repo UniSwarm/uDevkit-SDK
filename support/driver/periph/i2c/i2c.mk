@@ -2,6 +2,7 @@ ifndef I2C_DRIVER
 I2C_DRIVER=
 
 vpath %.c $(DRIVERPATH)
+vpath %.h $(DRIVERPATH)
 
 DRIVERS += sysclock
 

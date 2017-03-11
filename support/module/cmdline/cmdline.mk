@@ -1,6 +1,7 @@
 ifndef CMDLINE_MODULE
 CMDLINE_MODULE=
 
+vpath %.h $(MODULEPATH) $(MODULEPATH)cmd
 vpath %.c $(MODULEPATH) $(MODULEPATH)cmd
 
 SRC += cmdline.c

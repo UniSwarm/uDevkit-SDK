@@ -4,6 +4,7 @@ NETWORK_MODULE=
 NETPATH := $(MODULEPATH)
 
 vpath %.c $(NETPATH)
+vpath %.h $(NETPATH)
 
 include $(foreach net_driver,$(sort $(NETWORK_DRIVERS)),$(NETPATH)/driver/$(net_driver)/$(net_driver).mk)
 

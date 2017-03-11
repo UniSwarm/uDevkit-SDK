@@ -2,6 +2,7 @@ ifndef QEI_DRIVER
 QEI_DRIVER=
 
 vpath %.c $(DRIVERPATH)
+vpath %.h $(DRIVERPATH)
 
 HEADER += qei.h
 

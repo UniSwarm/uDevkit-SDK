@@ -54,3 +54,15 @@ $(subst $(space),\n,$(foreach MODULE,$(sort $(MODULES)),#define USE_MODULE_$(MOD
 $(subst $(space),\n,$(foreach DRIVER,$(sort $(DRIVERS)),#include \"driver/$(DRIVER).h\"\n))\n\
 $(subst $(space),\n,$(foreach MODULE,$(sort $(MODULES)),#include \"module/$(MODULE).h\"\n))\n\
 " > $(OUT_PWD)/modules.h
+
+.PHONY: distrib
+DISTRIB_PWD = distrib
+$(DISTRIB_PWD)/%.c : %.c
+	@test -d $(DISTRIB_PWD) || mkdir -p $(DISTRIB_PWD)
+	@printf "$(GREEN)cp %-35s => %s$(NORM)\n" $(notdir $<) $(DISTRIB_PWD)/$(notdir $@)
+	$(VERB)cp $< $(DISTRIB_PWD)/$(notdir $@)
+$(DISTRIB_PWD)/%.h : %.h
+	@test -d $(DISTRIB_PWD) || mkdir -p $(DISTRIB_PWD)
+	@printf "$(GREEN)cp %-35s => %s$(NORM)\n" $(notdir $<) $(DISTRIB_PWD)/$(notdir $@)
+	$(VERB)cp $< $(DISTRIB_PWD)/$(notdir $@)
+distrib: $(addprefix $(DISTRIB_PWD)/, $(notdir $(SRC)) $(notdir $(ARCHI_SRC)) $(notdir $(HEADER)))

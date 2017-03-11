@@ -2,6 +2,7 @@ ifndef PWM_DRIVER
 PWM_DRIVER=
 
 vpath %.c $(DRIVERPATH)
+vpath %.h $(DRIVERPATH)
 
 HEADER += pwm.h
 

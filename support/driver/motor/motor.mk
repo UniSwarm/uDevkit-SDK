@@ -2,6 +2,7 @@ ifndef MOTOR_DRIVER
 MOTOR_DRIVER=
 
 vpath %.c $(DRIVERPATH)
+vpath %.h $(DRIVERPATH)
 
 HEADER += motor.h
 ARCHI_SRC += motor.c

@@ -2,6 +2,7 @@ ifndef AX12_DRIVER
 AX12_DRIVER=
 
 vpath %.c $(DRIVERPATH)
+vpath %.h $(DRIVERPATH)
 
 DRIVERS += uart
 

@@ -4,6 +4,7 @@ SENSOR_MODULE=
 SENSOR_PATH := $(MODULEPATH)
 
 vpath %.c $(SENSOR_PATH)
+vpath %.h $(SENSOR_PATH)
 
 include $(foreach SENSOR_DRIVER,$(sort $(SENSOR_DRIVERS)),$(SENSOR_PATH)/driver/$(SENSOR_DRIVER)/$(SENSOR_DRIVER).mk)
 

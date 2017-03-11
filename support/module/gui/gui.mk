@@ -5,9 +5,13 @@ vpath %.c $(MODULEPATH)
 vpath %.c $(MODULEPATH)/screenController
 vpath %.c $(OUT_PWD)
 
+vpath %.h $(MODULEPATH)
+vpath %.h $(MODULEPATH)/screenController
+
 HEADER += gui.h
 SRC += gui.c widget.c
 ARCHI_SRC += screenController/d51e5ta7601.c
+HEADER += screenController/d51e5ta7601.h
 SIM_SRC += gui_sim.c
 
 ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic30 dspic33fj dspic33ep dspic33ev))

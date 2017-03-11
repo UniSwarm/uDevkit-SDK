@@ -2,6 +2,7 @@ ifndef SYSCLOCK_DRIVER
 SYSCLOCK_DRIVER=
 
 vpath %.c $(DRIVERPATH)
+vpath %.h $(DRIVERPATH)
 
 HEADER += sysclock.h
 

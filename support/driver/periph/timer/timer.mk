@@ -2,6 +2,7 @@ ifndef TIMER_DRIVER
 TIMER_DRIVER=
 
 vpath %.c $(DRIVERPATH)
+vpath %.h $(DRIVERPATH)
 
 DRIVERS += sysclock
 

@@ -2,6 +2,7 @@ ifndef OC_DRIVER
 OC_DRIVER=
 
 vpath %.c $(DRIVERPATH)
+vpath %.h $(DRIVERPATH)
 
 HEADER += oc.h
 

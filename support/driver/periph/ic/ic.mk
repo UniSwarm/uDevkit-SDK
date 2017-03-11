@@ -2,6 +2,7 @@ ifndef IC_DRIVER
 IC_DRIVER=
 
 vpath %.c $(DRIVERPATH)
+vpath %.h $(DRIVERPATH)
 
 HEADER += ic.h
 

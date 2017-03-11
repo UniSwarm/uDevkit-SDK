@@ -1,5 +1,6 @@
 
 vpath %.c $(MODULEPATH)
+vpath %.h $(MODULEPATH)
 
 DRIVERS += qei motor timer
 
