@@ -19,8 +19,7 @@
   #warning "No spi bus on the current device or unknow device"
 #endif
 
-#define SPI_BUFFRX_SIZE 16
-#define SPI_BUFFTX_SIZE 16
+#define SPI_BUFF_SIZE 32
 
 #define SPI_FLAG_UNUSED  0x00
 typedef struct {
@@ -41,8 +40,7 @@ struct spi_dev
     uint8_t sdivp, sdivs;
     spi_status flags;
 
-    STATIC_FIFO(buffRx, SPI_BUFFRX_SIZE);
-    STATIC_FIFO(buffTx, SPI_BUFFTX_SIZE);
+    STATIC_FIFO(buff, SPI_BUFF_SIZE);
 };
 
 struct spi_dev spis[] = {
@@ -86,6 +84,7 @@ rt_dev_t spi_getFreeDevice()
         return NULLDEV;
 
     spis[i].flags.used = 1;
+    STATIC_FIFO_INIT(spis[i].buff, SPI_BUFF_SIZE);
 
     return MKDEV(DEV_CLASS_SPI, i);
 }
@@ -187,6 +186,7 @@ int spi_disable(rt_dev_t device)
  */
 int spi_setFreq(rt_dev_t device, uint32_t freq)
 {
+    uint8_t enabled;
     uint32_t systemClockPeriph;
     uint16_t sdiv;
     uint16_t sdivp, sdivs;
@@ -202,6 +202,13 @@ int spi_setFreq(rt_dev_t device, uint32_t freq)
 
     systemClockPeriph = sysclock_getPeriphClock();
     sdiv = systemClockPeriph / freq;
+
+    // disable device if it is already enabled
+    if (spis[spi].flags.enabled == 1)
+    {
+        enabled = 1;
+        spi_disable(device);
+    }
 
     // primary divisor   : 1 (0x3), 4(0x2), 16(0x1), 64(0x0)
     // secondary divisor : 1 (0x7) to 8(0x0)
@@ -228,7 +235,8 @@ int spi_setFreq(rt_dev_t device, uint32_t freq)
             sdivs = 8;
     }
 
-    if (sdivp == 0x3 && sdivs == 1) // Do not set the Primary and Secondary prescalers to the value of 1:1 at the same time.
+    // Do not set the Primary and Secondary prescalers to the value of 1:1 at the same time.
+    if (sdivp == 0x3 && sdivs == 1)
         sdivs = 2;
 
     sdivs = ~(sdivs - 1);
@@ -261,6 +269,10 @@ int spi_setFreq(rt_dev_t device, uint32_t freq)
         break;
 #endif
     }
+
+    // re enable device if it was already enabled
+    if (enabled == 1)
+        spi_enable(device);
 
     return 0;
 }
@@ -460,7 +472,7 @@ ssize_t spi_read(rt_dev_t device, char *data, size_t size_max)
     if (spi >= SPI_COUNT)
         return -1;
 
-    size_read = fifo_pop(&spis[spi].buffRx, data, size_max);
+    size_read = fifo_pop(&spis[spi].buff, data, size_max);
 
     return size_read;
 }
@@ -469,7 +481,7 @@ ssize_t spi_read(rt_dev_t device, char *data, size_t size_max)
 void __attribute__((interrupt, no_auto_psv)) _SPI1Interrupt(void)
 {
     char uart_tmpchar[1];
-    while (!U1STAbits.UTXBF && fifo_pop(&spis[0].buffTx, uart_tmpchar, 1) == 1)
+    while (!U1STAbits.UTXBF && fifo_pop(&spis[0].buff, uart_tmpchar, 1) == 1)
     {
         SPI1BUF = uart_tmpchar[0];
     }
@@ -479,7 +491,7 @@ void __attribute__((interrupt, no_auto_psv)) _SPI1Interrupt(void)
     char rec[4];
     rec[0] = U1RXREG;
 
-    fifo_push(&spis[0].buffRx, rec, 1);
+    fifo_push(&spis[0].buff, rec, 1);
 
     _U1RXIF = 0;
 }
