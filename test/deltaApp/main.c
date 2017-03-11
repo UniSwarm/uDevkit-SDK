@@ -6,7 +6,7 @@
 #include "robot.h"
 #include "archi.h"
 
-#include "a6channels.h"
+//#include "a6channels.h"
 
 unsigned int pos[] = {
     1500, 1000,
@@ -73,9 +73,10 @@ int main(void)
     j=0;
     while(1)
     {
-		//esp_task();
+        esp_task();
         usb_serial_task();
         for(i=0;i<65000;i++);
+        //usleep(1000);
 
         /*if(asserv_getDistance() <= 15.0)
         {
@@ -96,13 +97,13 @@ int main(void)
         else
             mrobot_restart();
 
-        /*i2c_readregs(i2c, 0x38, 0x00, acc, 7, I2C_REG8 | I2C_REGADDR8);
+        i2c_readregs(i2c, 0x38, 0x00, acc, 7, I2C_REG8 | I2C_REGADDR8);
         if(acc[0] & 0x08)
         {
             value_x = acc[1];
             value_y = acc[3];
             value_z = acc[5];
-        }*/
+        }
 
         pose = mrobot_pose();
         sprintf(buff, "d1:%d\td2:%d\tx: %d\ty:%d\tt:%d\tacx:%d\tacy:%d\tacz:%d\r\n",
@@ -114,9 +115,9 @@ int main(void)
                 value_x, value_y, value_z
         );
 
-        if(j++>20)
+        if(j++>50)
         {
-            uint16_t *ptr;
+            int16_t *ptr;
             ptr = buff;
             *ptr = 0xA6;
 
@@ -126,7 +127,7 @@ int main(void)
             *ptr = percent;
 
             ptr++;
-            valueF = (float)volt * 35.6;
+            valueF = (float)volt * 35.6; // mV
             *ptr = (uint16_t)valueF;
 
             ptr++;
@@ -142,7 +143,7 @@ int main(void)
             *ptr = pose.y;
 
             ptr++;
-            *ptr = pose.t;
+            *ptr = pose.t * 180.0 / 3.1415;
 
             a6_write(buff, 16);
             j=0;

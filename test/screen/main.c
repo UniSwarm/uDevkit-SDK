@@ -106,7 +106,7 @@ int main(void)
     char buff[101];
     rt_dev_t uartDbg;
     size_t size;
-    uint16_t value, value2, value3;
+    int16_t value, value2, value3;
 
     sysclock_setClock(120000000);
     board_init();
@@ -163,8 +163,8 @@ int main(void)
         size = a6_read(buff, 100);
         if(size==16)
         {
-            uint16_t *ptr;
-            ptr = (uint16_t *)buff;
+            int16_t *ptr;
+            ptr = (int16_t *)buff;
 
             if(*ptr==0xA6)
             {
