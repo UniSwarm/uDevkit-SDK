@@ -1,6 +1,6 @@
 
-vpath %.c $(NETPATH)
-vpath %.h $(NETPATH)
+vpath %.c $(MODULEPATH)
+vpath %.h $(MODULEPATH)
 
 DRIVERS += uart
 

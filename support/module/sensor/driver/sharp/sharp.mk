@@ -1,6 +1,6 @@
 
-vpath %.c $(SENSOR_PATH)
-vpath %.h $(SENSOR_PATH)
+vpath %.c $(MODULEPATH)
+vpath %.h $(MODULEPATH)
 
 DRIVERS += adc
 

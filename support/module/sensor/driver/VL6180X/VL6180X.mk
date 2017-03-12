@@ -1,6 +1,6 @@
 
-vpath %.c $(SENSOR_PATH)
-vpath %.s $(SENSOR_PATH)
+vpath %.c $(MODULEPATH)
+vpath %.s $(MODULEPATH)
 
 DRIVERS += i2c
 
