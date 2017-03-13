@@ -196,7 +196,7 @@ int main(void)
 	board_init();
 
 	// warning keep this init order before remap support
-	esp_init();
+	network_init();
 
     // uart debug init
     uartLed = uart_getFreeDevice();
@@ -217,7 +217,7 @@ int main(void)
 
     // stepper
     stepper_timer = timer_getFreeDevice();
-    timer_setPeriodMs(stepper_timer, 1000);
+    timer_setPeriodMs(stepper_timer, 200);
     timer_setHandler(stepper_timer, stepper_handler);
     timer_enable(stepper_timer);
 
@@ -232,10 +232,10 @@ int main(void)
 	for(j=0;j<2;j++) for(i=0;i<65000;i++);
 
 	// uart debug init
-	uartLed = uart_getFreeDevice();
+	/*uartLed = uart_getFreeDevice();
 	uart_setBaudSpeed(uartLed, 115200);
 	uart_setBitConfig(uartLed, 8, UART_BIT_PARITY_NONE, 1);
-	uart_enable(uartLed);
+	uart_enable(uartLed);*/
 
 	while(1)
 	{
@@ -245,28 +245,28 @@ int main(void)
             board_setLed(1, 1);
             timer_enable(stepper_timer);
 
-            sendLed(128, 0, 0, buff);
+            /*sendLed(128, 0, 0, buff);
             sendLed(0, 0, 0, buff+12);
-            uart_write(uartLed, buff, 24);
+            uart_write(uartLed, buff, 24);*/
         }
         else
         {
             board_setLed(1, 0);
             timer_disable(stepper_timer);
 
-            sendLed(0, 0, 0, buff);
+            /*sendLed(0, 0, 0, buff);
             sendLed(0, 0, 128, buff+12);
-            uart_write(uartLed, buff, 24);
+            uart_write(uartLed, buff, 24);*/
         }
 
 		value = adc_getValue(BOARD_VOLT_IN);	// BOARD_VOLT_IN
 		sprintf(buff, "value: %dv", value);
 
-		uart_write(uartLed, buff, strlen(buff)+1);
+		/*uart_write(uartLed, buff, strlen(buff)+1);
 
 		value = uart_read(uartLed, buff, 100);
 		if(value>0)
-			uart_write(uartLed, buff, value);
+			uart_write(uartLed, buff, value);*/
 	}
 
 	return 0;

@@ -30,17 +30,16 @@ int main(void)
     float valueF;
     char led=0;
 
-    uint8_t a6Chan=0;
-
     sysclock_setClock(120000000);
     robot_init();
 
     usb_serial = usb_serial_getFreeDevice();
 
     // warning keep this init order before remap support
-    esp_init();
+    network_init();
+    //esp_init();
     ax12_init();
-    a6_init();
+    //a6_init();
 
     adc_init();
 
@@ -73,10 +72,13 @@ int main(void)
     j=0;
     while(1)
     {
-        esp_task();
+        network_task();
         usb_serial_task();
         for(i=0;i<65000;i++);
-        //usleep(1000);
+        
+        #ifdef SIMULATOR
+            usleep(1000);
+        #endif
 
         /*if(asserv_getDistance() <= 15.0)
         {
@@ -90,7 +92,7 @@ int main(void)
         value = sharp_convert(adc_getValue(ANS0), FarSharp);
         /*value = adc_getValue(25);	// AnS2*/
         value2 = sharp_convert(adc_getValue(ANS2), FarSharp);
-        ax12_moveTo(1, value, 512, 512);
+        //ax12_moveTo(1, value, 512, 512);
 
         if(value < 150 || value2 < 150)
             mrobot_pause();
@@ -118,7 +120,7 @@ int main(void)
         if(j++>50)
         {
             int16_t *ptr;
-            ptr = buff;
+            ptr = (int16_t *)buff;
             *ptr = 0xA6;
 
             ptr++;

@@ -30,9 +30,9 @@ int main(void)
 		if(value>0)
 			uart_write(uartDbg, buff, value);
 
-    board_setLed(2, 1);
+        board_setLed(2, 1);
         for(j=0; j<20; j++) for(i=0; i<65000; i++);
-    board_setLed(2, 0);
+        board_setLed(2, 0);
         for(j=0; j<20; j++) for(i=0; i<65000; i++);
 	}
 

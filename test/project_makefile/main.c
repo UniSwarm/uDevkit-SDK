@@ -20,9 +20,8 @@ int main(void)
 	board_init();
 
 	// warning keep this init order before remap support
-	esp_init();
+	network_init();
 	ax12_init();
-    a6_init();
 
 	adc_init();
     asserv_init();
@@ -60,13 +59,15 @@ int main(void)
 
 	while(1)
 	{
+        network_task();
+        
 		for(j=0;j<5;j++) for(i=0;i<65000;i++);
         board_setLed(0, 0);
-    board_setLed(2, 1);
-    LED3 = 1;
+        board_setLed(2, 1);
+        LED3 = 1;
 		for(j=0;j<5;j++) for(i=0;i<65000;i++);
         board_setLed(0, 1);
-    board_setLed(2, 0);
+        board_setLed(2, 0);
 
 		/*value = adc_getValue(24);	// AnS1
 		value = adc_getValue(25);	// AnS2*/
