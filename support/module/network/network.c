@@ -21,13 +21,16 @@
 void network_init()
 {
     #ifdef USE_esp8266
-      esp_init();
+      esp8266_init();
+    #endif
+    #ifdef USE_a6
+      a6_init();
     #endif
 }
 
 void network_task()
 {
     #ifdef USE_esp8266
-      esp_task();
+      esp8266_task();
     #endif
 }

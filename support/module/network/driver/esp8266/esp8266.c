@@ -1,3 +1,13 @@
+/**
+ * @file esp8266.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016-2017
+ *
+ * @date February 10, 2016, 09:32 PM
+ *
+ * @brief ESP8266 driver for RTProg network module
+ */
+
 #include "esp8266.h"
 
 #include <stdio.h>
@@ -10,7 +20,7 @@
 #include "sys/buffer.h"
 
 // data receive from esp
-uint8_t esp_socket = 0;
+uint8_t esp8266_socket = 0;
 uint16_t sizeRecPacket = 0;
 uint16_t idRecPacket = 0;
 uint8_t recPacketFlag = 0;
@@ -63,42 +73,42 @@ volatile WIFIstatus wifistatus = FSM_START;
 volatile WIFI_STATE pendingState = WIFI_STATE_NONE;
 volatile WIFI_STATE state = WIFI_STATE_NONE;
 
-uint8_t esp_config = 0;
+uint8_t esp8266_config = 0;
 
-void esp_parse(char rec);
+void esp8266_parse(char rec);
 
-rt_dev_t esp_uart;
+rt_dev_t esp8266_uart;
 
 STATIC_BUFFER(buff, 100);
 
-void esp_uart_init()
+void esp8266_uart_init()
 {
     // uart init
-    esp_uart = uart_getFreeDevice();
-    uart_setBaudSpeed(esp_uart, 115200);
-    uart_setBitConfig(esp_uart, 8, UART_BIT_PARITY_NONE, 1);
-    uart_enable(esp_uart);
+    esp8266_uart = uart_getFreeDevice();
+    uart_setBaudSpeed(esp8266_uart, 115200);
+    uart_setBitConfig(esp8266_uart, 8, UART_BIT_PARITY_NONE, 1);
+    uart_enable(esp8266_uart);
 }
 
-#define esp_write(data, size) uart_write(esp_uart, (data), (size))
-#define esp_send_cmd(cmd) uart_write(esp_uart, (cmd), strlen(cmd))
-#define esp_send_cmddat(cmd, size) uart_write(esp_uart, (cmd), (size))
+#define esp8266_write(data, size) uart_write(esp8266_uart, (data), (size))
+#define esp8266_send_cmd(cmd) uart_write(esp8266_uart, (cmd), strlen(cmd))
+#define esp8266_send_cmddat(cmd, size) uart_write(esp8266_uart, (cmd), (size))
 
-void esp_init()
+void esp8266_init()
 {
-    esp_uart_init();
+    esp8266_uart_init();
     
     // buffer cmd construction init
     STATIC_BUFFER_INIT(buff, 100);
 }
 
-void esp_task()
+void esp8266_task()
 {
     char buffRx[200];
     ssize_t read_size;
     
     // read esp uart
-	read_size = uart_read(esp_uart, buffRx, 200);
+	read_size = uart_read(esp8266_uart, buffRx, 200);
     if (read_size > 0)
     {
         int i;
@@ -107,45 +117,46 @@ void esp_task()
         buffPtr = buffRx;
         for (i=0; i<read_size; i++)
         {
-            printf("%c %d fsm: %d\n",*buffPtr,*buffPtr,wifistatus);
-            esp_parse(*buffPtr);
+            esp8266_parse(*buffPtr);
             buffPtr++;
         }
         printf("state:%d\n",state);
     }
     
     // config
-    if (esp_config < 4)
+    if ((esp8266_config>>1) < 4)
     {
-        switch (esp_config)
+        if (esp8266_config & 0x01)
         {
-        case 0:
-            esp_send_cmd("ATE0\r\n");
-            esp_config++;
-            break;
-        case 1:
             if (state == WIFI_STATE_OK)
             {
-                esp_config++;
+                esp8266_config++;
                 state = WIFI_STATE_NONE;
             }
-            break;
-        case 2:
-            esp_send_cmd("AT+CIPMUX=1\r\n");
-            esp_config++;
-            break;
-        case 3:
-            if (state == WIFI_STATE_OK)
+        }
+        else
+        {
+            switch (esp8266_config>>1)
             {
-                esp_config++;
-                state = WIFI_STATE_NONE;
+            case 0:
+                esp8266_send_cmd("ATE0\r\n");
+                break;
+            case 1:
+                esp8266_send_cmd("AT+CIPMUX=1\r\n");
+                break;
+            case 2:
+                esp8266_setMode(ESP8266_MODE_STA_AP);
+                break;
+            case 3:
+                esp8266_ap_setConfig("rtnet", "pwd2017A", ESP8266_ECN_WPA2, 5);
+                break;
             }
-            break;
+            esp8266_config++;
         }
     }
 }
 
-void esp_parse(char rec)
+void esp8266_parse(char rec)
 {
     switch(wifistatus)
     {
@@ -290,7 +301,7 @@ void esp_parse(char rec)
             if (rec >= '0' && rec <= '9')
             {
                 wifistatus = FSM_IPD_SOCKET_DIGIT;
-                esp_socket = rec - '0';
+                esp8266_socket = rec - '0';
             }
             else
                 wifistatus = FSM_UNKNOW;
@@ -326,7 +337,7 @@ void esp_parse(char rec)
             break;
         case FSM_PACKET_RX:
             recPacket[idRecPacket++] = rec;
-            if(idRecPacket >= sizeRecPacket)
+            if (idRecPacket >= sizeRecPacket)
             {
                 recPacketFlag=1;
                 state = WIFI_STATE_RECEIVE_DATA;
@@ -338,7 +349,7 @@ void esp_parse(char rec)
     }
 }
 
-char * esp_protectstr(char * destination, const char * source)
+char * esp8266_protectstr(char * destination, const char * source)
 {
     char *ptr, *ptrsource;
     ptr = destination;
@@ -355,12 +366,6 @@ char * esp_protectstr(char * destination, const char * source)
     return destination;
 }
 
-void wait_ok()
-{
-    while(state != WIFI_STATE_OK);
-    state = WIFI_STATE_NONE;
-}
-
 WIFI_STATE get_state()
 {
     return state;
@@ -368,7 +373,7 @@ WIFI_STATE get_state()
 
 uint8_t getRecSocket()
 {
-    return esp_socket;
+    return esp8266_socket;
 }
 
 char *getRecData()
@@ -391,30 +396,30 @@ uint8_t getRec()
     return 0;
 }
 
-uint8_t esp_open_tcp_socket(char *ip_domain, uint16_t port)
+uint8_t esp8266_open_tcp_socket(char *ip_domain, uint16_t port)
 {
     char protected[64];
     
     buffer_clear(&buff);
     buffer_astring(&buff, "AT+CIPSTART=\"TCP\",\"");
     
-    esp_protectstr(protected, ip_domain);
+    esp8266_protectstr(protected, ip_domain);
     buffer_astring(&buff, protected);
     buffer_astring(&buff, "\",");
     buffer_aint(&buff, port);
 
-    esp_send_cmddat(buff.data, buff.size);
+    esp8266_send_cmddat(buff.data, buff.size);
     return 0;
 }
 
-uint8_t esp_open_udp_socket(char *ip_domain, uint16_t port, uint16_t localPort, uint8_t mode)
+uint8_t esp8266_open_udp_socket(char *ip_domain, uint16_t port, uint16_t localPort, uint8_t mode)
 {
     char protected[64];
     
     buffer_clear(&buff);
     buffer_astring(&buff, "AT+CIPSTART=\"UDP\",\"");
     
-    esp_protectstr(protected, ip_domain);
+    esp8266_protectstr(protected, ip_domain);
     buffer_astring(&buff, protected);
     buffer_astring(&buff, "\",");
     buffer_aint(&buff, (int)port);
@@ -423,50 +428,78 @@ uint8_t esp_open_udp_socket(char *ip_domain, uint16_t port, uint16_t localPort, 
     buffer_achar(&buff, ',');
     buffer_aint(&buff, (int)mode);
 
-    esp_send_cmddat(buff.data, buff.size);
+    esp8266_send_cmddat(buff.data, buff.size);
     return 0;
 }
 
-void esp_set_mode(ESP_MODE mode)
+void esp8266_setMode(ESP8266_MODE mode)
 {
     buffer_clear(&buff);
     buffer_astring(&buff, "AT+CWMODE_CUR=");
 
-    if(mode==ESP_MODE_AP) buffer_achar(&buff, '2');
-    else if(mode==ESP_MODE_STA_AP) buffer_achar(&buff, '3');
+    if(mode==ESP8266_MODE_AP) buffer_achar(&buff, '2');
+    else if(mode==ESP8266_MODE_STA_AP) buffer_achar(&buff, '3');
     else buffer_achar(&buff, '1');
 
     buffer_astring(&buff, "\r\n");
 
-    esp_send_cmddat(buff.data, buff.size);
+    esp8266_send_cmddat(buff.data, buff.size);
 }
 
-uint8_t esp_connect_ap(char *ssid, char *pw)        // warning, be careful to special car, protect with backslash
+int esp8266_ap_setConfig(char *ssid, char *pw, ESP8266_ECN pw_ecn, uint8_t channel)
+{
+    char protected[64];
+
+    if (pw_ecn != ESP8266_ECN_OPEN && strlen(pw) < 8)
+        return -1; // password too short
+
+    buffer_clear(&buff);
+    buffer_astring(&buff, "AT+CWSAP_CUR=\"");
+
+    esp8266_protectstr(protected, ssid);
+    buffer_astring(&buff, protected);
+    buffer_astring(&buff, "\",\"");
+
+    esp8266_protectstr(protected, pw);
+    buffer_astring(&buff, protected);
+    buffer_astring(&buff, "\",");
+
+    buffer_aint(&buff, (int)channel);
+    buffer_astring(&buff, ",");
+
+    buffer_aint(&buff, (int)pw_ecn);
+    buffer_astring(&buff, "\r\n");
+
+    esp8266_send_cmddat(buff.data, buff.size);
+    return 0;
+}
+
+uint8_t esp8266_connect_ap(char *ssid, char *pw)
 {
     char protected[64];
     
     buffer_clear(&buff);
     buffer_astring(&buff, "AT+CWJAP_CUR=\"");
     
-    esp_protectstr(protected, ssid);
+    esp8266_protectstr(protected, ssid);
     buffer_astring(&buff, protected);
     buffer_astring(&buff, "\",\"");
     
-    esp_protectstr(protected, pw);
+    esp8266_protectstr(protected, pw);
     buffer_astring(&buff, protected);
     buffer_astring(&buff, "\"\r\n");
 
-    esp_send_cmddat(buff.data, buff.size);
+    esp8266_send_cmddat(buff.data, buff.size);
     return 0;
 }
 
-uint8_t esp_disconnect_ap()
+uint8_t esp8266_disconnect_ap()
 {
-    esp_send_cmd("AT+CWQAP\r\n");
+    esp8266_send_cmd("AT+CWQAP\r\n");
     return 0;
 }
 
-void esp_close_socket(uint8_t sock)
+void esp8266_close_socket(uint8_t sock)
 {
     if(sock > 4)
         return;
@@ -476,10 +509,10 @@ void esp_close_socket(uint8_t sock)
     buffer_aint(&buff, sock);
     buffer_astring(&buff, "\r\n");
     
-    esp_send_cmddat(buff.data, buff.size);
+    esp8266_send_cmddat(buff.data, buff.size);
 }
 
-void esp_write_socket(uint8_t sock, char *data, uint16_t size)
+void esp8266_write_socket(uint8_t sock, char *data, uint16_t size)
 {
     buffer_clear(&buff);
     buffer_astring(&buff, "AT+CIPSEND=");
@@ -487,30 +520,30 @@ void esp_write_socket(uint8_t sock, char *data, uint16_t size)
     buffer_achar(&buff, ',');
     buffer_aint(&buff, (int)size);
     buffer_astring(&buff, "\r\n");
-    esp_send_cmddat(buff.data, buff.size);
+    esp8266_send_cmddat(buff.data, buff.size);
 
     while(state != WIFI_STATE_SEND_DATA);
     state = WIFI_STATE_NONE;
 
-    esp_write(data, size);
+    esp8266_write(data, size);
     while(state != WIFI_STATE_SEND_OK);
 }
 
-void esp_write_socket_string(uint8_t sock, char *str)
+void esp8266_write_socket_string(uint8_t sock, char *str)
 {
-    esp_write_socket(sock, str, strlen(str)+1);
+    esp8266_write_socket(sock, str, strlen(str)+1);
 }
 
-void esp_server_create(uint16_t port)
+void esp8266_server_create(uint16_t port)
 {
     buffer_clear(&buff);
     buffer_astring(&buff, "AT+CIPSERVER=1,");
     buffer_aint(&buff, (int)port);
     buffer_astring(&buff, "\r\n");
-    esp_send_cmddat(buff.data, buff.size);
+    esp8266_send_cmddat(buff.data, buff.size);
 }
 
-void esp_server_destroy()
+void esp8266_server_destroy()
 {
-    esp_send_cmd("AT+CIPSERVER=0\r\n");
+    esp8266_send_cmd("AT+CIPSERVER=0\r\n");
 }
