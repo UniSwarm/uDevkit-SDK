@@ -11,9 +11,9 @@ ifndef OUT_PWD
  OUT_PWD = build
 endif
 
-YELLOW:=$(shell type -p tput > /dev/null && tput setaf 3)
-GREEN:=$(shell type -p tput > /dev/null && tput setaf 2)
-NORM:=$(shell type -p tput > /dev/null && tput sgr0)
+YELLOW:=$(shell command -v tput > /dev/null && tput setaf 3)
+GREEN:=$(shell command -v tput > /dev/null && tput setaf 2)
+NORM:=$(shell command -v tput > /dev/null && tput sgr0)
 
 # VERBOSE variable to set the verbosity if VERBOSE=1
 ifdef VERBOSE
