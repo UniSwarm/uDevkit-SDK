@@ -23,4 +23,10 @@ endif
 
 SIM_SRC += uart_sim.c
 
+test_uart:
+	xc16-gcc -DARCHI_dspic33ep -DDEVICE_33FJ16MC102 -mcpu=33FJ16MC102 -c -I$(RTPROG)include $(RTPROG)support/driver/periph/uart/uart_pic24_dspic33.c -o uart_pic24_dspic33.o
+	xc16-gcc -DARCHI_pic24f -DDEVICE_24FJ64GB412 -mcpu=24FJ64GB412 -c -I$(RTPROG)include $(RTPROG)support/driver/periph/uart/uart_pic24_dspic33.c -o uart_pic24_dspic33.o
+	xc16-gcc -DARCHI_dspic30f -DDEVICE_30F6015 -mcpu=30F6015 -c -I$(RTPROG)include $(RTPROG)support/driver/periph/uart/uart_dspic30.c -o uart_dspic30.o
+	xc32-gcc -DARCHI_pic32mzef -DDEVICE_32MZ1024EFH144 -mprocessor=32MZ1024EFH144 -c -I$(RTPROG)include $(RTPROG)support/driver/periph/uart/uart_pic32.c -o uart_pic32.o
+
 endif

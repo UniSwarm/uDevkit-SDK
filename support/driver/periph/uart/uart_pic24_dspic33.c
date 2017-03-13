@@ -89,43 +89,71 @@ struct uart_dev uarts[] = {
 };
 
 /**
- * @brief Gives a free uart device number
+ * @brief Gives a free uart device number and open it
  * @return uart device number
  */
 rt_dev_t uart_getFreeDevice()
 {
 #if UART_COUNT>=1
     uint8_t i;
+    rt_dev_t device;
 
     for (i = 0; i < UART_COUNT; i++)
-        if (uarts[i].flags.val == UART_FLAG_UNUSED)
+        if (uarts[i].baudSpeed == 0)
             break;
 
     if (i == UART_COUNT)
         return NULLDEV;
+    device = MKDEV(DEV_CLASS_UART, i);
 
-    uarts[i].flags.used = 1;
-    STATIC_FIFO_INIT(uarts[i].buffRx, UART_BUFFRX_SIZE);
-    STATIC_FIFO_INIT(uarts[i].buffTx, UART_BUFFRX_SIZE);
+    uart_open(i);
 
-    return MKDEV(DEV_CLASS_UART, i);
+    return device;
+
 #else
     return NULLDEV;
 #endif
 }
 
 /**
- * @brief Release an uart
- * @param device uart device number
+ * @brief Open an uart from his uart number (not rt_dev_t)
+ * @param uart uart number
+ * @return uart device number
  */
-void uart_releaseDevice(rt_dev_t device)
+int uart_open(uint8_t uart)
+{
+#if UART_COUNT>=1
+    if (uart >= UART_COUNT)
+        return -1;
+
+    uarts[uart].flags.used = 1;
+    STATIC_FIFO_INIT(uarts[uart].buffRx, UART_BUFFRX_SIZE);
+    STATIC_FIFO_INIT(uarts[uart].buffTx, UART_BUFFTX_SIZE);
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * @brief Close and release an uart
+ * @param device uart device number
+ * @return 0 if ok, -1 in case of error
+ */
+int uart_close(rt_dev_t device)
 {
 #if UART_COUNT>=1
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
-        return;
+        return -1;
+
+    uart_disable(device);
 
     uarts[uart].flags.val = UART_FLAG_UNUSED;
+    return 0;
+#else
+    return -1;
 #endif
 }
 

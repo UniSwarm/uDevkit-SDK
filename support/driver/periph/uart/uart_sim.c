@@ -1,5 +1,5 @@
 /**
- * @file uart_dspic.c
+ * @file uart_sim.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
@@ -16,7 +16,7 @@
 #include "sys/fifo.h"
 
 #if !defined (UART_COUNT) || UART_COUNT==0
-    #error No device
+    #warning No device
 #endif
 
 #include <stdio.h>
@@ -56,16 +56,26 @@ rt_dev_t uart_getFreeDevice()
     if (i == UART_COUNT)
         return NULLDEV;
 
-    uarts[i].baudSpeed = 115200;
-    uarts[i].bitLenght = 8;
-    uarts[i].bitStop = 1;
-    uarts[i].bitParity = UART_BIT_PARITY_NONE;
-    uart_sendconfig(i);
+    uart_open(i);
 
     return MKDEV(DEV_CLASS_UART, i);
 }
 
-void uart_releaseDevice(rt_dev_t device)
+int uart_open(uint8_t uart)
+{
+    if (uart >= UART_COUNT)
+        return -1;
+
+    uarts[uart].baudSpeed = 115200;
+    uarts[uart].bitLenght = 8;
+    uarts[uart].bitStop = 1;
+    uarts[uart].bitParity = UART_BIT_PARITY_NONE;
+    uart_sendconfig(uart);
+
+    return 0;
+}
+
+void uart_closeDevice(rt_dev_t device)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
