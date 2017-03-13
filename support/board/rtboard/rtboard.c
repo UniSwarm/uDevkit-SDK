@@ -52,17 +52,17 @@ int board_init_io()
     // Unlock configuration pin
     OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 0;
 
-        // UART1 pins (wifi)
+        // UART1 pins (wifi esp)
         _U1RXR = 71;          // RX1 ==> RP71
         _RP69R = _RPOUT_U1TX; // TX1 ==> RP69
 
-        // UART2 pins (AX12)
-        _U2RXR = 97;           // RX2 ==> RP97 AXrx
-        _RP120R = _RPOUT_U2TX; // TX2 ==> RP120 AXtx
+        // UART2 pins (A6)
+        _U2RXR = 72;          // RX2 ==> RPI72 A6rx
+        _RP66R = _RPOUT_U2TX; // TX2 ==> RP66 A6tx
 
-        // UART3 pins (A6)
-        _U3RXR = 72;          // RX3 ==> RPI72 A6rx
-        _RP66R = _RPOUT_U3TX; // TX3 ==> RP66 A6tx
+        // UART3 pins (AX12)
+        _U3RXR = 97;           // RX3 ==> RP97 AXrx
+        _RP120R = _RPOUT_U3TX; // TX3 ==> RP120 AXtx
 
         // UART4 pins (debug)
         _U4RXR = 86;          // RX4 ==> RPI86 AS7
@@ -103,14 +103,14 @@ int board_setLed(uint8_t led, uint8_t state)
     if(led == 0)
         LED1 = state;
 #else
-    if(state == 1)
+    if(state & 0x01)
     {
-        printf("LED %d on\n", led);
+        //printf("LED %d on\n", led);
         board_led_state |= (1 << led);
     }
     else
     {
-        printf("LED %d off\n", led);
+        //printf("LED %d off\n", led);
         board_led_state &= !(1 << led);
     }
 #endif

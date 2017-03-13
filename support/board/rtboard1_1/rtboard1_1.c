@@ -21,7 +21,7 @@ int board_init_io()
     // analog inputs
     ANSELB = 0x0000;    // all analog inputs of port B as digital buffer
     ANSELD = 0x0000;    // all analog inputs of port D as digital buffer
-    ANSELE = 0x0000;    // all analog inputs of port E as digital buffer
+    ANSELE = 0x000F;    // all analog inputs of port E as digital buffer
     ANSELG = 0x0000;    // all analog inputs of port G as digital buffer
 
     ANSELBbits.ANSB9 = 1;       // BOARD_VOLT_IN as analog
@@ -50,13 +50,13 @@ int board_init_io()
         _U1RXR = 113;          // RX1 ==> RP113
         _RP96R = _RPOUT_U1TX;  // TX1 ==> RP96
 
-        // UART2 pins (AX12)
-        _U2RXR = 39;           // RX2 ==> RP39 AXrx
-        _RP118R = _RPOUT_U2TX; // TX2 ==> RP118 AXtx
+        // UART2 pins (A6)
+        _U2RXR = 23;           // RX2 ==> RPI23 A6rx
+        _RP66R = _RPOUT_U2TX;  // TX2 ==> RP66 A6tx
 
-        // UART3 pins (A6)
-        _U3RXR = 23;           // RX3 ==> RPI23 A6rx
-        _RP66R = _RPOUT_U3TX;  // TX3 ==> RP66 A6tx
+        // UART3 pins (AX12)
+        _U3RXR = 39;           // RX3 ==> RP39 AXrx
+        _RP118R = _RPOUT_U3TX; // TX3 ==> RP118 AXtx
 
         // UART4 pins (debug)
         _U4RXR = 86;           // RX4 ==> RPI86 AS7
