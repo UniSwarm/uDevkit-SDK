@@ -58,10 +58,14 @@ typedef enum
     FSM_RX_COMPLETE
 
 } WIFIstatus;
-volatile WIFIstatus wifistatus = FSM_UNKNOW;
+volatile WIFIstatus wifistatus = FSM_START;
 
 volatile WIFI_STATE pendingState = WIFI_STATE_NONE;
 volatile WIFI_STATE state = WIFI_STATE_NONE;
+
+uint8_t esp_config = 0;
+
+void esp_parse(char rec);
 
 rt_dev_t esp_uart;
 
@@ -88,16 +92,57 @@ void esp_init()
     STATIC_BUFFER_INIT(buff, 100);
 }
 
-void esp_config()
-{
-    // esp config cmd
-    esp_send_cmd("ATE0\r\n");
-    esp_send_cmd("AT+CIPMUX=1\r\n");
-}
-
 void esp_task()
 {
-	
+    char buffRx[200];
+    ssize_t read_size;
+    
+    // read esp uart
+	read_size = uart_read(esp_uart, buffRx, 200);
+    if (read_size > 0)
+    {
+        int i;
+        char *buffPtr;
+        // parse it
+        buffPtr = buffRx;
+        for (i=0; i<read_size; i++)
+        {
+            printf("%c %d fsm: %d\n",*buffPtr,*buffPtr,wifistatus);
+            esp_parse(*buffPtr);
+            buffPtr++;
+        }
+        printf("state:%d\n",state);
+    }
+    
+    // config
+    if (esp_config < 4)
+    {
+        switch (esp_config)
+        {
+        case 0:
+            esp_send_cmd("ATE0\r\n");
+            esp_config++;
+            break;
+        case 1:
+            if (state == WIFI_STATE_OK)
+            {
+                esp_config++;
+                state = WIFI_STATE_NONE;
+            }
+            break;
+        case 2:
+            esp_send_cmd("AT+CIPMUX=1\r\n");
+            esp_config++;
+            break;
+        case 3:
+            if (state == WIFI_STATE_OK)
+            {
+                esp_config++;
+                state = WIFI_STATE_NONE;
+            }
+            break;
+        }
+    }
 }
 
 void esp_parse(char rec)
