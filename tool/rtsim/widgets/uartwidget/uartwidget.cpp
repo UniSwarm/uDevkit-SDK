@@ -17,7 +17,12 @@ UartWidget::UartWidget(uint16_t idPeriph, QWidget *parent)
 
 void UartWidget::recData(const QString &data)
 {
-    _log->appendPlainText(data);
+    QString dataReceived = data;
+    dataReceived = dataReceived.replace("\r","<b>\\r</b>");
+    dataReceived = dataReceived.replace("\n","<b>\\n</b>");
+    dataReceived = dataReceived.replace("\t","<b>\\t</b>");
+    //dataReceived = dataReceived.replace("\0","<b>\\0</b>");
+    _log->appendHtml(dataReceived);
 }
 
 void UartWidget::setConfig(uart_dev config)
@@ -50,8 +55,13 @@ void UartWidget::setConfig(uart_dev config)
 
 void UartWidget::send()
 {
-    emit sendRequest(_lineEdit->text());
-    _lineEdit->clear();
+    QString dataToSend = _lineEdit->text();
+    dataToSend = dataToSend.replace("\\r","\r");
+    dataToSend = dataToSend.replace("\\n","\n");
+    dataToSend = dataToSend.replace("\\t","\t");
+    //dataToSend = dataToSend.replace("\\0","\0");
+    emit sendRequest(dataToSend);
+    //_lineEdit->clear();
 }
 
 void UartWidget::createWidget()
@@ -66,6 +76,7 @@ void UartWidget::createWidget()
     sendLayout->addWidget(_lineEdit);
     QPushButton *sendButton = new QPushButton("Send");
     connect(sendButton, SIGNAL(clicked(bool)), this, SLOT(send()));
+    connect(_lineEdit, SIGNAL(editingFinished()), this, SLOT(send()));
     sendLayout->addWidget(sendButton);
     layout->addItem(sendLayout);
 
