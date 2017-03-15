@@ -81,7 +81,7 @@ rt_dev_t uart_getFreeDevice()
         return NULLDEV;
     device = MKDEV(DEV_CLASS_UART, i);
 
-    uart_open(i);
+    uart_open(device);
 
     return device;
 
@@ -91,13 +91,14 @@ rt_dev_t uart_getFreeDevice()
 }
 
 /**
- * @brief Open an uart from his uart number (not rt_dev_t)
- * @param uart uart number
+ * @brief Open an uart from his uart rt_dev_t
+ * @param uart uart rt_dev_t id
  * @return uart device number
  */
-int uart_open(uint8_t uart)
+int uart_open(rt_dev_t device)
 {
 #if UART_COUNT>=1
+    uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return -1;
 
