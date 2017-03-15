@@ -1,7 +1,7 @@
 /**
  * @file i2c_pic32.h
- * @author Sebastien CAUX (sebcaux) \
- * @copyright Robotips 2016
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016-2017
  *
  * @date October 06, 2016, 11:15 PM
  *
@@ -124,6 +124,7 @@
   #if I2C_COUNT>=4
     #define I2C_NUM5 3
   #endif
+
 #else // in normal case ...
   #if I2C_COUNT>=1
     #define I2C_NUM1 0

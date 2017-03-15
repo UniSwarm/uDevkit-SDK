@@ -1,7 +1,7 @@
 /**
  * @file i2c.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date June 09, 2016, 18:47 PM
  * 
@@ -11,11 +11,13 @@
 #ifndef I2C_H
 #define I2C_H
 
-#include "driver/device.h"
+#include <driver/device.h>
 
 // ====== device assignation ======
+#define i2c(d) MKDEV(DEV_CLASS_I2C, (d));
 rt_dev_t i2c_getFreeDevice();
-void i2c_releaseDevice(rt_dev_t device);
+int i2c_open(rt_dev_t device);
+int i2c_close(rt_dev_t device);
 
 // ==== device enable/disable =====
 int i2c_enable(rt_dev_t device);

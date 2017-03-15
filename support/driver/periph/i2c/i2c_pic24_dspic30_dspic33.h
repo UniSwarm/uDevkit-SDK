@@ -1,12 +1,12 @@
 /**
  * @file i2c_pic24_dspic30_dspic33.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date June 09, 2016, 18:47 PM
  * 
- * @brief I2C communication support driver for dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV,
- * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
+ * @brief I2C communication support driver for dsPIC30F, dsPIC33FJ, dsPIC33EP,
+ * dsPIC33EV, PIC24F, PIC24FJ, PIC24EP and PIC24HJ
  */
 
 #ifndef I2C_PIC24_DSPIC30_DSPIC33_H
