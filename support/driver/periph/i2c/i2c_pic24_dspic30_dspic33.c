@@ -93,6 +93,8 @@ int i2c_open(rt_dev_t device)
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
         return -1;
+    if (i2cs[i2c].flags.used == 1)
+        return -1;
 
     i2cs[i2c].flags.used = 1;
     return 0;
