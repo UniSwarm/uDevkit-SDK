@@ -1,7 +1,7 @@
 /**
  * @file timer.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date April 10, 2016, 11:04 PM
  *
@@ -11,21 +11,25 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include "driver/device.h"
+#include <driver/device.h>
 
+// ====== device assignation ======
+#define timer(d) MKDEV(DEV_CLASS_TIMER, (d));
 rt_dev_t timer_getFreeDevice();
-void timer_releaseDevice(rt_dev_t device);
+int timer_open(rt_dev_t device);
+int timer_close(rt_dev_t device);
 
+// ==== device enable/disable =====
 int timer_enable(rt_dev_t device);
 int timer_disable(rt_dev_t device);
 
 int timer_setHandler(rt_dev_t device, void (*handler)(void));
 
-// timer mode
+// ========= timer mode ===========
 int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs);
 uint32_t timer_periodMs(rt_dev_t device);
 
-// counter mode
+// ======== counter mode ==========
 int timer_setCounter(rt_dev_t device, uint16_t diviser);
 uint16_t timer_counter(rt_dev_t device);
 

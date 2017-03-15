@@ -5,7 +5,7 @@
  *
  * @date September 27, 2016, 11:37 AM
  *
- * @brief Timer support for rtprog (dsPIC33 family)
+ * @brief Timer support for rtprog for simulation purpose
  */
 
 #include "timer.h"

@@ -44,11 +44,13 @@ struct timer_dev
 };
 
 struct timer_dev timers[] = {
+#if TIMER_COUNT>=1
     {
         .periodMs = 0,
         .flags = {{.val = TIMER_FLAG_UNUSED}},
         .handler = NULL
     },
+#endif
 #if TIMER_COUNT>=2
     {
         .periodMs = 0,
@@ -113,7 +115,9 @@ struct timer_dev timers[] = {
  */
 rt_dev_t timer_getFreeDevice()
 {
+#if TIMER_COUNT>=1
     uint8_t i;
+    rt_dev_t device;
 
     for (i = 0; i < TIMER_COUNT; i++)
         if (timers[i].flags.used == 0)
@@ -121,23 +125,57 @@ rt_dev_t timer_getFreeDevice()
 
     if (i == TIMER_COUNT)
         return NULLDEV;
+    device = MKDEV(DEV_CLASS_TIMER, i);
 
-    timers[i].flags.used = 1;
+    timer_open(device);
 
-    return MKDEV(DEV_CLASS_TIMER, i);
+    return device;
+#else
+    return NULLDEV;
+#endif
 }
 
 /**
- * @brief Release a timer
+ * @brief Open a timer
  * @param device timer device number
  */
-void timer_releaseDevice(rt_dev_t device)
+int timer_open(rt_dev_t device)
 {
+#if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
-        return;
+        return -1;
+    if (timers[timer].flags.used == 1)
+        return -1;
+
+    timers[timer].flags.used = 1;
+    timers[timer].handler = NULL;
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * @brief Close a timer
+ * @param device timer device number
+ */
+int timer_close(rt_dev_t device)
+{
+#if TIMER_COUNT>=1
+    uint8_t timer = MINOR(device);
+    if (timer >= TIMER_COUNT)
+        return -1;
+
+    timer_disable(device);
 
     timers[timer].flags.val = TIMER_FLAG_UNUSED;
+
+    return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -147,6 +185,7 @@ void timer_releaseDevice(rt_dev_t device)
  */
 int timer_enable(rt_dev_t device)
 {
+#if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
         return -1;
@@ -219,6 +258,9 @@ int timer_enable(rt_dev_t device)
     }
 
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -228,6 +270,7 @@ int timer_enable(rt_dev_t device)
  */
 int timer_disable(rt_dev_t device)
 {
+#if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
         return -1;
@@ -291,6 +334,9 @@ int timer_disable(rt_dev_t device)
     }
 
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -301,6 +347,7 @@ int timer_disable(rt_dev_t device)
  */
 int timer_setHandler(rt_dev_t device, void (*handler)(void))
 {
+#if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
         return -1;
@@ -308,6 +355,9 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
     timers[timer].handler = handler;
 
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -317,6 +367,7 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
  */
 int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 {
+#if TIMER_COUNT>=1
     uint32_t prvalue;
     uint8_t div = 0;
     uint8_t timer = MINOR(device);
@@ -391,6 +442,9 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
     }
 
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -400,11 +454,15 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
  */
 uint32_t timer_periodMs(rt_dev_t device)
 {
+#if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
         return 0;
 
     return timers[timer].periodMs;
+#else
+    return 0;
+#endif
 }
 
 /**
@@ -414,6 +472,7 @@ uint32_t timer_periodMs(rt_dev_t device)
  */
 uint16_t timer_getValue(rt_dev_t device)
 {
+#if TIMER_COUNT>=1
     uint16_t value;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
@@ -467,6 +526,9 @@ uint16_t timer_getValue(rt_dev_t device)
     }
 
     return value;
+#else
+    return 0;
+#endif
 }
 
 /**
@@ -476,6 +538,7 @@ uint16_t timer_getValue(rt_dev_t device)
  */
 int timer_setValue(rt_dev_t device, uint16_t value)
 {
+#if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
         return -1;
@@ -528,6 +591,9 @@ int timer_setValue(rt_dev_t device, uint16_t value)
     }
 
     return 0;
+#else
+    return -1;
+#endif
 }
 
 #if TIMER_COUNT>=1
