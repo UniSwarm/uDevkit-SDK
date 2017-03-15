@@ -1,11 +1,11 @@
 /**
  * @file uart_sim.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date November 05, 2016, 17:51 PM
  *
- * @brief Uart simulator support for rtprog
+ * @brief Uart simulator support for rtprog for simulation purpose
  */
 
 #ifndef UART_SIM_H

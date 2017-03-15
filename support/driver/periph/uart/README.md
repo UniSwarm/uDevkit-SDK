@@ -5,6 +5,7 @@ UART driver support for hardware abstraction layer
 
 ```C
 char buff[20];
+rt_dev_t uart;
 
 // init
 uart = uart_getFreeDevice();
@@ -22,7 +23,9 @@ uart_read(uart, buff, 20);
 ### device assignation
 `rt_dev_t uart_getFreeDevice()` Gives a free uart device number
 
-`void uart_releaseDevice(rt_dev_t device)` Release an uart
+`int uart_open(rt_dev_t device)` Open an uart
+
+`int uart_close(rt_dev_t device)` Close an uart
 
 ### device enable/disable
 `int uart_enable(rt_dev_t device)` Enable the specified uart device
@@ -56,10 +59,9 @@ uart_read(uart, buff, 20);
 Device assignation, config, send and read data fully functionnal
 
 ### TODO :
-+ send data with sw buffer and interrupt DONE 29/10/2016 (still bugged)
-+ error interrupt (only for pic24ep, pic24hj, dspic33ep and dspic33ev)
++ error interrupt (only for pic24ep, pic24hj, dspic33ep, dspic33ev and PIC32MZ)
 + receive check flags
-+ use hw buffer for receive
++ use hw buffer for receive + almost empty interrupt config
 
 ## Supported architectures
 

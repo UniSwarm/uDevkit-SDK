@@ -1,11 +1,11 @@
 /**
  * @file uart_sim.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date April 13, 2016, 11:49 AM
  *
- * @brief Uart simulator support for rtprog
+ * @brief Uart simulator support for rtprog for simulation purpose
  */
 
 #include "uart.h"
@@ -48,6 +48,7 @@ void uart_sendconfig(uint8_t uart)
 rt_dev_t uart_getFreeDevice()
 {
     uint8_t i;
+    rt_dev_t device;
 
     for (i = 0; i < UART_COUNT; i++)
         if (uarts[i].baudSpeed == 0)
@@ -55,14 +56,16 @@ rt_dev_t uart_getFreeDevice()
 
     if (i == UART_COUNT)
         return NULLDEV;
+    device = MKDEV(DEV_CLASS_UART, i);
 
     uart_open(i);
 
-    return MKDEV(DEV_CLASS_UART, i);
+    return device;
 }
 
-int uart_open(uint8_t uart)
+int uart_open(rt_dev_t device)
 {
+    uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return -1;
 

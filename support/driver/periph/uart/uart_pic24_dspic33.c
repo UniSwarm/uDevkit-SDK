@@ -99,7 +99,7 @@ rt_dev_t uart_getFreeDevice()
     rt_dev_t device;
 
     for (i = 0; i < UART_COUNT; i++)
-        if (uarts[i].baudSpeed == 0)
+        if (uarts[i].flags.used == 0)
             break;
 
     if (i == UART_COUNT)
@@ -109,7 +109,6 @@ rt_dev_t uart_getFreeDevice()
     uart_open(device);
 
     return device;
-
 #else
     return NULLDEV;
 #endif
@@ -125,6 +124,8 @@ int uart_open(rt_dev_t device)
 #if UART_COUNT>=1
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
+        return -1;
+    if (uarts[uart].flags.used == 1)
         return -1;
 
     uarts[uart].flags.used = 1;
