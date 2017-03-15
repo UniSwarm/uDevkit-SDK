@@ -1,11 +1,11 @@
 /**
- * @file rtboard.h
+ * @file rtboard1_1.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
  * @date April 11, 2016, 06:07 PM
  *
- * @brief Code for RTboard from Robotips
+ * @brief Code for RTboard v1.1 from Robotips
  */
 
 #include "rtboard1_1.h"
@@ -95,14 +95,14 @@ int board_setLed(uint8_t led, uint8_t state)
     if(led == 0)
         LED1 = state;
 #else
-    if(state == 1)
+    if(state & 0x01)
     {
-        printf("LED %d on\n", led);
+        //printf("LED %d on\n", led);
         board_led_state |= (1 << led);
     }
     else
     {
-        printf("LED %d off\n", led);
+        //printf("LED %d off\n", led);
         board_led_state &= !(1 << led);
     }
 #endif

@@ -1,15 +1,15 @@
 /**
- * @file rtboard.h
+ * @file rtboard1_1.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
  * @date April 11, 2016, 06:07 PM
  *
- * @brief Definitions for RTboard from Robotips
+ * @brief Definitions for RTboard v1.1 from Robotips
  */
 
-#ifndef RTBOARD_H
-#define RTBOARD_H
+#ifndef RTBOARD1_1_H
+#define RTBOARD1_1_H
 
 #ifndef SIMULATOR
  #include <xc.h>
@@ -67,4 +67,4 @@ int8_t board_getLed(uint8_t led);
 #define ANS7 31
 #define ANS8 1
 
-#endif // RTBOARD_H
+#endif // RTBOARD1_1_H
