@@ -14,6 +14,7 @@
 #include "sysclock.h"
 
 #include <archi.h>
+#include "board.h"
 
 uint32_t sysclock_sysfreq = 200000000;
 

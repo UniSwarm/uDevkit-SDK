@@ -14,6 +14,8 @@
 
 #include <xc.h>
 
+#include "board.h"
+
 uint32_t sysfreq;
 
 /**
