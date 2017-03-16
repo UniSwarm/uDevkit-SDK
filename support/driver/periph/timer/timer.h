@@ -31,7 +31,6 @@ uint32_t timer_periodMs(rt_dev_t device);
 
 // ======== counter mode ==========
 int timer_setCounter(rt_dev_t device, uint16_t diviser);
-uint16_t timer_counter(rt_dev_t device);
 
 #define timer_clearValue(device) timer_setValue((device), 0)
 int timer_setValue(rt_dev_t device, uint16_t value);
