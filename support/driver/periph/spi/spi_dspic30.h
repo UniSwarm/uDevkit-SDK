@@ -1,7 +1,7 @@
 /**
- * @file spi_pic24_dspic30_dspic33.h
+ * @file spi_dspic30.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date October 10, 2016, 10:31 AM
  *

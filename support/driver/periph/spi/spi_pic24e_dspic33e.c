@@ -1,11 +1,14 @@
 /**
- * @file spi_pic24_dspic30_dspic33.c
+ * @file spi_pic24e_dspic33e.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date October 10, 2016, 10:31 AM
  *
  * @brief SPI communication support driver for dsPIC33EP, dsPIC33EV and PIC24EP
+ *
+ * Implementation based on Microchip document DS70005185A :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70005185a.pdf
  */
 
 #include "spi.h"
@@ -69,12 +72,13 @@ struct spi_dev spis[] = {
 };
 
 /**
- * @brief Gives a free spi bus device number
+ * @brief Gives a free spi bus device number and open it
  * @return spi bus device number
  */
 rt_dev_t spi_getFreeDevice()
 {
     uint8_t i;
+    rt_dev_t device;
 
     for (i = 0; i < SPI_COUNT; i++)
         if (spis[i].flags.val == SPI_FLAG_UNUSED)
@@ -82,24 +86,44 @@ rt_dev_t spi_getFreeDevice()
 
     if (i == SPI_COUNT)
         return NULLDEV;
+    device = MKDEV(DEV_CLASS_SPI, i);
 
-    spis[i].flags.used = 1;
-    STATIC_FIFO_INIT(spis[i].buff, SPI_BUFF_SIZE);
+    spi_open(device);
 
-    return MKDEV(DEV_CLASS_SPI, i);
+    return device;
 }
 
 /**
- * @brief Release an spi bus device
+ * @brief Open an spi bus device
  * @param device spi bus device number
  */
-void spi_releaseDevice(rt_dev_t device)
+int spi_open(rt_dev_t device)
 {
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)
-        return;
+        return -1;
+    if (spis[spi].flags.used == 1)
+        return -1;
+
+    spis[spi].flags.used = 1;
+    STATIC_FIFO_INIT(spis[spi].buff, SPI_BUFF_SIZE);
+
+    return 0;
+}
+
+/**
+ * @brief Close and release an spi bus device
+ * @param device spi bus device number
+ */
+int spi_close(rt_dev_t device)
+{
+    uint8_t spi = MINOR(device);
+    if (spi >= SPI_COUNT)
+        return -1;
 
     spis[spi].flags.val = SPI_FLAG_UNUSED;
+
+    return spi_disable(device);
 }
 
 /**
@@ -489,7 +513,7 @@ void __attribute__((interrupt, no_auto_psv)) _SPI1Interrupt(void)
 
     // rec
     char rec[4];
-    rec[0] = U1RXREG;
+    rec[0] = SPI1BUF;
 
     fifo_push(&spis[0].buff, rec, 1);
 

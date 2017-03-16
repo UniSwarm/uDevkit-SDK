@@ -1,11 +1,14 @@
 /**
- * @file spi_pic24_dspic30_dspic33.h
+ * @file spi_pic24e_dspic33e.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date October 10, 2016, 10:31 AM
  *
  * @brief SPI communication support driver for dsPIC33EP, dsPIC33EV and PIC24EP
+ *
+ * Implementation based on Microchip document DS70005185A :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70005185a.pdf
  */
 
 #ifndef SPI_PIC24E_DSPIC33E_H

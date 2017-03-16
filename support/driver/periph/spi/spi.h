@@ -14,8 +14,10 @@
 #include "driver/device.h"
 
 // ====== device assignation ======
+#define spi(d) MKDEV(DEV_CLASS_SPI, (d));
 rt_dev_t spi_getFreeDevice();
-void spi_releaseDevice(rt_dev_t device);
+int spi_open(rt_dev_t device);
+int spi_close(rt_dev_t device);
 
 // ==== device enable/disable =====
 int spi_enable(rt_dev_t device);
