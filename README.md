@@ -19,6 +19,7 @@ project, it is simply based on a single Makefile.
 
 Makefile example content :
 
+```Makefile
 	RTPROG = /home/toto/rtprog      # path to rtprog root directory
 	
 	PROJECT = deltaApp              # project name
@@ -31,6 +32,11 @@ Makefile example content :
 	SRC += main.c
 	
 	include $(RTPROG)/rtprog.mk
+```
+
+[Complete list of drivers](support/driver/README.md)
+
+[Complete list of modules](support/module/README.md)
 
 ## Prepare repository
 
@@ -40,6 +46,9 @@ To get all submodule used (USB and FatFS), please do not forget to init and upda
 	git submodule update
 
 ## dependencies
+### Qt > 5.2
+GUI tools are based on Qt like RTsim or img2raw. https://www.qt.io/
+
 ### MPLAB
 To program and debug the device (only IPE is needed to program)
 
