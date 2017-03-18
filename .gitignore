@@ -3,7 +3,8 @@
 *.ko
 *.obj
 *.elf
-build/
+build*/
+distrib/
 
 # Precompiled Headers
 *.gch
@@ -41,6 +42,7 @@ build/
 log.*
 *.xml.lck
 **/*Log.xml*
+*.X/
 
 # generated
 build-doc/
@@ -58,3 +60,5 @@ sensor_driver.h
 # proc file
 support/archi/pic16b/*.txt
 support/archi/pic32/*.txt
+
+nbproject/
