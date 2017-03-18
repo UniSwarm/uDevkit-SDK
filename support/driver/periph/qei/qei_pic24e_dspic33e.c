@@ -1,62 +1,93 @@
 /**
  * @file qei_pic24e_dspic33e.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date April 18, 2016, 22:33 PM
  *
- * @brief Quadrature Encoder Interface support driver for dsPIC33EP, dsPIC33EV
- * and PIC24EP
+ * @brief Quadrature Encoder Interface support driver for dsPIC33EP,
+ * dsPIC33EV and PIC24EP
+ *
+ * Implementation based on Microchip document DS70601B :
+ *   http://ww1.microchip.com/downloads/en/DeviceDoc/S15.pdf
  */
 
 #include "qei.h"
 
-#include <xc.h>
+#include <archi.h>
 
 #if !defined (QEI_COUNT) || QEI_COUNT==0
   #warning No device QEI periph on the current device
 #endif
 
-uint8_t qei_state = 0;
+uint8_t qeis[QEI_COUNT] = {0};
 
 /**
- * @brief Gives a free QEI device number
+ * @brief Gives a free QEI device number and open it
  * @return QEI device number
  */
 rt_dev_t qei_getFreeDevice()
 {
 #if QEI_COUNT>=1
-    if (!(qei_state & 0x01))
-    {
-        qei_state = qei_state | 0x01;
-        return MKDEV(DEV_CLASS_QEI, 1);
-    }
-#endif
-#if QEI_COUNT>=2
-    if (!(qei_state & 0x02))
-    {
-        qei_state = qei_state | 0x02;
-        return MKDEV(DEV_CLASS_QEI, 2);
-    }
-#endif
+    uint8_t i;
+    rt_dev_t device;
 
+    for (i = 0; i < QEI_COUNT; i++)
+        if (qeis[i] == 0)
+            break;
+
+    if (i == QEI_COUNT)
+        return NULLDEV;
+    device = MKDEV(DEV_CLASS_QEI, i);
+
+    qei_open(device);
+
+    return device;
+#else
     return NULLDEV;
+#endif
 }
 
 /**
- * @brief Release a QEI
+ * @brief Open a QEI
  * @param device QEI device number
+ * @return 0 if ok, -1 in case of error
  */
-void qei_releaseDevice(rt_dev_t device)
+int qei_open(rt_dev_t device)
 {
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
-    if (qei == 1)
-        qei_state = qei_state & 0xFE;
+    if (qei >= QEI_COUNT)
+        return -1;
+    if (qeis[qei] == 1)
+        return -1;
+
+    qeis[qei] = 1;
+
+    return 0;
+#else
+    return -1;
 #endif
-#if QEI_COUNT>=2
-    if (qei == 2)
-        qei_state = qei_state & 0xFD;
+}
+
+/**
+ * @brief Close a QEI
+ * @param device QEI device number
+ * @return 0 if ok, -1 in case of error
+ */
+int qei_close(rt_dev_t device)
+{
+#if QEI_COUNT>=1
+    uint8_t qei = MINOR(device);
+    if (qei >= QEI_COUNT)
+        return -1;
+
+    qei_disable(device);
+
+    qeis[qei] = 0;
+    return 0;
+#else
+    return -1;
 #endif
 }
 
@@ -76,14 +107,14 @@ int qei_enable(rt_dev_t device)
 #endif
 
 #if QEI_COUNT>=1
-    if (qei == 1)
+    if (qei == 0)
         QEI1CONbits.QEIEN = 1;
 #endif
 #if QEI_COUNT>=2
-    if (qei == 2)
+    if (qei == 1)
         QEI2CONbits.QEIEN = 1;
 #endif
-  
+
 #if QEI_COUNT>=1
     return 0;
 #endif
@@ -105,14 +136,14 @@ int qei_disable(rt_dev_t device)
 #endif
 
 #if QEI_COUNT>=1
-    if (qei == 1)
+    if (qei == 0)
         QEI1CONbits.QEIEN = 0;
 #endif
 #if QEI_COUNT>=2
-    if (qei == 2)
+    if (qei == 1)
         QEI2CONbits.QEIEN = 0;
 #endif
-  
+
 #if QEI_COUNT>=1
     return 0;
 #endif
@@ -128,7 +159,7 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
 {
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
-    if (qei == 1)
+    if (qei == 0)
     {
         INDX1CNTH = 0xFFFF;
         INDX1CNTL = 0xFFFF;
@@ -143,7 +174,7 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
     }
 #endif
 #if QEI_COUNT>=2
-    if (qei == 2)
+    if (qei == 1)
     {
         INDX2CNTH = 0xFFFF;
         INDX2CNTL = 0xFFFF;
@@ -165,19 +196,19 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
  * @param device QEI device number
  * @return position
  */
-uint32_t qei_getValue(rt_dev_t device)
+qei_type qei_getValue(rt_dev_t device)
 {
-    uint32_t tmp32 = 0;
+    qei_type tmp32 = 0;
   #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
-    if (qei == 1)
+    if (qei == 0)
     {
         tmp32 = (uint32_t) POS1CNTL;
         tmp32 += (uint32_t) POS1HLD << 16;
     }
   #endif
   #if QEI_COUNT>=2
-    if (qei == 2)
+    if (qei == 1)
     {
         tmp32 = (uint32_t) POS2CNTL;
         tmp32 += (uint32_t) POS2HLD << 16;
@@ -186,7 +217,7 @@ uint32_t qei_getValue(rt_dev_t device)
     return tmp32;
 }
 
-int qei_setHomeValue(rt_dev_t device, uint32_t home)
+int qei_setHomeValue(rt_dev_t device, qei_type home)
 {
     // TODO implement me
     return 0;

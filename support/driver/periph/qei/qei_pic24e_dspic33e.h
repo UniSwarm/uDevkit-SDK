@@ -1,12 +1,15 @@
 /**
  * @file qei_pic24e_dspic33e.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date April 18, 2016, 22:33 PM
  *
- * @brief Quadrature Encoder Interface support driver for dsPIC33EP, dsPIC33EV
- * and PIC24EP
+ * @brief Quadrature Encoder Interface support driver for dsPIC33EP,
+ * dsPIC33EV and PIC24EP
+ * 
+ * Implementation based on Microchip document DS70601B :
+ *   http://ww1.microchip.com/downloads/en/DeviceDoc/S15.pdf
  */
 
 #ifndef QEI_PIC24E_DSPIC33E_H

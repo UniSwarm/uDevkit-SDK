@@ -1,21 +1,22 @@
 /**
- * @file qei_pic24f_dspic30f_dspic33f.h
+ * @file qei_pic24f_dspic33f.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date April 18, 2016, 22:33 PM
  *
- * @brief Quadrature Encoder Interface support driver
+ * @brief Quadrature Encoder Interface support driver for dsPIC33FJ,
+ * PIC24F, PIC24FJ and PIC24HJ
+ *
+ * Implementation based on Microchip document DS70208C :
+ *   http://ww1.microchip.com/downloads/en/DeviceDoc/70208C.pdf
  */
 
-#ifndef QEI_PIC24F_DSPIC30F_DSPIC33F_H
-#define QEI_PIC24F_DSPIC30F_DSPIC33F_H
+#ifndef QEI_PIC24F_DSPIC33F_H
+#define QEI_PIC24F_DSPIC33F_H
 
 // calculate QEI count and version on the device
-#if defined(DEVICE_30F2010) || defined(DEVICE_30F3010) || defined(DEVICE_30F3011) \
- || defined(DEVICE_30F4011) || defined(DEVICE_30F4012) || defined(DEVICE_30F5015) \
- || defined(DEVICE_30F5016) || defined(DEVICE_30F6010A) || defined(DEVICE_30F6015) \
- || defined(DEVICE_33FJ128MC510A) || defined(DEVICE_33FJ128MC706A) || defined(DEVICE_33FJ128MC708A) \
+#if defined(DEVICE_33FJ128MC510A) || defined(DEVICE_33FJ128MC706A) || defined(DEVICE_33FJ128MC708A) \
  || defined(DEVICE_33FJ128MC710A) || defined(DEVICE_33FJ12MC201) || defined(DEVICE_33FJ12MC202) \
  || defined(DEVICE_33FJ16MC304) || defined(DEVICE_33FJ256MC510A) || defined(DEVICE_33FJ256MC710A) \
  || defined(DEVICE_33FJ32GS406) || defined(DEVICE_33FJ32MC202) || defined(DEVICE_33FJ32MC204) \
@@ -36,4 +37,4 @@
 
 #define QEI_16B
 
-#endif // QEI_PIC24F_DSPIC30F_DSPIC33F_H
+#endif // QEI_PIC24F_DSPIC33F_H

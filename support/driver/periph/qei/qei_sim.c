@@ -13,23 +13,28 @@
 uint8_t qei_state = 0;
 
 /**
- * @brief Gives a free QEI device number
+ * @brief Gives a free QEI device number and open it
  * @return QEI device number
  */
 rt_dev_t qei_getFreeDevice()
 {
+    rt_dev_t device;
 #if QEI_COUNT>=1
     if (!(qei_state & 0x01))
     {
         qei_state = qei_state | 0x01;
-        return MKDEV(DEV_CLASS_QEI, 1);
+        device = MKDEV(DEV_CLASS_QEI, 1);
+        qei_open(device);
+        return device;
     }
 #endif
 #if QEI_COUNT>=2
     if (!(qei_state & 0x02))
     {
         qei_state = qei_state | 0x02;
-        return MKDEV(DEV_CLASS_QEI, 2);
+        device = MKDEV(DEV_CLASS_QEI, 2);
+        qei_open(device);
+        return device;
     }
 #endif
 
@@ -37,10 +42,29 @@ rt_dev_t qei_getFreeDevice()
 }
 
 /**
- * @brief Release a QEI
+ * @brief Open a QEI
  * @param device QEI device number
+ * @return 0 if ok, -1 in case of error
  */
-void qei_releaseDevice(rt_dev_t device)
+int qei_open(rt_dev_t device)
+{
+#if QEI_COUNT>=1
+    uint8_t qei = MINOR(device);
+    if (qei == 1)
+        qei_state = qei_state | 0x01;
+#endif
+#if QEI_COUNT>=2
+    if (qei == 2)
+        qei_state = qei_state | 0x02;
+#endif
+}
+
+/**
+ * @brief Close a QEI
+ * @param device QEI device number
+ * @return 0 if ok, -1 in case of error
+ */
+int qei_close(rt_dev_t device)
 {
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
@@ -69,7 +93,7 @@ int qei_enable(rt_dev_t device)
 #endif
 
     // TODO SIM
-  
+
 #if QEI_COUNT>=1
     return 0;
 #endif
@@ -91,7 +115,7 @@ int qei_disable(rt_dev_t device)
 #endif
 
     // TODO SIM
-  
+
 #if QEI_COUNT>=1
     return 0;
 #endif
@@ -106,7 +130,7 @@ int qei_disable(rt_dev_t device)
 int qei_setConfig(rt_dev_t device, uint16_t config)
 {
     // TODO SIM
-    
+
     return 0;
 }
 
@@ -115,18 +139,18 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
  * @param device QEI device number
  * @return position
  */
-uint32_t qei_getValue(rt_dev_t device)
+qei_type qei_getValue(rt_dev_t device)
 {
-    uint32_t tmp32 = 0;
+    qei_type tmp32 = 0;
 
     // TODO SIM
-    
+
     return tmp32;
 }
 
-int qei_setHomeValue(rt_dev_t device, uint32_t home)
+int qei_setHomeValue(rt_dev_t device, qei_type home)
 {
     // TODO implement me
-    
+
     return 0;
 }
