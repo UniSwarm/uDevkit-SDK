@@ -6,7 +6,7 @@ OUT_PWD = build
 
 # CCFLAGS += -pedantic
 
-DRIVERS += uart ax12 adc i2c usb_serial
+DRIVERS += uart ax12 adc i2c usb_serial spi
 MODULES += cmdline # fs
 
 MODULES += network

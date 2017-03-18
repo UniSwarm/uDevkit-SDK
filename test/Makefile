@@ -1,4 +1,6 @@
 
+MAKE?=make
+
 TESTS = $(sort $(dir $(wildcard */Makefile)))
 
 all: $(TESTS)
@@ -6,7 +8,7 @@ all: $(TESTS)
 %/: FORCE
 	@echo
 	@echo ======================= Building $@ : ========================
-	cd $@ && make clean && make -j9 all
+	cd $@ && $(MAKE) clean && $(MAKE) -j9 all
 	@echo ======================== Test passed ==========================
 	@echo
 

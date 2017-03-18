@@ -1,4 +1,6 @@
 
+MAKE?=make
+
 NPROC:=$(shell nproc || echo 2)
 TOOL_NAME := a6kontrol
 
@@ -17,6 +19,6 @@ all: ../../bin/$(TARGET_NAME)
 	cd ../../build/$(TOOL_NAME) && qmake ../../tool/$(TOOL_NAME)/$(TOOL_NAME).pro
 
 ../../bin/$(TARGET_NAME): ../../build/$(TOOL_NAME)/Makefile FORCE
-	cd ../../build/$(TOOL_NAME) && make $(TARGET_EXE) -j$(NPROC)
+	cd ../../build/$(TOOL_NAME) && $(MAKE) $(TARGET_EXE) -j$(NPROC)
 
 FORCE:

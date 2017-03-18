@@ -1,4 +1,6 @@
 
+MAKE?=make
+
 SRC_FILES = $(shell find support/ include/ \( -name '*.h' -o -name '*.c' -o -name '*.mk' \))
 MD_FILES = $(shell find support/ -name '*.md')
 
@@ -12,10 +14,10 @@ init:
 	git submodule update
 	
 tools:
-	cd tool && make all
+	cd tool && $(MAKE) all
 
 tests:
-	cd test && make all
+	cd test && $(MAKE) all
 
 lines:
 	@wc -l $(SRC_FILES)| sort -n -k1

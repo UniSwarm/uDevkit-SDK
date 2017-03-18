@@ -1,4 +1,6 @@
 
+MAKE?=make
+
 TOOLS = $(sort $(dir $(wildcard */Makefile)))
 
 all: $(TOOLS)
@@ -6,7 +8,7 @@ all: $(TOOLS)
 %/: FORCE
 	@echo
 	@echo ======================= Building $@ : ========================
-	cd $@ && make all
+	cd $@ && $(MAKE) all
 	@echo ======================== Tool built ==========================
 	@echo
 
