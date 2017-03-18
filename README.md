@@ -2,6 +2,7 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![Build Status](https://travis-ci.org/Robotips/rtprog.svg?branch=master)](https://travis-ci.org/Robotips/rtprog)
+[![Build status](https://ci.appveyor.com/api/projects/status/yn3whlps1s3vy4ok?svg=true)](https://ci.appveyor.com/project/sebcaux/rtprog)
 
 A tool to simplify module inclusions in embedded systems.
 

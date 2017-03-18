@@ -23,10 +23,11 @@
  typedef uint16_t size_t;
 #endif
 
-#if !defined(_SSIZE_T_DEFINED) && !defined(_SSIZE_T) && !defined(_SSIZET) && !defined(_BSD_SSIZE_T_DEFINED_) && !defined(__ssize_t_defined) && !defined(_SSIZE_T_DECLARED)
+#if !defined(_SSIZE_T_DEFINED) && !defined(_SSIZE_T) && !defined(_SSIZE_T_) && !defined(_SSIZET) && !defined(_BSD_SSIZE_T_DEFINED_) && !defined(__ssize_t_defined) && !defined(_SSIZE_T_DECLARED)
 #define _SSIZE_T_DEFINED
 #define __ssize_t_defined
 #define _SSIZE_T
+#define _SSIZE_T_
 #define _SSIZET
 #define _SSIZE_T_DECLARED
 #define _BSD_SSIZE_T_DEFINED_
