@@ -1,16 +1,20 @@
 /**
  * @file oc_pic24e_dspic33e.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date August 18, 2016, 15:40 PM
  *
- * @brief Output Compare support driver for PIC24EP, dspic33EP and dsPIC33EV
+ * @brief Output Compare support driver for PIC24EP, dspic33EP,
+ * dsPIC33EV and PIC24FJxxxGA/GB/GC/DA
+ *
+ * Implementation based on Microchip document DS70005159A :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70005159a.pdf
  */
 
 #include "oc.h"
 
-#include <xc.h>
+#include <archi.h>
 
 #if !defined (OC_COUNT) || OC_COUNT==0
   #warning "No output compare (OC) on the current device or unknow device"
@@ -37,9 +41,11 @@ struct oc_dev
 };
 
 struct oc_dev ocs[] = {
+#if OC_COUNT>=1
     {
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
+#endif
 #if OC_COUNT>=2
     {
         .flags = {{.val = OC_FLAG_UNUSED}}
@@ -126,7 +132,9 @@ struct oc_dev ocs[] = {
  */
 rt_dev_t oc_getFreeDevice()
 {
+#if OC_COUNT>=1
     uint8_t i;
+    rt_dev_t device;
 
     for (i = 0; i < OC_COUNT; i++)
         if (ocs[i].flags.used == 0)
@@ -134,27 +142,62 @@ rt_dev_t oc_getFreeDevice()
 
     if (i == OC_COUNT)
         return NULLDEV;
+    device = MKDEV(DEV_CLASS_OC, i);
 
-    ocs[i].flags.used = 1;
+    oc_open(device);
 
-    return MKDEV(DEV_CLASS_OC, i);
+    return device;
+#else
+    return NULLDEV;
+#endif
+}
+
+/**
+ * @brief Open an OC
+ * @param device OC device number
+ * @return 0 if ok, -1 in case of error
+ */
+int oc_open(rt_dev_t device)
+{
+#if OC_COUNT>=1
+    uint8_t oc = MINOR(device);
+    if (oc >= OC_COUNT)
+        return -1;
+    if (ocs[oc].flags.used == 1)
+        return -1;
+
+    ocs[oc].flags.used = 1;
+
+    return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
  * @brief Release an OC device
  * @param device OC device number
+ * @return 0 if ok, -1 in case of error
  */
-void oc_releaseDevice(rt_dev_t device)
+int oc_close(rt_dev_t device)
 {
+#if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
-        return;
+        return -1;
+
+    oc_disable(device);
 
     ocs[oc].flags.val = OC_FLAG_UNUSED;
+    return 0;
+#else
+    return -1;
+#endif
 }
 
 int oc_setInternalMode(rt_dev_t device, uint8_t mode)
 {
+#if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
         return -1;
@@ -242,6 +285,9 @@ int oc_setInternalMode(rt_dev_t device, uint8_t mode)
     }
 
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -251,6 +297,7 @@ int oc_setInternalMode(rt_dev_t device, uint8_t mode)
  */
 int oc_enable(rt_dev_t device)
 {
+#if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
         return -1;
@@ -258,6 +305,9 @@ int oc_enable(rt_dev_t device)
     ocs[oc].flags.enabled = 1;
 
     return oc_setInternalMode(device, ocs[oc].flags.imode);
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -267,6 +317,7 @@ int oc_enable(rt_dev_t device)
  */
 int oc_disable(rt_dev_t device)
 {
+#if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
         return -1;
@@ -274,6 +325,9 @@ int oc_disable(rt_dev_t device)
     ocs[oc].flags.enabled = 0;
 
     return oc_setInternalMode(device, OC_PIC24E_dsPIC33E_DISABLE);
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -284,6 +338,7 @@ int oc_disable(rt_dev_t device)
  */
 int oc_setMode(rt_dev_t device, uint8_t mode)
 {
+#if OC_COUNT>=1
     uint8_t imode = OC_PIC24E_dsPIC33E_DISABLE;
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
@@ -302,6 +357,9 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
     if (ocs[oc].flags.enabled)
         return oc_setInternalMode(device, imode);
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -311,11 +369,15 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
  */
 uint8_t oc_mode(rt_dev_t device)
 {
+#if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
-        return -1;
+        return 0;
 
     return ocs[oc].flags.mode;
+#else
+    return 0;
+#endif
 }
 
 /**
@@ -327,6 +389,7 @@ uint8_t oc_mode(rt_dev_t device)
  */
 int oc_setRVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
 {
+#if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
         return -1;
@@ -433,6 +496,9 @@ int oc_setRVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
     }
 
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -442,11 +508,15 @@ int oc_setRVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
  */
 uint32_t oc_rVal(rt_dev_t device)
 {
+#if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
         return -1;
 
     return ocs[oc].rVal;
+#else
+    return 0;
+#endif
 }
 
 /**
@@ -456,9 +526,13 @@ uint32_t oc_rVal(rt_dev_t device)
  */
 uint32_t oc_rsVal(rt_dev_t device)
 {
+#if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
         return -1;
 
     return ocs[oc].rsVal;
+#else
+    return 0;
+#endif
 }
