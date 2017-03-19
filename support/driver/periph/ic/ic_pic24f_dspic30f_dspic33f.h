@@ -1,15 +1,21 @@
 /**
- * @file ic_pic24f_dspic33f_dspic30f.h
+ * @file ic_pic24f_dspic30f_dspic33f.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
- * @date August 18, 2016, 15:40 PM 
- * 
- * @brief Input Compare support driver for dsPIC30F, dsPIC33FJ, PIC24F, PIC24FJ, PIC24FV and PIC24HJ
+ * @date August 18, 2016, 15:40 PM
+ *
+ * @brief Input Compare support driver for dsPIC30F, dsPIC33FJ,
+ * PIC24F, some PIC24FJ, PIC24FV and PIC24HJ
+ *
+ * Warning ! PIC24FJxxxGA/GB/GC/DA use ic_pic24e_dspic33e driver
+ *
+ * Implementation based on Microchip document DS70005157A :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70005157a.pdf
  */
 
-#ifndef IC_PIC24F_dsPIC33F_dsPIC30F_H
-#define IC_PIC24F_dsPIC33F_dsPIC30F_H
+#ifndef IC_PIC24F_dsPIC30F_dsPIC33F_H
+#define IC_PIC24F_dsPIC30F_dsPIC33F_H
 
 #if defined(DEVICE_30F2020) || defined(DEVICE_30F2023) || defined(DEVICE_33FJ06GS202) \
  || defined(DEVICE_33FJ06GS202A) || defined(DEVICE_33FJ09GS302) || defined(DEVICE_24F04KA200) \
@@ -27,11 +33,8 @@
  || defined(DEVICE_33FJ32GP104) || defined(DEVICE_33FJ32MC101) || defined(DEVICE_33FJ32MC102) \
  || defined(DEVICE_33FJ32MC104) || defined(DEVICE_24F16KA301) || defined(DEVICE_24F16KA302) \
  || defined(DEVICE_24F16KA304) || defined(DEVICE_24F32KA301) || defined(DEVICE_24F32KA302) \
- || defined(DEVICE_24F32KA304) || defined(DEVICE_24FJ128GA702) || defined(DEVICE_24FJ128GA704) \
- || defined(DEVICE_24FJ128GA705) || defined(DEVICE_24FJ16MC101) || defined(DEVICE_24FJ16MC102) \
- || defined(DEVICE_24FJ256GA702) || defined(DEVICE_24FJ256GA704) || defined(DEVICE_24FJ256GA705) \
+ || defined(DEVICE_24F32KA304) || defined(DEVICE_24FJ16MC101) || defined(DEVICE_24FJ16MC102) \
  || defined(DEVICE_24FJ32MC101) || defined(DEVICE_24FJ32MC102) || defined(DEVICE_24FJ32MC104) \
- || defined(DEVICE_24FJ64GA702) || defined(DEVICE_24FJ64GA704) || defined(DEVICE_24FJ64GA705) \
  || defined(DEVICE_24FV16KA301) || defined(DEVICE_24FV16KA302) || defined(DEVICE_24FV16KA304) \
  || defined(DEVICE_24FV32KA301) || defined(DEVICE_24FV32KA302) || defined(DEVICE_24FV32KA304)
  #define IC_COUNT 3
@@ -59,34 +62,6 @@
  || defined(DEVICE_24HJ32GP304) || defined(DEVICE_24HJ64GP202) || defined(DEVICE_24HJ64GP204) \
  || defined(DEVICE_24HJ64GP502) || defined(DEVICE_24HJ64GP504)
  #define IC_COUNT 4
-#elif defined(DEVICE_24FJ128GA006) || defined(DEVICE_24FJ128GA008) || defined(DEVICE_24FJ128GA010) \
- || defined(DEVICE_24FJ16GA002) || defined(DEVICE_24FJ16GA004) || defined(DEVICE_24FJ32GA002) \
- || defined(DEVICE_24FJ32GA004) || defined(DEVICE_24FJ32GA102) || defined(DEVICE_24FJ32GA104) \
- || defined(DEVICE_24FJ32GB002) || defined(DEVICE_24FJ32GB004) || defined(DEVICE_24FJ48GA002) \
- || defined(DEVICE_24FJ48GA004) || defined(DEVICE_24FJ64GA002) || defined(DEVICE_24FJ64GA004) \
- || defined(DEVICE_24FJ64GA006) || defined(DEVICE_24FJ64GA008) || defined(DEVICE_24FJ64GA010) \
- || defined(DEVICE_24FJ64GA102) || defined(DEVICE_24FJ64GA104) || defined(DEVICE_24FJ64GB002) \
- || defined(DEVICE_24FJ64GB004) || defined(DEVICE_24FJ96GA006) || defined(DEVICE_24FJ96GA008) \
- || defined(DEVICE_24FJ96GA010)
- #define IC_COUNT 5
-#elif defined(DEVICE_24FJ1024GA606) || defined(DEVICE_24FJ1024GA610) || defined(DEVICE_24FJ1024GB606) \
- || defined(DEVICE_24FJ1024GB610) || defined(DEVICE_24FJ128GA202) || defined(DEVICE_24FJ128GA204) \
- || defined(DEVICE_24FJ128GA406) || defined(DEVICE_24FJ128GA410) || defined(DEVICE_24FJ128GA412) \
- || defined(DEVICE_24FJ128GA606) || defined(DEVICE_24FJ128GA610) || defined(DEVICE_24FJ128GB202) \
- || defined(DEVICE_24FJ128GB204) || defined(DEVICE_24FJ128GB406) || defined(DEVICE_24FJ128GB410) \
- || defined(DEVICE_24FJ128GB412) || defined(DEVICE_24FJ128GB606) || defined(DEVICE_24FJ128GB610) \
- || defined(DEVICE_24FJ256GA406) || defined(DEVICE_24FJ256GA410) || defined(DEVICE_24FJ256GA412) \
- || defined(DEVICE_24FJ256GA606) || defined(DEVICE_24FJ256GA610) || defined(DEVICE_24FJ256GB406) \
- || defined(DEVICE_24FJ256GB410) || defined(DEVICE_24FJ256GB412) || defined(DEVICE_24FJ256GB606) \
- || defined(DEVICE_24FJ256GB610) || defined(DEVICE_24FJ512GA606) || defined(DEVICE_24FJ512GA610) \
- || defined(DEVICE_24FJ512GB606) || defined(DEVICE_24FJ512GB610) || defined(DEVICE_24FJ64GA202) \
- || defined(DEVICE_24FJ64GA204) || defined(DEVICE_24FJ64GA406) || defined(DEVICE_24FJ64GA410) \
- || defined(DEVICE_24FJ64GA412) || defined(DEVICE_24FJ64GB202) || defined(DEVICE_24FJ64GB204) \
- || defined(DEVICE_24FJ64GB406) || defined(DEVICE_24FJ64GB410) || defined(DEVICE_24FJ64GB412)
- #define IC_COUNT 6
-#elif defined(DEVICE_24FJ128GA306) || defined(DEVICE_24FJ128GA308) || defined(DEVICE_24FJ128GA310) \
- || defined(DEVICE_24FJ64GA306) || defined(DEVICE_24FJ64GA308) || defined(DEVICE_24FJ64GA310)
- #define IC_COUNT 7
 #elif defined(DEVICE_30F5011) || defined(DEVICE_30F5011E) || defined(DEVICE_30F5013) \
  || defined(DEVICE_30F5013E) || defined(DEVICE_30F6010) || defined(DEVICE_30F6010A) \
  || defined(DEVICE_30F6011) || defined(DEVICE_30F6011A) || defined(DEVICE_30F6012) \
@@ -120,23 +95,8 @@
  || defined(DEVICE_24HJ64GP210A) || defined(DEVICE_24HJ64GP506) || defined(DEVICE_24HJ64GP506A) \
  || defined(DEVICE_24HJ64GP510) || defined(DEVICE_24HJ64GP510A)
  #define IC_COUNT 8
-#elif defined(DEVICE_24FJ128DA106) || defined(DEVICE_24FJ128DA110) || defined(DEVICE_24FJ128DA206) \
- || defined(DEVICE_24FJ128DA210) || defined(DEVICE_24FJ128GA106) || defined(DEVICE_24FJ128GA108) \
- || defined(DEVICE_24FJ128GA110) || defined(DEVICE_24FJ128GB106) || defined(DEVICE_24FJ128GB108) \
- || defined(DEVICE_24FJ128GB110) || defined(DEVICE_24FJ128GB206) || defined(DEVICE_24FJ128GB210) \
- || defined(DEVICE_24FJ128GC006) || defined(DEVICE_24FJ128GC010) || defined(DEVICE_24FJ192GA106) \
- || defined(DEVICE_24FJ192GA108) || defined(DEVICE_24FJ192GA110) || defined(DEVICE_24FJ192GB106) \
- || defined(DEVICE_24FJ192GB108) || defined(DEVICE_24FJ192GB110) || defined(DEVICE_24FJ256DA106) \
- || defined(DEVICE_24FJ256DA110) || defined(DEVICE_24FJ256DA206) || defined(DEVICE_24FJ256DA210) \
- || defined(DEVICE_24FJ256GA106) || defined(DEVICE_24FJ256GA108) || defined(DEVICE_24FJ256GA110) \
- || defined(DEVICE_24FJ256GB106) || defined(DEVICE_24FJ256GB108) || defined(DEVICE_24FJ256GB110) \
- || defined(DEVICE_24FJ256GB206) || defined(DEVICE_24FJ256GB210) || defined(DEVICE_24FJ64GA106) \
- || defined(DEVICE_24FJ64GA108) || defined(DEVICE_24FJ64GA110) || defined(DEVICE_24FJ64GB106) \
- || defined(DEVICE_24FJ64GB108) || defined(DEVICE_24FJ64GB110) || defined(DEVICE_24FJ64GC006) \
- || defined(DEVICE_24FJ64GC010)
- #define IC_COUNT 9
 #else
  #define IC_COUNT 0
 #endif
 
-#endif // IC_PIC24F_dsPIC33F_dsPIC30F_H
+#endif // IC_PIC24F_dsPIC30F_dsPIC33F_H
