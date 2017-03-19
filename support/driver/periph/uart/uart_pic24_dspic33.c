@@ -116,8 +116,8 @@ rt_dev_t uart_getFreeDevice()
 
 /**
  * @brief Open an uart from his uart rt_dev_t
- * @param uart uart rt_dev_t id
- * @return uart device number
+ * @param device uart device number
+ * @return 0 if ok, -1 in case of error
  */
 int uart_open(rt_dev_t device)
 {

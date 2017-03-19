@@ -1,5 +1,5 @@
 /**
- * @file qei_dspic30.c
+ * @file qei_dspic30f.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
  *

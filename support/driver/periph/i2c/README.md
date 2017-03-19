@@ -93,14 +93,14 @@ Device assignation, config, send and read data fully functionnal
 
 |Family|Implementation file|Implementation header|
 |------|-------------------|---------------------|
-|[pic24f](../../../archi/pic24f/README.md)|[i2c_pic24_dspic30_dspic33.c](i2c_pic24_dspic30_dspic33.c)|[i2c_pic24_dspic30_dspic33.h](i2c_pic24_dspic30_dspic33.h)|
-|[pic24fj](../../../archi/pic24fj/README.md)|[i2c_pic24_dspic30_dspic33.c](i2c_pic24_dspic30_dspic33.c)|[i2c_pic24_dspic30_dspic33.h](i2c_pic24_dspic30_dspic33.h)|
-|[pic24ep](../../../archi/pic24ep/README.md)|[i2c_pic24_dspic30_dspic33.c](i2c_pic24_dspic30_dspic33.c)|[i2c_pic24_dspic30_dspic33.h](i2c_pic24_dspic30_dspic33.h)|
-|[pic24hj](../../../archi/pic24hj/README.md)|[i2c_pic24_dspic30_dspic33.c](i2c_pic24_dspic30_dspic33.c)|[i2c_pic24_dspic30_dspic33.h](i2c_pic24_dspic30_dspic33.h)|
-|[dspic33fj](../../../archi/dspic33fj/README.md)|[i2c_pic24_dspic30_dspic33.c](i2c_pic24_dspic30_dspic33.c)|[i2c_pic24_dspic30_dspic33.h](i2c_pic24_dspic30_dspic33.h)|
-|[dspic33ep](../../../archi/dspic33ep/README.md)|[i2c_pic24_dspic30_dspic33.c](i2c_pic24_dspic30_dspic33.c)|[i2c_pic24_dspic30_dspic33.h](i2c_pic24_dspic30_dspic33.h)|
-|[dspic33ev](../../../archi/dspic33ev/README.md)|[i2c_pic24_dspic30_dspic33.c](i2c_pic24_dspic30_dspic33.c)|[i2c_pic24_dspic30_dspic33.h](i2c_pic24_dspic30_dspic33.h)|
-|[dspic30f](../../../archi/dspic30f/README.md)|[i2c_pic24_dspic30_dspic33.c](i2c_pic24_dspic30_dspic33.c)|[i2c_pic24_dspic30_dspic33.h](i2c_pic24_dspic30_dspic33.h)|
+|[pic24f](../../../archi/pic24f/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[pic24fj](../../../archi/pic24fj/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[pic24ep](../../../archi/pic24ep/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[pic24hj](../../../archi/pic24hj/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[dspic33fj](../../../archi/dspic33fj/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[dspic33ep](../../../archi/dspic33ep/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[dspic33ev](../../../archi/dspic33ev/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[dspic30f](../../../archi/dspic30f/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
 |[pic32mm](../../../archi/pic32mm/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|
 |[pic32mx](../../../archi/pic32mx/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|
 |[pic32mzec](../../../archi/pic32mzec/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|

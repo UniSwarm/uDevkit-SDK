@@ -1,5 +1,5 @@
 /**
- * @file timer_pic24_dspic30_dspic33.h
+ * @file timer_pic24_dspic30f_dspic33.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
  *
@@ -14,8 +14,8 @@
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/70059D.pdf
  */
 
-#ifndef TIMER_PIC24_DSPIC30_DSPIC33_H
-#define TIMER_PIC24_DSPIC30_DSPIC33_H
+#ifndef TIMER_PIC24_DSPIC30F_DSPIC33_H
+#define TIMER_PIC24_DSPIC30F_DSPIC33_H
 
 #if defined(DEVICE_24F08KM101) || defined(DEVICE_24F08KM102) || defined(DEVICE_24F08KM202) \
  || defined(DEVICE_24F08KM204) || defined(DEVICE_24F16KM102) || defined(DEVICE_24F16KM104) \
@@ -201,4 +201,4 @@
  #define TIMER_COUNT 0
 #endif
 
-#endif // TIMER_PIC24_DSPIC30_DSPIC33_H
+#endif // TIMER_PIC24_DSPIC30F_DSPIC33_H

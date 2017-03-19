@@ -13,10 +13,9 @@
 
 #include "spi.h"
 
-#include "driver/sysclock.h"
-#include "sys/fifo.h"
-
-#include <xc.h>
+#include <driver/sysclock.h>
+#include <archi.h>
+#include <sys/fifo.h>
 
 #if !defined (SPI_COUNT) || SPI_COUNT==0
   #warning "No spi bus on the current device or unknow device"
@@ -254,7 +253,7 @@ int spi_setFreq(rt_dev_t device, uint32_t freq)
     else
     {
         sdivp = 0x0; // primary = 64
-        sdivs = sdiv >> 4;
+        sdivs = sdiv >> 6;
         if (sdivs > 8)
             sdivs = 8;
     }
@@ -321,7 +320,7 @@ uint32_t spi_freq(rt_dev_t device)
 
     // primary divisor   : 1 (0x3), 4(0x2), 16(0x1), 64(0x0)
     sdivp = spis[spi].sdivp;
-    switch (sdivp == 0x3)
+    switch (sdivp)
     {
     case 0x3:
         sdivp = 1;

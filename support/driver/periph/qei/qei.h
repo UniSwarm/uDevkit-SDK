@@ -19,7 +19,7 @@
 #elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
  #include "qei_pic24e_dspic33e.h"
 #elif defined(ARCHI_dspic30f)
- #include "qei_dspic30.h"
+ #include "qei_dspic30f.h"
 #else
  #warning Unsuported ARCHI
 #endif

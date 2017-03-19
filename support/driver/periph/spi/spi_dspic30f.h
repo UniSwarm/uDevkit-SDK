@@ -1,5 +1,5 @@
 /**
- * @file spi_dspic30.h
+ * @file spi_dspic30f.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
  *
@@ -8,8 +8,8 @@
  * @brief SPI communication support driver for dsPIC30F
  */
 
-#ifndef SPI_DSPIC30_H
-#define SPI_DSPIC30_H
+#ifndef SPI_DSPIC30F_H
+#define SPI_DSPIC30F_H
 
 #if defined(DEVICE_30F1010) || defined(DEVICE_30F2010) || defined(DEVICE_30F2010E) \
  || defined(DEVICE_30F2011) || defined(DEVICE_30F2011E) || defined(DEVICE_30F2012) \
@@ -32,4 +32,4 @@
  #define SPI_COUNT 0
 #endif
 
-#endif // SPI_DSPIC30_H
+#endif // SPI_DSPIC30F_H

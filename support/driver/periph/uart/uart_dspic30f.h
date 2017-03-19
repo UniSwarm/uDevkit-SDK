@@ -1,5 +1,5 @@
 /**
- * @file uart_dspic30.h
+ * @file uart_dspic30f.h
  * @author Sebastien CAUX (sebcaux) \
  * @copyright Robotips 2016-2017
  *
@@ -11,8 +11,8 @@
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/70000582e.pdf
  */
 
-#ifndef UART_DSPIC30_H
-#define UART_DSPIC30_H
+#ifndef UART_DSPIC30F_H
+#define UART_DSPIC30F_H
 
 // calculate UART count on the device
 #if defined (DEVICE_30F1010) || defined (DEVICE_30F2010) || defined (DEVICE_30F2011) \
@@ -30,4 +30,4 @@
   #define UART_COUNT 0
 #endif
 
-#endif // UART_DSPIC30_H
+#endif // UART_DSPIC30F_H

@@ -1,7 +1,7 @@
 /**
- * @file sysclock_pic24_dspic30_dspic33.h
+ * @file sysclock_pic24_dspic30f_dspic33.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date April 11, 2016, 05:12 PM
  *
@@ -10,8 +10,8 @@
 
 #include "sysclock.h"
 
-#ifndef SYSCLOCK_PIC24_DSPIC30_DSPIC33_H
-#define SYSCLOCK_PIC24_DSPIC30_DSPIC33_H
+#ifndef SYSCLOCK_PIC24_DSPIC30F_DSPIC33_H
+#define SYSCLOCK_PIC24_DSPIC30F_DSPIC33_H
 
 /*
  *               Fplli                     Fsys
@@ -36,10 +36,10 @@
   #define SYSCLOCK_N1_MAX 33
   #define SYSCLOCK_FPLLI_MIN 800000
   #define SYSCLOCK_FPLLI_MAX 8000000
-  
+
   #define SYSCLOCK_FSYS_MIN 120000000
   #define SYSCLOCK_FSYS_MAX 340000000
-  
+
   #define SYSCLOCK_FOSC_MAX 120000000
 
 #elif defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
@@ -48,10 +48,10 @@
   #define SYSCLOCK_N1_MAX 33
   #define SYSCLOCK_FPLLI_MIN 800000
   #define SYSCLOCK_FPLLI_MAX 8000000
-  
+
   #define SYSCLOCK_FSYS_MIN 100000000
   #define SYSCLOCK_FSYS_MAX 200000000
-  
+
   #define SYSCLOCK_FOSC_MAX 80000000
 
 #else
@@ -61,4 +61,4 @@
 int sysclock_setClockWPLL(uint32_t freq);
 uint32_t sysclock_getPeriphClock();
 
-#endif // SYSCLOCK_PIC24_DSPIC30_DSPIC33_H
+#endif // SYSCLOCK_PIC24_DSPIC30F_DSPIC33_H

@@ -1,14 +1,14 @@
 /**
- * @file sysclock_pic24_dspic30_dspic33.c
+ * @file sysclock_pic24_dspic30f_dspic33.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date April 11, 2016, 05:12 PM
  *
  * @brief System clock support for rtprog
  */
 
-#include "sysclock_pic24_dspic30_dspic33.h"
+#include "sysclock_pic24_dspic30f_dspic33.h"
 
 #include <stdint.h>
 

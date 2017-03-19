@@ -16,7 +16,7 @@
 // ======= specific include =======
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
  || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
- #include "sysclock_pic24_dspic30_dspic33.h"
+ #include "sysclock_pic24_dspic30f_dspic33.h"
 #elif defined(ARCHI_pic32mx)
  #include "sysclock_pic32mx.h"
 #elif defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)

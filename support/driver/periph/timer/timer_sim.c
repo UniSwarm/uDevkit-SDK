@@ -1,5 +1,5 @@
 /**
- * @file timer_pic24_dspic30_dspic33.c
+ * @file timer_sim.c
  * @author Sebastien CAUX (sebcaux) \
  * @copyright Robotips 2016
  *

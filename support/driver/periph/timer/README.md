@@ -71,14 +71,14 @@ timer_clearValue(timer); // clear count
 
 |Family|Implementation file|Implementation header|
 |------|-------------------|---------------------|
-|[pic24f](../../../archi/pic24f/README.md)|[timer_pic24_dspic30_dspic33.c](timer_pic24_dspic30_dspic33.c)|[timer_pic24_dspic30_dspic33.h](timer_pic24_dspic30_dspic33.h)|
-|[pic24fj](../../../archi/pic24fj/README.md)|[timer_pic24_dspic30_dspic33.c](timer_pic24_dspic30_dspic33.c)|[timer_pic24_dspic30_dspic33.h](timer_pic24_dspic30_dspic33.h)|
-|[pic24ep](../../../archi/pic24ep/README.md)|[timer_pic24_dspic30_dspic33.c](timer_pic24_dspic30_dspic33.c)|[timer_pic24_dspic30_dspic33.h](timer_pic24_dspic30_dspic33.h)|
-|[pic24hj](../../../archi/pic24hj/README.md)|[timer_pic24_dspic30_dspic33.c](timer_pic24_dspic30_dspic33.c)|[timer_pic24_dspic30_dspic33.h](timer_pic24_dspic30_dspic33.h)|
-|[dspic33fj](../../../archi/dspic33fj/README.md)|[timer_pic24_dspic30_dspic33.c](timer_pic24_dspic30_dspic33.c)|[timer_pic24_dspic30_dspic33.h](timer_pic24_dspic30_dspic33.h)|
-|[dspic33ep](../../../archi/dspic33ep/README.md)|[timer_pic24_dspic30_dspic33.c](timer_pic24_dspic30_dspic33.c)|[timer_pic24_dspic30_dspic33.h](timer_pic24_dspic30_dspic33.h)|
-|[dspic33ev](../../../archi/dspic33ev/README.md)|[timer_pic24_dspic30_dspic33.c](timer_pic24_dspic30_dspic33.c)|[timer_pic24_dspic30_dspic33.h](timer_pic24_dspic30_dspic33.h)|
-|[dspic30f](../../../archi/dspic30f/README.md)|[timer_pic24_dspic30_dspic33.c](timer_pic24_dspic30_dspic33.c)|[timer_pic24_dspic30_dspic33.h](timer_pic24_dspic30_dspic33.h)|
+|[pic24f](../../../archi/pic24f/README.md)|[timer_pic24_dspic30f_dspic33.c](timer_pic24_dspic30f_dspic33.c)|[timer_pic24_dspic30f_dspic33.h](timer_pic24_dspic30f_dspic33.h)|
+|[pic24fj](../../../archi/pic24fj/README.md)|[timer_pic24_dspic30f_dspic33.c](timer_pic24_dspic30f_dspic33.c)|[timer_pic24_dspic30f_dspic33.h](timer_pic24_dspic30f_dspic33.h)|
+|[pic24ep](../../../archi/pic24ep/README.md)|[timer_pic24_dspic30f_dspic33.c](timer_pic24_dspic30f_dspic33.c)|[timer_pic24_dspic30f_dspic33.h](timer_pic24_dspic30f_dspic33.h)|
+|[pic24hj](../../../archi/pic24hj/README.md)|[timer_pic24_dspic30f_dspic33.c](timer_pic24_dspic30f_dspic33.c)|[timer_pic24_dspic30f_dspic33.h](timer_pic24_dspic30f_dspic33.h)|
+|[dspic33fj](../../../archi/dspic33fj/README.md)|[timer_pic24_dspic30f_dspic33.c](timer_pic24_dspic30f_dspic33.c)|[timer_pic24_dspic30f_dspic33.h](timer_pic24_dspic30f_dspic33.h)|
+|[dspic33ep](../../../archi/dspic33ep/README.md)|[timer_pic24_dspic30f_dspic33.c](timer_pic24_dspic30f_dspic33.c)|[timer_pic24_dspic30f_dspic33.h](timer_pic24_dspic30f_dspic33.h)|
+|[dspic33ev](../../../archi/dspic33ev/README.md)|[timer_pic24_dspic30f_dspic33.c](timer_pic24_dspic30f_dspic33.c)|[timer_pic24_dspic30f_dspic33.h](timer_pic24_dspic30f_dspic33.h)|
+|[dspic30f](../../../archi/dspic30f/README.md)|[timer_pic24_dspic30f_dspic33.c](timer_pic24_dspic30f_dspic33.c)|[timer_pic24_dspic30f_dspic33.h](timer_pic24_dspic30f_dspic33.h)|
 |[pic32mm](../../../archi/pic32mm/README.md)|[timer_pic32.c](timer_pic32.c)|[timer_pic32.h](timer_pic32.h)|
 |[pic32mx](../../../archi/pic32mx/README.md)|[timer_pic32.c](timer_pic32.c)|[timer_pic32.h](timer_pic32.h)|
 |[pic32mzec](../../../archi/pic32mzec/README.md)|[timer_pic32.c](timer_pic32.c)|[timer_pic32.h](timer_pic32.h)|

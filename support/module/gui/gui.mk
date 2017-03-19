@@ -14,7 +14,7 @@ ARCHI_SRC += screenController/d51e5ta7601.c
 HEADER += screenController/d51e5ta7601.h
 SIM_SRC += gui_sim.c
 
-ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic30 dspic33fj dspic33ep dspic33ev))
+ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic30f dspic33fj dspic33ep dspic33ev))
  CCFLAGS_XC += -mlarge-code -mlarge-arrays -mlarge-data
 endif
 

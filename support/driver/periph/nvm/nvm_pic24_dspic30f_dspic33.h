@@ -1,5 +1,5 @@
 /**
- * @file nvm_pic24_dspic30_dspic33.h
+ * @file nvm_pic24_dspic30f_dspic33.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
@@ -9,8 +9,8 @@
  * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
  */
 
-#ifndef NVM_PIC24_DSPIC30_DSPIC33_H
-#define NVM_PIC24_DSPIC30_DSPIC33_H
+#ifndef NVM_PIC24_DSPIC30F_DSPIC33_H
+#define NVM_PIC24_DSPIC30F_DSPIC33_H
 
 typedef unsigned long prog_ptr;
 
@@ -35,4 +35,4 @@ typedef unsigned long prog_ptr;
 
 #endif
 
-#endif // NVM_PIC24_DSPIC30_DSPIC33_H
+#endif // NVM_PIC24_DSPIC30F_DSPIC33_H
