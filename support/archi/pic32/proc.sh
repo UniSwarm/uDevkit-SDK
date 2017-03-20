@@ -41,6 +41,21 @@ function extract {
 function countgpio {
     egrep -rc ${PATHPIC}/32xxxx/PIC* -e $2 |sed -e 's/.*\///' -e's/\([A-Z0-9a-z]+\)/\1/' -e 's/\.PIC//' |sort > $1.txt
 }
+function printports {
+    OTHERPORT=$1
+    PORTCOUNT=0
+    for i in {A..L}
+    do
+        PORT=$(echo ${OTHERPORT}|sed -e's/\([0-1]\):.*/\1/')
+        OTHERPORT=$(echo ${OTHERPORT}|sed -e's/[0-1]:\(.*\)/\1/')
+        if [ "$PORT" == "1" ]
+        then
+            CONTENT+='\n  #defined GPIO_HAVE_PORT'${i}
+            PORTCOUNT=$((PORTCOUNT+1))
+        fi
+    done
+    CONTENT+='\n  #defined GPIO_COUNT '${PORTCOUNT}
+}
 function gpioget {
     echo "A"
     countgpio gpioA "SFRDef.*edc:cname=\"PORTA.*\""
@@ -68,16 +83,7 @@ function gpioget {
         then
             if ((${COUNT}!=0))
             then
-                OTHERPORT=${pgpio_port}
-                for i in {A..L}
-                do
-                    PORT=$(echo ${OTHERPORT}|sed -e's/\([0-1]\):.*/\1/')
-                    OTHERPORT=$(echo ${OTHERPORT}|sed -e's/[0-1]:\(.*\)/\1/')
-                    if [ "$PORT" == "1" ]
-                    then
-                        CONTENT+='\n  #defined HAVE_PORT'${i}
-                    fi
-                done
+                printports ${pgpio_port}
             fi
             COUNT=0
         fi
@@ -94,16 +100,7 @@ function gpioget {
         
         pgpio_port=${gpio_port}
     done
-    OTHERPORT=${pgpio_port}
-    for i in {A..L}
-    do
-        PORT=$(echo ${OTHERPORT}|sed -e's/\([0-1]\):.*/\1/')
-        OTHERPORT=$(echo ${OTHERPORT}|sed -e's/[0-1]:\(.*\)/\1/')
-        if [ "$PORT" == "1" ]
-        then
-            CONTENT+='\n  #defined HAVE_PORT'${i}
-        fi
-    done
+    printports ${pgpio_port}
     CONTENT+='\n#endif'
     
     echo -e ${CONTENT} > gpio_pic32.h

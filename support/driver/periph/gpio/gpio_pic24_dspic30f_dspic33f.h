@@ -1,15 +1,17 @@
 
 #elif defined(DEVICE_30F2011) || defined(DEVICE_30F2011E) || defined(DEVICE_30F3012) \
  || defined(DEVICE_30F3012E)
- #defined HAVE_PORTB
- #defined HAVE_PORTC
- #defined HAVE_PORTD
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTC
+ #defined GPIO_HAVE_PORTD
+ #defined GPIO_COUNT 3
 #elif defined(DEVICE_30F2012) || defined(DEVICE_30F2012E) || defined(DEVICE_30F3013) \
  || defined(DEVICE_30F3013E)
- #defined HAVE_PORTB
- #defined HAVE_PORTC
- #defined HAVE_PORTD
- #defined HAVE_PORTF
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTC
+ #defined GPIO_HAVE_PORTD
+ #defined GPIO_HAVE_PORTF
+ #defined GPIO_COUNT 4
 #elif defined(DEVICE_30F5011) || defined(DEVICE_30F5011E) || defined(DEVICE_30F6011) \
  || defined(DEVICE_30F6011A) || defined(DEVICE_30F6012) || defined(DEVICE_30F6012A) \
  || defined(DEVICE_33FJ128GP206) || defined(DEVICE_33FJ128GP206A) || defined(DEVICE_33FJ128GP306) \
@@ -21,20 +23,22 @@
  || defined(DEVICE_24HJ128GP506) || defined(DEVICE_24HJ128GP506A) || defined(DEVICE_24HJ256GP206) \
  || defined(DEVICE_24HJ256GP206A) || defined(DEVICE_24HJ64GP206) || defined(DEVICE_24HJ64GP206A) \
  || defined(DEVICE_24HJ64GP506) || defined(DEVICE_24HJ64GP506A)
- #defined HAVE_PORTB
- #defined HAVE_PORTC
- #defined HAVE_PORTD
- #defined HAVE_PORTF
- #defined HAVE_PORTG
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTC
+ #defined GPIO_HAVE_PORTD
+ #defined GPIO_HAVE_PORTF
+ #defined GPIO_HAVE_PORTG
+ #defined GPIO_COUNT 5
 #elif defined(DEVICE_30F2010) || defined(DEVICE_30F2010E) || defined(DEVICE_30F3010) \
  || defined(DEVICE_30F3010E) || defined(DEVICE_30F3011) || defined(DEVICE_30F3011E) \
  || defined(DEVICE_30F4011) || defined(DEVICE_30F4011E) || defined(DEVICE_30F4012) \
  || defined(DEVICE_30F4012E)
- #defined HAVE_PORTB
- #defined HAVE_PORTC
- #defined HAVE_PORTD
- #defined HAVE_PORTE
- #defined HAVE_PORTF
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTC
+ #defined GPIO_HAVE_PORTD
+ #defined GPIO_HAVE_PORTE
+ #defined GPIO_HAVE_PORTF
+ #defined GPIO_COUNT 5
 #elif defined(DEVICE_30F5015) || defined(DEVICE_30F5015E) || defined(DEVICE_30F6015) \
  || defined(DEVICE_33EP256MU806) || defined(DEVICE_33EP512GP806) || defined(DEVICE_33EP512MC806) \
  || defined(DEVICE_33FJ128MC506) || defined(DEVICE_33FJ128MC506A) || defined(DEVICE_33FJ128MC706) \
@@ -51,12 +55,13 @@
  || defined(DEVICE_24FJ256GB606) || defined(DEVICE_24FJ512GA606) || defined(DEVICE_24FJ512GB606) \
  || defined(DEVICE_24FJ64GA006) || defined(DEVICE_24FJ64GA106) || defined(DEVICE_24FJ64GA306) \
  || defined(DEVICE_24FJ64GB106) || defined(DEVICE_24FJ64GC006) || defined(DEVICE_24FJ96GA006)
- #defined HAVE_PORTB
- #defined HAVE_PORTC
- #defined HAVE_PORTD
- #defined HAVE_PORTE
- #defined HAVE_PORTF
- #defined HAVE_PORTG
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTC
+ #defined GPIO_HAVE_PORTD
+ #defined GPIO_HAVE_PORTE
+ #defined GPIO_HAVE_PORTF
+ #defined GPIO_HAVE_PORTG
+ #defined GPIO_COUNT 6
 #elif defined(DEVICE_33EP128GP502) || defined(DEVICE_33EP128GS702) || defined(DEVICE_33EP128MC202) \
  || defined(DEVICE_33EP128MC502) || defined(DEVICE_33EP16GS202) || defined(DEVICE_33EP16GS502) \
  || defined(DEVICE_33EP256GP502) || defined(DEVICE_33EP256MC202) || defined(DEVICE_33EP256MC502) \
@@ -102,21 +107,24 @@
  || defined(DEVICE_24HJ128GP202) || defined(DEVICE_24HJ128GP502) || defined(DEVICE_24HJ12GP201) \
  || defined(DEVICE_24HJ12GP202) || defined(DEVICE_24HJ32GP202) || defined(DEVICE_24HJ32GP302) \
  || defined(DEVICE_24HJ64GP202) || defined(DEVICE_24HJ64GP502)
- #defined HAVE_PORTA
- #defined HAVE_PORTB
+ #defined GPIO_HAVE_PORTA
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_COUNT 2
 #elif defined(DEVICE_30F1010) || defined(DEVICE_30F2020)
- #defined HAVE_PORTA
- #defined HAVE_PORTB
- #defined HAVE_PORTD
- #defined HAVE_PORTE
- #defined HAVE_PORTF
+ #defined GPIO_HAVE_PORTA
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTD
+ #defined GPIO_HAVE_PORTE
+ #defined GPIO_HAVE_PORTF
+ #defined GPIO_COUNT 5
 #elif defined(DEVICE_30F2023)
- #defined HAVE_PORTA
- #defined HAVE_PORTB
- #defined HAVE_PORTD
- #defined HAVE_PORTE
- #defined HAVE_PORTF
- #defined HAVE_PORTG
+ #defined GPIO_HAVE_PORTA
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTD
+ #defined GPIO_HAVE_PORTE
+ #defined GPIO_HAVE_PORTF
+ #defined GPIO_HAVE_PORTG
+ #defined GPIO_COUNT 6
 #elif defined(DEVICE_33EP128GM304) || defined(DEVICE_33EP128GM604) || defined(DEVICE_33EP128GP504) \
  || defined(DEVICE_33EP128GS704) || defined(DEVICE_33EP128GS804) || defined(DEVICE_33EP128MC204) \
  || defined(DEVICE_33EP128MC504) || defined(DEVICE_33EP16GS504) || defined(DEVICE_33EP16GS505) \
@@ -155,40 +163,45 @@
  || defined(DEVICE_24HJ128GP204) || defined(DEVICE_24HJ128GP504) || defined(DEVICE_24HJ16GP304) \
  || defined(DEVICE_24HJ32GP204) || defined(DEVICE_24HJ32GP304) || defined(DEVICE_24HJ64GP204) \
  || defined(DEVICE_24HJ64GP504)
- #defined HAVE_PORTA
- #defined HAVE_PORTB
- #defined HAVE_PORTC
+ #defined GPIO_HAVE_PORTA
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTC
+ #defined GPIO_COUNT 3
 #elif defined(DEVICE_33EP128GS705) || defined(DEVICE_33EP128GS706) || defined(DEVICE_33EP128GS805) \
  || defined(DEVICE_33EP128GS806) || defined(DEVICE_33EP16GS506) || defined(DEVICE_33EP32GS506) \
  || defined(DEVICE_33EP64GS506) || defined(DEVICE_33EP64GS805) || defined(DEVICE_33EP64GS806)
- #defined HAVE_PORTA
- #defined HAVE_PORTB
- #defined HAVE_PORTC
- #defined HAVE_PORTD
+ #defined GPIO_HAVE_PORTA
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTC
+ #defined GPIO_HAVE_PORTD
+ #defined GPIO_COUNT 4
 #elif defined(DEVICE_30F3014) || defined(DEVICE_30F3014E) || defined(DEVICE_30F4013) \
  || defined(DEVICE_30F4013E)
- #defined HAVE_PORTA
- #defined HAVE_PORTB
- #defined HAVE_PORTC
- #defined HAVE_PORTD
- #defined HAVE_PORTF
+ #defined GPIO_HAVE_PORTA
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTC
+ #defined GPIO_HAVE_PORTD
+ #defined GPIO_HAVE_PORTF
+ #defined GPIO_COUNT 5
 #elif defined(DEVICE_30F5013) || defined(DEVICE_30F5013E) || defined(DEVICE_30F6013) \
  || defined(DEVICE_30F6013A) || defined(DEVICE_30F6014) || defined(DEVICE_30F6014A) \
  || defined(DEVICE_33FJ128GP708) || defined(DEVICE_33FJ128GP708A) || defined(DEVICE_33FJ64GP708) \
  || defined(DEVICE_33FJ64GP708A)
- #defined HAVE_PORTA
- #defined HAVE_PORTB
- #defined HAVE_PORTC
- #defined HAVE_PORTD
- #defined HAVE_PORTF
- #defined HAVE_PORTG
+ #defined GPIO_HAVE_PORTA
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTC
+ #defined GPIO_HAVE_PORTD
+ #defined GPIO_HAVE_PORTF
+ #defined GPIO_HAVE_PORTG
+ #defined GPIO_COUNT 6
 #elif defined(DEVICE_33EP128GS708) || defined(DEVICE_33EP128GS808) || defined(DEVICE_33EP64GS708) \
  || defined(DEVICE_33EP64GS808)
- #defined HAVE_PORTA
- #defined HAVE_PORTB
- #defined HAVE_PORTC
- #defined HAVE_PORTD
- #defined HAVE_PORTE
+ #defined GPIO_HAVE_PORTA
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTC
+ #defined GPIO_HAVE_PORTD
+ #defined GPIO_HAVE_PORTE
+ #defined GPIO_COUNT 5
 #elif defined(DEVICE_30F5016) || defined(DEVICE_30F6010) || defined(DEVICE_30F6010A) \
  || defined(DEVICE_33DV64MC205) || defined(DEVICE_33EP128GM306) || defined(DEVICE_33EP128GM310) \
  || defined(DEVICE_33EP128GM706) || defined(DEVICE_33EP128GM710) || defined(DEVICE_33EP128GP506) \
@@ -235,38 +248,41 @@
  || defined(DEVICE_24HJ256GP210A) || defined(DEVICE_24HJ256GP610) || defined(DEVICE_24HJ256GP610A) \
  || defined(DEVICE_24HJ64GP210) || defined(DEVICE_24HJ64GP210A) || defined(DEVICE_24HJ64GP510) \
  || defined(DEVICE_24HJ64GP510A)
- #defined HAVE_PORTA
- #defined HAVE_PORTB
- #defined HAVE_PORTC
- #defined HAVE_PORTD
- #defined HAVE_PORTE
- #defined HAVE_PORTF
- #defined HAVE_PORTG
+ #defined GPIO_HAVE_PORTA
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTC
+ #defined GPIO_HAVE_PORTD
+ #defined GPIO_HAVE_PORTE
+ #defined GPIO_HAVE_PORTF
+ #defined GPIO_HAVE_PORTG
+ #defined GPIO_COUNT 7
 #elif defined(DEVICE_24FJ128GA406) || defined(DEVICE_24FJ128GA410) || defined(DEVICE_24FJ128GA412) \
  || defined(DEVICE_24FJ128GB406) || defined(DEVICE_24FJ128GB410) || defined(DEVICE_24FJ128GB412) \
  || defined(DEVICE_24FJ256GA406) || defined(DEVICE_24FJ256GA410) || defined(DEVICE_24FJ256GA412) \
  || defined(DEVICE_24FJ256GB406) || defined(DEVICE_24FJ256GB410) || defined(DEVICE_24FJ256GB412) \
  || defined(DEVICE_24FJ64GA406) || defined(DEVICE_24FJ64GA410) || defined(DEVICE_24FJ64GA412) \
  || defined(DEVICE_24FJ64GB406) || defined(DEVICE_24FJ64GB410) || defined(DEVICE_24FJ64GB412)
- #defined HAVE_PORTA
- #defined HAVE_PORTB
- #defined HAVE_PORTC
- #defined HAVE_PORTD
- #defined HAVE_PORTE
- #defined HAVE_PORTF
- #defined HAVE_PORTG
- #defined HAVE_PORTH
- #defined HAVE_PORTJ
+ #defined GPIO_HAVE_PORTA
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTC
+ #defined GPIO_HAVE_PORTD
+ #defined GPIO_HAVE_PORTE
+ #defined GPIO_HAVE_PORTF
+ #defined GPIO_HAVE_PORTG
+ #defined GPIO_HAVE_PORTH
+ #defined GPIO_HAVE_PORTJ
+ #defined GPIO_COUNT 9
 #elif defined(DEVICE_33EP256MU814) || defined(DEVICE_33EP512MU814) || defined(DEVICE_24EP256GU814) \
  || defined(DEVICE_24EP512GU814)
- #defined HAVE_PORTA
- #defined HAVE_PORTB
- #defined HAVE_PORTC
- #defined HAVE_PORTD
- #defined HAVE_PORTE
- #defined HAVE_PORTF
- #defined HAVE_PORTG
- #defined HAVE_PORTH
- #defined HAVE_PORTJ
- #defined HAVE_PORTK
+ #defined GPIO_HAVE_PORTA
+ #defined GPIO_HAVE_PORTB
+ #defined GPIO_HAVE_PORTC
+ #defined GPIO_HAVE_PORTD
+ #defined GPIO_HAVE_PORTE
+ #defined GPIO_HAVE_PORTF
+ #defined GPIO_HAVE_PORTG
+ #defined GPIO_HAVE_PORTH
+ #defined GPIO_HAVE_PORTJ
+ #defined GPIO_HAVE_PORTK
+ #defined GPIO_COUNT 10
 #endif
