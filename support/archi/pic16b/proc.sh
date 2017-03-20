@@ -1,7 +1,7 @@
 #/bin/bash
 
-PATHPIC='/cygdrive/e/soft/Microchip/pic_file'
-PATHXC16='/opt/microchip/xc16/v1.26'
+PATHPIC='/cygdrive/e/soft/Microchip/pic_file_2'
+PATHXC16='/opt/microchip/xc16/v1.31'
 
 # grep edc:AuxCodeSector *.PIC |sed -e's/\([^:]*\)\.PIC:.*edc:beginaddr="\([0-9xA-Fa-f]\+\)".*edc:endaddr="\([0-9xA-Fa-f]\+\)".*"\/>/\1-\2-\3/'
 # grep "edc:CodeSector.*edc:regionid=\"program\"" *.PIC |sed -e's/\([^:]*\)\.PIC:.*edc:beginaddr="\([0-9xA-Fa-f]\+\)".*edc:endaddr="\([0-9xA-Fa-f]\+\)".*\/>/\2:\3:\1/'|sed -e 's/0x0*\([0-9a-fA-F]*\)/0x\U\1\E/g'|sort
@@ -15,6 +15,67 @@ function count {
 # $1 name $2 expression
 function countxc16 {
     egrep -rc ${PATHXC16}/support/*/h -e $2 |sed -e 's/.*\///' -e's/\([A-Z0-9a-z]+\)/\1/' -e 's/\.h//' -e's/^p24/PIC24/' -e's/^p3/dsPIC3/' |grep PIC |grep -v xxx|sort -t$':' -n -k2 -k1 > $1.txt
+}
+
+function countgpio {
+    egrep -rc ${PATHPIC}/dsPIC30 ${PATHPIC}/dsPIC33 -e $2 |sed -e 's/.*\///' -e's/\([A-Z0-9a-z]+\)/\1/' -e 's/\.PIC//' -e's/DSPIC/dsPIC/' |sort > $1.txt
+}
+function gpioget {
+    echo "A"
+    countgpio gpioA "SFRDef.*PORTA.*\""
+    cp gpioA.txt gpio.txt
+    for i in {B..L}
+    do
+        echo ${i}
+        countgpio gpio${i} "SFRDef.*PORT${i}.*\""
+        join -1 1 -2 1 -t : gpio.txt gpio${i}.txt > gpiom.txt
+        cp gpiom.txt gpio.txt
+    done
+    cat gpiom.txt | sort -t: -k2 -k3 -k4 -k5 -k6 -k7 -k8 -k9 -k10 -k11 -k12 -k13 > gpio.txt
+    rm gpio?.txt
+    
+    pgpio_port="00"
+    RES=$(cat gpio.txt | sort -t: -k2 -k3 -k4 -k5 -k6 -k7 -k8 -k9 -k10 -k11 -k12 -k13)
+    for dev in ${RES}
+    do
+        device=$(echo ${dev}|sed -e's/[ds]*PIC\([^:]*\):.*/\1/')
+        gpio_port=$(echo ${dev}|sed -e's/[^:]*:\(.*\)/\1/')
+        
+        echo ${device}
+        
+        if [ "$gpio_port" != "$pgpio_port" ]
+        then
+            if ((${COUNT}!=0))
+            then
+                OTHERPORT=${pgpio_port}
+                for i in {A..L}
+                do
+                    PORT=$(echo ${OTHERPORT}|sed -e's/\([0-1]\):.*/\1/')
+                    OTHERPORT=$(echo ${OTHERPORT}|sed -e's/[0-1]:\(.*\)/\1/')
+                    if [ "$PORT" == "1" ]
+                    then
+                        CONTENT+='\n  #defined HAVE_PORT'${i}
+                    fi
+                done
+            fi
+            COUNT=0
+        fi
+        
+        if ((${COUNT}==0))
+        then
+            ((${FIRST}==1)) && CONTENT+='\r\n#if ' || CONTENT+='\r\n#elif '
+            FIRST=0
+        else
+            ((${COUNT}%3==0)) && CONTENT+=' \\\r\n || ' || CONTENT+=' || '
+        fi
+        CONTENT+='defined(DEVICE_'${device}')'
+        COUNT=$((COUNT+1))
+        
+        pgpio_port=${gpio_port}
+    done
+    CONTENT+='\n#endif'
+    
+    echo -e ${CONTENT} > gpio_pic24_dspic30f_dspic33f.h
 }
 
 function memory {
@@ -65,7 +126,7 @@ function extract {
     FIRST=1
     for i in {1..32}
     do
-        RES=$(cat $1.txt |grep ":${i}" |grep -E $2 | sort)
+        RES=$(cat $1.txt |egrep ":${i}$" |grep -E "$2" | sort)
         if [ -n "${RES}" ]; then
             COUNT=0
             for dev in ${RES}
@@ -102,8 +163,8 @@ function extract {
 #count i2c "SFRDef.*I2C[0-9]*CON[1L]*\""
 #extract i2c "dsPIC33E|PIC24E|dsPIC30F|dsPIC33FJ|PIC24F|PIC24HJ" "i2c_24_33_30.h"
 
-countxc16 timer "define[[:space:]]T[0-9]*CON[[:space:]]T[0-9]*CON"
-extract timer "dsPIC33E|PIC24E|dsPIC30F|dsPIC33FJ|PIC24F|PIC24HJ" "timer_24_33_30.h"
+#countxc16 timer "define[[:space:]]T[0-9]*CON[[:space:]]T[0-9]*CON"
+#extract timer "dsPIC33E|PIC24E|dsPIC30F|dsPIC33FJ|PIC24F|PIC24HJ" "timer_24_33_30.h"
 
 #count spi "SFRDef.*SPI[0-9]*CON[1L]*\""
 #extract spi "dsPIC33E|PIC24E" "spi_pic24e_dspic33e.h"
@@ -111,5 +172,8 @@ extract timer "dsPIC33E|PIC24E|dsPIC30F|dsPIC33FJ|PIC24F|PIC24HJ" "timer_24_33_3
 #extract spi "dsPIC30F" "spi_dspic30.h"
 
 #count pwm "SFRFieldDef.*PMOD0\""
+
+gpioget
+#extract gpio ".*" "gpio_dspic30.h"
 
 #memory
