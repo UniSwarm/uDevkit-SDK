@@ -1,5 +1,22 @@
+/**
+ * @file gpio_pic32.h
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016-2017
+ *
+ * @date March 20, 2017, 18:39 AM
+ *
+ * @brief GPIO support driver for PIC32MM, PIC32MK, PIC32MX,
+ * PIC32MZDA, PIC32MZEC and PIC32MZEF
+ *
+ * Implementation based on Microchip document DS60001120F :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/60001120F.pdf
+ */
 
-#elif defined(DEVICE_32MX120F064H) || defined(DEVICE_32MX130F128H) || defined(DEVICE_32MX150F256H) \
+#ifndef GPIO_PIC32_H
+#define GPIO_PIC32_H
+
+// compute PORT count and existance on device
+#if defined(DEVICE_32MX120F064H) || defined(DEVICE_32MX130F128H) || defined(DEVICE_32MX150F256H) \
  || defined(DEVICE_32MX170F512H) || defined(DEVICE_32MX230F128H) || defined(DEVICE_32MX250F256H) \
  || defined(DEVICE_32MX270F512H) || defined(DEVICE_32MX320F032H) || defined(DEVICE_32MX320F064H) \
  || defined(DEVICE_32MX320F128H) || defined(DEVICE_32MX330F064H) || defined(DEVICE_32MX340F128H) \
@@ -140,4 +157,13 @@
  #defined GPIO_HAVE_PORTJ
  #defined GPIO_HAVE_PORTK
  #defined GPIO_COUNT 10
+#else
+  #define GPIO_COUNT 0
 #endif
+
+#defined GPIO_MAX_PORTWIDTH 16
+
+#defined GPIO_HAVE_CHANGENOTIFICATION  // have change notification on pins
+#defined GPIO_HAVE_OPENDRAIN           // have open drain output config
+
+#endif // GPIO_PIC32_H

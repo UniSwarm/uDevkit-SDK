@@ -1,5 +1,24 @@
+/**
+ * @file gpio_pic24_dspic30f_dspic33.h
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016-2017
+ *
+ * @date March 20, 2017, 18:39 AM
+ *
+ * @brief GPIO support driver for dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV,
+ * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
+ *
+ * Implementation based on Microchip document DS70058D, DS70193D and DS70000598C :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70058D.pdf (dsPIC30F)
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70193D.pdf (PIC24F/dsPIC33F)
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70000598c.pdf (PIC24E/dsPIC33E)
+ */
 
-#elif defined(DEVICE_30F2011) || defined(DEVICE_30F2011E) || defined(DEVICE_30F3012) \
+#ifndef GPIO_PIC24_DSPIC30_DSPIC33_H
+#define GPIO_PIC24_DSPIC30_DSPIC33_H
+
+// compute PORT count and existance on device
+#if defined(DEVICE_30F2011) || defined(DEVICE_30F2011E) || defined(DEVICE_30F3012) \
  || defined(DEVICE_30F3012E)
  #defined GPIO_HAVE_PORTB
  #defined GPIO_HAVE_PORTC
@@ -285,4 +304,20 @@
  #defined GPIO_HAVE_PORTJ
  #defined GPIO_HAVE_PORTK
  #defined GPIO_COUNT 10
+#else
+  #define GPIO_COUNT 0
 #endif
+
+#defined GPIO_MAX_PORTWIDTH 16
+
+#if defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
+ #defined GPIO_HAVE_CHANGENOTIFICATION  // have change notification on pins
+ #defined GPIO_HAVE_OPENDRAIN           // have open drain output config
+#endif
+
+#if defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
+ || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic30f)
+ #defined GPIO_HAVE_OPENDRAIN           // have open drain output config
+#endif
+
+#endif // GPIO_PIC24_DSPIC30_DSPIC33_H
