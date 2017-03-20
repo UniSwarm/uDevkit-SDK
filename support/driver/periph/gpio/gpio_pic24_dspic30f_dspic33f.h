@@ -259,4 +259,14 @@
  #defined HAVE_PORTJ
 #elif defined(DEVICE_33EP256MU814) || defined(DEVICE_33EP512MU814) || defined(DEVICE_24EP256GU814) \
  || defined(DEVICE_24EP512GU814)
+ #defined HAVE_PORTA
+ #defined HAVE_PORTB
+ #defined HAVE_PORTC
+ #defined HAVE_PORTD
+ #defined HAVE_PORTE
+ #defined HAVE_PORTF
+ #defined HAVE_PORTG
+ #defined HAVE_PORTH
+ #defined HAVE_PORTJ
+ #defined HAVE_PORTK
 #endif

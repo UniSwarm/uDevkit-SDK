@@ -73,6 +73,16 @@ function gpioget {
         
         pgpio_port=${gpio_port}
     done
+    OTHERPORT=${pgpio_port}
+    for i in {A..L}
+    do
+        PORT=$(echo ${OTHERPORT}|sed -e's/\([0-1]\):.*/\1/')
+        OTHERPORT=$(echo ${OTHERPORT}|sed -e's/[0-1]:\(.*\)/\1/')
+        if [ "$PORT" == "1" ]
+        then
+            CONTENT+='\n  #defined HAVE_PORT'${i}
+        fi
+    done
     CONTENT+='\n#endif'
     
     echo -e ${CONTENT} > gpio_pic24_dspic30f_dspic33f.h
