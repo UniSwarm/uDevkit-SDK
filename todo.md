@@ -4,6 +4,11 @@
 - [ ] Find a solution for pins mapping and declaration
 
 ## Support:
+### GPIO
+- [x] prototypes
+- [ ] implementation pic24/dspic30f/dspic33
+- [ ] implementation pic32
+
 ### PPS
 - [ ] Defines depending on device
 - [ ] prototypes
@@ -24,10 +29,10 @@
 
 ### SPI
 - [x] prototypes
-- [ ] device assignation
+- [x] device assignation
 - [ ] config
-- [ ] send
-- [ ] receive
+- [x] send
+- [x] receive
 
 ### QEI
 - [x] prototypes
@@ -41,7 +46,7 @@
 - [x] config
 - [x] read data
 - [ ] 32 bits mode
-- [ ] counter mode
+- [x] counter mode
 
 ### PWM
 - [x] prototypes
@@ -75,7 +80,7 @@
 
 ## Module
 ###GUI
- - [] bouger les fonctions bas niveau dans driver/lcd
+- [x] move low level functions into drivers
 
 ## Boards
 ### RTBoard
