@@ -38,7 +38,7 @@ void ax12_receiveMode()
 }
 
 /**
- * @brief Setup the device
+ * @brief Setup the ax bus
  */
 void ax12_init(void)
 {
@@ -49,10 +49,10 @@ void ax12_init(void)
 }
 
 /**
- * @brief Send a char (8 bits) to the specified device
+ * @brief Send a char (8 bits) to the specified ax
  * @param ax_id the device address
- * @param param
- * @param val
+ * @param param addr of the parameter to set
+ * @param val value to write
  */
 void ax12_send_char(uint8_t ax_id, uint8_t param, uint8_t val)
 {
@@ -71,8 +71,10 @@ void ax12_send_char(uint8_t ax_id, uint8_t param, uint8_t val)
 }
 
 /**
- * @brief Send a short (16 bits) to the specified device
+ * @brief Send a short (16 bits) to the specified ax
  * @param ax_id the device address
+ * @param param addr of the parameter to set
+ * @param val value to write
  */
 void ax12_send_1_short(uint8_t ax_id, uint8_t param, uint16_t val)
 {
@@ -92,8 +94,11 @@ void ax12_send_1_short(uint8_t ax_id, uint8_t param, uint16_t val)
 }
 
 /**
- * @brief Send a two shorts (16 bits) to the specified device
+ * @brief Send a two shorts (16 bits) to the specified ax
  * @param ax_id the device address
+ * @param param addr of the parameter to set
+ * @param val value to write
+ * @param val2 second value to write at `param` + 2
  */
 void ax12_send_2_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2)
 {
@@ -115,8 +120,12 @@ void ax12_send_2_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2
 }
 
 /**
- * @brief Send three shorts (16 bits) to the specified device
+ * @brief Send three shorts (16 bits) to the specified ax
  * @param ax_id the device address
+ * @param param addr of the parameter to set
+ * @param val first value to write
+ * @param val2 second value to write at `param` + 2
+ * @param val3 third value to write at `param` + 4
  */
 void ax12_send_3_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2, uint16_t val3)
 {
@@ -171,7 +180,7 @@ void ax12_send_3_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2
  */
 /*uint8_t parseResponse6(uint8_t ax_id, uint16_t *pos, uint16_t *speed, uint16_t *load)
 {
-    uint8_t sum,i;
+    uint8_t sum, i;
     for(i=6;i<20;i++) if(buffr[i]==0xFF && buffr[i+1]==0xFF) break;
     if(buffr[i+1]!=0xFF) return 0;
     if(buffr[i+2]!=ax_id) return 0;
@@ -184,55 +193,13 @@ void ax12_send_3_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2
 }*/
 
 /**
- * @brief foo
+ * @brief clear internal respond buffer
  */
 /*void clearAxResponse(void)
 {
-    char i=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-    buffr[i++]=0;
-}*/
-
-/**
- * @brief foo
- */
-/*void interrupt tx3_int(void) @ U3TX_VCTR
-{
-    int p;
-    idax++;
-    if(idax>=my_size)
-    {
-        IEC5bits.U3TXIE = 0;
-
-        // axRecMode();                 //OLD NAME
-        axReceiveMode();                //NEW NAME
-
-        return;
-    }
-    //for(p=0;p<50;p++);
-    U3TXREG = trame[idax];
-    IFS5bits.U3TXIF = 0;
+    uint8_t i;
+	for (i=0; i<30; i++)
+		buffr[i]=0;
 }*/
 
 /**
@@ -266,31 +233,63 @@ void ax12_send_3_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2
     IFS5bits.U3RXIF = 0;
 }*/
 
+/**
+ * @brief Move an ax to the specified position with the specified speed and torque
+ * @param ax_id the device address
+ * @param position destination position. 0-1023, 511 is the center of a 270° movement
+ * @param speed speed limit for this movement. 0-1023
+ * @param torque torque limit for this movement. 0-1023
+ */
 void ax12_moveTo(uint8_t ax_id, uint16_t position, uint16_t speed, uint16_t torque)
 {
 	ax12_send_3_short(ax_id, P_GOAL_POSITION_L, position, speed, torque);
 }
 
+/**
+ * @brief Move an ax to the specified position
+ * @param ax_id the device address
+ * @param position destination position. 0-1023, 511 is the center of a 270° movement
+ */
 void ax12_setPosition(uint8_t ax_id, uint16_t position)
 {
 	ax12_send_1_short(ax_id, P_GOAL_POSITION_L, position);
 }
 
+/**
+ * @brief Set limit speed
+ * @param ax_id the device address
+ * @param speed speed limit for this movement. 0-1023
+ */
 void ax12_setSpeed(uint8_t ax_id, uint16_t speed)
 {
 	ax12_send_1_short(ax_id, P_GOAL_SPEED_L, speed);
 }
 
+/**
+ * @brief Set limit torque
+ * @param ax_id the device address
+ * @param torque torque limit for this movement. 0-1023
+ */
 void ax12_setTorque(uint8_t ax_id, uint16_t torque)
 {
 	ax12_send_1_short(ax_id, P_TORQUE_LIMIT_L, torque);
 }
 
+/**
+ * @brief Light on/off the ax led
+ * @param ax_id the device address
+ * @param led value of the led 0(Off)/1(On)
+ */
 void ax12_setLed(uint8_t ax_id, uint8_t led)
 {
 	ax12_send_char(ax_id, P_LED, led);
 }
 
+/**
+ * @brief CHange id of an ax motor
+ * @param ax_id actual id of the motor
+ * @param newId future id to set
+ */
 void ax12_setId(uint8_t ax_id, uint8_t newId)
 {
     ax12_send_char(ax_id, P_ID, newId);
