@@ -161,7 +161,9 @@
   #define GPIO_COUNT 0
 #endif
 
-#defined GPIO_MAX_PORTWIDTH 16
+#defined GPIO_MAX_PORTWIDTH        16
+#defined GPIO_MAX_PORTWIDTHU        4
+#defined GPIO_MAX_PORTWIDTHMASK  0x0F
 
 #defined GPIO_HAVE_CHANGENOTIFICATION  // have change notification on pins
 #defined GPIO_HAVE_OPENDRAIN           // have open drain output config

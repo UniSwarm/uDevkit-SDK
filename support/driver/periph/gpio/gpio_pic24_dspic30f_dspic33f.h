@@ -308,7 +308,9 @@
   #define GPIO_COUNT 0
 #endif
 
-#defined GPIO_MAX_PORTWIDTH 16
+#defined GPIO_MAX_PORTWIDTH        16
+#defined GPIO_MAX_PORTWIDTHU        4
+#defined GPIO_MAX_PORTWIDTHMASK  0x0F
 
 #if defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
  #defined GPIO_HAVE_CHANGENOTIFICATION  // have change notification on pins
