@@ -13,7 +13,11 @@
 
 #include <stdint.h>
 
-#include "d51e5ta7601.h"
+#include "gui_driver.h"
+
+#ifdef USE_d51e5ta7601
+ #include "d51e5ta7601.h"
+#endif
 
 void gui_ctrl_init();
 void gui_ctrl_write_data(uint16_t data);

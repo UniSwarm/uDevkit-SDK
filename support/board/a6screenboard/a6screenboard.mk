@@ -6,3 +6,5 @@ vpath %.c $(dir $(lastword $(MAKEFILE_LIST)))
 
 SRC += a6screenboard.c
 ARCHI_SRC += fuses.c
+
+GUI_DRIVERS += d51e5ta7601

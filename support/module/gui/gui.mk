@@ -10,14 +10,22 @@ vpath %.h $(MODULEPATH)/screenController
 
 HEADER += gui.h
 SRC += gui.c widget.c
-ARCHI_SRC += screenController/d51e5ta7601.c
-HEADER += screenController/d51e5ta7601.h
 SIM_SRC += gui_sim.c
 
-ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic30f dspic33fj dspic33ep dspic33ev))
- CCFLAGS_XC += -mlarge-code -mlarge-arrays -mlarge-data
-endif
+########## SCREEN CONTROLER SUPPORT ##########
 
+ARCHI_SRC += $(addsuffix .c, $(GUI_DRIVERS))
+HEADER += $(addsuffix .h, $(GUI_DRIVERS))
+
+$(OUT_PWD)/gui_driver.h : Makefile
+	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
+	@echo "$(YELLOW)generate gui_driver.h...$(NORM)"
+	@printf "\n// defines use drivers screen\n\
+$(subst $(space),\n,$(foreach GUI_DRIVER,$(sort $(GUI_DRIVERS)),#define USE_$(GUI_DRIVER)\n))\n\
+" > $(OUT_PWD)/gui_driver.h
+CONFIG_HEADERS += $(OUT_PWD)/gui_driver.h
+
+######### EXTERNAL RESSOURCE SUPPORT #########
 # IMG2RAW_EXE cmd
 ifeq ($(OS),Windows_NT)
  IMG2RAW_EXE := $(RTPROG)/bin/img2raw.exe
@@ -27,6 +35,10 @@ endif
 $(IMG2RAW_EXE): $(RTPROG)/tool/img2raw/img2raw.cpp $(RTPROG)/tool/img2raw/img2raw.pro
 	@echo "Building img2raw..."
 	cd $(RTPROG)/tool/img2raw/ && make
+
+ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic30f dspic33fj dspic33ep dspic33ev))
+ CCFLAGS_XC += -mlarge-code -mlarge-arrays -mlarge-data
+endif
 
 ################ IMAGE SUPPORT ################
 # rule to build image to OUT_PWD/*.c
@@ -74,15 +86,15 @@ CONFIG_HEADERS += $(OUT_PWD)/pictures.h
 FONTS_C := $(addprefix $(OUT_PWD)/, $(addsuffix .font.c, $(FONTS)))
 SRC += $(FONTS_C)
 
-fonts.h: Makefile
+$(OUT_PWD)/fonts.h: Makefile
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@echo "$(YELLOW)generate fonts.h...$(NORM)"
 	@printf "#ifndef _FONTS_\n#define _FONTS_\n\n\
 	#include <stdint.h>\n#include <gui/font.h>\n\
 	$(foreach FONT,$(FONTS),\nextern const Font $(FONT);)\n\n\
 	#endif //_FONTS_\
-	" > fonts.h
-CONFIG_HEADERS += fonts.h
+	" > $(OUT_PWD)/fonts.h
+CONFIG_HEADERS += $(OUT_PWD)/fonts.h
 
 #.PHONY : $(FONTS_C)
 $(OUT_PWD)/%.font.o : $(OUT_PWD)/%.font.c
