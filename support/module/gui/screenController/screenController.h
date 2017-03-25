@@ -18,6 +18,9 @@
 #ifdef USE_d51e5ta7601
  #include "d51e5ta7601.h"
 #endif
+#ifdef USE_ssd1306
+ #include "ssd1306.h"
+#endif
 
 void gui_ctrl_init();
 void gui_ctrl_write_data(uint16_t data);

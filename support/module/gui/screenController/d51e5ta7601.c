@@ -11,7 +11,7 @@
 #include "board.h"
 #include "screenController.h"
 
-#include <xc.h>
+#include <archi.h>
 
 #include <stdint.h>
 

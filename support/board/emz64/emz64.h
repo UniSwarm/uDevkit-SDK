@@ -37,4 +37,9 @@ int8_t board_getLed(uint8_t led);
 #define BUTTON_2 PORTBbits.RB13
 #define BUTTON_3 PORTBbits.RB14
 
+// oled
+#define OLED_RST LATFbits.LATF1
+#define OLED_I2C_BUS  5
+#define OLED_I2C_ADDR 0b01111000
+
 #endif // EMZ64_H

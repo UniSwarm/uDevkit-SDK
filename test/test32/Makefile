@@ -8,6 +8,7 @@ OUT_PWD = build
 # CCFLAGS += -pedantic
 
 DRIVERS += timer uart i2c
+MODULES += gui
 
 SRC += main.c
 

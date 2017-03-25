@@ -1,5 +1,5 @@
 /**
- * @file d51e5ta7601.c
+ * @file d51e5ta7601.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *

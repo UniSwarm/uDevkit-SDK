@@ -24,6 +24,8 @@ int board_init_io()
     TRISBbits.TRISB8 = 0;    // LED1
     TRISBbits.TRISB9 = 0;    // LED2
     TRISBbits.TRISB10 = 0;   // LED3
+	
+    TRISFbits.TRISF1 = 0;    // OLED_RST
 #endif
     return 0;
 }
