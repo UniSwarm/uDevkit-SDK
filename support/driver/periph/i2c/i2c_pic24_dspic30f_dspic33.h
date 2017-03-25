@@ -227,6 +227,8 @@
  #define ENHANCED_I2C
 #endif
 
+#define i2c(d) MKDEV(DEV_CLASS_I2C, (d)-1);
+
 #if defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
  || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj)
  #define I2C_FPGD 7692307 // 130ns

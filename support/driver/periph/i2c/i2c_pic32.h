@@ -125,6 +125,8 @@
     #define I2C_NUM5 3
   #endif
 
+  rt_dev_t i2c(uint8_t d);
+
 #else // in normal case ...
   #if I2C_COUNT>=1
     #define I2C_NUM1 0
@@ -141,6 +143,8 @@
   #if I2C_COUNT>=5
     #define I2C_NUM5 4
   #endif
+
+  #define i2c(d) MKDEV(DEV_CLASS_I2C, (d)-1);
 #endif
 
 #define I2C_FPGD 9615384 // 104ns

@@ -71,6 +71,16 @@ struct i2c_dev i2cs[] = {
 #endif
 };
 
+#ifdef I2C_NOI2C2
+rt_dev_t i2c(uint8_t d)
+{
+    if(d > 1)
+        return MKDEV(DEV_CLASS_I2C, d-2);
+    else
+        return MKDEV(DEV_CLASS_I2C, d-1);
+}
+#endif
+
 /**
  * @brief Gives a free i2c bus device number and open it
  * @return i2c bus device number
