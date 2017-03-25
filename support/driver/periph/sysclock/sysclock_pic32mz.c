@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file sysclock_pic32mz.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
@@ -32,7 +32,7 @@ uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock)
     if (busClock > SYSCLOCK_CLOCK_PBCLK8)
         return 1; // error, not return 0 to avoid divide by zero
     divisorAddr = &PB1DIV + (((uint8_t)busClock - 1) << 2);
-    divisor = ((*divisorAddr) & 0x000000FF) + 1;
+    divisor = ((*divisorAddr) & 0x0000007F) + 1;
     return sysclock_sysfreq / divisor;
 }
 
@@ -59,15 +59,13 @@ int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div)
     // get divisor bus value
     divisorAddr = &PB1DIV + (((uint8_t)busClock - 1) << 2);
 
-    board_setLed(0, 1);
     // wait for divisor can be changed
     while((*divisorAddr & _PB1DIV_PBDIVRDY_MASK) == 0)
         nop();
-    board_setLed(0, 0);
 
     // critical section, protected by lock on clock config
     unlockClockConfig();
-    *divisorAddr = (*divisorAddr & 0xFFFFFF00) + (div - 1);
+    *divisorAddr = (*divisorAddr & 0xFFFFFF80) + (div - 1);
     lockClockConfig();
 
     // wait for divisor setted
