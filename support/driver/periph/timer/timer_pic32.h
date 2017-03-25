@@ -117,6 +117,9 @@
 #ifndef _T1IE
   #define _T1IE IEC0bits.T1IE
 #endif
+#ifndef _T1IP
+  #define _T1IP IPC1bits.T1IP
+#endif
 
 // interrupt bits helpers for Timer2
 #ifndef _T2IF
@@ -124,6 +127,9 @@
 #endif
 #ifndef _T2IE
   #define _T2IE IEC0bits.T2IE
+#endif
+#ifndef _T2IP
+  #define _T2IP IPC2bits.T2IP
 #endif
 
 // interrupt bits helpers for Timer3
@@ -133,6 +139,9 @@
 #ifndef _T3IE
   #define _T3IE IEC0bits.T3IE
 #endif
+#ifndef _T3IP
+  #define _T3IP IPC3bits.T3IP
+#endif
 
 // interrupt bits helpers for Timer4
 #ifndef _T4IF
@@ -140,6 +149,9 @@
 #endif
 #ifndef _T4IE
   #define _T4IE IEC0bits.T4IE
+#endif
+#ifndef _T4IP
+  #define _T4IP IPC4bits.T4IP
 #endif
 
 // interrupt bits helpers for Timer5
@@ -149,6 +161,9 @@
 #ifndef _T5IE
   #define _T5IE IEC0bits.T5IE
 #endif
+#ifndef _T5IP
+  #define _T5IP IPC6bits.T5IP
+#endif
 
 // interrupt bits helpers for Timer6
 #ifndef _T6IF
@@ -156,6 +171,9 @@
 #endif
 #ifndef _T6IE
   #define _T6IE IEC0bits.T6IE
+#endif
+#ifndef _T6IP
+  #define _T6IP IPC7bits.T6IP
 #endif
 
 // interrupt bits helpers for Timer7
@@ -165,6 +183,9 @@
 #ifndef _T7IE
   #define _T7IE IEC1bits.T7IE
 #endif
+#ifndef _T7IP
+  #define _T7IP IPC8bits.T7IP
+#endif
 
 // interrupt bits helpers for Timer8
 #ifndef _T8IF
@@ -173,6 +194,9 @@
 #ifndef _T8IE
   #define _T8IE IEC1bits.T8IE
 #endif
+#ifndef _T8IP
+  #define _T8IP IPC9bits.T8IP
+#endif
 
 // interrupt bits helpers for Timer9
 #ifndef _T9IF
@@ -180,6 +204,9 @@
 #endif
 #ifndef _T9IE
   #define _T9IE IEC1bits.T9IE
+#endif
+#ifndef _T9IP
+  #define _T9IP IPC10bits.T9IP
 #endif
 
 #endif // TIMER_PIC32_H
