@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file sysclock_pic32mz.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
@@ -31,7 +31,7 @@ uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock)
         return sysclock_sysfreq;
     if (busClock > SYSCLOCK_CLOCK_PBCLK8)
         return 1; // error, not return 0 to avoid divide by zero
-    divisorAddr = &PB1DIV + (((uint8_t)busClock - 1) << 8);
+    divisorAddr = &PB1DIV + (((uint8_t)busClock - 1) << 2);
     divisor = ((*divisorAddr) & 0x000000FF) + 1;
     return sysclock_sysfreq / divisor;
 }
@@ -39,13 +39,13 @@ uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock)
 /**
  * @brief Change the divisor of the busClock given as argument. This can take up to 60
  * CPU cycles.
- * @param busClock id of the bus clock (1 to 8 for PBCLK1 to PBCLK8), 0 for sysclock
+ * @param busClock id of the bus clock (1 to 8 for PBCLK1 to PBCLK8)
  * @param div divisor to set
  * @return 0 if ok, -1 in case of error
  */
 int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div)
 {
-    volatile __PB1DIVbits_t* divisorAddr;
+    volatile uint32_t* divisorAddr;
 
     if (OSCCONbits.CLKLOCK == 1)
         return -1; // Clocks and PLL are locked, source cannot be changed
@@ -57,19 +57,21 @@ int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div)
         return -1; // bad divisor value
 
     // get divisor bus value
-    divisorAddr = (volatile __PB1DIVbits_t*)&PB1DIV + (((uint8_t)busClock - 1) << 8);
+    divisorAddr = &PB1DIV + (((uint8_t)busClock - 1) << 2);
 
+    board_setLed(0, 1);
     // wait for divisor can be changed
-    while(divisorAddr->PBDIVRDY == 0)
+    while((*divisorAddr & _PB1DIV_PBDIVRDY_MASK) == 0)
         nop();
+    board_setLed(0, 0);
 
     // critical section, protected by lock on clock config
     unlockClockConfig();
-    divisorAddr->PBDIV = div - 1;
+    *divisorAddr = (*divisorAddr & 0xFFFFFF00) + (div - 1);
     lockClockConfig();
 
     // wait for divisor setted
-    while(divisorAddr->PBDIVRDY == 0)
+    while((*divisorAddr & _PB1DIV_PBDIVRDY_MASK) == 0)
         nop();
 
     return 0;
