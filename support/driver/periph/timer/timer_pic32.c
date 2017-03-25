@@ -386,8 +386,8 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
     prvalue = sysclock_getPeriphClock(SYSCLOCK_CLOCK_TIMER) / 1000 * periodMs;
     if(prvalue > 65535)
     {
-        div = 0b11;
-        prvalue <<= 8;
+        div = 0b111; // 256 divisor for type A (0b11) and for type B (0b111)
+        prvalue >>= 8;
         if(prvalue > 65535)
             prvalue = 65535;
     }

@@ -380,7 +380,7 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
     if(prvalue > 65535)
     {
         div = 0b11;
-        prvalue <<= 8;
+        prvalue >>= 8;
         if(prvalue > 65535)
             prvalue = 65535;
     }
