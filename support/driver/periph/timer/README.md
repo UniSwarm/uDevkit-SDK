@@ -14,8 +14,8 @@ void tt()
 // init timer
 rt_dev_t timer;
 timer = timer_getFreeDevice();
-timer_setPeriodMs(asserv_timer, 100);
-timer_setHandler(asserv_timer, tt);
+timer_setPeriodMs(timer, 100);
+timer_setHandler(timer, tt);
 timer_enable(timer); // tt function will be called every 100ms
 ```
 
@@ -25,7 +25,7 @@ In counter mode :
 // init timer
 rt_dev_t timer;
 timer = timer_getFreeDevice();
-timer_setCounter(asserv_timer, 1); // no diviser
+timer_setCounter(timer, 1); // no diviser
 timer_enable(timer); // start to count
 
 uint16_t value;
