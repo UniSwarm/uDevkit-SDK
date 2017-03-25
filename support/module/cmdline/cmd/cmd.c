@@ -20,6 +20,8 @@
 
 #include "modules.h"
 
+int cmd_help(int argc, char **argv);
+
 Cmd cmds[] = {
   #ifdef USE_uart
     {"uart", cmd_uart},
@@ -37,6 +39,7 @@ Cmd cmds[] = {
     {"mrobot", cmd_mrobot},
   #endif
     {"led", cmd_led},
+    {"help", cmd_help},
     {"", NULL}
 };
 
@@ -89,6 +92,18 @@ int cmd_exec(char *line)
         return (*cmd->cmdFnPtr)(argc, argv);
     else
         return -1;
+}
+
+int cmd_help(int argc, char **argv)
+{
+    uint16_t i;
+    for(i=0; i<sizeof(cmds); i++)
+    {
+        if(cmds[i].cmdFnPtr==0)
+            break;
+        puts(cmds[i].name);
+    }
+    return 0;
 }
 
 void cmd_puts(const char *str)
