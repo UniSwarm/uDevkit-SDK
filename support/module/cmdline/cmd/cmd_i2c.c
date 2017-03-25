@@ -21,6 +21,16 @@ int cmd_i2c(int argc, char **argv)
         return 0;
     }
 
+    // help
+    if(strcmp(argv[1], "help")==0)
+    {
+        puts("i2c <bus-id>");
+        puts("i2c <bus-id> setspeed <speed>");
+        puts("i2c <bus-id> readreg <addr> <regaddr>");
+        puts("i2c <bus-id> writereg <addr> <regaddr> <value>");
+        return 0;
+    }
+
     // first arg numeric : convert to i2c id
     c = argv[1][0];
     if(isdigit(c))
@@ -50,7 +60,7 @@ int cmd_i2c(int argc, char **argv)
     }
 
     // parse argv 2
-    // == setspeed > i2c <bus-id> setspeed <addr>
+    // == setspeed > i2c <bus-id> setspeed <speed>
     if(strcmp(argv[2], "setspeed")==0)
     {
         if(argc < 4)

@@ -11,6 +11,15 @@ int cmd_ax(int argc, char **argv)
     if(argc < 2)
         return 1;
 
+    // help
+    if(strcmp(argv[1], "help")==0)
+    {
+        puts("ax <ax-id> move <pos> [<speed>] [<torque>]");
+        puts("ax <ax-id> setled <0-1>");
+        puts("ax <ax-id> setid <newid>");
+        return 0;
+    }
+
     // first arg numeric : convert to axid
     axid = atoi(argv[1]);
 

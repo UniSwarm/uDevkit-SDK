@@ -6,7 +6,7 @@
 int cmd_mrobot(int argc, char **argv)
 {
     int16_t param1, param2, param3;
-    // if no arg, print properties of asserv
+    // if no arg, print properties of mrobot
     if(argc == 1)
     {
         MrobotPose pose = mrobot_pose();
@@ -30,12 +30,22 @@ int cmd_mrobot(int argc, char **argv)
         return 0;
     }
 
+    // help
+    if(strcmp(argv[1], "help")==0)
+    {
+        puts("mrobot");
+        puts("mrobot goto <xpos> <ypos> [<speed>]");
+        puts("mrobot setpos <xpos> <ypos> <tpos>");
+        puts("mrobot setpid <p> <i> <d>");
+        return 0;
+    }
+
     // parse argv 2, 3
     if(argc < 4)
         return 1;
     param1 = atoi(argv[2]);
     param2 = atoi(argv[3]);
-    // == goto > asserv goto <xpos> <ypos>
+    // == goto > mrobot goto <xpos> <ypos> [<speed>]
     if(strcmp(argv[1], "goto")==0)
     {
         MrobotPoint pos;
@@ -51,7 +61,7 @@ int cmd_mrobot(int argc, char **argv)
     if(argc < 5)
         return 1;
     param3 = atoi(argv[4]);
-    // == setpos > asserv setpos <xpos> <ypos> <tpos>
+    // == setpos > mrobot setpos <xpos> <ypos> <tpos>
     if(strcmp(argv[1], "setpos")==0)
     {
         MrobotPose pose;
@@ -62,7 +72,7 @@ int cmd_mrobot(int argc, char **argv)
         puts("ok");
         return 0;
     }
-    // == setpid > asserv setpid <p> <i> <d>
+    // == setpid > mrobot setpid <p> <i> <d>
     if(strcmp(argv[1], "setpid")==0)
     {
         mrobot_setMotorPid(param1, param2, param3);

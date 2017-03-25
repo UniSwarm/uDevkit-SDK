@@ -20,6 +20,17 @@ int cmd_uart(int argc, char **argv)
         return 0;
     }
 
+    // help
+    if(strcmp(argv[1], "help")==0)
+    {
+        puts("uart");
+        puts("uart <uart-id>");
+        puts("uart <uart-id> read");
+        puts("uart <uart-id> write <data-to-write>");
+        puts("uart <uart-id> setbs <baud-speed>");
+        return 0;
+    }
+
     // first arg numeric : convert to uart id
     c = argv[1][0];
     if(isdigit(c))

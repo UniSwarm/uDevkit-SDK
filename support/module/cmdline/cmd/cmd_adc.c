@@ -9,6 +9,14 @@ int cmd_adc(int argc, char **argv)
     uint16_t value;
     if(argc < 2)
         return 1;
+
+    // help
+    if(strcmp(argv[1], "help")==0)
+    {
+        puts("adc <channel>");
+        return 0;
+    }
+
     param = atoi(argv[1]);
 
     // read value of an adc channel
