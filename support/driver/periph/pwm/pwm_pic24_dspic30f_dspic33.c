@@ -19,9 +19,9 @@ rt_dev_t pwm_getFreeDevice()
     return oc_getFreeDevice();
 }
 
-void pwm_releaseDevice(rt_dev_t device)
+void pwm_close(rt_dev_t device)
 {
-    oc_releaseDevice(device);
+    oc_close(device);
 }
 
 int pwm_enable(rt_dev_t device)

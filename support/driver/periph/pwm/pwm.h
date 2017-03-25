@@ -15,7 +15,7 @@
 
 // ====== device assignation ======
 rt_dev_t pwm_getFreeDevice();
-void pwm_releaseDevice(rt_dev_t device);
+void pwm_close(rt_dev_t device);
 
 // ==== device enable/disable =====
 int pwm_enable(rt_dev_t device);
