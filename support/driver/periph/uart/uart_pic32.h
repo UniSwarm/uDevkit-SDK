@@ -1,7 +1,7 @@
 /**
  * @file uart_pic32.h
  * @author Sebastien CAUX (sebcaux) \
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
  *
  * @date October 06, 2016, 11:15 PM
  *
@@ -110,6 +110,7 @@
  #define UART_COUNT 0
 #endif
 
+// interrupt bits helpers for UART1
 #ifndef _U1RXIP
  #define _U1RXIP  IPC28bits.U1RXIP
 #endif
@@ -128,7 +129,17 @@
 #ifndef _U1TXIE
  #define _U1TXIE  IEC3bits.U1TXIE
 #endif
+#ifndef _U1EIP
+ #define _U1EIP   IPC28bits.U1EIP
+#endif
+#ifndef _U1EIF
+ #define _U1EIF   IFS3bits.U1TXIF
+#endif
+#ifndef _U1EIE
+ #define _U1EIE   IEC3bits.U1TXIE
+#endif
 
+// interrupt bits helpers for UART2
 #ifndef _U2RXIP
  #define _U2RXIP  IPC36bits.U2RXIP
 #endif
@@ -147,7 +158,17 @@
 #ifndef _U2TXIE
  #define _U2TXIE  IEC4bits.U2TXIE
 #endif
+#ifndef _U2EIP
+ #define _U2EIP   IPC36bits.U2EIP
+#endif
+#ifndef _U2EIF
+ #define _U2EIF   IFS4bits.U2TXIF
+#endif
+#ifndef _U2EIE
+ #define _U2EIE   IEC4bits.U2TXIE
+#endif
 
+// interrupt bits helpers for UART3
 #ifndef _U3RXIP
  #define _U3RXIP  IPC39bits.U3RXIP
 #endif
@@ -166,7 +187,17 @@
 #ifndef _U3TXIE
  #define _U3TXIE  IEC4bits.U3TXIE
 #endif
+#ifndef _U3EIP
+ #define _U3EIP   IPC39bits.U3EIP
+#endif
+#ifndef _U3EIF
+ #define _U3EIF   IFS4bits.U3TXIF
+#endif
+#ifndef _U3EIE
+ #define _U3EIE   IEC4bits.U3TXIE
+#endif
 
+// interrupt bits helpers for UART4
 #ifndef _U4RXIP
  #define _U4RXIP  IPC42bits.U4RXIP
 #endif
@@ -185,7 +216,17 @@
 #ifndef _U4TXIE
  #define _U4TXIE  IEC5bits.U4TXIE
 #endif
+#ifndef _U4EIP
+ #define _U4EIP   IPC42bits.U4EIP
+#endif
+#ifndef _U4EIF
+ #define _U4EIF   IFS5bits.U4TXIF
+#endif
+#ifndef _U4EIE
+ #define _U4EIE   IEC5bits.U4TXIE
+#endif
 
+// interrupt bits helpers for UART5
 #ifndef _U5RXIP
  #define _U5RXIP  IPC45bits.U5RXIP
 #endif
@@ -204,7 +245,17 @@
 #ifndef _U5TXIE
  #define _U5TXIE  IEC5bits.U5TXIE
 #endif
+#ifndef _U5EIP
+ #define _U5EIP   IPC44bits.U5EIP
+#endif
+#ifndef _U5EIF
+ #define _U5EIF   IFS5bits.U5TXIF
+#endif
+#ifndef _U5EIE
+ #define _U5EIE   IEC5bits.U5TXIE
+#endif
 
+// interrupt bits helpers for UART6
 #ifndef _U6RXIP
  #define _U6RXIP  IPC47bits.U6RXIP
 #endif
@@ -222,6 +273,15 @@
 #endif
 #ifndef _U6TXIE
  #define _U6TXIE  IEC5bits.U6TXIE
+#endif
+#ifndef _U6EIP
+ #define _U6EIP   IPC47bits.U6EIP
+#endif
+#ifndef _U6EIF
+ #define _U6EIF   IFS5bits.U6TXIF
+#endif
+#ifndef _U6EIE
+ #define _U6EIE   IEC5bits.U6TXIE
 #endif
 
 #endif // UART_PIC32_H
