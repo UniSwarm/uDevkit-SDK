@@ -14,7 +14,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#if !defined(__MINGW32__) && !defined(_MSC_VER)
+#if !defined(__MINGW32__) && !defined(_MSC_VER) && !defined(__XC32)
 
  #if !defined(_SIZE_T_DEFINED) && !defined(__SIZE_TYPE__) && !defined(_SIZE_T) && !defined(_SIZET) && !defined(_BSD_SIZE_T_DEFINED_)
  #define _SIZE_T_DEFINED
@@ -37,8 +37,11 @@
  #define _BSD_SSIZE_T_DEFINED_
   typedef int16_t ssize_t;
  #endif
+#else
 
-#endif // !__MINGW32__ !_MSC_VER
+  #include <sys/types.h>
+
+#endif // !__MINGW32__ !_MSC_VER !__XC32
 
 // dev_t definition and macro helpers
 typedef uint16_t rt_dev_t;
@@ -58,6 +61,8 @@ typedef uint8_t rt_dev_t_class;
 #define DEV_CLASS_SPI           ((rt_dev_t_class) (0x06))
 #define DEV_CLASS_SPI_SOFT      ((rt_dev_t_class) (DEV_CLASS_SPI+1))
 #define DEV_CLASS_USB_SERIAL    ((rt_dev_t_class) (0x08))
+
+#define DEV_CLASS_GPIO          ((rt_dev_t_class) (0x09))
 
 // special classes
 #define DEV_CLASS_QEI           ((rt_dev_t_class) (0x11))
