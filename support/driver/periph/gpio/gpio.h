@@ -11,19 +11,25 @@
 #ifndef GPIO_H
 #define GPIO_H
 
+#include <driver/device.h>
+
 void gpio_setBit(rt_dev_t device);
 void gpio_clearBit(rt_dev_t device);
-void gpio_invBit(rt_dev_t device);
+void gpio_toggleBit(rt_dev_t device);
 
-#define GPIO_LOW           (0x00)
-#define GPIO_HIGHT         (0x01)
-#define GPIO_TRISTATE      (0x02)
-void gpio_writeBit(rt_dev_t device, uint8_t value);
-uint8_t gpio_readBit(rt_dev_t device);
+typedef enum {
+    GPIO_LOW = 0,
+    GPIO_HIGHT,
+    GPIO_TOGGLE
+} GPIO_VALUE;
+void gpio_writeBit(rt_dev_t device, GPIO_VALUE value);
+GPIO_VALUE gpio_readBit(rt_dev_t device);
 
-#define GPIO_INPUT         (0x01)
-#define GPIO_OUTPUT        (0x02)
-#define GPIO_OPENDRAIN     (0x04)
+typedef enum {
+    GPIO_INPUT     = 0x00,
+    GPIO_OUTPUT    = 0x01,
+    GPIO_OPENDRAIN = 0x02
+} GPIO_CONFIG;
 int gpio_setBitConfig(rt_dev_t device, uint16_t config);
 
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
