@@ -13,6 +13,10 @@ ifeq ($(FACE),INSECT)
   PICTURES += picture_insect.png
   CCFLAGS += -DINSECT
 endif
+ifeq ($(FACE),PICTURE)
+  PICTURES += picture.png
+  CCFLAGS += -DSIMPLEPICTURE
+endif
 
 PROJECT = testproj
 BOARD = a6screenboard

@@ -24,6 +24,10 @@
   #define BACKGROUND 0xbea6
   #define PICTURE    picture_insect
 #endif
+#ifdef SIMPLEPICTURE
+  #define BACKGROUND 0x51a4
+  #define PICTURE    picture
+#endif
 
 void drawBatt(uint16_t x, uint16_t y, uint16_t percent)
 {
@@ -112,7 +116,7 @@ int main(void)
     board_init();
 
     // a6 init
-    a6_init();
+    network_init();
     uartDbg = uart_getFreeDevice();
 
     gui_init();
@@ -130,33 +134,36 @@ int main(void)
     // response = ar1000_enable_touch();
 
     //WORKING ON GUI_CONSOLE
-    Console cmd = Terminal_default;
-    cmd.width = 300;
-    cmd.height = 100;
-    cmd.font = &Lucida_Console10;
-    cmd.font_color = Gui_White;
-    cmd.background_color = Gui_Black;
+    //Console cmd = Terminal_default;
+    //cmd.width = 300;
+    //cmd.height = 100;
+    //cmd.font = &Lucida_Console10;
+    //cmd.font_color = Gui_White;
+    //cmd.background_color = Gui_Black;
     // console_open(&cmd, 100, 50);
 
     gui_setFont(&core12b);
     drawMenuBar();
     drawBattValue(20, 300, 4100);
     drawBatt(390, 300, 50);
+
+#ifndef SIMPLEPICTURE
     drawBar(20, 100, 600);
     drawBar(480-20-20, 100, 100);
     drawPos(10, 10, 600, 500, 0);
+#endif
 
     uart_write(uartDbg, "Type a word to add: ", 20);
     while(1)
     {
-        size = uart_read(uartDbg, buff, 100);
+        /*size = uart_read(uartDbg, buff, 100);
         if(size > 0)
         {
             buff[size]=0;
             console_write(&cmd, buff);
             uart_write(uartDbg, buff, size);
             uart_write(uartDbg, "Type a word to add: ", 20);
-        }
+        }*/
 
         for(j=0;j<2;j++) for(i=0;i<65000;i++);
 
@@ -176,6 +183,7 @@ int main(void)
                 value = *ptr;
                 drawBattValue(20, 300, value);
 
+#ifndef SIMPLEPICTURE
                 ptr++;
                 value = *ptr;
                 drawBar(20, 100, value);
@@ -191,6 +199,7 @@ int main(void)
                 ptr++;
                 value3 = *ptr;
                 drawPos(10, 10, value, value2, value3);
+#endif
             }
 
             //gui_drawTextRect(188, 273, 282, 30, buff, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
