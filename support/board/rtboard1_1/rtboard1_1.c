@@ -92,8 +92,18 @@ int board_setLed(uint8_t led, uint8_t state)
     if(led >= LED_COUNT)
         return -1;
 #ifndef SIMULATOR
-    if(led == 0)
+    switch(led)
+    {
+    case 0:
         LED1 = state;
+        break;
+    case 1:
+        LED2 = state;
+        break;
+    case 2:
+        LED3 = state;
+        break;
+    }
 #else
     if(state & 0x01)
     {
