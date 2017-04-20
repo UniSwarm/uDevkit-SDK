@@ -55,6 +55,11 @@ typedef enum
     FSM_ERROR_O,
     FSM_ERROR_R3,
 
+    FSM_FAIL_F,
+    FSM_FAIL_A,
+    FSM_FAIL_I,
+    FSM_FAIL_L,
+
     FSM_PLUS,
 
     FSM_IPD_I,
@@ -97,7 +102,7 @@ void esp8266_uart_init()
 void esp8266_init()
 {
     esp8266_uart_init();
-    
+
     // buffer cmd construction init
     STATIC_BUFFER_INIT(buff, 100);
 }
@@ -106,7 +111,7 @@ void esp8266_task()
 {
     char buffRx[200];
     ssize_t read_size;
-    
+
     // read esp uart
 	read_size = uart_read(esp8266_uart, buffRx, 200);
     if (read_size > 0)
@@ -120,11 +125,11 @@ void esp8266_task()
             esp8266_parse(*buffPtr);
             buffPtr++;
         }
-        printf("state:%d\n",state);
+        //printf("state:%d\n",state);
     }
-    
+
     // config
-    if ((esp8266_config>>1) < 4)
+    if ((esp8266_config>>1) < 6)
     {
         if (esp8266_config & 0x01)
         {
@@ -139,7 +144,7 @@ void esp8266_task()
             switch (esp8266_config>>1)
             {
             case 0:
-                esp8266_send_cmd("ATE0\r\n");
+                esp8266_send_cmd("ATE1\r\n");
                 break;
             case 1:
                 esp8266_send_cmd("AT+CIPMUX=1\r\n");
@@ -148,7 +153,13 @@ void esp8266_task()
                 esp8266_setMode(ESP8266_MODE_STA_AP);
                 break;
             case 3:
+                esp8266_connect_ap("iotRT", "iotwifiA");
+                break;
+            case 4:
                 esp8266_ap_setConfig("rtnet", "pwd2017A", ESP8266_ECN_WPA2, 5);
+                break;
+            case 5:
+                esp8266_server_create(80);
                 break;
             }
             esp8266_config++;
@@ -161,8 +172,8 @@ void esp8266_parse(char rec)
     switch(wifistatus)
     {
         case FSM_UNKNOW:
-            if (rec == '\r')
-                wifistatus = FSM_WAITING_VALIDATE;
+            if (rec == '\n')
+                wifistatus = FSM_START;
             else
                 wifistatus = FSM_UNKNOW;
             break;
@@ -170,7 +181,8 @@ void esp8266_parse(char rec)
             if (rec == '\n')
             {
                 //validate
-                if(pendingState!=WIFI_STATE_NONE) state = pendingState;
+                if(pendingState!=WIFI_STATE_NONE)
+                    state = pendingState;
                 pendingState = WIFI_STATE_NONE;
 
                 wifistatus = FSM_START;
@@ -244,6 +256,25 @@ void esp8266_parse(char rec)
             if (rec == '\r')
             {
                 pendingState = WIFI_STATE_ERROR;
+                wifistatus = FSM_WAITING_VALIDATE;
+            }
+            else
+                wifistatus = FSM_UNKNOW;
+            break;
+
+        case FSM_FAIL_F:
+            if (rec == 'A') wifistatus = FSM_FAIL_A; else wifistatus = FSM_UNKNOW;
+            break;
+        case FSM_FAIL_A:
+            if (rec == 'I') wifistatus = FSM_FAIL_I; else wifistatus = FSM_UNKNOW;
+            break;
+        case FSM_FAIL_I:
+            if (rec == 'L') wifistatus = FSM_FAIL_L; else wifistatus = FSM_UNKNOW;
+            break;
+        case FSM_FAIL_L:
+            if (rec == '\r')
+            {
+                pendingState = WIFI_STATE_FAIL;
                 wifistatus = FSM_WAITING_VALIDATE;
             }
             else
@@ -399,10 +430,10 @@ uint8_t getRec()
 uint8_t esp8266_open_tcp_socket(char *ip_domain, uint16_t port)
 {
     char protected[64];
-    
+
     buffer_clear(&buff);
     buffer_astring(&buff, "AT+CIPSTART=\"TCP\",\"");
-    
+
     esp8266_protectstr(protected, ip_domain);
     buffer_astring(&buff, protected);
     buffer_astring(&buff, "\",");
@@ -415,10 +446,10 @@ uint8_t esp8266_open_tcp_socket(char *ip_domain, uint16_t port)
 uint8_t esp8266_open_udp_socket(char *ip_domain, uint16_t port, uint16_t localPort, uint8_t mode)
 {
     char protected[64];
-    
+
     buffer_clear(&buff);
     buffer_astring(&buff, "AT+CIPSTART=\"UDP\",\"");
-    
+
     esp8266_protectstr(protected, ip_domain);
     buffer_astring(&buff, protected);
     buffer_astring(&buff, "\",");
@@ -477,14 +508,14 @@ int esp8266_ap_setConfig(char *ssid, char *pw, ESP8266_ECN pw_ecn, uint8_t chann
 uint8_t esp8266_connect_ap(char *ssid, char *pw)
 {
     char protected[64];
-    
+
     buffer_clear(&buff);
     buffer_astring(&buff, "AT+CWJAP_CUR=\"");
-    
+
     esp8266_protectstr(protected, ssid);
     buffer_astring(&buff, protected);
     buffer_astring(&buff, "\",\"");
-    
+
     esp8266_protectstr(protected, pw);
     buffer_astring(&buff, protected);
     buffer_astring(&buff, "\"\r\n");
@@ -503,12 +534,12 @@ void esp8266_close_socket(uint8_t sock)
 {
     if(sock > 4)
         return;
-    
+
     buffer_clear(&buff);
     buffer_astring(&buff, "AT+CIPCLOSE=");
     buffer_aint(&buff, sock);
     buffer_astring(&buff, "\r\n");
-    
+
     esp8266_send_cmddat(buff.data, buff.size);
 }
 
