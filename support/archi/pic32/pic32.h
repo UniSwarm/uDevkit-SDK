@@ -19,10 +19,25 @@
  #define enable_interrupt() __builtin_enable_interrupts()
  #define disable_interrupt() __builtin_disable_interrupts()
 
+ #define unlockConfig() SYSKEY = 0; SYSKEY = 0xAA996655; SYSKEY = 0x556699AA;
+ #define lockConfig() SYSKEY = 0x33333333;
+
+ #define unlockIoConfig() unlockConfig(); CFGCONbits.IOLOCK = 0;
+ #define lockIoConfig() lockConfig(); CFGCONbits.IOLOCK = 1;
+
 #else
  #define nop() {}
  #define enable_interrupt() {}
  #define disable_interrupt() {}
+
+ #define unlockConfig() {}
+ #define lockConfig() {}
+
+ #define unlockIoConfig() {}
+ #define lockIoConfig() {}
 #endif
+
+#define unlockClockConfig() unlockConfig()
+#define lockClockConfig() lockConfig()
 
 #endif // PIC32_H

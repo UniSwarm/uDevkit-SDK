@@ -13,10 +13,15 @@
 
 #ifndef SIMULATOR
  #include <xc.h>
-#endif
 
-#define nop() __builtin_nop()
-#define enable_interrupt() INTCON2bits.GIE=1
-#define disable_interrupt() INTCON2bits.GIE=0
+ #define nop() __builtin_nop()
+ #define enable_interrupt() INTCON2bits.GIE=1
+ #define disable_interrupt() INTCON2bits.GIE=0
+
+#else
+ #define nop() {}
+ #define enable_interrupt() {}
+ #define disable_interrupt() {}
+#endif
 
 #endif // PIC16B_H
