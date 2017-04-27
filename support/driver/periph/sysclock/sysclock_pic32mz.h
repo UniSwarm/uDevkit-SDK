@@ -18,15 +18,15 @@
 
 // bus clock
 typedef enum {
-    SYSCLOCK_CLOCK_SYSCLK = 0x0,
-    SYSCLOCK_CLOCK_PBCLK1,
-    SYSCLOCK_CLOCK_PBCLK2,
-    SYSCLOCK_CLOCK_PBCLK3,
-    SYSCLOCK_CLOCK_PBCLK4,
-    SYSCLOCK_CLOCK_PBCLK5,
-    SYSCLOCK_CLOCK_PBCLK6,
-    SYSCLOCK_CLOCK_PBCLK7,
-    SYSCLOCK_CLOCK_PBCLK8
+    SYSCLOCK_CLOCK_SYSCLK = 0x0,    ///< main sysclock
+    SYSCLOCK_CLOCK_PBCLK1,          ///< periphericals bus 1
+    SYSCLOCK_CLOCK_PBCLK2,          ///< periphericals bus 2
+    SYSCLOCK_CLOCK_PBCLK3,          ///< periphericals bus 3
+    SYSCLOCK_CLOCK_PBCLK4,          ///< periphericals bus 4
+    SYSCLOCK_CLOCK_PBCLK5,          ///< periphericals bus 5
+    SYSCLOCK_CLOCK_PBCLK6,          ///< periphericals bus 6
+    SYSCLOCK_CLOCK_PBCLK7,          ///< periphericals bus 7
+    SYSCLOCK_CLOCK_PBCLK8           ///< periphericals bus 8
 } SYSCLOCK_CLOCK;
 uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock);
 int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div);
@@ -44,18 +44,16 @@ int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div);
 
 // clock source
 typedef enum {
-    SYSCLOCK_SRC_FRC   = 0b111, // sysclock from Fast RC Oscillator (FRC) divided by FRCDIV
-    SYSCLOCK_SRC_LPRC  = 0b101, // Low-Power RC (LPRC) Oscillator
-    SYSCLOCK_SRC_SOSC  = 0b100, // SOSC
-    SYSCLOCK_SRC_POSC  = 0b010, // Primary Oscillator (POSC) HS and EC
-    SYSCLOCK_SRC_SPLL  = 0b001, // System PLL (SPLL)
-    SYSCLOCK_SRC_FRC2  = 0b000
+    SYSCLOCK_SRC_FRC   = 0b111, ///< sysclock from Fast RC Oscillator (FRC) divided by FRCDIV
+    SYSCLOCK_SRC_BFRC  = 0b110, ///< backup FRC, cannot be chose by user
+    SYSCLOCK_SRC_LPRC  = 0b101, ///< Low-Power RC (LPRC) Oscillator
+    SYSCLOCK_SRC_SOSC  = 0b100, ///< SOSC
+    SYSCLOCK_SRC_POSC  = 0b010, ///< Primary Oscillator (POSC) HS and EC
+    SYSCLOCK_SRC_SPLL  = 0b001, ///< System PLL (SPLL)
+    SYSCLOCK_SRC_FRC2  = 0b000  ///< same as SYSCLOCK_SRC_FRC
 } SYSCLOCK_SOURCE;
 SYSCLOCK_SOURCE sysclock_source();
 int sysclock_switchSourceTo(SYSCLOCK_SOURCE source);
-
-#define unlockClockConfig() SYSKEY = 0; SYSKEY = 0xAA996655; SYSKEY = 0x556699AA;
-#define lockClockConfig() SYSKEY = 0x33333333;
 
 /*  main PLL
  *        __         _____         _____         _____

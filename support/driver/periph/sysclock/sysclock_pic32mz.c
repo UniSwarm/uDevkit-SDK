@@ -96,6 +96,9 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 {
     if (OSCCONbits.CLKLOCK == 1)
         return -1; // Clocks and PLL are locked, source cannot be changed
+    
+    if(source = SYSCLOCK_SRC_BFRC)
+        return -2; // cannot switch to backup FRC
 
     // disable interrupts
     disable_interrupt();
@@ -119,6 +122,9 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 
     // enable interrupts
     enable_interrupt();
+    
+    if (sysclock_source() != source)
+        return -3; // Error when switch clock source
 
     return 0;
 }
@@ -216,9 +222,9 @@ int sysclock_setClockWPLL(uint32_t fosc)
 
     // Wait for PLL to lock
     while (OSCCONbits.LOCK != 1);
-
-    sysclock_sysfreq = fplli * multiplier / postdiv; // Complete this
 */
+    sysclock_sysfreq = fosc;
+
     return 0;
 }
 
