@@ -606,13 +606,18 @@ uint8_t uart_bitStop(rt_dev_t device)
 }
 
 #if UART_COUNT>=1
-void __ISR(_UART1_TX_VECTOR, IPL3SRS) U1TXInterrupt(void)
+void uart_1_tx()
 {
     char uart_tmpchar[1];
     while (!U1STAbits.UTXBF && fifo_pop(&uarts[0].buffTx, uart_tmpchar, 1) == 1)
     {
         U1TXREG = uart_tmpchar[0];
     }
+}
+
+void __ISR(_UART1_TX_VECTOR, IPL3SRS) U1TXInterrupt(void)
+{
+    uart_1_tx();
     _U1TXIF = 0;
 }
 
@@ -628,13 +633,18 @@ void __ISR(_UART1_RX_VECTOR, IPL3SRS) U1RXInterrupt(void)
 #endif
 
 #if UART_COUNT>=2
-void __ISR(_UART2_TX_VECTOR, IPL3SRS) U2TXInterrupt(void)
+void uart_2_tx()
 {
     char uart_tmpchar[1];
     while (!U2STAbits.UTXBF && fifo_pop(&uarts[1].buffTx, uart_tmpchar, 1) == 1)
     {
         U2TXREG = uart_tmpchar[0];
     }
+}
+
+void __ISR(_UART2_TX_VECTOR, IPL3SRS) U2TXInterrupt(void)
+{
+    uart_2_tx();
     _U2TXIF = 0;
 }
 
@@ -650,13 +660,18 @@ void __ISR(_UART2_RX_VECTOR, IPL3SRS) U2RXInterrupt(void)
 #endif
 
 #if UART_COUNT>=3
-void __ISR(_UART3_TX_VECTOR, IPL3SRS) U3TXInterrupt(void)
+void uart_3_tx()
 {
     char uart_tmpchar[1];
     while (!U3STAbits.UTXBF && fifo_pop(&uarts[2].buffTx, uart_tmpchar, 1) == 1)
     {
         U3TXREG = uart_tmpchar[0];
     }
+}
+
+void __ISR(_UART3_TX_VECTOR, IPL3SRS) U3TXInterrupt(void)
+{
+    uart_3_tx();
     _U3TXIF = 0;
 }
 
@@ -672,13 +687,18 @@ void __ISR(_UART3_RX_VECTOR, IPL3SRS) U3RXInterrupt(void)
 #endif
 
 #if UART_COUNT>=4
-void __ISR(_UART4_TX_VECTOR, IPL3SRS) U4TXInterrupt(void)
+void uart_4_tx()
 {
     char uart_tmpchar[1];
     while (!U4STAbits.UTXBF && fifo_pop(&uarts[3].buffTx, uart_tmpchar, 1) == 1)
     {
         U4TXREG = uart_tmpchar[0];
     }
+}
+
+void __ISR(_UART4_TX_VECTOR, IPL3SRS) U4TXInterrupt(void)
+{
+    uart_4_tx();
     _U4TXIF = 0;
 }
 
@@ -694,13 +714,18 @@ void __ISR(_UART4_RX_VECTOR, IPL3SRS) U4RXInterrupt(void)
 #endif
 
 #if UART_COUNT>=5
-void __ISR(_UART5_TX_VECTOR, IPL3SRS) U5TXInterrupt(void)
+void uart_5_tx()
 {
     char uart_tmpchar[1];
     while (!U5STAbits.UTXBF && fifo_pop(&uarts[4].buffTx, uart_tmpchar, 1) == 1)
     {
         U5TXREG = uart_tmpchar[0];
     }
+}
+
+void __ISR(_UART5_TX_VECTOR, IPL3SRS) U5TXInterrupt(void)
+{
+    uart_5_tx();
     _U5TXIF = 0;
 }
 
@@ -716,13 +741,18 @@ void __ISR(_UART5_RX_VECTOR, IPL3SRS) U5RXInterrupt(void)
 #endif
 
 #if UART_COUNT>=6
-void __ISR(_UART6_TX_VECTOR, IPL3SRS) U6TXInterrupt(void)
+void uart_6_tx()
 {
     char uart_tmpchar[1];
     while (!U6STAbits.UTXBF && fifo_pop(&uarts[5].buffTx, uart_tmpchar, 1) == 1)
     {
         U6TXREG = uart_tmpchar[0];
     }
+}
+
+void __ISR(_UART6_TX_VECTOR, IPL3SRS) U6TXInterrupt(void)
+{
+    uart_6_tx();
     _U6TXIF = 0;
 }
 
@@ -788,41 +818,41 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
     {
     case 0:
         if (U1STAbits.TRMT)
-            U1TXInterrupt();
+            uart_1_tx();
         _U1TXIE = 1;
         break;
 #if UART_COUNT>=2
     case 1:
         if (U2STAbits.TRMT)
-            U2TXInterrupt();
+            uart_2_tx();
         _U2TXIE = 1;
         break;
 #endif
 #if UART_COUNT>=3
     case 2:
         if (U3STAbits.TRMT)
-            U3TXInterrupt();
+            uart_3_tx();
         _U3TXIE = 1;
         break;
 #endif
 #if UART_COUNT>=4
     case 3:
         if (U4STAbits.TRMT)
-            U4TXInterrupt();
+            uart_4_tx();
         _U4TXIE = 1;
         break;
 #endif
 #if UART_COUNT>=5
     case 4:
         if (U5STAbits.TRMT)
-            U5TXInterrupt();
+            uart_5_tx();
         _U5TXIE = 1;
         break;
 #endif
 #if UART_COUNT>=6
     case 5:
         if (U6STAbits.TRMT)
-           U6TXInterrupt();
+           uart_6_tx();
         _U6TXIE = 1;
         break;
 #endif
