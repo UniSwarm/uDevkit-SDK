@@ -29,8 +29,8 @@ int board_init_io()
 
     ANSELBbits.ANSB15 = 1;       // BOARD_VOLT_IN as analog
 
-    TRISCbits.TRISC15 = 0;       // OSC_EN pin as output
     OSC_EN = 1;
+    TRISCbits.TRISC15 = 0;       // OSC_EN pin as output
 
     // digitals outputs
     TRISBbits.TRISB7 = 0;       // LED1 pin as output
@@ -43,14 +43,26 @@ int board_init_io()
     TRISCbits.TRISC14 = 0;      // M1DIR pin as output
     TRISCbits.TRISC13 = 0;      // M2DIR pin as output
     TRISBbits.TRISB8 = 0;       // BOOST_SLEEP pin as output
+    BOOST_SLEEP = 1;
 
-    TRISEbits.TRISE5 = 0;       // ESP8266_RST pin as output
-    TRISEbits.TRISE7 = 0;       // ESP8266_FLASH pin as output
     ESP8266_FLASH = 1;
     ESP8266_RST   = 0;
+    TRISEbits.TRISE7 = 0;       // ESP8266_FLASH pin as output
+    for(i=0;i<65000;i++);
+    TRISEbits.TRISE5 = 0;       // ESP8266_RST pin as output
 
     for(i=0;i<65000;i++);
     ESP8266_RST   = 1;
+
+    // buzzer
+    LATBbits.LATB2 = 0;
+    TRISBbits.TRISB2 = 0;       // buzzer default out off
+
+    // acc
+    ACC_CS = 1;
+    //TRISDbits.TRISD2 = 0; //ACC_SD0
+    TRISDbits.TRISD5 = 0; //ACC_CS
+    //TRISDbits.TRISD3 = 0; //ACC_SCK
 
     // remappable pins
     // Unlock configuration pin
