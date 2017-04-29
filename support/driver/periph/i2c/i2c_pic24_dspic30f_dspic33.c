@@ -13,7 +13,7 @@
 
 #include "driver/sysclock.h"
 
-#include <xc.h>
+#include <archi.h>
 
 #if !defined (I2C_COUNT) || I2C_COUNT==0
   #warning "No i2c bus on the current device or unknow device"
@@ -86,6 +86,7 @@ rt_dev_t i2c_getFreeDevice()
 /**
  * @brief Open an i2c bus device
  * @param device i2c bus device number
+ * @return 0 if ok, -1 in case of error
  */
 int i2c_open(rt_dev_t device)
 {
@@ -106,6 +107,7 @@ int i2c_open(rt_dev_t device)
 /**
  * @brief Close and release an i2c bus device
  * @param device i2c bus device number
+ * @return 0 if ok, -1 in case of error
  */
 int i2c_close(rt_dev_t device)
 {
@@ -665,7 +667,7 @@ uint8_t i2c_getc(rt_dev_t device)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
-        return -1;
+        return 0;
 
     switch (i2c)
     {

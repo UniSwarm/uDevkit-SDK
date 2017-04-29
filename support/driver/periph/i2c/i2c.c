@@ -4,11 +4,11 @@
  * @copyright Robotips 2016
  *
  * @date March 01, 2016, 19:10 PM
- * 
+ *
  * @brief I2C communication support driver, global function peripherical
  * independent
  */
- 
+
  #include "i2c.h"
 
 /**
@@ -23,10 +23,13 @@ uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t fl
 {
     uint16_t value = 0;
     i2c_start(device);
-    i2c_putc(device, (uint8_t)(address & 0xFE));
+    if (i2c_putc(device, (uint8_t)(address & 0xFE)) == -1)
+        return 0;
     if (flags & I2C_REGADDR16)
-        i2c_putc(device, (uint8_t)(reg>>8));
-    i2c_putc(device, (uint8_t)(reg&0x00FF));
+        if(i2c_putc(device, (uint8_t)(reg>>8)) == -1)
+            return 0;
+    if (i2c_putc(device, (uint8_t)(reg&0x00FF)) == -1)
+        return 0;
     if (flags & I2C_READ_STOPSTART)
     {
         i2c_stop(device);
@@ -34,7 +37,8 @@ uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t fl
     }
     else
         i2c_restart(device);
-    i2c_putc(device, address | 0x01);
+    if (i2c_putc(device, address | 0x01) == -1)
+        return 0;
     if (flags & I2C_REG16)
         value = i2c_getc(device)<<8;
     value += i2c_getc(device);
@@ -57,10 +61,13 @@ ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t re
     uint8_t *ptrreg;
 
     i2c_start(device);
-    i2c_putc(device, (uint8_t)(address & 0xFE));
+    if (i2c_putc(device, (uint8_t)(address & 0xFE)) != 0)
+        return -1;
     if (flags & I2C_REGADDR16)
-        i2c_putc(device, (uint8_t)(reg>>8));
-    i2c_putc(device, (uint8_t)(reg&0x00FF));
+        if (i2c_putc(device, (uint8_t)(reg>>8)) != 0)
+            return -1;
+    if (i2c_putc(device, (uint8_t)(reg&0x00FF)) != 0)
+        return -1;
     if (flags & I2C_READ_STOPSTART)
     {
         i2c_stop(device);
@@ -69,7 +76,8 @@ ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t re
     else
         i2c_restart(device);
 
-    i2c_putc(device, address | 0x01);
+    if (i2c_putc(device, address | 0x01) != 0)
+        return -1;
     ptrreg = regs;
     for (id=0; id<size; id++)
     {
@@ -103,13 +111,18 @@ ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t re
 int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value, uint8_t flags)
 {
     i2c_start(device);
-    i2c_putc(device, (uint8_t)(address & 0xFE));
+    if (i2c_putc(device, (uint8_t)(address & 0xFE)) != 0)
+        return -1;
     if (flags & I2C_REGADDR16)
-        i2c_putc(device, (uint8_t)(reg>>8));
-    i2c_putc(device, (uint8_t)(reg&0x00FF));
+        if (i2c_putc(device, (uint8_t)(reg>>8)) != 0)
+            return -1;
+    if (i2c_putc(device, (uint8_t)(reg&0x00FF)) != 0)
+        return -1;
     if (flags & I2C_REG16)
-        i2c_putc(device, (uint8_t)(value>>8));
-    i2c_putc(device, (uint8_t)(value&0x00FF));
+        if (i2c_putc(device, (uint8_t)(value>>8)) != 0)
+            return -1;
+    if (i2c_putc(device, (uint8_t)(value&0x00FF)) != 0)
+        return -1;
     i2c_stop(device);
     return 0;
 }
@@ -131,17 +144,22 @@ int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[
     uint8_t *ptrreg;
 
     i2c_start(device);
-    i2c_putc(device, (uint8_t)(address & 0xFE));
+    if (i2c_putc(device, (uint8_t)(address & 0xFE)) != 0)
+        return -1;
     if (flags & I2C_REGADDR16)
-        i2c_putc(device, (uint8_t)(reg>>8));
-    i2c_putc(device, (uint8_t)(reg&0x00FF));
+        if (i2c_putc(device, (uint8_t)(reg>>8)) != 0)
+        return -1;
+    if (i2c_putc(device, (uint8_t)(reg&0x00FF)) != 0)
+        return -1;
 
     ptrreg = regs;
     for (id=0; id<size; id++)
     {
         if (flags & I2C_REG16)
-            i2c_putc(device, *(ptrreg++));
-        i2c_putc(device, *(ptrreg++));
+            if (i2c_putc(device, *(ptrreg++)) != 0)
+                return -1;
+        if (i2c_putc(device, *(ptrreg++)) != 0)
+            return -1;
     }
     i2c_stop(device);
     return 0;

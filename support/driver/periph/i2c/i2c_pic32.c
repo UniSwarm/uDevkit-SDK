@@ -110,6 +110,7 @@ rt_dev_t i2c_getFreeDevice()
 /**
  * @brief Open an i2c bus device
  * @param device i2c bus device number
+ * @return 0 if ok, -1 in case of error
  */
 int i2c_open(rt_dev_t device)
 {
@@ -130,6 +131,7 @@ int i2c_open(rt_dev_t device)
 /**
  * @brief Close and release an i2c bus device
  * @param device i2c bus device number
+ * @return 0 if ok, -1 in case of error
  */
 int i2c_close(rt_dev_t device)
 {
@@ -921,8 +923,6 @@ uint8_t i2c_getc(rt_dev_t device)
         return I2C5RCV;
 #endif
     }
-    return 0;
-#else
-    return -1;
 #endif
+    return 0;
 }
