@@ -183,6 +183,7 @@ int uart_enable(rt_dev_t device)
 
         U1MODEbits.UARTEN = 1;  // enable uart module
         U1STAbits.UTXEN = 1;    // enable transmiter
+        U1STAbits.URXEN = 1;    // enable receiver
         break;
 #if UART_COUNT>=2
     case 1:
@@ -196,6 +197,7 @@ int uart_enable(rt_dev_t device)
 
         U2MODEbits.UARTEN = 1;  // enable uart module
         U2STAbits.UTXEN = 1;    // enable transmiter
+        U2STAbits.URXEN = 1;    // enable receiver
         break;
 #endif
 #if UART_COUNT>=3
@@ -210,6 +212,7 @@ int uart_enable(rt_dev_t device)
 
         U3MODEbits.UARTEN = 1;  // enable uart module
         U3STAbits.UTXEN = 1;    // enable transmiter
+        U3STAbits.URXEN = 1;    // enable receiver
         break;
 #endif
 #if UART_COUNT>=4
@@ -224,6 +227,7 @@ int uart_enable(rt_dev_t device)
 
         U4MODEbits.UARTEN = 1;  // enable uart module
         U4STAbits.UTXEN = 1;    // enable transmiter
+        U4STAbits.URXEN = 1;    // enable receiver
         break;
 #endif
 #if UART_COUNT>=5
@@ -238,6 +242,7 @@ int uart_enable(rt_dev_t device)
 
         U5MODEbits.UARTEN = 1;  // enable uart module
         U5STAbits.UTXEN = 1;    // enable transmiter
+        U5STAbits.URXEN = 1;    // enable receiver
         break;
 #endif
 #if UART_COUNT>=6
@@ -252,6 +257,7 @@ int uart_enable(rt_dev_t device)
 
         U6MODEbits.UARTEN = 1;  // enable uart module
         U6STAbits.UTXEN = 1;    // enable transmiter
+        U6STAbits.URXEN = 1;    // enable receiver
         break;
 #endif
     }
