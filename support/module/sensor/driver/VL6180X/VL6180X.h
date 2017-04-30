@@ -15,6 +15,7 @@
 
 rt_dev_t VL6180X_init(rt_dev_t i2c_bus, uint8_t i2c_addr);
 uint16_t VL6180X_getDistance(rt_dev_t i2c_bus, uint8_t i2c_addr);
+void VL6180X_setAddr(rt_dev_t i2c_bus, uint8_t i2c_addr, uint8_t i2c_newaddr);
 
 // sensor register
 #define VL6180X_DEFAULT_I2CADDR                      0x52

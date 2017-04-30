@@ -82,3 +82,8 @@ uint16_t VL6180X_getDistance(rt_dev_t i2c_bus, uint8_t i2c_addr)
     i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSTEM_INTERRUPT_CLEAR, 0x07, I2C_REGADDR16);
     return value;
 }
+
+void VL6180X_setAddr(rt_dev_t i2c_bus, uint8_t i2c_addr, uint8_t i2c_newaddr)
+{
+    i2c_writereg(i2c_bus, i2c_addr, VL6180X_I2C_SLAVE_DEVICE_ADDRESS, i2c_newaddr>>1, I2C_REGADDR16);
+}
