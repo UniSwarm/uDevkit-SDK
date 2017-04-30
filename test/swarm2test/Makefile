@@ -13,6 +13,9 @@ DRIVERS += uart i2c timer
 MODULES += network
 NETWORK_DRIVERS = esp8266
 
+MODULES += gui
+GUI_DRIVERS = ssd1306
+
 MODULES += sensor
 SENSOR_DRIVERS = VL6180X
 
