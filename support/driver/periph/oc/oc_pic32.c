@@ -660,6 +660,7 @@ int oc_setTimer(rt_dev_t device, uint8_t timer)
 
 rt_dev_t oc_getTimer(rt_dev_t device)
 {
+#if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
         return NULLDEV;
@@ -671,5 +672,41 @@ rt_dev_t oc_getTimer(rt_dev_t device)
         else
             return timer(3); // timer 3
     }
+    else
+    {
+        switch(oc)
+        {
+        case 0:
+        case 1:
+        case 2:
+            if(ocs[oc].timer == 0)
+                return timer(4); // timer 4
+            else
+                return timer(5); // timer 5
+            break;
+#if OC_COUNT>=6
+        case 3:
+        case 4:
+        case 5:
+            if(ocs[oc].timer == 0)
+                return timer(2); // timer 2
+            else
+                return timer(3); // timer 3
+            break;
+#endif
+#if OC_COUNT>=9
+        case 6:
+        case 7:
+        case 8:
+            if(ocs[oc].timer == 0)
+                return timer(6); // timer 6
+            else
+                return timer(7); // timer 7
+            break;
+#endif
+        }
+    }
+#endif
+    
+    return NULLDEV;
 }
-
