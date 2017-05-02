@@ -14,7 +14,7 @@
 #include <driver/device.h>
 
 // ====== device assignation ======
-#define oc(d) MKDEV(DEV_CLASS_OC, (d));
+#define oc(d) MKDEV(DEV_CLASS_OC, (d)-1)
 rt_dev_t oc_getFreeDevice();
 int oc_open(rt_dev_t device);
 int oc_close(rt_dev_t device);
@@ -35,7 +35,8 @@ uint32_t oc_rsVal(rt_dev_t device);
 
 #if defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
  #include "oc_pic24e_dspic33e.h"
-#elif defined(ARCHI_pic24f) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj)
+#elif defined(ARCHI_pic24f) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) \
+   || defined(ARCHI_dspic33fj)
  #include "oc_pic24f_dspic30f_dspic33f.h"
 #elif defined(ARCHI_pic24fj)
  #if defined(DEVICE_24FJ16MC101) || defined(DEVICE_24FJ16MC102) || defined(DEVICE_24FJ32MC101) \
@@ -44,7 +45,8 @@ uint32_t oc_rsVal(rt_dev_t device);
  #else
   #include "oc_pic24e_dspic33e.h"
  #endif
-#elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
+#elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mx) \
+   || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
  #include "oc_pic32.h"
 #else
  #warning Unsuported ARCHI
