@@ -13,6 +13,7 @@
  */
 
 #include "oc.h"
+#include <driver/timer.h>
 
 #include <archi.h>
 
@@ -37,6 +38,7 @@ struct oc_dev
 {
     uint32_t rVal;
     uint32_t rsVal;
+    uint8_t timer;
     oc_status flags;
 };
 
@@ -530,7 +532,7 @@ uint32_t oc_rVal(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
-        return -1;
+        return 0;
 
     return ocs[oc].rVal;
 #else
@@ -548,10 +550,126 @@ uint32_t oc_rsVal(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
-        return -1;
+        return 0;
 
     return ocs[oc].rsVal;
 #else
     return 0;
 #endif
 }
+
+int oc_setTimer(rt_dev_t device, uint8_t timer)
+{
+#if OC_COUNT>=1
+    uint8_t oc = MINOR(device);
+    if (oc >= OC_COUNT)
+        return -1;
+
+    if (timer > 1)
+        return -1; // invalid timer id
+
+    ocs[oc].timer = timer;
+
+    switch (oc)
+    {
+    case 0:
+        OC1CONbits.OCTSEL = timer;
+        break;
+#if OC_COUNT>=2
+    case 1:
+        OC2CONbits.OCTSEL = timer;
+        break;
+#endif
+#if OC_COUNT>=3
+    case 2:
+        OC3CONbits.OCTSEL = timer;
+        break;
+#endif
+#if OC_COUNT>=4
+    case 3:
+        OC4CONbits.OCTSEL = timer;
+        break;
+#endif
+#if OC_COUNT>=5
+    case 4:
+        OC5CONbits.OCTSEL = timer;
+        break;
+#endif
+#if OC_COUNT>=6
+    case 5:
+        OC6CONbits.OCTSEL = timer;
+        break;
+#endif
+#if OC_COUNT>=7
+    case 6:
+        OC7CONbits.OCTSEL = timer;
+        break;
+#endif
+#if OC_COUNT>=8
+    case 7:
+        OC8CONbits.OCTSEL = timer;
+        break;
+#endif
+#if OC_COUNT>=9
+    case 8:
+        OC9CONbits.OCTSEL = timer;
+        break;
+#endif
+#if OC_COUNT>=10
+    case 9:
+        OC10CONbits.OCTSEL = timer;
+        break;
+#endif
+#if OC_COUNT>=11
+    case 10:
+        OC11CONbits.OCTSEL = timer;
+        break;
+#endif
+#if OC_COUNT>=12
+    case 11:
+        OC12CONbits.OCTSEL = timer;
+        break;
+#endif
+#if OC_COUNT>=13
+    case 12:
+        OC13CONbits.OCTSEL = timer;
+        break;
+#endif
+#if OC_COUNT>=14
+    case 13:
+        OC14CONbits.OCTSEL = timer;
+        break;
+#endif
+#if OC_COUNT>=15
+    case 14:
+        OC15CONbits.OCTSEL = timer;
+        break;
+#endif
+#if OC_COUNT>=16
+    case 15:
+        OC16CONbits.OCTSEL = timer;
+        break;
+#endif
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+rt_dev_t oc_getTimer(rt_dev_t device)
+{
+    uint8_t oc = MINOR(device);
+    if (oc >= OC_COUNT)
+        return NULLDEV;
+
+    if (CFGCONbits.OCACLK == 0)
+    {
+        if(ocs[oc].timer == 0)
+            return timer(2); // timer 2
+        else
+            return timer(3); // timer 3
+    }
+}
+

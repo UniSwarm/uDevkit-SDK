@@ -3,7 +3,7 @@
  * @author Sebastien CAUX (sebcaux) \
  * @copyright Robotips 2016-2017
  *
- * @date October 06, 2016, 11:15 PM
+ * @date April 30, 2017, 11:59 PM
  *
  * @brief OC support for rtprog for PIC32MM, PIC32MK, PIC32MX,
  * PIC32MZDA, PIC32MZEC and PIC32MZEF
@@ -14,6 +14,11 @@
 
 #ifndef OC_PIC32_H
 #define OC_PIC32_H
+
+#include <driver/device.h>
+
+int oc_setTimer(rt_dev_t device, uint8_t timer);
+rt_dev_t oc_getTimer(rt_dev_t device);
 
 #if defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024MCF100)
  #define OC_COUNT 1
