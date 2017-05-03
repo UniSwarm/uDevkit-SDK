@@ -29,15 +29,16 @@ int board_init();
 
 // ==== pins define ====
 // leds
-#define LED_COUNT 5
+#define LED_COUNT 6
 #define LED1 LATBbits.LATB7
 #define LED2 LATBbits.LATB6
 #define LED3 LATBbits.LATB3
 int board_setLed(uint8_t led, uint8_t state);
 int8_t board_getLed(uint8_t led);
 
-
 rt_dev_t board_i2c_tof();
+rt_dev_t board_i2c_ihm();
+
 void board_buzz(uint16_t freq);
 
 // ====== charger ======

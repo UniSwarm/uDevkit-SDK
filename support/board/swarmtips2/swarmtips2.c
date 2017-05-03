@@ -22,6 +22,7 @@ uint8_t board_led_state = 0;
 #endif
 
 rt_dev_t swarmtips2_i2c_tof;
+rt_dev_t swarmtips2_i2c_ihm;
 
 int board_init_io()
 {
@@ -126,6 +127,11 @@ rt_dev_t board_i2c_tof()
     return swarmtips2_i2c_tof;
 }
 
+rt_dev_t board_i2c_ihm()
+{
+    return swarmtips2_i2c_ihm;
+}
+
 int board_init_buzzer()
 {
     OC1CON = 0x0000;// Turn off the OC1 when performing the setup
@@ -157,6 +163,18 @@ void board_buzz(uint16_t freq)
     }
 }
 
+int board_init_ihm()
+{
+    // i2c ihm board
+    swarmtips2_i2c_ihm = i2c(IHM_I2C_BUS);
+    i2c_open(swarmtips2_i2c_ihm);
+    i2c_setBaudSpeed(swarmtips2_i2c_ihm, I2C_BAUD_400K);
+    i2c_enable(swarmtips2_i2c_ihm);
+
+    i2c_writereg(swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 3, 0x0E, 0); // led IHM as output
+    i2c_writereg(swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 1, 0, 0); // led IHM off
+}
+
 int board_init()
 {
     board_init_io();
@@ -166,6 +184,7 @@ int board_init()
 
     board_init_tof();
     board_init_buzzer();
+    board_init_ihm();
 
     return 0;
 }
@@ -197,6 +216,18 @@ int board_setLed(uint8_t led, uint8_t state)
             board_led_state |= 0x02;
         else
             board_led_state &= 0xFD;
+        break;
+    case 5:
+        if (state != 0)
+        {
+            board_led_state |= 0x04;
+            i2c_writereg(swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 1, 1, 0); // led IHM off
+        }
+        else
+        {
+            board_led_state &= 0xFB;
+            i2c_writereg(swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 1, 0, 0); // led IHM on
+        }
         break;
     }
 
@@ -230,6 +261,12 @@ int8_t board_getLed(uint8_t led)
         return LED2;
     case 2:
         return LED3;
+    case 3:
+        return ((board_led_state & 0x01) == 1);
+    case 4:
+        return ((board_led_state & 0x02) == 1);
+    case 5:
+        return ((board_led_state & 0x04) == 1);
     }
     return 0;
 #else

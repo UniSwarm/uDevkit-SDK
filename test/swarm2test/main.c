@@ -25,17 +25,8 @@ int main(void)
     value = sysclock_source();
     board_setLed(1, 1);
 
-    // ihm board
-    i2c_ihm = i2c(IHM_I2C_BUS);
-    i2c_open(i2c_ihm);
-    i2c_setBaudSpeed(i2c_ihm, I2C_BAUD_400K);
-    i2c_enable(i2c_ihm);
-
-    i2c_writereg(i2c_ihm, IHM_IOEXP_ADDR, 3, 0x0E, 0); // led IHM as output
-    i2c_writereg(i2c_ihm, IHM_IOEXP_ADDR, 1, 0, 0); // led IHM off
-
     // screen test
-    gui_init(i2c_ihm);
+    gui_init(board_i2c_ihm());
     gui_drawRect(16, 8, 32, 32);
     gui_ctrl_update();
 
