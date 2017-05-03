@@ -78,7 +78,7 @@ void gui_ctrl_write_command_data(uint8_t cmd, uint16_t data)
     gui_ctrl_write_data(data);
 }
 
-void gui_ctrl_init()
+void gui_ctrl_init(rt_dev_t dev)
 {
 	SCREEN_LEDBL = 1;
 
@@ -165,4 +165,17 @@ void gui_ctrl_setPos(uint16_t x, uint16_t y)
     gui_ctrl_write_command_data(GRAM_ADR_COL_S, y);
 
     gui_ctrl_write_command(0x22);
+}
+
+void gui_ctrl_drawPoint(uint16_t x, uint16_t y, uint16_t color)
+{
+    //uint16_t data;
+    gui_ctrl_setPos(x, y);
+
+    gui_ctrl_write_data(color);
+    /*data=gui_read_data();
+    data=gui_read_data();*/
+
+    // warning fixme double pixel send
+    gui_ctrl_write_data(color);
 }

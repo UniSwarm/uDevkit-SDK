@@ -19,7 +19,7 @@ const Font *_gui_font;
 uint16_t buffPix[BUFFPIXSIZE];
 int idPix = 0;
 
-void gui_ctrl_init(void)
+void gui_ctrl_init(rt_dev_t dev)
 {
     GuiConfig config =
     {

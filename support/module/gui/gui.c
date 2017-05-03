@@ -16,9 +16,9 @@ Color _gui_brushColor;
 uint16_t _gui_x, _gui_y;
 const Font *_gui_font;
 
-void gui_init(void)
+void gui_init(rt_dev_t dev)
 {
-    gui_ctrl_init();
+    gui_ctrl_init(dev);
 }
 
 void gui_fillScreen(Color color)
@@ -80,15 +80,7 @@ uint16_t gui_brushColor()
 
 void gui_drawPoint(uint16_t x, uint16_t y)
 {
-    //uint16_t data;
-    gui_ctrl_setPos(x, y);
-
-    gui_ctrl_write_data(_gui_penColor);
-    /*data=gui_read_data();
-    data=gui_read_data();*/
-
-    // warning fixme double pixel send
-    gui_ctrl_write_data(_gui_penColor);
+    gui_ctrl_drawPoint(x, y, _gui_penColor);
 }
 
 void gui_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2)
@@ -301,7 +293,7 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
                 }
                 for (i = 0; i < yendmargin; i++)
                     gui_ctrl_write_data(_gui_brushColor);
-                
+
                 wcurrent++;
             }
         }

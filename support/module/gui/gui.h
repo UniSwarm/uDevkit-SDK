@@ -11,13 +11,13 @@
 #ifndef GUI_H
 #define GUI_H
 
-#include <stdint.h>
+#include <driver/device.h>
 
 #include "gui/font.h"
 #include "gui/color.h"
 #include "gui/picture.h"
 
-void gui_init(void);
+void gui_init(rt_dev_t dev);
 
 void gui_fillScreen(Color bColor);
 void gui_dispImage(uint16_t x, uint16_t y, const Picture *pic);
