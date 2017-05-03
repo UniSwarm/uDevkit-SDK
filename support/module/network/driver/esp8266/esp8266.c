@@ -14,7 +14,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-//#include <xc.h>
+#include <board.h>
 
 #include "driver/uart.h"
 #include "sys/buffer.h"
@@ -89,7 +89,8 @@ STATIC_BUFFER(buff, 100);
 void esp8266_uart_init()
 {
     // uart init
-    esp8266_uart = uart_getFreeDevice();
+    esp8266_uart = uart(ESP8266_UART);
+    uart_open(esp8266_uart);
     uart_setBaudSpeed(esp8266_uart, 115200);
     uart_setBitConfig(esp8266_uart, 8, UART_BIT_PARITY_NONE, 1);
     uart_enable(esp8266_uart);
@@ -129,7 +130,7 @@ void esp8266_task()
     }
 
     // config
-    if ((esp8266_config>>1) < 6)
+    if ((esp8266_config>>1) < 7)
     {
         if (esp8266_config & 0x01)
         {
@@ -160,6 +161,9 @@ void esp8266_task()
                 break;
             case 5:
                 esp8266_server_create(80);
+                break;
+            case 6:
+                esp8266_send_cmd("AT+CIFSR\r\n");
                 break;
             }
             esp8266_config++;
@@ -553,11 +557,11 @@ void esp8266_write_socket(uint8_t sock, char *data, uint16_t size)
     buffer_astring(&buff, "\r\n");
     esp8266_send_cmddat(buff.data, buff.size);
 
-    while(state != WIFI_STATE_SEND_DATA);
+    while(state != WIFI_STATE_SEND_DATA) esp8266_task();
     state = WIFI_STATE_NONE;
 
     esp8266_write(data, size);
-    while(state != WIFI_STATE_SEND_OK);
+    while(state != WIFI_STATE_SEND_OK) esp8266_task();
 }
 
 void esp8266_write_socket_string(uint8_t sock, char *str)

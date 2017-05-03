@@ -10,13 +10,7 @@
 
 #include "network.h"
 
-#include "network_driver.h"
-#ifdef USE_esp8266
-  #include "driver/esp8266/esp8266.h"
-#endif
-#ifdef USE_a6
-  #include "driver/a6/a6.h"
-#endif
+#include "web_server.h"
 
 void network_init()
 {
@@ -26,6 +20,7 @@ void network_init()
     #ifdef USE_a6
       a6_init();
     #endif
+    web_server_init();
 }
 
 void network_task()
@@ -33,4 +28,5 @@ void network_task()
     #ifdef USE_esp8266
       esp8266_task();
     #endif
+    web_server_task();
 }
