@@ -17,6 +17,9 @@
 #ifndef OC_PIC24F_dsPIC30F_dsPIC33F_H
 #define OC_PIC24F_dsPIC30F_dsPIC33F_H
 
+int oc_setTimer(rt_dev_t device, uint8_t timer);
+rt_dev_t oc_getTimer(rt_dev_t device);
+
 #if defined(DEVICE_30F1010) || defined(DEVICE_33FJ06GS101) || defined(DEVICE_33FJ06GS101A) \
  || defined(DEVICE_33FJ06GS102) || defined(DEVICE_33FJ06GS102A) || defined(DEVICE_33FJ06GS202) \
  || defined(DEVICE_33FJ06GS202A) || defined(DEVICE_33FJ09GS302) || defined(DEVICE_24F04KA200) \
