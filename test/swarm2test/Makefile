@@ -8,7 +8,7 @@ DEV_PROG?=ICD3
 
 # CCFLAGS += -pedantic
 
-DRIVERS += uart i2c timer
+DRIVERS += uart i2c timer oc
 
 MODULES += network
 NETWORK_DRIVERS = esp8266
