@@ -39,10 +39,6 @@ int board_init_io()
     TRISCbits.TRISC15 = 0;       // OSC_EN pin as output
 
     // digitals outputs
-    TRISBbits.TRISB7 = 0;       // LED1 pin as output
-    TRISBbits.TRISB6 = 0;       // LED2 pin as output
-    TRISBbits.TRISB3 = 0;       // LED3 pin as output
-
     TRISBbits.TRISB11 = 0;      // CHARGER_CE pin as output
     //TRISBbits.TRISB14 = 0;      // CHARGER_SYS pin as output
 
@@ -82,11 +78,38 @@ int board_init_io()
         RPB2R = 0b1100;  // OC1             // buzzer pwm tone
         RPF4R = 0b1011;  // OC3             // M1 pwm speed
         RPF5R = 0b1011;  // OC4             // M2 pwm speed
+        RPB3R = 0b1100;  // OC7             // LED 3 intensity
+        RPB7R = 0b1100;  // OC8             // LED 1 intensity
+        RPB6R = 0b1101;  // OC9             // LED 2 intensity
 
     // Lock configuration pin
     lockIoConfig();
 #endif
     return 0;
+}
+
+int board_init_ledpwm()
+{
+    OC7CON = 0x0000;
+    OC7R = 0;
+    OC7RS = 0;
+    OC7CON = 0x0006;// Configure for PWM mode without Fault pin
+    OC7CONbits.OCTSEL = 1; // timer y
+    OC7CONSET = 0x8000;// Enable OC7
+
+    OC8CON = 0x0000;
+    OC8R = 0;
+    OC8RS = 0;
+    OC8CON = 0x0006;// Configure for PWM mode without Fault pin
+    OC8CONbits.OCTSEL = 1; // timer y
+    OC8CONSET = 0x8000;// Enable OC8
+
+    OC9CON = 0x0000;
+    OC9R = 0;
+    OC9RS = 0;
+    OC9CON = 0x0006;// Configure for PWM mode without Fault pin
+    OC9CONbits.OCTSEL = 1; // timer y
+    OC9CONSET = 0x8000;// Enable OC9
 }
 
 int board_init_tof()
@@ -185,6 +208,7 @@ int board_init()
     board_init_tof();
     board_init_buzzer();
     board_init_ihm();
+    board_init_ledpwm();
 
     return 0;
 }
@@ -197,13 +221,16 @@ int board_setLed(uint8_t led, uint8_t state)
     switch(led)
     {
     case 0:
-        LED1 = state;
+        OC8R = state<<1;
+        OC8RS = state<<1;
         break;
     case 1:
-        LED2 = state;
+        OC9R = state<<1;
+        OC9RS = state<<1;
         break;
     case 2:
-        LED3 = state;
+        OC7R = state<<1;
+        OC7RS = state<<1;
         break;
     case 3:
         if (state != 0)
@@ -256,11 +283,11 @@ int8_t board_getLed(uint8_t led)
     switch(led)
     {
     case 0:
-        return LED1;
+        return OC8R>>1;
     case 1:
-        return LED2;
+        return OC9R>>1;
     case 2:
-        return LED3;
+        return OC7R>>1;
     case 3:
         return ((board_led_state & 0x01) == 1);
     case 4:

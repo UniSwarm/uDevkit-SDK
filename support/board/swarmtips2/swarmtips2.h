@@ -30,9 +30,9 @@ int board_init();
 // ==== pins define ====
 // leds
 #define LED_COUNT 6
-#define LED1 LATBbits.LATB7
-#define LED2 LATBbits.LATB6
-#define LED3 LATBbits.LATB3
+#define LED1_OC 8 // OC8
+#define LED2_OC 9 // OC9
+#define LED3_OC 7 // OC7
 int board_setLed(uint8_t led, uint8_t state);
 int8_t board_getLed(uint8_t led);
 

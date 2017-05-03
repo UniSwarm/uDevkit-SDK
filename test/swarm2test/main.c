@@ -6,8 +6,6 @@
 #include "board.h"
 #include "archi.h"
 
-rt_dev_t i2c_ihm, i2c_acc;
-
 int main(void)
 {
     unsigned int i,j;
@@ -65,7 +63,7 @@ int main(void)
         LED3 = C1B;*/
 
         //for(i=0;i<65000;i++);
-        value = i2c_readreg(i2c_ihm, IHM_IOEXP_ADDR, 0, 0);
+        value = i2c_readreg(board_i2c_ihm(), IHM_IOEXP_ADDR, 0, 0);
         if ((value & IHM_BTN1_MASK) == 0)
             board_buzz(200);
         else if ((value & IHM_BTN2_MASK) == 0)
@@ -74,30 +72,28 @@ int main(void)
             board_buzz(0);
 
         value = VL6180X_getDistance(board_i2c_tof(), TOF1_ADDR);
+        if(value < 15)
+            value = 0;
+        board_setLed(2, value);
         if(value < 50)
-        {
-            board_setLed(2, 1);
             board_setLed(3, 1);
-        }
         else
-        {
-            board_setLed(2, 0);
             board_setLed(3, 0);
-        }
 
         value = VL6180X_getDistance(board_i2c_tof(), TOF2_ADDR);
+        if(value < 15)
+            value = 0;
+        board_setLed(1, value);
         if(value < 50)
         {
-            board_setLed(1, 1);
-            OC3R = 500;
-            OC3RS = 500;
+            OC3R = 512;
+            OC3RS = 512;
 
-            OC4R = 500;
-            OC4RS = 500;
+            OC4R = 512;
+            OC4RS = 512;
         }
         else
         {
-            board_setLed(1, 0);
             OC3R = 200;
             OC3RS = 200;
 
@@ -106,16 +102,13 @@ int main(void)
         }
 
         value = VL6180X_getDistance(board_i2c_tof(), TOF3_ADDR);
+        if(value < 15)
+            value = 0;
+        board_setLed(0, value);
         if(value < 50)
-        {
-            board_setLed(0, 1);
             board_setLed(4, 1);
-        }
         else
-        {
-            board_setLed(0, 0);
             board_setLed(4, 0);
-        }
 
         /*for(j=0;j<10;j++) for(i=0;i<65000;i++);
         board_setLed(2, 1);
