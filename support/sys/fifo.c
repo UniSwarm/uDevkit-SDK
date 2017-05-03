@@ -63,7 +63,6 @@ size_t fifo_pop(Fifo *fifo, char *data, size_t max_size)
 {
     char *dataPtr = data;
     int id, i;
-    int end;
 
     //printf("< read head: %d tail: %d size: %d len: %d\n", fifo->head, fifo->tail, fifo->size, fifo_len(fifo));
 
