@@ -41,7 +41,7 @@ int adc_init()
 
     // Clock setting
     ADCCON3 = 0;
-    ADCCON3bits.ADCSEL = 0; // Select input clock source
+    ADCCON3bits.ADCSEL = 1; // Select input clock source (FRC)
     ADCCON3bits.CONCLKDIV = 1; // Control clock frequency is half of input clock
     ADCCON3bits.VREFSEL = 0; // Select AVDD and AVSS as reference source
 
@@ -147,12 +147,6 @@ uint16_t adc_getValue(uint8_t channel)
 
     ADCCON3 = ADCCON3 & 0xFF00FFFF;
 
-
-    // Select analog input for ADC modules, no presync trigger, not sync sampling
-
-    ADCTRGMODEbits.SH1ALT = 0; // ADC1 = AN1
-    ADCTRGMODEbits.SH2ALT = 0; // ADC2 = AN2
-
     if (channel <= 31)
         mask = 1 << channel;
     else
@@ -200,6 +194,6 @@ uint16_t adc_getValue(uint8_t channel)
         while ((ADCDSTAT2 & mask) == 0);
 
     // return result
-    result = &ADCDATA0 + (channel << 2);
+    result = &ADCDATA0 + channel;
     return *result;
 }
