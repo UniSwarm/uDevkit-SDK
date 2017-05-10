@@ -36,7 +36,7 @@ typedef struct {
 
 struct timer_dev
 {
-    uint32_t periodMs;
+    uint32_t periodUs;
     timer_status flags;
     void (*handler)(void);
 };
@@ -44,63 +44,63 @@ struct timer_dev
 struct timer_dev timers[] = {
 #if TIMER_COUNT>=1
     {
-        .periodMs = 0,
+        .periodUs = 0,
         .flags = {{.val = TIMER_FLAG_UNUSED}},
         .handler = NULL
     },
 #endif
 #if TIMER_COUNT>=2
     {
-        .periodMs = 0,
+        .periodUs = 0,
         .flags = {{.val = TIMER_FLAG_UNUSED}},
         .handler = NULL
     },
 #endif
 #if TIMER_COUNT>=3
     {
-        .periodMs = 0,
+        .periodUs = 0,
         .flags = {{.val = TIMER_FLAG_UNUSED}},
         .handler = NULL
     },
 #endif
 #if TIMER_COUNT>=4
     {
-        .periodMs = 0,
+        .periodUs = 0,
         .flags = {{.val = TIMER_FLAG_UNUSED}},
         .handler = NULL
     },
 #endif
 #if TIMER_COUNT>=5
     {
-        .periodMs = 0,
+        .periodUs = 0,
         .flags = {{.val = TIMER_FLAG_UNUSED}},
         .handler = NULL
     },
 #endif
 #if TIMER_COUNT>=6
     {
-        .periodMs = 0,
+        .periodUs = 0,
         .flags = {{.val = TIMER_FLAG_UNUSED}},
         .handler = NULL
     },
 #endif
 #if TIMER_COUNT>=7
     {
-        .periodMs = 0,
+        .periodUs = 0,
         .flags = {{.val = TIMER_FLAG_UNUSED}},
         .handler = NULL
     },
 #endif
 #if TIMER_COUNT>=8
     {
-        .periodMs = 0,
+        .periodUs = 0,
         .flags = {{.val = TIMER_FLAG_UNUSED}},
         .handler = NULL
     },
 #endif
 #if TIMER_COUNT>=9
     {
-        .periodMs = 0,
+        .periodUs = 0,
         .flags = {{.val = TIMER_FLAG_UNUSED}},
         .handler = NULL
     },
@@ -368,22 +368,19 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
 }
 
 /**
- * @brief Sets the period in us of the timer module to work in timer mode
+ * @brief Sets the internal period
  * @param device timer device number
+ * @param prvalue reset value of timer, does not consider the time
  * @return 0 if ok, -1 in case of error
  */
-int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
+int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
 {
 #if TIMER_COUNT>=1
-    uint32_t prvalue;
     uint8_t div = 0;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
         return -1;
 
-    timers[timer].periodMs = periodMs;
-
-    prvalue = sysclock_getPeriphClock(SYSCLOCK_CLOCK_TIMER) / 1000 * periodMs;
     if(prvalue > 65535)
     {
         div = 0b111; // 256 divisor for type A (0b11) and for type B (0b111)
@@ -455,6 +452,85 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 }
 
 /**
+ * @brief Gets the internal period
+ * @param device timer device number
+ * @return 0 if ok, -1 in case of error
+ */
+uint32_t timer_period(rt_dev_t device)
+{
+#if TIMER_COUNT>=1
+    uint8_t timer = MINOR(device);
+    if (timer >= TIMER_COUNT)
+        return -1;
+
+    switch (timer)
+    {
+    case 0:
+        return PR1;
+#if TIMER_COUNT>=2
+    case 1:
+        return PR2;
+#endif
+#if TIMER_COUNT>=3
+    case 2:
+        return PR3;
+#endif
+#if TIMER_COUNT>=4
+    case 3:
+        return PR4;
+#endif
+#if TIMER_COUNT>=5
+    case 4:
+        return PR5;
+#endif
+#if TIMER_COUNT>=6
+    case 5:
+        return PR6;
+#endif
+#if TIMER_COUNT>=7
+    case 6:
+        return PR7;
+#endif
+#if TIMER_COUNT>=8
+    case 7:
+        return PR8;
+#endif
+#if TIMER_COUNT>=9
+    case 8:
+        return PR9;
+#endif
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * @brief Sets the period in us of the timer module to work in timer mode
+ * @param device timer device number
+ * @return 0 if ok, -1 in case of error
+ */
+int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
+{
+#if TIMER_COUNT>=1
+    float prvalue;
+    uint8_t timer = MINOR(device);
+    if (timer >= TIMER_COUNT)
+        return -1;
+
+    timers[timer].periodUs = periodMs * 1000;
+
+    prvalue = (float)sysclock_getPeriphClock(SYSCLOCK_CLOCK_TIMER) / 1000.0 * (float)periodMs;
+
+    return timer_setPeriod(device, (uint32_t)prvalue);
+#else
+    return -1;
+#endif
+}
+
+/**
  * @brief Returns the curent period in us
  * @param device timer device number
  * @return period in us if ok, 0 in case of error
@@ -466,7 +542,48 @@ uint32_t timer_periodMs(rt_dev_t device)
     if (timer >= TIMER_COUNT)
         return 0;
 
-    return timers[timer].periodMs;
+    return timers[timer].periodUs / 1000;
+#else
+    return 0;
+#endif
+}
+
+/**
+ * @brief Sets the period in us of the timer module to work in timer mode
+ * @param device timer device number
+ * @return 0 if ok, -1 in case of error
+ */
+int timer_setPeriodUs(rt_dev_t device, uint32_t periodUs)
+{
+#if TIMER_COUNT>=1
+    float prvalue;
+    uint8_t timer = MINOR(device);
+    if (timer >= TIMER_COUNT)
+        return -1;
+
+    timers[timer].periodUs = periodUs;
+
+    prvalue = (float)sysclock_getPeriphClock(SYSCLOCK_CLOCK_TIMER) / 1000000.0 * (float)periodUs;
+
+    return timer_setPeriod(device, (uint32_t)prvalue);
+#else
+    return -1;
+#endif
+}
+
+/**
+ * @brief Returns the curent period in us
+ * @param device timer device number
+ * @return period in us if ok, 0 in case of error
+ */
+uint32_t timer_periodUs(rt_dev_t device)
+{
+#if TIMER_COUNT>=1
+    uint8_t timer = MINOR(device);
+    if (timer >= TIMER_COUNT)
+        return 0;
+
+    return timers[timer].periodUs;
 #else
     return 0;
 #endif

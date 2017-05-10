@@ -28,6 +28,10 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void));
 // ========= timer mode ===========
 int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs);
 uint32_t timer_periodMs(rt_dev_t device);
+int timer_setPeriodUs(rt_dev_t device, uint32_t periodUs);
+uint32_t timer_periodUs(rt_dev_t device);
+int timer_setPeriod(rt_dev_t device, uint32_t period);
+uint32_t timer_period(rt_dev_t device);
 
 // ======== counter mode ==========
 int timer_setCounter(rt_dev_t device, uint16_t diviser);
