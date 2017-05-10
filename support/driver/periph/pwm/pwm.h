@@ -27,7 +27,7 @@ int pwm_disable(rt_dev_t device);
 int pwm_setFreq(rt_dev_t device, uint32_t period);
 uint32_t pwm_freq(rt_dev_t device);
 uint32_t pwm_freqVal(rt_dev_t device);
-int pwm_setDuty(rt_dev_t device, uint32_t duty);
+int pwm_setDuty(rt_dev_t device, uint16_t duty);
 uint32_t pwm_duty(rt_dev_t device);
 
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24fv) || defined(ARCHI_pic24hj) \

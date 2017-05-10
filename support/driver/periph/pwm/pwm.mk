@@ -14,7 +14,7 @@ endif
 ifeq ($(ARCHI),$(filter $(ARCHI),pic32mm pic32mk pic32mx pic32mzec pic32mzef))
  ARCHI_SRC += pwm_pic32.c
  HEADER += pwm_pic32.h
- DRIVERS += oc sysclock
+ DRIVERS += oc timer sysclock
 endif
 
 endif
