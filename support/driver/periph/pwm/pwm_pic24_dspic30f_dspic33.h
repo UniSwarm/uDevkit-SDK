@@ -1,5 +1,5 @@
 /**
- * @file pwm_pic24_dspic30f_dspic33.c
+ * @file pwm_pic24_dspic30f_dspic33.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *

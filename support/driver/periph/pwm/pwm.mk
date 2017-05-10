@@ -11,5 +11,10 @@ ifeq ($(ARCHI),$(filter $(ARCHI),pic24ep pic24f pic24fj pic24hj dspic30f dspic33
  HEADER += pwm_pic24_dspic30f_dspic33.h
  DRIVERS += oc sysclock
 endif
+ifeq ($(ARCHI),$(filter $(ARCHI),pic32mm pic32mk pic32mx pic32mzec pic32mzef))
+ ARCHI_SRC += pwm_pic32.c
+ HEADER += pwm_pic32.h
+ DRIVERS += oc sysclock
+endif
 
 endif

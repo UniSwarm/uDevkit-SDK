@@ -1,12 +1,12 @@
 /**
- * @file pwm_pic24_dspic30f_dspic33.c
+ * @file pwm_pic32.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2017
  *
- * @date August 20, 2016, 12:33 PM
+ * @date May 10, 2017, 13:00 PM
  *
- * @brief PWM support driver for dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV,
- * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
+ * @brief PWM support driver for PIC32MM, PIC32MK, PIC32MX,
+ * PIC32MZDA, PIC32MZEC and PIC32MZEF
  */
 
 #include "pwm.h"
@@ -19,7 +19,7 @@ rt_dev_t pwm_getFreeDevice()
     rt_dev_t dev = oc_getFreeDevice();
     if (dev != NULLDEV)
         dev = MKDEV(DEV_CLASS_PWM, MINOR(dev));
-    return dev;;
+    return dev;
 }
 
 int pwm_open(rt_dev_t device)
