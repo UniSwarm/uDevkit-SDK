@@ -22,7 +22,7 @@ rt_dev_t a6_uart;
 int a6_init()
 {
 	a6_uart = uart_getFreeDevice();
-	uart_setBaudSpeed(a6_uart, 1000000);
+	uart_setBaudSpeed(a6_uart, 937500);
 	uart_setBitConfig(a6_uart, 8, UART_BIT_PARITY_NONE, 1);
 
 #ifndef SIMULATOR

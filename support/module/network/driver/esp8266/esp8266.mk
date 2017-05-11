@@ -7,3 +7,4 @@ DRIVERS += uart
 HEADER += esp8266.h
 SRC += esp8266.c
 
+SRC += fs_data.c fs_functions.c http.c restApi.c web_server.c

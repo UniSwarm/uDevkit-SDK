@@ -6,8 +6,6 @@ NETPATH := $(MODULEPATH)
 SRC += network.c
 HEADER += network.h
 
-SRC += fs_data.c fs_functions.c http.c restApi.c web_server.c
-
 vpath %.c $(NETPATH)
 vpath %.h $(NETPATH)
 

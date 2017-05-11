@@ -10,7 +10,7 @@
 
 #include "board.h"
 
-char buffer[2048];
+char web_server_buffer[2048];
 
 void web_server_init()
 {
@@ -52,8 +52,8 @@ void web_server_task()
                             // run restapi
                             //LED1 = !LED1;
 
-                            rest_api_exec(http_parse_result, buffer);
-                            esp8266_write_socket_string(sock, buffer);
+                            rest_api_exec(http_parse_result, web_server_buffer);
+                            esp8266_write_socket_string(sock, web_server_buffer);
             }
             else
             {
@@ -62,39 +62,39 @@ void web_server_task()
                 file = getFile(http_parse_result->url+1);
                 if(file==NULL) // search in fs
                 {
-                    http_write_header_code(buffer, HTTP_NOT_FOUND);
-                    http_write_header_end(buffer);
-                    esp8266_write_socket_string(sock, buffer);
+                    http_write_header_code(web_server_buffer, HTTP_NOT_FOUND);
+                    http_write_header_end(web_server_buffer);
+                    esp8266_write_socket_string(sock, web_server_buffer);
                 }
                 else
                 {
                     unsigned int idData=0, start;
-                    http_write_header_code(buffer, HTTP_OK);
+                    http_write_header_code(web_server_buffer, HTTP_OK);
 
                     // content type
-                    http_write_content_type(buffer, file->type);
+                    http_write_content_type(web_server_buffer, file->type);
 
                     // end of header
-                    http_write_header_end(buffer);
-                    start=strlen(buffer);
+                    http_write_header_end(web_server_buffer);
+                    start=strlen(web_server_buffer);
 
                     while(idData+2048 < file->size)
                     {
-                        memcpy(buffer+start, file->data+idData, 2048-start);
-                        esp8266_write_socket(sock, buffer, 2048);
+                        memcpy(web_server_buffer+start, file->data+idData, 2048-start);
+                        esp8266_write_socket(sock, web_server_buffer, 2048);
                         idData+=2048-start;
                         start=0;
                     }
-                    memcpy(buffer+start, file->data+idData, file->size-idData-start);
-                    esp8266_write_socket(sock, buffer, file->size-idData);
+                    memcpy(web_server_buffer+start, file->data+idData, file->size-idData-start);
+                    esp8266_write_socket(sock, web_server_buffer, file->size-idData);
                 }
             }
         }
         else
         {
-            http_write_header_code(buffer, HTTP_BAD_REQUEST);
-            http_write_header_end(buffer);
-            esp8266_write_socket_string(sock, buffer);
+            http_write_header_code(web_server_buffer, HTTP_BAD_REQUEST);
+            http_write_header_end(web_server_buffer);
+            esp8266_write_socket_string(sock, web_server_buffer);
         }
         esp8266_close_socket(sock);
     }
