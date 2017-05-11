@@ -17,7 +17,7 @@
 
 #define UARTSERIAL_BUFFRX_SIZE 512
 STATIC_FIFO(usb_serial_buffrx, UARTSERIAL_BUFFRX_SIZE);
-uint8_t buffer[64];
+uint8_t usb_serial_buffer[64];
 
 void usb_serial_init()
 {
@@ -47,10 +47,10 @@ void usb_serial_task()
 	CDCTxService();
 
     // receive service
-    size_rec = getsUSBUSART(buffer, sizeof(buffer));
+    size_rec = getsUSBUSART(usb_serial_buffer, sizeof(usb_serial_buffer));
     if(size_rec > 0)
     {
-        fifo_push(&usb_serial_buffrx, (char*)buffer, size_rec);
+        fifo_push(&usb_serial_buffrx, (char*)usb_serial_buffer, size_rec);
     }
 }
 
