@@ -11,9 +11,7 @@
 #ifndef A6SCREENBOARD_H
 #define A6SCREENBOARD_H
 
-#ifndef SIMULATOR
- #include <xc.h>
-#endif
+#include <archi.h>
 
 int board_init();
 
@@ -27,10 +25,10 @@ int board_init();
 
 // screen
 #define SCREEN_PORT_OUT     LATB
-#define SCREEN_PORT_OUTPUT  (TRISB = 0)
+#define SCREEN_PORT_OUTPUT  (TRISB = 0x0000)
 
 #define SCREEN_PORT_IN      PORTB
-#define SCREEN_PORT_INPUT   (TRISB = 1)
+#define SCREEN_PORT_INPUT   (TRISB = 0xFFFF)
 
 #define SCREEN_RD           LATDbits.LATD3
 #define SCREEN_RW           LATDbits.LATD2

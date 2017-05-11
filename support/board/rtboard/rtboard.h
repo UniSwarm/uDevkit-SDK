@@ -11,9 +11,7 @@
 #ifndef RTBOARD_H
 #define RTBOARD_H
 
-#ifndef SIMULATOR
- #include <xc.h>
-#endif
+#include <archi.h>
 
 #include <stdint.h>
 
@@ -60,6 +58,9 @@ int8_t board_getLed(uint8_t led);
 #define A6_RW LATDbits.LATD1		// A6 trancever direction
 #define A6_WRITE 1
 #define A6_READ 0
+
+// ESP8266
+#define ESP8266_UART 1
 
 // Analog ports
 #define ANS0 24

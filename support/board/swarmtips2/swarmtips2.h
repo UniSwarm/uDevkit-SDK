@@ -11,9 +11,7 @@
 #ifndef SWARMTIPS2_H
 #define SWARMTIPS2_H
 
-#ifndef SIMULATOR
- #include <xc.h>
-#endif
+#include <archi.h>
 
 #include <stdint.h>
 

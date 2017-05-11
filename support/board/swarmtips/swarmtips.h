@@ -11,9 +11,7 @@
 #ifndef SWARMTIPS_H
 #define SWARMTIPS_H
 
-#ifndef SIMULATOR
- #include <xc.h>
-#endif
+#include <archi.h>
 
 #include <stdint.h>
  
@@ -42,6 +40,9 @@ int8_t board_getLed(uint8_t led);
 
 // ==== motor config ====
 #define MOTOR_COUNT 2
+
+// ESP8266
+#define ESP8266_UART 1
 
 
 #endif // SWARMTIPS_H

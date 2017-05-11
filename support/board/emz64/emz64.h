@@ -11,9 +11,7 @@
 #ifndef EMZ64_H
 #define EMZ64_H
 
-#ifndef SIMULATOR
- #include <xc.h>
-#endif
+#include <archi.h>
 
 #include <stdint.h>
 

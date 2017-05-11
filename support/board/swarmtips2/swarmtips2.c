@@ -92,6 +92,7 @@ int board_init_io()
 
 int board_init_ledpwm()
 {
+#ifndef SIMULATOR
     OC7CON = 0x0000;
     OC7R = 0;
     OC7RS = 0;
@@ -112,6 +113,7 @@ int board_init_ledpwm()
     OC9CON = 0x0006;// Configure for PWM mode without Fault pin
     OC9CONbits.OCTSEL = 1; // timer y
     OC9CONSET = 0x8000;// Enable OC9
+#endif
 
     return 0;
 }
@@ -161,6 +163,7 @@ rt_dev_t board_i2c_ihm()
 
 int board_init_buzzer()
 {
+#ifndef SIMULATOR
     OC1CON = 0x0000;// Turn off the OC1 when performing the setup
     OC1R = 0x0064;// Initialize primary Compare register
     OC1RS = 0x0064;// Initialize secondary Compare register
@@ -169,12 +172,14 @@ int board_init_buzzer()
 
     T2CON = 0x8030;// Enable Timer2
     //OC1CONSET = 0x8000;// Enable OC1
+#endif
 
     return 0;
 }
 
 void board_buzz(uint16_t freq)
 {
+#ifndef SIMULATOR
     if(freq > 0)
     {
         OC1R = freq/2;// Initialize primary Compare register
@@ -188,6 +193,7 @@ void board_buzz(uint16_t freq)
         OC1CON = 0x0000;
         OC1CONCLR = 0x8000;// Disable OC1
     }
+#endif
 }
 
 int board_init_ihm()
@@ -238,6 +244,8 @@ float board_getPowerVoltage()
 
 int board_init()
 {
+    init_archi();
+
     board_init_io();
 
     sysclock_setClock(24000000); // 24MHz
