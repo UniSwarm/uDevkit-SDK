@@ -18,6 +18,13 @@
 
 uint8_t ssd1306_pixels[128 * 64 / 8];
 
+// current pos
+uint16_t ssd1306_x, ssd1306_y;
+
+// current rect
+uint16_t ssd1306_rectx, ssd1306_rectw;
+uint16_t ssd1306_recty, ssd1306_recth;
+
 rt_dev_t i2c_screenbus;
 
 void gui_ctrl_write_command(uint8_t cmd)
@@ -25,9 +32,22 @@ void gui_ctrl_write_command(uint8_t cmd)
     i2c_writereg(i2c_screenbus, OLED_I2C_ADDR, 0, cmd, 0);
 }
 
+void ssd1306_increment()
+{
+    ssd1306_y++;
+    if (ssd1306_y >= ssd1306_recty + ssd1306_recth)
+    {
+        ssd1306_y = ssd1306_recty;
+        ssd1306_x++;
+        if (ssd1306_x >= ssd1306_rectx + ssd1306_rectw)
+            ssd1306_x = ssd1306_rectx;
+    }
+}
+
 void gui_ctrl_write_data(uint16_t data)
 {
-    i2c_writereg(i2c_screenbus, OLED_I2C_ADDR, 0x40, data, 0);
+    gui_ctrl_drawPoint(ssd1306_x, ssd1306_y, data);
+    ssd1306_increment();
 }
 
 void gui_ctrl_update()
@@ -36,12 +56,12 @@ void gui_ctrl_update()
     uint8_t *pix;
 
     gui_ctrl_write_command(0x21);
-	gui_ctrl_write_command(0); // column
-	gui_ctrl_write_command(127); // column
+    gui_ctrl_write_command(0); // column
+    gui_ctrl_write_command(127); // column
 
-	gui_ctrl_write_command(0x22);
-	gui_ctrl_write_command(0); // page
-	gui_ctrl_write_command(7); // page
+    gui_ctrl_write_command(0x22);
+    gui_ctrl_write_command(0); // page
+    gui_ctrl_write_command(7); // page
 
     pix = ssd1306_pixels;
     for(i=0; i<128; i++)
@@ -53,9 +73,19 @@ void gui_ctrl_update()
 
 void gui_ctrl_init(rt_dev_t dev)
 {
-    uint16_t j;
+  #ifdef OLED_RST
+    uint16_t i, j;
+  #endif
 
     i2c_screenbus = dev;
+
+    ssd1306_x = 0;
+    ssd1306_y = 0;
+
+    ssd1306_rectx = 0;
+    ssd1306_rectw = GUI_WIDTH;
+    ssd1306_recty = 0;
+    ssd1306_recth = GUI_HEIGHT;
 
   #ifdef OLED_RST
     OLED_RST = 0;
@@ -95,30 +125,46 @@ void gui_ctrl_init(rt_dev_t dev)
 
     // clear screen
     memset(ssd1306_pixels, 0, 128 * 64 / 8);
-    ssd1306_pixels[64] = 0xFF;
+    //ssd1306_pixels[64] = 0xFF;
     gui_ctrl_update();
 }
 
 void gui_ctrl_setRectScreen(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 {
-	gui_ctrl_write_command(0x21);
-	gui_ctrl_write_command(0);      // column
-	gui_ctrl_write_command(127);    // column
+    if (x < GUI_WIDTH)
+        ssd1306_rectx = x;
+    else
+        ssd1306_rectx = GUI_WIDTH-1;
+    ssd1306_x = ssd1306_rectx;
 
-	gui_ctrl_write_command(0x22);
-	gui_ctrl_write_command(0);      // page
-	gui_ctrl_write_command(7);      // page
+    if (y < GUI_HEIGHT)
+        ssd1306_recty = y;
+    else
+        ssd1306_recty = GUI_HEIGHT-1;
+    ssd1306_y = ssd1306_recty;
+
+    if (w + x <= GUI_WIDTH)
+        ssd1306_rectw = w;
+    else
+        ssd1306_rectw = GUI_WIDTH - ssd1306_rectx;
+
+    if (h + y <= GUI_HEIGHT)
+        ssd1306_recth = h;
+    else
+        ssd1306_recth = GUI_HEIGHT - ssd1306_recty;
 }
 
 void gui_ctrl_setPos(uint16_t x, uint16_t y)
 {
-	gui_ctrl_write_command(0x21);
-	gui_ctrl_write_command(0);      // column
-	gui_ctrl_write_command(127);    // column
+    if (x < GUI_WIDTH)
+        ssd1306_x = x;
+    else
+        ssd1306_x = GUI_WIDTH-1;
 
-	gui_ctrl_write_command(0x22);
-	gui_ctrl_write_command(0);      // page
-	gui_ctrl_write_command(7);      // page
+    if (y < GUI_HEIGHT)
+        ssd1306_y = y;
+    else
+        ssd1306_y = GUI_HEIGHT-1;
 }
 
 void gui_ctrl_drawPoint(uint16_t x, uint16_t y, uint16_t color)
@@ -133,6 +179,9 @@ void gui_ctrl_drawPoint(uint16_t x, uint16_t y, uint16_t color)
     id += x;
     pix = ssd1306_pixels + id;
 
-    *pix |= 1 << (y & 0x07);
+    if (color == 0)
+        *pix &= !(1 << (y & 0x07));
+    else
+        *pix |= 1 << (y & 0x07);
 }
 

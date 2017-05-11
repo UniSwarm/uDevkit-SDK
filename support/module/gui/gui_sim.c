@@ -7,9 +7,6 @@
 
 #include "screenController/screenController.h"
 
-#define GUI_WIDTH 480
-#define GUI_HEIGHT 320
-
 Color _gui_penColor;
 Color _gui_brushColor;
 uint16_t _gui_x, _gui_y;
@@ -48,6 +45,10 @@ void gui_ctrl_setRectScreen(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
     simulator_send(GUI_SIM_MODULE, 0, GUI_SIM_SETRECT, (char*)&rect, sizeof(GuiRect));
 }
 
+void gui_ctrl_update()
+{
+}
+
 void gui_ctrl_setPos(uint16_t x, uint16_t y)
 {
     gui_ctrl_flush_data();
@@ -66,4 +67,10 @@ void gui_ctrl_write_data(uint16_t data)
 
     if(idPix == BUFFPIXSIZE)
 		gui_ctrl_flush_data();
+}
+
+void gui_ctrl_drawPoint(uint16_t x, uint16_t y, uint16_t color)
+{
+    gui_ctrl_setPos(x, y);
+    gui_ctrl_write_data(color);
 }
