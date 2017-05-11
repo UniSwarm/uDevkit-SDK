@@ -43,6 +43,8 @@ void board_buzz(uint16_t freq);
 
 uint8_t board_button(uint8_t btn);
 
+float board_getPowerVoltage();
+
 // ====== charger ======
 #define CHARGER_CE       LATBbits.LATB11
 #define CHARGER_SYS      LATBbits.LATB14

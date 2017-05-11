@@ -206,7 +206,7 @@ int board_init_ihm()
 
 uint8_t board_button(uint8_t btn)
 {
-    uint16_t value;
+    uint8_t value;
     int ret;
     if (btn > 2)
         return 0;
@@ -230,6 +230,12 @@ uint8_t board_button(uint8_t btn)
     }
 }
 
+float board_getPowerVoltage()
+{
+    uint16_t value = adc_getValue(BOARD_VOLT_IN);
+    return ((float)value) / 4096.0 * 6.6;
+}
+
 int board_init()
 {
     board_init_io();
@@ -241,6 +247,8 @@ int board_init()
     board_init_buzzer();
     board_init_ihm();
     board_init_ledpwm();
+    
+    adc_init();
 
     return 0;
 }

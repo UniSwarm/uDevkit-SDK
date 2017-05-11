@@ -8,7 +8,8 @@
 
 int main(void)
 {
-    unsigned int i,j;
+    unsigned int i, j;
+    float voltage;
     int16_t value;
     
     init_archi();
@@ -55,12 +56,10 @@ int main(void)
     //OC4R = 300;
     //OC4RS = 300;
 
-	while(1)
-	{
+    while(1)
+    {
         network_task();
-
-        /*LED2 = C1A;
-        LED3 = C1B;*/
+        voltage = board_getPowerVoltage();
         
         if (board_button(0) == 1)
             board_buzz(200);
@@ -115,7 +114,7 @@ int main(void)
         for(j=0;j<10;j++) for(i=0;i<65000;i++);
         board_setLed(2, 0);
         i2c_writereg(i2c_ihm, IHM_IOEXP_ADDR, 1, 1, 0); // led IHM off*/
-	}
+    }
 
-	return 0;
+    return 0;
 }
