@@ -36,8 +36,8 @@ typedef struct {
 
 struct oc_dev
 {
-    uint32_t rVal;
-    uint32_t rsVal;
+    uint16_t rVal;
+    uint16_t rsVal;
     uint8_t timer;
     oc_status flags;
 };
@@ -45,81 +45,129 @@ struct oc_dev
 struct oc_dev ocs[] = {
 #if OC_COUNT>=1
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=2
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=3
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=4
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=5
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=6
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=7
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=8
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=9
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=10
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=11
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=12
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=13
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=14
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=15
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     },
 #endif
 #if OC_COUNT>=16
     {
+        .rVal = 0,
+        .rsVal = 0,
+        .timer = 0,
         .flags = {{.val = OC_FLAG_UNUSED}}
     }
 #endif
