@@ -18,6 +18,8 @@
  #define enable_interrupt() INTCON2bits.GIE=1
  #define disable_interrupt() INTCON2bits.GIE=0
 
+ #define init_archi() {}
+
 #else
  #define nop() {}
  #define enable_interrupt() {}

@@ -13,6 +13,4 @@
 
 #include "../pic32/pic32.h"
 
-void init_archi();
-
 #endif // PIC32MZEF_H
