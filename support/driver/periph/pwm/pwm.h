@@ -24,7 +24,7 @@ int pwm_enable(rt_dev_t device);
 int pwm_disable(rt_dev_t device);
 
 // ======== device control ========
-int pwm_setFreq(rt_dev_t device, uint32_t period);
+int pwm_setFreq(rt_dev_t device, uint32_t freq);
 uint32_t pwm_freq(rt_dev_t device);
 uint32_t pwm_freqVal(rt_dev_t device);
 int pwm_setDuty(rt_dev_t device, uint16_t duty);

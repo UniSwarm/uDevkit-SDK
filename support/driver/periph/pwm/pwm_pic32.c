@@ -96,8 +96,10 @@ int pwm_setDuty(rt_dev_t device, uint16_t duty) // 1000 => 100%
     uint16_t dutyR;
     if (pwm >= PWM_COUNT)
         return -1;
+    
+    pwms[pwm].duty = duty;
 
-    dutyR = pwms[pwm].period * 500 / duty;
+    dutyR = pwms[pwm].period * duty / 1000;
     oc_setRVal(device, dutyR, dutyR);
 
     return 0;
