@@ -10,6 +10,8 @@
 
 #include <stdint.h>
 
+#include "sysclock.h"
+
 uint32_t sysfreq;
 
 int sysclock_setClock(uint32_t fosc)
@@ -23,12 +25,38 @@ uint32_t sysclock_getClock()
     return sysfreq;
 }
 
-uint32_t sysclock_getPeriphClock()
+uint32_t sysclock_getCPUSystemClock()
 {
     return sysfreq >> 1;
 }
 
-uint32_t sysclock_getCPUSystemClock()
+#if defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
+uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock)
+{
+    // TODO
+    return sysfreq / 2;
+}
+#else
+uint32_t sysclock_getPeriphClock()
 {
     return sysfreq >> 1;
+}
+#endif
+
+int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div)
+{
+    // TODO
+    return 0;
+}
+
+SYSCLOCK_SOURCE sysclock_source()
+{
+    // TODO
+    return 0;
+}
+
+int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
+{
+    // TODO
+    return 0;
 }

@@ -10,7 +10,8 @@
 
 #include "adc_dspic.h"
 
-#include <xc.h>
+#include <archi.h>
+#include <stdint.h>
 
 int adc_init()
 {

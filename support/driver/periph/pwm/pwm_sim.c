@@ -1,5 +1,5 @@
 /**
- * @file pwm_pic32.c
+ * @file pwm_sim.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
  *
@@ -64,11 +64,9 @@ int pwm_setFreq(rt_dev_t device, uint32_t freq)
     if (pwm >= PWM_COUNT)
         return -1;
 
-    returnv = timer_setPeriodUs(timer, 1000000 / freq);
+    pwms[pwm].period = 1.0 / freq;
 
-    pwms[pwm].period = timer_period(timer);
-
-    return returnv;
+    return 0;
 #else
     return 0;
 #endif

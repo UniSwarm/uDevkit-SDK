@@ -58,7 +58,7 @@ uint32_t pwm_freqVal(rt_dev_t device)
     return 0;
 }
 
-int pwm_setDuty(rt_dev_t device, uint32_t period)
+int pwm_setDuty(rt_dev_t device, uint16_t duty)
 {
     return 0;
 }

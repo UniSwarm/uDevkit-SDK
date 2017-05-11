@@ -17,4 +17,6 @@ ifeq ($(ARCHI),$(filter $(ARCHI),pic32mm pic32mk pic32mx pic32mzec pic32mzef))
  DRIVERS += oc timer sysclock
 endif
 
+SIM_SRC += pwm_sim.c
+
 endif
