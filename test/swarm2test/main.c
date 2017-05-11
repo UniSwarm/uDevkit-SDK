@@ -10,7 +10,7 @@ int main(void)
 {
     unsigned int i,j;
     int16_t value;
-
+    
     init_archi();
     board_init();
 
@@ -61,12 +61,10 @@ int main(void)
 
         /*LED2 = C1A;
         LED3 = C1B;*/
-
-        //for(i=0;i<65000;i++);
-        value = i2c_readreg(board_i2c_ihm(), IHM_IOEXP_ADDR, 0, 0);
-        if ((value & IHM_BTN1_MASK) == 0)
+        
+        if (board_button(0) == 1)
             board_buzz(200);
-        else if ((value & IHM_BTN2_MASK) == 0)
+        else if (board_button(1) == 1)
             board_buzz(400);
         else
             board_buzz(0);

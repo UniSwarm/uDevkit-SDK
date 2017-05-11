@@ -41,6 +41,8 @@ rt_dev_t board_i2c_ihm();
 
 void board_buzz(uint16_t freq);
 
+uint8_t board_button(uint8_t btn);
+
 // ====== charger ======
 #define CHARGER_CE       LATBbits.LATB11
 #define CHARGER_SYS      LATBbits.LATB14

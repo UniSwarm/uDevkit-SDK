@@ -15,6 +15,8 @@
 #include <driver/i2c.h>
 #include <driver/sysclock.h>
 
+#include <module/sensor.h>
+
 uint8_t board_led_state = 0;
 
 #ifdef SIMULATOR
@@ -110,6 +112,8 @@ int board_init_ledpwm()
     OC9CON = 0x0006;// Configure for PWM mode without Fault pin
     OC9CONbits.OCTSEL = 1; // timer y
     OC9CONSET = 0x8000;// Enable OC9
+
+    return 0;
 }
 
 int board_init_tof()
@@ -120,8 +124,8 @@ int board_init_tof()
     i2c_setBaudSpeed(swarmtips2_i2c_tof, I2C_BAUD_400K);
     i2c_enable(swarmtips2_i2c_tof);
 
-    i2c_writereg(swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 3, 0x00, 0); // all io as output
     i2c_writereg(swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 1, 0x00, 0); // leds off and disable tof 2 and tof 3
+    i2c_writereg(swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 3, 0x00, 0); // all io as output
 
     // tof1
     VL6180X_setAddr(swarmtips2_i2c_tof, 0x52, TOF1_ADDR);
@@ -196,6 +200,34 @@ int board_init_ihm()
 
     i2c_writereg(swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 3, 0x0E, 0); // led IHM as output
     i2c_writereg(swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 1, 0, 0); // led IHM off
+
+    return 0;
+}
+
+uint8_t board_button(uint8_t btn)
+{
+    uint16_t value;
+    int ret;
+    if (btn > 2)
+        return 0;
+    ret = i2c_readregs(swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 0, &value, 1, 0);
+    if (ret != 0)
+        return 0;
+    switch (btn)
+    {
+    case 0:
+        if ((value & IHM_BTN1_MASK) == 0)
+            return 1;
+        return 0;
+    case 1:
+        if ((value & IHM_BTN2_MASK) == 0)
+            return 1;
+        return 0;
+    case 2:
+        if ((value & IHM_BTN3_MASK) == 0)
+            return 1;
+        return 0;
+    }
 }
 
 int board_init()
