@@ -37,7 +37,7 @@ int main(void)
     timer_enable(asserv_timer);
 
     // gui
-    gui_init();
+    gui_init(0);
     gui_drawRect(20, 20, 50, 100);
 
 	while(1)

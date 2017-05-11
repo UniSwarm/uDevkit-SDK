@@ -18,7 +18,7 @@ unsigned char step = 2;
 
 int main(void)
 {
-	unsigned int i, j;
+	unsigned int i, j, e=0;
     uint16_t value_x, value_y, value_z;
     rt_dev_t uartDbg;
     rt_dev_t i2c;
@@ -65,9 +65,11 @@ int main(void)
     pose.y = 1000;
     pose.t = 0;
     mrobot_setPose(pose);
-    //mrobot_setMode(Asserv_Mode_Linear);
-
-    //asserv_goTo(pos[0], pos[1]);
+    
+	MrobotPoint pos;
+	pos.x = 1500;
+	pos.y = 1000;
+    mrobot_goto(pos, 100);
 
     j=0;
     while(1)
@@ -108,19 +110,27 @@ int main(void)
         }
 
         pose = mrobot_pose();
-        sprintf(buff, "d1:%d\td2:%d\tx: %d\ty:%d\tt:%d\tacx:%d\tacy:%d\tacz:%d\r\n",
+        sprintf(buff, "d1:%d\td2:%d\tx:%d\ty:%d\tt:%d\tacx:%d\tacy:%d\tacz:%d\r\n",
                 value,
                 value2,
                 (int)pose.x,
                 (int)pose.y,
-                (int)pose.t,
+                (int)(pose.t/3.14*180.0),
                 value_x, value_y, value_z
         );
+
+        if(e++>10)
+        {
+			// ==================== USB =======================
+            //usb_serial_write(usb_serial, buff, strlen(buff));
+			e=0;
+		}
 
         if(j++>50)
         {
             int16_t *ptr;
             ptr = (int16_t *)buff;
+			
             *ptr = 0xA6;
 
             ptr++;
@@ -152,7 +162,6 @@ int main(void)
             board_setLed(0, led);
             led++;
             //uart_write(uartDbg, buff, strlen(buff));
-            //usb_serial_write(usb_serial, buff, strlen(buff));
         }
 
         cmdline_task();

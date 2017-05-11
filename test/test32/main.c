@@ -27,7 +27,7 @@ int main(void)
 
     //board_setLed(1, 1);
 
-    gui_init();
+    gui_init(0);
 
     // uart debug init
     uartDbg = uart_getFreeDevice();

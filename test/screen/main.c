@@ -119,7 +119,7 @@ int main(void)
     network_init();
     uartDbg = uart_getFreeDevice();
 
-    gui_init();
+    gui_init(NULLDEV);
     gui_fillScreen(Gui_Blue2);
 
     //display an image
