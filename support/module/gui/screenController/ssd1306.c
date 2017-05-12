@@ -125,7 +125,6 @@ void gui_ctrl_init(rt_dev_t dev)
 
     // clear screen
     memset(ssd1306_pixels, 0, 128 * 64 / 8);
-    //ssd1306_pixels[64] = 0xFF;
     gui_ctrl_update();
 }
 
@@ -180,7 +179,7 @@ void gui_ctrl_drawPoint(uint16_t x, uint16_t y, uint16_t color)
     pix = ssd1306_pixels + id;
 
     if (color == 0)
-        *pix &= !(1 << (y & 0x07));
+        *pix &= ~(1 << (y & 0x07));
     else
         *pix |= 1 << (y & 0x07);
 }
