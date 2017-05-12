@@ -25,7 +25,7 @@
 #include <QRegExp>
 
 /**
- * @Brief exportImage convert an image to a structure containing metadata and data
+ * @brief exportImage convert an image to a structure containing metadata and data
  * To read the arguments list of the Picture struc, see "/module/gui.gui.h" 
  */
 void exportImage(const QImage& image, const QString& filename)
@@ -71,7 +71,7 @@ void exportImage(const QImage& image, const QString& filename)
 }
 
 /**
- * @Brief exportFont
+ * @brief exportFont
  */
 void exportFont(QFont font, QString outFileName )
 {
@@ -108,7 +108,9 @@ void exportFont(QFont font, QString outFileName )
     QImage letters(2000,50,QImage::Format_ARGB32);
     QPainter paint;
     QPainter paint2(&letters);
+    font.setStyleStrategy(QFont::NoAntialias);
     paint2.setFont(font);
+    paint2.setBrush(Qt::white);
     paint2.drawRect(-1, -1, 2002, 52);
     wl = 0;
     for(c=first; c<=last; ++c)
@@ -184,6 +186,7 @@ void exportFont(QFont font, QString outFileName )
     stream << endl << "#endif";
 
     paint2.end();
+    letters = letters.copy(0, 0, wl, height);
     letters.save(outFileName+".png");
 }
 
