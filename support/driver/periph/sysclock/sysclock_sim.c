@@ -43,6 +43,7 @@ uint32_t sysclock_getPeriphClock()
 }
 #endif
 
+#if defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
 int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div)
 {
     // TODO
@@ -60,3 +61,4 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
     // TODO
     return 0;
 }
+#endif
