@@ -15,12 +15,12 @@ NETWORK_DRIVERS = esp8266
 
 MODULES += gui
 GUI_DRIVERS = ssd1306
-FONTS += core12b
+FONTS += Lucida_Console8
 
 MODULES += sensor
 SENSOR_DRIVERS = VL6180X
 
-SRC += main.c
+SRC += main.c ihm.c
 
 include $(RTPROG)/rtprog.mk
 

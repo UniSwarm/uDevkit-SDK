@@ -6,12 +6,12 @@
 #include "board.h"
 #include "archi.h"
 
-#include "fonts.h"
+extern int ihm_d1, ihm_d2, ihm_d3;
+extern float ihm_batt;
 
 int main(void)
 {
     unsigned int i, j;
-    float voltage;
     int16_t value;
     
     init_archi();
@@ -20,30 +20,13 @@ int main(void)
     // module init
     network_init();
 
-    //ACC_CS = 1;
-
     for(j=0;j<5;j++) for(i=0;i<65000;i++);
     value = sysclock_source();
     board_setLed(1, 1);
 
     // screen test
-    gui_init(board_i2c_ihm());
-    gui_setFont(&core12b);
-    
-    gui_setPenColor(1);
-    gui_drawLine(0, 0, 128, 64);
-    gui_ctrl_update();
-    
-    gui_setBrushColor(1);
-    gui_setPenColor(0);
-    gui_drawFillRect(16, 30, 16, 30);
-    gui_ctrl_update();
-    
-    gui_setBrushColor(0);
-    gui_setPenColor(1);
-    gui_drawText(0, 0, "swarm2");
-    gui_drawRect(16, 8, 32, 32);
-    gui_ctrl_update();
+
+    ihm_init();
 
     // motors test
     /*PR3 = 512; // Set period
@@ -75,28 +58,25 @@ int main(void)
     pwm_setFreq(pwm_m2, 20000);
     pwm_enable(pwm_m2);
     
-    //BOOST_SLEEP = 1;
-    //M1DIR = 1;
-    //OC3R = 300;
-    //OC3RS = 300;
-    
-    //M2DIR = 1;
-    //OC4R = 300;
-    //OC4RS = 300;
+#ifndef SIMULATOR
+    BOOST_SLEEP = 0;
+    M1DIR = 1;
+    pwm_setDuty(pwm_m1, 1000);
+    M2DIR = 1;
+    pwm_setDuty(pwm_m2, 1000);
+#endif
 
     while(1)
     {
+        #ifdef SIMULATOR
+            usleep(1000);
+        #endif
         network_task();
-        voltage = board_getPowerVoltage();
-        
-        if (board_button(0) == 1)
-            board_buzz(200);
-        else if (board_button(1) == 1)
-            board_buzz(400);
-        else
-            board_buzz(0);
+        ihm_task();
+        ihm_batt = board_getPowerVoltage();
 
         value = VL6180X_getDistance(board_i2c_tof(), TOF1_ADDR);
+        ihm_d1 = value;
         if(value < 15)
             value = 0;
         board_setLed(2, value);
@@ -106,31 +86,23 @@ int main(void)
             board_setLed(3, 0);
 
         value = VL6180X_getDistance(board_i2c_tof(), TOF2_ADDR);
+        ihm_d2 = value;
         if(value < 15)
             value = 0;
         board_setLed(1, value);
         if(value < 50)
         {
-            /*OC3R = 512;
-            OC3RS = 512;
-
-            OC4R = 512;
-            OC4RS = 512;*/
             pwm_setDuty(pwm_m1, 1000);
             pwm_setDuty(pwm_m2, 1000);
         }
         else
         {
-            /*OC3R = 200;
-            OC3RS = 200;
-
-            OC4R = 200;
-            OC4RS = 200;*/
             pwm_setDuty(pwm_m1, 500);
             pwm_setDuty(pwm_m2, 500);
         }
 
         value = VL6180X_getDistance(board_i2c_tof(), TOF3_ADDR);
+        ihm_d3 = value;
         if(value < 15)
             value = 0;
         board_setLed(0, value);
@@ -138,14 +110,6 @@ int main(void)
             board_setLed(4, 1);
         else
             board_setLed(4, 0);
-
-        /*for(j=0;j<10;j++) for(i=0;i<65000;i++);
-        board_setLed(2, 1);
-        i2c_writereg(i2c_ihm, IHM_IOEXP_ADDR, 1, 0, 0); // led IHM on
-
-        for(j=0;j<10;j++) for(i=0;i<65000;i++);
-        board_setLed(2, 0);
-        i2c_writereg(i2c_ihm, IHM_IOEXP_ADDR, 1, 1, 0); // led IHM off*/
     }
 
     return 0;
