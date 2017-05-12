@@ -23,7 +23,7 @@ void SimModuleGui::pushData(uint16_t functionId, const QByteArray &data)
         if(_guiWidget == NULL)
         {
             QSize size = QSize((int)config->width, (int)config->height);
-            _guiWidget = new GuiWidget(_idPeriph, size);
+            _guiWidget = new GuiWidget(_idPeriph, size, config->colorMode);
             _guiWidget->show();
         }
     }

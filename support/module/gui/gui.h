@@ -28,6 +28,12 @@ Color gui_penColor(void);
 void gui_setBrushColor(Color color);
 Color gui_brushColor(void);
 
+typedef enum {
+    ColorModeMono,
+    ColorMode565,
+    ColorMode666
+} GuiColorMode;
+
 // geometry paint
 void gui_drawPoint(uint16_t x, uint16_t y);
 void gui_drawLine(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2);

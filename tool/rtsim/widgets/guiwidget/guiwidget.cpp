@@ -9,10 +9,11 @@ GuiWidget::GuiWidget(QWidget *parent) : QWidget(parent)
     createWidget();
 }
 
-GuiWidget::GuiWidget(uint16_t idPeriph, QSize size, QWidget *parent) : QWidget(parent)
+GuiWidget::GuiWidget(uint16_t idPeriph, QSize size, int colorMode, QWidget *parent) : QWidget(parent)
 {
     _idPeriph = idPeriph;
     _size = size;
+    _colorMode = colorMode;
     setWindowTitle(QString("screen %1").arg(idPeriph));
     createWidget();
 }
@@ -36,7 +37,7 @@ void GuiWidget::createWidget()
 {
     QLayout *layout = new QVBoxLayout();
 
-    _screenWidget = new ScreenWidget(_size.width(), _size.height());
+    _screenWidget = new ScreenWidget(_size.width(), _size.height(), _colorMode);
     layout->addWidget(_screenWidget);
 
     QLayout *statusLayout = new QHBoxLayout();

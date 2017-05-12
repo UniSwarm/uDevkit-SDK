@@ -4,16 +4,25 @@
 #include <QDebug>
 #include <QPaintEvent>
 
-ScreenWidget::ScreenWidget(int width, int height)
+#include "module/gui/gui.h"
+#include "module/gui/gui_sim.h"
+
+ScreenWidget::ScreenWidget(int width, int height, int colorModde)
   : _pixmap(QPixmap(width, height))
 {
     QPainter painter(&_pixmap);
     painter.setBrush(Qt::white);
-    painter.drawRect(0, 0, width, height);
+    painter.drawRect(-1, -1, width+2, height+2);
     _rect = QRect(0, 0, width, height);
     _pos = QPoint(0, 0);
+    _colorModde = colorModde;
     painter.end();
-    setMinimumSize(width, height);
+
+    if (_rect.width() <= 320)
+        setMinimumSize(width*2, height*2);
+    else
+        setMinimumSize(width, height);
+
     update();
 }
 
@@ -35,9 +44,7 @@ void ScreenWidget::writeData(uint16_t *pix, size_t size)
     for(uint i=0; i<size; i++)
     {
         uint16_t pixValue = pix[i];
-        QColor color = QColor((pixValue&0xF800)>>8,
-                              (pixValue&0x07E0)>>3,
-                              (pixValue&0x001F)<<3);
+        QColor color = fromData(pixValue);
         painter.setPen(color);
         painter.drawPoint(_pos);
 
@@ -54,9 +61,34 @@ void ScreenWidget::writeData(uint16_t *pix, size_t size)
     update();
 }
 
+const QColor ScreenWidget::fromData(uint16_t pixValue)
+{
+    QColor color;
+    switch (_colorModde)
+    {
+    case ColorModeMono:
+        if (pixValue == 0)
+            color = QColor(Qt::white);
+        else
+            color = QColor(Qt::blue);
+        break;
+    case ColorMode565:
+        color = QColor((pixValue&0xF800)>>8,
+                              (pixValue&0x07E0)>>3,
+                              (pixValue&0x001F)<<3);
+        break;
+    default:
+        break;
+    }
+    return color;
+}
+
 void ScreenWidget::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
     QPainter painter(this);
-    painter.drawPixmap(0,0, _pixmap);
+    if (_rect.width() <= 320)
+        painter.drawPixmap(0, 0, _pixmap.scaled(_rect.width()*2, _rect.height()*2));
+    else
+        painter.drawPixmap(0, 0, _pixmap);
 }

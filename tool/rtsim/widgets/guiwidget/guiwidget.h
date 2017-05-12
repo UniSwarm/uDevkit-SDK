@@ -11,7 +11,7 @@ class GuiWidget : public QWidget
     Q_OBJECT
 public:
     explicit GuiWidget(QWidget *parent = 0);
-    GuiWidget(uint16_t idPeriph, QSize size, QWidget *parent = 0);
+    GuiWidget(uint16_t idPeriph, QSize size, int colorMode, QWidget *parent = 0);
 
     void setPos(uint16_t x, uint16_t y);
     void setRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
@@ -28,6 +28,7 @@ protected:
 
     uint16_t _idPeriph;
     QSize _size;
+    int _colorMode;
 };
 
 #endif // GUIWIDGET_H

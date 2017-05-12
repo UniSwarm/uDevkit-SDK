@@ -20,6 +20,7 @@ typedef struct
 {
     uint16_t width;
     uint16_t height;
+    GuiColorMode colorMode;
 } GuiConfig;
 
 #define GUI_SIM_SETPOS      0x0002

@@ -21,7 +21,8 @@ void gui_ctrl_init(rt_dev_t dev)
     GuiConfig config =
     {
         .width = GUI_WIDTH,
-        .height = GUI_HEIGHT
+        .height = GUI_HEIGHT,
+        .colorMode = GUI_COLOR_MODE
     };
     simulator_send(GUI_SIM_MODULE, 0, GUI_SIM_CONFIG, (char*)&config, sizeof(GuiConfig));
 }

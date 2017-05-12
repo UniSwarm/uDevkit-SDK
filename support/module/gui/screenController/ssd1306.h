@@ -13,5 +13,6 @@
 
 #define GUI_WIDTH 128
 #define GUI_HEIGHT 64
+#define GUI_COLOR_MODE ColorModeMono
 
 #endif //SSD1306_H
