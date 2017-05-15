@@ -25,6 +25,8 @@ uint16_t sizeRecPacket = 0;
 uint16_t idRecPacket = 0;
 uint8_t recPacketFlag = 0;
 char /*__attribute__((far))*/ recPacket[2049];
+char esp8266_ip[16] = "";
+char esp8266_ipid = 0;
 
 typedef enum
 {
@@ -61,6 +63,18 @@ typedef enum
     FSM_FAIL_L,
 
     FSM_PLUS,
+
+    FSM_IP_C,
+    FSM_IP_I,
+    FSM_IP_F,
+    FSM_IP_S,
+    FSM_IP_R,
+    FSM_IP_dP,
+    FSM_IP_S2,
+    FSM_IP_T,
+    FSM_IP_A,
+    FSM_IP_WIP,
+    FSM_IP_IP,
 
     FSM_IPD_I,
     FSM_IPD_P,
@@ -321,7 +335,54 @@ void esp8266_parse(char rec)
             break;
 
         case FSM_PLUS:
-            if (rec == 'I') wifistatus = FSM_IPD_I; else wifistatus = FSM_UNKNOW;
+            if (rec == 'I') wifistatus = FSM_IPD_I;
+            else if (rec == 'C') wifistatus = FSM_IP_C; // wait IP
+            else wifistatus = FSM_UNKNOW;
+            break;
+        case FSM_IP_C:
+            if (rec == 'I') wifistatus = FSM_IP_I; else wifistatus = FSM_UNKNOW;
+            break;
+        case FSM_IP_I:
+            if (rec == 'F') wifistatus = FSM_IP_F; else wifistatus = FSM_UNKNOW;
+            break;
+        case FSM_IP_F:
+            if (rec == 'S') wifistatus = FSM_IP_S; else wifistatus = FSM_UNKNOW;
+            break;
+        case FSM_IP_S:
+            if (rec == 'R') wifistatus = FSM_IP_R; else wifistatus = FSM_UNKNOW;
+            break;
+        case FSM_IP_R:
+            if (rec == ':') wifistatus = FSM_IP_dP; else wifistatus = FSM_UNKNOW;
+            break;
+        case FSM_IP_dP:
+            if (rec == 'S') wifistatus = FSM_IP_S2; else wifistatus = FSM_UNKNOW;
+            break;
+        case FSM_IP_S2:
+            if (rec == 'T') wifistatus = FSM_IP_T; else wifistatus = FSM_UNKNOW;
+            break;
+        case FSM_IP_T:
+            if (rec == 'A') wifistatus = FSM_IP_A; else wifistatus = FSM_UNKNOW;
+            break;
+        case FSM_IP_A:
+            if (rec == 'I') wifistatus = FSM_IP_WIP; else wifistatus = FSM_UNKNOW;
+            break;
+        case FSM_IP_WIP:
+            if (rec == '"')
+            {
+                wifistatus = FSM_IP_IP;
+                esp8266_ipid = 0;
+            }
+            else if (rec == '\r') wifistatus = FSM_UNKNOW;
+            else wifistatus = FSM_IP_WIP; // wait IP
+            break;
+        case FSM_IP_IP:
+            if ((rec >= '0' && rec <= '9') || rec == '.')
+                esp8266_ip[esp8266_ipid++] = rec;
+            else
+            {
+                esp8266_ip[esp8266_ipid] = 0;
+                wifistatus = FSM_UNKNOW;
+            }
             break;
         case FSM_IPD_I:
             if (rec == 'P') wifistatus = FSM_IPD_P; else wifistatus = FSM_UNKNOW;
@@ -581,4 +642,9 @@ void esp8266_server_create(uint16_t port)
 void esp8266_server_destroy()
 {
     esp8266_send_cmd("AT+CIPSERVER=0\r\n");
+}
+
+char *getIp()
+{
+    return esp8266_ip;
 }

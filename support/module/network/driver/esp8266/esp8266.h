@@ -70,4 +70,6 @@ uint8_t getRecSocket();
 char *getRecData();
 uint16_t getRecSize();
 
+char *getIp();
+
 #endif   // ESP8266_H
