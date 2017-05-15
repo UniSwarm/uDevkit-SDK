@@ -29,9 +29,9 @@ void process_coder()
 	// c2_state => 0b0000 & previous_A & previous_B & A & B
 	c2_state = (c2_state<<2) & 0b00001100;
 	if (C2A == 1)
-        c2_state+=2;
-	if (C2B == 1)
         c2_state+=1;
+	if (C2B == 1)
+        c2_state+=2;
 	c2 += encoder_value[c2_state];
     ihm_c2 = c2;
 }

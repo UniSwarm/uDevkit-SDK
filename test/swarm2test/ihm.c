@@ -4,6 +4,8 @@
 #include "module/gui.h"
 #include "fonts.h"
 
+#include "module/network.h"
+
 #include <stdio.h>
 
 int ihm_count = 0;
@@ -14,12 +16,13 @@ float ihm_batt;
 
 void ihm_screenClear();
 
-#define SCREEN_COUNT 3
+#define SCREEN_COUNT 4
 int8_t screen_id = 1;
 int8_t screen_btn = 0;
 void ihm_screenTof();
 void ihm_screenBatt();
 void ihm_screenCoder();
+void ihm_screenWifi();
 
 void ihm_init()
 {
@@ -96,13 +99,16 @@ void ihm_task()
     case 2:
         ihm_screenCoder();
         break;
+    case 3:
+        ihm_screenWifi();
+        break;
     }
 }
 
 void ihm_screenTof()
 {
     char text[60];
-    gui_drawTextRect(1, 1, 126, 14, "<  swarm2 : tof  >", GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
+    gui_drawTextRect(1, 1, 126, 14, "<  swt2 : tof  >", GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
 
     gui_setBrushColor(0);
     sprintf(text, "%d", (int)ihm_d1);
@@ -129,12 +135,12 @@ void ihm_screenTof()
 void ihm_screenBatt()
 {
     char text[60];
-    gui_drawTextRect(1, 1, 126, 14, "< swarm2 : battery >", GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
+    gui_drawTextRect(1, 1, 126, 14, "< swt2 : battery >", GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
 
     sprintf(text, "voltage : %.2fv", ihm_batt);
-    gui_drawTextRect(20, 22, 90, 15, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
-    
-    int i, x=33, y=45, percent=(ihm_batt-3.3)*100;
+    gui_drawTextRect(5, 22, 118, 15, text, GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
+
+    int i, x=33, y=42, percent=(ihm_batt-3.3)*100;
     if(percent > 100)
         percent = 100;
 
@@ -146,7 +152,7 @@ void ihm_screenBatt()
         gui_drawLine(x+3+i,   y+4, x+3+i,   y+8);
     }
     gui_setPenColor(0);
-    for (; i<20; i++)
+    for (; i<=20; i++)
     {
         gui_drawLine(x+3+i,   y+4, x+3+i,   y+8);
     }
@@ -157,6 +163,11 @@ void ihm_screenBatt()
 
     sprintf(text, "%d%%", percent);
     gui_drawTextRect(x+35, y, 55, 14, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
+    
+    if (CHARGER_CHARGING == 0)
+        gui_drawTextRect(3, y, 30, 14, "chrg", GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
+    else
+        gui_drawTextRect(3, y, 30, 14, " ", GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
 
     gui_ctrl_update();
 }
@@ -164,7 +175,7 @@ void ihm_screenBatt()
 void ihm_screenCoder()
 {
     char text[60];
-    gui_drawTextRect(1, 1, 126, 14, "< swarm2 : coders >", GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
+    gui_drawTextRect(1, 1, 126, 14, "< swt2 : coders >", GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
     gui_drawLine(63, 15, 63, 63);
 
     // left coder
@@ -190,6 +201,17 @@ void ihm_screenCoder()
     sprintf(text, "%d", ihm_c1);
     gui_setBrushColor(0);
     gui_drawTextRect(64, 48, 48, 14, text, GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
+
+    gui_ctrl_update();
+}
+
+void ihm_screenWifi()
+{
+    char text[60];
+    gui_drawTextRect(1, 1, 126, 14, "< swt2 : wifi >", GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
+
+    // ip
+    gui_drawTextRect(5, 18, 118, 14, getIp(), GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
 
     gui_ctrl_update();
 }
