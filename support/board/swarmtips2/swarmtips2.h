@@ -59,10 +59,17 @@ float board_getPowerVoltage();
 #define M2DIR LATCbits.LATC13       // M2 pin direction
 #define M2PWM 4  // OC4             // M2 pwm speed
 
-#define C1A PORTBbits.RB9           // Coder 1 pin A
-#define C1B PORTBbits.RB10          // Coder 1 pin B
-#define C2A PORTBbits.RB4           // Coder 2 pin A
-#define C2B PORTBbits.RB5           // Coder 2 pin B
+#ifndef SIMULATOR
+  #define C1A PORTBbits.RB9           // Coder 1 pin A
+  #define C1B PORTBbits.RB10          // Coder 1 pin B
+  #define C2A PORTBbits.RB4           // Coder 2 pin A
+  #define C2B PORTBbits.RB5           // Coder 2 pin B
+#else
+  #define C1A 1
+  #define C1B 1
+  #define C2A 1
+  #define C2B 1
+#endif
 
 // ====== buzzer ======
 #define BUZZER 1 // OC1             // PWM buzzer

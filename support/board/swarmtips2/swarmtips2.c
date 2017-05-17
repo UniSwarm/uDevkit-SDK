@@ -43,6 +43,8 @@ int board_init_io()
     // digitals outputs
     TRISBbits.TRISB11 = 0;      // CHARGER_CE pin as output
     //TRISBbits.TRISB14 = 0;      // CHARGER_SYS pin as output
+    CNPUBbits.CNPUB12 = 1; // pwgood
+    CNPUBbits.CNPUB13 = 1; // charging
 
     TRISCbits.TRISC14 = 0;      // M1DIR pin as output
     TRISCbits.TRISC13 = 0;      // M2DIR pin as output
@@ -67,6 +69,9 @@ int board_init_io()
     //TRISDbits.TRISD2 = 0; //ACC_SD0
     TRISDbits.TRISD5 = 0; //ACC_CS
     //TRISDbits.TRISD3 = 0; //ACC_SCK
+    
+    // RGB led
+    TRISEbits.TRISE6 = 0; // RBG_LED
 
     // remappable pins
     // Unlock configuration pin
