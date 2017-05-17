@@ -4,7 +4,7 @@ PROJECT = swarm2test
 BOARD = swarmtips2
 OUT_PWD = build
 
-DEV_PROG?=ICD3
+DEV_PROG?=RICE
 
 # CCFLAGS += -pedantic
 
@@ -20,7 +20,7 @@ FONTS += Lucida_Console8
 MODULES += sensor
 SENSOR_DRIVERS = VL6180X
 
-SRC += main.c ihm.c
+SRC += main.c ihm.c motors.c
 
 include $(RTPROG)/rtprog.mk
 

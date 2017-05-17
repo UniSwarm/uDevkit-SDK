@@ -5,14 +5,13 @@
 #include "fonts.h"
 
 #include "module/network.h"
+#include "motors.h"
 
 #include <stdio.h>
 
 int ihm_count = 0;
 
 int ihm_d1, ihm_d2, ihm_d3;
-int ihm_c1, ihm_c2;
-float ihm_batt;
 
 void ihm_screenClear();
 
@@ -135,6 +134,7 @@ void ihm_screenTof()
 void ihm_screenBatt()
 {
     char text[60];
+    float ihm_batt = board_getPowerVoltage();
     gui_drawTextRect(1, 1, 126, 14, "< swt2 : battery >", GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
 
     sprintf(text, "voltage : %.2fv", ihm_batt);
@@ -163,7 +163,7 @@ void ihm_screenBatt()
 
     sprintf(text, "%d%%", percent);
     gui_drawTextRect(x+35, y, 55, 14, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
-    
+
     if (CHARGER_CHARGING == 0)
         gui_drawTextRect(3, y, 30, 14, "chrg", GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
     else
@@ -186,7 +186,7 @@ void ihm_screenCoder()
     gui_setBrushColor(C2B);
     gui_drawRect(40-5, 38-5, 9, 9);
     gui_drawFillRect(40-3, 38-3, 6, 6);
-    sprintf(text, "%d", ihm_c2);
+    sprintf(text, "%d", getC2());
     gui_setBrushColor(0);
     gui_drawTextRect(2, 48, 60, 14, text, GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
 
@@ -198,7 +198,7 @@ void ihm_screenCoder()
     gui_setBrushColor(C1B);
     gui_drawRect(63+40-5, 38-5, 9, 9);
     gui_drawFillRect(63+40-3, 38-3, 6, 6);
-    sprintf(text, "%d", ihm_c1);
+    sprintf(text, "%d", getC1());
     gui_setBrushColor(0);
     gui_drawTextRect(64, 48, 48, 14, text, GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
 
