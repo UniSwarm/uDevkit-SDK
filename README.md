@@ -21,18 +21,18 @@ project, it is simply based on a single Makefile.
 Makefile example content :
 
 ```Makefile
-	RTPROG = /home/toto/rtprog      # path to rtprog root directory
-	
-	PROJECT = deltaApp              # project name
-	ROBOT = deltatips               # robot to use (or BOARD= if you want to choose only a board)
-	OUT_PWD = build                 # output directory
-	
-	DRIVERS += uart ax12 asserv i2c usb_serial
-	MODULES += cmdline
-	
-	SRC += main.c
-	
-	include $(RTPROG)/rtprog.mk
+RTPROG = /home/toto/rtprog      # path to rtprog root directory
+
+PROJECT = deltaApp              # project name
+ROBOT = deltatips               # robot to use (or BOARD= if you want to choose only a board)
+OUT_PWD = build                 # output directory
+
+DRIVERS += uart ax12 asserv i2c usb_serial
+MODULES += cmdline mrobot
+
+SRC += main.c
+
+include $(RTPROG)/rtprog.mk
 ```
 
 [Complete list of drivers](support/driver/README.md)
@@ -43,26 +43,28 @@ Makefile example content :
 
 To get all submodule used (USB and FatFS), please do not forget to init and update submodule :
 
-	git submodule init
-	git submodule update
+```bash
+git submodule init
+git submodule update
+```
 
 ## dependencies
 ### Qt > 5.2
 GUI tools are based on Qt like RTsim or img2raw. https://www.qt.io/
 
-### MPLAB
+### MPLAB X IDE
 To program and debug the device (only IPE is needed to program)
 
 * windows : http://www.microchip.com/mplabx-ide-windows-installer
 * linux : http://www.microchip.com/mplabx-ide-linux-installer
 
-### XC16 compiler (for 16 bits devices)
+### XC16 compiler (for Microchip 16 bits devices)
 Compiler for 16-bit devices (v1.26 minimum)
 
 * windows : http://www.microchip.com/mplabxc16windows
 * linux : http://www.microchip.com/mplabxc16linux
 
-### XC32 compiler (for 32 bits devices)
+### XC32 compiler (for Microchip 32 bits devices)
 Compiler for 32-bit devices (v1.30 minimum)
 
 * windows : http://www.microchip.com/mplabxc32windows
