@@ -11,6 +11,8 @@
 #ifndef ARCHI_H
 #define ARCHI_H
 
+void init_archi();
+
 // ======== Microchip 16 bits family =======
 #if defined(ARCHI_dspic30f)
  #include "../support/archi/dspic30f/dspic30f.h"
@@ -50,9 +52,6 @@
 
 #if defined(SIMULATOR)
  #include "../support/archi/simulator/simulator.h"
-
- #define board_init() board_init(); simulator_init()
- #define robot_init() robot_init(); simulator_init()
 #endif
 
 #endif // ARCHI_H
