@@ -11,7 +11,7 @@ UartWidget::UartWidget(QWidget *parent) : QWidget(parent)
 UartWidget::UartWidget(uint16_t idPeriph, QWidget *parent)
 {
     _idPeriph = idPeriph;
-    setWindowTitle(QString("uart %1").arg(idPeriph));
+    setWindowTitle(QString("UART %1").arg(idPeriph+1));
     createWidget();
 }
 

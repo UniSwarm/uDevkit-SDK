@@ -1,6 +1,7 @@
 #include "simmodulefactory.h"
 
 #include "simmodule_uart.h"
+#include "simmodule_adc.h"
 #include "simmodule_gui.h"
 #include "simmodule_mrobot.h"
 
@@ -11,6 +12,9 @@ SimModule *SimModuleFactory::getSimModule(SimClient *client, uint16_t idModule, 
     {
     case UART_SIM_MODULE:
         module = new SimModuleUart(client, idPeriph);
+        break;
+    case ADC_SIM_MODULE:
+        module = new SimModuleAdc(client, idPeriph);
         break;
     case GUI_SIM_MODULE:
         module = new SimModuleGui(client, idPeriph);

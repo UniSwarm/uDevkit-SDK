@@ -74,8 +74,8 @@ const QColor ScreenWidget::fromData(uint16_t pixValue)
         break;
     case ColorMode565:
         color = QColor((pixValue&0xF800)>>8,
-                              (pixValue&0x07E0)>>3,
-                              (pixValue&0x001F)<<3);
+                       (pixValue&0x07E0)>>3,
+                       (pixValue&0x001F)<<3);
         break;
     default:
         break;
@@ -87,8 +87,8 @@ void ScreenWidget::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
     QPainter painter(this);
-    if (_rect.width() <= 320)
-        painter.drawPixmap(0, 0, _pixmap.scaled(_rect.width()*2, _rect.height()*2));
+    if (_pixmap.width() <= 320)
+        painter.drawPixmap(0, 0, _pixmap.scaled(_pixmap.width()*2, _pixmap.height()*2));
     else
         painter.drawPixmap(0, 0, _pixmap);
 }
