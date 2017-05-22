@@ -13,4 +13,20 @@
 
 #include "adc.h"
 
+#include <stdint.h>
+
+typedef struct
+{
+    uint32_t baudSpeed;
+    uint8_t bitStop;
+    uint8_t bitParity;
+    uint8_t bitLenght;
+    uint8_t enabled;
+} adc_dev;
+
+#define ADC_SIM_MODULE 0x0031
+
+#define ADC_SIM_CONFIG 0x0000
+#define ADC_SIM_READ   0x0001
+
 #endif // ADC_SIM_H

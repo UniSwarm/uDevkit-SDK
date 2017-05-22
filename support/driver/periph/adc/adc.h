@@ -24,8 +24,6 @@ uint16_t adc_getValue(uint8_t channel);
  #include "adc_dspic.h"
 #elif defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
  #include "adc_pic32mz.h"
-#else
- #warning Unsuported ARCHI
 #endif
 
 #endif // ADC_H
