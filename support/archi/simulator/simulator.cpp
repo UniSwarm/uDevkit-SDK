@@ -1,5 +1,5 @@
  /**
- * @file simulator.c
+ * @file simulator.cpp
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
@@ -20,6 +20,7 @@
 #include <map>
 #include <queue>
 #include <string>
+#include <iostream>
 std::map<uint64_t, std::queue<std::string> > packages;
 
 void simulator_init()
@@ -66,6 +67,7 @@ int simulator_rec_task()
         std::string dataPacket(data + 8, sizePacket - 8);
         uint64_t key = ((uint64_t)moduleId << 32) + ((uint64_t)periphId << 16) + functionId;
         std::map<uint64_t, std::queue<std::string> >::iterator it = packages.find(key);
+        
         if(it == packages.end())
         {
             std::queue<std::string> queue;

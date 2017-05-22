@@ -46,8 +46,13 @@ float board_getPowerVoltage();
 // ====== charger ======
 #define CHARGER_CE       LATBbits.LATB11
 #define CHARGER_SYS      LATBbits.LATB14
-#define CHARGER_PWGOOD   PORTBbits.RB12
-#define CHARGER_CHARGING PORTBbits.RB13
+#ifndef SIMULATOR
+  #define CHARGER_PWGOOD   PORTBbits.RB12
+  #define CHARGER_CHARGING PORTBbits.RB13
+#else
+  #define CHARGER_PWGOOD   1
+  #define CHARGER_CHARGING 1
+#endif
 #define BOARD_VOLT_IN 10 // RB15    // analog board voltage channel
 
 // ====== motors pins ======

@@ -411,7 +411,7 @@ uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t fl
     value += i2c_getc(device);
     i2c_nack(device);
     i2c_stop(device);
-    return value;
+    return -1;
 }
 /**
  * @brief Read 'size' registers begining at address 'reg' in i2c chip with address 'address'
@@ -459,7 +459,7 @@ ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t re
             i2c_stop(device);
         }
     }
-    return 0;
+    return -1;
 }
 
 /**
@@ -482,7 +482,7 @@ int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value
         i2c_putc(device, (uint8_t)(value>>8));
     i2c_putc(device, (uint8_t)value);
     i2c_stop(device);
-    return 0;
+    return -1;
 }
 
 /**
@@ -515,5 +515,5 @@ int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[
         i2c_putc(device, *(ptrreg++));
     }
     i2c_stop(device);
-    return 0;
+    return -1;
 }

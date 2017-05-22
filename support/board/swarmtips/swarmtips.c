@@ -10,6 +10,8 @@
 
 #include "swarmtips.h"
 
+#include "driver/adc.h"
+
 #ifdef SIMULATOR
 uint8_t board_led_state = 0;
 #include <stdio.h>

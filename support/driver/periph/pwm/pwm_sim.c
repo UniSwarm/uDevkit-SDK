@@ -5,8 +5,7 @@
  *
  * @date May 10, 2017, 13:00 PM
  *
- * @brief PWM support driver for PIC32MM, PIC32MK, PIC32MX,
- * PIC32MZDA, PIC32MZEC and PIC32MZEF
+ * @brief PWM support for rtprog simulator
  */
 
 #include "pwm.h"

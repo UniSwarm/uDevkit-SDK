@@ -14,12 +14,12 @@ else
   RTSIM_EXE := $(RTPROG)/bin/rtsim
 endif
 
-$(RTSIM_EXE): $(shell find $(RTPROG)/tool/rtsim/ \( -name '*.h' -o -name '*.c' -o -name '*.pro' \))
+$(RTSIM_EXE): $(shell find $(RTPROG)/tool/rtsim/ \( -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.pro' \))
 	@echo "Building rtsim..."
 	cd $(RTPROG)/tool/rtsim/ && make
 
 SIMULATOR_PATH := $(RTPROG)/support/archi/simulator
-DEFINES_SIM += -D SIMULATOR -I $(SIMULATOR_PATH)
+DEFINES_SIM += -D SIMULATOR -I $(SIMULATOR_PATH) -g
 
 vpath %.c $(SIMULATOR_PATH)
 vpath %.cpp $(SIMULATOR_PATH)
