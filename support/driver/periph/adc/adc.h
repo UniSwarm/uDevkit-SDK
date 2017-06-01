@@ -21,7 +21,7 @@ uint16_t adc_getValue(uint8_t channel);
 //int adc_setSamplingPeriod(uint16_t priodMs);
 
 #if defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
- #include "adc_dspic.h"
+ #include "adc_pic24e_dspic33e.h"
 #elif defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
  #include "adc_pic32mz.h"
 #endif
