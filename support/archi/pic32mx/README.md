@@ -2,7 +2,7 @@
 
 This architecture support file handle all PIC32MX devices.
 
-(120 devices on feb 2017)
+(133 devices on june 2017)
 
 |Compatible devices|
 |---------|
@@ -20,17 +20,24 @@ This architecture support file handle all PIC32MX devices.
 |[PIC32MX130F128L](http://microchip.com/wwwproducts/en/PIC32MX130F128L)|
 |[PIC32MX130F256B](http://microchip.com/wwwproducts/en/PIC32MX130F256B)|
 |[PIC32MX130F256D](http://microchip.com/wwwproducts/en/PIC32MX130F256D)|
-|[PIC32MX150F128B](http://microchip.com/wwwproducts/en/PIC32MX150F128B)| 
+|[PIC32MX150F128B](http://microchip.com/wwwproducts/en/PIC32MX150F128B)|
 |[PIC32MX150F128C](http://microchip.com/wwwproducts/en/PIC32MX150F128C)|
 |[PIC32MX150F128D](http://microchip.com/wwwproducts/en/PIC32MX150F128D)|
 |[PIC32MX150F256H](http://microchip.com/wwwproducts/en/PIC32MX150F256H)|
 |[PIC32MX150F256L](http://microchip.com/wwwproducts/en/PIC32MX150F256L)|
-|[PIC32MX151F128E*](http://microchip.com/wwwproducts/en/PIC32MX151F128E)|
 |[PIC32MX151F128H](http://microchip.com/wwwproducts/en/PIC32MX151F128H)|
+|[PIC32MX154F128B*](http://microchip.com/wwwproducts/en/PIC32MX154F128B)|
+|[PIC32MX154F128D*](http://microchip.com/wwwproducts/en/PIC32MX154F128D)|
+|[PIC32MX155F128B*](http://microchip.com/wwwproducts/en/PIC32MX155F128B)|
+|[PIC32MX155F128D*](http://microchip.com/wwwproducts/en/PIC32MX155F128D)|
 |[PIC32MX170F256B](http://microchip.com/wwwproducts/en/PIC32MX170F256B)|
 |[PIC32MX170F256D](http://microchip.com/wwwproducts/en/PIC32MX170F256D)|
 |[PIC32MX170F512H](http://microchip.com/wwwproducts/en/PIC32MX170F512H)|
 |[PIC32MX170F512L](http://microchip.com/wwwproducts/en/PIC32MX170F512L)|
+|[PIC32MX174F256B*](http://microchip.com/wwwproducts/en/PIC32MX174F256B)|
+|[PIC32MX174F256D*](http://microchip.com/wwwproducts/en/PIC32MX174F256D)|
+|[PIC32MX175F256B*](http://microchip.com/wwwproducts/en/PIC32MX175F256B)|
+|[PIC32MX175F256D*](http://microchip.com/wwwproducts/en/PIC32MX175F256D)|
 |[PIC32MX210F016B](http://microchip.com/wwwproducts/en/PIC32MX210F016B)|
 |[PIC32MX210F016C](http://microchip.com/wwwproducts/en/PIC32MX210F016C)|
 |[PIC32MX210F016D](http://microchip.com/wwwproducts/en/PIC32MX210F016D)|
@@ -49,14 +56,20 @@ This architecture support file handle all PIC32MX devices.
 |[PIC32MX250F128D](http://microchip.com/wwwproducts/en/PIC32MX250F128D)|
 |[PIC32MX250F256H](http://microchip.com/wwwproducts/en/PIC32MX250F256H)|
 |[PIC32MX250F256L](http://microchip.com/wwwproducts/en/PIC32MX250F256L)|
-|[PIC32MX251F128E*](http://microchip.com/wwwproducts/en/PIC32MX251F128E)|
+|[PIC32MX251F128E](http://microchip.com/wwwproducts/en/PIC32MX251F128E)|
 |[PIC32MX251F128H](http://microchip.com/wwwproducts/en/PIC32MX251F128H)|
+|[PIC32MX254F128B*](http://microchip.com/wwwproducts/en/PIC32MX254F128B)|
+|[PIC32MX254F128D*](http://microchip.com/wwwproducts/en/PIC32MX254F128D)|
+|[PIC32MX255F128B*](http://microchip.com/wwwproducts/en/PIC32MX255F128B)|
 |[PIC32MX270F256B](http://microchip.com/wwwproducts/en/PIC32MX270F256B)|
 |[PIC32MX270F256D](http://microchip.com/wwwproducts/en/PIC32MX270F256D)|
-|[PIC32MX270F256DB*](http://microchip.com/wwwproducts/en/PIC32MX270F256DB)|
+|[PIC32MX270F256DB](http://microchip.com/wwwproducts/en/PIC32MX270F256DB)|
 |[PIC32MX270F512H](http://microchip.com/wwwproducts/en/PIC32MX270F512H)|
 |[PIC32MX270F512L](http://microchip.com/wwwproducts/en/PIC32MX270F512L)|
-|[PIC32MX275F256D*](http://microchip.com/wwwproducts/en/PIC32MX275F256D)|
+|[PIC32MX274F256B*](http://microchip.com/wwwproducts/en/PIC32MX274F256B)|
+|[PIC32MX274F256D*](http://microchip.com/wwwproducts/en/PIC32MX274F256D)|
+|[PIC32MX275F256B*](http://microchip.com/wwwproducts/en/PIC32MX275F256B)|
+|[PIC32MX275F256D](http://microchip.com/wwwproducts/en/PIC32MX275F256D)|
 |[PIC32MX320F032H](http://microchip.com/wwwproducts/en/PIC32MX320F032H)|
 |[PIC32MX320F064H](http://microchip.com/wwwproducts/en/PIC32MX320F064H)|
 |[PIC32MX320F128H](http://microchip.com/wwwproducts/en/PIC32MX320F128H)|
@@ -85,13 +98,13 @@ This architecture support file handle all PIC32MX devices.
 |[PIC32MX450F128H](http://microchip.com/wwwproducts/en/PIC32MX450F128H)|
 |[PIC32MX450F128L](http://microchip.com/wwwproducts/en/PIC32MX450F128L)|
 |[PIC32MX450F256H](http://microchip.com/wwwproducts/en/PIC32MX450F256H)|
-|[PIC32MX450F256HB*](http://microchip.com/wwwproducts/en/PIC32MX450F256HB)|
+|[PIC32MX450F256HB](http://microchip.com/wwwproducts/en/PIC32MX450F256HB)|
 |[PIC32MX450F256L](http://microchip.com/wwwproducts/en/PIC32MX450F256L)|
 |[PIC32MX460F256L](http://microchip.com/wwwproducts/en/PIC32MX460F256L)|
 |[PIC32MX460F512L](http://microchip.com/wwwproducts/en/PIC32MX460F512L)|
 |[PIC32MX470F512H](http://microchip.com/wwwproducts/en/PIC32MX470F512H)|
 |[PIC32MX470F512L](http://microchip.com/wwwproducts/en/PIC32MX470F512L)|
-|[PIC32MX470F512LB*](http://microchip.com/wwwproducts/en/PIC32MX470F512LB)|
+|[PIC32MX470F512LB](http://microchip.com/wwwproducts/en/PIC32MX470F512LB)|
 |[PIC32MX530F128H](http://microchip.com/wwwproducts/en/PIC32MX530F128H)|
 |[PIC32MX530F128L](http://microchip.com/wwwproducts/en/PIC32MX530F128L)|
 |[PIC32MX534F064H](http://microchip.com/wwwproducts/en/PIC32MX534F064H)|
