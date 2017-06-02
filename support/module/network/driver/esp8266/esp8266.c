@@ -148,7 +148,7 @@ void esp8266_task()
     {
         if (esp8266_config & 0x01)
         {
-            if (state == WIFI_STATE_OK)
+            if (state != WIFI_STATE_NONE)
             {
                 esp8266_config++;
                 state = WIFI_STATE_NONE;
@@ -219,6 +219,8 @@ void esp8266_parse(char rec)
                 wifistatus = FSM_ERROR_E;
             else if (rec == 'r')
                 wifistatus = FSM_ready_r;
+            else if (rec == 'F')
+                wifistatus = FSM_FAIL_F;
             else if (rec == '>')
             {
                 state = WIFI_STATE_SEND_DATA;
