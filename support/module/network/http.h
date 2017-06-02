@@ -1,5 +1,15 @@
-#ifndef __HTTP_HEADER__
-#define __HTTP_HEADER__
+/**
+ * @file http.h
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016-2017
+ *
+ * @date June 2, 2016, 11:45 AM
+ *
+ * @brief HTTP protocol parsing and formating
+ */
+
+#ifndef HTTP_H
+#define HTTP_H
 
 // parsing querry header
 typedef enum
@@ -54,8 +64,8 @@ enum {
 };
 
 void http_write_header_code(char *buffer, int result_code);
-void http_write_content_type(char *buffer, char *content_type);
+void http_write_content_type(char *buffer, const char *content_type);
 void http_write_content_lenght(char *buffer, unsigned int content_lenght);
 void http_write_header_end(char *buffer);
 
-#endif   //__HTTP_HEADER__
+#endif // HTTP_H
