@@ -26,7 +26,7 @@ uint16_t idRecPacket = 0;
 uint8_t recPacketFlag = 0;
 char /*__attribute__((far))*/ recPacket[2049];
 char esp8266_ip[16] = "";
-char esp8266_ipid = 0;
+uint8_t esp8266_ipid = 0;
 
 typedef enum
 {
@@ -128,23 +128,23 @@ void esp8266_task()
     ssize_t read_size;
 
     // read esp uart
-	read_size = uart_read(esp8266_uart, buffRx, 200);
+    read_size = uart_read(esp8266_uart, buffRx, 200);
     if (read_size > 0)
     {
         int i;
         char *buffPtr;
         // parse it
         buffPtr = buffRx;
-        for (i=0; i<read_size; i++)
+        for (i = 0; i < read_size; i++)
         {
             esp8266_parse(*buffPtr);
             buffPtr++;
         }
-        //printf("state:%d\n",state);
+        // printf("state:%d\n",state);
     }
 
     // config
-    if ((esp8266_config>>1) < 7)
+    if ((esp8266_config >> 1) < 7)
     {
         if (esp8266_config & 0x01)
         {
@@ -156,7 +156,7 @@ void esp8266_task()
         }
         else
         {
-            switch (esp8266_config>>1)
+            switch (esp8266_config >> 1)
             {
             case 0:
                 esp8266_send_cmd("ATE1\r\n");
@@ -187,277 +187,375 @@ void esp8266_task()
 
 void esp8266_parse(char rec)
 {
-    switch(wifistatus)
+    switch (wifistatus)
     {
-        case FSM_UNKNOW:
-            if (rec == '\n')
-                wifistatus = FSM_START;
-            else
-                wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_WAITING_VALIDATE:
-            if (rec == '\n')
-            {
-                //validate
-                if(pendingState!=WIFI_STATE_NONE)
-                    state = pendingState;
-                pendingState = WIFI_STATE_NONE;
+    case FSM_UNKNOW:
+        if (rec == '\n')
+            wifistatus = FSM_START;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_WAITING_VALIDATE:
+        if (rec == '\n')
+        {
+            // validate
+            if (pendingState != WIFI_STATE_NONE)
+                state = pendingState;
+            pendingState = WIFI_STATE_NONE;
 
-                wifistatus = FSM_START;
-            }
-            else
-                wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_START:
-            if (rec == '\r')
-                wifistatus = FSM_WAITING_VALIDATE;
-            else if (rec == '+')
-                wifistatus = FSM_PLUS;
-            else if (rec == 'S')
-                wifistatus = FSM_SENDOK_S;
-            else if (rec == 'E')
-                wifistatus = FSM_ERROR_E;
-            else if (rec == 'r')
-                wifistatus = FSM_ready_r;
-            else if (rec == 'F')
-                wifistatus = FSM_FAIL_F;
-            else if (rec == '>')
-            {
-                state = WIFI_STATE_SEND_DATA;
-                wifistatus = FSM_UNKNOW;
-            }
-            else if (rec == 'O')
-                wifistatus = FSM_OK_O;
-            else
-                wifistatus = FSM_UNKNOW;
-            break;
+            wifistatus = FSM_START;
+        }
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_START:
+        if (rec == '\r')
+            wifistatus = FSM_WAITING_VALIDATE;
+        else if (rec == '+')
+            wifistatus = FSM_PLUS;
+        else if (rec == 'S')
+            wifistatus = FSM_SENDOK_S;
+        else if (rec == 'E')
+            wifistatus = FSM_ERROR_E;
+        else if (rec == 'r')
+            wifistatus = FSM_ready_r;
+        else if (rec == 'F')
+            wifistatus = FSM_FAIL_F;
+        else if (rec == '>')
+        {
+            state = WIFI_STATE_SEND_DATA;
+            wifistatus = FSM_UNKNOW;
+        }
+        else if (rec == 'O')
+            wifistatus = FSM_OK_O;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
 
-        case FSM_SENDOK_S:
-            if (rec == 'E') wifistatus = FSM_SENDOK_E; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_SENDOK_E:
-            if (rec == 'N') wifistatus = FSM_SENDOK_N; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_SENDOK_N:
-            if (rec == 'D') wifistatus = FSM_SENDOK_D; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_SENDOK_D:
-            if (rec == ' ') wifistatus = FSM_SENDOK_Sp; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_SENDOK_Sp:
-            if (rec == 'O') wifistatus = FSM_SENDOK_O; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_SENDOK_O:
-            if (rec == 'K') wifistatus = FSM_SENDOK_K; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_SENDOK_K:
-            if (rec == '\r')
-            {
-                pendingState = WIFI_STATE_SEND_OK;
-                wifistatus = FSM_WAITING_VALIDATE;
-            }
-            else
-                wifistatus = FSM_UNKNOW;
-            break;
+    case FSM_SENDOK_S:
+        if (rec == 'E')
+            wifistatus = FSM_SENDOK_E;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_SENDOK_E:
+        if (rec == 'N')
+            wifistatus = FSM_SENDOK_N;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_SENDOK_N:
+        if (rec == 'D')
+            wifistatus = FSM_SENDOK_D;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_SENDOK_D:
+        if (rec == ' ')
+            wifistatus = FSM_SENDOK_Sp;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_SENDOK_Sp:
+        if (rec == 'O')
+            wifistatus = FSM_SENDOK_O;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_SENDOK_O:
+        if (rec == 'K')
+            wifistatus = FSM_SENDOK_K;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_SENDOK_K:
+        if (rec == '\r')
+        {
+            pendingState = WIFI_STATE_SEND_OK;
+            wifistatus = FSM_WAITING_VALIDATE;
+        }
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
 
-        case FSM_ERROR_E:
-            if (rec == 'R') wifistatus = FSM_ERROR_R1; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_ERROR_R1:
-            if (rec == 'R') wifistatus = FSM_ERROR_R2; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_ERROR_R2:
-            if (rec == 'O') wifistatus = FSM_ERROR_O; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_ERROR_O:
-            if (rec == 'R') wifistatus = FSM_ERROR_R3; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_ERROR_R3:
-            if (rec == '\r')
-            {
-                pendingState = WIFI_STATE_ERROR;
-                wifistatus = FSM_WAITING_VALIDATE;
-            }
-            else
-                wifistatus = FSM_UNKNOW;
-            break;
+    case FSM_ERROR_E:
+        if (rec == 'R')
+            wifistatus = FSM_ERROR_R1;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_ERROR_R1:
+        if (rec == 'R')
+            wifistatus = FSM_ERROR_R2;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_ERROR_R2:
+        if (rec == 'O')
+            wifistatus = FSM_ERROR_O;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_ERROR_O:
+        if (rec == 'R')
+            wifistatus = FSM_ERROR_R3;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_ERROR_R3:
+        if (rec == '\r')
+        {
+            pendingState = WIFI_STATE_ERROR;
+            wifistatus = FSM_WAITING_VALIDATE;
+        }
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
 
-        case FSM_FAIL_F:
-            if (rec == 'A') wifistatus = FSM_FAIL_A; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_FAIL_A:
-            if (rec == 'I') wifistatus = FSM_FAIL_I; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_FAIL_I:
-            if (rec == 'L') wifistatus = FSM_FAIL_L; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_FAIL_L:
-            if (rec == '\r')
-            {
-                pendingState = WIFI_STATE_FAIL;
-                wifistatus = FSM_WAITING_VALIDATE;
-            }
-            else
-                wifistatus = FSM_UNKNOW;
-            break;
+    case FSM_FAIL_F:
+        if (rec == 'A')
+            wifistatus = FSM_FAIL_A;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_FAIL_A:
+        if (rec == 'I')
+            wifistatus = FSM_FAIL_I;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_FAIL_I:
+        if (rec == 'L')
+            wifistatus = FSM_FAIL_L;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_FAIL_L:
+        if (rec == '\r')
+        {
+            pendingState = WIFI_STATE_FAIL;
+            wifistatus = FSM_WAITING_VALIDATE;
+        }
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
 
-        case FSM_ready_r:
-            if (rec == 'e') wifistatus = FSM_ready_e; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_ready_e:
-            if (rec == 'a') wifistatus = FSM_ready_a; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_ready_a:
-            if (rec == 'd') wifistatus = FSM_ready_d; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_ready_d:
-            if (rec == 'y') wifistatus = FSM_ready_y; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_ready_y:
-            if (rec == '\r')
-            {
-                pendingState = WIFI_STATE_READY;
-                wifistatus = FSM_WAITING_VALIDATE;
-            }
-            else
-                wifistatus = FSM_UNKNOW;
-            break;
+    case FSM_ready_r:
+        if (rec == 'e')
+            wifistatus = FSM_ready_e;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_ready_e:
+        if (rec == 'a')
+            wifistatus = FSM_ready_a;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_ready_a:
+        if (rec == 'd')
+            wifistatus = FSM_ready_d;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_ready_d:
+        if (rec == 'y')
+            wifistatus = FSM_ready_y;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_ready_y:
+        if (rec == '\r')
+        {
+            pendingState = WIFI_STATE_READY;
+            wifistatus = FSM_WAITING_VALIDATE;
+        }
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
 
-        case FSM_OK_O:
-            if (rec == 'K') wifistatus = FSM_OK_K; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_OK_K:
-            if (rec == '\r')
-            {
-                pendingState = WIFI_STATE_OK;
-                wifistatus = FSM_WAITING_VALIDATE;
-            }
-            else
-                wifistatus = FSM_UNKNOW;
-            break;
+    case FSM_OK_O:
+        if (rec == 'K')
+            wifistatus = FSM_OK_K;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_OK_K:
+        if (rec == '\r')
+        {
+            pendingState = WIFI_STATE_OK;
+            wifistatus = FSM_WAITING_VALIDATE;
+        }
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
 
-        case FSM_PLUS:
-            if (rec == 'I') wifistatus = FSM_IPD_I;
-            else if (rec == 'C') wifistatus = FSM_IP_C; // wait IP
-            else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IP_C:
-            if (rec == 'I') wifistatus = FSM_IP_I; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IP_I:
-            if (rec == 'F') wifistatus = FSM_IP_F; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IP_F:
-            if (rec == 'S') wifistatus = FSM_IP_S; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IP_S:
-            if (rec == 'R') wifistatus = FSM_IP_R; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IP_R:
-            if (rec == ':') wifistatus = FSM_IP_dP; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IP_dP:
-            if (rec == 'S') wifistatus = FSM_IP_S2; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IP_S2:
-            if (rec == 'T') wifistatus = FSM_IP_T; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IP_T:
-            if (rec == 'A') wifistatus = FSM_IP_A; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IP_A:
-            if (rec == 'I') wifistatus = FSM_IP_WIP; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IP_WIP:
-            if (rec == '"')
-            {
-                wifistatus = FSM_IP_IP;
-                esp8266_ipid = 0;
-            }
-            else if (rec == '\r') wifistatus = FSM_UNKNOW;
-            else wifistatus = FSM_IP_WIP; // wait IP
-            break;
-        case FSM_IP_IP:
-            if ((rec >= '0' && rec <= '9') || rec == '.')
-                esp8266_ip[esp8266_ipid++] = rec;
-            else
-            {
-                esp8266_ip[esp8266_ipid] = 0;
-                wifistatus = FSM_UNKNOW;
-            }
-            break;
-        case FSM_IPD_I:
-            if (rec == 'P') wifistatus = FSM_IPD_P; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IPD_P:
-            if (rec == 'D') wifistatus = FSM_IPD_D; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IPD_D:
-            if (rec == ',') wifistatus = FSM_IPD_COMMA_1; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IPD_COMMA_1:
-            if (rec >= '0' && rec <= '9')
-            {
-                wifistatus = FSM_IPD_SOCKET_DIGIT;
-                esp8266_socket = rec - '0';
-            }
-            else
-                wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IPD_SOCKET_DIGIT:
-            if (rec == ',') wifistatus = FSM_IPD_COMMA_2; else wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IPD_COMMA_2:
+    case FSM_PLUS:
+        if (rec == 'I')
+            wifistatus = FSM_IPD_I;
+        else if (rec == 'C')
+            wifistatus = FSM_IP_C;  // wait IP
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IP_C:
+        if (rec == 'I')
+            wifistatus = FSM_IP_I;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IP_I:
+        if (rec == 'F')
+            wifistatus = FSM_IP_F;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IP_F:
+        if (rec == 'S')
+            wifistatus = FSM_IP_S;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IP_S:
+        if (rec == 'R')
+            wifistatus = FSM_IP_R;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IP_R:
+        if (rec == ':')
+            wifistatus = FSM_IP_dP;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IP_dP:
+        if (rec == 'S')
+            wifistatus = FSM_IP_S2;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IP_S2:
+        if (rec == 'T')
+            wifistatus = FSM_IP_T;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IP_T:
+        if (rec == 'A')
+            wifistatus = FSM_IP_A;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IP_A:
+        if (rec == 'I')
+            wifistatus = FSM_IP_WIP;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IP_WIP:
+        if (rec == '"')
+        {
+            wifistatus = FSM_IP_IP;
+            esp8266_ipid = 0;
+        }
+        else if (rec == '\r')
+            wifistatus = FSM_UNKNOW;
+        else
+            wifistatus = FSM_IP_WIP;  // wait IP
+        break;
+    case FSM_IP_IP:
+        if ((rec >= '0' && rec <= '9') || rec == '.')
+            esp8266_ip[esp8266_ipid++] = rec;
+        else
+        {
+            esp8266_ip[esp8266_ipid] = 0;
+            wifistatus = FSM_UNKNOW;
+        }
+        break;
+    case FSM_IPD_I:
+        if (rec == 'P')
+            wifistatus = FSM_IPD_P;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IPD_P:
+        if (rec == 'D')
+            wifistatus = FSM_IPD_D;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IPD_D:
+        if (rec == ',')
+            wifistatus = FSM_IPD_COMMA_1;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IPD_COMMA_1:
+        if (rec >= '0' && rec <= '9')
+        {
+            wifistatus = FSM_IPD_SOCKET_DIGIT;
+            esp8266_socket = rec - '0';
+        }
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IPD_SOCKET_DIGIT:
+        if (rec == ',')
+            wifistatus = FSM_IPD_COMMA_2;
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IPD_COMMA_2:
+        if (rec >= '0' && rec <= '9')
+        {
+            wifistatus = FSM_IPD_SIZE_DIGITS;
+            sizeRecPacket = (rec - '0');
+        }
+        else
+            wifistatus = FSM_UNKNOW;
+        break;
+    case FSM_IPD_SIZE_DIGITS:
+        if (rec == ':')
+        {
+            idRecPacket = 0;
+            wifistatus = FSM_PACKET_RX;
+        }
+        else
+        {
             if (rec >= '0' && rec <= '9')
             {
                 wifistatus = FSM_IPD_SIZE_DIGITS;
-                sizeRecPacket = (rec - '0');
+                sizeRecPacket = sizeRecPacket * 10 + (rec - '0');
             }
             else
                 wifistatus = FSM_UNKNOW;
-            break;
-        case FSM_IPD_SIZE_DIGITS:
-            if (rec == ':')
-            {
-                idRecPacket = 0;
-                wifistatus = FSM_PACKET_RX;
-            }
-            else
-            {
-                if (rec >= '0' && rec <= '9')
-                {
-                    wifistatus = FSM_IPD_SIZE_DIGITS;
-                    sizeRecPacket = sizeRecPacket * 10 + (rec - '0');
-                }
-                else
-                    wifistatus = FSM_UNKNOW;
-            }
-            break;
-        case FSM_PACKET_RX:
-            recPacket[idRecPacket++] = rec;
-            if (idRecPacket >= sizeRecPacket)
-            {
-                recPacketFlag=1;
-                state = WIFI_STATE_RECEIVE_DATA;
-                wifistatus = FSM_UNKNOW;
-            }
-            break;
-        default:
+        }
+        break;
+    case FSM_PACKET_RX:
+        recPacket[idRecPacket++] = rec;
+        if (idRecPacket >= sizeRecPacket)
+        {
+            recPacketFlag = 1;
+            state = WIFI_STATE_RECEIVE_DATA;
             wifistatus = FSM_UNKNOW;
+        }
+        break;
+    default:
+        wifistatus = FSM_UNKNOW;
     }
 }
 
-char * esp8266_protectstr(char * destination, const char * source)
+char *esp8266_protectstr(char *destination, const char *source)
 {
     char *ptr, *ptrsource;
     ptr = destination;
     ptrsource = (char *)source;
 
-    while(*ptrsource!=0)
+    while (*ptrsource != 0)
     {
-        if(*ptrsource=='"' || *ptrsource==',' || *ptrsource=='\\')
-            (*(ptr++))='\\';
-        (*(ptr++))=*ptrsource;
+        if (*ptrsource == '"' || *ptrsource == ',' || *ptrsource == '\\')
+            (*(ptr++)) = '\\';
+        (*(ptr++)) = *ptrsource;
         ptrsource++;
     }
     (*ptr) = 0;
@@ -486,9 +584,9 @@ uint16_t getRecSize()
 
 uint8_t getRec()
 {
-    if(recPacketFlag==1)
+    if (recPacketFlag == 1)
     {
-        recPacketFlag=0;
+        recPacketFlag = 0;
         return 1;
     }
     return 0;
@@ -510,7 +608,8 @@ uint8_t esp8266_open_tcp_socket(char *ip_domain, uint16_t port)
     return 0;
 }
 
-uint8_t esp8266_open_udp_socket(char *ip_domain, uint16_t port, uint16_t localPort, uint8_t mode)
+uint8_t esp8266_open_udp_socket(char *ip_domain, uint16_t port,
+                                uint16_t localPort, uint8_t mode)
 {
     char protected[64];
 
@@ -535,21 +634,25 @@ void esp8266_setMode(ESP8266_MODE mode)
     buffer_clear(&buff);
     buffer_astring(&buff, "AT+CWMODE_CUR=");
 
-    if(mode==ESP8266_MODE_AP) buffer_achar(&buff, '2');
-    else if(mode==ESP8266_MODE_STA_AP) buffer_achar(&buff, '3');
-    else buffer_achar(&buff, '1');
+    if (mode == ESP8266_MODE_AP)
+        buffer_achar(&buff, '2');
+    else if (mode == ESP8266_MODE_STA_AP)
+        buffer_achar(&buff, '3');
+    else
+        buffer_achar(&buff, '1');
 
     buffer_astring(&buff, "\r\n");
 
     esp8266_send_cmddat(buff.data, buff.size);
 }
 
-int esp8266_ap_setConfig(char *ssid, char *pw, ESP8266_ECN pw_ecn, uint8_t channel)
+int esp8266_ap_setConfig(char *ssid, char *pw, ESP8266_ECN pw_ecn,
+                         uint8_t channel)
 {
     char protected[64];
 
     if (pw_ecn != ESP8266_ECN_OPEN && strlen(pw) < 8)
-        return -1; // password too short
+        return -1;  // password too short
 
     buffer_clear(&buff);
     buffer_astring(&buff, "AT+CWSAP_CUR=\"");
@@ -599,7 +702,7 @@ uint8_t esp8266_disconnect_ap()
 
 void esp8266_close_socket(uint8_t sock)
 {
-    if(sock > 4)
+    if (sock > 4)
         return;
 
     buffer_clear(&buff);
@@ -620,16 +723,16 @@ void esp8266_write_socket(uint8_t sock, char *data, uint16_t size)
     buffer_astring(&buff, "\r\n");
     esp8266_send_cmddat(buff.data, buff.size);
 
-    while(state != WIFI_STATE_SEND_DATA) esp8266_task();
+    while (state != WIFI_STATE_SEND_DATA) esp8266_task();
     state = WIFI_STATE_NONE;
 
     esp8266_write(data, size);
-    while(state != WIFI_STATE_SEND_OK) esp8266_task();
+    while (state != WIFI_STATE_SEND_OK) esp8266_task();
 }
 
 void esp8266_write_socket_string(uint8_t sock, char *str)
 {
-    esp8266_write_socket(sock, str, strlen(str)+1);
+    esp8266_write_socket(sock, str, strlen(str) + 1);
 }
 
 void esp8266_server_create(uint16_t port)
