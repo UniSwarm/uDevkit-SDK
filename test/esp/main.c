@@ -4,13 +4,14 @@
 
 #include "modules.h"
 #include "archi.h"
-//#include "board.h"
+#include "board.h"
 
 int main(void)
 {
-	unsigned int i, j;
+#ifndef SIMULATOR
+    unsigned int i;
+#endif
     rt_dev_t uartDbg;
-    char buff[200];
 
     sysclock_setClock(120000000);
     board_init();
@@ -24,11 +25,15 @@ int main(void)
     uart_setBitConfig(uartDbg, 8, UART_BIT_PARITY_NONE, 1);
     uart_enable(uartDbg);
 
-    j=0;
     while(1)
     {
         network_task();
-        for(i=0;i<65000;i++);
+        
+        #ifdef SIMULATOR
+            usleep(1000);
+        #else
+            for(i=0;i<65000;i++);
+        #endif
     }
 
     return 0;

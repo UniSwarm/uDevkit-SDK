@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<h1>This is a Heading</h1>
+<p>This is a paragraph.</p>
+
+<div id="batt"></div>
+<div id="batt2"></div>
+
+<script>
+var xmlhttp = new XMLHttpRequest();
+var url = "api/status";
+
+xmlhttp.onreadystatechange = function()
+{
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
+    {
+        var result = JSON.parse(this.responseText);
+        document.getElementById("batt").innerHTML = result.batteryLevel;
+        document.getElementById("batt2").innerHTML = "ok";
+    }
+};
+xmlhttp.open("GET", url, true);
+xmlhttp.send();
+</script>
+
+</body>
+</html>
