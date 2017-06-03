@@ -19,6 +19,8 @@
   #include "driver/a6/a6.h"
 #endif
 
+#include "web_server.h"
+
 void network_init();
 void network_task();
 

@@ -11,6 +11,8 @@
 <div id="batt">NOK</div>
 
 <script>
+function refresh()
+{
 var xmlhttp = new XMLHttpRequest();
 var url = "api/status";
 
@@ -19,11 +21,14 @@ xmlhttp.addEventListener('readystatechange', function()
     if (xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status === 200)
     {
         var result = JSON.parse(xmlhttp.responseText);
-        document.getElementById("batt").innerHTML = result.batteryLevel + "ok";
+        document.getElementById("batt").innerHTML = result.batteryLevel;
     }
 });
 xmlhttp.open("GET", url, true);
 xmlhttp.send(null);
+setInterval(refresh, 5000);
+}
+setInterval(refresh, 5000);
 </script>
 
 </body>

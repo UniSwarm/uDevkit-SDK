@@ -6,6 +6,8 @@
 #include "archi.h"
 #include "board.h"
 
+extern void rest_api_exec(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *buffer);
+
 int main(void)
 {
 #ifndef SIMULATOR
@@ -18,6 +20,7 @@ int main(void)
 
     // warning keep this init order before remap support
     network_init();
+    web_server_setRestApi(rest_api_exec);
 
     // uart debug init
     uartDbg = uart_getFreeDevice();

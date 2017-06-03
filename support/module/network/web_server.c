@@ -11,8 +11,6 @@
 #include "web_server.h"
 
 #include "driver/esp8266/esp8266.h"
-#include "http.h"
-#include "restApi.h"
 
 #include "fs_functions.h"
 
@@ -21,11 +19,11 @@
 #include "board.h"
 
 char web_server_buffer[2048];
+void (*web_server_restApi)(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *buffer) = NULL;
 
 void web_server_init()
 {
     // services init
-    rest_api_init();
 }
 
 void web_server_task()
@@ -43,10 +41,9 @@ void web_server_task()
     {
         if (strncmp(http_parse_result->url, "/api/", 5) == 0)
         {
-            // run restapi
-            // LED1 = !LED1;
-
-            rest_api_exec(http_parse_result, web_server_buffer);
+            if (web_server_restApi)
+                (*web_server_restApi)(http_parse_result->url+5,
+                        http_parse_result->type, web_server_buffer);
             esp8266_write_socket_string(sock, web_server_buffer);
         }
         else
@@ -94,4 +91,9 @@ void web_server_task()
         esp8266_write_socket_string(sock, web_server_buffer);
     }
     esp8266_close_socket(sock);
+}
+
+void web_server_setRestApi( void (*restApi)(char *url, HTTP_QUERRY_TYPE code, char *buffer) )
+{
+    web_server_restApi = restApi;
 }

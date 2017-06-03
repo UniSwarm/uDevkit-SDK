@@ -1,9 +1,12 @@
-#include "restApi.h"
+
+#include "http.h"
 
 #include <stdio.h>
 #include <string.h>
 
 #include "board.h"
+
+int id = 0;
 
 void write_header_json(char *buffer)
 {
@@ -12,33 +15,29 @@ void write_header_json(char *buffer)
     http_write_header_end(buffer);
 }
 
-void rest_api_init()
+void rest_api_exec(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *buffer)
 {
-}
-
-void rest_api_exec(HTTP_PARSE_RESULT *http_parse_result, char *buffer)
-{
-    char *restUrl = http_parse_result->url+5;
-    if(strcmp(restUrl, "status")==0)
+    if (strcmp(restUrl, "status") == 0)
     {
-        if(http_parse_result->type==HTTP_QUERRY_TYPE_GET)
+        if (querry_type==HTTP_QUERRY_TYPE_GET)
         {
+            id++;
             write_header_json(buffer);
-            sprintf(buffer+strlen(buffer),"{\"batteryLevel\":\"26%%\"}");
+            sprintf(buffer+strlen(buffer), "{\"batteryLevel\":\"%d\"}", id);
         }
     }
-    else if(strcmp(restUrl, "led")==0)
+    else if (strcmp(restUrl, "led") == 0)
     {
-        if(http_parse_result->type==HTTP_QUERRY_TYPE_POST)
+        if (querry_type == HTTP_QUERRY_TYPE_POST)
         {
             http_write_header_code(buffer, HTTP_OK);
 
         }
-        else if(http_parse_result->type==HTTP_QUERRY_TYPE_GET)
+        else if (querry_type == HTTP_QUERRY_TYPE_GET)
         {
             write_header_json(buffer);
             strcat(buffer, "{\"ledStatus\":\"");
-            if(board_getLed(0)==0)
+            if (board_getLed(0) == 0)
                 strcat(buffer, "Off\"}");
             else
                 strcat(buffer, "On\"}");

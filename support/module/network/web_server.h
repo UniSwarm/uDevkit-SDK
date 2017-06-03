@@ -11,7 +11,11 @@
 #ifndef WEB_SERVER_H
 #define WEB_SERVER_H
 
+#include "http.h"
+
 void web_server_init();
 void web_server_task();
+
+void web_server_setRestApi( void (*restApi)(char *url, HTTP_QUERRY_TYPE code, char *buffer) );
 
 #endif // WEB_SERVER_H
