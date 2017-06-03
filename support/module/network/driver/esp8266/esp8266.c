@@ -732,7 +732,7 @@ void esp8266_write_socket(uint8_t sock, char *data, uint16_t size)
 
 void esp8266_write_socket_string(uint8_t sock, char *str)
 {
-    esp8266_write_socket(sock, str, strlen(str) + 1);
+    esp8266_write_socket(sock, str, strlen(str));
 }
 
 void esp8266_server_create(uint16_t port)
