@@ -8,24 +8,22 @@
 <h1>This is a Heading</h1>
 <p>This is a paragraph.</p>
 
-<div id="batt"></div>
-<div id="batt2"></div>
+<div id="batt">NOK</div>
 
 <script>
 var xmlhttp = new XMLHttpRequest();
 var url = "api/status";
 
-xmlhttp.onreadystatechange = function()
+xmlhttp.addEventListener('readystatechange', function()
 {
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
+    if (xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status === 200)
     {
-        var result = JSON.parse(this.responseText);
-        document.getElementById("batt").innerHTML = result.batteryLevel;
-        document.getElementById("batt2").innerHTML = "ok";
+        var result = JSON.parse(xmlhttp.responseText);
+        document.getElementById("batt").innerHTML = result.batteryLevel + "ok";
     }
-};
+});
 xmlhttp.open("GET", url, true);
-xmlhttp.send();
+xmlhttp.send(null);
 </script>
 
 </body>
