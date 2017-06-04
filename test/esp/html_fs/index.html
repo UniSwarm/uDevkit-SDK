@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Page Title</title>
+<title>ESP test</title>
 </head>
 <body>
 
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
+<h1>Wifi test page</h1>
+<p>RTest</p>
 
 <div id="batt">NOK</div>
+<button onclick="refresh()">refresh</button>
 
 <script>
 function refresh()
@@ -26,9 +27,8 @@ xmlhttp.addEventListener('readystatechange', function()
 });
 xmlhttp.open("GET", url, true);
 xmlhttp.send(null);
-setInterval(refresh, 5000);
+
 }
-setInterval(refresh, 5000);
 </script>
 
 </body>
