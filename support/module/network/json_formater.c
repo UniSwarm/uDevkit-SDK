@@ -5,7 +5,7 @@
  *
  * @date June 4, 2017, 11:15 AM
  *
- * @brief JSON protocol formating
+ * @brief JSON formating protocol
  */
 
 #include "json.h"
