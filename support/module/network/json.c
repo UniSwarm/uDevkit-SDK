@@ -101,6 +101,33 @@ void json_add_object(JsonBuffer *json, const char *name)
     json_open_object(json);
 }
 
+void json_open_list(JsonBuffer *json)
+{
+    buffer_astring(&json->buffer, "[");
+}
+
+void json_close_list(JsonBuffer *json)
+{
+    //delete last comma
+    if (*(json->buffer.tail - 1) == ',')
+        *(json->buffer.tail - 1) = ' ';
+
+    buffer_astring(&json->buffer, "]");
+
+    //add a comma exept at last object
+    if (json->indent_level != 0)
+        buffer_astring(&json->buffer, ",");
+}
+
+void json_add_list(JsonBuffer *json, const char *name)
+{
+    buffer_astring(&json->buffer, "\"");
+    buffer_astring(&json->buffer, name);
+    buffer_astring(&json->buffer, "\": ");
+
+    json_open_list(json);
+}
+
 #ifdef TEST_JSON_FORMAT
 #include <stdio.h>
 #include <string.h>
@@ -108,14 +135,13 @@ void json_add_object(JsonBuffer *json, const char *name)
 
 int main(void)
 {
-    printf("\n");
     JsonBuffer json;
-    char data [200];
+    char data [500];
 
-    // json_init(&json, data, 200, JSON_MONOBLOC);
-    json_init(&json, data, 200, JSON_STANDARD);
+    // json_init(&json, data, 500, JSON_MONOBLOC);
+    json_init(&json, data, 500, JSON_STANDARD);
 
-    printf("json_size: %ld", json.buffer.data_size);
+    printf("json.buffer.data_size: %ld", json.buffer.data_size);
     printf("%s\n", json.buffer.data);
     printf("\n");
 
@@ -124,6 +150,12 @@ int main(void)
         json_add_field_str(&json, "name1", "value1");
         json_carriage_return(&json);
         json_add_field_int(&json, "name2", 42);
+        json_carriage_return(&json);
+        json_add_list(&json, "list1");
+            json_add_field_str(&json, "name10", "value10");
+            json_add_field_str(&json, "name11", "value11");
+            json_add_field_str(&json, "name12", "value12");
+        json_close_list(&json);
         json_carriage_return(&json);
 
             json_add_object(&json, "obj1");
@@ -139,6 +171,13 @@ int main(void)
             json_carriage_return(&json);
             json_add_field_int(&json, "name6", 42);
             json_close_object(&json);
+
+        json_carriage_return(&json);
+        json_add_list(&json, "list2");
+            json_add_field_str(&json, "name20", "value20");
+            json_add_field_str(&json, "name21", "value21");
+            json_add_field_str(&json, "name22", "value22");
+        json_close_list(&json);
 
     json_close_object(&json);
 

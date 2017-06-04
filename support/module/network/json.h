@@ -34,20 +34,20 @@ typedef struct
     JSON_SYNTAX syntax;
 } JsonBuffer;
 
-void json_init(JsonBuffer *buffer, char *data, size_t size, JSON_SYNTAX s);
+void json_init(JsonBuffer *json, char *data, size_t size, JSON_SYNTAX s);
 
 //FORMATING
-void json_add_field_str(JsonBuffer *buffer, const char *name, const char *value);
-void json_add_field_int(JsonBuffer *buffer, const char *name, const int value);
-// void json_add_field_float(JsonBuffer *buffer, const char *name, const float value);
+void json_add_field_str(JsonBuffer *json, const char *name, const char *value);
+void json_add_field_int(JsonBuffer *json, const char *name, const int value);
+// void json_add_field_float(JsonBuffer *json, const char *name, const float value);
 
-void json_open_object(JsonBuffer *buffer);
-void json_close_object(JsonBuffer *buffer);
-void json_add_object(JsonBuffer *buffer, const char *name);
+void json_open_object(JsonBuffer *json);
+void json_close_object(JsonBuffer *json);
+void json_add_object(JsonBuffer *json, const char *name);
 
-// void json_open_list(JsonBuffer *buffer);
-// void json_close_list(JsonBuffer *buffer);
-// void json_add_list();
+void json_open_list(JsonBuffer *json);
+void json_close_list(JsonBuffer *json);
+void json_add_list(JsonBuffer *json, const char *name);
 
 //PARSING
 
