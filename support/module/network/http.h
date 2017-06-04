@@ -11,7 +11,7 @@
 #ifndef HTTP_H
 #define HTTP_H
 
-// parsing querry header
+// http querry parser
 typedef enum
 {
     HTTP_QUERRY_TYPE_ERROR = 0,
@@ -34,32 +34,30 @@ typedef struct
 HTTP_PARSE_RESULT *http_parse_querry_str(char *querry_str);
 HTTP_PARSE_RESULT *http_parse_querry(char *querry, unsigned short size);
 
-// write header
+// http formater
 enum {
-    HTTP_OK = 200,
-    HTTP_PARTIAL_CONTENT = 206,
-    HTTP_MOVED_TEMPORARILY = 302,
-    HTTP_BAD_REQUEST = 400,       /* malformed syntax */
-    HTTP_UNAUTHORIZED = 401, /* authentication needed, respond with auth hdr */
-    HTTP_NOT_FOUND = 404,
-    HTTP_FORBIDDEN = 403,
-    HTTP_REQUEST_TIMEOUT = 408,
-    HTTP_NOT_IMPLEMENTED = 501,   /* used for unrecognized requests */
-    HTTP_INTERNAL_SERVER_ERROR = 500,
     HTTP_CONTINUE = 100,
-#if 0   /* future use */
     HTTP_SWITCHING_PROTOCOLS = 101,
+    HTTP_OK = 200,
     HTTP_CREATED = 201,
     HTTP_ACCEPTED = 202,
     HTTP_NON_AUTHORITATIVE_INFO = 203,
     HTTP_NO_CONTENT = 204,
+    HTTP_PARTIAL_CONTENT = 206,
     HTTP_MULTIPLE_CHOICES = 300,
     HTTP_MOVED_PERMANENTLY = 301,
+    HTTP_MOVED_TEMPORARILY = 302,
     HTTP_NOT_MODIFIED = 304,
+    HTTP_BAD_REQUEST = 400,  // malformed syntax
+    HTTP_UNAUTHORIZED = 401, // authentication needed, respond with auth hdr
     HTTP_PAYMENT_REQUIRED = 402,
+    HTTP_NOT_FOUND = 404,
+    HTTP_FORBIDDEN = 403,
+    HTTP_REQUEST_TIMEOUT = 408,
+    HTTP_INTERNAL_SERVER_ERROR = 500,
+    HTTP_NOT_IMPLEMENTED = 501,   // used for unrecognized requests
     HTTP_BAD_GATEWAY = 502,
-    HTTP_SERVICE_UNAVAILABLE = 503, /* overload, maintenance */
-#endif
+    HTTP_SERVICE_UNAVAILABLE = 503 // overload, maintenance
 };
 
 void http_write_header_code(char *buffer, int result_code);

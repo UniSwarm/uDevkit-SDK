@@ -62,7 +62,7 @@ void exportPathToStruct(const QString &path, const QString &outputFile)
     text << "*/" << endl;
     text << endl;
     
-    text << "#include \"fs_data.h\"" << endl << endl;
+    text << "#include <module/network.h>" << endl << endl;
 
     text << "// ======== Struct content ======== " << endl;
     foreach (QString file, files)

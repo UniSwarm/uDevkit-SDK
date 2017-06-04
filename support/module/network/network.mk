@@ -19,4 +19,15 @@ $(subst $(space),\n,$(foreach NETWORK_DRIVER,$(sort $(NETWORK_DRIVERS)),#define 
 " > $(OUT_PWD)/network_driver.h
 CONFIG_HEADERS += $(OUT_PWD)/network_driver.h
 
+# HTMLGEN_EXE cmd
+ifeq ($(OS),Windows_NT)
+ HTMLGEN_EXE := $(RTPROG)/bin/htmlGen.exe
+else
+ HTMLGEN_EXE := $(RTPROG)/bin/htmlGen
+endif
+$(HTMLGEN_EXE): $(RTPROG)/tool/htmlGen/htmlGen.cpp $(RTPROG)/tool/htmlGen/htmlGen.pro
+	@echo "Building htmlGen..."
+	cd $(RTPROG)/tool/htmlGen/ && make
+rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
+
 endif
