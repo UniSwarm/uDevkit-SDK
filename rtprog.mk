@@ -66,3 +66,6 @@ $(DISTRIB_PWD)/%.h : %.h
 	@printf "$(GREEN)cp %-35s => %s$(NORM)\n" $(notdir $<) $(DISTRIB_PWD)/$(notdir $@)
 	$(VERB)cp $< $(DISTRIB_PWD)/$(notdir $@)
 distrib: $(addprefix $(DISTRIB_PWD)/, $(notdir $(SRC)) $(notdir $(ARCHI_SRC)) $(notdir $(HEADER)))
+
+.PHONY: rebuild
+rebuild: clean hex
