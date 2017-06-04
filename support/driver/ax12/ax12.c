@@ -1,6 +1,6 @@
 /**
  * @file ax12.h
- * @author Sebastien CAUX (sebcaux) / Charles-Antoine NOURY (CharlyBigoud)
+ * @author Sebastien CAUX (sebcaux) / Charles-Antoine NOURY (charlybigoud)
  * @copyright Robotips 2016
  *
  * @date April 16, 2016, 14:41 PM

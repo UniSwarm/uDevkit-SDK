@@ -1,3 +1,13 @@
+/**
+ * @file json.c
+ * @author Charles-Antoine NOURY (charlybigoud)
+ * @copyright Robotips 2017
+ *
+ * @date June 4, 2017, 11:15 AM
+ *
+ * @brief JSON protocol formating
+ */
+
 #include "json.h"
 
 void json_set_indentation(JsonBuffer *json)

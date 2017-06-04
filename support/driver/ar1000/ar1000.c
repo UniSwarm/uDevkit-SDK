@@ -1,6 +1,6 @@
 /**
  * @file ar1000.c
- * @author Charles-Antoine NOURY (CharlyBigoud)
+ * @author Charles-Antoine NOURY (charlybigoud)
  * @copyright Robotips 2016
  *
  * @date June 6, 2016, 9:10 PM 

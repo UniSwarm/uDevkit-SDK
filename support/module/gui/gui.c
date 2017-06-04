@@ -1,6 +1,6 @@
 /**
  * @file gui.c
- * @author Sebastien CAUX (sebcaux) / Charles-Antoine NOURY (CharlyBigoud)
+ * @author Sebastien CAUX (sebcaux) / Charles-Antoine NOURY (charlybigoud)
  * @copyright Robotips 2016
  *
  * @date April 25, 2016, 18:35 AM
