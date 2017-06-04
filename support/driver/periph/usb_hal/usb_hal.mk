@@ -6,6 +6,7 @@ vpath %.h $(DRIVERPATH)
 
 INCLUDEPATH:= $(INCLUDEPATH) -I$(DRIVERPATH)
 
+# 16bits proc
 ifeq ($(ARCHI), $(filter $(ARCHI),pic24ep pic24fj dspic33ep))
  vpath %.c $(RTPROG)/contrib/microchip/mla_usb/src
  vpath %.h $(RTPROG)/contrib/microchip/mla_usb/inc
@@ -21,6 +22,14 @@ ifeq ($(ARCHI), pic24fj)
 endif
 ifeq ($(ARCHI), dspic33ep)
  ARCHI_SRC += usb_hal_dspic33e.c
+endif
+
+# 32bits proc
+ifeq ($(ARCHI), $(filter $(ARCHI),pic32mzef pic32mzec))
+ vpath %.c $(RTPROG)/contrib/microchip/harmony_usb/src
+ vpath %.h $(RTPROG)/contrib/microchip/harmony_usb/include
+ INCLUDEPATH:= $(INCLUDEPATH) -I$(RTPROG)/contrib/microchip/harmony_usb/include -I$(RTPROG)/contrib/microchip/harmony_usb/
+ ARCHI_SRC += usb_device.c
 endif
 
 endif
