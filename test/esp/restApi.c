@@ -15,13 +15,18 @@ void write_header_json(char *buffer)
 
 void rest_api_exec(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *buffer)
 {
+    JsonBuffer json;
+    write_header_json(buffer);
+    json_init(&json, buffer+strlen(buffer), 100, JSON_MONOBLOC);
+
     if (strcmp(restUrl, "status") == 0)
     {
         if (querry_type==HTTP_QUERRY_TYPE_GET)
         {
             id++;
-            write_header_json(buffer);
-            sprintf(buffer+strlen(buffer), "{\"batteryLevel\":\"%d\"}", id);
+            json_open_object(&json);
+            json_add_field_int(&json, "batteryLevel", id);
+            json_close_object(&json);
         }
     }
     else if (strcmp(restUrl, "led") == 0)
@@ -33,12 +38,9 @@ void rest_api_exec(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *buffer)
         }
         else if (querry_type == HTTP_QUERRY_TYPE_GET)
         {
-            write_header_json(buffer);
-            strcat(buffer, "{\"ledStatus\":\"");
-            if (board_getLed(0) == 0)
-                strcat(buffer, "Off\"}");
-            else
-                strcat(buffer, "On\"}");
+            json_open_object(&json);
+            json_add_field_int(&json, "ledStatus", board_getLed(0));
+            json_close_object(&json);
         }
     }
     else

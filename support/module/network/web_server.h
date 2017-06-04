@@ -12,6 +12,7 @@
 #define WEB_SERVER_H
 
 #include "http.h"
+#include "json.h"
 #include "fs_data.h"
 
 void web_server_init();

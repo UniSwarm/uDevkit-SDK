@@ -1,6 +1,6 @@
 RTPROG = ../..
 
-PROJECT = deltaApp
+PROJECT = esp
 BOARD = rtboard1_1
 OUT_PWD = build
 
@@ -9,7 +9,7 @@ OUT_PWD = build
 MODULES += network
 NETWORK_DRIVERS = esp8266
 
-SRC += main.c html_fs_data.c
+SRC += main.c html_fs_data.c restApi.c
 
 all : hex
 
