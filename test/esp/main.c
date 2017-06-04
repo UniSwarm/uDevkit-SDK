@@ -7,6 +7,7 @@
 #include "board.h"
 
 extern void rest_api_exec(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *buffer);
+extern const Fs_FilesList file_list;
 
 int main(void)
 {
@@ -21,6 +22,7 @@ int main(void)
     // warning keep this init order before remap support
     network_init();
     web_server_setRestApi(rest_api_exec);
+    web_server_setRootFS(&file_list);
 
     // uart debug init
     uartDbg = uart_getFreeDevice();
@@ -31,7 +33,7 @@ int main(void)
     while(1)
     {
         network_task();
-        
+
         #ifdef SIMULATOR
             usleep(1000);
         #else

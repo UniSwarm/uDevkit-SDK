@@ -19,5 +19,6 @@ void web_server_init();
 void web_server_task();
 
 void web_server_setRestApi( void (*restApi)(char *url, HTTP_QUERRY_TYPE code, char *buffer) );
+void web_server_setRootFS(const Fs_FilesList *file_list);
 
 #endif // WEB_SERVER_H

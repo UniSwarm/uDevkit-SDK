@@ -21,6 +21,8 @@
 char web_server_buffer[2048];
 void (*web_server_restApi)(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *buffer) = NULL;
 
+const Fs_FilesList *web_server_file_list = NULL;
+
 void web_server_init()
 {
     // services init
@@ -30,7 +32,7 @@ void web_server_task()
 {
     if (getRec() != 1)
         return;
-    
+
     unsigned char sock = getRecSocket();
     char *querry = getRecData();
     HTTP_PARSE_RESULT *http_parse_result;
@@ -50,7 +52,7 @@ void web_server_task()
         {
             const Fs_File *file;
 
-            file = getFile(http_parse_result->url + 1);
+            file = getFile(web_server_file_list, http_parse_result->url + 1);
             if (file == NULL)  // search in fs
             {
                 http_write_header_code(web_server_buffer, HTTP_NOT_FOUND);
@@ -96,4 +98,9 @@ void web_server_task()
 void web_server_setRestApi( void (*restApi)(char *url, HTTP_QUERRY_TYPE code, char *buffer) )
 {
     web_server_restApi = restApi;
+}
+
+void web_server_setRootFS(const Fs_FilesList *file_list)
+{
+    web_server_file_list = file_list;
 }

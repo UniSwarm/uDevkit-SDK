@@ -1,6 +1,6 @@
 #ifndef __FS_DATA_HEADER__
 #define __FS_DATA_HEADER__
-// ======== Struct declare ======== 
+// ======== Struct declare ========
 typedef struct
 {
 	const char *name;
@@ -14,9 +14,5 @@ typedef struct
 	const Fs_File **files;
 	const unsigned int count;
 } Fs_FilesList;
-
-#ifndef __INTERNAL_FS__
-extern const Fs_FilesList file_list;
-#endif   // __INTERNAL_FS__
 
 #endif   //__FS_DATA_HEADER__
