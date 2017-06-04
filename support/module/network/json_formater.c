@@ -12,9 +12,10 @@
 
 void json_set_indentation(JsonBuffer *json)
 {
+    int i;
     if (json->syntax == JSON_STANDARD)
     {
-        for (int i = 0 ; i < json->indent_level; ++i)
+        for (i = 0 ; i < json->indent_level; ++i)
             buffer_astring(&json->buffer, "\t");
     }
 }
