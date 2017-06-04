@@ -106,8 +106,11 @@ void gui_ctrl_init(rt_dev_t dev)
     gui_ctrl_write_command(0x14); // charge pump
     gui_ctrl_write_command(0x20);
     gui_ctrl_write_command(0x0);
-    gui_ctrl_write_command(0xA1);
-    gui_ctrl_write_command(0xC8);
+    
+    /*gui_ctrl_write_command(0xA1); // rotate screen
+    gui_ctrl_write_command(0xC8);*/
+    gui_ctrl_write_command(0xA0);
+    gui_ctrl_write_command(0xC0);
 
     gui_ctrl_write_command(0xDA);
     gui_ctrl_write_command(0x12);

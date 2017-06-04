@@ -28,5 +28,6 @@ void gui_ctrl_write_data(uint16_t data);
 void gui_ctrl_setRectScreen(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
 void gui_ctrl_setPos(uint16_t x, uint16_t y);
 void gui_ctrl_drawPoint(uint16_t x, uint16_t y, uint16_t color);
+void gui_ctrl_update();
 
 #endif // SCREENCONTROLLER_H

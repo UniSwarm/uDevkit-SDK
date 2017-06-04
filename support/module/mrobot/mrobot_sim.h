@@ -11,6 +11,8 @@
 #ifndef MROBOT_SIM_H
 #define MROBOT_SIM_H
 
+#include <stdint.h>
+
 #define MROBOT_SIM_MODULE 0x0038
 
 #endif

@@ -10,8 +10,10 @@ int16_t mrobot_lastSpeed = 0;
 
 void mrobot_init()
 {
+#ifndef SIMULATOR
     asserv_init();
     motor_init();
+#endif
 }
 
 void mrobot_setCoderDev(rt_dev_t leftCoder_dev, rt_dev_t rightCoder_dev)
