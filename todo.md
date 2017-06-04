@@ -60,6 +60,9 @@
 - [x] read data
 - [ ] interrupt
 
+### NETWORK
+- [ ] fix json init (data won't be set)
+
 ## Others drivers
 ### AX12
 - [x] porting

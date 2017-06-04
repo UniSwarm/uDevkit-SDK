@@ -50,5 +50,6 @@ void json_close_list(JsonBuffer *json);
 void json_add_list(JsonBuffer *json, const char *name);
 
 //PARSING
+void json_get_next_field(const JsonBuffer *json, char *name, char *value);
 
 #endif // JSON_H
