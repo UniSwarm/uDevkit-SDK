@@ -2,20 +2,27 @@
 
 void json_set_indentation(JsonBuffer *json)
 {
-    for (int i = 0 ; i < json->indent_level; ++i)
-        buffer_astring(&json->buffer, "\t");
+    if (json->syntax == JSON_STANDARD)
+    {
+        for (int i = 0 ; i < json->indent_level; ++i)
+            buffer_astring(&json->buffer, "\t");
+    }
 }
 
 void json_carriage_return(JsonBuffer *json)
 {
-    buffer_astring(&json->buffer, "\n");
-    json_set_indentation(json);
+    if (json->syntax == JSON_STANDARD)
+    {
+        buffer_astring(&json->buffer, "\n");
+        json_set_indentation(json);
+    }
 }
 
-void json_init(JsonBuffer *json, char *data, size_t size)
+void json_init(JsonBuffer *json, char *data, size_t size, JSON_SYNTAX s)
 {
     json->indent_level = 0;
     buffer_init(&json->buffer, data, size);
+    json->syntax = s;
 }
 
 void json_add_field_str(JsonBuffer *json, const char *name, const char* value)
@@ -47,11 +54,13 @@ void json_add_field_int(JsonBuffer *json, const char *name, const int value)
 
 void json_open_object(JsonBuffer *json)
 {
-    json_carriage_return(json);
+    // json_carriage_return(json);
+    buffer_astring(&json->buffer, "{");
 
-    buffer_astring(&json->buffer, "{\n");
+    if (json->syntax == JSON_STANDARD)
+        buffer_astring(&json->buffer, "\n");
+
     json->indent_level++;
-
     json_set_indentation(json);
 }
 
@@ -63,19 +72,18 @@ void json_close_object(JsonBuffer *json)
     if (*(json->buffer.tail - 1) == ',')
         *(json->buffer.tail - 1) = ' ';
 
+    if (json->syntax == JSON_STANDARD)
+        buffer_astring(&json->buffer, "\n");
+
     if (json->indent_level != 0)
     {
-        buffer_astring(&json->buffer, "\n");
         json_set_indentation(json);
-
         buffer_astring(&json->buffer, "},");
     }
     else
     {
-        buffer_astring(&json->buffer, "\n");
         buffer_astring(&json->buffer, "}");
     }
-
 }
 
 void json_add_object(JsonBuffer *json, const char *name)
@@ -83,15 +91,8 @@ void json_add_object(JsonBuffer *json, const char *name)
     buffer_astring(&json->buffer, "\"");
     buffer_astring(&json->buffer, name);
     buffer_astring(&json->buffer, "\": ");
-    
-    // json_open_object(&json->buffer);
 
-    ///TODO a degager
-    buffer_astring(&json->buffer, "{\n");
-    json->indent_level++;
-    json_set_indentation(json);
-
-
+    json_open_object(json);
 }
 
 #ifdef TEST_JSON
@@ -108,7 +109,8 @@ int main(void)
     printf(data);
     printf("\n");
 
-    json_init(&json, data, 200);
+    // json_init(&json, data, 200, JSON_MONOBLOC);
+    json_init(&json, data, 200, JSON_STANDARD);
 
     printf("json_size: %ld", json.buffer.data_size);
     printf("%s\n", json.buffer.data);
@@ -116,25 +118,25 @@ int main(void)
     printf("\n");
 
     json_open_object(&json);
-    json_add_field_str(&json, "name1", "value1");
-    json_carriage_return(&json);
-    json_add_field_int(&json, "name2", 42);
-    json_carriage_return(&json);
 
-    json_add_object(&json, "name3");
-    json_add_field_int(&json, "name2", 42);
-    json_carriage_return(&json);
-    json_add_object(&json, "name4");
-    json_add_field_int(&json, "name2", 42);
-    json_carriage_return(&json);
-    json_add_field_int(&json, "name2", 42);
-    json_carriage_return(&json);
-    json_add_field_int(&json, "name2", 42);
-    json_close_object(&json);
-    json_close_object(&json);
+        json_add_field_str(&json, "name1", "value1");
+        json_carriage_return(&json);
+        json_add_field_int(&json, "name2", 42);
+        json_carriage_return(&json);
 
-    json_carriage_return(&json);
-    json_add_field_int(&json, "name2", 42);
+            json_add_object(&json, "obj1");
+            json_add_field_int(&json, "name3", 42);
+            json_carriage_return(&json);
+            json_add_field_int(&json, "name4", 42);
+            json_close_object(&json);
+
+        json_carriage_return(&json);
+
+            json_add_object(&json, "obj2");
+            json_add_field_int(&json, "name5", 42);
+            // json_carriage_return(&json);
+            // json_add_field_int(&json, "name6", 42);
+            json_close_object(&json);
 
     json_close_object(&json);
 
