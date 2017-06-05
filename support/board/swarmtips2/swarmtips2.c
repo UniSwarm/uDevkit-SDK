@@ -12,8 +12,9 @@
 
 #include <archi.h>
 
-#include <driver/i2c.h>
 #include <driver/sysclock.h>
+#include <driver/adc.h>
+#include <driver/i2c.h>
 
 #include <module/sensor.h>
 
@@ -52,13 +53,13 @@ int board_init_io()
     BOOST_SLEEP = 1;
 
     ESP8266_FLASH = 1;
-    ESP8266_RST   = 0;
+    ESP8266_RST = 0;
     TRISEbits.TRISE7 = 0;       // ESP8266_FLASH pin as output
     for(i=0;i<65000;i++);
     TRISEbits.TRISE5 = 0;       // ESP8266_RST pin as output
 
     for(i=0;i<65000;i++);
-    ESP8266_RST   = 1;
+    ESP8266_RST = 1;
 
     // buzzer
     LATBbits.LATB2 = 0;
@@ -69,7 +70,7 @@ int board_init_io()
     //TRISDbits.TRISD2 = 0; //ACC_SD0
     TRISDbits.TRISD5 = 0; //ACC_CS
     //TRISDbits.TRISD3 = 0; //ACC_SCK
-    
+
     // RGB led
     TRISEbits.TRISE6 = 0; // RBG_LED
 
@@ -239,6 +240,7 @@ uint8_t board_button(uint8_t btn)
             return 1;
         return 0;
     }
+    return 0;
 }
 
 float board_getPowerVoltage()
@@ -260,7 +262,7 @@ int board_init()
     board_init_buzzer();
     board_init_ihm();
     board_init_ledpwm();
-    
+
     adc_init();
 
     return 0;
