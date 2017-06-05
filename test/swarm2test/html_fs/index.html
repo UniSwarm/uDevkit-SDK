@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Swarm2</title>
+</head>
+<body>
+
+<h1>Swarm2</h1>
+<h2>Time of flight sensors</h2>
+
+<div>tof1: <span id="tof1">0</span>mm</div>
+<div>tof2: <span id="tof2">0</span>mm</div>
+<div>tof3: <span id="tof3">0</span>mm</div>
+<button onclick="refresh()">refresh</button>
+<button onclick="start()">start</button>
+
+<script>
+function refresh()
+{
+var xmlhttp = new XMLHttpRequest();
+var url = "api/tof";
+
+xmlhttp.addEventListener('readystatechange', function()
+{
+  if (xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status === 200)
+  {
+    var result = JSON.parse(xmlhttp.responseText);
+    document.getElementById("tof1").innerHTML = result.tof1;
+    document.getElementById("tof2").innerHTML = result.tof2;
+    document.getElementById("tof3").innerHTML = result.tof3;
+  }
+});
+xmlhttp.open("GET", url, true);
+xmlhttp.send(null);
+//setInterval(refresh, 5000);
+}
+refresh();
+
+function start()
+{
+var xmlhttp = new XMLHttpRequest();
+var url = "api/start";
+xmlhttp.open("GET", url, true);
+xmlhttp.send(null);
+}
+</script>
+
+</body>
+</html>

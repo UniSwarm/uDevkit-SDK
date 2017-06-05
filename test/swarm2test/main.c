@@ -9,6 +9,9 @@
 #include "ihm.h"
 #include "motors.h"
 
+extern void rest_api_exec(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *buffer);
+extern const Fs_FilesList file_list;
+
 extern int ihm_d1, ihm_d2, ihm_d3;
 
 int main(void)
@@ -16,11 +19,13 @@ int main(void)
     unsigned int i, j;
     int16_t value;
 
-    init_archi();
     board_init();
 
     // module init
     network_init();
+    web_server_setRestApi(rest_api_exec);
+    web_server_setRootFS(&file_list);
+
     motors_init();
 
     for (j=0;j<5;j++)
@@ -28,7 +33,7 @@ int main(void)
 
     // screen test
     ihm_init();
-    motors_setSpeed(600);
+    motors_setSpeed(0);
     motors_moveForward(200);
 
     while(1)
@@ -41,7 +46,7 @@ int main(void)
 
         value = VL6180X_getDistance(board_i2c_tof(), TOF1_ADDR);
         ihm_d1 = value;
-        if (value < 50)
+        if (value < 55)
         {
             board_setLed(3, 1);
             if (motors_state() != Motors_State_Rotate)
@@ -52,7 +57,7 @@ int main(void)
 
         value = VL6180X_getDistance(board_i2c_tof(), TOF2_ADDR);
         ihm_d2 = value;
-        if (value < 50)
+        if (value < 35)
             motors_stop();
         else
         {
@@ -63,7 +68,7 @@ int main(void)
 
         value = VL6180X_getDistance(board_i2c_tof(), TOF3_ADDR);
         ihm_d3 = value;
-        if (value < 50)
+        if (value < 55)
         {
             board_setLed(4, 1);
             if (motors_state() != Motors_State_Rotate)

@@ -68,7 +68,7 @@ void ihm_task()
             ihm_screenClear();
         }
         if (screen_id < 0)
-            screen_id = SCREEN_COUNT;
+            screen_id = SCREEN_COUNT - 1;
         if (screen_id >= SCREEN_COUNT)
             screen_id = 0;
         screen_btn = btn;
@@ -143,6 +143,8 @@ void ihm_screenBatt()
     int i, x=33, y=42, percent=(ihm_batt-3.3)*100;
     if(percent > 100)
         percent = 100;
+    if(percent < 0)
+        percent = 0;
 
     gui_setBrushColor(0);
     gui_setPenColor(1);
