@@ -58,7 +58,7 @@ rt_dev_t VL6180X_init(rt_dev_t i2c_bus, uint8_t i2c_addr)
     //http://www.st.com/st-web-ui/static/active/en/resource/technical/document/application_note/DM00122600.pdf
     i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSRANGE_INTERMEASUREMENT_PERIOD, 0x09, I2C_REGADDR16); // Set default ranging inter-measurement period to 100ms
     i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSALS_INTERMEASUREMENT_PERIOD, 0x0A, I2C_REGADDR16); // Set default ALS inter-measurement period to 100ms
-    i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSTEM_INTERRUPT_CONFIG_GPIO, 0x24, I2C_REGADDR16); // Configures interrupt on ‘New Sample Ready threshold event’
+    i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSTEM_INTERRUPT_CONFIG_GPIO, 0x24, I2C_REGADDR16); // Configures interrupt on New Sample Ready threshold event
     //Additional settings defaults from community
     i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSRANGE_MAX_CONVERGENCE_TIME, 0x32, I2C_REGADDR16);
     i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSRANGE_RANGE_CHECK_ENABLES, 0x10 | 0x01, I2C_REGADDR16);
@@ -68,18 +68,33 @@ rt_dev_t VL6180X_init(rt_dev_t i2c_bus, uint8_t i2c_addr)
     i2c_writereg(i2c_bus, i2c_addr, VL6180X_READOUT_AVERAGING_SAMPLE_PERIOD, 0x30, I2C_REGADDR16);
     i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSALS_ANALOGUE_GAIN, 0x40, I2C_REGADDR16);
     i2c_writereg(i2c_bus, i2c_addr, VL6180X_FIRMWARE_RESULT_SCALER, 0x01, I2C_REGADDR16);
+    
+    //i2c_writereg(i2c_bus, i2c_addr, VL6180X_INTERLEAVED_MODE_ENABLE, 0x01, I2C_REGADDR16);
+    //i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSALS_INTERMEASUREMENT_PERIOD, 200, I2C_REGADDR16);
+    i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSRANGE_START, 0x03, I2C_REGADDR16); // set continus ranging mode on and start it
+    //i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSALS_START, 0x03, I2C_REGADDR16);   // set continus ALS mode on and start it
 
     return 0; // TODO
 }
 
-uint16_t VL6180X_getDistance(rt_dev_t i2c_bus, uint8_t i2c_addr)
+int16_t VL6180X_getDistance(rt_dev_t i2c_bus, uint8_t i2c_addr)
 {
-	uint16_t value;
-    uint16_t i;
-    i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSRANGE_START, 0x01, I2C_REGADDR16); // start
-    for(i=0;i<65000;i++);
-    value = i2c_readreg(i2c_bus, i2c_addr, VL6180X_RESULT_RANGE_VAL, I2C_REGADDR16 | I2C_READ_STOPSTART);
+    uint16_t value;
+    //uint16_t i;
+    //if (i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSRANGE_START, 0x01, I2C_REGADDR16) != 0) // start
+        //return 0; // error, sensor can not be reached
+    //for(i=0;i<65000;i++);
+    if (i2c_readregs(i2c_bus, i2c_addr, VL6180X_RESULT_RANGE_VAL, (uint8_t*)&value, 1, I2C_REGADDR16 | I2C_READ_STOPSTART) != 0)
+        return -1;
     i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSTEM_INTERRUPT_CLEAR, 0x07, I2C_REGADDR16);
+    return value;
+}
+
+int16_t VL6180X_getALS(rt_dev_t i2c_bus, uint8_t i2c_addr)
+{
+    uint16_t value;
+    if (i2c_readregs(i2c_bus, i2c_addr, VL6180X_RESULT_ALS_VAL, (uint8_t*)&value, 1, I2C_REGADDR16 | I2C_READ_STOPSTART) != 0)
+        return -1;
     return value;
 }
 
