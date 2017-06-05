@@ -63,13 +63,13 @@ typedef enum
     WIFI_STATE_SEND_OK
 
 } WIFI_STATE;
-WIFI_STATE get_state();
+WIFI_STATE esp8266_get_state();
 
-uint8_t getRec();
-uint8_t getRecSocket();
-char *getRecData();
-uint16_t getRecSize();
+uint8_t esp8266_getRec();
+uint8_t esp8266_getRecSocket();
+char *esp8266_getRecData();
+uint16_t esp8266_getRecSize();
 
-char *getIp();
+char *esp8266_getIp();
 
 #endif   // ESP8266_H

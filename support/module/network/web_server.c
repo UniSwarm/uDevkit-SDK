@@ -30,22 +30,21 @@ void web_server_init()
 
 void web_server_task()
 {
-    if (getRec() != 1)
+    if (esp8266_getRec() != 1)
         return;
 
-    unsigned char sock = getRecSocket();
-    char *querry = getRecData();
+    unsigned char sock = esp8266_getRecSocket();
+    char *querry = esp8266_getRecData();
     HTTP_PARSE_RESULT *http_parse_result;
 
-    http_parse_result = http_parse_querry(querry, getRecSize());
+    http_parse_result = http_parse_querry(querry, esp8266_getRecSize());
 
     if (http_parse_result->type != HTTP_QUERRY_TYPE_ERROR)
     {
-        if (strncmp(http_parse_result->url, "/api/", 5) == 0)
+        if (web_server_restApi && strncmp(http_parse_result->url, "/api/", 5) == 0)
         {
-            if (web_server_restApi)
-                (*web_server_restApi)(http_parse_result->url+5,
-                        http_parse_result->type, web_server_buffer);
+            (*web_server_restApi)(http_parse_result->url+5,
+                                  http_parse_result->type, web_server_buffer);
             esp8266_write_socket_string(sock, web_server_buffer);
         }
         else

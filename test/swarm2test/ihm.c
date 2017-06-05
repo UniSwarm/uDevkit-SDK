@@ -213,7 +213,7 @@ void ihm_screenWifi()
     gui_drawTextRect(1, 1, 126, 14, "< swt2 : wifi >", GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
 
     // ip
-    gui_drawTextRect(5, 18, 118, 14, getIp(), GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
+    gui_drawTextRect(5, 18, 118, 14, esp8266_getIp(), GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
 
     gui_ctrl_update();
 }
