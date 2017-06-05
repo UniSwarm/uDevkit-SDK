@@ -9,6 +9,7 @@ endif
 DEV_PROG?=PK3  # default value pickit3 (PK3), possible value: real ice (RICE) or ICD3 (ICD3)
 prog : $(OUT_PWD)/$(PROJECT).hex
 	$(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -F$(OUT_PWD)/$(PROJECT).hex -M -OL
+	@rm log.* MPLABXLog.*
 
 # special cmd for hex creation
 $(OUT_PWD)/$(PROJECT).hex : $(OUT_PWD)/$(PROJECT).elf
