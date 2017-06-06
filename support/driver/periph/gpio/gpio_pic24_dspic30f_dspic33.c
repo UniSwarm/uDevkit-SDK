@@ -18,6 +18,10 @@
 
 #include <archi.h>
 
+/**
+ * @brief Set a bit of a GPIO to 1 (HIGHT)
+ * @param device GPIO pin
+ */
 void gpio_setBit(rt_dev_t device)
 {
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
@@ -83,6 +87,10 @@ void gpio_setBit(rt_dev_t device)
     }
 }
 
+/**
+ * @brief Set a bit of a GPIO to 0 (LOW)
+ * @param device GPIO pin
+ */
 void gpio_clearBit(rt_dev_t device)
 {
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
@@ -148,6 +156,10 @@ void gpio_clearBit(rt_dev_t device)
     }
 }
 
+/**
+ * @brief Toggle (invert) a bit of a GPIO from 1 to 0 or from 0 to 1
+ * @param device GPIO pin
+ */
 void gpio_toggleBit(rt_dev_t device)
 {
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
@@ -213,6 +225,11 @@ void gpio_toggleBit(rt_dev_t device)
     }
 }
 
+/**
+ * @brief Write a specific value of a bit of a GPIO
+ * @param device GPIO pin
+ * @param value value to set (GPIO_LOW / GPIO_HIGHT / GPIO_TOGGLE)
+ */
 void gpio_writeBit(rt_dev_t device, GPIO_VALUE value)
 {
     switch(value)
@@ -229,6 +246,11 @@ void gpio_writeBit(rt_dev_t device, GPIO_VALUE value)
     }
 }
 
+/**
+ * @brief Read a bit of a GPIO
+ * @param device GPIO pin
+ * @return curent value of the bit(GPIO_LOW / GPIO_HIGHT)
+ */
 GPIO_VALUE gpio_readBit(rt_dev_t device)
 {
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
@@ -300,6 +322,12 @@ GPIO_VALUE gpio_readBit(rt_dev_t device)
         return GPIO_LOW;
 }
 
+/**
+ * @brief Set GPIO bit configuration (input / output)
+ * @param device GPIO pin
+ * @param config pin configuration to set (GPIO_OUTPUT / GPIO_INPUT)
+ * @return 0 if ok, -1 in case of error
+ */
 int gpio_setBitConfig(rt_dev_t device, uint16_t config)
 {
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
@@ -400,6 +428,11 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
     return 0;
 }
 
+/**
+ * @brief Set GPIO port value (complete port)
+ * @param device GPIO port
+ * @param value to set
+ */
 void gpio_writePort(rt_dev_t device, port_type value)
 {
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
@@ -464,6 +497,11 @@ void gpio_writePort(rt_dev_t device, port_type value)
     }
 }
 
+/**
+ * @brief Read GPIO port value (complete port)
+ * @param device GPIO port
+ * @return current value of port
+ */
 port_type gpio_readPort(rt_dev_t device)
 {
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
@@ -519,6 +557,12 @@ port_type gpio_readPort(rt_dev_t device)
     return 0;
 }
 
+/**
+ * @brief Set GPIO port configuration (input / output)
+ * @param device GPIO port
+ * @param config port configuration to set (GPIO_OUTPUT / GPIO_INPUT)
+ * @return 0 if ok, -1 in case of error
+ */
 int gpio_setPortConfig(rt_dev_t device, uint16_t config)
 {
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
