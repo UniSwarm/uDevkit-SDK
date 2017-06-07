@@ -1,7 +1,7 @@
 
 MAKE?=make
 
-SRC_FILES = $(shell find support/ include/ \( -name '*.h' -o -name '*.c' -o -name '*.mk' \))
+SRC_FILES = $(shell find support/ include/ \( -name '*.h' -o -name '*.c' -o -name '*.mk' \)) README.md
 MD_FILES = $(shell find support/ -name '*.md')
 
 doc: doc/html/index.html
@@ -21,3 +21,6 @@ tests:
 
 lines:
 	@wc -l $(SRC_FILES)| sort -n -k1
+
+checks:
+	find . -type f -exec file {} \; | grep "CRLF line terminators" | awk -F ':' '{ print $1 }'

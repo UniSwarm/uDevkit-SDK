@@ -1,12 +1,12 @@
 PROJECT_NAME           = "RTprog"
-PROJECT_BRIEF          = "A tool to simplify module inclusions in embeded systems"
+PROJECT_BRIEF          = "A tool to simplify module inclusions in embedded systems"
 OUTPUT_DIRECTORY       = doc/
 OPTIMIZE_OUTPUT_FOR_C  = YES
 
-INPUT                  = ./support/
+INPUT                  = .
 RECURSIVE              = YES
-EXCLUDE_PATTERNS       = */build/* */include/*
+EXCLUDE_PATTERNS       = */build/* */include/* */contrib/* */nbproject/* */distrib/*
 
 GENERATE_TODOLIST      = YES
-INLINE_SOURCES         = YES
-USE_MDFILE_AS_MAINPAGE = ./README.md
+# USE_MDFILE_AS_MAINPAGE = README.md
+
