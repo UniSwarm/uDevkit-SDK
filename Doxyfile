@@ -8,5 +8,3 @@ RECURSIVE              = YES
 EXCLUDE_PATTERNS       = */build/* */include/* */contrib/* */nbproject/* */distrib/*
 
 GENERATE_TODOLIST      = YES
-# USE_MDFILE_AS_MAINPAGE = README.md
-
