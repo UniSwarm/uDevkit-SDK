@@ -11,4 +11,6 @@
 #ifndef PIC32MZEC_H
 #define PIC32MZEC_H
 
+#include "../pic32/pic32.h"
+
 #endif // PIC32MZEC_H
