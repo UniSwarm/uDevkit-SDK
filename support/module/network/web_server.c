@@ -51,7 +51,11 @@ void web_server_task()
         {
             const Fs_File *file;
 
-            file = getFile(web_server_file_list, http_parse_result->url + 1);
+            if (strcmp(http_parse_result->url, "/") == 0)
+                file = getFile(web_server_file_list, "index.html");
+            else
+                file = getFile(web_server_file_list, http_parse_result->url + 1);
+
             if (file == NULL)  // search in fs
             {
                 http_write_header_code(web_server_buffer, HTTP_NOT_FOUND);
