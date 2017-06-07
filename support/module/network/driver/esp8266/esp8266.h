@@ -30,23 +30,24 @@ typedef enum
     ESP8266_MODE_STA_AP
 } ESP8266_MODE;
 void esp8266_setMode(ESP8266_MODE mode);
+
 typedef enum
 {
-    ESP8266_ECN_OPEN = 0,
-    ESP8266_ECN_WPA = 2,
-    ESP8266_ECN_WPA2 = 3,
-    ESP8266_ECN_WPA_WPA2 = 4
+    ESP8266_ECN_OPEN = 0,     ///< open access point, no password
+    ESP8266_ECN_WPA = 2,      ///< WPA security
+    ESP8266_ECN_WPA2 = 3,     ///< WPA2 security
+    ESP8266_ECN_WPA_WPA2 = 4  ///< WPA/WPA2 mixed security
 } ESP8266_ECN;
 int esp8266_ap_setConfig(char *ssid, char *pw, ESP8266_ECN pw_ecn, uint8_t channel);
-uint8_t esp8266_connect_ap(char *ssid, char *pw);
-uint8_t esp8266_disconnect_ap();
+int esp8266_connect_ap(char *ssid, char *pw);
+int esp8266_disconnect_ap();
 
 // ======== tcp/ip layer =========
 uint8_t esp8266_open_tcp_socket(char *ip_domain, uint16_t port);
-uint8_t esp8266_open_udp_socket(char *ip_domain, uint16_t port, uint16_t localPort, uint8_t mode);
-void esp8266_close_socket(uint8_t sock);
+uint8_t esp8266_open_udp_socket(char *ip_domain, uint16_t port, uint16_t localPort);
 void esp8266_write_socket(uint8_t sock, char *data, uint16_t size);
 void esp8266_write_socket_string(uint8_t sock, char *str);
+void esp8266_close_socket(uint8_t sock);
 
 void esp8266_server_create(uint16_t port);
 void esp8266_server_destroy();
@@ -63,7 +64,7 @@ typedef enum
     WIFI_STATE_SEND_OK
 
 } WIFI_STATE;
-WIFI_STATE esp8266_get_state();
+WIFI_STATE esp8266_getStatus();
 
 uint8_t esp8266_getRec();
 uint8_t esp8266_getRecSocket();

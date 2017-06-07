@@ -5,7 +5,7 @@
  *
  * @date February 10, 2016, 09:32 PM
  *
- * @brief ESP8266 driver for RTProg network module
+ * @brief ESP8266 driver in AT mode for RTProg network module
  */
 
 #include "esp8266.h"
@@ -102,6 +102,9 @@ rt_dev_t esp8266_uart;
 
 STATIC_BUFFER(esp8266_txBuff, 100);
 
+/**
+ * @brief Internal function to initailise UART to ESP8266
+ */
 void esp8266_uart_init()
 {
     // uart init
@@ -116,6 +119,9 @@ void esp8266_uart_init()
 #define esp8266_send_cmd(cmd) uart_write(esp8266_uart, (cmd), strlen(cmd))
 #define esp8266_send_cmddat(cmd, size) uart_write(esp8266_uart, (cmd), (size))
 
+/**
+ * @brief Initailise driver for ESP8266
+ */
 void esp8266_init()
 {
     esp8266_uart_init();
@@ -124,25 +130,27 @@ void esp8266_init()
     STATIC_BUFFER_INIT(esp8266_txBuff, 100);
 }
 
+/**
+ * @brief Task to call periodically
+ */
 void esp8266_task()
 {
-    char esp8266_txBuffRx[200];
+    char esp8266_rxBuff[200];
     ssize_t read_size;
 
     // read esp uart
-    read_size = uart_read(esp8266_uart, esp8266_txBuffRx, 200);
+    read_size = uart_read(esp8266_uart, esp8266_rxBuff, 200);
     if (read_size > 0)
     {
         int i;
         char *esp8266_txBuffPtr;
         // parse it
-        esp8266_txBuffPtr = esp8266_txBuffRx;
+        esp8266_txBuffPtr = esp8266_rxBuff;
         for (i = 0; i < read_size; i++)
         {
             esp8266_parse(*esp8266_txBuffPtr);
             esp8266_txBuffPtr++;
         }
-        // printf("esp8266_status:%d\n",esp8266_status);
     }
 
     // config
@@ -187,6 +195,10 @@ void esp8266_task()
     }
 }
 
+/**
+ * @brief Internal function to parse response of AT commands
+ * @param rec new char to parse
+ */
 void esp8266_parse(char rec)
 {
     switch (esp8266_fsmState)
@@ -547,6 +559,12 @@ void esp8266_parse(char rec)
     }
 }
 
+/**
+ * @brief Internal function to protect string from special char 
+ * (,\\") char in AT commands arguments
+ * @param destination protected string argument
+ * @param destination string to protect
+ */
 char *esp8266_protectstr(char *destination, const char *source)
 {
     char *ptr, *ptrsource;
@@ -564,26 +582,46 @@ char *esp8266_protectstr(char *destination, const char *source)
     return destination;
 }
 
-WIFI_STATE esp8266_get_esp8266_status()
+/**
+ * @brief Gives the current status of AT response
+ * @return current status
+ */
+WIFI_STATE esp8266_getStatus()
 {
     return esp8266_status;
 }
 
+/**
+ * @brief Give the id of the last socket received
+ * @return socket id
+ */
 uint8_t esp8266_getRecSocket()
 {
     return esp8266_socket;
 }
 
+/**
+ * @brief Reads the last packet received
+ * @return pointer to data
+ */
 char *esp8266_getRecData()
 {
     return esp8266_dataPacket;
 }
 
+/**
+ * @brief Gives the last packet received size in bytes
+ * @return size of packet
+ */
 uint16_t esp8266_getRecSize()
 {
     return esp8266_sizePacket;
 }
 
+/**
+ * @brief Check if packet is received by a socket
+ * @return 0 if no packet is received, 1 else
+ */
 uint8_t esp8266_getRec()
 {
     if (esp8266_flagPacket == 1)
@@ -594,6 +632,12 @@ uint8_t esp8266_getRec()
     return 0;
 }
 
+/**
+ * @brief Opens a TCP socket
+ * @param ip_domain destination IP or domain
+ * @param port destinantion port
+ * @return 0 if OK
+ */
 uint8_t esp8266_open_tcp_socket(char *ip_domain, uint16_t port)
 {
     char protected[64];
@@ -610,8 +654,15 @@ uint8_t esp8266_open_tcp_socket(char *ip_domain, uint16_t port)
     return 0;
 }
 
+/**
+ * @brief Opens a UDP socket
+ * @param ip_domain destination IP or domain
+ * @param port destinantion port
+ * @param localPort local port
+ * @return 0 if OK
+ */
 uint8_t esp8266_open_udp_socket(char *ip_domain, uint16_t port,
-                                uint16_t localPort, uint8_t mode)
+                                uint16_t localPort)
 {
     char protected[64];
 
@@ -624,13 +675,16 @@ uint8_t esp8266_open_udp_socket(char *ip_domain, uint16_t port,
     buffer_aint(&esp8266_txBuff, (int)port);
     buffer_achar(&esp8266_txBuff, ',');
     buffer_aint(&esp8266_txBuff, (int)localPort);
-    buffer_achar(&esp8266_txBuff, ',');
-    buffer_aint(&esp8266_txBuff, (int)mode);
 
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
     return 0;
 }
 
+/**
+ * @brief Sets mode of Wifi access
+ * @param mode mode of operation : station (ESP8266_MODE_STA)
+ * / access point (ESP8266_MODE_AP) or both (ESP8266_MODE_STA_AP)
+ */
 void esp8266_setMode(ESP8266_MODE mode)
 {
     buffer_clear(&esp8266_txBuff);
@@ -648,6 +702,15 @@ void esp8266_setMode(ESP8266_MODE mode)
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
 }
 
+/**
+ * @brief Sets config of access point (only in AP mode or STA_AP) SSID,
+ * password, security mode and channel
+ * @param ssid Name of the access point
+ * @param pw_ecn Security mode : none/open (ESP8266_ECN_OPEN) /
+ * WPA (ESP8266_ECN_WPA), WPA2 (ESP8266_ECN_WPA2) or auto (ESP8266_ECN_WPA_WPA2)
+ * @param channel wifi channel
+ * @return 0 if OK
+ */
 int esp8266_ap_setConfig(char *ssid, char *pw, ESP8266_ECN pw_ecn,
                          uint8_t channel)
 {
@@ -677,7 +740,13 @@ int esp8266_ap_setConfig(char *ssid, char *pw, ESP8266_ECN pw_ecn,
     return 0;
 }
 
-uint8_t esp8266_connect_ap(char *ssid, char *pw)
+/**
+ * @brief Connects the station to an access point (only in STA mode)
+ * @param ssid Name of the access point to connect to
+ * @param pw password of the access point
+ * @return 0 if OK
+ */
+int esp8266_connect_ap(char *ssid, char *pw)
 {
     char protected[64];
 
@@ -696,12 +765,20 @@ uint8_t esp8266_connect_ap(char *ssid, char *pw)
     return 0;
 }
 
-uint8_t esp8266_disconnect_ap()
+/**
+ * @brief Disconnects the station of the current access point
+ * @return 0 if OK
+ */
+int esp8266_disconnect_ap()
 {
     esp8266_send_cmd("AT+CWQAP\r\n");
     return 0;
 }
 
+/**
+ * @brief Closes a socket
+ * @param sock id of the socket to close
+ */
 void esp8266_close_socket(uint8_t sock)
 {
     if (sock > 4)
@@ -715,6 +792,12 @@ void esp8266_close_socket(uint8_t sock)
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
 }
 
+/**
+ * @brief Writes data to a socket
+ * @param sock id of the socket
+ * @param data pointer of data to send
+ * @param size size of data in bytes
+ */
 void esp8266_write_socket(uint8_t sock, char *data, uint16_t size)
 {
     buffer_clear(&esp8266_txBuff);
@@ -732,11 +815,20 @@ void esp8266_write_socket(uint8_t sock, char *data, uint16_t size)
     while (esp8266_status != WIFI_STATE_SEND_OK) esp8266_task();
 }
 
+/**
+ * @brief Writes a string to a socket
+ * @param sock id of the socket
+ * @param data pointer of string to send (0 terminated string)
+ */
 void esp8266_write_socket_string(uint8_t sock, char *str)
 {
     esp8266_write_socket(sock, str, strlen(str));
 }
 
+/**
+ * @brief Creates a local server
+ * @param port local port to bind
+ */
 void esp8266_server_create(uint16_t port)
 {
     buffer_clear(&esp8266_txBuff);
@@ -746,11 +838,18 @@ void esp8266_server_create(uint16_t port)
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
 }
 
+/**
+ * @brief Destroy the local server
+ */
 void esp8266_server_destroy()
 {
     esp8266_send_cmd("AT+CIPSERVER=0\r\n");
 }
 
+/**
+ * @brief Gets the station IP
+ * @return string current IP
+ */
 char *esp8266_getIp()
 {
     return esp8266_ip;
