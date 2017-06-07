@@ -8,7 +8,7 @@ A tool to simplify module inclusions in embedded systems.
 
 Currently works for all 16 bits Microchip devices (531 devices including
 dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV, PIC24F, PIC24FJ, PIC24EP and PIC24HJ).
-[Complete list of 16bits devices](support/archi/pic16b/README.md)
+[Complete list of 16bits devices](support/archi/pic16b/pic16b.md)
 
 Currently works for all 32 bits Microchip devices (280 devices including
 PIC32MM, PIC32MK, PIC32MX, PIC32MZDA, PIC32MZEC and PIC32MZEF).
@@ -71,6 +71,6 @@ Compiler for 32-bit devices (v1.30 minimum)
 * linux : http://www.microchip.com/mplabxc32linux
 
 ### default Windows PATHs
-C:\Program Files (x86)\Microchip\xc16\v1.26\bin
+C:\\Program Files (x86)\\Microchip\\xc16\\v1.26\\bin
 
-C:\Program Files (x86)\Microchip\MPLABX\v3.45\mplab_ipe
+C:\\Program Files (x86)\\Microchip\\MPLABX\\v3.45\\mplab_ipe
