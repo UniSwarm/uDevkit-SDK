@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Swarm2</title>
+<meta name="viewport" content="width=device-width, height=device-height" />
 </head>
 <body>
 
@@ -9,8 +10,11 @@
 <h2>Time of flight sensors</h2>
 
 <div>tof1: <span id="tof1">0</span>mm</div>
+<div id="tof1bar" style="width:100%; height:20px; background-color: black;"></div>
 <div>tof2: <span id="tof2">0</span>mm</div>
+<div id="tof2bar" style="width:100%; height:20px; background-color: black;"></div>
 <div>tof3: <span id="tof3">0</span>mm</div>
+<div id="tof3bar" style="width:100%; height:20px; background-color: black;"></div>
 <button onclick="refresh()">refresh</button>
 <button onclick="start()">start</button>
 
@@ -22,13 +26,16 @@ var url = "api/tof";
 
 xmlhttp.addEventListener('readystatechange', function()
 {
-  if (xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status === 200)
-  {
-    var result = JSON.parse(xmlhttp.responseText);
-    document.getElementById("tof1").innerHTML = result.tof1;
-    document.getElementById("tof2").innerHTML = result.tof2;
-    document.getElementById("tof3").innerHTML = result.tof3;
-  }
+	if (xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status === 200)
+	{
+		var result = JSON.parse(xmlhttp.responseText);
+		document.getElementById("tof1").innerHTML = result.tof1;
+		document.getElementById("tof1bar").style.width = result.tof1/2.55+"%";
+		document.getElementById("tof2").innerHTML = result.tof2;
+		document.getElementById("tof2bar").style.width = result.tof2/2.55+"%";
+		document.getElementById("tof3").innerHTML = result.tof3;
+		document.getElementById("tof3bar").style.width = result.tof3/2.55+"%";
+	}
 });
 xmlhttp.open("GET", url, true);
 xmlhttp.send(null);
