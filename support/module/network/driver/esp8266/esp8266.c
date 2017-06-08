@@ -88,11 +88,40 @@ typedef enum
     FSM_PACKET_RX,
     FSM_RX_COMPLETE
 
-} WIFIstatus;
-volatile WIFIstatus esp8266_fsmState = FSM_START;
+} ESP8266_FSMSTATE;
+volatile ESP8266_FSMSTATE esp8266_fsmState = FSM_START;
 
-volatile WIFI_STATE esp8266_pendingStatus = WIFI_STATE_NONE;
-volatile WIFI_STATE esp8266_status = WIFI_STATE_NONE;
+typedef enum
+{
+    ESP8266_STATE_NONE = 0,
+    ESP8266_STATE_READY,
+    ESP8266_STATE_OK,
+    ESP8266_STATE_ERROR,
+    ESP8266_STATE_FAIL,
+    ESP8266_STATE_RECEIVE_DATA,
+    ESP8266_STATE_SEND_DATA,
+    ESP8266_STATE_SEND_OK
+} ESP8266_STATE;
+volatile ESP8266_STATE esp8266_pendingState = ESP8266_STATE_NONE;
+volatile ESP8266_STATE esp8266_state = ESP8266_STATE_NONE;
+
+typedef enum
+{
+    ESP8266_CMD_NONE = 0,
+    ESP8266_CMD_CUSTOM,
+    ESP8266_CMD_OPENTCP,
+    ESP8266_CMD_OPENUDP,
+    ESP8266_CMD_SETMODE,
+    ESP8266_CMD_APCONFIG,
+    ESP8266_CMD_CONNECTAP,
+    ESP8266_CMD_DISCONNECTAP,
+    ESP8266_CMD_CLOSESOCKET,
+    ESP8266_CMD_WRITESOCK_REQ,
+    ESP8266_CMD_WRITESOCK_DATA,
+    ESP8266_CMD_SERVERCREATE,
+    ESP8266_CMD_SERVERDESTROY
+} ESP8266_CMD;
+volatile ESP8266_CMD esp8266_currentCmd = ESP8266_CMD_NONE;
 
 uint8_t esp8266_config = 0;
 
@@ -114,10 +143,6 @@ void esp8266_uart_init()
     uart_setBitConfig(esp8266_uart, 8, UART_BIT_PARITY_NONE, 1);
     uart_enable(esp8266_uart);
 }
-
-#define esp8266_write(data, size) uart_write(esp8266_uart, (data), (size))
-#define esp8266_send_cmd(cmd) uart_write(esp8266_uart, (cmd), strlen(cmd))
-#define esp8266_send_cmddat(cmd, size) uart_write(esp8266_uart, (cmd), (size))
 
 /**
  * @brief Initailise driver for ESP8266
@@ -158,10 +183,10 @@ void esp8266_task()
     {
         if (esp8266_config & 0x01)
         {
-            if (esp8266_status != WIFI_STATE_NONE)
+            if (esp8266_state != ESP8266_STATE_NONE)
             {
                 esp8266_config++;
-                esp8266_status = WIFI_STATE_NONE;
+                esp8266_state = ESP8266_STATE_NONE;
             }
         }
         else
@@ -213,9 +238,9 @@ void esp8266_parse(char rec)
         if (rec == '\n')
         {
             // validate
-            if (esp8266_pendingStatus != WIFI_STATE_NONE)
-                esp8266_status = esp8266_pendingStatus;
-            esp8266_pendingStatus = WIFI_STATE_NONE;
+            if (esp8266_pendingState != ESP8266_STATE_NONE)
+                esp8266_state = esp8266_pendingState;
+            esp8266_pendingState = ESP8266_STATE_NONE;
 
             esp8266_fsmState = FSM_START;
         }
@@ -237,7 +262,7 @@ void esp8266_parse(char rec)
             esp8266_fsmState = FSM_FAIL_F;
         else if (rec == '>')
         {
-            esp8266_status = WIFI_STATE_SEND_DATA;
+            esp8266_state = ESP8266_STATE_SEND_DATA;
             esp8266_fsmState = FSM_UNKNOW;
         }
         else if (rec == 'O')
@@ -285,7 +310,7 @@ void esp8266_parse(char rec)
     case FSM_SENDOK_K:
         if (rec == '\r')
         {
-            esp8266_pendingStatus = WIFI_STATE_SEND_OK;
+            esp8266_pendingState = ESP8266_STATE_SEND_OK;
             esp8266_fsmState = FSM_WAITING_VALIDATE;
         }
         else
@@ -319,7 +344,7 @@ void esp8266_parse(char rec)
     case FSM_ERROR_R3:
         if (rec == '\r')
         {
-            esp8266_pendingStatus = WIFI_STATE_ERROR;
+            esp8266_pendingState = ESP8266_STATE_ERROR;
             esp8266_fsmState = FSM_WAITING_VALIDATE;
         }
         else
@@ -347,7 +372,7 @@ void esp8266_parse(char rec)
     case FSM_FAIL_L:
         if (rec == '\r')
         {
-            esp8266_pendingStatus = WIFI_STATE_FAIL;
+            esp8266_pendingState = ESP8266_STATE_FAIL;
             esp8266_fsmState = FSM_WAITING_VALIDATE;
         }
         else
@@ -381,7 +406,7 @@ void esp8266_parse(char rec)
     case FSM_ready_y:
         if (rec == '\r')
         {
-            esp8266_pendingStatus = WIFI_STATE_READY;
+            esp8266_pendingState = ESP8266_STATE_READY;
             esp8266_fsmState = FSM_WAITING_VALIDATE;
         }
         else
@@ -397,7 +422,7 @@ void esp8266_parse(char rec)
     case FSM_OK_K:
         if (rec == '\r')
         {
-            esp8266_pendingStatus = WIFI_STATE_OK;
+            esp8266_pendingState = ESP8266_STATE_OK;
             esp8266_fsmState = FSM_WAITING_VALIDATE;
         }
         else
@@ -550,7 +575,7 @@ void esp8266_parse(char rec)
         if (esp8266_idPacket >= esp8266_sizePacket)
         {
             esp8266_flagPacket = 1;
-            esp8266_status = WIFI_STATE_RECEIVE_DATA;
+            esp8266_state = ESP8266_STATE_RECEIVE_DATA;
             esp8266_fsmState = FSM_UNKNOW;
         }
         break;
@@ -560,7 +585,7 @@ void esp8266_parse(char rec)
 }
 
 /**
- * @brief Internal function to protect string from special char 
+ * @brief Internal function to protect string from special char
  * (,\\") char in AT commands arguments
  * @param destination protected string argument
  * @param destination string to protect
@@ -586,9 +611,9 @@ char *esp8266_protectstr(char *destination, const char *source)
  * @brief Gives the current status of AT response
  * @return current status
  */
-WIFI_STATE esp8266_getStatus()
+ESP8266_STATUS esp8266_getStatus()
 {
-    return esp8266_status;
+    return esp8266_state;
 }
 
 /**
@@ -633,6 +658,17 @@ uint8_t esp8266_getRec()
 }
 
 /**
+ * @brief Sends a custom commands
+ * @param data data command to send
+ * @param size command size
+ */
+void esp8266_send_cmddat(char data[], uint16_t size)
+{
+    uart_write(esp8266_uart, data, size);
+    esp8266_currentCmd = ESP8266_CMD_CUSTOM;
+}
+
+/**
  * @brief Opens a TCP socket
  * @param ip_domain destination IP or domain
  * @param port destinantion port
@@ -651,7 +687,8 @@ uint8_t esp8266_open_tcp_socket(char *ip_domain, uint16_t port)
     buffer_aint(&esp8266_txBuff, port);
 
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
-    return 0;
+    esp8266_currentCmd = ESP8266_CMD_OPENTCP;
+    return 0; // TODO return sock id
 }
 
 /**
@@ -677,7 +714,8 @@ uint8_t esp8266_open_udp_socket(char *ip_domain, uint16_t port,
     buffer_aint(&esp8266_txBuff, (int)localPort);
 
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
-    return 0;
+    esp8266_currentCmd = ESP8266_CMD_OPENUDP;
+    return 0; // TODO return sock id
 }
 
 /**
@@ -700,6 +738,7 @@ void esp8266_setMode(ESP8266_MODE mode)
     buffer_astring(&esp8266_txBuff, "\r\n");
 
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
+    esp8266_currentCmd = ESP8266_CMD_SETMODE;
 }
 
 /**
@@ -737,6 +776,7 @@ int esp8266_ap_setConfig(char *ssid, char *pw, ESP8266_ECN pw_ecn,
     buffer_astring(&esp8266_txBuff, "\r\n");
 
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
+    esp8266_currentCmd = ESP8266_CMD_APCONFIG;
     return 0;
 }
 
@@ -762,6 +802,7 @@ int esp8266_connect_ap(char *ssid, char *pw)
     buffer_astring(&esp8266_txBuff, "\"\r\n");
 
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
+    esp8266_currentCmd = ESP8266_CMD_CONNECTAP;
     return 0;
 }
 
@@ -772,6 +813,7 @@ int esp8266_connect_ap(char *ssid, char *pw)
 int esp8266_disconnect_ap()
 {
     esp8266_send_cmd("AT+CWQAP\r\n");
+    esp8266_currentCmd = ESP8266_CMD_DISCONNECTAP;
     return 0;
 }
 
@@ -790,6 +832,7 @@ void esp8266_close_socket(uint8_t sock)
     buffer_astring(&esp8266_txBuff, "\r\n");
 
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
+    esp8266_currentCmd = ESP8266_CMD_CLOSESOCKET;
 }
 
 /**
@@ -806,13 +849,17 @@ void esp8266_write_socket(uint8_t sock, char *data, uint16_t size)
     buffer_achar(&esp8266_txBuff, ',');
     buffer_aint(&esp8266_txBuff, (int)size);
     buffer_astring(&esp8266_txBuff, "\r\n");
+
+    // send request
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
+    esp8266_currentCmd = ESP8266_CMD_WRITESOCK_REQ;
 
-    while (esp8266_status != WIFI_STATE_SEND_DATA) esp8266_task();
-    esp8266_status = WIFI_STATE_NONE;
+    while (esp8266_state != ESP8266_STATE_SEND_DATA) esp8266_task(); // TODO FIXME
+    esp8266_state = ESP8266_STATE_NONE;
 
-    esp8266_write(data, size);
-    while (esp8266_status != WIFI_STATE_SEND_OK) esp8266_task();
+    esp8266_send_cmddat(data, size);
+    esp8266_currentCmd = ESP8266_CMD_WRITESOCK_DATA;
+    while (esp8266_state != ESP8266_STATE_SEND_OK) esp8266_task(); // TODO FIXME
 }
 
 /**
@@ -836,6 +883,7 @@ void esp8266_server_create(uint16_t port)
     buffer_aint(&esp8266_txBuff, (int)port);
     buffer_astring(&esp8266_txBuff, "\r\n");
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
+    esp8266_currentCmd = ESP8266_CMD_SERVERCREATE;
 }
 
 /**
@@ -844,6 +892,7 @@ void esp8266_server_create(uint16_t port)
 void esp8266_server_destroy()
 {
     esp8266_send_cmd("AT+CIPSERVER=0\r\n");
+    esp8266_currentCmd = ESP8266_CMD_SERVERDESTROY;
 }
 
 /**

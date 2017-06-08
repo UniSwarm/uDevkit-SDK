@@ -17,10 +17,8 @@ void esp8266_init();
 
 void esp8266_task();
 
-void esp8266_send_cmd(char data[]);
-void esp8266_write(char data[], uint16_t size);
-
-void esp8266_rst();
+#define esp8266_send_cmd(cmd) uart_write(esp8266_uart, (cmd), strlen(cmd))
+void esp8266_send_cmddat(char data[], uint16_t size);
 
 // ======== wifi layer =========
 typedef enum
@@ -54,17 +52,11 @@ void esp8266_server_destroy();
 
 typedef enum
 {
-    WIFI_STATE_NONE = 0,
-    WIFI_STATE_READY,
-    WIFI_STATE_OK,
-    WIFI_STATE_ERROR,
-    WIFI_STATE_FAIL,
-    WIFI_STATE_RECEIVE_DATA,
-    WIFI_STATE_SEND_DATA,
-    WIFI_STATE_SEND_OK
+    ESP8266_STATUS_BUSY = 0,
+    ESP8266_STATUS_READY
 
-} WIFI_STATE;
-WIFI_STATE esp8266_getStatus();
+} ESP8266_STATUS;
+ESP8266_STATUS esp8266_getStatus();
 
 uint8_t esp8266_getRec();
 uint8_t esp8266_getRecSocket();
