@@ -29,6 +29,8 @@ char /*__attribute__((far))*/ esp8266_dataPacket[2049];
 // station IP
 char esp8266_ip[16] = "";
 uint8_t esp8266_ipid = 0;
+char esp8266_mac[18] = "";
+uint8_t esp8266_macid = 0;
 
 typedef enum
 {
@@ -77,6 +79,8 @@ typedef enum
     FSM_IP_A,
     FSM_IP_WIP,
     FSM_IP_IP,
+    FSM_IP_WMAC,
+    FSM_IP_MAC,
 
     FSM_IPD_I,
     FSM_IPD_P,
@@ -163,7 +167,7 @@ void esp8266_task()
     char esp8266_rxBuff[200];
     ssize_t read_size;
 
-    // read esp uart
+    // read esp uart response and parse it
     read_size = uart_read(esp8266_uart, esp8266_rxBuff, 200);
     if (read_size > 0)
     {
@@ -178,7 +182,7 @@ void esp8266_task()
         }
     }
 
-    // config
+    // send base configuration (begining only)
     if ((esp8266_config >> 1) < 7)
     {
         if (esp8266_config & 0x01)
@@ -488,6 +492,8 @@ void esp8266_parse(char rec)
     case FSM_IP_A:
         if (rec == 'I')
             esp8266_fsmState = FSM_IP_WIP;
+        else if (rec == 'M')
+            esp8266_fsmState = FSM_IP_WMAC;
         else
             esp8266_fsmState = FSM_UNKNOW;
         break;
@@ -508,6 +514,26 @@ void esp8266_parse(char rec)
         else
         {
             esp8266_ip[esp8266_ipid] = 0;
+            esp8266_fsmState = FSM_UNKNOW;
+        }
+        break;
+    case FSM_IP_WMAC:
+        if (rec == '"')
+        {
+            esp8266_fsmState = FSM_IP_MAC;
+            esp8266_macid = 0;
+        }
+        else if (rec == '\r')
+            esp8266_fsmState = FSM_UNKNOW;
+        else
+            esp8266_fsmState = FSM_IP_WMAC;  // wait IP
+        break;
+    case FSM_IP_MAC:
+        if ((rec >= '0' && rec <= '9') || rec == ':' || (rec >= 'a' && rec <= 'f'))
+            esp8266_mac[esp8266_macid++] = rec;
+        else
+        {
+            esp8266_mac[esp8266_macid] = 0;
             esp8266_fsmState = FSM_UNKNOW;
         }
         break;
@@ -902,4 +928,13 @@ void esp8266_server_destroy()
 char *esp8266_getIp()
 {
     return esp8266_ip;
+}
+
+/**
+ * @brief Gets the station MAC
+ * @return string current MAC
+ */
+char *esp8266_getMac()
+{
+    return esp8266_mac;
 }
