@@ -27,12 +27,12 @@ typedef enum
 
 typedef struct
 {
-    HTTP_QUERRY_TYPE type;
-    char *url;
-} HTTP_PARSE_RESULT;
+    char *querry_str;
+    char *ptr;
+} HTTP_PARSER;
 
-HTTP_PARSE_RESULT *http_parse_querry_str(char *querry_str);
-HTTP_PARSE_RESULT *http_parse_querry(char *querry, unsigned short size);
+void http_parse_init(HTTP_PARSER *parser, char *querry_str);
+HTTP_QUERRY_TYPE http_parse_querry(HTTP_PARSER *parser, char *url);
 
 // http formater
 enum {
