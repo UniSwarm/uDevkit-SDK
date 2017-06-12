@@ -35,26 +35,30 @@ void web_server_task()
 
     unsigned char sock = esp8266_getRecSocket();
     char *querry = esp8266_getRecData();
-    HTTP_PARSE_RESULT *http_parse_result;
+    HTTP_PARSER parser;
+    char url[50];
 
-    http_parse_result = http_parse_querry(querry, esp8266_getRecSize());
+    querry[esp8266_getRecSize()] = 0;
 
-    if (http_parse_result->type != HTTP_QUERRY_TYPE_ERROR)
+    http_parse_init(&parser, querry);
+    HTTP_QUERRY_TYPE type = http_parse_querry(&parser, url);
+
+    if (type != HTTP_QUERRY_TYPE_ERROR)
     {
-        if (web_server_restApi && strncmp(http_parse_result->url, "/api/", 5) == 0)
+        if (web_server_restApi && strncmp(url, "/api/", 5) == 0)
         {
-            (*web_server_restApi)(http_parse_result->url+5,
-                                  http_parse_result->type, web_server_buffer);
+            (*web_server_restApi)(url+5,
+                                  type, web_server_buffer);
             esp8266_write_socket_string(sock, web_server_buffer);
         }
         else
         {
             const Fs_File *file;
 
-            if (strcmp(http_parse_result->url, "/") == 0)
+            if (strcmp(url, "/") == 0)
                 file = getFile(web_server_file_list, "index.html");
             else
-                file = getFile(web_server_file_list, http_parse_result->url + 1);
+                file = getFile(web_server_file_list, url + 1);
 
             if (file == NULL)  // search in fs
             {
