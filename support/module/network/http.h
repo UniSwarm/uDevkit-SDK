@@ -29,10 +29,12 @@ typedef struct
 {
     char *querry_str;
     char *ptr;
+    HTTP_QUERRY_TYPE type;
 } HTTP_PARSER;
 
 void http_parse_init(HTTP_PARSER *parser, char *querry_str);
 HTTP_QUERRY_TYPE http_parse_querry(HTTP_PARSER *parser, char *url);
+int http_parse_field(HTTP_PARSER *parser, char *name, char *value);
 
 // http formater
 enum {
