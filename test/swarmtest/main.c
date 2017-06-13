@@ -8,6 +8,9 @@
 
 #include "steppers.h"
 
+extern void rest_api_exec(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *buffer);
+extern const Fs_FilesList file_list;
+
 rt_dev_t uartLed;
 
 void sendLed(uint8_t r, uint8_t g, uint8_t b, char *bufLed)
@@ -38,6 +41,8 @@ int main(void)
 
 	// warning keep this init order before remap support
 	network_init();
+    web_server_setRestApi(rest_api_exec);
+    web_server_setRootFS(&file_list);
 
     // uart debug init
     uartLed = uart_getFreeDevice();

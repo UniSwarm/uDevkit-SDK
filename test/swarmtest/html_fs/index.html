@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Swarm2</title>
+<meta name="viewport" content="width=device-width, height=device-height" />
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Swarm</h1>
+<h2>Time of flight sensors</h2>
+
+<div>tof: <span id="tof1">0</span>mm</div>
+-<div id="tof1bar" style="width:100%; height:20px; background-color: black;"></div>
+<button onclick="refresh()">refresh</button>
+<button onclick="start()">start</button>
+
+<script>
+function refresh()
+{
+var xmlhttp = new XMLHttpRequest();
+var url = "api/tof";
+
+xmlhttp.addEventListener('readystatechange', function()
+{
+	if (xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status === 200)
+	{
+		var result = JSON.parse(xmlhttp.responseText);
+		document.getElementById("tof1").innerHTML = result.tof1;
+		document.getElementById("tof1bar").style.width = result.tof1/2.55+"%";
+	}
+});
+xmlhttp.open("GET", url, true);
+xmlhttp.send(null);
+}
+refresh();
+
+function start()
+{
+var xmlhttp = new XMLHttpRequest();
+var url = "api/start";
+xmlhttp.open("GET", url, true);
+xmlhttp.send(null);
+}
+</script>
+
+</body>
+</html>
