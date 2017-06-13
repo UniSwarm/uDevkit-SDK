@@ -4,7 +4,7 @@
  * @copyright Robotips 2016
  *
  * @date August 13, 2016, 12:04 PM
- * 
+ *
  * @brief Definitions for Swarmtips platform from Robotips
  */
 
@@ -14,7 +14,8 @@
 #include <archi.h>
 
 #include <stdint.h>
- 
+#include <driver/device.h>
+
 int board_init();
 
 #define BOARD_NAME "swarmtips"
@@ -43,6 +44,9 @@ int8_t board_getLed(uint8_t led);
 
 // ESP8266
 #define ESP8266_UART 1
+
+rt_dev_t board_i2c_tof();
+#define TOF_ADDR       0x52
 
 
 #endif // SWARMTIPS_H

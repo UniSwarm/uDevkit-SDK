@@ -10,12 +10,17 @@
 
 #include "swarmtips.h"
 
-#include "driver/adc.h"
+#include <driver/adc.h>
+#include <driver/i2c.h>
+
+#include <module/sensor.h>
 
 #ifdef SIMULATOR
 uint8_t board_led_state = 0;
 #include <stdio.h>
 #endif
+
+rt_dev_t swarmtips2_i2c_tof;
 
 int board_init_io()
 {
@@ -63,11 +68,25 @@ int board_init_io()
 
 int board_init()
 {
+    int i, j;
     init_archi();
 
     board_init_io();
 
+    swarmtips2_i2c_tof = i2c_getFreeDevice();
+    i2c_setBaudSpeed(swarmtips2_i2c_tof, I2C_BAUD_400K);
+    i2c_enable(swarmtips2_i2c_tof);
+
+	for(j=0;j<2;j++) for(i=0;i<65000;i++);
+
+    VL6180X_init(swarmtips2_i2c_tof, 0x52);
+
     return 0;
+}
+
+rt_dev_t board_i2c_tof()
+{
+    return swarmtips2_i2c_tof;
 }
 
 int board_setLed(uint8_t led, uint8_t state)
