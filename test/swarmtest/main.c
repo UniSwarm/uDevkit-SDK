@@ -36,7 +36,7 @@ int main(void)
 	uint16_t value;
 	char buff[100];
 
-	sysclock_setClock(120000000);
+	sysclock_setClock(60000000);
 	board_init();
 
 	// warning keep this init order before remap support

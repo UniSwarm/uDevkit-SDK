@@ -167,7 +167,7 @@ void steppers_init()
     setup_PWM();
 
     stepper_timer = timer_getFreeDevice();
-    timer_setPeriodMs(stepper_timer, 10);
+    timer_setPeriodMs(stepper_timer, 100);
     timer_setHandler(stepper_timer, stepper_handler);
     timer_enable(stepper_timer);
 }

@@ -32,7 +32,7 @@ void rest_api_exec(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *buffer)
     }
     else if (strcmp(restUrl, "start") == 0)
     {
-        steppers_setSpeed(10);
+        steppers_setSpeed(50);
     }
     else
     {
