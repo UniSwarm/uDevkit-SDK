@@ -28,6 +28,6 @@ void SimServer::newClient()
 
 void SimServer::deleteClient(QAbstractSocket::SocketError error)
 {
-    if(error == QAbstractSocket::RemoteHostClosedError)
-        qDebug()<<"end connection";
+    /*if(error == QAbstractSocket::RemoteHostClosedError)
+        qDebug()<<"end connection";*/
 }

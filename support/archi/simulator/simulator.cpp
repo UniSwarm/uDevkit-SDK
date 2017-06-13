@@ -35,7 +35,7 @@ void simulator_init()
 void simulator_end()
 {
     simulator_socket_end();
-    puts("end simulator execution\n");
+    //puts("end simulator execution\n");
 }
 
 void simulator_send(uint16_t moduleId, uint16_t periphId, uint16_t functionId, const char *data, size_t size)
@@ -81,7 +81,7 @@ int simulator_rec_task()
         
         //dbg
         data[size]=0;
-        printf("module %d, periph %d, fct %d %s\n", moduleId, periphId, functionId, data + 8);
+        //printf("module %d, periph %d, fct %d %s\n", moduleId, periphId, functionId, data + 8);
     }
     
     return 0;
