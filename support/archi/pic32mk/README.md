@@ -1,6 +1,6 @@
 # PIC32MK support
 
-PIC32MM family is a high-performance 32 bits range with FPU. All version include USB communication module (2 modules in 100 pins package)
+PIC32MK family is a high-performance 32 bits range with FPU. All version include USB communication module (2 modules in 100 pins package)
 
 This family is spitted into three sub-families :
 
@@ -10,13 +10,13 @@ This family is spitted into three sub-families :
 
 ## Main features
 
-|Feature|GPL|GPM|
-|-------|---|---|
-|Core|32 bits|32 bits|
-|Performance|198 DMIPS|198 DMIPS|
-|Program memory|512kb - 1024kb|512kb - 1024kb|
-|Data memory|128kb - 256kb|128kb - 256kb|
-|Pins|64-100|64-100|
+|Feature|GPD - GPE - MCF|
+|-------|------|
+|Core|32 bits|
+|Performance|198 DMIPS|
+|Program memory|512kb - 1024kb|
+|Data memory|128kb - 256kb|
+|Pins|64-100|
 
 ## Devices list
 
