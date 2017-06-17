@@ -2,17 +2,22 @@
 
 PIC32MM family is a low power high-performance 32 bits range.
 
-This family is spitted into two sub-family :
+This family is spitted into two sub-families :
 
 * GPL : low pin count (20 to 36) with a small set of peripherical
 * GPM : medium pin count (28 to 64) with more periphericals and USB communication
 
+## Main features
+
 |Feature|GPL|GPM|
 |-------|---|---|
 |Core|32 bits|32 bits|
-|Program memory|16k - 64kb|64k - 256kb|
-|Data memory|4k - 8kb|16k - 32k|
+|Performance|37 DMIPS|37 DMIPS|
+|Program memory|16kb - 64kb|64kb - 256kb|
+|Data memory|4kb - 8kb|16kb - 32kb|
 |Pins|20-36|28-64|
+
+## Devices list
 
 |Compatible devices (21 devices on june 2017)|
 |---------|
