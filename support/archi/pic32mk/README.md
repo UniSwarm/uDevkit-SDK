@@ -22,6 +22,10 @@ This family is spitted into three sub-families :
 
 12 devices on june 2017.
 
+### GPD devices
+
+Global Purpose device
+
 |GPD Compatible devices|Program|Data|Pins|
 |---------|--|--|--|
 |[PIC32MK0512GPD064](http://microchip.com/wwwproducts/en/PIC32MK0512GPD064)|512 kb|128 kb|64|
@@ -29,12 +33,20 @@ This family is spitted into three sub-families :
 |[PIC32MK1024GPD064](http://microchip.com/wwwproducts/en/PIC32MK1024GPD064)|1024 kb|256 kb|64|
 |[PIC32MK1024GPD100](http://microchip.com/wwwproducts/en/PIC32MK1024GPD100)|1024 kb|256 kb|100|
 
+### GPE devices
+
+GPD with 4 CAN devices.
+
 |GPE Compatible devices|Program|Data|Pins|
 |---------|--|--|--|
 |[PIC32MK0512GPE064](http://microchip.com/wwwproducts/en/PIC32MK0512GPE064)|512 kb|128 kb|64|
 |[PIC32MK0512GPE100](http://microchip.com/wwwproducts/en/PIC32MK0512GPE100)|512 kb|128 kb|100|
 |[PIC32MK1024GPE064](http://microchip.com/wwwproducts/en/PIC32MK1024GPE064)|1024 kb|256 kb|64|
 |[PIC32MK1024GPE100](http://microchip.com/wwwproducts/en/PIC32MK1024GPE100)|1024 kb|256 kb|100|
+
+### MCF devices
+
+GPD with 4 CAN devices, 6 QEI modules and 12 enhanced PWM.
 
 |MCF Compatible devices|Program|Data|Pins|
 |---------|--|--|--|
