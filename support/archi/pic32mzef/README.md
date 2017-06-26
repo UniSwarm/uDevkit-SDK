@@ -27,7 +27,7 @@ This family is spitted into three variations :
 Base family.
 
 |EFE / EFG Compatible devices|Program|Data|Pins|
-|---------|
+|---------|-|-|-|
 |[PIC32MZ0512EFE064](http://microchip.com/wwwproducts/en/PIC32MZ0512EFE064)| 512 kb|128 kb| 64|
 |[PIC32MZ0512EFE100](http://microchip.com/wwwproducts/en/PIC32MZ0512EFE100)| 512 kb|128 kb|100|
 |[PIC32MZ0512EFE124](http://microchip.com/wwwproducts/en/PIC32MZ0512EFE124)| 512 kb|128 kb|124|
@@ -50,7 +50,7 @@ Base family.
 EFE / EFG with 2 CAN devices.
 
 |EFF / EFH Compatible devices|Program|Data|Pins|
-|---------|
+|---------|-|-|-|
 |[PIC32MZ0512EFF064](http://microchip.com/wwwproducts/en/PIC32MZ0512EFF064)| 512 kb|128 kb| 64|
 |[PIC32MZ0512EFF100](http://microchip.com/wwwproducts/en/PIC32MZ0512EFF100)| 512 kb|128 kb|100|
 |[PIC32MZ0512EFF124](http://microchip.com/wwwproducts/en/PIC32MZ0512EFF124)| 512 kb|128 kb|124|
@@ -73,7 +73,7 @@ EFE / EFG with 2 CAN devices.
 EFE / EFG with 2 CAN devices and hardware crypto module.
 
 |EFK / EFM Compatible devices|Program|Data|Pins|
-|---------|
+|---------|-|-|-|
 |[PIC32MZ0512EFK064](http://microchip.com/wwwproducts/en/PIC32MZ0512EFK064)| 512 kb|128 kb| 64|
 |[PIC32MZ0512EFK100](http://microchip.com/wwwproducts/en/PIC32MZ0512EFK100)| 512 kb|128 kb|100|
 |[PIC32MZ0512EFK124](http://microchip.com/wwwproducts/en/PIC32MZ0512EFK124)| 512 kb|128 kb|124|

@@ -27,7 +27,7 @@ This family is spitted into three variations :
 Base family.
 
 |ECG compatible devices|Program|Data|Pins|
-|---------|
+|---------|-|-|-|
 |[PIC32MZ1024ECG064](http://microchip.com/wwwproducts/en/PIC32MZ1024ECG064)|1024 kb|512 kb| 64|
 |[PIC32MZ1024ECG100](http://microchip.com/wwwproducts/en/PIC32MZ1024ECG100)|1024 kb|512 kb|100|
 |[PIC32MZ1024ECG124](http://microchip.com/wwwproducts/en/PIC32MZ1024ECG124)|1024 kb|512 kb|124|
@@ -42,7 +42,7 @@ Base family.
 ECG with 2 CAN devices.
 
 |ECH compatible devices|Program|Data|Pins|
-|---------|
+|---------|-|-|-|
 |[PIC32MZ1024ECH064](http://microchip.com/wwwproducts/en/PIC32MZ1024ECH064)|1024 kb|512 kb| 64|
 |[PIC32MZ1024ECH100](http://microchip.com/wwwproducts/en/PIC32MZ1024ECH100)|1024 kb|512 kb|100|
 |[PIC32MZ1024ECH124](http://microchip.com/wwwproducts/en/PIC32MZ1024ECH124)|1024 kb|512 kb|124|
@@ -57,7 +57,7 @@ ECG with 2 CAN devices.
 ECG with 2 CAN devices and hardware crypto module.
 
 |ECM compatible devices|Program|Data|Pins|
-|---------|
+|---------|-|-|-|
 |[PIC32MZ1024ECM064](http://microchip.com/wwwproducts/en/PIC32MZ1024ECM064)|1024 kb|512 kb| 64|
 |[PIC32MZ1024ECM100](http://microchip.com/wwwproducts/en/PIC32MZ1024ECM100)|1024 kb|512 kb|100|
 |[PIC32MZ1024ECM124](http://microchip.com/wwwproducts/en/PIC32MZ1024ECM124)|1024 kb|512 kb|124|
