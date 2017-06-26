@@ -46,5 +46,6 @@ int board_init();
 #define A6_RW               LATFbits.LATF1      // A6 trancever direction
 #define A6_WRITE 1
 #define A6_READ 0
+#define A6_UART 1
 
 #endif // A6SCREENBOARD_H

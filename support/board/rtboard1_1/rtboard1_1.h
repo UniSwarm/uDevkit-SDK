@@ -47,12 +47,14 @@ int8_t board_getLed(uint8_t led);
 
 // AX12
 #define AX12_TXEN LATBbits.LATB0       // AX12 buffer direction
+#define AX12_UART 3
 
 // A6
 #define A6_RW LATDbits.LATD0           // A6 trancever direction
 #define A6_WRITE 1
 #define A6_READ 0
 #define A6_DE LATAbits.LATA6
+#define A6_UART 2
 
 // ESP8266
 #define ESP8266_UART 1

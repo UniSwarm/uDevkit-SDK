@@ -21,16 +21,17 @@ rt_dev_t a6_uart;
 
 int a6_init()
 {
-	a6_uart = uart_getFreeDevice();
-	uart_setBaudSpeed(a6_uart, 937500);
-	uart_setBitConfig(a6_uart, 8, UART_BIT_PARITY_NONE, 1);
+    a6_uart = uart(A6_UART);
+    uart_open(a6_uart);
+    uart_setBaudSpeed(a6_uart, 937500);
+    uart_setBitConfig(a6_uart, 8, UART_BIT_PARITY_NONE, 1);
 
 #ifndef SIMULATOR
     A6_RW = A6_READ;
 #endif
 
-	uart_enable(a6_uart);
-	return 0;
+    uart_enable(a6_uart);
+    return 0;
 }
 
 ssize_t a6_write(const char *data, size_t size)
