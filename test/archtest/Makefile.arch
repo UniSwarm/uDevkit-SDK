@@ -1,0 +1,11 @@
+RTPROG = ../..
+
+PROJECT = archtest
+
+DRIVERS += uart i2c timer pwm adc gpio
+
+SRC += main.c
+
+all : hex
+
+include $(RTPROG)/rtprog.mk
