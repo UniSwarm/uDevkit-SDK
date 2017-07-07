@@ -1,12 +1,11 @@
 /**
- * @file uart_pic32.c
- * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @file uart_pic32mx.c
+ * @author Sebastien CAUX (sebcaux) \
+ * @copyright Robotips 2016-2017
  *
- * @date October 06, 2016, 11:15 PM
+ * @date June 07, 2017, 08:15 AM
  *
- * @brief Uart support for rtprog for PIC32MM, PIC32MK, PIC32MX,
- * PIC32MZDA, PIC32MZEC and PIC32MZEF
+ * @brief Uart support for rtprog for PIC32MX
  *
  * Implementation based on Microchip document DS61107G :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/61107G.pdf
@@ -173,11 +172,11 @@ int uart_enable(rt_dev_t device)
     switch (uart)
     {
     case 0:
-        _U1RXIP = 3;    // interrupt priority for receptor
+        _U1IP = 3;    // interrupt priority for receptor
         _U1RXIF = 0;    // clear receive Flag
         _U1RXIE = 1;    // enable receive interrupt
 
-        _U1TXIP = 3;    // interrupt priority for transmitor
+        _U1IP = 3;    // interrupt priority for transmitor
         _U1TXIF = 0;    // clear transmit Flag
         _U1TXIE = 0;    // disable transmit interrupt
 
@@ -187,11 +186,11 @@ int uart_enable(rt_dev_t device)
         break;
 #if UART_COUNT>=2
     case 1:
-        _U2RXIP = 3;    // interrupt priority for receptor
+        _U2IP = 3;    // interrupt priority for receptor
         _U2RXIF = 0;    // clear receive Flag
         _U2RXIE = 1;    // enable receive interrupt
 
-        _U2TXIP = 3;    // interrupt priority for transmitor
+        _U2IP = 3;    // interrupt priority for transmitor
         _U2TXIF = 0;    // clear transmit Flag
         _U2TXIE = 0;    // disable transmit interrupt
 
@@ -202,11 +201,11 @@ int uart_enable(rt_dev_t device)
 #endif
 #if UART_COUNT>=3
     case 2:
-        _U3RXIP = 3;    // interrupt priority for receptor
+        _U3IP = 3;    // interrupt priority for receptor
         _U3RXIF = 0;    // clear receive Flag
         _U3RXIE = 1;    // enable receive interrupt
 
-        _U3TXIP = 3;    // interrupt priority for transmitor
+        _U3IP = 3;    // interrupt priority for transmitor
         _U3TXIF = 0;    // clear transmit Flag
         _U3TXIE = 0;    // disable transmit interrupt
 
@@ -217,11 +216,11 @@ int uart_enable(rt_dev_t device)
 #endif
 #if UART_COUNT>=4
     case 3:
-        _U4RXIP = 3;    // interrupt priority for receptor
+        _U4IP = 3;    // interrupt priority for receptor
         _U4RXIF = 0;    // clear receive Flag
         _U4RXIE = 1;    // enable receive interrupt
 
-        _U4TXIP = 3;    // interrupt priority for transmitor
+        _U4IP = 3;    // interrupt priority for transmitor
         _U4TXIF = 0;    // clear transmit Flag
         _U4TXIE = 0;    // disable transmit interrupt
 
@@ -232,11 +231,11 @@ int uart_enable(rt_dev_t device)
 #endif
 #if UART_COUNT>=5
     case 4:
-        _U5RXIP = 3;    // interrupt priority for receptor
+        _U5IP = 3;    // interrupt priority for receptor
         _U5RXIF = 0;    // clear receive Flag
         _U5RXIE = 1;    // enable receive interrupt
 
-        _U5TXIP = 3;    // interrupt priority for transmitor
+        _U5IP = 3;    // interrupt priority for transmitor
         _U5TXIF = 0;    // clear transmit Flag
         _U5TXIE = 0;    // disable transmit interrupt
 
@@ -247,11 +246,11 @@ int uart_enable(rt_dev_t device)
 #endif
 #if UART_COUNT>=6
     case 5:
-        _U6RXIP = 3;    // interrupt priority for receptor
+        _U6IP = 3;    // interrupt priority for receptor
         _U6RXIF = 0;    // clear receive Flag
         _U6RXIE = 1;    // enable receive interrupt
 
-        _U6TXIP = 3;    // interrupt priority for transmitor
+        _U6IP = 3;    // interrupt priority for transmitor
         _U6TXIF = 0;    // clear transmit Flag
         _U6TXIE = 0;    // disable transmit interrupt
 
@@ -621,22 +620,25 @@ void uart_1_tx()
     }
 }
 
-void __ISR(_UART1_TX_VECTOR, IPL3SRS) U1TXInterrupt(void)
-{
-    uart_1_tx();
-    if(fifo_len(&uarts[0].buffTx) == 0)
-        _U1TXIE = 0;
-    _U1TXIF = 0;
-}
-
-void __ISR(_UART1_RX_VECTOR, IPL3SRS) U1RXInterrupt(void)
+void __ISR(_UART_1_VECTOR, IPL3SRS) U1Interrupt(void)
 {
     char rec[4];
-    rec[0] = U1RXREG;
+	if (_U1TXIF == 1)
+	{
+		uart_1_tx();
+		if (fifo_len(&uarts[0].buffTx) == 0)
+			_U1TXIE = 0;
+		_U1TXIF = 0;
+    }
+    
+	if (_U1RXIF == 1)
+	{
+		rec[0] = U1RXREG;
 
-    fifo_push(&uarts[0].buffRx, rec, 1);
+		fifo_push(&uarts[0].buffRx, rec, 1);
 
-    _U1RXIF = 0;
+		_U1RXIF = 0;
+	}
 }
 #endif
 
@@ -650,22 +652,25 @@ void uart_2_tx()
     }
 }
 
-void __ISR(_UART2_TX_VECTOR, IPL3SRS) U2TXInterrupt(void)
-{
-    uart_2_tx();
-    if(fifo_len(&uarts[1].buffTx) == 0)
-        _U2TXIE = 0;
-    _U2TXIF = 0;
-}
-
-void __ISR(_UART2_RX_VECTOR, IPL3SRS) U2RXInterrupt(void)
+void __ISR(_UART_2_VECTOR, IPL3SRS) U2Interrupt(void)
 {
     char rec[4];
-    rec[0] = U2RXREG;
+	if (_U2TXIF == 1)
+	{
+		uart_2_tx();
+		if (fifo_len(&uarts[1].buffTx) == 0)
+			_U2TXIE = 0;
+		_U2TXIF = 0;
+    }
+    
+	if (_U2RXIF == 1)
+	{
+		rec[0] = U2RXREG;
 
-    fifo_push(&uarts[1].buffRx, rec, 1);
+		fifo_push(&uarts[1].buffRx, rec, 1);
 
-    _U2RXIF = 0;
+		_U2RXIF = 0;
+	}
 }
 #endif
 
@@ -679,22 +684,25 @@ void uart_3_tx()
     }
 }
 
-void __ISR(_UART3_TX_VECTOR, IPL3SRS) U3TXInterrupt(void)
-{
-    uart_3_tx();
-    if(fifo_len(&uarts[2].buffTx) == 0)
-        _U3TXIE = 0;
-    _U3TXIF = 0;
-}
-
-void __ISR(_UART3_RX_VECTOR, IPL3SRS) U3RXInterrupt(void)
+void __ISR(_UART_3_VECTOR, IPL3SRS) U3Interrupt(void)
 {
     char rec[4];
-    rec[0] = U3RXREG;
+	if (_U3TXIF == 1)
+	{
+		uart_3_tx();
+		if (fifo_len(&uarts[2].buffTx) == 0)
+			_U3TXIE = 0;
+		_U3TXIF = 0;
+    }
+    
+	if (_U3RXIF == 1)
+	{
+		rec[0] = U3RXREG;
 
-    fifo_push(&uarts[2].buffRx, rec, 1);
+		fifo_push(&uarts[2].buffRx, rec, 1);
 
-    _U3RXIF = 0;
+		_U3RXIF = 0;
+	}
 }
 #endif
 
@@ -708,22 +716,25 @@ void uart_4_tx()
     }
 }
 
-void __ISR(_UART4_TX_VECTOR, IPL3SRS) U4TXInterrupt(void)
-{
-    uart_4_tx();
-    if(fifo_len(&uarts[3].buffTx) == 0)
-        _U4TXIE = 0;
-    _U4TXIF = 0;
-}
-
-void __ISR(_UART4_RX_VECTOR, IPL3SRS) U4RXInterrupt(void)
+void __ISR(_UART_4_VECTOR, IPL3SRS) U4Interrupt(void)
 {
     char rec[4];
-    rec[0] = U4RXREG;
+	if (_U4TXIF == 1)
+	{
+		uart_4_tx();
+		if (fifo_len(&uarts[3].buffTx) == 0)
+			_U4TXIE = 0;
+		_U4TXIF = 0;
+    }
+    
+	if (_U4RXIF == 1)
+	{
+		rec[0] = U4RXREG;
 
-    fifo_push(&uarts[3].buffRx, rec, 1);
+		fifo_push(&uarts[3].buffRx, rec, 1);
 
-    _U4RXIF = 0;
+		_U4RXIF = 0;
+	}
 }
 #endif
 
@@ -737,22 +748,25 @@ void uart_5_tx()
     }
 }
 
-void __ISR(_UART5_TX_VECTOR, IPL3SRS) U5TXInterrupt(void)
-{
-    uart_5_tx();
-    if(fifo_len(&uarts[4].buffTx) == 0)
-        _U5TXIE = 0;
-    _U5TXIF = 0;
-}
-
-void __ISR(_UART5_RX_VECTOR, IPL3SRS) U5RXInterrupt(void)
+void __ISR(_UART_5_VECTOR, IPL3SRS) U5Interrupt(void)
 {
     char rec[4];
-    rec[0] = U5RXREG;
+	if (_U5TXIF == 1)
+	{
+		uart_5_tx();
+		if (fifo_len(&uarts[4].buffTx) == 0)
+			_U5TXIE = 0;
+		_U5TXIF = 0;
+    }
+    
+	if (_U5RXIF == 1)
+	{
+		rec[0] = U5RXREG;
 
-    fifo_push(&uarts[4].buffRx, rec, 1);
+		fifo_push(&uarts[4].buffRx, rec, 1);
 
-    _U5RXIF = 0;
+		_U5RXIF = 0;
+	}
 }
 #endif
 
@@ -766,22 +780,25 @@ void uart_6_tx()
     }
 }
 
-void __ISR(_UART6_TX_VECTOR, IPL3SRS) U6TXInterrupt(void)
-{
-    uart_6_tx();
-    if(fifo_len(&uarts[5].buffTx) == 0)
-        _U6TXIE = 0;
-    _U6TXIF = 0;
-}
-
-void __ISR(_UART6_RX_VECTOR, IPL3SRS) U6RXInterrupt(void)
+void __ISR(_UART_6_VECTOR, IPL3SRS) U6Interrupt(void)
 {
     char rec[4];
-    rec[0] = U6RXREG;
+	if (_U6TXIF == 1)
+	{
+		uart_6_tx();
+		if (fifo_len(&uarts[5].buffTx) == 0)
+			_U6TXIE = 0;
+		_U6TXIF = 0;
+    }
+    
+	if (_U6RXIF == 1)
+	{
+		rec[0] = U6RXREG;
 
-    fifo_push(&uarts[5].buffRx, rec, 1);
+		fifo_push(&uarts[5].buffRx, rec, 1);
 
-    _U6RXIF = 0;
+		_U6RXIF = 0;
+	}
 }
 #endif
 
