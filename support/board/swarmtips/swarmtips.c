@@ -69,7 +69,7 @@ int board_init_io()
 int board_init()
 {
     uint16_t i, j;
-    init_archi();
+    archi_init();
 
     board_init_io();
 

@@ -19,7 +19,7 @@ int main(void)
     uint16_t value;
     char buff[100];
 
-    init_archi();
+    archi_init();
     //sysclock_setClock(200000000);
     sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK_TIMER, 16);
 

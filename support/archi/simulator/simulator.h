@@ -27,7 +27,7 @@ void simulator_send(uint16_t moduleId, uint16_t periphId, uint16_t functionId, c
 int simulator_recv(uint16_t moduleId, uint16_t periphId, uint16_t functionId, char *data, size_t size);
 int simulator_rec_task();
 
-#define init_archi() simulator_init()
+#define archi_init() simulator_init()
 
 #ifdef __cplusplus
 }

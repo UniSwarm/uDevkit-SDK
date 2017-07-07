@@ -55,7 +55,7 @@ int board_init_io()
 
 int board_init()
 {
-    init_archi();
+    archi_init();
 
     board_init_io();
 
