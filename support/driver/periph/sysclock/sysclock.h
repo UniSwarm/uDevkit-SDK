@@ -14,13 +14,19 @@
 #include <stdint.h>
 
 // ======= specific include =======
-#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
- || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
- #include "sysclock_pic24_dspic30f_dspic33.h"
+#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) \
+ || defined(ARCHI_pic24hj) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) \
+ || defined(ARCHI_dspic33ev)
+ #include "sysclock_pic24_dspic33.h"
+#elif defined(ARCHI_dspic30f)
+ #include "sysclock_dspic30.h"
 #elif defined(ARCHI_pic32mx)
  #include "sysclock_pic32mx.h"
-#elif defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
- #include "sysclock_pic32mz.h"
+#elif defined(ARCHI_pic32mm)
+ #include "sysclock_pic32mm.h"
+#elif defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) \
+ || defined(ARCHI_pic32mk)
+ #include "sysclock_pic32mz_mk.h"
 #else
  #error Unsuported ARCHI
 #endif

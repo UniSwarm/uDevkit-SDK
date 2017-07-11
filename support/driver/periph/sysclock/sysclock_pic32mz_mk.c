@@ -1,11 +1,12 @@
 /**
- * @file sysclock_pic32mz.h
+ * @file sysclock_pic32mz_mk.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
  *
  * @date March 01, 2016, 22:10 PM
  *
  * @brief System clock support for rtprog for PIC32MZ family (DA, EC and EF)
+ * PIC32MK and PIC32MM
  *
  * Implementation based on Microchip document DS60001250B :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/60001250B.pdf
@@ -96,8 +97,8 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 {
     if (OSCCONbits.CLKLOCK == 1)
         return -1; // Clocks and PLL are locked, source cannot be changed
-    
-    if(source = SYSCLOCK_SRC_BFRC)
+
+    if(source == SYSCLOCK_SRC_BFRC)
         return -2; // cannot switch to backup FRC
 
     // disable interrupts
@@ -122,7 +123,7 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 
     // enable interrupts
     enable_interrupt();
-    
+
     if (sysclock_source() != source)
         return -3; // Error when switch clock source
 
@@ -137,39 +138,63 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
  */
 int sysclock_setClock(uint32_t fosc)
 {
-    return sysclock_setClockWPLL(fosc);
+    //return sysclock_setClockWPLL(fosc);
+    sysclock_sysfreq = fosc;
+    return 0;
 }
 
 /**
  * @brief Internal function to set clock with PLL from XTAL or FRC
  * @param fosc desirate system frequency in Hz
+ * @param src input source clock of PLL (SYSCLOCK_SRC_FRC or SYSCLOCK_SRC_POSC)
  * @return 0 if ok, -1 in case of error
  */
-int sysclock_setClockWPLL(uint32_t fosc)
+int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 {
-    /*uint32_t fin, fplli, fsys;
-    uint16_t multiplier;
-    uint16_t prediv, postdiv;
+    uint32_t fin, fpllo, fsys;
+    uint16_t prediv, multiplier, postdiv;
 
-    uint8_t frc_mode;
+    if (sysclock_source() == SYSCLOCK_SRC_SPLL)
+        return -1; // cannot change PLL when it is used
 
     if (fosc > SYSCLOCK_FOSC_MAX)
         return -1; // cannot generate fosc > SYSCLOCK_FOSC_MAX
 
-    if (fosc < SYSCLOCK_FSYS_MIN / 8)
-        return -1; // cannot generate fosc < SYSCLOCK_FSYS_MIN / 8
+    if(src == SYSCLOCK_SRC_FRC2 || src == SYSCLOCK_SRC_FRC)
+    {
+        fin = 8000000;
+        SPLLCONbits.PLLICLK = 1; // FRC as input
+    }
+    else if(src == SYSCLOCK_SRC_POSC)
+    {
+        fin = SYSCLOCK_XTAL;
+        SPLLCONbits.PLLICLK = 0; // POSC as input
+    }
+    else
+    {
+        return -1; // source can be only FRC or POSC
+    }
 
-#ifndef SYSCLOCK_XTAL
-    OSCTUN = 23; // ==> Fin = 8 MHz Internal clock
-    fin = 8000000;
-    frc_mode = 1;
-#else
-    fin = SYSCLOCK_XTAL;
-    frc_mode = 0;
-#endif
+    // post div
+    postdiv = 32;
+    while (fosc * postdiv > SYSCLOCK_FVCO_MAX && postdiv >= 2)
+        postdiv = postdiv >> 1;
+    if (postdiv < 2)
+        return -1;
+    fpllo = fosc * postdiv;
+
+    // multiplier
+
+    // pre divisor
+    for (prediv = 1; prediv <= 8; prediv++)
+    {
+        multiplier = fpllo / (fin / prediv);
+    }
+
+    // pll range
 
     // calculate post-diviser and fsys
-    postdiv = 2;
+    /*postdiv = 2;
     fsys = fosc << 1;
     if (fsys < SYSCLOCK_FSYS_MIN)
     {
@@ -221,9 +246,7 @@ int sysclock_setClockWPLL(uint32_t fosc)
     }
 
     // Wait for PLL to lock
-    while (OSCCONbits.LOCK != 1);
-*/
-    sysclock_sysfreq = fosc;
+    while (OSCCONbits.LOCK != 1);*/
 
     return 0;
 }

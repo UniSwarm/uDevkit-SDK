@@ -5,14 +5,21 @@
  *
  * @date April 11, 2016, 05:12 PM
  *
- * @brief System clock support for rtprog
+ * @brief System clock support for rtprog for dsPIC33FJ, dsPIC33EP, dsPIC33EV,
+ * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
+ *
+ * Implementation based on Microchip documents DS70186D, DS70580C, DS70005131A, DS70307E :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70216D.pdf
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70580C.pdf
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70005131a.pdf
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70307E.pdf
  */
 
-#include "sysclock_pic24_dspic30f_dspic33.h"
+#include "sysclock.h"
 
 #include <stdint.h>
 
-#include <xc.h>
+#include <archi.h>
 
 #include "board.h"
 
