@@ -66,9 +66,12 @@ int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div);
 typedef enum {
 #if defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
     SYSCLOCK_SRC_FRC2  = 0b111, ///< sysclock from Fast RC Oscillator (FRC) divided by FRCDIV
-#endif
     SYSCLOCK_SRC_BFRC  = 0b110, ///< backup FRC, cannot be chose by user
+#endif
     SYSCLOCK_SRC_LPRC  = 0b101, ///< Low-Power RC (LPRC) Oscillator
+#if defined(ARCHI_pic32mk)
+    SYSCLOCK_SRC_UPLL  = 0b011, ///< USB PLL (UPLL)
+#endif
     SYSCLOCK_SRC_SOSC  = 0b100, ///< SOSC
     SYSCLOCK_SRC_POSC  = 0b010, ///< Primary Oscillator (POSC) HS and EC
     SYSCLOCK_SRC_SPLL  = 0b001, ///< System PLL (SPLL)
@@ -76,6 +79,13 @@ typedef enum {
 } SYSCLOCK_SOURCE;
 SYSCLOCK_SOURCE sysclock_source();
 int sysclock_switchSourceTo(SYSCLOCK_SOURCE source);
+
+#if defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
+ #define SYSCLOCK_SRC_FRC2 SYSCLOCK_SRC_FRC2
+ #define SYSCLOCK_SRC_BFRC SYSCLOCK_SRC_BFRC
+#elif defined(ARCHI_pic32mk)
+ #define SYSCLOCK_SRC_UPLL SYSCLOCK_SRC_UPLL
+#endif
 
 /*  main PLL
  *        __         _____         _____         _____

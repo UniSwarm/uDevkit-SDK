@@ -83,8 +83,10 @@ int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div)
 SYSCLOCK_SOURCE sysclock_source()
 {
     SYSCLOCK_SOURCE source = (SYSCLOCK_SOURCE)OSCCONbits.COSC;
+#ifdef SYSCLOCK_SRC_FRC2
     if (source == SYSCLOCK_SRC_FRC2)
         return SYSCLOCK_SRC_FRC;
+#endif
     return source;
 }
 
@@ -98,8 +100,10 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
     if (OSCCONbits.CLKLOCK == 1)
         return -1; // Clocks and PLL are locked, source cannot be changed
 
+#ifdef SYSCLOCK_SRC_BFRC
     if(source == SYSCLOCK_SRC_BFRC)
         return -2; // cannot switch to backup FRC
+#endif
 
     // disable interrupts
     disable_interrupt();
@@ -160,12 +164,16 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     if (fosc > SYSCLOCK_FOSC_MAX)
         return -1; // cannot generate fosc > SYSCLOCK_FOSC_MAX
 
-    if(src == SYSCLOCK_SRC_FRC2 || src == SYSCLOCK_SRC_FRC)
+#ifdef SYSCLOCK_SRC_FRC2
+    if (src == SYSCLOCK_SRC_FRC2 || src == SYSCLOCK_SRC_FRC)
+#else
+    if (src == SYSCLOCK_SRC_FRC)
+#endif
     {
         fin = 8000000;
         SPLLCONbits.PLLICLK = 1; // FRC as input
     }
-    else if(src == SYSCLOCK_SRC_POSC)
+    else if (src == SYSCLOCK_SRC_POSC)
     {
         fin = SYSCLOCK_XTAL;
         SPLLCONbits.PLLICLK = 0; // POSC as input
