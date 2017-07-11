@@ -8,7 +8,7 @@
 
 int main(void)
 {
-    arch_init();
+    archi_init();
 
     while(1);
 

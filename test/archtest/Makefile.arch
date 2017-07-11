@@ -2,7 +2,7 @@ RTPROG = ../..
 
 PROJECT = archtest
 
-DRIVERS += uart # i2c timer pwm adc gpio
+DRIVERS += uart timer # i2c pwm adc gpio
 
 SRC += main.c
 
