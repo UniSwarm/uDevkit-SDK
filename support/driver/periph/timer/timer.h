@@ -45,10 +45,10 @@ uint16_t timer_getValue(rt_dev_t device);
  || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
  #include "timer_pic24_dspic30f_dspic33.h"
 #elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mx) \
-   || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
+   || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
  #include "timer_pic32.h"
 #else
-#error "Unsupported ARCHI"
+ #warning "Unsupported ARCHI"
 #endif
 
 #endif // TIMER_H
