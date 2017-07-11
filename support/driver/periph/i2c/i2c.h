@@ -59,13 +59,15 @@ int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value
 int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[], size_t size, uint8_t flags);
 
 // ======= specific include =======
-#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
- || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
+#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) \
+ || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) \
+ || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
  #include "i2c_pic24_dspic30f_dspic33.h"
-#elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
+#elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mx) \
+|| defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
  #include "i2c_pic32.h"
 #else
- #error Unsuported ARCHI
+ #warning Unsuported ARCHI
 #endif
 
 #endif // I2C_H

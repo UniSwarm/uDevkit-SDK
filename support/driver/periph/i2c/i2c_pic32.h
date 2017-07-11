@@ -103,6 +103,12 @@
  #define I2C_COUNT 0
 #endif
 
+// I2C are disabled in MK familly until it will fixed ...
+#if defined(ARCHI_pic32mk)
+ #undef I2C_COUNT
+ #define I2C_COUNT 0
+#endif
+
 #if defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ2048EFM064) \
  || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ1024ECG064) || defined(DEVICE_32MZ1024ECH064) \
  || defined(DEVICE_32MZ1024ECM064) || defined(DEVICE_32MZ1024EFE064) || defined(DEVICE_32MZ1024EFF064) \
