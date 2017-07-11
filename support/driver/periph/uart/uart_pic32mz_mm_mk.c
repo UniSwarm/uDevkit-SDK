@@ -86,6 +86,20 @@ struct uart_dev uarts[] = {
 #endif
 };
 
+#if defined(ARCHI_pic32mk)
+uint32_t uart_getClock(rt_dev_t device)
+{
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+        return 1;
+    
+    if (uart < 2)
+        return sysclock_getPeriphClock(SYSCLOCK_CLOCK_UART1_2);
+    else
+        return sysclock_getPeriphClock(SYSCLOCK_CLOCK_UART3_6);
+}
+#endif
+
 /**
  * @brief Gives a free uart device number and open it
  * @return uart device number
@@ -346,7 +360,7 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 
     uarts[uart].baudSpeed = baudSpeed;
 
-    systemClockPeriph = sysclock_getPeriphClock(SYSCLOCK_CLOCK_UART);
+    systemClockPeriph = uart_getClock(device);
     uBrg = systemClockPeriph / baudSpeed;
 
     if ((uBrg & 0x0F) == 0)
@@ -454,7 +468,7 @@ uint32_t uart_baudSpeed(rt_dev_t device)
 #endif
     }
 
-    baudSpeed = sysclock_getPeriphClock(SYSCLOCK_CLOCK_UART) / uBrg;
+    baudSpeed = uart_getClock(device) / uBrg;
     if (hs == 1)
         baudSpeed = baudSpeed >> 2;
     else

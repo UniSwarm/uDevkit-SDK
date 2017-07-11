@@ -72,6 +72,12 @@
 #endif
 
 #if defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
+ #define uart_getClock(d) sysclock_getPeriphClock(SYSCLOCK_CLOCK_UART)
+#else
+ uint32_t uart_getClock(rt_dev_t device);
+#endif
+
+#if defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
  // interrupt bits helpers for MZ
  #ifndef _U1RXIE
   #define _U1EIE  IEC3bits.U1EIE
