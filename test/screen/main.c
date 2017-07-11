@@ -62,7 +62,7 @@ void drawBattValue(uint16_t x, uint16_t y, uint16_t volt)
     char text[20];
 
     sprintf(text, "%.2fv", (float)volt/1000.0);
-    gui_drawTextRect(x, y-4, 55, 20, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
+    gui_drawTextRect(x, y-4, 70, 20, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
 }
 
 void drawPos(uint16_t x, uint16_t y, uint16_t posx, uint16_t posy, uint16_t post)
@@ -142,7 +142,7 @@ int main(void)
     //cmd.background_color = Gui_Black;
     // console_open(&cmd, 100, 50);
 
-    gui_setFont(&core12b);
+    gui_setFont(&core14b);
     drawMenuBar();
     drawBattValue(20, 300, 4100);
     drawBatt(390, 300, 50);

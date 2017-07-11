@@ -27,7 +27,7 @@ MODULES += gui network
 NETWORK_DRIVERS = a6
 
 SRC += main.c
-FONTS += core12b core18b Lucida_Console10
+FONTS += core14b core18b Lucida_Console10
 
 include $(RTPROG)/rtprog.mk
 

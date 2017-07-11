@@ -15,7 +15,7 @@ NETWORK_DRIVERS = esp8266
 
 MODULES += gui
 GUI_DRIVERS = ssd1306
-FONTS += Lucida_Console8
+FONTS += Lucida_Console10
 
 MODULES += sensor
 SENSOR_DRIVERS = VL6180X

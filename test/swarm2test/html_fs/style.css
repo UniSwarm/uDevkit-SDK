@@ -1,0 +1,38 @@
+body {
+	padding: 0;
+	margin: 0;
+	background-color : #d9d9d9;
+}
+h1 {
+	color: #c64421;
+	font-family: Georgia, Garamond, Baskerville , "Times New Roman", Times, serif;
+	font-size: 1.8em;
+	font-weight: bold;
+	text-decoration : none;
+	margin-top: 0px;
+	margin-bottom: 15px;
+}
+
+h2 {
+	color: #c64421;
+	font-family: Georgia, Garamond, Baskerville , "Times New Roman", Times, serif;
+	font-size: 1.5em;
+	font-weight: bold;
+	text-decoration : none;
+}
+
+.tofbar {
+	padding: 3px;
+    background-color: white;
+}
+
+.tofbar > div {
+    height:20px;
+    background-color: #c64421;
+}
+
+.box {
+    float: left;
+    box-sizing: border-box;
+    width: 33%;
+}

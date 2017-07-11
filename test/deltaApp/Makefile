@@ -15,21 +15,11 @@ NETWORK_DRIVERS = esp8266 a6
 MODULES += sensor
 SENSOR_DRIVERS = sharp
 
-SRC += main.c
+SRC += main.c html_fs_data.c restApi.c
+
+all : hex
 
 include $(RTPROG)/rtprog.mk
 
-all : hex
-	@echo "DRIVERS implemented   :" $(DRIVERS)
-	@echo DEVICE: $(DEVICE), ARCHI: $(ARCHI), CC: $(CC), DEFINES: $(DEFINES)
-	@echo CCFLAGS: $(CCFLAGS)
-	
-echo:
-	@echo "DRIVERS implemented   :" $(DRIVERS)
-	@echo DEVICE: $(DEVICE), ARCHI: $(ARCHI), CC: $(CC), DEFINES: $(DEFINES)
-	@echo CCFLAGS: $(CCFLAGS)
-	@echo SRC: $(SRC)
-	@echo OBJECTS: $(OBJECTS)
-
-FORCE:
-
+html_fs_data.c: $(HTMLGEN_EXE) $(call rwildcard, html_fs/, *)
+	$(HTMLGEN_EXE) -i html_fs/ -o html_fs_data.c

@@ -33,7 +33,7 @@ int main(void)
 
     // screen test
     ihm_init();
-    motors_setSpeed(0);
+    motors_setSpeed(600);
     motors_moveForward(200);
 
     while(1)

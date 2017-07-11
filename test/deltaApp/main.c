@@ -6,6 +6,9 @@
 #include "robot.h"
 #include "archi.h"
 
+extern void rest_api_exec(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *buffer);
+extern const Fs_FilesList file_list;
+
 //#include "a6channels.h"
 
 unsigned int pos[] = {
@@ -35,12 +38,11 @@ int main(void)
 
     usb_serial = usb_serial_getFreeDevice();
 
-    // warning keep this init order before remap support
     network_init();
-    //esp_init();
-    ax12_init();
-    //a6_init();
+    web_server_setRestApi(rest_api_exec);
+    web_server_setRootFS(&file_list);
 
+    ax12_init();
     adc_init();
 
     // uart debug init
@@ -65,7 +67,7 @@ int main(void)
     pose.y = 1000;
     pose.t = 0;
     mrobot_setPose(pose);
-    
+
 	MrobotPoint pos;
 	pos.x = 1500;
 	pos.y = 1000;
@@ -77,7 +79,7 @@ int main(void)
         network_task();
         usb_serial_task();
         for(i=0;i<65000;i++);
-        
+
         #ifdef SIMULATOR
             usleep(1000);
         #endif
@@ -130,7 +132,7 @@ int main(void)
         {
             int16_t *ptr;
             ptr = (int16_t *)buff;
-			
+
             *ptr = 0xA6;
 
             ptr++;

@@ -4,8 +4,6 @@
 #include "board.h"
 #include "modules.h"
 
-#include "motors.h"
-
 int id = 0;
 
 void write_header_json(char *buffer)
@@ -36,32 +34,8 @@ void rest_api_exec(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *buffer)
         if (querry_type == HTTP_QUERRY_TYPE_GET)
         {
             json_open_object(&json);
-            json_add_field_int(&json, "tof1", VL6180X_getDistance(board_i2c_tof(), TOF1_ADDR));
-            json_add_field_int(&json, "tof2", VL6180X_getDistance(board_i2c_tof(), TOF2_ADDR));
-            json_add_field_int(&json, "tof3", VL6180X_getDistance(board_i2c_tof(), TOF3_ADDR));
+            //json_add_field_int(&json, "tof1", VL6180X_getDistance(board_i2c_tof(), TOF1_ADDR));
             json_close_object(&json);
-        }
-    }
-    else if (strcmp(restUrl, "start60") == 0)
-    {
-        if (querry_type == HTTP_QUERRY_TYPE_POST)
-        {
-            motors_setSpeed(600);
-        }
-        else if (querry_type == HTTP_QUERRY_TYPE_GET)
-        {
-            motors_setSpeed(600);
-        }
-    }
-    else if (strcmp(restUrl, "start100") == 0)
-    {
-        if (querry_type == HTTP_QUERRY_TYPE_POST)
-        {
-            motors_setSpeed(1000);
-        }
-        else if (querry_type == HTTP_QUERRY_TYPE_GET)
-        {
-            motors_setSpeed(1000);
         }
     }
     else

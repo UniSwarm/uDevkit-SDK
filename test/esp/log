@@ -1,0 +1,344 @@
+ready
+AT+CIPMUX=1
+
+OK
+AT+CWMODE_CUR=3
+
+OK
+AT+CWJAP_CUR="iotRT","iotwifiA"
+WIFI CONNECTED
+WIFI GOT IP
+
+OK
+AT+CWSAP_CUR="rtnet","pwd2017A",5,3
+
+OK
+AT+CIPSERVER=1,80
+
+OK
+AT+CIFSR
++CIFSR:APIP,"192.168.4.1"
++CIFSR:APMAC,"1a:fe:34:fc:ad:61"
++CIFSR:STAIP,"192.168.0.101"
++CIFSR:STAMAC,"18:fe:34:fc:ad:61"
+
+OK
+0,CONNECT
+
++IPD,0,374:GET /index.html HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+DNT: 1
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+Cache-Control: max-age=0
+
+AT+CIPSEND=0,706
+
+OK
+>
+Recv 706 bytes
+
+SEND OK
+AT+CIPCLOSE=0
+0,CLOSED
+
+OK
+0,CONNECT
+
++IPD,0,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+AT+CIPSEND=0,71
+
+OK
+>
+Recv 71 bytes
+
+SEND OK
+AT+CIPCLOSE=0
+0,CLOSED
+
+OK
+0,CONNECT
+
++IPD,0,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+AT+CIPSEND=0,71
+
+OK
+>
+Recv 71 bytes
+
+SEND OK
+AT+CIPCLOSE=0
+0,CLOSED
+
+OK
+0,CONNECT
+
++IPD,0,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+AT+CIPSEND=0,71
+
+OK
+>
+Recv 71 bytes
+
+SEND OK
+AT+CIPCLOSE=0
+0,CLOSED
+
+OK
+0,CONNECT
+
++IPD,0,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+1,CONNECT
+AT+CIPSEND=0,71
+
+OK
+>
++IPD,1,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+
+Recv 71 bytes
+
+SEND OK
+2,CONNECT
+
++IPD,2,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+AT+CIPCLOSE=0
+0,CLOSED
+
+OK
+AT+CIPSEND=2,71
+
+OK
+> 0,CONNECT
+
++IPD,0,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+
+Recv 71 bytes
+
+SEND OK
+AT+CIPCLOSE=2
+2,CLOSED
+
+OK
+AT+CIPSEND=0,71
+
+OK
+>
+Recv 71 bytes
+
+SEND OK
+AT+CIPCLOSE=0
+0,CLOSED
+
+OK
+0,CONNECT
+
++IPD,0,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+2,CONNECT
+
++IPD,2,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+3,CONNECT
+
++IPD,3,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+AT+CIPSEND=2,71
+
+OK
+> 4,CONNECT
+
++IPD,4,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+
+Recv 71 bytes
+
+SEND OK
+AT+CIPCLOSE=2
+2,CLOSED
+
+OK
+AT+CIPSEND=4,71
+
+OK
+> 2,CONNECT
+
+Recv 71 bytes
+
++IPD,2,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+
+SEND OK
+AT+CIPCLOSE=4
+4,CLOSED
+
+OK
+AT+CIPSEND=2,71
+
+OK
+>
+Recv 71 bytes
+
+SEND OK
+AT+CIPCLOSE=2
+2,CLOSED
+
+OK
+2,CONNECT
+
++IPD,2,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+4,CONNECT
+
++IPD,4,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+AT+CIPSEND=4,72
+
+OK
+>
+Recv 72 bytes
+
+SEND OK
+AT+CIPCLOSE=4
+4,CLOSED
+
+OK
+AT+CIPSEND=4,72
+link is not valid
+
+ERROR
+4,CONNECT
+
++IPD,4,298:GET /api/status HTTP/1.1
+Host: 192.168.4.1
+User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0
+Accept: */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://192.168.4.1/index.html
+DNT: 1
+Connection: keep-alive
+
+

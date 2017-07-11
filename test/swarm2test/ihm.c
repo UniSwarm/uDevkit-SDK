@@ -26,7 +26,7 @@ void ihm_screenWifi();
 void ihm_init()
 {
     gui_init(board_i2c_ihm());
-    gui_setFont(&Lucida_Console8);
+    gui_setFont(&Lucida_Console10);
     gui_setBrushColor(0);
     gui_setPenColor(1);
 
@@ -214,6 +214,7 @@ void ihm_screenWifi()
 
     // ip
     gui_drawTextRect(5, 18, 118, 14, esp8266_getIp(), GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
+    gui_drawTextRect(5, 36, 118, 14, esp8266_getMac(), GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
 
     gui_ctrl_update();
 }
