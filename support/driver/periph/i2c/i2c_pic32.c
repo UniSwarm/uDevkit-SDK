@@ -217,31 +217,31 @@ int i2c_disable(rt_dev_t device)
 #ifdef I2C_NUM1
     case I2C_NUM1:
         I2C1CONbits.I2CEN = 0;  // disable i2c
-        IEC3bits.I2C1MIE = 0;   // disable i2c master interrupt
+        _I2C1MIE = 0;           // disable i2c master interrupt
         break;
 #endif
 #ifdef I2C_NUM2
     case I2C_NUM2:
         I2C2CONbits.I2CEN = 0;  // disable i2c
-        IEC4bits.I2C2MIE = 0;   // disable i2c master interrupt
+        _I2C2MIE = 0;           // disable i2c master interrupt
         break;
 #endif
 #ifdef I2C_NUM3
     case I2C_NUM3:
         I2C3CONbits.I2CEN = 0;  // disable i2c
-        IEC5bits.I2C3MIE = 0;   // disable i2c master interrupt
+        _I2C3MIE = 0;           // disable i2c master interrupt
         break;
 #endif
 #ifdef I2C_NUM4
     case I2C_NUM4:
         I2C4CONbits.I2CEN = 0;  // disable i2c
-        IEC5bits.I2C4MIE = 0;   // disable i2c master interrupt
+        _I2C4MIE = 0;           // disable i2c master interrupt
         break;
 #endif
 #ifdef I2C_NUM5
     case I2C_NUM5:
         I2C5CONbits.I2CEN = 0;  // disable i2c
-        IEC5bits.I2C5MIE = 0;   // disable i2c master interrupt
+        _I2C5MIE = 0;           // disable i2c master interrupt
         break;
 #endif
     }
