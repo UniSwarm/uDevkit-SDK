@@ -16,7 +16,7 @@
 #include <archi.h>
 #include "board.h"
 
-uint32_t sysclock_sysfreq = 200000000;
+uint32_t sysclock_sysfreq = 25000000;
 
 /**
  * @brief Gets the actual frequency on a particular peripherical bus clock

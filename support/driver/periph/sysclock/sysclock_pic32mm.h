@@ -28,39 +28,25 @@ int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div);
 // periph clock assoc
 #define SYSCLOCK_CLOCK_CPU    SYSCLOCK_CLOCK_SYSCLK  ///< CPU clock bus
 #define SYSCLOCK_CLOCK_USB    SYSCLOCK_CLOCK_USBCLK  ///< USB clock bus
-#define SYSCLOCK_CLOCK_CAN    SYSCLOCK_CLOCK_PBCLK  ///< CAN clock bus mapped to periphericals bus 5
-#define SYSCLOCK_CLOCK_PMP    SYSCLOCK_CLOCK_PBCLK  ///< PMP clock bus mapped to periphericals bus 2
-#define SYSCLOCK_CLOCK_I2C    SYSCLOCK_CLOCK_PBCLK  ///< I2C clock bus mapped to periphericals bus 2
-#define SYSCLOCK_CLOCK_UART   SYSCLOCK_CLOCK_PBCLK  ///< UART clock bus mapped to periphericals bus 2
-#define SYSCLOCK_CLOCK_SPI    SYSCLOCK_CLOCK_PBCLK  ///< SPI clock bus mapped to periphericals bus 2
-#define SYSCLOCK_CLOCK_TIMER  SYSCLOCK_CLOCK_PBCLK  ///< TIMER clock bus mapped to periphericals bus 3
-#define SYSCLOCK_CLOCK_OC     SYSCLOCK_CLOCK_PBCLK  ///< OC clock bus mapped to periphericals bus 3
-#define SYSCLOCK_CLOCK_IC     SYSCLOCK_CLOCK_PBCLK  ///< IC clock bus mapped to periphericals bus 3
+#define SYSCLOCK_CLOCK_CAN    SYSCLOCK_CLOCK_PBCLK   ///< CAN clock bus mapped to periphericals bus 5
+#define SYSCLOCK_CLOCK_PMP    SYSCLOCK_CLOCK_PBCLK   ///< PMP clock bus mapped to periphericals bus 2
+#define SYSCLOCK_CLOCK_I2C    SYSCLOCK_CLOCK_PBCLK   ///< I2C clock bus mapped to periphericals bus 2
+#define SYSCLOCK_CLOCK_UART   SYSCLOCK_CLOCK_PBCLK   ///< UART clock bus mapped to periphericals bus 2
+#define SYSCLOCK_CLOCK_SPI    SYSCLOCK_CLOCK_PBCLK   ///< SPI clock bus mapped to periphericals bus 2
+#define SYSCLOCK_CLOCK_TIMER  SYSCLOCK_CLOCK_PBCLK   ///< TIMER clock bus mapped to periphericals bus 3
+#define SYSCLOCK_CLOCK_OC     SYSCLOCK_CLOCK_PBCLK   ///< OC clock bus mapped to periphericals bus 3
+#define SYSCLOCK_CLOCK_IC     SYSCLOCK_CLOCK_PBCLK   ///< IC clock bus mapped to periphericals bus 3
 
 // clock source
 typedef enum {
-#if defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
-    SYSCLOCK_SRC_FRC2  = 0b111, ///< sysclock from Fast RC Oscillator (FRC) divided by FRCDIV
-    SYSCLOCK_SRC_BFRC  = 0b110, ///< backup FRC, cannot be chose by user
-#endif
     SYSCLOCK_SRC_LPRC  = 0b101, ///< Low-Power RC (LPRC) Oscillator
-#if defined(ARCHI_pic32mk)
-    SYSCLOCK_SRC_UPLL  = 0b011, ///< USB PLL (UPLL)
-#endif
     SYSCLOCK_SRC_SOSC  = 0b100, ///< SOSC
     SYSCLOCK_SRC_POSC  = 0b010, ///< Primary Oscillator (POSC) HS and EC
     SYSCLOCK_SRC_SPLL  = 0b001, ///< System PLL (SPLL)
-    SYSCLOCK_SRC_FRC   = 0b000  ///< same as SYSCLOCK_SRC_FRC
+    SYSCLOCK_SRC_FRC   = 0b000  ///< Fast internal oscilator (FRC)
 } SYSCLOCK_SOURCE;
 SYSCLOCK_SOURCE sysclock_source();
 int sysclock_switchSourceTo(SYSCLOCK_SOURCE source);
-
-#if defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
- #define SYSCLOCK_SRC_FRC2 SYSCLOCK_SRC_FRC2
- #define SYSCLOCK_SRC_BFRC SYSCLOCK_SRC_BFRC
-#elif defined(ARCHI_pic32mk)
- #define SYSCLOCK_SRC_UPLL SYSCLOCK_SRC_UPLL
-#endif
 
 /*  main PLL
  *        __         _____         _____         _____
