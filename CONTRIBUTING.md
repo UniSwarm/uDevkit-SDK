@@ -27,7 +27,7 @@ Before contributing, never forget the following points:
 * Include the name of modified driver or module between square brackets.
 
   * `[uart] msg` For a global modification to the uart driver, not device dependent
-  
+
   * `[uart:pic32mx] msg` For a specific modification to uart driver for PIC32MX family
 
 ### C code styleguide
@@ -39,22 +39,23 @@ Before contributing, never forget the following points:
 int module_superFunction(uint8_t arg1)
 {
     uint8_t val;
-    
+
     if (arg1 == 0)
     {
-        val = 2;
+        return -1;
     }
-    
+
     switch (arg1)
     {
-    case 0:
+    case 1:
         val = 3;
         break;
     default:
         val = 8;
         break;
-    
-    return 0;
+    }
+
+    return val;
 }
 
 ```
