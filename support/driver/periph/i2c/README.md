@@ -102,6 +102,8 @@ Device assignation, config, send and read data fully functionnal
 |[dspic33ev](../../../archi/dspic33ev/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
 |[dspic30f](../../../archi/dspic30f/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
 |[pic32mm](../../../archi/pic32mm/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|
+|[pic32mk](../../../archi/pic32mk/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|
 |[pic32mx](../../../archi/pic32mx/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|
 |[pic32mzec](../../../archi/pic32mzec/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|
 |[pic32mzef](../../../archi/pic32mzef/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|
+|[pic32mzda](../../../archi/pic32mzda/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|

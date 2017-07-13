@@ -80,6 +80,8 @@ timer_clearValue(timer); // clear count
 |[dspic33ev](../../../archi/dspic33ev/README.md)|[timer_pic24_dspic30f_dspic33.c](timer_pic24_dspic30f_dspic33.c)|[timer_pic24_dspic30f_dspic33.h](timer_pic24_dspic30f_dspic33.h)|
 |[dspic30f](../../../archi/dspic30f/README.md)|[timer_pic24_dspic30f_dspic33.c](timer_pic24_dspic30f_dspic33.c)|[timer_pic24_dspic30f_dspic33.h](timer_pic24_dspic30f_dspic33.h)|
 |[pic32mm](../../../archi/pic32mm/README.md)|[timer_pic32.c](timer_pic32.c)|[timer_pic32.h](timer_pic32.h)|
+|[pic32mk](../../../archi/pic32mk/README.md)|[timer_pic32.c](timer_pic32.c)|[timer_pic32.h](timer_pic32.h)|
 |[pic32mx](../../../archi/pic32mx/README.md)|[timer_pic32.c](timer_pic32.c)|[timer_pic32.h](timer_pic32.h)|
 |[pic32mzec](../../../archi/pic32mzec/README.md)|[timer_pic32.c](timer_pic32.c)|[timer_pic32.h](timer_pic32.h)|
 |[pic32mzef](../../../archi/pic32mzef/README.md)|[timer_pic32.c](timer_pic32.c)|[timer_pic32.h](timer_pic32.h)|
+|[pic32mzda](../../../archi/pic32mzda/README.md)|[timer_pic32.c](timer_pic32.c)|[timer_pic32.h](timer_pic32.h)|

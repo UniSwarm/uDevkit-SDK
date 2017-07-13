@@ -75,7 +75,9 @@ Device assignation, config, send and read data fully functionnal
 |[dspic33ep](../../../archi/dspic33ep/README.md)|[uart_pic24_dspic33.c](uart_pic24_dspic33.c)|[uart_pic24_dspic33.h](uart_pic24_dspic33.h)|
 |[dspic33ev](../../../archi/dspic33ev/README.md)|[uart_pic24_dspic33.c](uart_pic24_dspic33.c)|[uart_pic24_dspic33.h](uart_pic24_dspic33.h)|
 |[dspic30f](../../../archi/dspic30f/README.md)|[uart_dspic30f.c](uart_dspic30f.c)|[uart_dspic30f.h](uart_dspic30f.h)|
-|[pic32mm](../../../archi/pic32mm/README.md)|[uart_pic32.c](uart_pic32.c)|[uart_pic32.h](uart_pic32.h)|
-|[pic32mx](../../../archi/pic32mx/README.md)|[uart_pic32.c](uart_pic32.c)|[uart_pic32.h](uart_pic32.h)|
-|[pic32mzec](../../../archi/pic32mzec/README.md)|[uart_pic32.c](uart_pic32.c)|[uart_pic32.h](uart_pic32.h)|
-|[pic32mzef](../../../archi/pic32mzef/README.md)|[uart_pic32.c](uart_pic32.c)|[uart_pic32.h](uart_pic32.h)|
+|[pic32mm](../../../archi/pic32mm/README.md)|[uart_pic32mz_mm_mk.c](uart_pic32mz_mm_mk.c)|[uart_pic32mz_mm_mk.h](uart_pic32mz_mm_mk.h)|
+|[pic32mk](../../../archi/pic32mk/README.md)|[uart_pic32mz_mm_mk.c](uart_pic32mz_mm_mk.c)|[uart_pic32mz_mm_mk.h](uart_pic32mz_mm_mk.h)|
+|[pic32mx](../../../archi/pic32mx/README.md)|[uart_pic32mx.c](uart_pic32mx.c)|[uart_pic32mx.h](uart_pic32mx.h)|
+|[pic32mzec](../../../archi/pic32mzec/README.md)|[uart_pic32mz_mm_mk.c](uart_pic32mz_mm_mk.c)|[uart_pic32mz_mm_mk.h](uart_pic32mz_mm_mk.h)|
+|[pic32mzef](../../../archi/pic32mzef/README.md)|[uart_pic32mz_mm_mk.c](uart_pic32mz_mm_mk.c)|[uart_pic32mz_mm_mk.h](uart_pic32mz_mm_mk.h)|
+|[pic32mzda](../../../archi/pic32mzda/README.md)|[uart_pic32mz_mm_mk.c](uart_pic32mz_mm_mk.c)|[uart_pic32mz_mm_mk.h](uart_pic32mz_mm_mk.h)|
