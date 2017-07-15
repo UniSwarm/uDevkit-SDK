@@ -195,14 +195,20 @@ int timer_enable(rt_dev_t device)
     case 0:
         T1CONbits.TON = 1;  // enable timer module
         _T1IF = 0;
-        _T1IE = 1;
+        if (timers[0].handler)
+            _T1IE = 1;
+        else
+            _T1IE = 0;
         _T1IP = 4;
         break;
 #if TIMER_COUNT>=2
     case 1:
         T2CONbits.TON = 1;  // enable timer module
         _T2IF = 0;
-        _T2IE = 1;
+        if (timers[1].handler)
+            _T2IE = 1;
+        else
+            _T2IE = 0;
         _T2IP = 4;
         break;
 #endif
@@ -210,7 +216,10 @@ int timer_enable(rt_dev_t device)
     case 2:
         T3CONbits.TON = 1;  // enable timer module
         _T3IF = 0;
-        _T3IE = 1;
+        if (timers[2].handler)
+            _T3IE = 1;
+        else
+            _T3IE = 0;
         _T3IP = 4;
         break;
 #endif
@@ -218,7 +227,10 @@ int timer_enable(rt_dev_t device)
     case 3:
         T4CONbits.TON = 1;  // enable timer module
         _T4IF = 0;
-        _T4IE = 1;
+        if (timers[3].handler)
+            _T4IE = 1;
+        else
+            _T4IE = 0;
         _T4IP = 4;
         break;
 #endif
@@ -226,7 +238,10 @@ int timer_enable(rt_dev_t device)
     case 4:
         T5CONbits.TON = 1;  // enable timer module
         _T5IF = 0;
-        _T5IE = 1;
+        if (timers[4].handler)
+            _T5IE = 1;
+        else
+            _T5IE = 0;
         _T5IP = 4;
         break;
 #endif
@@ -234,7 +249,10 @@ int timer_enable(rt_dev_t device)
     case 5:
         T6CONbits.TON = 1;  // enable timer module
         _T6IF = 0;
-        _T6IE = 1;
+        if (timers[5].handler)
+            _T6IE = 1;
+        else
+            _T6IE = 0;
         _T6IP = 4;
         break;
 #endif
@@ -242,7 +260,10 @@ int timer_enable(rt_dev_t device)
     case 6:
         T7CONbits.TON = 1;  // enable timer module
         _T7IF = 0;
-        _T7IE = 1;
+        if (timers[6].handler)
+            _T7IE = 1;
+        else
+            _T7IE = 0;
         _T7IP = 4;
         break;
 #endif
@@ -250,7 +271,10 @@ int timer_enable(rt_dev_t device)
     case 7:
         T8CONbits.TON = 1;  // enable timer module
         _T8IF = 0;
-        _T8IE = 1;
+        if (timers[7].handler)
+            _T8IE = 1;
+        else
+            _T8IE = 0;
         _T8IP = 4;
         break;
 #endif
@@ -258,7 +282,10 @@ int timer_enable(rt_dev_t device)
     case 8:
         T9CONbits.TON = 1;  // enable timer module
         _T9IF = 0;
-        _T9IE = 1;
+        if (timers[8].handler)
+            _T9IE = 1;
+        else
+            _T9IE = 0;
         _T9IP = 4;
         break;
 #endif
@@ -360,6 +387,7 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
         return -1;
 
     timers[timer].handler = handler;
+    timer_enable(device);
 
     return 0;
 #else
@@ -381,11 +409,11 @@ int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
     if (timer >= TIMER_COUNT)
         return -1;
 
-    if(prvalue > 65535)
+    if (prvalue > 65535)
     {
         div = 0b111; // 256 divisor for type A (0b11) and for type B (0b111)
         prvalue >>= 8;
-        if(prvalue > 65535)
+        if (prvalue > 65535)
             prvalue = 65535;
     }
 
@@ -723,7 +751,7 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 #if TIMER_COUNT>=1
 void __ISR(_TIMER_1_VECTOR, IPL4SRS) T1Interrupt(void)
 {
-    if(timers[0].handler)
+    if (timers[0].handler)
         (*timers[0].handler)();
 
     _T1IF = 0;
@@ -733,7 +761,7 @@ void __ISR(_TIMER_1_VECTOR, IPL4SRS) T1Interrupt(void)
 #if TIMER_COUNT>=2
 void __ISR(_TIMER_2_VECTOR, IPL4SRS) T2Interrupt(void)
 {
-    if(timers[1].handler)
+    if (timers[1].handler)
         (*timers[1].handler)();
 
     _T2IF = 0;
@@ -743,7 +771,7 @@ void __ISR(_TIMER_2_VECTOR, IPL4SRS) T2Interrupt(void)
 #if TIMER_COUNT>=3
 void __ISR(_TIMER_3_VECTOR, IPL4SRS) T3Interrupt(void)
 {
-    if(timers[2].handler)
+    if (timers[2].handler)
         (*timers[2].handler)();
 
     _T3IF = 0;
@@ -753,7 +781,7 @@ void __ISR(_TIMER_3_VECTOR, IPL4SRS) T3Interrupt(void)
 #if TIMER_COUNT>=4
 void __ISR(_TIMER_4_VECTOR, IPL4SRS) T4Interrupt(void)
 {
-    if(timers[3].handler)
+    if (timers[3].handler)
         (*timers[3].handler)();
 
     _T4IF = 0;
@@ -763,7 +791,7 @@ void __ISR(_TIMER_4_VECTOR, IPL4SRS) T4Interrupt(void)
 #if TIMER_COUNT>=5
 void __ISR(_TIMER_5_VECTOR, IPL4SRS) T5Interrupt(void)
 {
-    if(timers[4].handler)
+    if (timers[4].handler)
         (*timers[4].handler)();
 
     _T5IF = 0;
@@ -773,7 +801,7 @@ void __ISR(_TIMER_5_VECTOR, IPL4SRS) T5Interrupt(void)
 #if TIMER_COUNT>=6
 void __ISR(_TIMER_6_VECTOR, IPL4SRS) T6Interrupt(void)
 {
-    if(timers[5].handler)
+    if (timers[5].handler)
         (*timers[5].handler)();
 
     _T6IF = 0;
@@ -783,7 +811,7 @@ void __ISR(_TIMER_6_VECTOR, IPL4SRS) T6Interrupt(void)
 #if TIMER_COUNT>=7
 void __ISR(_TIMER_7_VECTOR, IPL4SRS) T7Interrupt(void)
 {
-    if(timers[6].handler)
+    if (timers[6].handler)
         (*timers[6].handler)();
 
     _T7IF = 0;
@@ -793,7 +821,7 @@ void __ISR(_TIMER_7_VECTOR, IPL4SRS) T7Interrupt(void)
 #if TIMER_COUNT>=8
 void __ISR(_TIMER_8_VECTOR, IPL4SRS) T8Interrupt(void)
 {
-    if(timers[7].handler)
+    if (timers[7].handler)
         (*timers[7].handler)();
 
     _T8IF = 0;
@@ -803,7 +831,7 @@ void __ISR(_TIMER_8_VECTOR, IPL4SRS) T8Interrupt(void)
 #if TIMER_COUNT>=9
 void __ISR(_TIMER_9_VECTOR, IPL4SRS) T9Interrupt(void)
 {
-    if(timers[8].handler)
+    if (timers[8].handler)
         (*timers[8].handler)();
 
     _T9IF = 0;
