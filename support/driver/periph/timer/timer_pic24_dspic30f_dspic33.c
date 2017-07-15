@@ -197,62 +197,98 @@ int timer_enable(rt_dev_t device)
     case 0:
         T1CONbits.TON = 1;  // enable timer module
         _T1IF = 0;
-        _T1IE = 1;
+        if (timers[0].handler)
+            _T1IE = 1;
+        else
+            _T1IE = 0;
+        _T1IP = 4;
         break;
 #if TIMER_COUNT>=2
     case 1:
         T2CONbits.TON = 1;  // enable timer module
         _T2IF = 0;
-        _T2IE = 1;
+        if (timers[1].handler)
+            _T2IE = 1;
+        else
+            _T2IE = 0;
+        _T2IP = 4;
         break;
 #endif
 #if TIMER_COUNT>=3
     case 2:
         T3CONbits.TON = 1;  // enable timer module
         _T3IF = 0;
-        _T3IE = 1;
+        if (timers[2].handler)
+            _T3IE = 1;
+        else
+            _T3IE = 0;
+        _T3IP = 4;
         break;
 #endif
 #if TIMER_COUNT>=4
     case 3:
         T4CONbits.TON = 1;  // enable timer module
         _T4IF = 0;
-        _T4IE = 1;
+        if (timers[3].handler)
+            _T4IE = 1;
+        else
+            _T4IE = 0;
+        _T4IP = 4;
         break;
 #endif
 #if TIMER_COUNT>=5
     case 4:
         T5CONbits.TON = 1;  // enable timer module
         _T5IF = 0;
-        _T5IE = 1;
+        if (timers[4].handler)
+            _T5IE = 1;
+        else
+            _T5IE = 0;
+        _T5IP = 4;
         break;
 #endif
 #if TIMER_COUNT>=6
     case 5:
         T6CONbits.TON = 1;  // enable timer module
         _T6IF = 0;
-        _T6IE = 1;
+        if (timers[5].handler)
+            _T6IE = 1;
+        else
+            _T6IE = 0;
+        _T6IP = 4;
         break;
 #endif
 #if TIMER_COUNT>=7
     case 6:
         T7CONbits.TON = 1;  // enable timer module
         _T7IF = 0;
-        _T7IE = 1;
+        if (timers[6].handler)
+            _T7IE = 1;
+        else
+            _T7IE = 0;
+        _T7IP = 4;
         break;
 #endif
 #if TIMER_COUNT>=8
     case 7:
         T8CONbits.TON = 1;  // enable timer module
         _T8IF = 0;
-        _T8IE = 1;
+        if (timers[7].handler)
+            _T8IE = 1;
+        else
+            _T8IE = 0;
+        _T8IP = 4;
         break;
 #endif
 #if TIMER_COUNT>=9
     case 8:
         T9CONbits.TON = 1;  // enable timer module
         _T9IF = 0;
-        _T9IE = 1;
+        if (timers[8].handler)
+            _T9IE = 1;
+        else
+            _T9IE = 0;
+        _T9IP = 4;
         break;
 #endif
     }
@@ -353,6 +389,7 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
         return -1;
 
     timers[timer].handler = handler;
+    timer_enable(device);
 
     return 0;
 #else
