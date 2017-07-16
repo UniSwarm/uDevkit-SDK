@@ -18,7 +18,6 @@ before_install:
             && chmod +x "$XC32_DL"
             && sudo "$XC32_DL" --mode unattended --netservername localhost
             && export PATH="$PATH:$XC32_PATH"
-            && ls
             && echo "xc32 installed";
     fi
   - if [[ "$TEST" == "tools" ]]; then
