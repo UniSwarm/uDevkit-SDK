@@ -12,14 +12,10 @@ env:
     - TEST=tests32
 
 before_install:
-  - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty universe" &&
-  - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty main" &&
-  - if [[ "$TEST" == "tests32" ]]; then
-        sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install libc6:i386 && wget -O "$XC32_DL" "$XC32_URL" && chmod +x "$XC32_DL" && sudo "$XC32_DL" --mode unattended --netservername localhost && export PATH="$PATH:$XC32_PATH"; && ls && echo "xc32 installed"
-    fi
-  - if [[ "$TEST" == "tools" ]]; then
-        sudo apt-get install debian-keyring debian-archive-keyring && sudo apt-key update && sudo apt-get update -qq && sudo apt-get install -qq qt5-qmake qtbase5-dev qt5-default qttools5-dev-tools libqt5serialport5-dev && sudo apt-get install -qq zlib1g-dev libudev-dev && echo "Qt5 installed"
-    fi
+  - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty universe"
+  - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty main"
+  - if [[ "$TEST" == "tests32" ]]; then sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install libc6:i386 && wget -O "$XC32_DL" "$XC32_URL" && chmod +x "$XC32_DL" && sudo "$XC32_DL" --mode unattended --netservername localhost && export PATH="$PATH:$XC32_PATH"; && ls && echo "xc32 installed" fi
+  - if [[ "$TEST" == "tools" ]]; then sudo apt-get install debian-keyring debian-archive-keyring && sudo apt-key update && sudo apt-get update -qq && sudo apt-get install -qq qt5-qmake qtbase5-dev qt5-default qttools5-dev-tools libqt5serialport5-dev && sudo apt-get install -qq zlib1g-dev libudev-dev && echo "Qt5 installed" fi
 language: cpp
 
 # Compiler selection
