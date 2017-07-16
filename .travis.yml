@@ -20,13 +20,13 @@ before_install:
             && export PATH="$PATH:$XC32_PATH";
     fi
   - if [[ "$TEST" == "tools" ]]; then
-         sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty universe"
-      && sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty main"
-      && sudo apt-get install debian-keyring debian-archive-keyring
-      && sudo apt-key update
-      && sudo apt-get update -qq
-      && sudo apt-get install -qq qt5-qmake qtbase5-dev qt5-default qttools5-dev-tools libqt5serialport5-dev
-      && sudo apt-get install -qq zlib1g-dev libudev-dev
+        sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty universe"
+            && sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty main"
+            && sudo apt-get install debian-keyring debian-archive-keyring
+            && sudo apt-key update
+            && sudo apt-get update -qq
+            && sudo apt-get install -qq qt5-qmake qtbase5-dev qt5-default qttools5-dev-tools libqt5serialport5-dev
+            && sudo apt-get install -qq zlib1g-dev libudev-dev
     fi
 
 language: cpp
