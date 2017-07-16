@@ -2,14 +2,32 @@ sudo: required
 dist: trusty
 group: edge
 
+env:
+  global:
+    - XC32_URL="http://ww1.microchip.com/downloads/en/DeviceDoc/xc32-v1.43-full-install-linux-installer.run"
+    - XC32_PATH="/opt/microchip/xc32/v1.43/bin"
+    - XC32_DL="$HOME/xc32.run"
+  matrix:
+    - TEST=tools
+    - TEST=tests32
+
 before_install:
-  - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty universe"
-  - sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty main"
-  - sudo apt-get install debian-keyring debian-archive-keyring
-  - sudo apt-key update
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq qt5-qmake qtbase5-dev qt5-default qttools5-dev-tools libqt5serialport5-dev
-  - sudo apt-get install -qq zlib1g-dev libudev-dev
+  - if [[ "$TEST" == "tests32" ]]; then
+        sudo dpkg --add-architecture i386 && sudo apt-get update
+            && sudo apt-get install libc6:i386 && wget -O "$XC32_DL" "$XC32_URL"
+            && chmod +x "$XC32_DL"
+            && sudo "$XC32_DL" --mode unattended --netservername localhost
+            && export PATH="$PATH:$XC32_PATH";
+    fi
+  - if [[ "$TEST" == "tools" ]]; then
+         sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty universe"
+      && sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu trusty main"
+      && sudo apt-get install debian-keyring debian-archive-keyring
+      && sudo apt-key update
+      && sudo apt-get update -qq
+      && sudo apt-get install -qq qt5-qmake qtbase5-dev qt5-default qttools5-dev-tools libqt5serialport5-dev
+      && sudo apt-get install -qq zlib1g-dev libudev-dev
+    fi
 
 language: cpp
 
@@ -18,9 +36,6 @@ compiler:
   - gcc
 
 install: true
-
-env:
-  - TEST=tools
 
 # Build steps
 script:
