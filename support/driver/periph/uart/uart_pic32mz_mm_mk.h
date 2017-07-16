@@ -71,7 +71,8 @@
  #define UART_COUNT 0
 #endif
 
-#if defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
+#if defined(ARCHI_pic32mm) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) \
+ || defined(ARCHI_pic32mzda)
  #define uart_getClock(d) sysclock_getPeriphClock(SYSCLOCK_CLOCK_UART)
 #else
  uint32_t uart_getClock(rt_dev_t device);
@@ -194,8 +195,9 @@
    #define _U3TXIP IPC15bits.U3TXIP
   #endif
  #endif
- 
+
 #elif defined(ARCHI_pic32mk)
+ #ifndef _U1RXIE
   #define _U1EIE  IEC1bits.U1EIE
   #define _U1EIF  IFS1bits.U1EIF
   #define _U1EIP  IPC9bits.U1EIP
@@ -250,6 +252,7 @@
   #define _U6TXIE IEC5bits.U6TXIE
   #define _U6TXIF IFS5bits.U6TXIF
   #define _U6TXIP IPC41bits.U6TXIP
+ #endif
 #endif
 
 #endif // UART_PIC32MZ_MM_MK_H
