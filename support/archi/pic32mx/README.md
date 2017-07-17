@@ -1,21 +1,21 @@
 # PIC32MX support
 
-PIC32MX family is the first 32 bits Microchip range.
+PIC32MX family is the first 32 bits Microchip range. All of them 
 
 This family is spitted into multiple sub-families :
 
-* MX1 / MX2: low pin count (20 to 36) with a small set of peripherical
-* MX3 / MX4: medium pin count (28 to 64) with more periphericals and USB communication
-* MX5: 
-* MX6: 
-* MX7: 
+* MX1 / MX2: lower CPU power, USB on MX2xx, low pin count available
+* MX3 / MX4: two CPU speed available (105 or 150DMIP)
+* MX5: USB and CAN com, large memory
+* MX6: USB and ethernet com, large memory
+* MX7: USB, 2 CAN and ethernet com, large memory
 
 ## Main features
 
 |Feature|MX1 / MX2|MX3 / MX4|MX5|MX6|MX7|
 |-------|---------|---------|---|---|---|
 |Core|32 bits|32 bits|32 bits|32 bits|32 bits|
-|Performance|83 DMIPS|105 DMIPS|105 DMIPS|105 DMIPS|105 DMIPS|
+|Performance|83 DMIPS|105-150 DMIPS|105 DMIPS|105 DMIPS|105 DMIPS|
 |Program memory|16kb - 512kb|32kb - 512kb|64kb - 512kb|64kb - 512kb|128kb - 512kb|
 |Data memory|4kb - 64kb|8kb - 128kb|16kb - 64kb|32kb - 128kb|32kb - 128kb|
 |Pins|28-100|64-121|64-100|64-100|64-100|
