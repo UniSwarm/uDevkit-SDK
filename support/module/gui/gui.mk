@@ -17,7 +17,7 @@ SIM_SRC += gui_sim.c
 ARCHI_SRC += $(addsuffix .c, $(GUI_DRIVERS))
 HEADER += $(addsuffix .h, $(GUI_DRIVERS))
 
-$(OUT_PWD)/gui_driver.h : Makefile
+$(OUT_PWD)/gui_driver.h : $(firstword $(MAKEFILE_LIST))
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@echo "$(YELLOW)generate gui_driver.h...$(NORM)"
 	@printf "\n// defines use drivers screen\n\
@@ -72,7 +72,7 @@ PICTURES_C := $(addprefix $(OUT_PWD)/, $(PICTURES_C))
 SRC += $(PICTURES_C)
 
 # generate list of used pictures
-$(OUT_PWD)/pictures.h: Makefile
+$(OUT_PWD)/pictures.h: $(firstword $(MAKEFILE_LIST))
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@echo "$(YELLOW)generate pictures.h...$(NORM)"
 	@printf "#ifndef PICTURES_H\n#define PICTURES_H\n\n\

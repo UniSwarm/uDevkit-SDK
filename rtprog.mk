@@ -44,7 +44,7 @@ clean: sim-clean
 # generate list of used drivers modules
 empty:=
 space:= \n $(empty)
-$(OUT_PWD)/modules.h : Makefile
+$(OUT_PWD)/modules.h : $(firstword $(MAKEFILE_LIST))
 	@echo "$(YELLOW)generate module.h...$(NORM)"
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "\n// defines use of modules and drivers\n\

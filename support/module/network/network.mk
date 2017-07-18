@@ -11,7 +11,7 @@ vpath %.h $(NETPATH)
 
 include $(foreach net_driver,$(sort $(NETWORK_DRIVERS)),$(NETPATH)/driver/$(net_driver)/$(net_driver).mk)
 
-$(OUT_PWD)/network_driver.h : Makefile
+$(OUT_PWD)/network_driver.h : $(firstword $(MAKEFILE_LIST))
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@echo "$(YELLOW)generate network_driver.h...$(NORM)"
 	@printf "\n// defines use of modules and drivers\n\
