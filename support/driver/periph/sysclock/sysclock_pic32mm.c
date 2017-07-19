@@ -16,7 +16,10 @@
 #include <archi.h>
 #include "board.h"
 
-uint32_t sysclock_sysfreq = 25000000;
+uint32_t sysclock_sysfreq = 8000000;
+uint32_t sysclock_sosc = 0;
+uint32_t sysclock_posc = 0;
+uint32_t sysclock_pll = 0;
 
 /**
  * @brief Gets the actual frequency on a particular peripherical bus clock
@@ -27,6 +30,8 @@ uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock)
 {
     if (busClock == SYSCLOCK_CLOCK_SYSCLK || busClock == SYSCLOCK_CLOCK_PBCLK)
         return sysclock_sysfreq;
+    if (busClock == SYSCLOCK_CLOCK_REFCLK)
+        return 1; // TODO implement me (refclock computation)
     return 1;
 }
 
@@ -39,13 +44,42 @@ uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock)
  */
 int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div)
 {
-    // checks
-    // TODO
     if (busClock != SYSCLOCK_CLOCK_REFCLK)  // bad index
         return -1;
 
     // TODO implement me
 
+    return 0;
+}
+
+/**
+ * @brief Return the actual frequency of the clock source
+ * @param source clock id to request
+ * @return SYSCLOCK_SOURCE enum corresponding to actual clock source
+ */
+uint32_t sysclock_getSourceClock(SYSCLOCK_SOURCE source)
+{
+    switch (source)
+    {
+    case SYSCLOCK_SRC_LPRC:
+        return 32000;         // 32kHz LPRC
+    case SYSCLOCK_SRC_SOSC:
+        return sysclock_sosc; // external secondary oscilator
+    case SYSCLOCK_SRC_POSC:
+        return sysclock_posc; // external primary oscilator
+    case SYSCLOCK_SRC_SPLL:
+        return sysclock_pll;  // PLL out freq
+    case SYSCLOCK_SRC_FRC:
+        {
+            uint16_t div = OSCCONbits.FRCDIV;
+            if (div != 0b111)
+                div = 1 << div;
+            else
+                div = 256;
+
+            return 8000000 / div; // 8MHz FRC // TODO integrate OSCTUNE
+        }
+    }
     return 0;
 }
 
@@ -68,11 +102,6 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 {
     if (OSCCONbits.CLKLOCK == 1)
         return -1; // Clocks and PLL are locked, source cannot be changed
-
-#ifdef SYSCLOCK_SRC_BFRC
-    if (source == SYSCLOCK_SRC_BFRC)
-        return -2; // cannot switch to backup FRC
-#endif
 
     // disable interrupts
     disable_interrupt();

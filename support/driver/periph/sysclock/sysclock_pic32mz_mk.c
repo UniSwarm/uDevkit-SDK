@@ -17,7 +17,13 @@
 #include <archi.h>
 #include "board.h"
 
-uint32_t sysclock_sysfreq = 200000000;
+uint32_t sysclock_sysfreq = 8000000;
+uint32_t sysclock_sosc = 0;
+uint32_t sysclock_posc = 0;
+uint32_t sysclock_pll = 0;
+#if defined(ARCHI_pic32mk)
+uint32_t sysclock_upll = 0;
+#endif
 
 /**
  * @brief Gets the actual frequency on a particular peripherical bus clock
@@ -70,9 +76,49 @@ int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div)
     lockClockConfig();
 
     // wait for divisor setted
-    while((*divisorAddr & _PB1DIV_PBDIVRDY_MASK) == 0)
+    while ((*divisorAddr & _PB1DIV_PBDIVRDY_MASK) == 0)
         nop();
 
+    return 0;
+}
+
+/**
+ * @brief Return the actual frequency of the clock source
+ * @param source clock id to request
+ * @return SYSCLOCK_SOURCE enum corresponding to actual clock source
+ */
+uint32_t sysclock_getSourceClock(SYSCLOCK_SOURCE source)
+{
+    switch (source)
+    {
+#if defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
+    case SYSCLOCK_SRC_BFRC:
+        return 8000000;         // 8MHz BFRC hardware automatic selection
+    case SYSCLOCK_SRC_FRC2:
+#endif
+    case SYSCLOCK_SRC_FRC:
+        {
+            uint16_t div = OSCCONbits.FRCDIV;
+            if (div != 0b111)
+                div = 1 << div;
+            else
+                div = 256;
+
+            return 8000000 / div; // 8MHz FRC // TODO integrate OSCTUNE
+        }
+    case SYSCLOCK_SRC_LPRC:
+        return 32000;         // 32kHz LPRC
+    case SYSCLOCK_SRC_SOSC:
+        return sysclock_sosc; // external secondary oscilator
+    case SYSCLOCK_SRC_POSC:
+        return sysclock_posc; // external primary oscilator
+    case SYSCLOCK_SRC_SPLL:
+        return sysclock_pll;  // PLL out freq
+#if defined(ARCHI_pic32mk)
+    case SYSCLOCK_SRC_UPLL:
+        return sysclock_upll; // USB PLL out freq
+#endif
+    }
     return 0;
 }
 
@@ -101,7 +147,7 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
         return -1; // Clocks and PLL are locked, source cannot be changed
 
 #ifdef SYSCLOCK_SRC_BFRC
-    if(source == SYSCLOCK_SRC_BFRC)
+    if (source == SYSCLOCK_SRC_BFRC)
         return -2; // cannot switch to backup FRC
 #endif
 
@@ -255,6 +301,8 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 
     // Wait for PLL to lock
     while (OSCCONbits.LOCK != 1);*/
+
+    sysclock_pll = 0;
 
     return 0;
 }

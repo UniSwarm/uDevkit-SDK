@@ -27,7 +27,6 @@ uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock)
 {
     if (busClock == SYSCLOCK_CLOCK_SYSCLK)
         return sysclock_sysfreq;
-
     // SYSCLOCK_CLOCK_PBCLK TODO
     return 1;
 }
