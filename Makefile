@@ -19,8 +19,11 @@ tools:
 tests:
 	cd test && $(MAKE) all
 
+tests16:
+	cd test/archtest && $(MAKE) pic16b
+
 tests32:
-	cd test/archtest && $(MAKE) all
+	cd test/archtest && $(MAKE) pic32
 
 lines:
 	@wc -l $(SRC_FILES)| sort -n -k1
