@@ -180,7 +180,9 @@ int i2c_disable(rt_dev_t device)
     {
     case 0:
         I2C1CONbits.I2CEN = 0;  // disable i2c
+    #ifndef ARCHI_dspic30f
         _MI2C1IE = 0;
+    #endif
         break;
 #if I2C_COUNT>=2
     case 1:

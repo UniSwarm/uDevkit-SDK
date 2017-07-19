@@ -236,4 +236,12 @@
  #define I2C_FPGD 15384615 // 65ns
 #endif
 
+#if defined(ARCHI_dspic30f)
+ #define I2C1BRG I2CBRG
+ #define I2C1CONbits I2CCONbits
+ #define I2C1STATbits I2CSTATbits
+ #define I2C1TRN I2CTRN
+ #define I2C1RCV I2CRCV
+#endif
+
 #endif // I2C_PIC24_DSPIC30F_DSPIC33_H
