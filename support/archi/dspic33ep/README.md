@@ -2,7 +2,7 @@
 
 This architecture support file handle all dsPIC33EP devices.
 
-(101 devices on feb 2017)
+(101 devices on july 2017)
 
 |Compatible devices|
 |---------|
@@ -50,9 +50,9 @@ This architecture support file handle all dsPIC33EP devices.
 |[dsPIC33EP256MC502](http://microchip.com/wwwproducts/en/dsPIC33EP256MC502)|
 |[dsPIC33EP256MC504](http://microchip.com/wwwproducts/en/dsPIC33EP256MC504)|
 |[dsPIC33EP256MC506](http://microchip.com/wwwproducts/en/dsPIC33EP256MC506)|
-|[dsPIC33EP256MU8066](http://microchip.com/wwwproducts/en/dsPIC33EP256MU8066)|
-|[dsPIC33EP256MU8106](http://microchip.com/wwwproducts/en/dsPIC33EP256MU8106)|
-|[dsPIC33EP256MU8146](http://microchip.com/wwwproducts/en/dsPIC33EP256MU8146)|
+|[dsPIC33EP256MU806](http://microchip.com/wwwproducts/en/dsPIC33EP256MU806)|
+|[dsPIC33EP256MU810](http://microchip.com/wwwproducts/en/dsPIC33EP256MU810)|
+|[dsPIC33EP256MU814](http://microchip.com/wwwproducts/en/dsPIC33EP256MU814)|
 |[dsPIC33EP32GP502](http://microchip.com/wwwproducts/en/dsPIC33EP32GP502)|
 |[dsPIC33EP32GP503](http://microchip.com/wwwproducts/en/dsPIC33EP32GP503)|
 |[dsPIC33EP32GP504](http://microchip.com/wwwproducts/en/dsPIC33EP32GP504)|
@@ -76,16 +76,16 @@ This architecture support file handle all dsPIC33EP devices.
 |[dsPIC33EP512GP502](http://microchip.com/wwwproducts/en/dsPIC33EP512GP502)|
 |[dsPIC33EP512GP504](http://microchip.com/wwwproducts/en/dsPIC33EP512GP504)|
 |[dsPIC33EP512GP506](http://microchip.com/wwwproducts/en/dsPIC33EP512GP506)|
-|[dsPIC33EP512GP8066](http://microchip.com/wwwproducts/en/dsPIC33EP512GP8066)|
+|[dsPIC33EP512GP806](http://microchip.com/wwwproducts/en/dsPIC33EP512GP806)|
 |[dsPIC33EP512MC202](http://microchip.com/wwwproducts/en/dsPIC33EP512MC202)|
 |[dsPIC33EP512MC204](http://microchip.com/wwwproducts/en/dsPIC33EP512MC204)|
 |[dsPIC33EP512MC206](http://microchip.com/wwwproducts/en/dsPIC33EP512MC206)|
 |[dsPIC33EP512MC502](http://microchip.com/wwwproducts/en/dsPIC33EP512MC502)|
 |[dsPIC33EP512MC504](http://microchip.com/wwwproducts/en/dsPIC33EP512MC504)|
 |[dsPIC33EP512MC506](http://microchip.com/wwwproducts/en/dsPIC33EP512MC506)|
-|[dsPIC33EP512MC8066](http://microchip.com/wwwproducts/en/dsPIC33EP512MC8066)|
-|[dsPIC33EP512MU8106](http://microchip.com/wwwproducts/en/dsPIC33EP512MU8106)|
-|[dsPIC33EP512MU8146](http://microchip.com/wwwproducts/en/dsPIC33EP512MU8146)|
+|[dsPIC33EP512MC806](http://microchip.com/wwwproducts/en/dsPIC33EP512MC806)|
+|[dsPIC33EP512MU810](http://microchip.com/wwwproducts/en/dsPIC33EP512MU810)|
+|[dsPIC33EP512MU814](http://microchip.com/wwwproducts/en/dsPIC33EP512MU814)|
 |[dsPIC33EP64GP502](http://microchip.com/wwwproducts/en/dsPIC33EP64GP502)|
 |[dsPIC33EP64GP503](http://microchip.com/wwwproducts/en/dsPIC33EP64GP503)|
 |[dsPIC33EP64GP504](http://microchip.com/wwwproducts/en/dsPIC33EP64GP504)|
