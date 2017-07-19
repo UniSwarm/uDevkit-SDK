@@ -2,7 +2,7 @@
 
 This architecture support file handle all PIC24EP devices.
 
-(37 devices on feb 2017)
+(37 devices on july 2017)
 
 |Compatible devices|
 |---------|
@@ -15,8 +15,8 @@ This architecture support file handle all PIC24EP devices.
 |[PIC24EP256GP202](http://microchip.com/wwwproducts/en/PIC24EP256GP202)|
 |[PIC24EP256GP204](http://microchip.com/wwwproducts/en/PIC24EP256GP204)|
 |[PIC24EP256GP206](http://microchip.com/wwwproducts/en/PIC24EP256GP206)|
-|[PIC24EP256GU8106](http://microchip.com/wwwproducts/en/PIC24EP256GU8106)|
-|[PIC24EP256GU8146](http://microchip.com/wwwproducts/en/PIC24EP256GU8146)|
+|[PIC24EP256GU810](http://microchip.com/wwwproducts/en/PIC24EP256GU810)|
+|[PIC24EP256GU814](http://microchip.com/wwwproducts/en/PIC24EP256GU814)|
 |[PIC24EP256MC202](http://microchip.com/wwwproducts/en/PIC24EP256MC202)|
 |[PIC24EP256MC204](http://microchip.com/wwwproducts/en/PIC24EP256MC204)|
 |[PIC24EP256MC206](http://microchip.com/wwwproducts/en/PIC24EP256MC206)|
@@ -29,9 +29,9 @@ This architecture support file handle all PIC24EP devices.
 |[PIC24EP512GP202](http://microchip.com/wwwproducts/en/PIC24EP512GP202)|
 |[PIC24EP512GP204](http://microchip.com/wwwproducts/en/PIC24EP512GP204)|
 |[PIC24EP512GP206](http://microchip.com/wwwproducts/en/PIC24EP512GP206)|
-|[PIC24EP512GP8066](http://microchip.com/wwwproducts/en/PIC24EP512GP8066)|
-|[PIC24EP512GU8106](http://microchip.com/wwwproducts/en/PIC24EP512GU8106)|
-|[PIC24EP512GU8146](http://microchip.com/wwwproducts/en/PIC24EP512GU8146)|
+|[PIC24EP512GP806](http://microchip.com/wwwproducts/en/PIC24EP512GP806)|
+|[PIC24EP512GU810](http://microchip.com/wwwproducts/en/PIC24EP512GU810)|
+|[PIC24EP512GU814](http://microchip.com/wwwproducts/en/PIC24EP512GU814)|
 |[PIC24EP512MC202](http://microchip.com/wwwproducts/en/PIC24EP512MC202)|
 |[PIC24EP512MC204](http://microchip.com/wwwproducts/en/PIC24EP512MC204)|
 |[PIC24EP512MC206](http://microchip.com/wwwproducts/en/PIC24EP512MC206)|
