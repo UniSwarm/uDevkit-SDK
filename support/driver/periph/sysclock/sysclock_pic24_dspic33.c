@@ -1,5 +1,5 @@
 /**
- * @file sysclock_pic24_dspic30f_dspic33.c
+ * @file sysclock_pic24_dspic33.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
  *

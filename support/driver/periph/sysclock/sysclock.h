@@ -19,7 +19,7 @@
  || defined(ARCHI_dspic33ev)
  #include "sysclock_pic24_dspic33.h"
 #elif defined(ARCHI_dspic30f)
- #include "sysclock_dspic30.h"
+ #include "sysclock_dspic30f.h"
 #elif defined(ARCHI_pic32mx)
  #include "sysclock_pic32mx.h"
 #elif defined(ARCHI_pic32mm)

@@ -1,17 +1,24 @@
 /**
- * @file sysclock_pic24_dspic30f_dspic33.h
+ * @file sysclock_pic24_dspic33.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
  *
  * @date April 11, 2016, 05:12 PM
  *
- * @brief System clock support for rtprog
+ * @brief System clock support for rtprog for dsPIC33FJ, dsPIC33EP, dsPIC33EV,
+ * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
+ *
+ * Implementation based on Microchip documents DS70186D, DS70580C, DS70005131A, DS70307E :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70216D.pdf
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70580C.pdf
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70005131a.pdf
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70307E.pdf
  */
 
 #include "sysclock.h"
 
-#ifndef SYSCLOCK_PIC24_DSPIC30F_DSPIC33_H
-#define SYSCLOCK_PIC24_DSPIC30F_DSPIC33_H
+#ifndef SYSCLOCK_PIC24_DSPIC33_H
+#define SYSCLOCK_PIC24_DSPIC33_H
 
 /*
  *               Fplli                     Fsys
