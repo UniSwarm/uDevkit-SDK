@@ -62,3 +62,5 @@ support/archi/pic16b/*.txt
 support/archi/pic32/*.txt
 
 nbproject/
+
+html_fs_data.c
