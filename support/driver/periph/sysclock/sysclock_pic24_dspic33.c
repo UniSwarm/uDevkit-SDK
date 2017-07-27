@@ -23,7 +23,80 @@
 
 #include "board.h"
 
-uint32_t sysfreq;
+uint32_t sysclock_sysfreq = 80000000;
+
+/**
+ * @brief Gets the actual frequency on a particular peripherical bus clock
+ * @param busClock id of the bus clock (1 periph bus clock), 0 for sysclock
+ * @return bus frequency in Hz, 1 in case of error to not cause divide by 0
+ */
+uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
+{
+    if (busClock == SYSCLOCK_CLOCK_SYSCLK)
+        return sysclock_sysfreq >> 1;
+    if (busClock == SYSCLOCK_CLOCK_PBCLK)
+    {
+        uint16_t div = 1;
+        if (CLKDIVbits.DOZEN == 1)
+            div = 1 << (CLKDIVbits.DOZE);
+        return (sysclock_sysfreq >> 1) / div;
+    }
+    return 1;
+}
+
+/**
+ * @brief Change the divisor of the busClock given as argument.
+ * @param busClock id of the bus clock or ref clock (SYSCLOCK_CLOCK_REFCLK or
+ * SYSCLOCK_CLOCK_PBCLK, SYSCLOCK_CLOCK_FRC)
+ * @param div divisor to set
+ * @return 0 if ok, -1 in case of error
+ */
+int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
+{
+    uint16_t udiv;
+    if (busClock == SYSCLOCK_CLOCK_FRC)
+    {
+        if (div > 256)
+            return -1;
+        if (div == 256)
+            udiv = 8;
+        else
+            for (udiv=0; div!=0; udiv++)
+                div >>= 1;
+        udiv -= 1;
+        REFOCONbits.RODIV = udiv;
+        return 0;
+    }
+    if (busClock == SYSCLOCK_CLOCK_REFCLK)
+    {
+        if (div > 32768)
+            return -1;
+        else
+            for (udiv=0; div!=0; udiv++)
+                div >>= 1;
+        udiv -= 1;
+        CLKDIVbits.FRCDIV = udiv;
+        return 0;
+    }
+    if (busClock == SYSCLOCK_CLOCK_PBCLK)
+    {
+        if (div == 1)
+            CLKDIVbits.DOZEN = 0;
+        else
+        {
+            if (div > 128)
+                return -1;
+            for (udiv=0; div!=0; udiv++)
+                div >>= 1;
+            udiv -= 1;
+            CLKDIVbits.DOZE = udiv;
+            CLKDIVbits.DOZEN = 1;
+        }
+        return 0;
+    }
+
+    return -1;   // bad index
+}
 
 /**
  * @brief Sets the system clock of the CPU, the system clock may be different of CPU
@@ -106,47 +179,20 @@ int sysclock_setClockWPLL(uint32_t fosc)
     if (frc_mode == 1)
     {
         __builtin_write_OSCCONH(0x01); // frc input
-    	__builtin_write_OSCCONL(OSCCON | 0x01);
+        __builtin_write_OSCCONL(OSCCON | 0x01);
     }
     else
     {
         __builtin_write_OSCCONH(0x03); // primariry osc input
-    	__builtin_write_OSCCONL(OSCCON | 0x01);
-	    // Wait for Clock switch to occur
-	    while (OSCCONbits.COSC != 0b011);
+        __builtin_write_OSCCONL(OSCCON | 0x01);
+        // Wait for Clock switch to occur
+        while (OSCCONbits.COSC != 0b011);
     }
 
     // Wait for PLL to lock
     while (OSCCONbits.LOCK != 1);
 
-    sysfreq = fplli * multiplier / postdiv; // Complete this
+    sysclock_sysfreq = fplli * multiplier / postdiv; // Complete this
 
     return 0;
-}
-
-/**
- * @brief Gets system frequency in Hz
- * @return system frequency in Hz
- */
-uint32_t sysclock_getClock()
-{
-    return sysfreq;
-}
-
-/**
- * @brief Gets peripherical clock frequency in Hz
- * @return system frequency in Hz
- */
-uint32_t sysclock_getPeriphClock()
-{
-    return sysfreq >> 1;
-}
-
-/**
- * @brief Gets CPU clock frequency in Hz
- * @return system frequency in Hz
- */
-uint32_t sysclock_getCPUClock()
-{
-    return sysfreq >> 1;
 }
