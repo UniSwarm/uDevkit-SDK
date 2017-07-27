@@ -44,28 +44,11 @@ int sysclock_setClockWPLL(uint32_t fosc)
 }
 
 /**
- * @brief Gets system frequency in Hz
- * @return system frequency in Hz
+ * @brief Gets the actual frequency on a particular peripherical bus clock
+ * @param busClock id of the bus clock (1 periph bus clock), 0 for sysclock
+ * @return bus frequency in Hz
  */
-uint32_t sysclock_getClock()
-{
-    return sysfreq;
-}
-
-/**
- * @brief Gets peripherical clock frequency in Hz
- * @return system frequency in Hz
- */
-uint32_t sysclock_getPeriphClock()
-{
-    return sysfreq >> 1;
-}
-
-/**
- * @brief Gets CPU clock frequency in Hz
- * @return system frequency in Hz
- */
-uint32_t sysclock_getCPUClock()
+uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
     return sysfreq >> 1;
 }
