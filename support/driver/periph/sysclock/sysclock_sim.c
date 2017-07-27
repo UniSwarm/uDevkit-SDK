@@ -31,13 +31,13 @@ uint32_t sysclock_getCPUSystemClock()
 }
 
 #if defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
-uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock)
+uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
     // TODO
     return sysfreq / 2;
 }
 #else
-uint32_t sysclock_getPeriphClock()
+uint32_t sysclock_periphFreq()
 {
     return sysfreq >> 1;
 }

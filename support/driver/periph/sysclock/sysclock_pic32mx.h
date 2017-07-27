@@ -38,8 +38,6 @@ typedef enum {
     SYSCLOCK_SRC_UPLL  = 0b011,     ///< USB PLL (UPLL)
 #endif
 } SYSCLOCK_CLOCK;
-uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock);
-int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div);
 
 // periph clock assoc
 #define SYSCLOCK_CLOCK_CPU    SYSCLOCK_CLOCK_SYSCLK ///< CPU clock bus
@@ -63,8 +61,6 @@ typedef enum {
     SYSCLOCK_SRC_FRC16  = 0b110, ///< Fast internal oscilator (FRC) divided by 16
     SYSCLOCK_SRC_FRCDIV = 0b111  ///< Fast internal oscilator (FRC) divided by FRCDIV
 } SYSCLOCK_SOURCE;
-SYSCLOCK_SOURCE sysclock_source();
-int sysclock_switchSourceTo(SYSCLOCK_SOURCE source);
 
 /*
  *               Fplli                    Fsys

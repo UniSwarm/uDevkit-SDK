@@ -22,8 +22,6 @@ typedef enum {
     SYSCLOCK_CLOCK_PBCLK,           ///< peripherical bus
     SYSCLOCK_CLOCK_REFCLK           ///< reference clock module
 } SYSCLOCK_CLOCK;
-uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock);
-int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div);
 
 // periph clock assoc
 #define SYSCLOCK_CLOCK_CPU    SYSCLOCK_CLOCK_SYSCLK  ///< CPU clock bus

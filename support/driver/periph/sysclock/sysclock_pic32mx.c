@@ -17,28 +17,36 @@
 #include "board.h"
 
 uint32_t sysclock_sysfreq = 80000000;
+uint32_t sysclock_sosc = 0;
+uint32_t sysclock_posc = 0;
+uint32_t sysclock_pllMultiplier = 1;
 
 /**
  * @brief Gets the actual frequency on a particular peripherical bus clock
  * @param busClock id of the bus clock
- * @return bus frequency in Hz
+ * @return bus frequency in Hz, 1 in case of error to not cause divide by 0
  */
-uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock)
+uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
     if (busClock == SYSCLOCK_CLOCK_SYSCLK)
         return sysclock_sysfreq;
-    // SYSCLOCK_CLOCK_PBCLK TODO
+    if (busClock == SYSCLOCK_CLOCK_PBCLK)
+    {
+        uint8_t div = OSCCONbits.PBDIV;
+        div = 1 << div;
+        return sysclock_sysfreq / div; // TODO
+    }
     return 1;
 }
 
 /**
- * @brief Change the divisor of the busClock given as argument. This can take up to 60
- * CPU cycles.
- * @param busClock id of the bus clock (SYSCLOCK_CLOCK_REFCLK)
+ * @brief Change the divisor of the busClock given as argument.
+ * @param busClock id of the bus clock or ref clock (SYSCLOCK_CLOCK_REFCLK or
+ * SYSCLOCK_CLOCK_PBCLK)
  * @param div divisor to set
  * @return 0 if ok, -1 in case of error
  */
-int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div)
+int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
 {
     // checks
     // TODO
@@ -47,6 +55,43 @@ int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div)
 
     // TODO implement me
 
+    return 0;
+}
+
+/**
+ * @brief Return the actual frequency of the clock source
+ * @param source clock id to request
+ * @return SYSCLOCK_SOURCE enum corresponding to actual clock source
+ */
+uint32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
+{
+    switch (source)
+    {
+    case SYSCLOCK_SRC_LPRC:
+        return 32000;         // 32kHz LPRC
+    case SYSCLOCK_SRC_SOSC:
+        return sysclock_sosc; // external secondary oscilator
+    case SYSCLOCK_SRC_POSC:
+        return sysclock_posc; // external primary oscilator
+    case SYSCLOCK_SRC_PPLL:
+        return sysclock_posc * sysclock_pllMultiplier;  // primary oscilator with PLL
+    case SYSCLOCK_SRC_FRC:
+        return 8000000;       // FRC  // TODO integrate OSCTUNE
+    case SYSCLOCK_SRC_FRC16:
+        return 8000000 / 16;  // FRC /16  // TODO integrate OSCTUNE
+    case SYSCLOCK_SRC_FRCDIV:
+        {
+            uint16_t div = OSCCONbits.FRCDIV;
+            if (div != 0b111)
+                div = 1 << div;
+            else
+                div = 256;
+
+            return 8000000 / div; // 8MHz FRC // TODO integrate OSCTUNE
+        }
+    case SYSCLOCK_SRC_FRCPLL:
+        return 8000000 * sysclock_pllMultiplier;  // FRC with PLL  // TODO integrate OSCTUNE
+    }
     return 0;
 }
 
@@ -126,24 +171,8 @@ int sysclock_setClock(uint32_t fosc)
 int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 {
     // TODO implement me
+
+    // set sysclock_pllMultiplier
+
     return 0;
 }
-
-/**
- * @brief Gets system frequency in Hz
- * @return system frequency in Hz
- */
-uint32_t sysclock_getClock()
-{
-    return sysclock_sysfreq;
-}
-
-/**
- * @brief Gets CPU clock frequency in Hz
- * @return cpu frequency in Hz
- */
-uint32_t sysclock_getCPUClock()
-{
-    return sysclock_sysfreq;
-}
-

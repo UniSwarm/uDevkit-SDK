@@ -30,7 +30,7 @@ uint32_t sysclock_upll = 0;
  * @param busClock id of the bus clock (1 to 8 for PBCLK1 to PBCLK8), 0 for sysclock
  * @return bus frequency in Hz
  */
-uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock)
+uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
     volatile uint32_t* divisorAddr;
     uint8_t divisor;
@@ -50,7 +50,7 @@ uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock)
  * @param div divisor to set
  * @return 0 if ok, -1 in case of error
  */
-int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div)
+int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
 {
     volatile uint32_t* divisorAddr;
 
@@ -201,7 +201,7 @@ int sysclock_setClock(uint32_t fosc)
  */
 int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 {
-    uint32_t fin, fpllo, fsys;
+    /*uint32_t fin, fpllo, fsys;
     uint16_t prediv, multiplier, postdiv;
 
     if (sysclock_source() == SYSCLOCK_SRC_SPLL)
@@ -245,83 +245,7 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         multiplier = fpllo / (fin / prediv);
     }
 
-    // pll range
-
-    // calculate post-diviser and fsys
-    /*postdiv = 2;
-    fsys = fosc << 1;
-    if (fsys < SYSCLOCK_FSYS_MIN)
-    {
-        postdiv = 4;
-        fsys = fosc << 2;
-    }
-    if (fsys < SYSCLOCK_FSYS_MIN)
-    {
-        postdiv = 8;
-        fsys = fosc << 3;
-    }
-
-    // calculate pre-diviser to ensure Fplli < SYSCLOCK_FPLLI_MAX
-    prediv = (fin / (SYSCLOCK_FPLLI_MAX + 1)) + 1;
-    if (prediv < SYSCLOCK_N1_MIN)
-        prediv = SYSCLOCK_N1_MIN;
-    fplli = fin / prediv;
-
-    // calculate multiplier
-    multiplier = fsys / fplli;
-
-    // set post-diviser
-    if (postdiv == 2)
-        CLKDIVbits.PLLPOST = 0b00; // PLL post div = 2
-    if (postdiv == 4)
-        CLKDIVbits.PLLPOST = 0b01; // PLL post div = 4
-    if (postdiv == 8)
-        CLKDIVbits.PLLPOST = 0b11; // PLL post div = 8
-
-    // set pre-diviser
-    CLKDIVbits.PLLPRE = prediv - 2; // PLL pre div = 1
-
-    //                         (PLLFBD + 2)
-    // Fosc = Fin * ----------------------------------
-    //              ((PLLPRE + 2) * 2 * (PLLPOST + 1))
-    PLLFBD = multiplier - 2;
-
-    if (frc_mode == 1)
-    {
-        __builtin_write_OSCCONH(0x01); // frc input
-    	__builtin_write_OSCCONL(OSCCON | 0x01);
-    }
-    else
-    {
-        __builtin_write_OSCCONH(0x03); // primariry osc input
-    	__builtin_write_OSCCONL(OSCCON | 0x01);
-	    // Wait for Clock switch to occur
-	    while (OSCCONbits.COSC != 0b011);
-    }
-
-    // Wait for PLL to lock
-    while (OSCCONbits.LOCK != 1);*/
-
     sysclock_pll = 0;
-
+*/
     return 0;
 }
-
-/**
- * @brief Gets system frequency in Hz
- * @return system frequency in Hz
- */
-uint32_t sysclock_getClock()
-{
-    return sysclock_sysfreq;
-}
-
-/**
- * @brief Gets CPU clock frequency in Hz
- * @return cpu frequency in Hz
- */
-uint32_t sysclock_getCPUClock()
-{
-    return sysclock_sysfreq;
-}
-

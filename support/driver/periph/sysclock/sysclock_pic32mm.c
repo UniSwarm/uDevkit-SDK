@@ -26,7 +26,7 @@ uint32_t sysclock_pll = 0;
  * @param busClock id of the bus clock
  * @return bus frequency in Hz
  */
-uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock)
+uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
     if (busClock == SYSCLOCK_CLOCK_SYSCLK || busClock == SYSCLOCK_CLOCK_PBCLK)
         return sysclock_sysfreq;
@@ -42,7 +42,7 @@ uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock)
  * @param div divisor to set
  * @return 0 if ok, -1 in case of error
  */
-int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div)
+int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
 {
     if (busClock != SYSCLOCK_CLOCK_REFCLK)  // bad index
         return -1;
@@ -156,22 +156,3 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     // TODO implement me
     return 0;
 }
-
-/**
- * @brief Gets system frequency in Hz
- * @return system frequency in Hz
- */
-uint32_t sysclock_getClock()
-{
-    return sysclock_sysfreq;
-}
-
-/**
- * @brief Gets CPU clock frequency in Hz
- * @return cpu frequency in Hz
- */
-uint32_t sysclock_getCPUClock()
-{
-    return sysclock_sysfreq;
-}
-

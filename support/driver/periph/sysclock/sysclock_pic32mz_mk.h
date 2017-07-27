@@ -29,8 +29,6 @@ typedef enum {
     SYSCLOCK_CLOCK_PBCLK7,          ///< peripherical bus 7
     SYSCLOCK_CLOCK_PBCLK8           ///< peripherical bus 8
 } SYSCLOCK_CLOCK;
-uint32_t sysclock_getPeriphClock(SYSCLOCK_CLOCK busClock);
-int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div);
 
 // periph clock assoc
 #if defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
@@ -77,9 +75,6 @@ typedef enum {
     SYSCLOCK_SRC_SPLL  = 0b001, ///< System PLL (SPLL)
     SYSCLOCK_SRC_FRC   = 0b000  ///< same as SYSCLOCK_SRC_FRC
 } SYSCLOCK_SOURCE;
-uint32_t sysclock_getSourceClock(SYSCLOCK_SOURCE source);
-SYSCLOCK_SOURCE sysclock_source();
-int sysclock_switchSourceTo(SYSCLOCK_SOURCE source);
 
 #if defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
  #define SYSCLOCK_SRC_FRC2 SYSCLOCK_SRC_FRC2
