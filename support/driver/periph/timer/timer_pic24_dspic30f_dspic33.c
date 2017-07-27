@@ -413,7 +413,7 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 
     timers[timer].periodMs = periodMs;
 
-    prvalue = sysclock_getPeriphClock() / 1000 * periodMs;
+    prvalue = sysclock_periphFreq(SYSCLOCK_CLOCK_TIMER) / 1000 * periodMs;
     if(prvalue > 65535)
     {
         div = 0b11;

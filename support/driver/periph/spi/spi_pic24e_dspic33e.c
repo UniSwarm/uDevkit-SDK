@@ -223,7 +223,7 @@ int spi_setFreq(rt_dev_t device, uint32_t freq)
 
     spis[spi].freq = freq;
 
-    systemClockPeriph = sysclock_getPeriphClock();
+    systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_SPI);
     sdiv = systemClockPeriph / freq;
 
     // disable device if it is already enabled
@@ -336,7 +336,7 @@ uint32_t spi_freq(rt_dev_t device)
         break;
     }
 
-    systemClockPeriph = sysclock_getPeriphClock();
+    systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_SPI);
     freq = systemClockPeriph / (sdivp * sdivs);
 
     return freq;

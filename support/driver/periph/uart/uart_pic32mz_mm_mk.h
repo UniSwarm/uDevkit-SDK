@@ -73,7 +73,7 @@
 
 #if defined(ARCHI_pic32mm) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) \
  || defined(ARCHI_pic32mzda)
- #define uart_getClock(d) sysclock_getPeriphClock(SYSCLOCK_CLOCK_UART)
+ #define uart_getClock(d) sysclock_periphFreq(SYSCLOCK_CLOCK_UART)
 #else
  uint32_t uart_getClock(rt_dev_t device);
 #endif

@@ -94,9 +94,9 @@ uint32_t uart_getClock(rt_dev_t device)
         return 1;
     
     if (uart < 2)
-        return sysclock_getPeriphClock(SYSCLOCK_CLOCK_UART1_2);
+        return sysclock_periphFreq(SYSCLOCK_CLOCK_UART1_2);
     else
-        return sysclock_getPeriphClock(SYSCLOCK_CLOCK_UART3_6);
+        return sysclock_periphFreq(SYSCLOCK_CLOCK_UART3_6);
 }
 #endif
 

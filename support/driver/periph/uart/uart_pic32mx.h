@@ -86,7 +86,7 @@
   #define _U1TXIF IFS0bits.U1TXIF
   #define _U3TXIF IFS1bits.U3TXIF
   #define _U3TXIE IEC1bits.U3TXIE
-  
+
   #define _U1IP   IPC6bits.U1IP
   #define _U2IP   IPC8bits.U2IP
   #define _U3IP   IPC7bits.U3IP
@@ -103,14 +103,14 @@
   #define _U1TXIF IFS1bits.U1TXIF
   #define _U3TXIF IFS2bits.U3TXIF
   #define _U3TXIE IEC2bits.U3TXIE
-  
+
   #define _U1IP   IPC7bits.U1IP
   #define _U2IP   IPC9bits.U2IP
   #define _U3IP   IPC9bits.U3IP
   #define _U4IP   IPC9bits.U4IP
   #define _U5IP   IPC10bits.U5IP
  #endif
- 
+
  #define _U2EIE  IEC1bits.U2EIE
  #define _U2EIF  IFS1bits.U2EIF
  #define _U2RXIE IEC1bits.U2RXIE

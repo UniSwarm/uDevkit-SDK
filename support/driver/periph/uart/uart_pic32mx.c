@@ -172,11 +172,10 @@ int uart_enable(rt_dev_t device)
     switch (uart)
     {
     case 0:
-        _U1IP = 3;    // interrupt priority for receptor
+        _U1IP = 3;      // interrupt priority for receptor and transmitor
         _U1RXIF = 0;    // clear receive Flag
         _U1RXIE = 1;    // enable receive interrupt
 
-        _U1IP = 3;    // interrupt priority for transmitor
         _U1TXIF = 0;    // clear transmit Flag
         _U1TXIE = 0;    // disable transmit interrupt
 
@@ -186,11 +185,10 @@ int uart_enable(rt_dev_t device)
         break;
 #if UART_COUNT>=2
     case 1:
-        _U2IP = 3;    // interrupt priority for receptor
+        _U2IP = 3;      // interrupt priority for receptor and transmitor
         _U2RXIF = 0;    // clear receive Flag
         _U2RXIE = 1;    // enable receive interrupt
 
-        _U2IP = 3;    // interrupt priority for transmitor
         _U2TXIF = 0;    // clear transmit Flag
         _U2TXIE = 0;    // disable transmit interrupt
 
@@ -201,11 +199,10 @@ int uart_enable(rt_dev_t device)
 #endif
 #if UART_COUNT>=3
     case 2:
-        _U3IP = 3;    // interrupt priority for receptor
+        _U3IP = 3;      // interrupt priority for receptor and transmitor
         _U3RXIF = 0;    // clear receive Flag
         _U3RXIE = 1;    // enable receive interrupt
 
-        _U3IP = 3;    // interrupt priority for transmitor
         _U3TXIF = 0;    // clear transmit Flag
         _U3TXIE = 0;    // disable transmit interrupt
 
@@ -216,11 +213,10 @@ int uart_enable(rt_dev_t device)
 #endif
 #if UART_COUNT>=4
     case 3:
-        _U4IP = 3;    // interrupt priority for receptor
+        _U4IP = 3;      // interrupt priority for receptor and transmitor
         _U4RXIF = 0;    // clear receive Flag
         _U4RXIE = 1;    // enable receive interrupt
 
-        _U4IP = 3;    // interrupt priority for transmitor
         _U4TXIF = 0;    // clear transmit Flag
         _U4TXIE = 0;    // disable transmit interrupt
 
@@ -231,11 +227,10 @@ int uart_enable(rt_dev_t device)
 #endif
 #if UART_COUNT>=5
     case 4:
-        _U5IP = 3;    // interrupt priority for receptor
+        _U5IP = 3;      // interrupt priority for receptor and transmitor
         _U5RXIF = 0;    // clear receive Flag
         _U5RXIE = 1;    // enable receive interrupt
 
-        _U5IP = 3;    // interrupt priority for transmitor
         _U5TXIF = 0;    // clear transmit Flag
         _U5TXIE = 0;    // disable transmit interrupt
 
@@ -246,11 +241,10 @@ int uart_enable(rt_dev_t device)
 #endif
 #if UART_COUNT>=6
     case 5:
-        _U6IP = 3;    // interrupt priority for receptor
+        _U6IP = 3;      // interrupt priority for receptor and transmitor
         _U6RXIF = 0;    // clear receive Flag
         _U6RXIE = 1;    // enable receive interrupt
 
-        _U6IP = 3;    // interrupt priority for transmitor
         _U6TXIF = 0;    // clear transmit Flag
         _U6TXIE = 0;    // disable transmit interrupt
 
@@ -345,7 +339,7 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 
     uarts[uart].baudSpeed = baudSpeed;
 
-    systemClockPeriph = sysclock_getPeriphClock(SYSCLOCK_CLOCK_UART);
+    systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_UART);
     uBrg = systemClockPeriph / baudSpeed;
 
     if ((uBrg & 0x0F) == 0)
@@ -453,7 +447,7 @@ uint32_t uart_baudSpeed(rt_dev_t device)
 #endif
     }
 
-    baudSpeed = sysclock_getPeriphClock(SYSCLOCK_CLOCK_UART) / uBrg;
+    baudSpeed = sysclock_periphFreq(SYSCLOCK_CLOCK_UART) / uBrg;
     if (hs == 1)
         baudSpeed = baudSpeed >> 2;
     else
@@ -630,7 +624,7 @@ void __ISR(_UART_1_VECTOR, IPL3SRS) U1Interrupt(void)
 			_U1TXIE = 0;
 		_U1TXIF = 0;
     }
-    
+
 	if (_U1RXIF == 1)
 	{
 		rec[0] = U1RXREG;
@@ -662,7 +656,7 @@ void __ISR(_UART_2_VECTOR, IPL3SRS) U2Interrupt(void)
 			_U2TXIE = 0;
 		_U2TXIF = 0;
     }
-    
+
 	if (_U2RXIF == 1)
 	{
 		rec[0] = U2RXREG;
@@ -694,7 +688,7 @@ void __ISR(_UART_3_VECTOR, IPL3SRS) U3Interrupt(void)
 			_U3TXIE = 0;
 		_U3TXIF = 0;
     }
-    
+
 	if (_U3RXIF == 1)
 	{
 		rec[0] = U3RXREG;
@@ -726,7 +720,7 @@ void __ISR(_UART_4_VECTOR, IPL3SRS) U4Interrupt(void)
 			_U4TXIE = 0;
 		_U4TXIF = 0;
     }
-    
+
 	if (_U4RXIF == 1)
 	{
 		rec[0] = U4RXREG;
@@ -758,7 +752,7 @@ void __ISR(_UART_5_VECTOR, IPL3SRS) U5Interrupt(void)
 			_U5TXIE = 0;
 		_U5TXIF = 0;
     }
-    
+
 	if (_U5RXIF == 1)
 	{
 		rec[0] = U5RXREG;
@@ -790,7 +784,7 @@ void __ISR(_UART_6_VECTOR, IPL3SRS) U6Interrupt(void)
 			_U6TXIE = 0;
 		_U6TXIF = 0;
     }
-    
+
 	if (_U6RXIF == 1)
 	{
 		rec[0] = U6RXREG;

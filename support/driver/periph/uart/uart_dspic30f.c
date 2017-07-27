@@ -245,7 +245,7 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 
     uarts[uart].baudSpeed = baudSpeed;
 
-    systemClockPeriph = sysclock_getPeriphClock();
+    systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_UART);
     uBrg = systemClockPeriph / baudSpeed;
 
     uBrg = uBrg >> 4;
@@ -294,7 +294,7 @@ uint32_t uart_baudSpeed(rt_dev_t device)
 #endif
     }
 
-    baudSpeed = sysclock_getPeriphClock() / uBrg;
+    baudSpeed = sysclock_periphFreq(SYSCLOCK_CLOCK_UART) / uBrg;
     baudSpeed = baudSpeed >> 4;
 
     return baudSpeed;

@@ -550,7 +550,7 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 
     timers[timer].periodUs = periodMs * 1000;
 
-    prvalue = (float)sysclock_getPeriphClock(SYSCLOCK_CLOCK_TIMER) / 1000.0 * (float)periodMs;
+    prvalue = (float)sysclock_periphFreq(SYSCLOCK_CLOCK_TIMER) / 1000.0 * (float)periodMs;
 
     return timer_setPeriod(device, (uint32_t)prvalue);
 #else
@@ -591,7 +591,7 @@ int timer_setPeriodUs(rt_dev_t device, uint32_t periodUs)
 
     timers[timer].periodUs = periodUs;
 
-    prvalue = (float)sysclock_getPeriphClock(SYSCLOCK_CLOCK_TIMER) / 1000000.0 * (float)periodUs;
+    prvalue = (float)sysclock_periphFreq(SYSCLOCK_CLOCK_TIMER) / 1000000.0 * (float)periodUs;
 
     return timer_setPeriod(device, (uint32_t)prvalue);
 #else
