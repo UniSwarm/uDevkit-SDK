@@ -32,7 +32,13 @@
 #endif
 
 int sysclock_setClock(uint32_t freq);
-uint32_t sysclock_getClock();
-uint32_t sysclock_getCPUClock();
+
+// new API
+uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock);
+int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div);
+
+uint32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source);
+SYSCLOCK_SOURCE sysclock_source();
+int sysclock_switchSourceTo(SYSCLOCK_SOURCE source);
 
 #endif // SYSCLOCK_H
