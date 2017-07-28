@@ -8,7 +8,7 @@
 #pragma config CP =         OFF
 
 /*** DEVCFG1 ***/
-#pragma config FNOSC =      PRIPLL
+#pragma config FNOSC =      PRI // PRIPLL
 #pragma config FSOSCEN =    OFF
 #pragma config IESO =       ON
 #pragma config POSCMOD =    HS
