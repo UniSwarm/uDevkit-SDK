@@ -1,58 +1,22 @@
-/********************************************************************
- Software License Agreement:
-
- The software supplied herewith by Microchip Technology Incorporated
- (the "Company") for its PIC(R) Microcontroller is intended and
- supplied to you, the Company's customer, for use solely and
- exclusively on Microchip PIC Microcontroller products. The
- software is owned by the Company and/or its supplier, and is
- protected under applicable copyright laws. All rights are reserved.
- Any use in violation of the foregoing restrictions may subject the
- user to criminal sanctions under applicable laws, as well as to
- civil liability for the breach of the terms and conditions of this
- license.
-
- THIS SOFTWARE IS PROVIDED IN AN "AS IS" CONDITION. NO WARRANTIES,
- WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING, BUT NOT LIMITED
- TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
- PARTICULAR PURPOSE APPLY TO THIS SOFTWARE. THE COMPANY SHALL NOT,
- IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL OR
- CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
- *******************************************************************/
-
-#include <xc.h>
+#include <archi.h>
 #include "system.h"
 #include "usb.h"
-/*********************************************************************
-* Function: void SYSTEM_Initialize( SYSTEM_STATE state )
-*
-* Overview: Initializes the system.
-*
-* PreCondition: None
-*
-* Input:  SYSTEM_STATE - the state to initialize the system into
-*
-* Output: None
-*
-********************************************************************/
+
 void SYSTEM_Initialize( SYSTEM_STATE state )
 {
     switch(state)
     {
         case SYSTEM_STATE_USB_START:
 
-            // Configuring the auxiliary PLL, since the primary
-            // oscillator provides the source clock to the auxiliary
-            // PLL, the auxiliary oscillator is disabled. Note that
-            // the AUX PLL is enabled. The input 8MHz clock is divided
-            // by 2, multiplied by 24 and then divided by 2. Wait till
-            // the AUX PLL locks.
+            // Start USB PLL
 
+#ifdef ARCHI_dspic33ep
             ACLKCON3 = 0x24C1;
             ACLKDIV3 = 0x7;
 
             ACLKCON3bits.ENAPLL = 1;
             while(ACLKCON3bits.APLLCK != 1);
+#endif
 
             break;
 
@@ -101,8 +65,15 @@ void SYSTEM_Initialize( SYSTEM_STATE state )
     }
 }
 
-#if defined(USB_INTERRUPT)
-void __attribute__((interrupt,auto_psv)) _USB1Interrupt()
+#if defined(USB_INTERRUPT) && defined(ARCHI_pic32mm)
+void __ISR(_USB_VECTOR, IPL4AUTO) USBInterrupt ()
+{
+    USBDeviceTasks();
+}
+#endif
+
+#if defined(USB_INTERRUPT) && defined(ARCHI_dspic33ep)
+void __attribute__((interrupt, auto_psv)) _USB1Interrupt()
 {
     USBDeviceTasks();
 }
