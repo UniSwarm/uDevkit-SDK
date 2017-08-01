@@ -193,7 +193,7 @@ int timer_enable(rt_dev_t device)
     switch (timer)
     {
     case 0:
-        T1CONbits.TON = 1;  // enable timer module
+        T1CONbits.ON = 1;  // enable timer module
         _T1IF = 0;
         if (timers[0].handler)
             _T1IE = 1;
@@ -203,7 +203,7 @@ int timer_enable(rt_dev_t device)
         break;
 #if TIMER_COUNT>=2
     case 1:
-        T2CONbits.TON = 1;  // enable timer module
+        T2CONbits.ON = 1;  // enable timer module
         _T2IF = 0;
         if (timers[1].handler)
             _T2IE = 1;
@@ -214,7 +214,7 @@ int timer_enable(rt_dev_t device)
 #endif
 #if TIMER_COUNT>=3
     case 2:
-        T3CONbits.TON = 1;  // enable timer module
+        T3CONbits.ON = 1;  // enable timer module
         _T3IF = 0;
         if (timers[2].handler)
             _T3IE = 1;
@@ -225,7 +225,7 @@ int timer_enable(rt_dev_t device)
 #endif
 #if TIMER_COUNT>=4
     case 3:
-        T4CONbits.TON = 1;  // enable timer module
+        T4CONbits.ON = 1;  // enable timer module
         _T4IF = 0;
         if (timers[3].handler)
             _T4IE = 1;
@@ -236,7 +236,7 @@ int timer_enable(rt_dev_t device)
 #endif
 #if TIMER_COUNT>=5
     case 4:
-        T5CONbits.TON = 1;  // enable timer module
+        T5CONbits.ON = 1;  // enable timer module
         _T5IF = 0;
         if (timers[4].handler)
             _T5IE = 1;
@@ -247,7 +247,7 @@ int timer_enable(rt_dev_t device)
 #endif
 #if TIMER_COUNT>=6
     case 5:
-        T6CONbits.TON = 1;  // enable timer module
+        T6CONbits.ON = 1;  // enable timer module
         _T6IF = 0;
         if (timers[5].handler)
             _T6IE = 1;
@@ -258,7 +258,7 @@ int timer_enable(rt_dev_t device)
 #endif
 #if TIMER_COUNT>=7
     case 6:
-        T7CONbits.TON = 1;  // enable timer module
+        T7CONbits.ON = 1;  // enable timer module
         _T7IF = 0;
         if (timers[6].handler)
             _T7IE = 1;
@@ -269,7 +269,7 @@ int timer_enable(rt_dev_t device)
 #endif
 #if TIMER_COUNT>=8
     case 7:
-        T8CONbits.TON = 1;  // enable timer module
+        T8CONbits.ON = 1;  // enable timer module
         _T8IF = 0;
         if (timers[7].handler)
             _T8IE = 1;
@@ -280,7 +280,7 @@ int timer_enable(rt_dev_t device)
 #endif
 #if TIMER_COUNT>=9
     case 8:
-        T9CONbits.TON = 1;  // enable timer module
+        T9CONbits.ON = 1;  // enable timer module
         _T9IF = 0;
         if (timers[8].handler)
             _T9IE = 1;
@@ -314,54 +314,54 @@ int timer_disable(rt_dev_t device)
     switch (timer)
     {
     case 0:
-        T1CONbits.TON = 0;  // disable timer module
+        T1CONbits.ON = 0;  // disable timer module
         _T1IE = 0;
         break;
 #if TIMER_COUNT>=2
     case 1:
-        T2CONbits.TON = 0;  // disable timer module
+        T2CONbits.ON = 0;  // disable timer module
         _T2IE = 0;
         break;
 #endif
 #if TIMER_COUNT>=3
     case 2:
-        T3CONbits.TON = 0;  // disable timer module
+        T3CONbits.ON = 0;  // disable timer module
         _T3IE = 0;
         break;
 #endif
 #if TIMER_COUNT>=4
     case 3:
-        T4CONbits.TON = 0;  // disable timer module
+        T4CONbits.ON = 0;  // disable timer module
         _T4IE = 0;
         break;
 #endif
 #if TIMER_COUNT>=5
     case 4:
-        T5CONbits.TON = 0;  // disable timer module
+        T5CONbits.ON = 0;  // disable timer module
         _T5IE = 0;
         break;
 #endif
 #if TIMER_COUNT>=6
     case 5:
-        T6CONbits.TON = 0;  // disable timer module
+        T6CONbits.ON = 0;  // disable timer module
         _T6IE = 0;
         break;
 #endif
 #if TIMER_COUNT>=7
     case 6:
-        T7CONbits.TON = 0;  // disable timer module
+        T7CONbits.ON = 0;  // disable timer module
         _T7IE = 0;
         break;
 #endif
 #if TIMER_COUNT>=8
     case 7:
-        T8CONbits.TON = 0;  // disable timer module
+        T8CONbits.ON = 0;  // disable timer module
         _T8IE = 0;
         break;
 #endif
 #if TIMER_COUNT>=9
     case 8:
-        T9CONbits.TON = 0;  // disable timer module
+        T9CONbits.ON = 0;  // disable timer module
         _T9IE = 0;
         break;
 #endif
