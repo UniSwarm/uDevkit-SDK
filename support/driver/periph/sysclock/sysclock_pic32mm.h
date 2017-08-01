@@ -43,9 +43,16 @@ typedef enum {
     SYSCLOCK_SRC_SPLL  = 0b001, ///< System PLL (SPLL)
     SYSCLOCK_SRC_FRC   = 0b000  ///< Fast internal oscilator (FRC)
 } SYSCLOCK_SOURCE;
-uint32_t sysclock_getSourceClock(SYSCLOCK_SOURCE source);
-SYSCLOCK_SOURCE sysclock_source();
-int sysclock_switchSourceTo(SYSCLOCK_SOURCE source);
+#define SYSCLOCK_SRC_LPRC   SYSCLOCK_SRC_LPRC
+#define SYSCLOCK_SRC_SOSC   SYSCLOCK_SRC_SOSC
+#define SYSCLOCK_SRC_POSC   SYSCLOCK_SRC_POSC
+#define SYSCLOCK_SRC_SPLL   SYSCLOCK_SRC_SPLL
+#define SYSCLOCK_SRC_FRC    SYSCLOCK_SRC_FRC
+#define SYSCLOCK_SRC_MAX    5
+
+#ifdef SYSCLOCK_DEBUG
+ static const char *sysclock_sources_str[] = { "FRC", "SPLL", "POSC", "", "SOSC", "LPRC" };
+#endif
 
 /*  main PLL
  *        __          _____         _____

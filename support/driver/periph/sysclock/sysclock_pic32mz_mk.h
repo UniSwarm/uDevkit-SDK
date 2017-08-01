@@ -82,6 +82,15 @@ typedef enum {
 #elif defined(ARCHI_pic32mk)
  #define SYSCLOCK_SRC_UPLL SYSCLOCK_SRC_UPLL
 #endif
+#define SYSCLOCK_SRC_LPRC   SYSCLOCK_SRC_LPRC
+#define SYSCLOCK_SRC_POSC   SYSCLOCK_SRC_POSC
+#define SYSCLOCK_SRC_SPLL   SYSCLOCK_SRC_SPLL
+#define SYSCLOCK_SRC_FRC    SYSCLOCK_SRC_FRC
+#define SYSCLOCK_SRC_MAX    7
+
+#ifdef SYSCLOCK_DEBUG
+ static const char *sysclock_sources_str[] = { "FRC", "SPLL", "POSC", "UPLL", "SOSC", "LPRC", "BFRC", "FRC2" };
+#endif
 
 /*  main PLL
  *        __         _____         _____         _____

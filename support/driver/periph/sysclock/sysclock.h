@@ -37,7 +37,9 @@ int sysclock_setClock(uint32_t freq);
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock);
 int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div);
 
-uint32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source);
+// source clock
+int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source);
+int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq);
 SYSCLOCK_SOURCE sysclock_source();
 int sysclock_switchSourceTo(SYSCLOCK_SOURCE source);
 

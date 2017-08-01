@@ -55,9 +55,9 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
 /**
  * @brief Return the actual frequency of the clock source
  * @param source clock id to request
- * @return SYSCLOCK_SOURCE enum corresponding to actual clock source
+ * @return frequency of 'source' clock, 0 in case of disabled clock, -1 in case of error
  */
-uint32_t sysclock_getSourceClock(SYSCLOCK_SOURCE source)
+int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 {
     switch (source)
     {
@@ -80,7 +80,27 @@ uint32_t sysclock_getSourceClock(SYSCLOCK_SOURCE source)
             return 8000000 / div; // 8MHz FRC // TODO integrate OSCTUNE
         }
     }
-    return 0;
+    return -1;
+}
+
+/**
+ * @brief Change a frequency of a source if it can be modified
+ * @param source clock id to change
+ * @return 0 in case of success, -1 in case of error
+ */
+int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq)
+{
+    if (source == SYSCLOCK_SRC_SOSC)
+    {
+        sysclock_sosc = freq;
+        return 0;
+    }
+    if (source == SYSCLOCK_SRC_POSC)
+    {
+        sysclock_posc = freq;
+        return 0;
+    }
+    return -1;
 }
 
 /**
