@@ -39,6 +39,19 @@ typedef enum {
     SYSCLOCK_SRC_FRC16  = 0b110, ///< Fast internal oscilator (FRC) divided by 16
     SYSCLOCK_SRC_FRCDIV = 0b111  ///< Fast internal oscilator (FRC) divided by FRCDIV
 } SYSCLOCK_SOURCE;
+#define SYSCLOCK_SRC_LPRC   SYSCLOCK_SRC_LPRC
+#define SYSCLOCK_SRC_SOSC   SYSCLOCK_SRC_SOSC
+#define SYSCLOCK_SRC_POSC   SYSCLOCK_SRC_POSC
+#define SYSCLOCK_SRC_PPLL   SYSCLOCK_SRC_PPLL
+#define SYSCLOCK_SRC_FRC    SYSCLOCK_SRC_FRC
+#define SYSCLOCK_SRC_FRCPLL SYSCLOCK_SRC_FRCPLL
+#define SYSCLOCK_SRC_FRC16  SYSCLOCK_SRC_FRC16
+#define SYSCLOCK_SRC_FRCDIV SYSCLOCK_SRC_FRCDIV
+#define SYSCLOCK_SRC_MAX    7
+
+#ifdef SYSCLOCK_DEBUG
+ static const char *sysclock_sources_str[] = { "FRC", "FRCPLL", "POSC", "PPLL", "SOSC", "LPRC", "FRC16", "FRCDIV" };
+#endif
 
 // periph clock assoc
 #define SYSCLOCK_CLOCK_CPU    SYSCLOCK_CLOCK_SYSCLK ///< CPU clock bus

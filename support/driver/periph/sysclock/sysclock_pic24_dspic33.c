@@ -24,6 +24,9 @@
 #include "board.h"
 
 uint32_t sysclock_sysfreq = 80000000;
+uint32_t sysclock_sosc = 0;
+uint32_t sysclock_posc = 0;
+uint32_t sysclock_pllMultiplier = 1; // TODO review this
 
 /**
  * @brief Gets the actual frequency on a particular peripherical bus clock
@@ -96,6 +99,63 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
     }
 
     return -1;   // bad index
+}
+
+/**
+ * @brief Return the actual frequency of the clock source
+ * @param source clock id to request
+ * @return frequency of 'source' clock, 0 in case of disabled clock, -1 in case of error
+ */
+int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
+{
+    switch (source)
+    {
+    case SYSCLOCK_SRC_LPRC:
+        return 32000;         // 32kHz LPRC
+    case SYSCLOCK_SRC_SOSC:
+        return sysclock_sosc; // external secondary oscilator
+    case SYSCLOCK_SRC_POSC:
+        return sysclock_posc; // external primary oscilator
+    case SYSCLOCK_SRC_PPLL:
+        return sysclock_posc * sysclock_pllMultiplier;  // primary oscilator with PLL
+    case SYSCLOCK_SRC_FRC:
+        return 8000000;       // FRC  // TODO integrate OSCTUNE
+    case SYSCLOCK_SRC_FRC16:
+        return 8000000 / 16;  // FRC /16  // TODO integrate OSCTUNE
+    case SYSCLOCK_SRC_FRCDIV:
+        {
+            uint16_t div = CLKDIVbits.FRCDIV;
+            if (div != 0b111)
+                div = 1 << div;
+            else
+                div = 256;
+
+            return 8000000 / div; // 8MHz FRC // TODO integrate OSCTUNE
+        }
+    case SYSCLOCK_SRC_FRCPLL:
+        return 8000000 * sysclock_pllMultiplier;  // FRC with PLL  // TODO integrate OSCTUNE
+    }
+    return -1;
+}
+
+/**
+ * @brief Change a frequency of a source if it can be modified
+ * @param source clock id to change
+ * @return 0 in case of success, -1 in case of error
+ */
+int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq)
+{
+    if (source == SYSCLOCK_SRC_SOSC)
+    {
+        sysclock_sosc = freq;
+        return 0;
+    }
+    if (source == SYSCLOCK_SRC_POSC)
+    {
+        sysclock_posc = freq;
+        return 0;
+    }
+    return -1;
 }
 
 /**
