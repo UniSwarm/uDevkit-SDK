@@ -67,7 +67,7 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
             for (udiv=0; div!=0; udiv++)
                 div >>= 1;
         udiv -= 1;
-        REFOCONbits.RODIV = udiv;
+        CLKDIVbits.FRCDIV = udiv;
         return 0;
     }
     if (busClock == SYSCLOCK_CLOCK_REFCLK)
@@ -78,7 +78,7 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
             for (udiv=0; div!=0; udiv++)
                 div >>= 1;
         udiv -= 1;
-        CLKDIVbits.FRCDIV = udiv;
+        REFOCONbits.RODIV = udiv;
         return 0;
     }
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
@@ -156,6 +156,55 @@ int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq)
         return 0;
     }
     return -1;
+}
+
+/**
+ * @brief Return the actual clock source for system clock
+ * @return SYSCLOCK_SOURCE enum corresponding to actual clock source
+ */
+SYSCLOCK_SOURCE sysclock_source()
+{
+    SYSCLOCK_SOURCE source = (SYSCLOCK_SOURCE)OSCCONbits.COSC;
+    return source;
+}
+
+/**
+ * @brief Switch the source clock of sysclock to another one and wait for the change effective
+ * @param source id to switch to
+ * @return 0 if ok, -1 in case of error
+ */
+int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
+{
+    if (OSCCONbits.CLKLOCK == 1)
+        return -1; // Clocks and PLL are locked, source cannot be changed
+
+    // disable interrupts
+    disable_interrupt();
+
+    // unlock clock config (OSCCON is write protected)
+    //unlockClockConfig();
+
+    // select the new source
+    OSCCONbits.NOSC = source;
+
+    // trigger change
+    __builtin_write_OSCCONL(OSCCON | 0x01);
+    nop();
+    nop();
+
+    // relock clock config
+    //lockClockConfig();
+
+    while (OSCCONbits.OSWEN == 1)
+        nop();
+
+    // enable interrupts
+    enable_interrupt();
+
+    if (sysclock_source() != source)
+        return -3; // Error when switch clock source
+
+    return 0;
 }
 
 /**
