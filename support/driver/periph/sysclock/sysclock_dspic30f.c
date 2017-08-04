@@ -13,42 +13,118 @@
 
 #include "sysclock.h"
 
-#include <stdint.h>
-
 #include <archi.h>
 
 #include "board.h"
 
-uint32_t sysfreq;
-
-/**
- * @brief Sets the system clock of the CPU, the system clock may be different of CPU
- * clock and peripherical clock
- * @param fosc desirate system frequency in Hz
- * @return 0 if ok, -1 in case of error
- */
-int sysclock_setClock(uint32_t fosc)
-{
-    return sysclock_setClockWPLL(fosc);
-}
-
-/**
- * @brief Internal function to set clock with PLL from XTAL or FRC
- * @param fosc desirate system frequency in Hz
- * @return 0 if ok, -1 in case of error
- */
-int sysclock_setClockWPLL(uint32_t fosc)
-{
-    // TODO implement me
-    return 0;
-}
+uint32_t sysclock_sysfreq;
+uint32_t sysclock_sosc = 0;
+uint32_t sysclock_posc = 0;
 
 /**
  * @brief Gets the actual frequency on a particular peripherical bus clock
  * @param busClock id of the bus clock (1 periph bus clock), 0 for sysclock
- * @return bus frequency in Hz
+ * @return bus frequency in Hz, 1 in case of error to not cause divide by 0
  */
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
-    return sysfreq >> 1;
+    if (busClock == SYSCLOCK_CLOCK_SYSCLK)
+        return sysclock_sysfreq;
+    if (busClock == SYSCLOCK_CLOCK_PBCLK)
+    {
+        uint16_t div = OSCCONbits.POST << 1; // (0, 4, 16, 64)
+        return sysclock_sysfreq >> div;
+    }
+    return 1;
+}
+
+/**
+ * @brief Change the divisor of the busClock given as argument.
+ * @param busClock id of the bus clock or ref clock (SYSCLOCK_CLOCK_REFCLK or
+ * SYSCLOCK_CLOCK_PBCLK, SYSCLOCK_CLOCK_FRC)
+ * @param div divisor to set
+ * @return 0 if ok, -1 in case of error
+ */
+int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
+{
+    uint16_t udiv;
+    if (busClock == SYSCLOCK_CLOCK_PBCLK)
+    {
+        if (div == 1)
+            udiv = 0;
+        else if (div == 4)
+            udiv = 1;
+        else if (div == 4)
+            udiv = 1;
+        else if (div == 4)
+            udiv = 1;
+        else
+            return -1;
+        OSCCONbits.POST = udiv;
+        return 0;
+    }
+
+    return -1;   // bad index
+}
+
+/**
+ * @brief Return the actual frequency of the clock source
+ * @param source clock id to request
+ * @return frequency of 'source' clock, 0 in case of disabled clock, -1 in case of error
+ */
+int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
+{
+    switch (source)
+    {
+    case SYSCLOCK_SRC_LPRC:
+        return 32000;         // 32kHz LPRC
+    case SYSCLOCK_SRC_SOSC:
+        return sysclock_sosc; // external secondary oscilator
+    case SYSCLOCK_SRC_POSC:
+        return sysclock_posc; // external primary oscilator
+    case SYSCLOCK_SRC_FRC:
+        return 8000000;       // FRC  // TODO integrate OSCTUNE
+    }
+    return -1;
+}
+
+/**
+ * @brief Change a frequency of a source if it can be modified
+ * @param source clock id to change
+ * @return 0 in case of success, -1 in case of error
+ */
+int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq)
+{
+    if (source == SYSCLOCK_SRC_SOSC)
+    {
+        sysclock_sosc = freq;
+        return 0;
+    }
+    if (source == SYSCLOCK_SRC_POSC)
+    {
+        sysclock_posc = freq;
+        return 0;
+    }
+    return -1;
+}
+
+/**
+ * @brief Return the actual clock source for system clock
+ * @return SYSCLOCK_SOURCE enum corresponding to actual clock source
+ */
+SYSCLOCK_SOURCE sysclock_source()
+{
+    SYSCLOCK_SOURCE source = (SYSCLOCK_SOURCE)OSCCONbits.COSC;
+    return source;
+}
+
+/**
+ * @brief Switch the source clock of sysclock to another one and wait for the change effective
+ * @param source id to switch to
+ * @return 0 if ok, -1 in case of error
+ */
+int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
+{
+    // TODO implement me
+    return -1;
 }
