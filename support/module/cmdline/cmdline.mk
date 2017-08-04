@@ -22,6 +22,11 @@ endif
 ifneq (,$(findstring ax,$(DRIVERS)))
   SRC := $(SRC) cmd_ax.c
 endif
+$(echo $(DRIVERS))
+ifneq (,$(findstring sysclock,$(DRIVERS)))
+  SRC := $(SRC) cmd_sysclock.c
+endif
+
 ifneq (,$(findstring mrobot,$(MODULES)))
   SRC := $(SRC) cmd_mrobot.c
 endif

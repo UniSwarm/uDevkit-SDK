@@ -26,6 +26,9 @@ Cmd cmds[] = {
   #ifdef USE_uart
     {"uart", cmd_uart},
   #endif
+  #ifdef USE_sysclock
+    {"sysclock", cmd_sysclock},
+  #endif
   #ifdef USE_i2c
     {"i2c", cmd_i2c},
   #endif
