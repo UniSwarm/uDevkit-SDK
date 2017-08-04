@@ -31,7 +31,7 @@ typedef enum {
 // clock source
 typedef enum {
     SYSCLOCK_SRC_LPRC   = 0b101, ///< Low-Power RC (LPRC) Oscillator
-    SYSCLOCK_SRC_SOSC   = 0b100, ///< SOSC
+    SYSCLOCK_SRC_SOSC   = 0b100, ///< Secondary oscilator (SOSC)
     SYSCLOCK_SRC_POSC   = 0b010, ///< Primary Oscillator (POSC) HS and EC
     SYSCLOCK_SRC_PPLL   = 0b011, ///< System PLL (SPLL)
     SYSCLOCK_SRC_FRC    = 0b000, ///< Fast internal oscilator (FRC)

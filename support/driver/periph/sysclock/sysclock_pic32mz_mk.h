@@ -70,7 +70,7 @@ typedef enum {
 #if defined(ARCHI_pic32mk)
     SYSCLOCK_SRC_UPLL  = 0b011, ///< USB PLL (UPLL)
 #endif
-    SYSCLOCK_SRC_SOSC  = 0b100, ///< SOSC
+    SYSCLOCK_SRC_SOSC  = 0b100, ///< Secondary oscilator (SOSC)
     SYSCLOCK_SRC_POSC  = 0b010, ///< Primary Oscillator (POSC) HS and EC
     SYSCLOCK_SRC_SPLL  = 0b001, ///< System PLL (SPLL)
     SYSCLOCK_SRC_FRC   = 0b000  ///< same as SYSCLOCK_SRC_FRC

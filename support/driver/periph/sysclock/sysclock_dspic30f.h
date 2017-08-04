@@ -33,21 +33,23 @@ typedef enum {
  #define SYSCLOCK_VERSION 3
 #endif
 
-#if SYSCLOCK_VERSION > 2
+#if SYSCLOCK_VERSION >= 2
  #define SYSCLOCK_PLL_FRC  // FRC can be used as input of PLL
  #define SYSCLOCK_FRC_TUNE // FRC tune
 #endif
-#if SYSCLOCK_VERSION > 3
+#if SYSCLOCK_VERSION >= 3
  #define SYSCLOCK_PLL_HS   // HS can be used as input of PLL
 #endif
 
 // clock source
 typedef enum {
-    SYSCLOCK_SRC_PLL    = 0b111, ///< Low-Power RC (LPRC) Oscillator
+#if SYSCLOCK_VERSION >= 3
+    SYSCLOCK_SRC_PLL    = 0b111, ///< System PLL (SPLL)
+#endif
     SYSCLOCK_SRC_LPRC   = 0b11,  ///< Low-Power RC (LPRC) Oscillator
     SYSCLOCK_SRC_POSC   = 0b10,  ///< Primary Oscillator (POSC) HS and EC
     SYSCLOCK_SRC_FRC    = 0b01,  ///< Fast internal oscilator (FRC)
-    SYSCLOCK_SRC_SOSC   = 0b00,  ///< Fast internal oscilator (FRC) with PLL
+    SYSCLOCK_SRC_SOSC   = 0b00,  ///< Secondary oscilator (SOSC)
 } SYSCLOCK_SOURCE;
 #define SYSCLOCK_SRC_LPRC   SYSCLOCK_SRC_LPRC
 #define SYSCLOCK_SRC_SOSC   SYSCLOCK_SRC_SOSC
