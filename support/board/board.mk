@@ -4,11 +4,8 @@ BOARDPATH = $(dir $(lastword $(MAKEFILE_LIST)))
 # check BOARD variable exists or DEVICE + ARCHI
 # BOARD does not have to be defined. A project can be setted BOARD (ie. working with a labdec) 
 ifndef BOARD
- ifndef ARCHI
-  $(error Define BOARD or (ARCHI and DEVICE) in your project)
- endif
  ifndef DEVICE
-  $(error Define BOARD or (ARCHI and DEVICE) in your project)
+  $(error Define BOARD or DEVICE in your project)
  endif
 endif
 
