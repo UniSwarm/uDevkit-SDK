@@ -32,8 +32,12 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
         return sysclock_sysfreq;
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
     {
+#ifndef SYSCLOCK_NOPOST
         uint16_t div = OSCCONbits.POST << 1; // (0, 4, 16, 64)
         return sysclock_sysfreq >> div;
+#else
+        return sysclock_sysfreq;
+#endif
     }
     return 1;
 }
@@ -47,6 +51,7 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
  */
 int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
 {
+#ifndef SYSCLOCK_NOPOST
     uint16_t udiv;
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
     {
@@ -63,6 +68,7 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
         OSCCONbits.POST = udiv;
         return 0;
     }
+#endif
 
     return -1;   // bad index
 }

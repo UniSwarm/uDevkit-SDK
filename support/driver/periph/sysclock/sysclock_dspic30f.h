@@ -33,6 +33,10 @@ typedef enum {
  #define SYSCLOCK_VERSION 3
 #endif
 
+#if defined(DEVICE_30F1010) || defined(DEVICE_30F2020) || defined(DEVICE_30F2023)
+ #define SYSCLOCK_NOPOST
+#endif
+
 #if SYSCLOCK_VERSION >= 2
  #define SYSCLOCK_PLL_FRC  // FRC can be used as input of PLL
  #define SYSCLOCK_FRC_TUNE // FRC tune
