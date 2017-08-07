@@ -70,6 +70,7 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
         CLKDIVbits.FRCDIV = udiv;
         return 0;
     }
+#ifdef SYSCLOCK_HAVE_REFCLOCKO
     if (busClock == SYSCLOCK_CLOCK_REFCLK)
     {
         if (div > 32768)
@@ -81,6 +82,7 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
         REFOCONbits.RODIV = udiv;
         return 0;
     }
+#endif
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
     {
         if (div == 1)
