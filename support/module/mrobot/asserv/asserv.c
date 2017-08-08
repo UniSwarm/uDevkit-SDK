@@ -8,11 +8,7 @@
  * @brief Support for motor control with positionning
  */
 
-#ifndef SIMULATOR
-  #include <xc.h>
-#else
-  #include "simulator.h"
-#endif
+#include <archi.h>
 
 #include "board.h"
 #include "asserv.h"

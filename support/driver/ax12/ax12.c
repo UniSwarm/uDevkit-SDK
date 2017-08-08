@@ -11,7 +11,7 @@
 #include "ax12.h"
 
 #include "driver/uart.h"
-//#include <xc.h>
+#include <archi.h>
 #include "board.h"
 
 //uint8_t idr=255;

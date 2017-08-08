@@ -10,7 +10,7 @@
  
 #include "ar1000.h"
 
-#include <xc.h>
+#include <archi.h>
 #include <string.h>
 
 #include "driver/uart.h"

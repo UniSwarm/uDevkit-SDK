@@ -7,8 +7,8 @@
  *
  * @brief Support for motors control
  */
-
-#include <xc.h>
+ 
+#include <archi.h>
 
 #include "motor.h"
 #include "driver/adc.h"

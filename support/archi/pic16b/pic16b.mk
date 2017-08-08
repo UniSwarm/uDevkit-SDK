@@ -19,7 +19,6 @@ else                      # other compiler used
  DEFPROC := $(shell echo $(DEVICE) |\
     sed -e 's/.*\(^[23][42][MEF].*\).*/PIC\1/'\
     -e 's/.*\(^3[03][EF][PVJ]*.*\).*/dsPIC\1/')
-$(warning $(DEFPROC))
  CCFLAGS += -D_HOSTED -D__$(DEFPROC)__ -D__XC16__ -D__prog__
  CCFLAGS += -Wno-attributes -Wno-unknown-pragmas
  CCFLAGS += -I$(XC16_PATH)include/ -I$(XC16_PATH)support/generic/h/
@@ -41,7 +40,6 @@ $(warning $(DEFPROC))
   CCFLAGS += -D__dsPIC33E__
  endif
  CCFLAGS += -Wno-all
- OUT_PWD := $(OUT_PWD)_$(notdir $(CC))
 endif
 
 # debug flags for MPLAB X, experimental

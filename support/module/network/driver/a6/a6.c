@@ -8,9 +8,7 @@
  * @brief A6 communication support
  */
 
-#ifdef XC16
-  #include <xc.h>
-#endif
+#include <archi.h>
 
 #include "a6.h"
 

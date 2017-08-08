@@ -13,7 +13,7 @@
 
 #include "driver/sysclock.h"
 
-#include <xc.h>
+#include <archi.h>
 
 #if !defined (I2C_COUNT) || I2C_COUNT==0
   #warning "No i2c bus on the current device or unknow device"
