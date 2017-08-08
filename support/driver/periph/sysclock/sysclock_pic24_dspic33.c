@@ -8,11 +8,16 @@
  * @brief System clock support for rtprog for dsPIC33FJ, dsPIC33EP, dsPIC33EV,
  * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
  *
- * Implementation based on Microchip documents DS70186D, DS70580C, DS70005131A, DS70307E :
+ * Implementation based on Microchip documents DS70186D, DS70580C, DS70005131A,
+ * DS70307E and DS70216D :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/70216D.pdf
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/70580C.pdf
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/70005131a.pdf
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/70307E.pdf
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70216D.pdf
+ *
+ * Simple PLL devices: DS70644A
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/S52.pdf
  */
 
 #include "sysclock.h"
@@ -262,6 +267,7 @@ int sysclock_setClockWPLL(uint32_t fosc)
         fsys = fosc << 3;
     }
 
+#ifndef SYSCLOCK_PLL4
     // calculate pre-diviser to ensure Fplli < SYSCLOCK_FPLLI_MAX
     prediv = (fin / (SYSCLOCK_FPLLI_MAX + 1)) + 1;
     if (prediv < SYSCLOCK_N1_MIN)
@@ -299,6 +305,12 @@ int sysclock_setClockWPLL(uint32_t fosc)
         // Wait for Clock switch to occur
         while (OSCCONbits.COSC != 0b011);
     }
+#else
+    prediv = 1;
+    fplli = fin;
+    multiplier = 4;
+    postdiv = 1;
+#endif
 
     // Wait for PLL to lock
     while (OSCCONbits.LOCK != 1);

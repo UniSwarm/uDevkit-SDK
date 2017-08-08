@@ -81,30 +81,46 @@ typedef enum {
  *  SYSCLOCK_FSYS_MIN  > Fsys  > SYSCLOCK_FSYS_MAX
  */
 
+#if defined(DEVICE_33FJ16GP101) || defined(DEVICE_33FJ16GP102) || defined(DEVICE_33FJ16MC101) \
+ || defined(DEVICE_33FJ16MC102) || defined(DEVICE_33FJ32GP101) || defined(DEVICE_33FJ32GP102) \
+ || defined(DEVICE_33FJ32GP104) || defined(DEVICE_33FJ32MC101) || defined(DEVICE_33FJ32MC102) \
+ || defined(DEVICE_33FJ32MC104)
+ #define SYSCLOCK_PLL4 // fixed x4 PLL
+#endif
+
 #if defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
 // pre-diviser N
-  #define SYSCLOCK_N1_MIN 2
-  #define SYSCLOCK_N1_MAX 33
-  #define SYSCLOCK_FPLLI_MIN 800000
-  #define SYSCLOCK_FPLLI_MAX 8000000
+ #define SYSCLOCK_N1_MIN 2
+ #define SYSCLOCK_N1_MAX 33
+ #define SYSCLOCK_FPLLI_MIN 800000
+ #define SYSCLOCK_FPLLI_MAX 8000000
 
-  #define SYSCLOCK_FSYS_MIN 120000000
-  #define SYSCLOCK_FSYS_MAX 340000000
+ #define SYSCLOCK_FSYS_MIN 120000000
+ #define SYSCLOCK_FSYS_MAX 340000000
 
-  #define SYSCLOCK_FOSC_MAX 120000000
+ #define SYSCLOCK_FOSC_MAX 120000000
 
 #elif defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
- || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj)
+ || defined(ARCHI_dspic33fj)
+ #ifndef SYSCLOCK_PLL4
   #define SYSCLOCK_N1_MIN 2
   #define SYSCLOCK_N1_MAX 33
   #define SYSCLOCK_FPLLI_MIN 800000
   #define SYSCLOCK_FPLLI_MAX 8000000
-
+ 
   #define SYSCLOCK_FSYS_MIN 100000000
   #define SYSCLOCK_FSYS_MAX 200000000
-
+ 
   #define SYSCLOCK_FOSC_MAX 80000000
 
+ #else
+  #define SYSCLOCK_FPLLI_MIN 3000000
+  #define SYSCLOCK_FPLLI_MAX 8000000
+
+  #define SYSCLOCK_FSYS_MIN 1000000
+  #define SYSCLOCK_FSYS_MAX 32000000
+  #define SYSCLOCK_FOSC_MAX 16000000
+ #endif
 #else
  #error Unsuported ARCHI
 #endif
