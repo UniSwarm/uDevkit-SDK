@@ -1,6 +1,7 @@
 #/bin/bash
 
-PATHPIC='/cygdrive/e/soft/Microchip/pic_file_2'
+#PATHPIC='/cygdrive/c/Users/sebas/Desktop/edc/'
+PATHPIC='/home/seb/Documents/pic_file'
 PATHXC16='/opt/microchip/xc16/v1.31'
 
 # grep edc:AuxCodeSector *.PIC |sed -e's/\([^:]*\)\.PIC:.*edc:beginaddr="\([0-9xA-Fa-f]\+\)".*edc:endaddr="\([0-9xA-Fa-f]\+\)".*"\/>/\1-\2-\3/'
@@ -70,10 +71,10 @@ function gpioget {
         
         if ((${COUNT}==0))
         then
-            ((${FIRST}==1)) && CONTENT+='\r\n#if ' || CONTENT+='\r\n#elif '
+            ((${FIRST}==1)) && CONTENT+='\n#if ' || CONTENT+='\n#elif '
             FIRST=0
         else
-            ((${COUNT}%3==0)) && CONTENT+=' \\\r\n || ' || CONTENT+=' || '
+            ((${COUNT}%3==0)) && CONTENT+=' \\\n || ' || CONTENT+=' || '
         fi
         CONTENT+='defined(DEVICE_'${device}')'
         COUNT=$((COUNT+1))
@@ -109,10 +110,10 @@ function memory {
         
         if ((${COUNT}==0))
         then
-            ((${FIRST}==1)) && CONTENT+='\r\n#if ' || CONTENT+='\r\n#elif '
+            ((${FIRST}==1)) && CONTENT+='\n#if ' || CONTENT+='\n#elif '
             FIRST=0
         else
-            ((${COUNT}%3==0)) && CONTENT+=' \\\r\n || ' || CONTENT+=' || '
+            ((${COUNT}%3==0)) && CONTENT+=' \\\n || ' || CONTENT+=' || '
         fi
         CONTENT+='defined(DEVICE_'${device}')'
         COUNT=$((COUNT+1))
@@ -141,24 +142,26 @@ function extract {
             do
                 if ((${COUNT}==0))
                 then
-                    ((${FIRST}==1)) && CONTENT+='\r\n#if ' || CONTENT+='\r\n#elif '
+                    ((${FIRST}==1)) && CONTENT+='\n#if ' || CONTENT+='\n#elif '
                     FIRST=0
                 else
-                    ((${COUNT}%3==0)) && CONTENT+=' \\\r\n || ' || CONTENT+=' || '
+                    ((${COUNT}%3==0)) && CONTENT+=' \\\n || ' || CONTENT+=' || '
                 fi
                 device=$(echo ${dev}|sed -e's/[ds]*PIC\(.*\):[0-9]\+/\1/')
                 CONTENT+='defined(DEVICE_'${device}')'
                 COUNT=$((COUNT+1))
             done
-            CONTENT+='\r\n #define '${NAME_UPPER}'_COUNT '$i
+            CONTENT+='\n #define '${NAME_UPPER}'_COUNT '$i
         fi
     done
-    CONTENT+='\r\n#else\r\n #define '${NAME_UPPER}'_COUNT 0\r\n#endif\r\n'
+    CONTENT+='\n#else\n #define '${NAME_UPPER}'_COUNT 0\n#endif\n'
     echo -e ${CONTENT} > $3
 }
 
 #count uart "URXEN"
 #extract uart "dsPIC30F|dsPIC33FJ|PIC24F|PIC24HJ" "urxen.h"
+#count uart "SFRDef.*U[0-9]+MODE"
+#extract uart "dsPIC30F[0-9]+A*:" "uart_dspic30f.h"
 
 #count oc "OC[0-9]+CON[1]*\""
 #extract oc "dsPIC33E|PIC24E" "oc_24e_33e.h"
@@ -181,7 +184,17 @@ function extract {
 
 #count pwm "SFRFieldDef.*PMOD0\""
 
-gpioget
+#gpioget
 #extract gpio ".*" "gpio_dspic30.h"
+
+#count can "SFRDef.*C[0-9]CTRL1*\""
+#extract can "dsPIC33|PIC24" "can_pic24_dspic33.h"
+#extract can "dsPIC30" "can_dspic30.h"
+
+#count rtc "SFRDef.*RCFGCAL\""
+#extract rtc "dsPIC33|PIC24" "rtc_pic24_dspic33.h"
+
+grep -rc "tagREFOCONBITS" /opt/microchip/xc16/v1.31/support/dsPIC33*/h |grep -v :0 |sed -e 's/.*\///' -e's/\([A-Z0-9a-z]+\)/\1/' -e 's/\.h//' -e's/^p24/PIC24/' -e's/^p3/dsPIC3/' |grep PIC |grep -v xxx|sort -t$':' -n -k2 -k1 > sysclock.txt
+extract sysclock ".*" "sysclock.h"
 
 #memory

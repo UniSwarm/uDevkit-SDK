@@ -1,10 +1,11 @@
 #/bin/bash
 
-PATHPIC='/cygdrive/e/soft/Microchip/pic_file_2'
+#PATHPIC='/cygdrive/c/Users/sebas/Desktop/edc'
+PATHPIC='/home/seb/Documents/pic_file'
 
 # $1 name $2 expression
 function count {
-    egrep -rc ${PATHPIC}/32xxxx -e $2 |sed -e 's/.*\///' -e's/\([A-Z0-9a-z]+\)/\1/' -e 's/\.PIC//' |sort -t$':' -n -k2 -k1 > $1.txt
+    egrep -rc ${PATHPIC}/32xxxx/ -e $2 |sed -e 's/.*\///' -e's/\([A-Z0-9a-z]+\)/\1/' -e 's/PIC\(.*\)\.PIC/\1/' |sort -t$':' -n -k2 -k1 > $1.txt
 }
 
 # $1 name $2 devfilter $3 fileout
@@ -21,19 +22,19 @@ function extract {
             do
                 if ((${COUNT}==0))
                 then
-                    ((${FIRST}==1)) && CONTENT+='\r\n#if ' || CONTENT+='\r\n#elif '
+                    ((${FIRST}==1)) && CONTENT+='\n#if ' || CONTENT+='\n#elif '
                     FIRST=0
                 else
-                    ((${COUNT}%3==0)) && CONTENT+=' \\\r\n || ' || CONTENT+=' || '
+                    ((${COUNT}%3==0)) && CONTENT+=' \\\n || ' || CONTENT+=' || '
                 fi
                 device=$(echo ${dev}|sed -e's/\(.*\):[0-9]\+/\1/')
                 CONTENT+='defined(DEVICE_'${device}')'
                 COUNT=$((COUNT+1))
             done
-            CONTENT+='\r\n #define '${NAME_UPPER}'_COUNT '$i
+            CONTENT+='\n #define '${NAME_UPPER}'_COUNT '$i
         fi
     done
-    CONTENT+='\r\n#else\r\n #define '${NAME_UPPER}'_COUNT 0\r\n#endif\r\n'
+    CONTENT+='\n#else\n #define '${NAME_UPPER}'_COUNT 0\n#endif\n'
     echo -e ${CONTENT} > $3
 }
 
@@ -90,10 +91,10 @@ function gpioget {
         
         if ((${COUNT}==0))
         then
-            ((${FIRST}==1)) && CONTENT+='\r\n#if ' || CONTENT+='\r\n#elif '
+            ((${FIRST}==1)) && CONTENT+='\n#if ' || CONTENT+='\n#elif '
             FIRST=0
         else
-            ((${COUNT}%3==0)) && CONTENT+=' \\\r\n || ' || CONTENT+=' || '
+            ((${COUNT}%3==0)) && CONTENT+=' \\\n || ' || CONTENT+=' || '
         fi
         CONTENT+='defined(DEVICE_'${device}')'
         COUNT=$((COUNT+1))
@@ -106,25 +107,35 @@ function gpioget {
     echo -e ${CONTENT} > gpio_pic32.h
 }
 
-# count uart "U[0-9]+MODE*\""
-# extract uart "PIC32" "uart_pic32.h"
+# count uart "SFRDef.*edc:cname=\"U[0-9]+MODE*\""
+# extract uart "32MX" "uart_pic32mx.h"
+# extract uart "32M[ZMK]" "uart_pic32mz_mm_mk.h"
 
-# count oc "OC[0-9]+CON[1]*\""
-# extract oc "PIC32" "oc_pic32.h"
+# count oc "SFRDef.*OC[0-9]+CON[1]*\""
+# extract oc "32M" "oc_pic32.h"
 
-# count ic "IC[0-9]+CON[1]*\""
-# extract ic "PIC32" "ic_pic32.h"
+# count ic "SFRDef.*IC[0-9]+CON[1]*\""
+# extract ic "32M" "ic_pic32.h"
 
-# count i2c "SFRDef.*I2C[0-9]*CON[1L]*\""
-# extract i2c "PIC32" "i2c_pic32.h"
+count i2c "SFRDef.*I2C[0-9]*CON[1L]*\""
+extract i2c "32M" "i2c_pic32.h"
 
 # count spi "SFRDef.*SPI[0-9]*CON*\""
-# extract spi "PIC32" "spi_pic32.h"
+# extract spi "32M" "spi_pic32.h"
 
 #count timer "SFRDef.*T[0-9]+CON*\""
-#extract timer "PIC32" "timer_pic32.h"
+#extract timer "32M" "timer_pic32.h"
 
 #count pwm "SFRFieldDef.*PMOD0\""
 
 #count gpio "SFRDef.*edc:cname=\"PORT[A-Z]*\""
-gpioget
+#gpioget
+
+#count can "SFRDef.*C[0-9]FSTAT\""
+#extract can "32M" "can_pic32.h"
+
+#count rtc "SFRDef.*RTCCON\""
+#extract rtc "32M" "rtc_pic32.h"
+
+#count qei "SFRDef.*QEI[0-9]STAT\""
+#extract qei "32M" "qei_pic32.h"
