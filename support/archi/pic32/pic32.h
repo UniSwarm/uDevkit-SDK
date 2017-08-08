@@ -12,12 +12,19 @@
 #define PIC32_H
 
 #ifndef SIMULATOR
+
+ #ifndef __XC32
+  #define __prog__
+  #define nop() {}
+  #define enable_interrupt() {}
+  #define disable_interrupt() {}
+ #else
+  #define nop() _nop()
+  #define enable_interrupt() __builtin_enable_interrupts()
+  #define disable_interrupt() __builtin_disable_interrupts()
+ #endif
  #include <xc.h>
  #include <sys/attribs.h>
-
- #define nop() _nop()
- #define enable_interrupt() __builtin_enable_interrupts()
- #define disable_interrupt() __builtin_disable_interrupts()
 
  #define unlockConfig() SYSKEY = 0; SYSKEY = 0xAA996655; SYSKEY = 0x556699AA;
  #define lockConfig() SYSKEY = 0x33333333;

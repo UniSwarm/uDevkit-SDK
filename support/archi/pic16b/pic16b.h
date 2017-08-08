@@ -12,6 +12,10 @@
 #define PIC16B_H
 
 #ifndef SIMULATOR
+
+ #ifndef __XC16
+  #define __prog__
+ #endif
  #include <xc.h>
 
  #define nop() __builtin_nop()
