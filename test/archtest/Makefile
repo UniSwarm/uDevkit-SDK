@@ -1,71 +1,39 @@
 
 MAKE?=make
 
-GREEN:=$(shell command -v tput > /dev/null && tput setaf 2)
+RULE ?= all
+
+ORANGE:=$(shell command -v tput > /dev/null && tput setaf 3)
 NORM:=$(shell command -v tput > /dev/null && tput sgr0)
-	
+
+.PHONY: all cpu_list allcpu
+
 all: pic32 pic16b
 
+allcpu: $(shell cat cpu_list)
+cpu_list:
+	ls /opt/microchip/xc16/v1.31/support/*/h |grep -E "p[23].*\.h"|grep -v -E "xxx" |sed 's/^p\(.*\)\.h/\1/' > cpu_list
+
+.PHONY: pic16b dspic30f dspic33ep
 pic16b: dspic30f dspic33ep
-dspic30f:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=dspic30f DEVICE=30F6014A $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
-	
-dspic33ep: dspic33epmc5 dspic33epgp5 dspic33epmu8 dspic33epgs5 dspic33epgs8 dspic33epgm7
-dspic33epmc5:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=dspic33ep DEVICE=33EP512MC506 $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
-dspic33epgp5:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=dspic33ep DEVICE=33EP512GP506 $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
-dspic33epmu8:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=dspic33ep DEVICE=33EP512MU810 $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
-dspic33epgs5:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=dspic33ep DEVICE=33EP16GS506 $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
-dspic33epgs8:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=dspic33ep DEVICE=33EP64GS808 $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
-dspic33epgm7:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=dspic33ep DEVICE=33EP512GM710 $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
+dspic30f: 30F6014A 30F6014A
+dspic33ep: 33EP512MC506 33EP512GP506 33EP512MU810 33EP16GS506 33EP64GS808 33EP512GM710
 
+.PHONY: pic32 pic32mm pic32mk pic32mx pic32mz
 pic32: pic32mm pic32mk pic32mx pic32mk pic32mz
+pic32mm: 32MM0064GPL028 32MM0256GPM048
+pic32mk: 32MK1024MCF100
+pic32mx: 32MX370F512L 32MX470F512H 32MX575F256H 32MX795F512L
+pic32mz: 32MZ1024ECH100 32MZ0512EFF100 32MZ2064DAH169
 
-pic32mm: pic32mmgpl pic32mmgpm
-pic32mmgpl:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=pic32mm DEVICE=32MM0064GPL028 $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
-pic32mmgpm:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=pic32mm DEVICE=32MM0256GPM048 $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
-
-pic32mk:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=pic32mk DEVICE=32MK1024MCF100 $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
-
-pic32mx: pic32mx3 pic32mx5 pic32mx7
-pic32mx3:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=pic32mx DEVICE=32MX370F512L $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
-pic32mx5:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=pic32mx DEVICE=32MX575F256H $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
-pic32mx7:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=pic32mx DEVICE=32MX795F512L $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
-
-pic32mz: pic32mzec pic32mzef pic32mzda
-pic32mzec:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=pic32mzec DEVICE=32MZ1024ECH100 $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
-pic32mzef:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=pic32mzef DEVICE=32MZ0512EFF100 $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
-pic32mzda:
-	@printf "> $(GREEN)$@$(NORM)\n"
-	@OUT_PWD=build_$@ ARCHI=pic32mzda DEVICE=32MZ2064DAH169 $(MAKE) -f Makefile.arch -j all > log_$@ 2>&1 || ( cat log_$@ ; false )
+curiosityMMUSB:
+	@printf ">>> $(ORANGE)$@$(NORM)\n"
+	@OUT_PWD=build_$@ BOARD=curiosity_32MM_USB $(MAKE) --no-print-directory -f Makefile.arch -j $(RULE) CCFLAGS=-DBOARD
 
 clean:
 	rm -rf build* log*
+
+%:
+	@printf "> $(ORANGE)$@$(NORM)\n"
+	@OUT_PWD=build_$@ DEVICE=$@ $(MAKE) --no-print-directory -f Makefile.arch -j all
+

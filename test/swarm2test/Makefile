@@ -26,5 +26,7 @@ all : hex
 
 include $(RTPROG)/rtprog.mk
 
+$(info SRC = $(SRC))
+
 html_fs_data.c: $(HTMLGEN_EXE) $(call rwildcard, html_fs/, *)
 	$(HTMLGEN_EXE) -i html_fs/ -o html_fs_data.c

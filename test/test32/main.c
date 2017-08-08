@@ -21,7 +21,7 @@ int main(void)
 
     archi_init();
     //sysclock_setClock(200000000);
-    sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK_TIMER, 16);
+    sysclock_setClockDiv(SYSCLOCK_CLOCK_TIMER, 16);
 
     board_init();
 

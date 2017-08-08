@@ -6,6 +6,6 @@ DRIVERS += uart timer gpio i2c # pwm adc
 
 SRC += main.c
 
-all : hex
+all : elf
 
 include $(RTPROG)/rtprog.mk
