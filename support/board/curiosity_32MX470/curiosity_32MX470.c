@@ -15,6 +15,8 @@
 
 #include "curiosity_32MX470.h"
 
+#include "driver/sysclock.h"
+
 #ifdef SIMULATOR
 uint8_t board_led_state = 0;
 #include <stdio.h>
@@ -38,6 +40,7 @@ int board_init_io()
 
 int board_init()
 {
+    sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, 20000000); // 20MHz
     archi_init();
 
     board_init_io();

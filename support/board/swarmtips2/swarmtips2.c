@@ -13,10 +13,15 @@
 #include <archi.h>
 
 #include <driver/sysclock.h>
-#include <driver/adc.h>
 #include <driver/i2c.h>
 
-#include <module/sensor.h>
+#include "modules.h"
+#ifdef USE_sensor
+ #include <module/sensor.h>
+#endif
+#ifdef USE_adc
+ #include <driver/adc.h>
+#endif
 
 uint8_t board_led_state = 0;
 
@@ -135,6 +140,7 @@ int board_init_tof()
     i2c_writereg(swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 1, 0x00, 0); // leds off and disable tof 2 and tof 3
     i2c_writereg(swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 3, 0x00, 0); // all io as output
 
+#ifdef USE_sensor
     // tof1
     VL6180X_setAddr(swarmtips2_i2c_tof, 0x52, TOF1_ADDR);
     for(i=0;i<65000;i++);
@@ -153,6 +159,7 @@ int board_init_tof()
     VL6180X_setAddr(swarmtips2_i2c_tof, 0x52, TOF3_ADDR);
     for(i=0;i<65000;i++);
     VL6180X_init(swarmtips2_i2c_tof, TOF3_ADDR);
+#endif
 
     return 0;
 }
@@ -245,13 +252,18 @@ uint8_t board_button(uint8_t btn)
 
 float board_getPowerVoltage()
 {
+#ifdef USE_adc
     uint16_t value = adc_getValue(BOARD_VOLT_IN);
     return ((float)value) / 4096.0 * 6.6;
+#else
+    return 0;
+#endif
 }
 
 int board_init()
 {
-    init_archi();
+    sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, 24000000); // 24MHz
+    archi_init();
 
     board_init_io();
 
@@ -263,7 +275,9 @@ int board_init()
     board_init_ihm();
     board_init_ledpwm();
 
+#ifdef USE_adc
     adc_init();
+#endif
 
     return 0;
 }

@@ -13,7 +13,10 @@
 #include <driver/adc.h>
 #include <driver/i2c.h>
 
-#include <module/sensor.h>
+#include "modules.h"
+#ifdef USE_sensor
+ #include <module/sensor.h>
+#endif
 
 #ifdef SIMULATOR
 uint8_t board_led_state = 0;
@@ -79,7 +82,9 @@ int board_init()
 
 	for(j=0;j<2;j++) for(i=0;i<65000;i++);
 
+#ifdef USE_sensor
     VL6180X_init(swarmtips_i2c_tof, 0x52);
+#endif
 
     return 0;
 }

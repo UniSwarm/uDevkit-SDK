@@ -6,9 +6,16 @@
  * @date April 11, 2016, 06:07 PM
  *
  * @brief Code for RTboard v1.1 from Robotips
+ *
+ * product page:
+ *  http://www.robotips.fr/fr/projet/RTboard_1.1
+ * datasheet:
+ *  http://www.robotips.fr/data/actu/46/mother_board_1.1.pdf
  */
 
 #include "rtboard1_1.h"
+
+#include "driver/sysclock.h"
 
 #ifdef SIMULATOR
 uint8_t board_led_state = 0;
@@ -82,6 +89,7 @@ int board_init_io()
 
 int board_init()
 {
+    sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, 8000000); // 8MHz
     archi_init();
 
     board_init_io();

@@ -15,6 +15,8 @@
 
 #include "curiosity_32MM_USB.h"
 
+#include "driver/sysclock.h"
+
 #ifdef SIMULATOR
 uint8_t board_led_state = 0;
 #include <stdio.h>
@@ -37,6 +39,7 @@ int board_init_io()
 
 int board_init()
 {
+    sysclock_setSourceFreq(SYSCLOCK_SRC_SOSC, 32768); // 32kHz
     archi_init();
 
     board_init_io();

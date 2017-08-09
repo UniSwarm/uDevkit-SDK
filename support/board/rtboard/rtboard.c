@@ -1,14 +1,22 @@
 /**
- * @file rtboard.h
+ * @file rtboard.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
  *
  * @date April 11, 2016, 06:07 PM
  *
  * @brief Code for RTboard from Robotips
+ *
+ * product page:
+ *  https://www.robotips.fr/fr/projet/RTboard
+ *  https://hackaday.io/project/20901-rtboard-10
+ * datasheet:
+ *  https://www.robotips.fr/data/gpage/11/squaretips_mother-board_schematics.pdf
  */
 
 #include "rtboard.h"
+
+#include "driver/sysclock.h"
 
 #ifdef SIMULATOR
 uint8_t board_led_state = 0;
@@ -21,7 +29,7 @@ int board_init_io()
     // analog inputs
     ANSELB = 0x0000;    // all analog inputs of port B as digital buffer
     ANSELD = 0x0000;    // all analog inputs of port D as digital buffer
-    ANSELE = 0x0007;    // all analog inputs of port E as digital buffer
+    ANSELE = 0x0007;    // all analog inputs of port E as digital buffer, RE2-0 as analog
     ANSELG = 0x0000;    // all analog inputs of port G as digital buffer
 
     ANSELBbits.ANSB2 = 1;       // BOARD_VOLT_IN as analog
@@ -90,6 +98,7 @@ int board_init_io()
 
 int board_init()
 {
+    sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, 8000000); // 8MHz
     archi_init();
 
     board_init_io();
