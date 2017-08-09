@@ -7,7 +7,7 @@ vpath %.c $(MODULEPATH) $(MODULEPATH)cmd
 SRC += cmdline.c
 HEADER += cmdline.h
 
-SRC := $(SRC) cmd.c cmd_led.c
+SRC := $(SRC) cmd.c cmd_led.c cmd_reg.c
 
 # include all commands
 ifneq (,$(findstring uart,$(DRIVERS)))

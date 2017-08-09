@@ -41,6 +41,7 @@ Cmd cmds[] = {
   #ifdef USE_MODULE_mrobot
     {"mrobot", cmd_mrobot},
   #endif
+    {"reg", cmd_reg},
     {"led", cmd_led},
     {"help", cmd_help},
     {"", NULL}
