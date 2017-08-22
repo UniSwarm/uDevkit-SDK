@@ -8,8 +8,8 @@ endif
 
 DEV_PROG?=PK3  # default value pickit3 (PK3), possible value: real ice (RICE) or ICD3 (ICD3)
 prog : $(OUT_PWD)/$(PROJECT).hex
-	$(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -F$(OUT_PWD)/$(PROJECT).hex -M -OL
-	@rm log.* MPLABXLog.*
+	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -F$(PROJECT).hex -M -OL || true
+	@rm $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.*
 
 # special cmd for hex creation
 $(OUT_PWD)/$(PROJECT).hex : $(OUT_PWD)/$(PROJECT).elf
@@ -31,7 +31,7 @@ $(OUT_PWD)/%.o : %.c
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c  $< $(DEFINES) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@)
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
-HEAP?=1000
+HEAP?=100
 
 # rule to link OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
@@ -49,4 +49,4 @@ dbg : $(OUT_PWD)/$(PROJECT).elf
 
 # shows a disassembly listing of the symbol after the dot
 dbg.% : $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(OBJDUMP) -S $(OUT_PWD)/$(PROJECT).elf |sed -n -e '/^[a-f0-9]\+ <_*$*>:/,/^[a-f0-9]\+ <_.*>:/ p'
+	$(VERB)$(OBJDUMP) -S $(OUT_PWD)/$(PROJECT).elf |sed -n -e '/^[a-f0-9]\+ <_*$*>:/,/^[a-f0-9]\+ <.*>:/ p'
