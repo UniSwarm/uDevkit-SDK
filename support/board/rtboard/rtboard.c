@@ -36,22 +36,22 @@ int board_init_io()
     ANSELBbits.ANSB1 = 1;       // M1I as analog
     ANSELBbits.ANSB0 = 1;       // M2I as analog
     ANSELBbits.ANSB6 = 1;       // M3I as analog
-    ANSELBbits.ANSB6 = 1;       // M4I as analog
+    ANSELBbits.ANSB7 = 1;       // M4I as analog
 
     // digitals outputs
     TRISDbits.TRISD11 = 0;      // LED pin as output
 
-    TRISBbits.TRISB14 = 0;      // M1A pin as output
-    TRISBbits.TRISB15 = 0;      // M1B pin as output
+    TRISBbits.TRISB15 = 0;      // M1A pin as output
+    TRISBbits.TRISB14 = 0;      // M1B pin as output
 
     TRISBbits.TRISB12 = 0;      // M2A pin as output
     TRISBbits.TRISB13 = 0;      // M2B pin as output
 
-    TRISBbits.TRISB8 = 0;       // M3A pin as output
-    TRISBbits.TRISB9 = 0;       // M3B pin as output
+    TRISBbits.TRISB10 = 0;      // M3A pin as output
+    TRISBbits.TRISB11 = 0;      // M3B pin as output
 
-    TRISBbits.TRISB10 = 0;      // M4A pin as output
-    TRISBbits.TRISB11 = 0;      // M4B pin as output
+    TRISBbits.TRISB8 = 0;       // M4A pin as output
+    TRISBbits.TRISB9 = 0;       // M4B pin as output
 
     TRISBbits.TRISB3 = 0;       // AX12_TXEN pin as output
     TRISDbits.TRISD1 = 0;       // A6_RW pin as output
