@@ -2,7 +2,6 @@
 #include "cmd_stdio.h"
 
 #include <stdint.h>
-#include <sys/kmem.h>
 #include <archi.h>
 
 void cmd_reg_help()

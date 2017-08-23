@@ -25,6 +25,7 @@
  #endif
  #include <xc.h>
  #include <sys/attribs.h>
+ #include <sys/kmem.h>
 
  #define unlockConfig() SYSKEY = 0; SYSKEY = 0xAA996655; SYSKEY = 0x556699AA;
  #define lockConfig() SYSKEY = 0x33333333;
