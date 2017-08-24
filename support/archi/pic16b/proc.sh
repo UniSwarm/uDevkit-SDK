@@ -133,7 +133,7 @@ function extract {
     NAME_UPPER=$(echo $1 | tr '[:lower:]' '[:upper:]')
     CONTENT=''
     FIRST=1
-    for i in {1..32}
+    for i in {0..32}
     do
         RES=$(cat $1.txt |egrep ":${i}$" |grep -E "$2" | sort)
         if [ -n "${RES}" ]; then
@@ -194,7 +194,8 @@ function extract {
 #count rtc "SFRDef.*RCFGCAL\""
 #extract rtc "dsPIC33|PIC24" "rtc_pic24_dspic33.h"
 
-grep -rc "tagREFOCONBITS" /opt/microchip/xc16/v1.31/support/dsPIC33*/h |grep -v :0 |sed -e 's/.*\///' -e's/\([A-Z0-9a-z]+\)/\1/' -e 's/\.h//' -e's/^p24/PIC24/' -e's/^p3/dsPIC3/' |grep PIC |grep -v xxx|sort -t$':' -n -k2 -k1 > sysclock.txt
+grep -rc "PLLPOST" /opt/microchip/xc16/v1.31/support/dsPIC33*/h |grep :0 |sed -e 's/.*\///' -e's/\([A-Z0-9a-z]+\)/\1/' -e 's/\.h//' -e's/^p24/PIC24/' -e's/^p3/dsPIC3/' |grep PIC |grep -v xxx|sort -t$':' -n -k2 -k1 > sysclock.txt
 extract sysclock ".*" "sysclock.h"
+
 
 #memory
