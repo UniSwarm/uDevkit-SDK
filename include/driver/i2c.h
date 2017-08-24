@@ -1,1 +1,1 @@
-#include "../../support/driver/periph/i2c/i2c.h"
+#include "../../support/driver/i2c/i2c.h"

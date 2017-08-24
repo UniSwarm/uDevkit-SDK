@@ -1,1 +1,1 @@
-#include "../../support/driver/periph/spi/spi.h"
+#include "../../support/driver/spi/spi.h"

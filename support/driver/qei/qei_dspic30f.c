@@ -1,0 +1,167 @@
+/**
+ * @file qei_dspic30f.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016-2017
+ *
+ * @date April 18, 2016, 22:33 PM
+ *
+ * @brief Quadrature Encoder Interface support driver for dsPIC30F.
+ * Only one QEI device could be present in this architechture.
+ *
+ * Implementation based on Microchip document DS70063D :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/70063D.pdf
+ */
+
+#include "qei.h"
+
+#include <archi.h>
+
+#if !defined (QEI_COUNT) || QEI_COUNT==0
+  #warning No device QEI periph on the current device
+#endif
+
+uint8_t qei_state = 0;
+
+/**
+ * @brief Gives a free QEI device number and open it
+ * @return QEI device number
+ */
+rt_dev_t qei_getFreeDevice()
+{
+#if QEI_COUNT>=1
+    uint8_t i;
+    rt_dev_t device;
+
+    if (qei_state == 0)
+        return NULLDEV;
+
+    device = MKDEV(DEV_CLASS_QEI, 0);
+
+    qei_open(device);
+
+    return device;
+#else
+    return NULLDEV;
+#endif
+}
+
+/**
+ * @brief Open a QEI
+ * @param device QEI device number
+ * @return 0 if ok, -1 in case of error
+ */
+int qei_open(rt_dev_t device)
+{
+#if QEI_COUNT>=1
+    uint8_t qei = MINOR(device);
+    if (qei != 0)
+        return -1;
+    if (qei_state == 1)
+        return -1;
+
+    qei_state = 1;
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * @brief Close a QEI
+ * @param device QEI device number
+ * @return 0 if ok, -1 in case of error
+ */
+int qei_close(rt_dev_t device)
+{
+#if QEI_COUNT>=1
+    uint8_t qei = MINOR(device);
+    if (qei != 0)
+        return -1;
+
+    qei_disable(device);
+
+    qei_state = 0;
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * @brief Enable the specified QEI device
+ * @param device QEI device number
+ * @return 0 if ok, -1 in case of error
+ */
+int qei_enable(rt_dev_t device)
+{
+#if QEI_COUNT>=1
+    uint8_t qei = MINOR(device);
+    if (qei != 0)
+        return -1;
+    QEICONbits.QEIM = 0b111; // TODO, review this taking care of setConfig
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * @brief Disable the specified QEI device
+ * @param device QEI device number
+ * @return 0 if ok, -1 in case of error
+ */
+int qei_disable(rt_dev_t device)
+{
+#if QEI_COUNT>=1
+    uint8_t qei = MINOR(device);
+    if (qei != 0)
+        return -1;
+    QEICONbits.QEIM = 0;
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * Configures the specified QEI device with bits in config
+ * @param device QEI device number
+ * @param config config bit
+ * @return 0 if ok, -1 in case of error
+ */
+int qei_setConfig(rt_dev_t device, uint16_t config)
+{
+#if QEI_COUNT>=1
+    uint8_t qei = MINOR(device);
+    if (qei != 0)
+        return -1;
+    // TODO
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * Returns the actual position of the specified QEI
+ * @param device QEI device number
+ * @return position
+ */
+uint16_t qei_getValue(rt_dev_t device)
+{
+  #if QEI_COUNT>=1
+    uint8_t qei = MINOR(device);
+    if (qei != 0)
+        return -1;
+    return POSCNT;
+#else
+    return 0;
+#endif
+}
+
+int qei_setHomeValue(rt_dev_t device, uint16_t home)
+{
+    // TODO implement me
+    return 0;
+}

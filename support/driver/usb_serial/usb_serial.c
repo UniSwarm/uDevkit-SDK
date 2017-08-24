@@ -15,7 +15,7 @@
 
 #include "sys/fifo.h"
 
-#include "../periph/usb_hal/usb_hal.h"
+#include "../usb_hal/usb_hal.h"
 
 #define UARTSERIAL_BUFFRX_SIZE 512
 STATIC_FIFO(usb_serial_buffrx, UARTSERIAL_BUFFRX_SIZE);

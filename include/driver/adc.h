@@ -1,1 +1,1 @@
-#include "../../support/driver/periph/adc/adc.h"
+#include "../../support/driver/adc/adc.h"

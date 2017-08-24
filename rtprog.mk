@@ -41,20 +41,6 @@ clean: sim-clean
 	rm -f $(OUT_PWD)/$(PROJECT).elf
 	rm -f $(CONFIG_HEADERS)
 
-# generate list of used drivers modules
-empty:=
-space:= \n $(empty)
-$(OUT_PWD)/modules.h : $(firstword $(MAKEFILE_LIST))
-	@echo "$(YELLOW)generate module.h...$(NORM)"
-	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "\n// defines use of modules and drivers\n\
-$(subst $(space),\n,$(foreach DRIVER,$(sort $(DRIVERS)),#define USE_$(DRIVER)\n))\n\
-$(subst $(space),\n,$(foreach MODULE,$(sort $(MODULES)),#define USE_MODULE_$(MODULE)\n))\n\
-// include all modules and drivers in project\n\
-$(subst $(space),\n,$(foreach DRIVER,$(sort $(DRIVERS)),#include \"driver/$(DRIVER).h\"\n))\n\
-$(subst $(space),\n,$(foreach MODULE,$(sort $(MODULES)),#include \"module/$(MODULE).h\"\n))\n\
-" > $(OUT_PWD)/modules.h
-
 .PHONY: distrib
 DISTRIB_PWD = distrib
 $(DISTRIB_PWD)/%.c : %.c

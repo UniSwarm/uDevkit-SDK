@@ -1,1 +1,1 @@
-#include "../../support/driver/periph/ic/ic.h"
+#include "../../support/driver/ic/ic.h"

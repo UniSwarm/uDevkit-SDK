@@ -1,1 +1,1 @@
-#include "../../support/driver/periph/usb_hal/usb_hal.h"
+#include "../../support/driver/usb_hal/usb_hal.h"

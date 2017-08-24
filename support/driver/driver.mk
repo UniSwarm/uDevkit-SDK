@@ -9,16 +9,8 @@ define includedriver
    include $(RTPROG)/support/driver/$(1)/$(1).mk
   endif
  else
-  ifneq "$(wildcard $(RTPROG)/support/driver/periph/$(1)/$(1).mk)" ""
-   ifeq (,$(findstring " $1 ",$(IDRIVERS)))
-    DRIVER_FILES += $(RTPROG)/support/driver/periph/$(1)/$(1).mk
-    IDRIVERS += $(1)
-    include $(RTPROG)/support/driver/periph/$(1)/$(1).mk
-   endif
-  else
-   ifeq (,$(findstring $1,$(BADDRIVERS)))
-    BADDRIVERS += $(1)
-   endif
+  ifeq (,$(findstring $1,$(BADDRIVERS)))
+   BADDRIVERS += $(1)
   endif
  endif
 endef

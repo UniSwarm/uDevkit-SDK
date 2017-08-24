@@ -1,1 +1,1 @@
-#include "../../support/driver/periph/qei/qei.h"
+#include "../../support/driver/qei/qei.h"

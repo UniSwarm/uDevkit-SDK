@@ -1,4 +1,4 @@
-# RTprog {#mainpage}
+# RTprog
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 [![Build Status](https://travis-ci.org/Robotips/rtprog.svg?branch=master)](https://travis-ci.org/Robotips/rtprog)
@@ -9,7 +9,7 @@ A tool to simplify module inclusions in embedded systems.
 Currently works for all 16 bits and 32 bits Microchip devices (792 devices):
 
 |Range|Famillies|List of devices|Device count|
-|-----|---------|---------------|------------|
+|-----|---------|:-------------:|-----------:|
 |Microchip 16bits|dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV, PIC24F, PIC24FJ, PIC24EP and PIC24HJ|[list](support/archi/pic16b/README.md)|517|
 |Microchip 32bits|PIC32MM, PIC32MK, PIC32MX, PIC32MZDA, PIC32MZEC and PIC32MZEF|[list](support/archi/pic32/README.md)|275|
 
@@ -35,6 +35,8 @@ include $(RTPROG)/rtprog.mk
 ```
 
 [Complete list of drivers](support/driver/README.md)
+
+[Complete list of periph driver](support/periph/README.md)
 
 [Complete list of modules](support/module/README.md)
 
