@@ -6,8 +6,8 @@
 #include "simmodule.h"
 #include "widgets/adcwidget/adcwidget.h"
 
-#include "driver/periph/adc/adc.h"
-#include "driver/periph/adc/adc_sim.h"
+#include "driver/adc/adc.h"
+#include "driver/adc/adc_sim.h"
 
 class SimModuleAdc : public SimModule
 {

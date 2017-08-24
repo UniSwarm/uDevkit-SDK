@@ -5,8 +5,8 @@
 #include <QDial>
 #include <QLabel>
 
-#include "driver/periph/adc/adc.h"
-#include "driver/periph/adc/adc_sim.h"
+#include "driver/adc/adc.h"
+#include "driver/adc/adc_sim.h"
 
 class AdcWidget : public QWidget
 {

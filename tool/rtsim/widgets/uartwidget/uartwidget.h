@@ -6,8 +6,8 @@
 #include <QPlainTextEdit>
 #include <QLabel>
 
-#include "driver/periph/uart/uart.h"
-#include "driver/periph/uart/uart_sim.h"
+#include "driver/uart/uart.h"
+#include "driver/uart/uart_sim.h"
 
 class UartWidget : public QWidget
 {
