@@ -139,7 +139,7 @@ uint8_t adc_sarFromChannel(uint8_t channel)
     return 7;
 }
 
-uint16_t adc_getValue(uint8_t channel)
+int16_t adc_getValue(uint8_t channel)
 {
     volatile uint32_t* result;
     uint32_t mask;

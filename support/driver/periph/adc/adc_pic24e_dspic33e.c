@@ -42,7 +42,7 @@ int adc_init()
     return 0;
 }
 
-uint16_t adc_getValue(uint8_t channel)
+int16_t adc_getValue(uint8_t channel)
 {
     AD1CHS0 = channel;          // select channel to convert
     AD1CON1bits.SAMP = 1;       // Start sampling

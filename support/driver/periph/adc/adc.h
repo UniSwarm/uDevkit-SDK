@@ -17,7 +17,7 @@ int adc_init();
 //int adc_initchannel(uint8_t channel);
 //int adc_closechannel(uint8_t channel);
 
-uint16_t adc_getValue(uint8_t channel);
+int16_t adc_getValue(uint8_t channel);
 //int adc_setSamplingPeriod(uint16_t priodMs);
 
 #if defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
