@@ -7,6 +7,6 @@ vpath %.h $(dir $(lastword $(MAKEFILE_LIST)))
 
 SRC += emz64.c
 HEADER += emz64.h
-ARCHI_SRC += fuses.c
+ARCHI_SRC += emz64_fuses.c
 
 GUI_DRIVERS += ssd1306

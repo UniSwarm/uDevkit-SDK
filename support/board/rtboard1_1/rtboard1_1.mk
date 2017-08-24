@@ -7,4 +7,4 @@ vpath %.h $(dir $(lastword $(MAKEFILE_LIST)))
 
 SRC += rtboard1_1.c
 HEADER += rtboard1_1.h
-ARCHI_SRC += fuses.c
+ARCHI_SRC += rtboard1_1_fuses.c

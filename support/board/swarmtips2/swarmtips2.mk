@@ -9,4 +9,4 @@ DRIVERS += i2c
 
 SRC += swarmtips2.c
 HEADER += swarmtips2.h
-ARCHI_SRC += fuses.c
+ARCHI_SRC += swarmtips2_fuses.c

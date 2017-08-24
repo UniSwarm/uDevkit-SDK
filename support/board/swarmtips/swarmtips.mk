@@ -7,4 +7,4 @@ vpath %.h $(dir $(lastword $(MAKEFILE_LIST)))
 
 SRC += swarmtips.c
 HEADER += swarmtips.h
-ARCHI_SRC += fuses.c
+ARCHI_SRC += swarmtips_fuses.c

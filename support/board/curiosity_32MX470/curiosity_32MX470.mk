@@ -9,4 +9,4 @@ vpath %.h $(dir $(lastword $(MAKEFILE_LIST)))
 
 SRC += curiosity_32MX470.c
 HEADER += curiosity_32MX470.h
-ARCHI_SRC += fuses.c
+ARCHI_SRC += curiosity_32MX470_fuses.c
