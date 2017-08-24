@@ -36,6 +36,13 @@ int board_init_io()
     TRISEbits.TRISE3 = 0;    // LED1
     TRISEbits.TRISE4 = 0;    // LED2
     TRISEbits.TRISE6 = 0;    // LED3
+
+    // remappable pins
+    // Unlock configuration pin
+    unlockIoConfig();
+        U2RXR = 0b1100;         // RX2 ==> RPC3
+        RPC2R = 0b0010;         // TX2 ==> RPC2
+    lockIoConfig();
 #endif
     return 0;
 }
