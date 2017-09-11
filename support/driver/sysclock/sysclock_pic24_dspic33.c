@@ -28,7 +28,7 @@
 uint32_t sysclock_sysfreq = 80000000;
 uint32_t sysclock_sosc = 0;
 uint32_t sysclock_posc = 0;
-uint32_t sysclock_pllMultiplier = 1; // TODO review this
+uint32_t sysclock_pll = 0;
 
 /**
  * @brief Gets the actual frequency on a particular peripherical bus clock
@@ -112,34 +112,50 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
  */
 int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 {
+    int32_t freq = -1;
+    uint16_t div;
+    int16_t osctune;
     switch (source)
     {
     case SYSCLOCK_SRC_LPRC:
-        return 32000;         // 32kHz LPRC
+        freq = 32000;         // 32kHz LPRC
+        break;
     case SYSCLOCK_SRC_SOSC:
-        return sysclock_sosc; // external secondary oscilator
+        freq = sysclock_sosc; // external secondary oscilator
+        break;
     case SYSCLOCK_SRC_POSC:
-        return sysclock_posc; // external primary oscilator
+        freq = sysclock_posc; // external primary oscilator
+        break;
     case SYSCLOCK_SRC_PPLL:
-        return sysclock_posc * sysclock_pllMultiplier;  // primary oscilator with PLL
+        freq = sysclock_pll;  // primary oscilator with PLL
+        break;
     case SYSCLOCK_SRC_FRC:
-        return 8000000;       // FRC  // TODO integrate OSCTUNE
     case SYSCLOCK_SRC_FRC16:
-        return 8000000 / 16;  // FRC /16  // TODO integrate OSCTUNE
     case SYSCLOCK_SRC_FRCDIV:
+        osctune = OSCTUN;
+        if (osctune >= 32)
+            osctune = ~(osctune & 0x1F);
+        freq = 7370000 + 27637;       // FRC
+
+        if (source == SYSCLOCK_SRC_FRC16)
+            freq = freq / 16;  // FRC /16
+
+        if (source == SYSCLOCK_SRC_FRCDIV)
         {
-            uint16_t div = CLKDIVbits.FRCDIV;
+            div = CLKDIVbits.FRCDIV;
             if (div != 0b111)
                 div = 1 << div;
             else
                 div = 256;
 
-            return 8000000 / div; // 8MHz FRC // TODO integrate OSCTUNE
+            freq = freq / div; // FRC / div
         }
+        break;
     case SYSCLOCK_SRC_FRCPLL:
-        return 8000000 * sysclock_pllMultiplier;  // FRC with PLL  // TODO integrate OSCTUNE
+        freq = sysclock_pll;  // FRC with PLL
+        break;
     }
-    return -1;
+    return freq;
 }
 
 /**
@@ -316,7 +332,8 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     // Wait for PLL to lock
     while (OSCCONbits.LOCK != 1);
 
-    sysclock_sysfreq = fplli * multiplier / postdiv; // Complete this
+    sysclock_pll = fplli * multiplier / postdiv;
+    sysclock_sysfreq = sysclock_sysfreq; // Complete this
 
     return 0;
 }
