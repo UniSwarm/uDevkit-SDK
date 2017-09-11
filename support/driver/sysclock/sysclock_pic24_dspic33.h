@@ -176,6 +176,6 @@ typedef enum {
  #define SYSCLOCK_HAVE_REFCLOCKO
 #endif
 
-int sysclock_setClockWPLL(uint32_t freq);
+int sysclock_setPLLClock(uint32_t freq, uint8_t src);
 
 #endif // SYSCLOCK_PIC24_DSPIC30F_DSPIC33_H
