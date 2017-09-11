@@ -25,7 +25,7 @@
 #include <archi.h>
 #include "board.h"
 
-uint32_t sysclock_sysfreq = 8000000;
+uint32_t sysclock_sysfreq = 0;
 uint32_t sysclock_sosc = 0;
 uint32_t sysclock_posc = 0;
 uint32_t sysclock_pll = 0;
@@ -37,8 +37,12 @@ uint32_t sysclock_pll = 0;
  */
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
+    if (sysclock_sysfreq == 0)
+        sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
+
     if (busClock == SYSCLOCK_CLOCK_SYSCLK)
         return sysclock_sysfreq >> 1;
+
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
     {
         uint16_t div = 1;
@@ -114,7 +118,7 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 {
     int32_t freq = -1;
     uint16_t div;
-    int16_t osctune;
+    int32_t osctune;
     switch (source)
     {
     case SYSCLOCK_SRC_LPRC:
@@ -134,8 +138,8 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
     case SYSCLOCK_SRC_FRCDIV:
         osctune = OSCTUN;
         if (osctune >= 32)
-            osctune = ~(osctune & 0x1F);
-        freq = 7370000 + 27637 * osctune;       // FRC
+            osctune = (osctune | 0xFFFFFFE0);
+        freq = 7370000 + osctune * 27637;       // FRC
 
         if (source == SYSCLOCK_SRC_FRC16)
             freq = freq / 16;  // FRC /16
