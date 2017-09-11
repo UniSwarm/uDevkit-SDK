@@ -25,7 +25,7 @@
 #include <archi.h>
 #include "board.h"
 
-uint32_t sysclock_sysfreq = 80000000;
+uint32_t sysclock_sysfreq = 8000000;
 uint32_t sysclock_sosc = 0;
 uint32_t sysclock_posc = 0;
 uint32_t sysclock_pll = 0;
@@ -135,7 +135,7 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
         osctune = OSCTUN;
         if (osctune >= 32)
             osctune = ~(osctune & 0x1F);
-        freq = 7370000 + 27637;       // FRC
+        freq = 7370000 + 27637 * osctune;       // FRC
 
         if (source == SYSCLOCK_SRC_FRC16)
             freq = freq / 16;  // FRC /16
@@ -239,9 +239,9 @@ int sysclock_setClock(uint32_t fosc)
 {
 #ifndef SYSCLOCK_XTAL
     OSCTUN = 21; // ==> Fin = 8 MHz Internal clock
-    return sysclock_setPLLClock(fosc, SYSCLOCK_SRC_FRCPLL);
+    return sysclock_setPLLClock(fosc, SYSCLOCK_SRC_FRC);
 #else
-    return sysclock_setPLLClock(fosc, SYSCLOCK_SRC_PPLL);
+    return sysclock_setPLLClock(fosc, SYSCLOCK_SRC_POSC);
 #endif
 }
 
@@ -257,7 +257,7 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     uint16_t multiplier;
     uint16_t prediv, postdiv;
     
-    if (src != SYSCLOCK_SRC_FRCPLL && src != SYSCLOCK_SRC_PPLL)
+    if (src != SYSCLOCK_SRC_FRC && src != SYSCLOCK_SRC_POSC)
         return -4;
 
     if (fosc > SYSCLOCK_FOSC_MAX)
@@ -308,7 +308,7 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     //              ((PLLPRE + 2) * 2 * (PLLPOST + 1))
     PLLFBD = multiplier - 2;
 
-    if (src == SYSCLOCK_SRC_FRCPLL)
+    if (src == SYSCLOCK_SRC_FRC)
     {
         __builtin_write_OSCCONH(SYSCLOCK_SRC_FRCPLL); // frc input
         __builtin_write_OSCCONL(OSCCON | 0x01);
@@ -333,7 +333,7 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     while (OSCCONbits.LOCK != 1);
 
     sysclock_pll = fplli * multiplier / postdiv;
-    sysclock_sysfreq = sysclock_sysfreq; // Complete this
+    sysclock_sysfreq = sysclock_pll; // Complete this
 
     return 0;
 }
