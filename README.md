@@ -22,7 +22,7 @@ Makefile example content :
 ```Makefile
 RTPROG = /home/toto/rtprog      # path to rtprog root directory
 
-PROJECT = deltaApp              # project name
+PROJECT = myproject             # project name
 ROBOT = deltatips               # robot to use (or BOARD= if you want to choose only a board)
 OUT_PWD = build                 # output directory
 
@@ -34,11 +34,17 @@ SRC += main.c
 include $(RTPROG)/rtprog.mk
 ```
 
+To build and program your board, simply launch :
+
+```bash
+make prog
+```
+
 [Complete list of drivers](support/driver/README.md)
 
-[Complete list of periph driver](support/periph/README.md)
-
 [Complete list of modules](support/module/README.md)
+
+An IDE named RtIDE is available as beta version : https://github.com/Robotips/rtide
 
 ## Prepare repository
 

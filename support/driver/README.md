@@ -1,6 +1,6 @@
 # drivers support
 
-Low level driver dependant (periph/) or not of the processor.
+Low level driver dependant or not of the processor.
 
 Each driver must have a particular directory with the same name of the driver which contains a 'driver-name'.mk file.
 
@@ -10,17 +10,17 @@ Each driver must have a particular directory with the same name of the driver wh
 |-----------|-----------|
 |[ax12](ax12/README.md)|ax12 servo motor driver|
 |[motor](motor/README.md)|motor abstraction drivers|
-|[adc](periph/adc/README.md)|ADC analog converters driver|
-|[i2c](periph/i2c/README.md)|I2C communication driver|
-|[ic](periph/ic/README.md)|Input compare driver|
-|[oc](periph/oc/README.md)|Output compare driver|
-|[pwm](periph/pwm/README.md)|PWM driver|
-|[qei](periph/qei/README.md)|Quadrature encoder driver|
-|[spi](periph/spi/README.md)|SPI communication driver|
-|[sysclock](periph/sysclock/README.md)|System clock|
-|[timer](periph/timer/README.md)|Timer driver|
-|[uart](periph/uart/README.md)|UART (serial) communication driver|
-|[usb_hal](periph/usb_hal/README.md)|USB low layer driver|
+|[adc](adc/README.md)|ADC analog converters driver|
+|[i2c](i2c/README.md)|I2C communication driver|
+|[ic](ic/README.md)|Input compare driver|
+|[oc](oc/README.md)|Output compare driver|
+|[pwm](pwm/README.md)|PWM driver|
+|[qei](qei/README.md)|Quadrature encoder driver|
+|[spi](spi/README.md)|SPI communication driver|
+|[sysclock](sysclock/README.md)|System clock|
+|[timer](timer/README.md)|Timer driver|
+|[uart](uart/README.md)|UART (serial) communication driver|
+|[usb_hal](usb_hal/README.md)|USB low layer driver|
 |[usb_serial](usb_serial/README.md)|USB CDC driver|
 
 ## How to add a driver support?
