@@ -17,7 +17,7 @@
 
 #include "board.h"
 
-uint32_t sysclock_sysfreq;
+uint32_t sysclock_sysfreq = 0;
 uint32_t sysclock_sosc = 0;
 uint32_t sysclock_posc = 0;
 
@@ -28,8 +28,12 @@ uint32_t sysclock_posc = 0;
  */
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
+    if (sysclock_sysfreq == 0)
+        sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
+
     if (busClock == SYSCLOCK_CLOCK_SYSCLK)
         return sysclock_sysfreq;
+
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
     {
 #ifndef SYSCLOCK_NOPOST
@@ -85,9 +89,9 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
     case SYSCLOCK_SRC_LPRC:
         return 32000;         // 32kHz LPRC
     case SYSCLOCK_SRC_SOSC:
-        return sysclock_sosc; // external secondary oscilator
+        return sysclock_sosc; // external secondary oscillator
     case SYSCLOCK_SRC_POSC:
-        return sysclock_posc; // external primary oscilator
+        return sysclock_posc; // external primary oscillator
     case SYSCLOCK_SRC_FRC:
         return 8000000;       // FRC  // TODO integrate OSCTUNE
     }

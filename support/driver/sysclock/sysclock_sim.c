@@ -56,6 +56,10 @@ SYSCLOCK_SOURCE sysclock_source()
     return 0;
 }
 
+int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq)
+{
+}
+
 int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 {
     // TODO

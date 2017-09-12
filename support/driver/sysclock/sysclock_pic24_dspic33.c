@@ -124,15 +124,19 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
     case SYSCLOCK_SRC_LPRC:
         freq = 32000;         // 32kHz LPRC
         break;
+
     case SYSCLOCK_SRC_SOSC:
-        freq = sysclock_sosc; // external secondary oscilator
+        freq = sysclock_sosc; // external secondary oscillator
         break;
+
     case SYSCLOCK_SRC_POSC:
-        freq = sysclock_posc; // external primary oscilator
+        freq = sysclock_posc; // external primary oscillator
         break;
+
     case SYSCLOCK_SRC_PPLL:
-        freq = sysclock_pll;  // primary oscilator with PLL
+        freq = sysclock_pll;  // primary oscillator with PLL
         break;
+
     case SYSCLOCK_SRC_FRC:
     case SYSCLOCK_SRC_FRC16:
     case SYSCLOCK_SRC_FRCDIV:
@@ -155,6 +159,7 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
             freq = freq / div; // FRC / div
         }
         break;
+
     case SYSCLOCK_SRC_FRCPLL:
         freq = sysclock_pll;  // FRC with PLL
         break;
