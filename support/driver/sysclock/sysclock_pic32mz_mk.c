@@ -17,7 +17,7 @@
 #include <archi.h>
 #include "board.h"
 
-uint32_t sysclock_sysfreq = 24000000;
+uint32_t sysclock_sysfreq = 0;
 uint32_t sysclock_sosc = 0;
 uint32_t sysclock_posc = 0;
 uint32_t sysclock_pll = 0;
@@ -36,9 +36,7 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
     uint8_t divisor;
     
     if (sysclock_sysfreq == 0)
-    {
         sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
-    }
     
     if (busClock == SYSCLOCK_CLOCK_SYSCLK)
         return sysclock_sysfreq;
@@ -95,37 +93,55 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
  */
 int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 {
+    int32_t freq = -1;
+    uint16_t div;
+    int32_t osctune;
     switch (source)
     {
 #if defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
     case SYSCLOCK_SRC_BFRC:
-        return 8000000;         // 8MHz BFRC hardware automatic selection
+        freq = 8000000;         // 8MHz BFRC hardware automatic selection
+        break;
     case SYSCLOCK_SRC_FRC2:
 #endif
-    case SYSCLOCK_SRC_FRC:
-        {
-            uint16_t div = OSCCONbits.FRCDIV;
-            if (div != 0b111)
-                div = 1 << div;
-            else
-                div = 256;
 
-            return 8000000 / div; // 8MHz FRC // TODO integrate OSCTUNE
-        }
+    case SYSCLOCK_SRC_FRC:
+        div = OSCCONbits.FRCDIV;
+        if (div != 0b111)
+            div = 1 << div;
+        else
+            div = 256;
+
+        osctune = OSCTUN;
+        if (osctune >= 32)
+            osctune = (osctune | 0xFFFFFFE0);
+
+        freq = (8000000 + osctune * 31250) / div; // 8MHz typical FRC, tuned by OSCTUN (+/- 12.5%), divided by FRCDIV
+        break;
+
     case SYSCLOCK_SRC_LPRC:
-        return 32000;         // 32kHz LPRC
+        freq = 32000;         // 32kHz LPRC
+        break;
+
     case SYSCLOCK_SRC_SOSC:
-        return sysclock_sosc; // external secondary oscilator
+        freq = sysclock_sosc; // external secondary oscillator
+        break;
+
     case SYSCLOCK_SRC_POSC:
-        return sysclock_posc; // external primary oscilator
+        freq = sysclock_posc; // external primary oscillator
+        break;
+
     case SYSCLOCK_SRC_SPLL:
-        return sysclock_pll;  // PLL out freq
+        freq = sysclock_pll;  // PLL out freq
+        break;
+
 #if defined(ARCHI_pic32mk)
     case SYSCLOCK_SRC_UPLL:
-        return sysclock_upll; // USB PLL out freq
+        freq = sysclock_upll; // USB PLL out freq
+        break;
 #endif
     }
-    return -1;
+    return freq;
 }
 
 /**
