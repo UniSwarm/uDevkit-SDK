@@ -758,7 +758,7 @@ rt_dev_t oc_getTimer(rt_dev_t device)
             else
                 return timer(5); // timer 5
             break;
-#if OC_COUNT>=3
+#if OC_COUNT>=4
         case 3:
         case 4:
         case 5:
@@ -768,7 +768,7 @@ rt_dev_t oc_getTimer(rt_dev_t device)
                 return timer(3); // timer 3
             break;
 #endif
-#if OC_COUNT>=6
+#if OC_COUNT>=7
         case 6:
         case 7:
         case 8:
@@ -778,7 +778,7 @@ rt_dev_t oc_getTimer(rt_dev_t device)
                 return timer(7); // timer 7
             break;
 #endif
-#if OC_COUNT>=9
+#if OC_COUNT>=10
         case 9:
         case 10:
         case 11:
@@ -786,6 +786,17 @@ rt_dev_t oc_getTimer(rt_dev_t device)
                 return timer(8); // timer 8
             else
                 return timer(9); // timer 9
+            break;
+#endif
+#if OC_COUNT>=13
+        case 12:
+        case 13:
+        case 14:
+        case 15:
+            if(ocs[oc].timer == 0)
+                return timer(2); // timer 2
+            else
+                return timer(3); // timer 3
             break;
 #endif
         }
