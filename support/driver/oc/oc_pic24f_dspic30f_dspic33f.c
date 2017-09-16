@@ -290,7 +290,7 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
         imode = OC_PIC24F_dsPIC33F_dsPIC30F_PWM;
         break;
     case OC_MODE_PWM_CENTER:
-        imode = OC_PIC24F_dsPIC33F_dsPIC30F_PWM_CENTER;
+        imode = OC_PIC24F_dsPIC33F_dsPIC30F_PWM; // no PWM center support
         break;
     case OC_MODE_SINGLE_LOW:
         imode = OC_PIC24F_dsPIC33F_dsPIC30F_SINGLE_LOW;

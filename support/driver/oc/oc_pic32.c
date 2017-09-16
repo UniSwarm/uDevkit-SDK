@@ -173,8 +173,13 @@ struct oc_dev ocs[] = {
 #endif
 };
 
-#define OC_PIC32_DISABLE  0b000
-#define OC_PIC32_PWM      0b110
+#define OC_PIC32_DISABLE           0b000
+#define OC_PIC32_PWM               0b110
+#define OC_PIC32_SINGLE_LOW        0b010
+#define OC_PIC32_SINGLE_HIGH       0b001
+#define OC_PIC32_CONTINOUS_TOGGLE  0b011
+#define OC_PIC32_SINGLE_LOWHIGH    0b100
+#define OC_PIC32_CONTINOUS_LOWHIGH 0b101
 
 /**
  * @brief Gives a free OC device number
@@ -419,6 +424,24 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
     {
     case OC_MODE_PWM:
         imode = OC_PIC32_PWM;
+        break;
+    case OC_MODE_PWM_CENTER:
+        imode = OC_PIC32_PWM; // no PWM center support
+        break;
+    case OC_MODE_SINGLE_LOW:
+        imode = OC_PIC32_SINGLE_LOW;
+        break;
+    case OC_MODE_SINGLE_HIGH:
+        imode = OC_PIC32_SINGLE_HIGH;
+        break;
+    case OC_MODE_CONTINOUS_TOGGLE:
+        imode = OC_PIC32_CONTINOUS_TOGGLE;
+        break;
+    case OC_MODE_SINGLE_LOWHIGH:
+        imode = OC_PIC32_SINGLE_LOWHIGH;
+        break;
+    case OC_MODE_CONTINOUS_LOWHIGH:
+        imode = OC_PIC32_CONTINOUS_LOWHIGH;
         break;
     }
     ocs[oc].flags.imode = imode;
@@ -713,13 +736,16 @@ rt_dev_t oc_getTimer(rt_dev_t device)
     if (oc >= OC_COUNT)
         return NULLDEV;
 
+#ifdef OC_HAVE_ALTERNATIVE_TIMER_SELECTION
     if (CFGCONbits.OCACLK == 0)
+#endif
     {
         if(ocs[oc].timer == 0)
             return timer(2); // timer 2
         else
             return timer(3); // timer 3
     }
+#ifdef OC_HAVE_ALTERNATIVE_TIMER_SELECTION
     else
     {
         switch(oc)
@@ -732,7 +758,7 @@ rt_dev_t oc_getTimer(rt_dev_t device)
             else
                 return timer(5); // timer 5
             break;
-#if OC_COUNT>=6
+#if OC_COUNT>=3
         case 3:
         case 4:
         case 5:
@@ -742,7 +768,7 @@ rt_dev_t oc_getTimer(rt_dev_t device)
                 return timer(3); // timer 3
             break;
 #endif
-#if OC_COUNT>=9
+#if OC_COUNT>=6
         case 6:
         case 7:
         case 8:
@@ -752,8 +778,19 @@ rt_dev_t oc_getTimer(rt_dev_t device)
                 return timer(7); // timer 7
             break;
 #endif
+#if OC_COUNT>=9
+        case 9:
+        case 10:
+        case 11:
+            if(ocs[oc].timer == 0)
+                return timer(8); // timer 8
+            else
+                return timer(9); // timer 9
+            break;
+#endif
         }
     }
+#endif
 #endif
     
     return NULLDEV;

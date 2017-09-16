@@ -56,7 +56,7 @@ uint32_t oc_rsVal(rt_dev_t device);
   #include "oc_pic24e_dspic33e.h"
  #endif
 #elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mx) \
-   || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
+   || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
  #include "oc_pic32.h"
 #else
  #warning Unsuported ARCHI

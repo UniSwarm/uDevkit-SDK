@@ -109,4 +109,9 @@ rt_dev_t oc_getTimer(rt_dev_t device);
  #define OC_COUNT 0
 #endif
 
+#if defined(ARCHI_pic32mk) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) \
+ || defined(ARCHI_pic32mzda)
+ #define OC_HAVE_ALTERNATIVE_TIMER_SELECTION
+#endif
+
 #endif // OC_PIC32_H
