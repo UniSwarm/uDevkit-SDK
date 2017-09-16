@@ -91,8 +91,13 @@ struct oc_dev ocs[] = {
 #endif
 };
 
-#define OC_PIC24F_dsPIC33F_dsPIC30F_DISABLE  0b000
-#define OC_PIC24F_dsPIC33F_dsPIC30F_PWM      0b110
+#define OC_PIC24F_dsPIC33F_dsPIC30F_DISABLE           0b000
+#define OC_PIC24F_dsPIC33F_dsPIC30F_PWM               0b110
+#define OC_PIC24F_dsPIC33F_dsPIC30F_SINGLE_LOW        0b010
+#define OC_PIC24F_dsPIC33F_dsPIC30F_SINGLE_HIGH       0b001
+#define OC_PIC24F_dsPIC33F_dsPIC30F_CONTINOUS_TOGGLE  0b011
+#define OC_PIC24F_dsPIC33F_dsPIC30F_SINGLE_LOWHIGH    0b100
+#define OC_PIC24F_dsPIC33F_dsPIC30F_CONTINOUS_LOWHIGH 0b101
 
 /**
  * @brief Gives a free OC device number
@@ -283,6 +288,24 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
     {
     case OC_MODE_PWM:
         imode = OC_PIC24F_dsPIC33F_dsPIC30F_PWM;
+        break;
+    case OC_MODE_PWM_CENTER:
+        imode = OC_PIC24F_dsPIC33F_dsPIC30F_PWM_CENTER;
+        break;
+    case OC_MODE_SINGLE_LOW:
+        imode = OC_PIC24F_dsPIC33F_dsPIC30F_SINGLE_LOW;
+        break;
+    case OC_MODE_SINGLE_HIGH:
+        imode = OC_PIC24F_dsPIC33F_dsPIC30F_SINGLE_HIGH;
+        break;
+    case OC_MODE_CONTINOUS_TOGGLE:
+        imode = OC_PIC24F_dsPIC33F_dsPIC30F_CONTINOUS_TOGGLE;
+        break;
+    case OC_MODE_SINGLE_LOWHIGH:
+        imode = OC_PIC24F_dsPIC33F_dsPIC30F_SINGLE_LOWHIGH;
+        break;
+    case OC_MODE_CONTINOUS_LOWHIGH:
+        imode = OC_PIC24F_dsPIC33F_dsPIC30F_CONTINOUS_LOWHIGH;
         break;
     }
     ocs[oc].flags.imode = imode;
