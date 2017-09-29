@@ -97,7 +97,7 @@ rt_dev_t i2c_getFreeDevice()
 
     if (i == I2C_COUNT)
         return NULLDEV;
-    device = MKDEV(DEV_CLASS_UART, i);
+    device = MKDEV(DEV_CLASS_I2C, i);
 
     i2c_open(device);
 
