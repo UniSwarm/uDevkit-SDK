@@ -48,4 +48,8 @@
 #define unlockClockConfig() unlockConfig()
 #define lockClockConfig() lockConfig()
 
+#define REGSIZE 4
+typedef unsigned int rt_reg_t;
+typedef unsigned int rt_reg_ptr_t;
+
 #endif // PIC32_H

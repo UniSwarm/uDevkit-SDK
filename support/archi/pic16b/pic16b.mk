@@ -42,6 +42,9 @@ else                      # other compiler used
  CCFLAGS += -Wno-all
 endif
 
+vpath %.h $(RTPROG)/support/archi/pic16b/
+HEADER += pic16b.h
+
 # debug flags for MPLAB X, experimental
 #
 #LDFLAGS_XC += -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf   -mreserve=data@0x1000:0x101B -mreserve=data@0x101C:0x101D -mreserve=data@0x101E:0x101F -mreserve=data@0x1020:0x1021 -mreserve=data@0x1022:0x1023 -mreserve=data@0x1024:0x1027 -mreserve=data@0x1028:0x104F

@@ -40,4 +40,7 @@ $(warning $(DEFPROC))
  CCFLAGS += -Wno-all
 endif
 
+vpath %.h $(RTPROG)/support/archi/pic32/
+HEADER += pic32.h
+
 -include $(RTPROG)/support/archi/microchip/microchip.mk

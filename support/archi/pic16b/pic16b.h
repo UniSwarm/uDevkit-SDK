@@ -24,7 +24,8 @@
   #define enable_interrupt() INTCON2bits.GIE=1
   #define disable_interrupt() INTCON2bits.GIE=0
 
- #elif defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24fv) || defined(ARCHI_pic24hj)
+ #elif defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_pic24f) \
+    || defined(ARCHI_pic24fj) || defined(ARCHI_pic24fv) || defined(ARCHI_pic24hj)
   #define enable_interrupt() __builtin_disi(0)
   #define disable_interrupt() __builtin_disi(0x3FFF)
  #endif
@@ -36,5 +37,9 @@
  #define enable_interrupt() {}
  #define disable_interrupt() {}
 #endif
+
+#define REGSIZE 2
+typedef unsigned short rt_reg_t;
+typedef unsigned long rt_reg_ptr_t;
 
 #endif // PIC16B_H
