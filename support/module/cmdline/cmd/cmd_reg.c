@@ -24,23 +24,28 @@ int cmd_reg(int argc, char **argv)
     {
         cmd_reg_help();
         return 0;
-    }
+    } 
 
     if (argc < 3)
         return 1;
-    
-    volatile unsigned int* addr = (volatile unsigned int*)strtoul(argv[2], NULL, 16);
+
+    volatile rt_reg_ptr_t* addr = (volatile rt_reg_ptr_t*)strtoul(argv[2], NULL, 16);
     if (addr == 0)
         return 1;
 
     if (strcmp(argv[1], "read")==0)
     {
         char res[sizeof(int)*8+4];
-        uint32_t value = *((volatile unsigned int*)(addr));
-        
-        // print in binary format
-        unsigned int mask = 0x80000000;
+        uint32_t value = *addr;
         uint8_t id = 0;
+
+        // print in binary format
+        unsigned int mask;
+        #if (REGSIZE == 4)
+            mask = 0x80000000;
+        #else
+            mask = 0x8000;
+        #endif
         while (mask != 0)
         {
             res[id++] = ((value & mask) == 0) ? '0' : '1';
@@ -49,8 +54,12 @@ int cmd_reg(int argc, char **argv)
                 res[id++] = ' ';
         }
         res[id]=0;
-        
-        printf("0x%.8X : 0b%s\n", value, res);
+
+        #if (REGSIZE == 4)
+            printf("0x%.8X : 0b%s\n", value, res);
+        #else
+            printf("0x%.4X : 0b%s\n", value, res);
+        #endif
         return 0;
     }
 
