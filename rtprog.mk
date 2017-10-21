@@ -10,6 +10,7 @@ RTPROG := $(dir $(lastword $(MAKEFILE_LIST)))
 ifndef OUT_PWD
  OUT_PWD = build
 endif
+OUT_PWD := $(strip $(OUT_PWD))
 
 YELLOW:=$(shell command -v tput > /dev/null && tput setaf 3)
 GREEN:=$(shell command -v tput > /dev/null && tput setaf 2)
@@ -38,7 +39,7 @@ INCLUDEPATH += -I. -I$(RTPROG)/include -I$(OUT_PWD)
 .PHONY: clean
 clean: sim-clean
 	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c
-	rm -f $(OUT_PWD)/$(PROJECT).elf
+	rm -f $(OUT_PWD)/$(PROJECT).elf $(OUT_PWD)/$(PROJECT).hex
 	rm -f $(CONFIG_HEADERS)
 
 .PHONY: distrib
