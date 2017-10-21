@@ -1,21 +1,23 @@
 RTPROG = ../..
 
 DEV_PROG = RICE
-PROJECT = testproj
+PROJECT = test32
 BOARD = emz64
-OUT_PWD = build
+OUT_PWD = build 
 
 # CCFLAGS += -pedantic
 
-DRIVERS += timer uart i2c qei
+DRIVERS += sysclock uart i2c timer
 MODULES += gui
+
+MODULES += cmdline
 
 SRC += main.c
 
 include $(RTPROG)/rtprog.mk
 
 all : hex
-	@echo "DRIVERS asked         :" $(sort $(DRIVERS) $(BADDRIVERS))
+	@echo "SRC asked         :" $(sort $(SRC) $(ARCHI_SRC))
 	@echo "DRIVERS implemented   :" $(DRIVERS)
 	@echo "BADDRIVERS sorted     :" $(sort $(BADDRIVERS))
 	@echo DEVICE: $(DEVICE), ARCHI: $(ARCHI), CC: $(CC), DEFINES: $(DEFINES)
