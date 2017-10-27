@@ -136,6 +136,7 @@
   #define _U6TXIF IFS5bits.U6TXIF
   #define _U6TXIP IPC47bits.U6TXIP
  #endif
+ #define UIPR IPL3SRS
 
 #elif defined(ARCHI_pic32mm)
 
@@ -163,6 +164,7 @@
    #define _U2TXIF IFS1bits.U2TXIF
    #define _U2TXIP IPC10bits.U2TXIP
   #endif
+ #define UIPR IPL3SRS
  #else
   // interrupt bits helpers for MM GPM
   #ifndef _U1RXIE
@@ -194,6 +196,7 @@
    #define _U3TXIF IFS1bits.U3TXIF
    #define _U3TXIP IPC15bits.U3TXIP
   #endif
+ #define UIPR IPL3SRS
  #endif
 
 #elif defined(ARCHI_pic32mk)
@@ -253,6 +256,7 @@
   #define _U6TXIF IFS5bits.U6TXIF
   #define _U6TXIP IPC41bits.U6TXIP
  #endif
+ #define UIPR IPL3AUTO
 #endif
 
 #endif // UART_PIC32MZ_MM_MK_H
