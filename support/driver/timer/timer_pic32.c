@@ -749,7 +749,7 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 }
 
 #if TIMER_COUNT>=1
-void __ISR(_TIMER_1_VECTOR, IPL4SRS) T1Interrupt(void)
+void __ISR(_TIMER_1_VECTOR, TIPR) T1Interrupt(void)
 {
     if (timers[0].handler)
         (*timers[0].handler)();
@@ -759,7 +759,7 @@ void __ISR(_TIMER_1_VECTOR, IPL4SRS) T1Interrupt(void)
 #endif
 
 #if TIMER_COUNT>=2
-void __ISR(_TIMER_2_VECTOR, IPL4SRS) T2Interrupt(void)
+void __ISR(_TIMER_2_VECTOR, TIPR) T2Interrupt(void)
 {
     if (timers[1].handler)
         (*timers[1].handler)();
@@ -769,7 +769,7 @@ void __ISR(_TIMER_2_VECTOR, IPL4SRS) T2Interrupt(void)
 #endif
 
 #if TIMER_COUNT>=3
-void __ISR(_TIMER_3_VECTOR, IPL4SRS) T3Interrupt(void)
+void __ISR(_TIMER_3_VECTOR, TIPR) T3Interrupt(void)
 {
     if (timers[2].handler)
         (*timers[2].handler)();
@@ -779,7 +779,7 @@ void __ISR(_TIMER_3_VECTOR, IPL4SRS) T3Interrupt(void)
 #endif
 
 #if TIMER_COUNT>=4
-void __ISR(_TIMER_4_VECTOR, IPL4SRS) T4Interrupt(void)
+void __ISR(_TIMER_4_VECTOR, TIPR) T4Interrupt(void)
 {
     if (timers[3].handler)
         (*timers[3].handler)();
@@ -789,7 +789,7 @@ void __ISR(_TIMER_4_VECTOR, IPL4SRS) T4Interrupt(void)
 #endif
 
 #if TIMER_COUNT>=5
-void __ISR(_TIMER_5_VECTOR, IPL4SRS) T5Interrupt(void)
+void __ISR(_TIMER_5_VECTOR, TIPR) T5Interrupt(void)
 {
     if (timers[4].handler)
         (*timers[4].handler)();
@@ -799,7 +799,7 @@ void __ISR(_TIMER_5_VECTOR, IPL4SRS) T5Interrupt(void)
 #endif
 
 #if TIMER_COUNT>=6
-void __ISR(_TIMER_6_VECTOR, IPL4SRS) T6Interrupt(void)
+void __ISR(_TIMER_6_VECTOR, TIPR) T6Interrupt(void)
 {
     if (timers[5].handler)
         (*timers[5].handler)();
@@ -809,7 +809,7 @@ void __ISR(_TIMER_6_VECTOR, IPL4SRS) T6Interrupt(void)
 #endif
 
 #if TIMER_COUNT>=7
-void __ISR(_TIMER_7_VECTOR, IPL4SRS) T7Interrupt(void)
+void __ISR(_TIMER_7_VECTOR, TIPR) T7Interrupt(void)
 {
     if (timers[6].handler)
         (*timers[6].handler)();
@@ -819,7 +819,7 @@ void __ISR(_TIMER_7_VECTOR, IPL4SRS) T7Interrupt(void)
 #endif
 
 #if TIMER_COUNT>=8
-void __ISR(_TIMER_8_VECTOR, IPL4SRS) T8Interrupt(void)
+void __ISR(_TIMER_8_VECTOR, TIPR) T8Interrupt(void)
 {
     if (timers[7].handler)
         (*timers[7].handler)();
@@ -829,7 +829,7 @@ void __ISR(_TIMER_8_VECTOR, IPL4SRS) T8Interrupt(void)
 #endif
 
 #if TIMER_COUNT>=9
-void __ISR(_TIMER_9_VECTOR, IPL4SRS) T9Interrupt(void)
+void __ISR(_TIMER_9_VECTOR, TIPR) T9Interrupt(void)
 {
     if (timers[8].handler)
         (*timers[8].handler)();

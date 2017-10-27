@@ -722,3 +722,18 @@ void __attribute__ ((interrupt,no_auto_psv)) _T9Interrupt(void)
     _T9IF = 0;
 }
 #endif
+
+void timer_reconfig()
+{
+    uint8_t i;
+    rt_dev_t device;
+
+    for (i = 0; i < TIMER_COUNT; i++)
+    {
+        if (timers[i].flags.used == 1)
+        {
+            device = MKDEV(DEV_CLASS_TIMER, i);
+            timer_setPeriodMs(device, timers[i].periodMs);
+        }
+    }
+}

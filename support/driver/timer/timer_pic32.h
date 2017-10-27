@@ -153,6 +153,7 @@
   #define _T9IP   IPC10bits.T9IP
   #define _T9IS   IPC10bits.T9IS
  #endif
+ #define TIPR IPL4SRS
 
 #elif defined(ARCHI_pic32mm)
  #if defined(DEVICE_32MM0016GPL020) || defined(DEVICE_32MM0016GPL028) || defined(DEVICE_32MM0016GPL036) \
@@ -182,6 +183,7 @@
    #define _T3IS   IPC4bits.T3IS
   #endif
  #endif
+ #define TIPR IPL4SRS
  
 #elif defined(ARCHI_pic32mk)
   // interrupt bits helpers for PIC32MK
@@ -223,6 +225,7 @@
   #define _T9IP   IPC22bits.T9IP
   #define _T9IS   IPC22bits.T9IS
  #endif
+ #define TIPR IPL4SRS
  
 #elif defined(ARCHI_pic32mx)
   // interrupt bits helpers for PIC32MX
@@ -248,6 +251,7 @@
   #define _T5IP   IPC5bits.T5IP
   #define _T5IS   IPC5bits.T5IS
  #endif
+ #define TIPR IPL4SRS
 #endif
 
 #endif // TIMER_PIC32_H
