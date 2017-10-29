@@ -140,7 +140,7 @@ int board_init_tof()
     i2c_writereg(swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 1, 0x00, 0); // leds off and disable tof 2 and tof 3
     i2c_writereg(swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 3, 0x00, 0); // all io as output
 
-#ifdef USE_sensor
+#ifdef USE_MODULE_sensor
     // tof1
     VL6180X_setAddr(swarmtips2_i2c_tof, 0x52, TOF1_ADDR);
     for(i=0;i<65000;i++);

@@ -14,7 +14,7 @@
 #include <driver/i2c.h>
 
 #include "modules.h"
-#ifdef USE_sensor
+#ifdef USE_MODULE_sensor
  #include <module/sensor.h>
 #endif
 
@@ -77,12 +77,13 @@ int board_init()
     board_init_io();
 
     swarmtips_i2c_tof = i2c_getFreeDevice();
+    //i2c_open(swarmtips_i2c_tof);
     i2c_setBaudSpeed(swarmtips_i2c_tof, I2C_BAUD_400K);
     i2c_enable(swarmtips_i2c_tof);
 
 	for(j=0;j<2;j++) for(i=0;i<65000;i++);
 
-#ifdef USE_sensor
+#ifdef USE_MODULE_sensor
     VL6180X_init(swarmtips_i2c_tof, 0x52);
 #endif
 
