@@ -6,7 +6,7 @@
  * @date March 01, 2016, 22:10 PM
  *
  * @brief System clock support for rtprog for PIC32MZ family (DA, EC and EF)
- * PIC32MK and PIC32MM
+ * and PIC32MK
  *
  * Implementation based on Microchip document DS60001250B :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/60001250B.pdf
@@ -144,5 +144,6 @@ typedef enum {
 #endif
 
 int sysclock_setPLLClock(uint32_t freq, uint8_t src);
+uint32_t sysclock_getPLLClock();
 
 #endif // SYSCLOCK_PIC32MZ_MK_H

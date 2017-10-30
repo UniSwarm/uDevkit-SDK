@@ -6,7 +6,7 @@
  * @date March 01, 2016, 22:10 PM
  *
  * @brief System clock support for rtprog for PIC32MZ family (DA, EC and EF)
- * PIC32MK and PIC32MM
+ * and PIC32MK
  *
  * Implementation based on Microchip document DS60001250B :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/60001250B.pdf
@@ -132,6 +132,8 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
         break;
 
     case SYSCLOCK_SRC_SPLL:
+        if (sysclock_pll == 0)
+            sysclock_pll = sysclock_getPLLClock();
         freq = sysclock_pll;  // PLL out freq
         break;
 
@@ -293,4 +295,26 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     sysclock_pll = 0;
 
     return 0;
+}
+
+uint32_t sysclock_getPLLClock()
+{
+    uint32_t fin, fpllo;
+    uint16_t prediv, multiplier, postdiv;
+
+    if (SPLLCONbits.PLLICLK == 1) // FRC as input
+    {
+        fin = sysclock_sourceFreq(SYSCLOCK_SRC_FRC);
+    }
+    else
+    {
+        fin = sysclock_sourceFreq(SYSCLOCK_SRC_POSC);
+    }
+    
+    prediv = SPLLCONbits.PLLIDIV + 1;
+    multiplier = SPLLCONbits.PLLMULT + 1;
+    postdiv = 1 << (SPLLCONbits.PLLODIV);
+    
+    fpllo = fin / prediv * multiplier / postdiv;
+    return fpllo;
 }
