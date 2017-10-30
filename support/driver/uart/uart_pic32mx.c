@@ -329,6 +329,7 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
     uint32_t systemClockPeriph;
     uint16_t uBrg;
     uint8_t hs = 0;
+    uint8_t enabled = 0;
 
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
@@ -336,6 +337,12 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 
     if (baudSpeed == 0)
         return -1;
+
+    if (uarts[uart].flags.enabled == 1)
+    {
+        uart_disable(device);
+        enabled = 1;
+    }
 
     uarts[uart].baudSpeed = baudSpeed;
 
@@ -390,6 +397,9 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
         break;
 #endif
     }
+
+    if (enabled == 1)
+        uart_enable(device);
 
     return 0;
 }
