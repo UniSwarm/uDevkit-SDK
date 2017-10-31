@@ -71,6 +71,13 @@
  #define UART_COUNT 0
 #endif
 
+// Maximum baud rate generator divisor
+#if defined(ARCHI_pic32mk)
+ #define UART_MAXBRG 0x000FFFFF    // 20 bits divisor
+#else
+ #define UART_MAXBRG 0x0000FFFF    // 16 bits divisor
+#endif
+
 #if defined(ARCHI_pic32mm) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) \
  || defined(ARCHI_pic32mzda)
  #define uart_getClock(d) sysclock_periphFreq(SYSCLOCK_CLOCK_UART)

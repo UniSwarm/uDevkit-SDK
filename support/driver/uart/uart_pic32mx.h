@@ -139,4 +139,6 @@
  #define _U6TXIF IFS2bits.U6TXIF
 #endif
 
+#define UART_MAXBRG 0x0000FFFF    // 16 bits divisor
+
 #endif // UART_PIC32MX_H

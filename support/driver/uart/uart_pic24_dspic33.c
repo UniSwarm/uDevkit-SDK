@@ -373,13 +373,14 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
     uint8_t hs = 0;
     uint8_t enabled = 0;
 
+    // check parameters
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return -1;
-
     if (baudSpeed == 0)
         return -1;
 
+    // disable uart if it was already enabled
     if (uarts[uart].flags.enabled == 1)
     {
         uart_disable(device);
@@ -388,9 +389,13 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 
     uarts[uart].baudSpeed = baudSpeed;
 
+    // baud rate computation
     systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_UART);
     uBrg = systemClockPeriph / baudSpeed;
+    if (uBrg >= UART_MAXBRG)
+        uBrg = UART_MAXBRG;
 
+    // high speed baud rate mode
     if ((uBrg & 0x0F) == 0)
     {
         hs = 0;

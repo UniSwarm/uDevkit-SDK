@@ -190,4 +190,6 @@
   #define UART_RXEN
 #endif
 
+#define UART_MAXBRG 0x0000FFFF    // 16 bits divisor
+
 #endif // UART_PIC24_DSPIC33_H
