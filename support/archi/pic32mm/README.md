@@ -10,7 +10,7 @@ This family is spitted into two sub-families :
 ## Main features
 
 |Feature|GPL|GPM|
-|-------|---|---|
+|-------|:-----:|
 |Core|32 bits|32 bits|
 |Performance|37 DMIPS|37 DMIPS|
 |Program memory|16kb - 64kb|64kb - 256kb|
@@ -22,7 +22,7 @@ This family is spitted into two sub-families :
 21 devices on june 2017.
 
 |GPL Compatible devices|Program|Data|Pins|
-|---------|--|--|--|
+|---------|--:|--:|--:|
 |[PIC32MM0016GPL020](http://microchip.com/wwwproducts/en/PIC32MM0016GPL020)|16 kb|4 kb|20|
 |[PIC32MM0016GPL028](http://microchip.com/wwwproducts/en/PIC32MM0016GPL028)|16 kb|4 kb|28|
 |[PIC32MM0016GPL036](http://microchip.com/wwwproducts/en/PIC32MM0016GPL036)|16 kb|4 kb|36/40|
@@ -34,7 +34,7 @@ This family is spitted into two sub-families :
 |[PIC32MM0064GPL036](http://microchip.com/wwwproducts/en/PIC32MM0064GPL036)|64 kb|8 kb|36/40|
 
 |GPM Compatible devices|Program|Data|Pins|
-|---------|--|--|--|
+|---------|--:|--:|--:|
 |[PIC32MM0064GPM028](http://microchip.com/wwwproducts/en/PIC32MM0064GPM028)|64 kb|16 kb|28|
 |[PIC32MM0064GPM036](http://microchip.com/wwwproducts/en/PIC32MM0064GPM036)|64 kb|16 kb|36/40|
 |[PIC32MM0064GPM048](http://microchip.com/wwwproducts/en/PIC32MM0064GPM048)|64 kb|16 kb|48|

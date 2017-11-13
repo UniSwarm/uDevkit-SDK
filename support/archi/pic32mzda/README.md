@@ -22,7 +22,7 @@ An hardware crypto module is optionally available.
 ### Devices without DDR
 
 |Compatible devices|Program|Data|Pins|Crypto module|
-|---------|-|-|-|-|
+|---------|--:|--:|--:|--:|
 |[PIC32MZ1025DAA169](http://microchip.com/wwwproducts/en/PIC32MZ1025DAA169)|1024 kb|256 kb|169| |
 |[PIC32MZ1025DAA176](http://microchip.com/wwwproducts/en/PIC32MZ1025DAA176)|1024 kb|256 kb|176| |
 |[PIC32MZ1025DAB169](http://microchip.com/wwwproducts/en/PIC32MZ1025DAB169)|1024 kb|256 kb|169|Y|
@@ -45,7 +45,7 @@ An hardware crypto module is optionally available.
 External DDR2 interface up to 128MB.
 
 |Compatible devices|Program|Data|Pins|Crypto module|
-|---------|-|-|-|-|
+|---------|--:|--:|--:|--:|
 |[PIC32MZ1025DAA288](http://microchip.com/wwwproducts/en/PIC32MZ1025DAA288)|1024 kb|256 kb|288| |
 |[PIC32MZ1025DAB288](http://microchip.com/wwwproducts/en/PIC32MZ1025DAB288)|1024 kb|256 kb|288|Y|
 |[PIC32MZ1064DAA288](http://microchip.com/wwwproducts/en/PIC32MZ1064DAA288)|1024 kb|640 kb|288| |
@@ -60,7 +60,7 @@ External DDR2 interface up to 128MB.
 Internal stacked 32MB DDR2.
 
 |Compatible devices|Program|Data|Pins|Crypto module|
-|---------|-|-|-|-|
+|---------|--:|--:|--:|--:|
 |[PIC32MZ1025DAG169](http://microchip.com/wwwproducts/en/PIC32MZ1025DAG169)|1024 kb|256 kb|169| |
 |[PIC32MZ1025DAG176](http://microchip.com/wwwproducts/en/PIC32MZ1025DAG176)|1024 kb|256 kb|176| |
 |[PIC32MZ1025DAH169](http://microchip.com/wwwproducts/en/PIC32MZ1025DAH169)|1024 kb|256 kb|169|Y|
