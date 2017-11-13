@@ -6,11 +6,11 @@
 
 A tool to simplify module inclusions in embedded systems.
 
-Currently works for all 16 bits and 32 bits Microchip devices (792 devices):
+Currently works for all 16 bits and 32 bits Microchip devices (876 devices):
 
 |Range|Famillies|List of devices|Device count|
 |-----|---------|:-------------:|-----------:|
-|Microchip 16bits|dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV, PIC24F, PIC24FJ, PIC24EP and PIC24HJ|[list](support/archi/pic16b/README.md)|517|
+|Microchip 16bits|dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV, PIC24F, PIC24FJ, PIC24EP and PIC24HJ|[list](support/archi/pic16b/README.md)|603|
 |Microchip 32bits|PIC32MM, PIC32MK, PIC32MX, PIC32MZDA, PIC32MZEC and PIC32MZEF|[list](support/archi/pic32/README.md)|273|
 
 ## How to use ?
