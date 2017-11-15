@@ -1,8 +1,8 @@
 # PIC32MX support
 
-PIC32MX family is the first 32 bits Microchip range. All of them 
+PIC32MX family is the first 32 bits Microchip range.
 
-This family is spitted into multiple sub-families :
+This family is splitted into multiple subfamilies :
 
 * MX1 / MX2: lower CPU power, USB on MX2xx, low pin count available
 * MX3 / MX4: two CPU speed available (105 or 150DMIP)

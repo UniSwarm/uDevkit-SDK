@@ -2,7 +2,7 @@
 
 PIC32MZ EF family is a high-performance 32 bits range for Embedded Connectivity with hardware Floating point unit (FPU).
 
-This family is spitted into three variations :
+This family is splitted into three variations :
 
 * EFE/EFG : Base family
 * EFF/EFH : EFE/EFG with 2 CAN devices
@@ -13,7 +13,7 @@ This family is spitted into three variations :
 |Feature|ECG - ECH - ECM|
 |-------|------|
 |Core|32 bits|
-|Performance|330 DMIPS (400DMIPS for some device)|
+|Performance|330 DMIPS (up to 400DMIPS for some devices)|
 |Program memory|1024kb - 2048kb|
 |Data memory|512kb|
 |Pins|64-144|

@@ -2,7 +2,7 @@
 
 PIC32MZ EC family is a high-performance 32 bits range for Embedded Connectivity.
 
-This family is spitted into three variations :
+This family is splitted into three variations :
 
 * ECG : Base family
 * ECH : ECG with 2 CAN devices
