@@ -19,9 +19,10 @@ This family have variation of flash memory, pin count and CAN FD for 5XX subfami
 
 ## Common devices
 
-|Peripheral|UART|TIMER|I2C|SPI|SENT|CLC|QEI|
-|----------|:--:|:---:|:-:|:-:|:--:|:-:|:-:|
-|Count     |   2|    1|  2|  2|   2|  4|  1|
+|Peripheral|UART|TIMER|I2C|SPI|SENT|CLC|QEI|CAN|
+|----------|:--:|:---:|:-:|:-:|:--:|:-:|:-:|:-:|
+|20X       |   2|    1|  2|  2|   2|  4|  1|  0|
+|50X       |   2|    1|  2|  2|   2|  4|  1|  1|
 
 ## Devices list
 
