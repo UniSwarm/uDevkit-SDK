@@ -1,6 +1,6 @@
 # dsPIC33CK support
 
-> **Warning ** support based on a very low piece of information, may vary in few weeks, only preliminary support.
+> Warning support based on a very low piece of information, may vary in few weeks, only preliminary support.
 
 dsPIC33CK family is the first dual core 16 bits range. 
 A lot of periphericals are not compatibles with others dsPIC ranges. Full support of driver ay needs additionnal time.
