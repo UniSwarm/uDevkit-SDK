@@ -254,7 +254,7 @@ void gpio_writeBit(rt_dev_t device, GPIO_VALUE value)
 GPIO_VALUE gpio_readBit(rt_dev_t device)
 {
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
-    uint16_t bit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
+    uint16_t mbit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
     uint16_t value = 0;
 
     switch(port)

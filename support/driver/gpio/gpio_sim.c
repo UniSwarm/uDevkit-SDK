@@ -55,7 +55,7 @@ void gpio_writeBit(rt_dev_t device, GPIO_VALUE value)
     case GPIO_LOW:
         gpio_clearBit(device);
         break;
-    case GPIO_HIGHT:
+    case GPIO_HIGH:
         gpio_setBit(device);
         break;
     case GPIO_TOGGLE:
@@ -76,7 +76,7 @@ GPIO_VALUE gpio_readBit(rt_dev_t device)
     uint16_t value = 0;
 
     if((value & bit) == 1)
-        return GPIO_HIGHT;
+        return GPIO_HIGH;
     else
         return GPIO_LOW;
 }
