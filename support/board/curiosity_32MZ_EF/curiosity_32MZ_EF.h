@@ -33,10 +33,12 @@ int board_init();
 #define LED2 LATEbits.LATE4
 #define LED3 LATEbits.LATE6
 int board_setLed(uint8_t led, uint8_t state);
+int board_toggleLed(uint8_t led, uint8_t state);
 int8_t board_getLed(uint8_t led);
 
 // buttons
 #define BUTTON_COUNT 1
 #define BUTTON_1 PORTGbits.RG12
+int8_t board_getButton(uint8_t button);
 
 #endif // CURIOSITY_32MZ_EF_H
