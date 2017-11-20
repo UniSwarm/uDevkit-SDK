@@ -28,16 +28,18 @@ int board_init();
 
 // ==== pins define ====
 // leds
-#define LED_COUNT 3
+#define LED_COUNT 2
 #define LED1 LATDbits.LATD3
 #define LED2 LATCbits.LATC13
 int board_setLed(uint8_t led, uint8_t state);
+int board_toggleLed(uint8_t led, uint8_t state);
 int8_t board_getLed(uint8_t led);
 
 // buttons
 #define BUTTON_COUNT 3
-#define BUTTON_1 PORTBbits.RD9
+#define BUTTON_1 PORTBbits.RB9
 #define BUTTON_2 PORTCbits.RC10
 #define BUTTON_3 PORTCbits.RC4
+int8_t board_getButton(uint8_t button);
 
 #endif // CURIOSITY_32MM_USB_H
