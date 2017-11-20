@@ -34,6 +34,7 @@ int board_init();
 #define LED2 LATGbits.LATG13
 #define LED3 LATGbits.LATG14
 int board_setLed(uint8_t led, uint8_t state);
+int board_toggleLed(uint8_t led, uint8_t state);
 int8_t board_getLed(uint8_t led);
 
 // buttons
@@ -41,5 +42,6 @@ int8_t board_getLed(uint8_t led);
 #define BUTTON_1 PORTGbits.RG11
 #define BUTTON_2 PORTFbits.RF13
 #define BUTTON_3 PORTFbits.RF12
+int8_t board_getButton(uint8_t button);
 
 #endif // PIC32MK1024GPE_DEVBOARD_H

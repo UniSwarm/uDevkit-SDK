@@ -17,11 +17,10 @@
 #include "PIC32MK1024GPE_devboard.h"
 
 #include "driver/sysclock.h"
+#include "driver/gpio.h"
 
-#ifdef SIMULATOR
-uint8_t board_led_state = 0;
-#include <stdio.h>
-#endif
+rt_dev_t board_leds[LED_COUNT];
+rt_dev_t board_buttons[BUTTON_COUNT];
 
 int board_init_io()
 {
@@ -34,17 +33,31 @@ int board_init_io()
     ANSELE = 0x0000;         // all analog inputs of port E as digital buffer
     ANSELG = 0x0000;         // all analog inputs of port G as digital buffer
 
-    TRISGbits.TRISG12 = 0;    // LED1
-    TRISGbits.TRISG13 = 0;    // LED2
-    TRISGbits.TRISG14 = 0;    // LED3
-
     // remappable pins
     // Unlock configuration pin
     unlockIoConfig();
+        U3RXR = 0b0101;        // RX3 ==> RPC7
+        RPC6R = 0b00001;       // TX3 ==> RPC6
+
         U6RXR = 0b1101;        // RX6 ==> RPA15
         RPA4R = 0b01011;       // TX6 ==> RPA4
     lockIoConfig();
 #endif
+
+    board_leds[0] = gpio_pin(GPIO_PORTG, 12);
+    gpio_setBitConfig(board_leds[0], GPIO_OUTPUT);
+    board_leds[1] = gpio_pin(GPIO_PORTG, 13);
+    gpio_setBitConfig(board_leds[1], GPIO_OUTPUT);
+    board_leds[2] = gpio_pin(GPIO_PORTG, 14);
+    gpio_setBitConfig(board_leds[2], GPIO_OUTPUT);
+
+    board_buttons[0] = gpio_pin(GPIO_PORTG, 11);
+    gpio_setBitConfig(board_buttons[0], GPIO_INPUT);
+    board_buttons[1] = gpio_pin(GPIO_PORTF, 13);
+    gpio_setBitConfig(board_buttons[1], GPIO_INPUT);
+    board_buttons[2] = gpio_pin(GPIO_PORTF, 12);
+    gpio_setBitConfig(board_buttons[2], GPIO_INPUT);
+
     return 0;
 }
 
@@ -63,25 +76,21 @@ int board_setLed(uint8_t led, uint8_t state)
 {
     if(led >= LED_COUNT)
         return -1;
-#ifndef SIMULATOR
-    if(led == 0)
-        LED1 = state;
-    if(led == 1)
-        LED2 = state;
-    if(led == 2)
-        LED3 = state;
-#else
-    if(state == 1)
-    {
-        printf("LED %d on\n", led);
-        board_led_state |= (1 << led);
-    }
+
+    if (state & 1)
+        gpio_setBit(board_leds[led]);
     else
-    {
-        printf("LED %d off\n", led);
-        board_led_state &= !(1 << led);
-    }
-#endif
+        gpio_clearBit(board_leds[led]);
+    return 0;
+}
+
+int board_toggleLed(uint8_t led, uint8_t state)
+{
+    int value = GPIO_HIGH;
+    if(led >= LED_COUNT)
+        return -1;
+
+    gpio_toggleBit(board_leds[led]);
     return 0;
 }
 
@@ -89,15 +98,18 @@ int8_t board_getLed(uint8_t led)
 {
     if(led >= LED_COUNT)
         return -1;
-#ifndef SIMULATOR
-    if(led == 0)
-        return LED1;
-    if(led == 1)
-        return LED2;
-    if(led == 2)
-        return LED3;
-#else
-    return board_led_state & (!(1 << led));
-#endif
-    return 0;
+
+    return gpio_readBit(board_leds[led]);
+}
+
+int8_t board_getButton(uint8_t button)
+{
+    GPIO_VALUE value;
+    if(button >= BUTTON_COUNT)
+        return -1;
+
+    value = gpio_readBit(board_buttons[button]);
+    if (value == GPIO_HIGH)
+        return 0;
+    return 1;
 }
