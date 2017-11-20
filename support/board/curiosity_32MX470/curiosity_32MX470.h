@@ -33,10 +33,12 @@ int board_init();
 #define LED2 LATEbits.LATE6
 #define LED3 LATEbits.LATE7
 int board_setLed(uint8_t led, uint8_t state);
+int board_toggleLed(uint8_t led, uint8_t state);
 int8_t board_getLed(uint8_t led);
 
 // buttons
 #define BUTTON_COUNT 1
 #define BUTTON_1 PORTDbits.RD6
+int8_t board_getButton(uint8_t button);
 
 #endif // CURIOSITY_32MX470_H

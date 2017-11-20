@@ -16,11 +16,10 @@
 #include "curiosity_32MX470.h"
 
 #include "driver/sysclock.h"
+#include "driver/gpio.h"
 
-#ifdef SIMULATOR
-uint8_t board_led_state = 0;
-#include <stdio.h>
-#endif
+rt_dev_t board_leds[LED_COUNT];
+rt_dev_t board_buttons[BUTTON_COUNT];
 
 int board_init_io()
 {
@@ -35,6 +34,17 @@ int board_init_io()
     TRISEbits.TRISE6 = 0;    // LED2
     TRISEbits.TRISE7 = 0;    // LED3
 #endif
+
+    board_leds[0] = gpio_pin(GPIO_PORTE, 4);
+    gpio_setBitConfig(board_leds[0], GPIO_OUTPUT);
+    board_leds[1] = gpio_pin(GPIO_PORTE, 6);
+    gpio_setBitConfig(board_leds[1], GPIO_OUTPUT);
+    board_leds[2] = gpio_pin(GPIO_PORTE, 7);
+    gpio_setBitConfig(board_leds[2], GPIO_OUTPUT);
+
+    board_buttons[0] = gpio_pin(GPIO_PORTD, 6);
+    gpio_setBitConfig(board_buttons[0], GPIO_INPUT);
+
     return 0;
 }
 
@@ -52,25 +62,21 @@ int board_setLed(uint8_t led, uint8_t state)
 {
     if(led >= LED_COUNT)
         return -1;
-#ifndef SIMULATOR
-    if(led == 0)
-        LED1 = state;
-    if(led == 1)
-        LED2 = state;
-    if(led == 2)
-        LED3 = state;
-#else
-    if(state == 1)
-    {
-        printf("LED %d on\n", led);
-        board_led_state |= (1 << led);
-    }
+
+    if (state & 1)
+        gpio_setBit(board_leds[led]);
     else
-    {
-        printf("LED %d off\n", led);
-        board_led_state &= !(1 << led);
-    }
-#endif
+        gpio_clearBit(board_leds[led]);
+    return 0;
+}
+
+int board_toggleLed(uint8_t led, uint8_t state)
+{
+    int value = GPIO_HIGH;
+    if(led >= LED_COUNT)
+        return -1;
+
+    gpio_toggleBit(board_leds[led]);
     return 0;
 }
 
@@ -78,15 +84,18 @@ int8_t board_getLed(uint8_t led)
 {
     if(led >= LED_COUNT)
         return -1;
-#ifndef SIMULATOR
-    if(led == 0)
-        return LED1;
-    if(led == 1)
-        return LED2;
-    if(led == 2)
-        return LED3;
-#else
-    return board_led_state & (!(1 << led));
-#endif
-    return 0;
+
+    return gpio_readBit(board_leds[led]);
+}
+
+int8_t board_getButton(uint8_t button)
+{
+    GPIO_VALUE value;
+    if(button >= BUTTON_COUNT)
+        return -1;
+
+    value = gpio_readBit(board_buttons[button]);
+    if (value == GPIO_HIGH)
+        return 0;
+    return 1;
 }
