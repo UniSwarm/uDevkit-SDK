@@ -30,7 +30,9 @@ GPIO_VALUE gpio_readBit(rt_dev_t device);
 typedef enum {
     GPIO_INPUT     = 0x00,
     GPIO_OUTPUT    = 0x01,
-    GPIO_OPENDRAIN = 0x02
+    GPIO_OPENDRAIN = 0x02,
+    GPIO_PULLUP    = 0x04,
+    GPIO_PULLDOWN  = 0x08
 } GPIO_CONFIG;
 int gpio_setBitConfig(rt_dev_t device, uint16_t config);
 
