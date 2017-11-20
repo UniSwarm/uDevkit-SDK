@@ -629,7 +629,7 @@ void uart_1_tx()
     }
 }
 
-void __ISR(_UART_1_VECTOR, IPL3SRS) U1Interrupt(void)
+void __ISR(_UART_1_VECTOR, IPL3SOFT) U1Interrupt(void)
 {
     char rec[4];
 	if (_U1TXIF == 1)
@@ -661,7 +661,7 @@ void uart_2_tx()
     }
 }
 
-void __ISR(_UART_2_VECTOR, IPL3SRS) U2Interrupt(void)
+void __ISR(_UART_2_VECTOR, IPL3SOFT) U2Interrupt(void)
 {
     char rec[4];
 	if (_U2TXIF == 1)
@@ -693,7 +693,7 @@ void uart_3_tx()
     }
 }
 
-void __ISR(_UART_3_VECTOR, IPL3SRS) U3Interrupt(void)
+void __ISR(_UART_3_VECTOR, IPL3SOFT) U3Interrupt(void)
 {
     char rec[4];
 	if (_U3TXIF == 1)
@@ -725,7 +725,7 @@ void uart_4_tx()
     }
 }
 
-void __ISR(_UART_4_VECTOR, IPL3SRS) U4Interrupt(void)
+void __ISR(_UART_4_VECTOR, IPL3SOFT) U4Interrupt(void)
 {
     char rec[4];
 	if (_U4TXIF == 1)
@@ -757,7 +757,7 @@ void uart_5_tx()
     }
 }
 
-void __ISR(_UART_5_VECTOR, IPL3SRS) U5Interrupt(void)
+void __ISR(_UART_5_VECTOR, IPL3SOFT) U5Interrupt(void)
 {
     char rec[4];
 	if (_U5TXIF == 1)
@@ -789,7 +789,7 @@ void uart_6_tx()
     }
 }
 
-void __ISR(_UART_6_VECTOR, IPL3SRS) U6Interrupt(void)
+void __ISR(_UART_6_VECTOR, IPL3SOFT) U6Interrupt(void)
 {
     char rec[4];
 	if (_U6TXIF == 1)
@@ -861,42 +861,30 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
     switch (uart)
     {
     case 0:
-        if (U1STAbits.TRMT)
-            uart_1_tx();
         _U1TXIE = 1;
         break;
 #if UART_COUNT>=2
     case 1:
-        if (U2STAbits.TRMT)
-            uart_2_tx();
         _U2TXIE = 1;
         break;
 #endif
 #if UART_COUNT>=3
     case 2:
-        if (U3STAbits.TRMT)
-            uart_3_tx();
         _U3TXIE = 1;
         break;
 #endif
 #if UART_COUNT>=4
     case 3:
-        if (U4STAbits.TRMT)
-            uart_4_tx();
         _U4TXIE = 1;
         break;
 #endif
 #if UART_COUNT>=5
     case 4:
-        if (U5STAbits.TRMT)
-            uart_5_tx();
         _U5TXIE = 1;
         break;
 #endif
 #if UART_COUNT>=6
     case 5:
-        if (U6STAbits.TRMT)
-           uart_6_tx();
         _U6TXIE = 1;
         break;
 #endif

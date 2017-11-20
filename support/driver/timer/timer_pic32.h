@@ -251,7 +251,7 @@
   #define _T5IP   IPC5bits.T5IP
   #define _T5IS   IPC5bits.T5IS
  #endif
- #define TIPR IPL4SRS
+ #define TIPR IPL4SOFT
 #endif
 
 #endif // TIMER_PIC32_H
