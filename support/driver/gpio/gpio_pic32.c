@@ -343,14 +343,18 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             ODCACLR = bit; // disable open drain
         else
             ODCASET = bit; // enable open drain
+    #ifdef CNPUA
         if(config & GPIO_PULLUP)
             CNPUACLR = bit; // disable pull-up
         else
             CNPUASET = bit; // enable pull-up
+    #endif
+    #ifdef CNPDA
         if(config & GPIO_PULLDOWN)
             CNPDACLR = bit; // disable pull-down
         else
             CNPDASET = bit; // enable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTB
@@ -363,14 +367,18 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             ODCBCLR = bit; // disable open drain
         else
             ODCBSET = bit; // enable open drain
+    #ifdef CNPUB
         if(config & GPIO_PULLUP)
             CNPUBCLR = bit; // disable pull-up
         else
             CNPUBSET = bit; // enable pull-up
+    #endif
+    #ifdef CNPDB
         if(config & GPIO_PULLDOWN)
             CNPDBCLR = bit; // disable pull-down
         else
             CNPDBSET = bit; // enable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTC
@@ -383,14 +391,18 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             ODCCCLR = bit; // disable open drain
         else
             ODCCSET = bit; // enable open drain
+    #ifdef CNPUC
         if(config & GPIO_PULLUP)
             CNPUCCLR = bit; // disable pull-up
         else
             CNPUCSET = bit; // enable pull-up
+    #endif
+    #ifdef CNPDC
         if(config & GPIO_PULLDOWN)
             CNPDCCLR = bit; // disable pull-down
         else
             CNPDCSET = bit; // enable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTD
@@ -403,14 +415,18 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             ODCDCLR = bit; // disable open drain
         else
             ODCDSET = bit; // enable open drain
+    #ifdef CNPUD
         if(config & GPIO_PULLUP)
             CNPUDCLR = bit; // disable pull-up
         else
             CNPUDSET = bit; // enable pull-up
+    #endif
+    #ifdef CNPDD
         if(config & GPIO_PULLDOWN)
             CNPDDCLR = bit; // disable pull-down
         else
             CNPDDSET = bit; // enable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTE
@@ -423,14 +439,18 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             ODCECLR = bit; // disable open drain
         else
             ODCESET = bit; // enable open drain
+    #ifdef CNPUE
         if(config & GPIO_PULLUP)
             CNPUECLR = bit; // disable pull-up
         else
             CNPUESET = bit; // enable pull-up
+    #endif
+    #ifdef CNPDE
         if(config & GPIO_PULLDOWN)
             CNPDECLR = bit; // disable pull-down
         else
             CNPDESET = bit; // enable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTF
@@ -443,14 +463,18 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             ODCFCLR = bit; // disable open drain
         else
             ODCFSET = bit; // enable open drain
+    #ifdef CNPUF
         if(config & GPIO_PULLUP)
             CNPUFCLR = bit; // disable pull-up
         else
             CNPUFSET = bit; // enable pull-up
+    #endif
+    #ifdef CNPDF
         if(config & GPIO_PULLDOWN)
             CNPDFCLR = bit; // disable pull-down
         else
             CNPDFSET = bit; // enable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTG
@@ -463,14 +487,18 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             ODCGCLR = bit; // disable open drain
         else
             ODCGSET = bit; // enable open drain
+    #ifdef CNPUG
         if(config & GPIO_PULLUP)
             CNPUGCLR = bit; // disable pull-up
         else
             CNPUGSET = bit; // enable pull-up
+    #endif
+    #ifdef CNPDG
         if(config & GPIO_PULLDOWN)
             CNPDGCLR = bit; // disable pull-down
         else
             CNPDGSET = bit; // enable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTH
@@ -483,14 +511,18 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             ODCHCLR = bit; // disable open drain
         else
             ODCHSET = bit; // enable open drain
+    #ifdef CNPUH
         if(config & GPIO_PULLUP)
             CNPUHCLR = bit; // disable pull-up
         else
             CNPUHSET = bit; // enable pull-up
+    #endif
+    #ifdef CNPDH
         if(config & GPIO_PULLDOWN)
             CNPDHCLR = bit; // disable pull-down
         else
             CNPDHSET = bit; // enable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTI
@@ -503,14 +535,18 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             ODCICLR = bit; // disable open drain
         else
             ODCISET = bit; // enable open drain
+    #ifdef CNPUI
         if(config & GPIO_PULLUP)
             CNPUICLR = bit; // disable pull-up
         else
             CNPUISET = bit; // enable pull-up
+    #endif
+    #ifdef CNPDI
         if(config & GPIO_PULLDOWN)
             CNPDICLR = bit; // disable pull-down
         else
             CNPDISET = bit; // enable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTJ
@@ -523,14 +559,18 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             ODCJCLR = bit; // disable open drain
         else
             ODCJSET = bit; // enable open drain
+    #ifdef CNPUJ
         if(config & GPIO_PULLUP)
             CNPUJCLR = bit; // disable pull-up
         else
             CNPUJSET = bit; // enable pull-up
+    #endif
+    #ifdef CNPDJ
         if(config & GPIO_PULLDOWN)
             CNPDJCLR = bit; // disable pull-down
         else
             CNPDJSET = bit; // enable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTK
@@ -539,18 +579,22 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             TRISKCLR = bit; // set as output
         else
             TRISKSET = bit; // set as input;
-        if(config & GPIO_OPENDRKIN)
+        if(config & GPIO_OPENDRAIN)
             ODCKCLR = bit; // disable open drain
         else
             ODCKSET = bit; // enable open drain
+    #ifdef CNPUK
         if(config & GPIO_PULLUP)
             CNPUKCLR = bit; // disable pull-up
         else
             CNPUKSET = bit; // enable pull-up
+    #endif
+    #ifdef CNPDK
         if(config & GPIO_PULLDOWN)
             CNPDKCLR = bit; // disable pull-down
         else
             CNPDKSET = bit; // enable pull-down
+    #endif
         break;
 #endif
     default:
