@@ -13,13 +13,15 @@
 
 #include <driver/device.h>
 
+#include "gpio_device.h"
+
 void gpio_setBit(rt_dev_t device);
 void gpio_clearBit(rt_dev_t device);
 void gpio_toggleBit(rt_dev_t device);
 
 typedef enum {
     GPIO_LOW = 0,
-    GPIO_HIGHT,
+    GPIO_HIGH,
     GPIO_TOGGLE
 } GPIO_VALUE;
 void gpio_writeBit(rt_dev_t device, GPIO_VALUE value);
@@ -32,24 +34,8 @@ typedef enum {
 } GPIO_CONFIG;
 int gpio_setBitConfig(rt_dev_t device, uint16_t config);
 
-#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
- || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
-  #include "gpio_pic24_dspic30f_dspic33.h"
-#elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec) \
- || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
- #include "gpio_pic32.h"
-#endif
-
-#define gpio_pin(port, pin) MKDEV(DEV_CLASS_GPIO, (((port)<<GPIO_MAX_PORTWIDTHU) + ((pin) & GPIO_MAX_PORTWIDTHMASK));
+#define gpio_pin(port, pin) MKDEV(DEV_CLASS_GPIO, (((port)<<GPIO_MAX_PORTWIDTHU) + ((pin) & GPIO_MAX_PORTWIDTHMASK)));
 #define gpio_port(port)     MKDEV(DEV_CLASS_GPIO, ((port)<<GPIO_MAX_PORTWIDTHU));
-
-#if GPIO_MAX_PORTWIDTH>32
-  typedef uint32_t port_type;
-#elif GPIO_MAX_PORTWIDTH>16
-  typedef uint16_t port_type;
-#else
-  typedef uint8_t port_type;
-#endif
 
 void gpio_writePort(rt_dev_t device, port_type value);
 port_type gpio_readPort(rt_dev_t device);

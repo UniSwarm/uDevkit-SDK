@@ -228,7 +228,7 @@ void gpio_toggleBit(rt_dev_t device)
 /**
  * @brief Write a specific value of a bit of a GPIO
  * @param device GPIO pin
- * @param value value to set (GPIO_LOW / GPIO_HIGHT / GPIO_TOGGLE)
+ * @param value value to set (GPIO_LOW / GPIO_HIGH / GPIO_TOGGLE)
  */
 void gpio_writeBit(rt_dev_t device, GPIO_VALUE value)
 {
@@ -237,7 +237,7 @@ void gpio_writeBit(rt_dev_t device, GPIO_VALUE value)
     case GPIO_LOW:
         gpio_clearBit(device);
         break;
-    case GPIO_HIGHT:
+    case GPIO_HIGH:
         gpio_setBit(device);
         break;
     case GPIO_TOGGLE:
@@ -249,7 +249,7 @@ void gpio_writeBit(rt_dev_t device, GPIO_VALUE value)
 /**
  * @brief Read a bit of a GPIO
  * @param device GPIO pin
- * @return curent value of the bit(GPIO_LOW / GPIO_HIGHT)
+ * @return curent value of the bit(GPIO_LOW / GPIO_HIGH)
  */
 GPIO_VALUE gpio_readBit(rt_dev_t device)
 {
@@ -316,10 +316,10 @@ GPIO_VALUE gpio_readBit(rt_dev_t device)
 #endif
     }
 
-    if((value & bit) == 1)
-        return GPIO_HIGHT;
-    else
+    if((value & mbit) == 0)
         return GPIO_LOW;
+    else
+        return GPIO_HIGH;
 }
 
 /**
@@ -423,6 +423,8 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             TRISK |= bit;  // set as input;
         break;
 #endif
+    default:
+        return -1;
     }
 
     return 0;
@@ -630,6 +632,8 @@ int gpio_setPortConfig(rt_dev_t device, uint16_t config)
         TRISK = trisValue;
         break;
 #endif
+    default:
+        return -1;
     }
 
     return 0;
