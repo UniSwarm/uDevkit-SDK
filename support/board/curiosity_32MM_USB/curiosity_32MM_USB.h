@@ -32,7 +32,7 @@ int board_init();
 #define LED1 LATDbits.LATD3
 #define LED2 LATCbits.LATC13
 int board_setLed(uint8_t led, uint8_t state);
-int board_toggleLed(uint8_t led, uint8_t state);
+int board_toggleLed(uint8_t led);
 int8_t board_getLed(uint8_t led);
 
 // buttons

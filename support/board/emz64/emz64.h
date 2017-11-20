@@ -27,6 +27,7 @@ int board_init();
 #define LED2 LATBbits.LATB9
 #define LED3 LATBbits.LATB10
 int board_setLed(uint8_t led, uint8_t state);
+int board_toggleLed(uint8_t led);
 int8_t board_getLed(uint8_t led);
 
 // buttons
@@ -34,6 +35,7 @@ int8_t board_getLed(uint8_t led);
 #define BUTTON_1 PORTBbits.RB12
 #define BUTTON_2 PORTBbits.RB13
 #define BUTTON_3 PORTBbits.RB14
+int8_t board_getButton(uint8_t button);
 
 // oled
 #define OLED_RST LATFbits.LATF1

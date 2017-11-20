@@ -58,7 +58,6 @@ int board_init()
 
 int board_setLed(uint8_t led, uint8_t state)
 {
-    int value = GPIO_HIGH;
     if(led >= LED_COUNT)
         return -1;
 
@@ -69,9 +68,8 @@ int board_setLed(uint8_t led, uint8_t state)
     return 0;
 }
 
-int board_toggleLed(uint8_t led, uint8_t state)
+int board_toggleLed(uint8_t led)
 {
-    int value = GPIO_HIGH;
     if(led >= LED_COUNT)
         return -1;
 

@@ -65,7 +65,6 @@ int board_init()
 
 int board_setLed(uint8_t led, uint8_t state)
 {
-    int value = GPIO_HIGH;
     if(led >= LED_COUNT)
         return -1;
 
