@@ -23,11 +23,14 @@ int board_init();
 // ==== pins define ====
 // leds
 #define LED_COUNT 3
-#define LED1  LATDbits.LATD11
+#define LED1 LATDbits.LATD11
 #define LED2 LATAbits.LATA15
 #define LED3 LATAbits.LATA4
-int board_setLed(uint8_t led, uint8_t state);
+int board_toggleLed(uint8_t led);
 int8_t board_getLed(uint8_t led);
+
+#define BUTTON_COUNT 0
+int8_t board_getButton(uint8_t button);
 
 // voltage measurement
 #define BOARD_VOLT_IN 9 // RB9		// analog board voltage channel
@@ -69,5 +72,7 @@ int8_t board_getLed(uint8_t led);
 #define ANS6 30
 #define ANS7 31
 #define ANS8 1
+
+#define OLED_I2C_ADDR 0b01111000
 
 #endif // RTBOARD1_1_H

@@ -12,16 +12,20 @@
 #define A6SCREENBOARD_H
 
 #include <archi.h>
+#include <stdint.h>
 
 int board_init();
 
 #define BOARD_NAME "a6screenboard"
 
 // ==== pins define ====
-// leds
+// no leds and no buttons
 #define LED_COUNT 0
-#define board_setLed(led, state) (-1)
-#define board_getLed(led) (-1)
+int board_setLed(uint8_t led, uint8_t state);
+int board_toggleLed(uint8_t led);
+int8_t board_getLed(uint8_t led);
+#define BUTTON_COUNT 0
+int8_t board_getButton(uint8_t button);
 
 // screen
 #define SCREEN_PORT_OUT     LATB

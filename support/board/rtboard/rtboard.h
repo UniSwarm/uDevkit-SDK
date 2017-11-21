@@ -25,7 +25,11 @@ int board_init();
 #define LED_COUNT 1
 #define LED1 LATDbits.LATD11
 int board_setLed(uint8_t led, uint8_t state);
+int board_toggleLed(uint8_t led);
 int8_t board_getLed(uint8_t led);
+
+#define BUTTON_COUNT 0
+int8_t board_getButton(uint8_t button);
 
 // voltage measurement
 #define BOARD_VOLT_IN 2 // RB2     // analog board voltage channel

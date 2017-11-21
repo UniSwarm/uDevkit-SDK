@@ -62,3 +62,22 @@ int board_init()
     return 0;
 }
 
+int board_setLed(uint8_t led, uint8_t state)
+{
+    return -1;
+}
+
+int8_t board_getLed(uint8_t led)
+{
+    return -1;
+}
+
+int board_toggleLed(uint8_t led)
+{
+    return -1;
+}
+
+int8_t board_getButton(uint8_t button)
+{
+    return -1;
+}

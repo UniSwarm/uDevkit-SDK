@@ -30,7 +30,11 @@ int board_init();
 #define LED1 LATBbits.LATB3
 #define LED2 LATDbits.LATD11
 int board_setLed(uint8_t led, uint8_t state);
+int board_toggleLed(uint8_t led);
 int8_t board_getLed(uint8_t led);
+
+#define BUTTON_COUNT 0
+int8_t board_getButton(uint8_t button);
 
 // motors pins
 #define M1A LATEbits.LATE4          // A pin direction

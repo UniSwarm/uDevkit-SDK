@@ -17,11 +17,9 @@
 #include "rtboard.h"
 
 #include "driver/sysclock.h"
+#include "driver/gpio.h"
 
-#ifdef SIMULATOR
-uint8_t board_led_state = 0;
-#include <stdio.h>
-#endif
+rt_dev_t board_leds[LED_COUNT];
 
 int board_init_io()
 {
@@ -39,8 +37,6 @@ int board_init_io()
     ANSELBbits.ANSB7 = 1;       // M4I as analog
 
     // digitals outputs
-    TRISDbits.TRISD11 = 0;      // LED pin as output
-
     TRISBbits.TRISB15 = 0;      // M1A pin as output
     TRISBbits.TRISB14 = 0;      // M1B pin as output
 
@@ -93,6 +89,10 @@ int board_init_io()
     // Lock configuration pin
     OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 1;
 #endif
+
+    board_leds[0] = gpio_pin(GPIO_PORTD, 11);
+    gpio_setBitConfig(board_leds[0], GPIO_OUTPUT);
+
     return 0;
 }
 
@@ -110,21 +110,20 @@ int board_setLed(uint8_t led, uint8_t state)
 {
     if(led >= LED_COUNT)
         return -1;
-#ifndef SIMULATOR
-    if(led == 0)
-        LED1 = state;
-#else
-    if(state & 0x01)
-    {
-        //printf("LED %d on\n", led);
-        board_led_state |= (1 << led);
-    }
+
+    if (state & 1)
+        gpio_setBit(board_leds[led]);
     else
-    {
-        //printf("LED %d off\n", led);
-        board_led_state &= !(1 << led);
-    }
-#endif
+        gpio_clearBit(board_leds[led]);
+    return 0;
+}
+
+int board_toggleLed(uint8_t led)
+{
+    if(led >= LED_COUNT)
+        return -1;
+
+    gpio_toggleBit(board_leds[led]);
     return 0;
 }
 
@@ -132,9 +131,11 @@ int8_t board_getLed(uint8_t led)
 {
     if(led >= LED_COUNT)
         return -1;
-#ifndef SIMULATOR
-    return LED1;
-#else
-    return board_led_state & (!(1 << led));
-#endif
+
+    return gpio_readBit(board_leds[led]);
+}
+
+int8_t board_getButton(uint8_t button)
+{
+    return -1;
 }

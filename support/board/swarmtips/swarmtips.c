@@ -10,17 +10,15 @@
 
 #include "swarmtips.h"
 
-#include <driver/adc.h>
+#include <driver/sysclock.h>
+#include <driver/gpio.h>
 #include <driver/i2c.h>
+
+rt_dev_t board_leds[LED_COUNT];
 
 #include "modules.h"
 #ifdef USE_MODULE_sensor
  #include <module/sensor.h>
-#endif
-
-#ifdef SIMULATOR
-uint8_t board_led_state = 0;
-#include <stdio.h>
 #endif
 
 rt_dev_t swarmtips_i2c_tof;
@@ -37,9 +35,6 @@ int board_init_io()
     ANSELBbits.ANSB8 = 1;       // BOARD_VOLT_IN as analog
 
     // digitals outputs
-    TRISBbits.TRISB3 = 0;       // LED pin as output
-    TRISDbits.TRISD11 = 0;      // LED2 pin as output
-
     TRISEbits.TRISE4 = 0;       // M1A pin as output
     TRISEbits.TRISE6 = 0;       // M1B pin as output
 
@@ -66,6 +61,12 @@ int board_init_io()
     // Lock configuration pin
     OSCCONL = 0x46; OSCCONL = 0x57; OSCCONbits.IOLOCK = 1;
 #endif
+
+    board_leds[0] = gpio_pin(GPIO_PORTB, 3);
+    gpio_setBitConfig(board_leds[0], GPIO_OUTPUT);
+    board_leds[1] = gpio_pin(GPIO_PORTD, 11);
+    gpio_setBitConfig(board_leds[1], GPIO_OUTPUT);
+
     return 0;
 }
 
@@ -99,23 +100,20 @@ int board_setLed(uint8_t led, uint8_t state)
 {
     if(led >= LED_COUNT)
         return -1;
-#ifndef SIMULATOR
-    if(led == 0)
-        LED1 = state;
-    if(led == 1)
-        LED2 = state;
-#else
-    if(state == 1)
-    {
-        printf("LED %d on\n", led);
-        board_led_state |= (1 << led);
-    }
+
+    if (state & 1)
+        gpio_setBit(board_leds[led]);
     else
-    {
-        printf("LED %d off\n", led);
-        board_led_state &= !(1 << led);
-    }
-#endif
+        gpio_clearBit(board_leds[led]);
+    return 0;
+}
+
+int board_toggleLed(uint8_t led)
+{
+    if(led >= LED_COUNT)
+        return -1;
+
+    gpio_toggleBit(board_leds[led]);
     return 0;
 }
 
@@ -123,9 +121,11 @@ int8_t board_getLed(uint8_t led)
 {
     if(led >= LED_COUNT)
         return -1;
-#ifndef SIMULATOR
-    return LED1;
-#else
-    return board_led_state & (!(1 << led));
-#endif
+
+    return gpio_readBit(board_leds[led]);
+}
+
+int8_t board_getButton(uint8_t button)
+{
+    return -1;
 }
