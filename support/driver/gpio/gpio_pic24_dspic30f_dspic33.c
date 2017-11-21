@@ -19,7 +19,7 @@
 #include <archi.h>
 
 /**
- * @brief Set a bit of a GPIO to 1 (HIGHT)
+ * @brief Set a bit of a GPIO to 1 (HIGH)
  * @param device GPIO pin
  */
 void gpio_setBit(rt_dev_t device)

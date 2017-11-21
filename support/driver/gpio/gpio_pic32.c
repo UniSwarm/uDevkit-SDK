@@ -17,7 +17,7 @@
 #include <archi.h>
 
 /**
- * @brief Set a bit of a GPIO to 1 (HIGHT)
+ * @brief Set a bit of a GPIO to 1 (HIGH)
  * @param device GPIO pin
  */
 void gpio_setBit(rt_dev_t device)
@@ -321,9 +321,10 @@ GPIO_VALUE gpio_readBit(rt_dev_t device)
 }
 
 /**
- * @brief Set GPIO bit configuration (input / output)
+ * @brief Set GPIO bit configuration (input / output / open-drain / pull-up / pull-down)
  * @param device GPIO pin
- * @param config pin configuration to set (GPIO_OUTPUT / GPIO_INPUT)
+ * @param config pin configuration to set (GPIO_OUTPUT / GPIO_INPUT / GPIO_OPENDRAIN
+ * / GPIO_PULLUP / GPIO_PULLDOWN)
  * @return 0 if ok, -1 in case of error
  */
 int gpio_setBitConfig(rt_dev_t device, uint16_t config)
