@@ -20,7 +20,8 @@
 
  #define nop() __builtin_nop()
 
- #if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) || defined(ARCHI_pic24ep)
+ #if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) || defined(ARCHI_pic24ep) \
+  || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
   #define enable_interrupt() INTCON2bits.GIE=1
   #define disable_interrupt() INTCON2bits.GIE=0
 
