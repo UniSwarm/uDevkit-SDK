@@ -42,7 +42,9 @@ int main(void)
     web_server_setRestApi(rest_api_exec);
     web_server_setRootFS(&file_list);
 
-    ax12_init();
+    // ax12
+    ax12_init(uart(AX12_UART), gpio_pin(AX12_TXEN_PORT, AX12_TXEN_PIN), 1);
+
     adc_init();
 
     // uart debug init
