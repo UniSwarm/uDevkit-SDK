@@ -36,8 +36,8 @@ typedef enum {
 } GPIO_CONFIG;
 int gpio_setBitConfig(rt_dev_t device, uint16_t config);
 
-#define gpio_pin(port, pin) MKDEV(DEV_CLASS_GPIO, (((port)<<GPIO_MAX_PORTWIDTHU) + ((pin) & GPIO_MAX_PORTWIDTHMASK)));
-#define gpio_port(port)     MKDEV(DEV_CLASS_GPIO, ((port)<<GPIO_MAX_PORTWIDTHU));
+#define gpio_pin(port, pin) MKDEV(DEV_CLASS_GPIO, (((port)<<GPIO_MAX_PORTWIDTHU) + ((pin) & GPIO_MAX_PORTWIDTHMASK)))
+#define gpio_port(port)     MKDEV(DEV_CLASS_GPIO, ((port)<<GPIO_MAX_PORTWIDTHU))
 
 void gpio_writePort(rt_dev_t device, port_type value);
 port_type gpio_readPort(rt_dev_t device);

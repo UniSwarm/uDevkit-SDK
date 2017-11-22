@@ -11,9 +11,10 @@
 #ifndef AX12_H
 #define AX12_H
 
-#include <stdint.h>
+#include "driver/uart.h"
+#include "driver/gpio.h"
 
-void ax12_init(void);
+void ax12_init(rt_dev_t uart, rt_dev_t txen, uint8_t inverted);
 
 void ax12_send_char(uint8_t ax_id, uint8_t param, uint8_t val);
 void ax12_send_1_short(uint8_t ax_id, uint8_t param, uint16_t val);
