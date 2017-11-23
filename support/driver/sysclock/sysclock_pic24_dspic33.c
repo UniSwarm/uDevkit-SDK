@@ -143,7 +143,7 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
         osctune = OSCTUN;
         if (osctune >= 32)
             osctune = (osctune | 0xFFFFFFE0);
-        freq = 7370000 + osctune * 27637;       // FRC
+        freq = FRC_BASE_FREQ + osctune * OSCTUN_D;  // FRC
 
         if (source == SYSCLOCK_SRC_FRC16)
             freq = freq / 16;  // FRC /16
@@ -276,6 +276,8 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         return -1; // cannot generate fosc < SYSCLOCK_FSYS_MIN / 8
 
     fin = sysclock_sourceFreq(src);
+    if (fin == 0)
+        return -1;
 
     // calculate post-diviser and fsys
     postdiv = 2;
