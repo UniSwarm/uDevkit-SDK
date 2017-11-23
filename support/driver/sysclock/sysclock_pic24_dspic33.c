@@ -63,6 +63,7 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
 {
     uint16_t udiv;
+#ifndef SYSCLOCK_HAVENO_FRCDIV
     if (busClock == SYSCLOCK_CLOCK_FRC)
     {
         if (div > 256)
@@ -76,6 +77,7 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
         CLKDIVbits.FRCDIV = udiv;
         return 0;
     }
+#endif
 #ifdef SYSCLOCK_HAVE_REFCLOCKO
     if (busClock == SYSCLOCK_CLOCK_REFCLK)
     {
@@ -150,7 +152,11 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 
         if (source == SYSCLOCK_SRC_FRCDIV)
         {
+#ifndef SYSCLOCK_HAVENO_FRCDIV
             div = CLKDIVbits.FRCDIV;
+#else
+            div = 1 << CLKDIVbits.RCDIV;
+#endif
             if (div != 0b111)
                 div = 1 << div;
             else
@@ -293,7 +299,28 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         fsys = fosc << 3;
     }
 
-#ifndef SYSCLOCK_PLL4
+#if defined(SYSCLOCK_PLL468)
+    prediv = 1;
+    fplli = fin;
+    switch ((_CONFIG4 & 0x003C00) >> 10)
+    {
+    case 0b1110:
+        multiplier = 8;
+        break;
+    case 0b1101:
+        multiplier = 6;
+        break;
+    default:
+        multiplier = 4;
+        break;
+    }
+    postdiv = 1;
+#elif defined(SYSCLOCK_PLL4)
+    prediv = 1;
+    fplli = fin;
+    multiplier = 4;
+    postdiv = 1;
+#else
     // calculate pre-diviser to ensure Fplli < SYSCLOCK_FPLLI_MAX
     prediv = (fin / (SYSCLOCK_FPLLI_MAX + 1)) + 1;
     if (prediv < SYSCLOCK_N1_MIN)
@@ -333,11 +360,6 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         // Wait for Clock switch to occur
         while (OSCCONbits.COSC != SYSCLOCK_SRC_PPLL);
     }
-#else
-    prediv = 1;
-    fplli = fin;
-    multiplier = 4;
-    postdiv = 1;
 #endif
 
     // Wait for PLL to lock

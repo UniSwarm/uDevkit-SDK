@@ -86,6 +86,22 @@ typedef enum {
  || defined(DEVICE_33FJ32GP104) || defined(DEVICE_33FJ32MC101) || defined(DEVICE_33FJ32MC102) \
  || defined(DEVICE_33FJ32MC104)
  #define SYSCLOCK_PLL4 // fixed x4 PLL
+#elif defined(DEVICE_24FJ128GA202) || defined(DEVICE_24FJ128GA204) || defined(DEVICE_24FJ128GB202) \
+ || defined(DEVICE_24FJ128GB204) || defined(DEVICE_24FJ64GA202) || defined(DEVICE_24FJ64GA204) \
+ || defined(DEVICE_24FJ64GB202) || defined(DEVICE_24FJ64GB204)
+ #define SYSCLOCK_PLL468 // fixed x4/*6/*8 PLL
+#endif
+
+#if defined(DEVICE_24FJ1024GA606) || defined(DEVICE_24FJ1024GA610) || defined(DEVICE_24FJ1024GB606) \
+ || defined(DEVICE_24FJ1024GB610) || defined(DEVICE_24FJ128GA606) || defined(DEVICE_24FJ128GA610) \
+ || defined(DEVICE_24FJ128GA702) || defined(DEVICE_24FJ128GA704) || defined(DEVICE_24FJ128GA705) \
+ || defined(DEVICE_24FJ128GB606) || defined(DEVICE_24FJ128GB610) || defined(DEVICE_24FJ256GA606) \
+ || defined(DEVICE_24FJ256GA610) || defined(DEVICE_24FJ256GA702) || defined(DEVICE_24FJ256GA704) \
+ || defined(DEVICE_24FJ256GA705) || defined(DEVICE_24FJ256GB606) || defined(DEVICE_24FJ256GB610) \
+ || defined(DEVICE_24FJ512GA606) || defined(DEVICE_24FJ512GA610) || defined(DEVICE_24FJ512GB606) \
+ || defined(DEVICE_24FJ512GB610) || defined(DEVICE_24FJ64GA702) || defined(DEVICE_24FJ64GA704) \
+ || defined(DEVICE_24FJ64GA705)
+ #define SYSCLOCK_HAVENO_FRCDIV // no FRCDIV
 #endif
 
 #if defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
