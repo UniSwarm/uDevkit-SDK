@@ -98,6 +98,7 @@ int board_init_io()
     // Lock configuration pin
     lockIoConfig();
 #endif
+
     return 0;
 }
 
@@ -223,16 +224,16 @@ int board_init_ihm()
     return 0;
 }
 
-uint8_t board_button(uint8_t btn)
+int8_t board_getButton(uint8_t button)
 {
     uint8_t value;
     int ret;
-    if (btn > 2)
+    if (button > 2)
         return 0;
     ret = i2c_readregs(swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 0, &value, 1, 0);
     if (ret != 0)
         return 0;
-    switch (btn)
+    switch (button)
     {
     case 0:
         if ((value & IHM_BTN1_MASK) == 0)
@@ -286,9 +287,9 @@ int board_setLed(uint8_t led, uint8_t state)
 {
     if (led >= LED_COUNT)
         return -1;
-#ifndef SIMULATOR
     switch(led)
     {
+#ifndef SIMULATOR
     case 0:
         OC8R = state<<1;
         OC8RS = state<<1;
@@ -301,6 +302,7 @@ int board_setLed(uint8_t led, uint8_t state)
         OC7R = state<<1;
         OC7RS = state<<1;
         break;
+#endif
     case 3:
         if (state != 0)
             board_led_state |= 0x01;
@@ -329,19 +331,17 @@ int board_setLed(uint8_t led, uint8_t state)
 
     if (led == 3 || led == 4)
         i2c_writereg(swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 1, board_led_state << 2 | 0x03, 0);
-#else
-    if(state & 0x01)
-    {
-        //printf("LED %d on\n", led);
-        board_led_state |= (1 << led);
-    }
-    else
-    {
-        //printf("LED %d off\n", led);
-        board_led_state &= !(1 << led);
-    }
-#endif
     return 0;
+}
+
+int board_toggleLed(uint8_t led)
+{
+    int8_t state = board_getLed(led);
+    if (state == 0)
+        state = 255;
+    else
+        state = 0;
+    board_setLed(led, state);
 }
 
 int8_t board_getLed(uint8_t led)

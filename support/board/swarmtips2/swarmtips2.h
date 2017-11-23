@@ -32,14 +32,16 @@ int board_init();
 #define LED2_OC 9 // OC9
 #define LED3_OC 7 // OC7
 int board_setLed(uint8_t led, uint8_t state);
+int board_toggleLed(uint8_t led);
 int8_t board_getLed(uint8_t led);
+
+#define BUTTON_COUNT 3
+int8_t board_getButton(uint8_t button);
 
 rt_dev_t board_i2c_tof();
 rt_dev_t board_i2c_ihm();
 
 void board_buzz(uint16_t freq);
-
-uint8_t board_button(uint8_t btn);
 
 float board_getPowerVoltage();
 

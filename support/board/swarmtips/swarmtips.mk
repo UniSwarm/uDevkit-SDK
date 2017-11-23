@@ -5,6 +5,8 @@ ARCHI = dspic33ep
 vpath %.c $(dir $(lastword $(MAKEFILE_LIST)))
 vpath %.h $(dir $(lastword $(MAKEFILE_LIST)))
 
+DRIVERS += gpio
+
 SRC += swarmtips.c
 HEADER += swarmtips.h
 ARCHI_SRC += swarmtips_fuses.c

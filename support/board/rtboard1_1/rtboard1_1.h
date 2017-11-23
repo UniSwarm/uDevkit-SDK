@@ -50,6 +50,8 @@ int8_t board_getButton(uint8_t button);
 
 // AX12
 #define AX12_TXEN LATBbits.LATB0       // AX12 buffer direction
+#define AX12_TXEN_PORT GPIO_PORTB
+#define AX12_TXEN_PIN  0
 #define AX12_UART 3
 
 // A6
