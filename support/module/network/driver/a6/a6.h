@@ -13,11 +13,13 @@
 
 #include "driver/device.h"
 
-int a6_init();
+int a6_init(rt_dev_t uart, rt_dev_t txen, uint8_t inverted);
 
 ssize_t a6_write(const char *data, size_t size);
 ssize_t a6_read(char *data, size_t size_max);
 
 void a6_writeShort(uint16_t channel, uint16_t value);
+
+void a6_task();
 
 #endif // A6_H

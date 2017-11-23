@@ -18,15 +18,15 @@ void network_init()
         esp8266_init();
         web_server_init();
     #endif
-    #ifdef USE_a6
-      a6_init();
-    #endif
 }
 
 void network_task()
 {
-    #ifdef USE_esp8266
-        esp8266_task();
-        web_server_task();
-    #endif
+#ifdef USE_esp8266
+    esp8266_task();
+    web_server_task();
+#endif
+#ifdef USE_a6
+    a6_task();
+#endif
 }

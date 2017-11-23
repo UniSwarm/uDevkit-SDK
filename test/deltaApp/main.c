@@ -33,17 +33,18 @@ int main(void)
     float valueF;
     char led=0;
 
-    sysclock_setClock(120000000);
     robot_init();
+    sysclock_setClock(120000000);
 
     usb_serial = usb_serial_getFreeDevice();
 
     network_init();
+    a6_init(uart(A6_UART), gpio_pin(A6_RW_PORT, A6_RW_PIN), 0);
     web_server_setRestApi(rest_api_exec);
     web_server_setRootFS(&file_list);
 
     // ax12
-    ax12_init(uart(AX12_UART), gpio_pin(AX12_TXEN_PORT, AX12_TXEN_PIN), 1);
+    ax12_init(uart(AX12_UART), gpio_pin(AX12_TXEN_PORT, AX12_TXEN_PIN), 0);
 
     adc_init();
 

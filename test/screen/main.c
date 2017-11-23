@@ -112,11 +112,13 @@ int main(void)
     size_t size;
     int16_t value, value2, value3;
 
-    sysclock_setClock(120000000);
     board_init();
+    sysclock_setClock(120000000);
 
     // a6 init
     network_init();
+    a6_init(uart(A6_UART), gpio_pin(A6_RW_PORT, A6_RW_PIN), 0);
+
     uartDbg = uart_getFreeDevice();
 
     gui_init(NULLDEV);
@@ -127,20 +129,6 @@ int main(void)
 
     gui_setPenColor(Gui_Yellow);
     gui_setBrushColor(0x2965);
-
-    //initialize touch
-    // ssize_t response = 42;
-    // response = ar1000_init();
-    // response = ar1000_enable_touch();
-
-    //WORKING ON GUI_CONSOLE
-    //Console cmd = Terminal_default;
-    //cmd.width = 300;
-    //cmd.height = 100;
-    //cmd.font = &Lucida_Console10;
-    //cmd.font_color = Gui_White;
-    //cmd.background_color = Gui_Black;
-    // console_open(&cmd, 100, 50);
 
     gui_setFont(&core14b);
     drawMenuBar();

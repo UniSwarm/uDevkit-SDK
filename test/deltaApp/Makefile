@@ -4,6 +4,8 @@ PROJECT = deltaApp
 ROBOT = deltatips
 OUT_PWD = build
 
+DEV_PROG?=ICD3
+
 # CCFLAGS += -pedantic
 
 DRIVERS += sysclock uart ax12 adc i2c usb_serial oc gpio
