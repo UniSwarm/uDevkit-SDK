@@ -30,21 +30,13 @@ uint32_t sysclock_getCPUSystemClock()
     return sysfreq >> 1;
 }
 
-#if defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
     // TODO
     return sysfreq / 2;
 }
-#else
-uint32_t sysclock_periphFreq()
-{
-    return sysfreq >> 1;
-}
-#endif
 
-#if defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
-int sysclock_setPeriphClockDiv(SYSCLOCK_CLOCK busClock, uint8_t div)
+int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
 {
     // TODO
     return 0;
@@ -58,6 +50,12 @@ SYSCLOCK_SOURCE sysclock_source()
 
 int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq)
 {
+    return 0;
+}
+
+int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
+{
+    return 0;
 }
 
 int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
@@ -65,4 +63,3 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
     // TODO
     return 0;
 }
-#endif

@@ -21,6 +21,10 @@ uint32_t sysclock_sysfreq = 0;
 uint32_t sysclock_sosc = 0;
 uint32_t sysclock_posc = 0;
 
+#ifdef SYSCLOCK_SRC_PLL
+uint32_t sysclock_pll = 0;
+#endif
+
 /**
  * @brief Gets the actual frequency on a particular peripherical bus clock
  * @param busClock id of the bus clock (1 periph bus clock), 0 for sysclock
@@ -60,13 +64,13 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
     {
         if (div == 1)
-            udiv = 0;
+            udiv = 0b00;
         else if (div == 4)
-            udiv = 1;
-        else if (div == 4)
-            udiv = 1;
-        else if (div == 4)
-            udiv = 1;
+            udiv = 0b01;
+        else if (div == 16)
+            udiv = 0b10;
+        else if (div == 64)
+            udiv = 0b11;
         else
             return -1;
         OSCCONbits.POST = udiv;
@@ -87,13 +91,17 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
     switch (source)
     {
     case SYSCLOCK_SRC_LPRC:
-        return 32000;         // 32kHz LPRC
+        return 512000;        // 512kHz LPRC
     case SYSCLOCK_SRC_SOSC:
         return sysclock_sosc; // external secondary oscillator
     case SYSCLOCK_SRC_POSC:
         return sysclock_posc; // external primary oscillator
     case SYSCLOCK_SRC_FRC:
         return 8000000;       // FRC  // TODO integrate OSCTUNE
+#ifdef SYSCLOCK_SRC_PLL
+    case SYSCLOCK_SRC_PLL:
+        return sysclock_pll;       // FRC  // TODO integrate OSCTUNE
+#endif
     }
     return -1;
 }
