@@ -6,9 +6,12 @@
 
 #include <QDebug>
 
-SimServer::SimServer(QObject *parent) : QObject(parent)
+SimServer *SimServer::server = Q_NULLPTR;
+
+SimServer::SimServer(QObject *parent)
+    : QObject(parent)
 {
-    _server = new QTcpServer();
+    _server = new QTcpServer(this);
     connect(_server, SIGNAL(newConnection()), this, SLOT(newClient()));
     _server->listen(QHostAddress::LocalHost, SIM_SOCKET_PORT);
 }
@@ -18,9 +21,17 @@ bool SimServer::isConnected() const
     return _server->isListening();
 }
 
+SimServer *SimServer::instance()
+{
+    if (!server)
+        server = new SimServer();
+
+    return server;
+}
+
 void SimServer::newClient()
 {
-    qDebug()<<"new connection";
+    //qDebug()<<"new connection";
     QTcpSocket *socket = _server->nextPendingConnection();
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(deleteClient(QAbstractSocket::SocketError)));
     _simClients.append(new SimClient(socket));

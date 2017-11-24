@@ -10,14 +10,13 @@ class SimClient;
 class SimServer : public QObject
 {
     Q_OBJECT
+protected:
+    SimServer(QObject *parent = 0);
+
 public:
-    explicit SimServer(QObject *parent = 0);
 
     bool isConnected() const;
-
-signals:
-
-public slots:
+    static SimServer *instance();
 
 protected slots:
     void newClient();
@@ -26,6 +25,7 @@ protected slots:
 protected:
     QTcpServer *_server;
     QList<SimClient *> _simClients;
+    static SimServer *server;
 };
 
 #endif // SIMSERVER_H

@@ -3,15 +3,17 @@
 #include <QLayout>
 #include <QPushButton>
 
-UartWidget::UartWidget(QWidget *parent) : QWidget(parent)
+UartWidget::UartWidget(QWidget *parent)
+    : QWidget(parent)
 {
     createWidget();
 }
 
 UartWidget::UartWidget(uint16_t idPeriph, QWidget *parent)
+    : QWidget(parent)
 {
     _idPeriph = idPeriph;
-    setWindowTitle(QString("UART %1").arg(idPeriph+1));
+    setWindowTitle(QString("UART %1").arg(_idPeriph+1));
     createWidget();
 }
 

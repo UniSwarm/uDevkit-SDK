@@ -3,11 +3,7 @@
 
 #include <QMainWindow>
 
-#include "simserver.h"
-
-namespace Ui {
-class MainWindow;
-}
+#include "simproject.h"
 
 class MainWindow : public QMainWindow
 {
@@ -17,10 +13,13 @@ public:
     explicit MainWindow(QStringList args);
     ~MainWindow();
 
-private:
-    Ui::MainWindow *ui;
+public slots:
+    bool openProject(const QString &path=QString());
 
-    SimServer *_simServer;
+protected:
+    void createMenus();
+
+    SimProject *_simProject;
 };
 
 #endif // MAINWINDOW_H

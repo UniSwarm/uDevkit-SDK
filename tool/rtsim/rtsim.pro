@@ -22,10 +22,10 @@ SOURCES += main.cpp \
     widgets/guiwidget/screenwidget.cpp \
     widgets/uartwidget/uartwidget.cpp \
     widgets/adcwidget/adcwidget.cpp \
-    widgets/guiwidget/guiwidget.cpp
+    widgets/guiwidget/guiwidget.cpp \
+    simproject.cpp
 
-FORMS += \
-    mainwindow.ui
+FORMS +=
 
 HEADERS += \
     mainwindow.h \
@@ -40,6 +40,7 @@ HEADERS += \
     widgets/guiwidget/screenwidget.h \
     widgets/uartwidget/uartwidget.h \
     widgets/adcwidget/adcwidget.h \
-    widgets/guiwidget/guiwidget.h
+    widgets/guiwidget/guiwidget.h \
+    simproject.h
 
 INCLUDEPATH += ../../include ../../support
