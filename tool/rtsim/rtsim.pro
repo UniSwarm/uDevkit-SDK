@@ -2,6 +2,8 @@ QT += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+QT += serialport
+
 CONFIG += c++11
 
 DESTDIR = $$PWD/../../bin

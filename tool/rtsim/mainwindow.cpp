@@ -28,7 +28,7 @@ bool MainWindow::openProject(const QString &path)
         dialog.setOption(QFileDialog::DontUseNativeDialog);
         dialog.setFileMode(QFileDialog::ExistingFiles);
 #if defined(Q_OS_WIN)
-        dialog.setNameFilter(tr("Exe (*.png *.xpm *.jpg)"));
+        dialog.setNameFilter(tr("Exe (*.exe)"));
 #else
         //dialog.setFilter(QDir::Executable | QDir::Files | QDir::AllDirs);
 #endif

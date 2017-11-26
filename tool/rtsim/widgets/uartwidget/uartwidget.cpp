@@ -3,10 +3,14 @@
 #include <QLayout>
 #include <QPushButton>
 
+#include <QSerialPortInfo>
+#include <QDebug>
+
 UartWidget::UartWidget(QWidget *parent)
     : QWidget(parent)
 {
     createWidget();
+    _port = Q_NULLPTR;
 }
 
 UartWidget::UartWidget(uint16_t idPeriph, QWidget *parent)
@@ -15,20 +19,32 @@ UartWidget::UartWidget(uint16_t idPeriph, QWidget *parent)
     _idPeriph = idPeriph;
     setWindowTitle(QString("UART %1").arg(_idPeriph+1));
     createWidget();
+    _port = Q_NULLPTR;
+
+    if (idPeriph == 0)
+        _serialPortComboBox->setCurrentIndex(4);
 }
 
-void UartWidget::recData(const QString &data)
+void UartWidget::recFromUart(const QString &data)
 {
     QString dataReceived = data;
     dataReceived = dataReceived.replace("\r","<b>\\r</b>");
     dataReceived = dataReceived.replace("\n","<b>\\n</b>");
     dataReceived = dataReceived.replace("\t","<b>\\t</b>");
     //dataReceived = dataReceived.replace("\0","<b>\\0</b>");
-    _log->appendHtml(dataReceived);
+    _logRec->appendHtml(dataReceived);
+
+    if (_port)
+    {
+        QByteArray badat;
+        badat.append(data);
+        _port->write(badat);
+    }
 }
 
 void UartWidget::setConfig(uart_dev config)
 {
+    _config = config;
     if(config.enabled==0)
         _statusEnabled->setText("disabled");
     else
@@ -55,32 +71,91 @@ void UartWidget::setConfig(uart_dev config)
                      .arg(config.bitStop));
 }
 
-void UartWidget::send()
+void UartWidget::sendToUart()
 {
-    QString dataToSend = _lineEdit->text();
-    dataToSend = dataToSend.replace("\\r","\r");
-    dataToSend = dataToSend.replace("\\n","\n");
-    dataToSend = dataToSend.replace("\\t","\t");
-    //dataToSend = dataToSend.replace("\\0","\0");
+    QString dataToSend;
+
+    if (_port == Q_NULLPTR)
+    {
+        dataToSend = _lineEdit->text();
+        dataToSend = dataToSend.replace("\\r","\r");
+        dataToSend = dataToSend.replace("\\n","\n");
+        dataToSend = dataToSend.replace("\\t","\t");
+    }
+    else
+    {
+        QByteArray readenData = _port->readAll();
+        qDebug()<<readenData;
+        dataToSend = QString(readenData);
+    }
+
     emit sendRequest(dataToSend);
+
+    dataToSend = dataToSend.replace("\r","<b>\\r</b>");
+    dataToSend = dataToSend.replace("\n","<b>\\n</b>");
+    dataToSend = dataToSend.replace("\t","<b>\\t</b>");
+    _logSend->appendHtml(dataToSend);
+
     //_lineEdit->clear();
+}
+
+void UartWidget::portChanged(int index)
+{
+    if (_port != Q_NULLPTR)
+    {
+        _port->close();
+        _port = Q_NULLPTR;
+    }
+
+    if (index == 0)
+    {
+        _sendLayout->setEnabled(true);
+    }
+    else
+    {
+        _sendLayout->setEnabled(false);
+        _port = new QSerialPort(_serialPortComboBox->itemData(index).toString(), this);
+        _port->open(QIODevice::ReadWrite);
+        _port->setBaudRate(115200/*_config.baudSpeed*/);
+        qDebug()<<_config.baudSpeed;
+        _port->setDataBits(QSerialPort::Data8);
+        _port->setParity(QSerialPort::NoParity);
+        _port->setStopBits(QSerialPort::OneStop);
+        _port->setFlowControl(QSerialPort::NoFlowControl);
+
+        connect(_port, SIGNAL(readyRead()), this, SLOT(sendToUart()));
+    }
 }
 
 void UartWidget::createWidget()
 {
     QLayout *layout = new QVBoxLayout();
 
-    _log = new QPlainTextEdit();
-    layout->addWidget(_log);
+    _serialPortComboBox = new QComboBox();
+    _serialPortComboBox->addItem("Simulated UART");
 
-    QLayout *sendLayout = new QHBoxLayout();
+    QList<QSerialPortInfo> availablePorts = QSerialPortInfo::availablePorts();
+    foreach (QSerialPortInfo portInfo, availablePorts)
+    {
+        _serialPortComboBox->addItem(portInfo.portName() + " (" + portInfo.description() + ", " + portInfo.manufacturer() + ")", portInfo.portName());
+    }
+    layout->addWidget(_serialPortComboBox);
+    connect(_serialPortComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(portChanged(int)));
+
+    _logRec = new QPlainTextEdit();
+    layout->addWidget(_logRec);
+
+    _logSend = new QPlainTextEdit();
+    layout->addWidget(_logSend);
+
+    _sendLayout = new QHBoxLayout();
     _lineEdit = new QLineEdit();
-    sendLayout->addWidget(_lineEdit);
+    _sendLayout->addWidget(_lineEdit);
     QPushButton *sendButton = new QPushButton("Send");
-    connect(sendButton, SIGNAL(clicked(bool)), this, SLOT(send()));
-    connect(_lineEdit, SIGNAL(editingFinished()), this, SLOT(send()));
-    sendLayout->addWidget(sendButton);
-    layout->addItem(sendLayout);
+    connect(sendButton, SIGNAL(clicked(bool)), this, SLOT(sendToUart()));
+    connect(_lineEdit, SIGNAL(editingFinished()), this, SLOT(sendToUart()));
+    _sendLayout->addWidget(sendButton);
+    layout->addItem(_sendLayout);
 
     QLayout *statusLayout = new QHBoxLayout();
     statusLayout->addWidget(new QLabel(QString("uart %1").arg(_idPeriph)));

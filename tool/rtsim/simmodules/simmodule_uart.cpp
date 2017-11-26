@@ -24,7 +24,7 @@ void SimModuleUart::pushData(uint16_t functionId, const QByteArray &data)
         _uartWidget->setConfig(_config_uart);
         break;
     case UART_SIM_WRITE:
-        _uartWidget->recData(data.data());
+        _uartWidget->recFromUart(data.data());
         break;
     default:
         break;
