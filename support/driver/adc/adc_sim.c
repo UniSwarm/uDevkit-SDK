@@ -20,7 +20,7 @@ int adc_init()
 	return 0;
 }
 
-uint16_t adc_getValue(uint8_t channel)
+int16_t adc_getValue(uint8_t channel)
 {
     ssize_t size_read;
     char data[10];
