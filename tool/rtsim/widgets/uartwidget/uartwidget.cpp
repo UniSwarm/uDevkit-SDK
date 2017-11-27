@@ -23,7 +23,7 @@ UartWidget::UartWidget(uint16_t idPeriph, QWidget *parent)
     _port = Q_NULLPTR;
 
     QSettings settings("UniSwarm", "RtSim");
-    settings.beginGroup(QString("UART %1").arg(_idPeriph+1));
+    settings.beginGroup(QString("UART%1").arg(_idPeriph+1));
 
     QString port = settings.value("port", "").toString();
 
@@ -46,7 +46,7 @@ UartWidget::~UartWidget()
 
 void UartWidget::recFromUart(const QString &data)
 {
-    QString dataReceived = data;
+    QString dataReceived = data.toHtmlEscaped();
     dataReceived = dataReceived.replace("\r","<b>\\r</b>");
     dataReceived = dataReceived.replace("\n","<b>\\n</b>");
     dataReceived = dataReceived.replace("\t","<b>\\t</b>");
@@ -110,9 +110,11 @@ void UartWidget::sendToUart()
 
     emit sendRequest(dataToSend);
 
+    dataToSend = dataToSend.toHtmlEscaped();
     dataToSend = dataToSend.replace("\r","<b>\\r</b>");
     dataToSend = dataToSend.replace("\n","<b>\\n</b>");
     dataToSend = dataToSend.replace("\t","<b>\\t</b>");
+
     _logSend->appendHtml(dataToSend);
 
     //_lineEdit->clear();
@@ -120,6 +122,9 @@ void UartWidget::sendToUart()
 
 void UartWidget::portChanged(int index)
 {
+    QSettings settings("UniSwarm", "RtSim");
+    settings.beginGroup(QString("UART%1").arg(_idPeriph+1));
+
     if (_port != Q_NULLPTR)
     {
         _port->close();
@@ -128,11 +133,16 @@ void UartWidget::portChanged(int index)
 
     if (index == 0)
     {
-        _sendLayout->setEnabled(true);
+        _sendButton->setEnabled(true);
+        _lineEdit->setEnabled(true);
+
+        settings.setValue("port", "");
     }
     else
     {
-        _sendLayout->setEnabled(false);
+        _sendButton->setEnabled(false);
+        _lineEdit->setEnabled(false);
+
         _port = new QSerialPort(_serialPortComboBox->itemData(index).toString(), this);
         _port->open(QIODevice::ReadWrite);
         _port->setBaudRate(115200/*_config.baudSpeed*/);
@@ -144,8 +154,6 @@ void UartWidget::portChanged(int index)
 
         connect(_port, SIGNAL(readyRead()), this, SLOT(sendToUart()));
 
-        QSettings settings("UniSwarm", "RtSim");
-        settings.beginGroup(QString("UART %1").arg(_idPeriph+1));
         settings.setValue("port", _port->portName());
     }
 }
@@ -171,14 +179,14 @@ void UartWidget::createWidget()
     _logSend = new QPlainTextEdit();
     layout->addWidget(_logSend);
 
-    _sendLayout = new QHBoxLayout();
+    QLayout *sendLayout = new QHBoxLayout();
     _lineEdit = new QLineEdit();
-    _sendLayout->addWidget(_lineEdit);
-    QPushButton *sendButton = new QPushButton("Send");
-    connect(sendButton, SIGNAL(clicked(bool)), this, SLOT(sendToUart()));
+    sendLayout->addWidget(_lineEdit);
+    _sendButton = new QPushButton("Send");
+    connect(_sendButton, SIGNAL(clicked(bool)), this, SLOT(sendToUart()));
     connect(_lineEdit, SIGNAL(editingFinished()), this, SLOT(sendToUart()));
-    _sendLayout->addWidget(sendButton);
-    layout->addItem(_sendLayout);
+    sendLayout->addWidget(_sendButton);
+    layout->addItem(sendLayout);
 
     QLayout *statusLayout = new QHBoxLayout();
     statusLayout->addWidget(new QLabel(QString("uart %1").arg(_idPeriph)));

@@ -6,6 +6,7 @@
 #include <QPlainTextEdit>
 #include <QLabel>
 #include <QComboBox>
+#include <QPushButton>
 
 #include "driver/uart/uart.h"
 #include "driver/uart/uart_sim.h"
@@ -31,7 +32,7 @@ protected slots:
     void portChanged(int index);
 
 protected:
-    QLayout *_sendLayout;
+    QPushButton *_sendButton;
     QLineEdit *_lineEdit;
 
     QPlainTextEdit *_logRec;
