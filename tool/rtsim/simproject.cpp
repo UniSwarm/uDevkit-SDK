@@ -7,6 +7,8 @@ SimProject::SimProject(QObject *parent)
     : QObject(parent)
 {
     _process = new QProcess();
+    connect(_process, SIGNAL(readyReadStandardOutput()), this, SLOT(readProcess()));
+    connect(_process, SIGNAL(readyReadStandardError()), this, SLOT(readProcess()));
     _valid = false;
 }
 
@@ -41,6 +43,16 @@ bool SimProject::isValid() const
     return _valid;
 }
 
+SimProject::Status SimProject::status() const
+{
+    if (!_valid)
+        return Invalid;
+    if (_process->state() == QProcess::Running)
+        return Running;
+    else
+        return Stopped;
+}
+
 void SimProject::start()
 {
     if (!_valid)
@@ -53,4 +65,31 @@ void SimProject::start()
         qDebug()<<_process->errorString()<<_process->program();
         return;
     }
+}
+
+void SimProject::readProcess()
+{
+    QString log;
+
+    QString error = _process->readAllStandardError();
+    if (!error.isEmpty())
+        log.append("<span color='red'>" + error + "</span>");
+
+    QString out = _process->readAllStandardOutput();
+    if (!out.isEmpty())
+        log.append(out);
+
+    log.replace('\n', "<br></br>");
+    log.replace('\r', "");
+    emit logAppended(log);
+}
+
+SimClient *SimProject::client() const
+{
+    return _client;
+}
+
+void SimProject::setClient(SimClient *client)
+{
+    _client = client;
 }

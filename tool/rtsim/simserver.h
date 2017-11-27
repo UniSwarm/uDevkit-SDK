@@ -14,9 +14,12 @@ protected:
     SimServer(QObject *parent = 0);
 
 public:
-
     bool isConnected() const;
     static SimServer *instance();
+
+signals:
+    void clientAdded(SimClient *client);
+    void clientClosed(SimClient *client);
 
 protected slots:
     void newClient();

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include <QTextEdit>
+
 #include "simproject.h"
 
 class MainWindow : public QMainWindow
@@ -15,11 +17,13 @@ public:
 
 public slots:
     bool openProject(const QString &path=QString());
+    void setClient(SimClient *client);
 
 protected:
     void createMenus();
 
     SimProject *_simProject;
+    QTextEdit *_logWidget;
 };
 
 #endif // MAINWINDOW_H

@@ -4,11 +4,19 @@
 #include <QMenuBar>
 #include <QDebug>
 
+#include "simserver.h"
+
 MainWindow::MainWindow(QStringList args)
 {
     _simProject = new SimProject(this);
 
+    _logWidget = new QTextEdit();
+    _logWidget->setReadOnly(true);
+    setCentralWidget(_logWidget);
     createMenus();
+
+    connect(SimServer::instance(), SIGNAL(clientAdded(SimClient *)), this, SLOT(setClient(SimClient *)));
+    connect(_simProject, SIGNAL(logAppended(QString)), _logWidget, SLOT(insertHtml(QString)));
 
     if (args.size()>1)
         openProject(args[1]);
@@ -41,6 +49,11 @@ bool MainWindow::openProject(const QString &path)
     _simProject->start();
 
     return true;
+}
+
+void MainWindow::setClient(SimClient *client)
+{
+    _simProject->setClient(client);
 }
 
 void MainWindow::createMenus()
