@@ -10,21 +10,22 @@ SimClient::SimClient(QTcpSocket *socket)
 
 SimModule *SimClient::module(uint16_t idModule, uint16_t idPeriph) const
 {
-    QMap<uint32_t, SimModule*>::const_iterator localConstFind = _modules.constFind((uint32_t)((idModule<<16) + idPeriph));
+    uint32_t key = static_cast<uint32_t>((idModule<<16) + idPeriph);
+    QMap<uint32_t, SimModule*>::const_iterator localConstFind = _modules.constFind(key);
     if(localConstFind != _modules.constEnd())
         return *localConstFind;
-    return NULL;
+    return Q_NULLPTR;
 }
 
 void SimClient::writeData(uint16_t moduleId, uint16_t periphId, uint16_t functionId, const QByteArray &data)
 {
-    char header[6];
+    char header[8];
     QByteArray packet;
 
-    ((uint16_t*)header)[0] = data.size()+8;
-    ((uint16_t*)header)[1] = moduleId;
-    ((uint16_t*)header)[2] = periphId;
-    ((uint16_t*)header)[3] = functionId;
+    (reinterpret_cast<uint16_t*>(header))[0] = static_cast<uint16_t>(data.size()) + 8;
+    (reinterpret_cast<uint16_t*>(header))[1] = moduleId;
+    (reinterpret_cast<uint16_t*>(header))[2] = periphId;
+    (reinterpret_cast<uint16_t*>(header))[3] = functionId;
     packet.append(header, 8);
     packet.append(data);
 
@@ -36,14 +37,14 @@ void SimClient::readData()
     _dataReceive.append(_socket->readAll());
     while(_dataReceive.size()>6)
     {
-        unsigned short sizePacket = *((short*)_dataReceive.mid(0,2).data());
+        unsigned short sizePacket = *(reinterpret_cast<unsigned short*>(_dataReceive.mid(0,2).data()));
 
         if(sizePacket>_dataReceive.size())
             return;
 
-        unsigned short moduleId = *((short*)_dataReceive.mid(2,2).data());
-        unsigned short periphId = *((short*)_dataReceive.mid(4,2).data());
-        unsigned short functionId = *((short*)_dataReceive.mid(6,2).data());
+        unsigned short moduleId = *(reinterpret_cast<unsigned short*>(_dataReceive.mid(2,2).data()));
+        unsigned short periphId = *(reinterpret_cast<unsigned short*>(_dataReceive.mid(4,2).data()));
+        unsigned short functionId = *(reinterpret_cast<unsigned short*>(_dataReceive.mid(6,2).data()));
         QByteArray data = _dataReceive.mid(8, sizePacket-8);
 
         SimModule *modulePtr = module(moduleId, periphId);
@@ -57,7 +58,7 @@ void SimClient::readData()
                 continue;
             }
 
-            _modules.insert((uint32_t)((moduleId<<16) + periphId), modulePtr);
+            _modules.insert(static_cast<uint32_t>((moduleId<<16) + periphId), modulePtr);
         }
 
         modulePtr->pushData(functionId, data);
