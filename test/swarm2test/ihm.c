@@ -46,11 +46,11 @@ void ihm_task()
     int8_t btn = 0;
 
     // process buttons
-    if (board_button(0) == 1)
+    if (board_getButton(0) == 1)
         btn = 1;
-    else if (board_button(1) == 1)
+    else if (board_getButton(1) == 1)
         btn = 2;
-    else if (board_button(2) == 1)
+    else if (board_getButton(2) == 1)
         btn = 3;
 
     if (screen_btn == 0 && btn != 0)

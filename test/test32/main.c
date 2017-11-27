@@ -66,6 +66,10 @@ int main(void)
 
     while(1)
     {
+        #ifdef SIMULATOR
+            usleep(1000);
+        #endif
+        
         cmdline_task();
 
         board_setLed(2, 1);

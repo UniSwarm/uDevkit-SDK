@@ -156,12 +156,16 @@ int main(void)
         for(j=0;j<2;j++) for(i=0;i<65000;i++);
 
         size = a6_read(buff, 100);
-        if(size==16)
+
+char text[60];
+sprintf(text, "t: %d", (int)size);
+gui_drawTextRect(240, 40, 50, 25, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
+        if(size>10)
         {
             int16_t *ptr;
             ptr = (int16_t *)buff;
 
-            if(*ptr==0xA6)
+            //if(*ptr==0xA6)
             {
                 ptr++;
                 value = *ptr;

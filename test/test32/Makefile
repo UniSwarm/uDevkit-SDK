@@ -7,7 +7,7 @@ OUT_PWD = build
 
 # CCFLAGS += -pedantic
 
-DRIVERS += sysclock uart i2c timer
+DRIVERS += sysclock uart i2c timer gpio
 MODULES += gui
 
 MODULES += cmdline

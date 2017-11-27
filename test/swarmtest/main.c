@@ -33,7 +33,7 @@ void sendLed(uint8_t r, uint8_t g, uint8_t b, char *bufLed)
 int main(void)
 {
 	unsigned int i,j;
-	uint16_t value;
+	int16_t value;
 	char buff[100];
 
 	sysclock_setClock(60000000);
@@ -45,11 +45,11 @@ int main(void)
     web_server_setRootFS(&file_list);
 
     // uart debug init
-    uartLed = uart_getFreeDevice();
+    /*uartLed = uart_getFreeDevice();
     uart_setBaudSpeed(uartLed, 4000000);
     uart_setBitConfig(uartLed, 8, UART_BIT_PARITY_NONE, 1);
     U2STAbits.UTXINV = 1;
-    uart_enable(uartLed);
+    uart_enable(uartLed);*/
 
     board_setLed(0, 1);
     for(j=0;j<2;j++) for(i=0;i<65000;i++);

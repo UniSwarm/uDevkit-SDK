@@ -21,15 +21,15 @@ int main(void)
 
     board_init();
 
-    // module init
-    network_init();
-    web_server_setRestApi(rest_api_exec);
-    web_server_setRootFS(&file_list);
-
     motors_init();
 
     for (j=0;j<5;j++)
         for (i=0;i<65000;i++);
+
+    // module init
+    network_init();
+    web_server_setRestApi(rest_api_exec);
+    web_server_setRootFS(&file_list);
 
     // screen test
     ihm_init();
