@@ -18,6 +18,7 @@ class UartWidget : public QWidget
 public:
     explicit UartWidget(QWidget *parent = 0);
     UartWidget(uint16_t idPeriph, QWidget *parent = 0);
+    ~UartWidget();
 
     void recFromUart(const QString &data);
     void setConfig(uart_dev config);

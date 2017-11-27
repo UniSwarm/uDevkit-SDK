@@ -5,6 +5,7 @@
 
 #include <QSerialPortInfo>
 #include <QDebug>
+#include <QSettings>
 
 UartWidget::UartWidget(QWidget *parent)
     : QWidget(parent)
@@ -21,8 +22,26 @@ UartWidget::UartWidget(uint16_t idPeriph, QWidget *parent)
     createWidget();
     _port = Q_NULLPTR;
 
-    if (idPeriph == 0)
-        _serialPortComboBox->setCurrentIndex(4);
+    QSettings settings("UniSwarm", "RtSim");
+    settings.beginGroup(QString("UART %1").arg(_idPeriph+1));
+
+    QString port = settings.value("port", "").toString();
+
+    if (!port.isEmpty())
+    {
+        int indexPortCom = _serialPortComboBox->findData(port);
+        if (indexPortCom != -1)
+            _serialPortComboBox->setCurrentIndex(indexPortCom);
+    }
+}
+
+UartWidget::~UartWidget()
+{
+    if (_port)
+    {
+        _port->close();
+        delete _port;
+    }
 }
 
 void UartWidget::recFromUart(const QString &data)
@@ -124,6 +143,10 @@ void UartWidget::portChanged(int index)
         _port->setFlowControl(QSerialPort::NoFlowControl);
 
         connect(_port, SIGNAL(readyRead()), this, SLOT(sendToUart()));
+
+        QSettings settings("UniSwarm", "RtSim");
+        settings.beginGroup(QString("UART %1").arg(_idPeriph+1));
+        settings.setValue("port", _port->portName());
     }
 }
 
