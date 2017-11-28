@@ -2,8 +2,10 @@
 
 > Warning support based on a very low piece of information, may vary in few weeks, only preliminary support.
 
-dsPIC33CK family is the first dual core 16 bits range. 
-A lot of periphericals are not compatibles with others dsPIC ranges. Full support of driver ay needs additionnal time.
+dsPIC33CK family is a new generation of 16 bits microcontroller with DSP accelerator. Architechture and periphericals
+are similar to [dsPIC33CH](../dspic33ch/README.md).
+
+A lot of periphericals are not compatible with others dsPIC ranges. Full support of drivers ay needs additionnal time.
 
 This family have variation of flash memory, pin count and CAN FD for 5XX subfamily.
 
