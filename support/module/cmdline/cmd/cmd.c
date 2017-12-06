@@ -23,6 +23,9 @@
 int cmd_help(int argc, char **argv);
 
 Cmd cmds[] = {
+  #ifdef USE_gpio
+    {"gpio", cmd_uart},
+  #endif
   #ifdef USE_uart
     {"uart", cmd_uart},
   #endif
@@ -105,7 +108,7 @@ int cmd_help(int argc, char **argv)
     {
         if(cmds[i].cmdFnPtr==0)
             break;
-        puts(cmds[i].name);
+        cmd_puts(cmds[i].name);
     }
     return 0;
 }

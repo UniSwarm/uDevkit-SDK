@@ -11,6 +11,7 @@
 #ifndef CMDS_H
 #define CMDS_H
 
+int cmd_gpio(int argc, char **argv);
 int cmd_ls(int argc, char **argv);
 int cmd_uart(int argc, char **argv);
 int cmd_i2c(int argc, char **argv);

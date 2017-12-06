@@ -10,6 +10,9 @@ HEADER += cmdline.h
 SRC := $(SRC) cmd.c cmd_led.c cmd_reg.c
 
 # include all commands
+ifneq (,$(findstring gpio,$(DRIVERS)))
+  SRC := $(SRC) cmd_gpio.c
+endif
 ifneq (,$(findstring uart,$(DRIVERS)))
   SRC := $(SRC) cmd_uart.c
 endif
@@ -22,10 +25,7 @@ endif
 ifneq (,$(findstring ax,$(DRIVERS)))
   SRC := $(SRC) cmd_ax.c
 endif
-$(echo $(DRIVERS))
-ifneq (,$(findstring sysclock,$(DRIVERS)))
   SRC := $(SRC) cmd_sysclock.c
-endif
 
 ifneq (,$(findstring mrobot,$(MODULES)))
   SRC := $(SRC) cmd_mrobot.c
