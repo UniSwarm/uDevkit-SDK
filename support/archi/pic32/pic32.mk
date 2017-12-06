@@ -11,6 +11,7 @@ ifeq ("$(CC)","xc32-gcc") # XC32 compiler used
  CCFLAGS_XC += -no-legacy-libc
  CCFLAGS_XC += -mprocessor=$(DEVICE)
  CCFLAGS += -Wall
+ LDFLAGS_XC += -Wl,--defsym=_min_heap_size=$(HEAP)
 
 else                      # other compiler used
  XC32_PATH = $(abspath $(dir $(lastword $(shell whereis -b xc32-gcc)))..)/
