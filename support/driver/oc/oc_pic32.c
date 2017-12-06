@@ -5,8 +5,8 @@
  *
  * @date August 18, 2016, 15:40 PM
  *
- * @brief OC support for rtprog for PIC32MM, PIC32MK, PIC32MX,
- * PIC32MZDA, PIC32MZEC and PIC32MZEF
+ * @brief OC support for rtprog for PIC32MK, PIC32MX, PIC32MZDA,
+ * PIC32MZEC and PIC32MZEF
  *
  * Implementation based on Microchip document DS61111E :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/61111E.pdf

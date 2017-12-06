@@ -17,6 +17,7 @@
 #include "oc.h"
 
 #include <archi.h>
+#include <driver/timer.h>
 
 #if !defined (OC_COUNT) || OC_COUNT==0
   #warning "No output compare (OC) on the current device or unknow device"
