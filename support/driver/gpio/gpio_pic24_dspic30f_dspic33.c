@@ -341,6 +341,25 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             TRISA &= ~bit; // set as output
         else
             TRISA |= bit;  // set as input
+
+    #ifdef ODCA
+        if(config & GPIO_OPENDRAIN)
+            ODCA |= bit; // enable open drain
+        else
+            ODCA &= ~bit; // disable open drain
+    #endif
+    #ifdef CNPUA
+        if(config & GPIO_PULLUP)
+            CNPUA |= bit; // enable pull-up
+        else
+            CNPUA &= ~bit; // disable pull-up
+    #endif
+    #ifdef CNPDA
+        if(config & GPIO_PULLDOWN)
+            CNPDA |= bit; // enable pull-down
+        else
+            CNPDA &= ~bit; // disable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTB
@@ -349,6 +368,25 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             TRISB &= ~bit; // set as output
         else
             TRISB |= bit;  // set as input;
+
+    #ifdef ODCB
+        if(config & GPIO_OPENDRAIN)
+            ODCB |= bit; // enable open drain
+        else
+            ODCB &= ~bit; // disable open drain
+    #endif
+    #ifdef CNPUB
+        if(config & GPIO_PULLUP)
+            CNPUB |= bit; // enable pull-up
+        else
+            CNPUB &= ~bit; // disable pull-up
+    #endif
+    #ifdef CNPDB
+        if(config & GPIO_PULLDOWN)
+            CNPDB |= bit; // enable pull-down
+        else
+            CNPDB &= ~bit; // disable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTC
@@ -357,6 +395,25 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             TRISC &= ~bit; // set as output
         else
             TRISC |= bit;  // set as input;
+
+    #ifdef ODCC
+        if(config & GPIO_OPENDRAIN)
+            ODCC |= bit; // enable open drain
+        else
+            ODCC &= ~bit; // disable open drain
+    #endif
+    #ifdef CNPUC
+        if(config & GPIO_PULLUP)
+            CNPUC |= bit; // enable pull-up
+        else
+            CNPUC &= ~bit; // disable pull-up
+    #endif
+    #ifdef CNPDC
+        if(config & GPIO_PULLDOWN)
+            CNPDC |= bit; // enable pull-down
+        else
+            CNPDC &= ~bit; // disable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTD
@@ -365,6 +422,25 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             TRISD &= ~bit; // set as output
         else
             TRISD |= bit;  // set as input;
+
+    #ifdef ODCD
+        if(config & GPIO_OPENDRAIN)
+            ODCD |= bit; // enable open drain
+        else
+            ODCD &= ~bit; // disable open drain
+    #endif
+    #ifdef CNPUD
+        if(config & GPIO_PULLUP)
+            CNPUD |= bit; // enable pull-up
+        else
+            CNPUD &= ~bit; // disable pull-up
+    #endif
+    #ifdef CNPDD
+        if(config & GPIO_PULLDOWN)
+            CNPDD |= bit; // enable pull-down
+        else
+            CNPDD &= ~bit; // disable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTE
@@ -373,6 +449,25 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             TRISE &= ~bit; // set as output
         else
             TRISE |= bit;  // set as input;
+
+    #ifdef ODCE
+        if(config & GPIO_OPENDRAIN)
+            ODCE |= bit; // enable open drain
+        else
+            ODCE &= ~bit; // disable open drain
+    #endif
+    #ifdef CNPUE
+        if(config & GPIO_PULLUP)
+            CNPUE |= bit; // enable pull-up
+        else
+            CNPUE &= ~bit; // disable pull-up
+    #endif
+    #ifdef CNPDE
+        if(config & GPIO_PULLDOWN)
+            CNPDE |= bit; // enable pull-down
+        else
+            CNPDE &= ~bit; // disable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTF
@@ -381,6 +476,25 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             TRISF &= ~bit; // set as output
         else
             TRISF |= bit;  // set as input;
+
+    #ifdef ODCF
+        if(config & GPIO_OPENDRAIN)
+            ODCF |= bit; // enable open drain
+        else
+            ODCF &= ~bit; // disable open drain
+    #endif
+    #ifdef CNPUF
+        if(config & GPIO_PULLUP)
+            CNPUF |= bit; // enable pull-up
+        else
+            CNPUF &= ~bit; // disable pull-up
+    #endif
+    #ifdef CNPDF
+        if(config & GPIO_PULLDOWN)
+            CNPDF |= bit; // enable pull-down
+        else
+            CNPDF &= ~bit; // disable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTG
@@ -389,6 +503,25 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             TRISG &= ~bit; // set as output
         else
             TRISG |= bit;  // set as input;
+
+    #ifdef ODCG
+        if(config & GPIO_OPENDRAIN)
+            ODCG |= bit; // enable open drain
+        else
+            ODCG &= ~bit; // disable open drain
+    #endif
+    #ifdef CNPUG
+        if(config & GPIO_PULLUP)
+            CNPUG |= bit; // enable pull-up
+        else
+            CNPUG &= ~bit; // disable pull-up
+    #endif
+    #ifdef CNPDG
+        if(config & GPIO_PULLDOWN)
+            CNPDG |= bit; // enable pull-down
+        else
+            CNPDG &= ~bit; // disable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTH
@@ -397,6 +530,25 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             TRISH &= ~bit; // set as output
         else
             TRISH |= bit;  // set as input;
+
+    #ifdef ODCH
+        if(config & GPIO_OPENDRAIN)
+            ODCH |= bit; // enable open drain
+        else
+            ODCH &= ~bit; // disable open drain
+    #endif
+    #ifdef CNPUH
+        if(config & GPIO_PULLUP)
+            CNPUH |= bit; // enable pull-up
+        else
+            CNPUH &= ~bit; // disable pull-up
+    #endif
+    #ifdef CNPDH
+        if(config & GPIO_PULLDOWN)
+            CNPDH |= bit; // enable pull-down
+        else
+            CNPDH &= ~bit; // disable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTI
@@ -405,6 +557,25 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             TRISI &= ~bit; // set as output
         else
             TRISI |= bit;  // set as input;
+
+    #ifdef ODCI
+        if(config & GPIO_OPENDRAIN)
+            ODCI |= bit; // enable open drain
+        else
+            ODCI &= ~bit; // disable open drain
+    #endif
+    #ifdef CNPUI
+        if(config & GPIO_PULLUP)
+            CNPUI |= bit; // enable pull-up
+        else
+            CNPUI &= ~bit; // disable pull-up
+    #endif
+    #ifdef CNPDI
+        if(config & GPIO_PULLDOWN)
+            CNPDI |= bit; // enable pull-down
+        else
+            CNPDI &= ~bit; // disable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTJ
@@ -413,6 +584,25 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             TRISJ &= ~bit; // set as output
         else
             TRISJ |= bit;  // set as input;
+
+    #ifdef ODCJ
+        if(config & GPIO_OPENDRAIN)
+            ODCJ |= bit; // enable open drain
+        else
+            ODCJ &= ~bit; // disable open drain
+    #endif
+    #ifdef CNPUJ
+        if(config & GPIO_PULLUP)
+            CNPUJ |= bit; // enable pull-up
+        else
+            CNPUJ &= ~bit; // disable pull-up
+    #endif
+    #ifdef CNPDJ
+        if(config & GPIO_PULLDOWN)
+            CNPDJ |= bit; // enable pull-down
+        else
+            CNPDJ &= ~bit; // disable pull-down
+    #endif
         break;
 #endif
 #ifdef GPIO_HAVE_PORTK
@@ -421,6 +611,25 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             TRISK &= ~bit; // set as output
         else
             TRISK |= bit;  // set as input;
+
+    #ifdef ODCK
+        if(config & GPIO_OPENDRAIN)
+            ODCK |= bit; // enable open drain
+        else
+            ODCK &= ~bit; // disable open drain
+    #endif
+    #ifdef CNPUK
+        if(config & GPIO_PULLUP)
+            CNPUK |= bit; // enable pull-up
+        else
+            CNPUK &= ~bit; // disable pull-up
+    #endif
+    #ifdef CNPDK
+        if(config & GPIO_PULLDOWN)
+            CNPDK |= bit; // enable pull-down
+        else
+            CNPDK &= ~bit; // disable pull-down
+    #endif
         break;
 #endif
     default:
