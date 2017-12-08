@@ -21,9 +21,17 @@ same functionalities and a floating point unit
 |Data memory|512kb|
 |Pins|64-144|
 
+## Common devices
+
+|Devices     |UART|TMR |OC  |IC  |I2C |SPI |CAN |SENT|CLC |QEI |PWM |MCCP|SCCP|
+|:-----------|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+|PIC32MZ ECG |   6|   9|   9|   9| 4-5| 4-6|   0|   0|   0|   0|   0|   0|   0|
+|PIC32MZ ECH |   6|   9|   9|   9| 4-5| 4-6|   2|   0|   0|   0|   0|   0|   0|
+|PIC32MZ ECM |   6|   9|   9|   9| 4-5| 4-6|   2|   0|   0|   0|   0|   0|   0|
+
 ## Devices list
 
-24 devices on feb 2017.
+24 devices on december 2017.
 
 ### ECG devices
 
@@ -31,41 +39,41 @@ Base family.
 
 |ECG compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[PIC32MZ1024ECG064](http://microchip.com/wwwproducts/en/PIC32MZ1024ECG064)|1024 kb|512 kb| 64|
-|[PIC32MZ2048ECG064](http://microchip.com/wwwproducts/en/PIC32MZ2048ECG064)|2048 kb|512 kb| 64|
-|[PIC32MZ1024ECG100](http://microchip.com/wwwproducts/en/PIC32MZ1024ECG100)|1024 kb|512 kb|100|
-|[PIC32MZ2048ECG100](http://microchip.com/wwwproducts/en/PIC32MZ2048ECG100)|2048 kb|512 kb|100|
-|[PIC32MZ1024ECG124](http://microchip.com/wwwproducts/en/PIC32MZ1024ECG124)|1024 kb|512 kb|124|
-|[PIC32MZ2048ECG124](http://microchip.com/wwwproducts/en/PIC32MZ2048ECG124)|2048 kb|512 kb|124|
-|[PIC32MZ1024ECG144](http://microchip.com/wwwproducts/en/PIC32MZ1024ECG144)|1024 kb|512 kb|144|
-|[PIC32MZ2048ECG144](http://microchip.com/wwwproducts/en/PIC32MZ2048ECG144)|2048 kb|512 kb|144|
+|[PIC32MZ1024ECG064](http://microchip.com/wwwproducts/en/PIC32MZ1024ECG064)|1049 kb| 524 kb| 64|
+|[PIC32MZ2048ECG064](http://microchip.com/wwwproducts/en/PIC32MZ2048ECG064)|2097 kb| 524 kb| 64|
+|[PIC32MZ1024ECG100](http://microchip.com/wwwproducts/en/PIC32MZ1024ECG100)|1049 kb| 524 kb|100|
+|[PIC32MZ2048ECG100](http://microchip.com/wwwproducts/en/PIC32MZ2048ECG100)|2097 kb| 524 kb|100|
+|[PIC32MZ1024ECG124](http://microchip.com/wwwproducts/en/PIC32MZ1024ECG124)|1049 kb| 524 kb|124|
+|[PIC32MZ2048ECG124](http://microchip.com/wwwproducts/en/PIC32MZ2048ECG124)|2097 kb| 524 kb|124|
+|[PIC32MZ1024ECG144](http://microchip.com/wwwproducts/en/PIC32MZ1024ECG144)|1049 kb| 524 kb|144|
+|[PIC32MZ2048ECG144](http://microchip.com/wwwproducts/en/PIC32MZ2048ECG144)|2097 kb| 524 kb|144|
 
 ### ECH devices
 
-ECG with 2 CAN devices.
+Same as ECG with 2 CAN devices.
 
 |ECH compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[PIC32MZ1024ECH064](http://microchip.com/wwwproducts/en/PIC32MZ1024ECH064)|1024 kb|512 kb| 64|
-|[PIC32MZ2048ECH064](http://microchip.com/wwwproducts/en/PIC32MZ2048ECH064)|2048 kb|512 kb| 64|
-|[PIC32MZ1024ECH100](http://microchip.com/wwwproducts/en/PIC32MZ1024ECH100)|1024 kb|512 kb|100|
-|[PIC32MZ2048ECH100](http://microchip.com/wwwproducts/en/PIC32MZ2048ECH100)|2048 kb|512 kb|100|
-|[PIC32MZ1024ECH124](http://microchip.com/wwwproducts/en/PIC32MZ1024ECH124)|1024 kb|512 kb|124|
-|[PIC32MZ2048ECH124](http://microchip.com/wwwproducts/en/PIC32MZ2048ECH124)|2048 kb|512 kb|124|
-|[PIC32MZ1024ECH144](http://microchip.com/wwwproducts/en/PIC32MZ1024ECH144)|1024 kb|512 kb|144|
-|[PIC32MZ2048ECH144](http://microchip.com/wwwproducts/en/PIC32MZ2048ECH144)|2048 kb|512 kb|144|
+|[PIC32MZ1024ECH064](http://microchip.com/wwwproducts/en/PIC32MZ1024ECH064)|1049 kb| 524 kb| 64|
+|[PIC32MZ2048ECH064](http://microchip.com/wwwproducts/en/PIC32MZ2048ECH064)|2097 kb| 524 kb| 64|
+|[PIC32MZ1024ECH100](http://microchip.com/wwwproducts/en/PIC32MZ1024ECH100)|1049 kb| 524 kb|100|
+|[PIC32MZ2048ECH100](http://microchip.com/wwwproducts/en/PIC32MZ2048ECH100)|2097 kb| 524 kb|100|
+|[PIC32MZ1024ECH124](http://microchip.com/wwwproducts/en/PIC32MZ1024ECH124)|1049 kb| 524 kb|124|
+|[PIC32MZ2048ECH124](http://microchip.com/wwwproducts/en/PIC32MZ2048ECH124)|2097 kb| 524 kb|124|
+|[PIC32MZ1024ECH144](http://microchip.com/wwwproducts/en/PIC32MZ1024ECH144)|1049 kb| 524 kb|144|
+|[PIC32MZ2048ECH144](http://microchip.com/wwwproducts/en/PIC32MZ2048ECH144)|2097 kb| 524 kb|144|
 
 ### ECM devices
 
-ECG with 2 CAN devices and hardware crypto module.
+Same as ECG with 2 CAN devices and hardware crypto module.
 
 |ECM compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[PIC32MZ1024ECM064](http://microchip.com/wwwproducts/en/PIC32MZ1024ECM064)|1024 kb|512 kb| 64|
-|[PIC32MZ2048ECM064](http://microchip.com/wwwproducts/en/PIC32MZ2048ECM064)|2048 kb|512 kb| 64|
-|[PIC32MZ1024ECM100](http://microchip.com/wwwproducts/en/PIC32MZ1024ECM100)|1024 kb|512 kb|100|
-|[PIC32MZ2048ECM100](http://microchip.com/wwwproducts/en/PIC32MZ2048ECM100)|2048 kb|512 kb|100|
-|[PIC32MZ1024ECM124](http://microchip.com/wwwproducts/en/PIC32MZ1024ECM124)|1024 kb|512 kb|124|
-|[PIC32MZ2048ECM124](http://microchip.com/wwwproducts/en/PIC32MZ2048ECM124)|2048 kb|512 kb|124|
-|[PIC32MZ1024ECM144](http://microchip.com/wwwproducts/en/PIC32MZ1024ECM144)|1024 kb|512 kb|144|
-|[PIC32MZ2048ECM144](http://microchip.com/wwwproducts/en/PIC32MZ2048ECM144)|2048 kb|512 kb|144|
+|[PIC32MZ1024ECM064](http://microchip.com/wwwproducts/en/PIC32MZ1024ECM064)|1049 kb| 524 kb| 64|
+|[PIC32MZ2048ECM064](http://microchip.com/wwwproducts/en/PIC32MZ2048ECM064)|2097 kb| 524 kb| 64|
+|[PIC32MZ1024ECM100](http://microchip.com/wwwproducts/en/PIC32MZ1024ECM100)|1049 kb| 524 kb|100|
+|[PIC32MZ2048ECM100](http://microchip.com/wwwproducts/en/PIC32MZ2048ECM100)|2097 kb| 524 kb|100|
+|[PIC32MZ1024ECM124](http://microchip.com/wwwproducts/en/PIC32MZ1024ECM124)|1049 kb| 524 kb|124|
+|[PIC32MZ2048ECM124](http://microchip.com/wwwproducts/en/PIC32MZ2048ECM124)|2097 kb| 524 kb|124|
+|[PIC32MZ1024ECM144](http://microchip.com/wwwproducts/en/PIC32MZ1024ECM144)|1049 kb| 524 kb|144|
+|[PIC32MZ2048ECM144](http://microchip.com/wwwproducts/en/PIC32MZ2048ECM144)|2097 kb| 524 kb|144|
