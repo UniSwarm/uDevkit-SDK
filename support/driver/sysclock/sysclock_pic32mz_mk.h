@@ -123,7 +123,7 @@ typedef enum {
  #define SYSCLOCK_FSYS_MIN 8000000
  #define SYSCLOCK_FSYS_MAX 200000000
 
- #define SYSCLOCK_FOSC_MAX 120000000
+ #define SYSCLOCK_FOSC_MAX 200000000
 
 #elif defined(ARCHI_pic32mk)
  // pre-diviser N

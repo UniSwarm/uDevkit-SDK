@@ -286,7 +286,7 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         merror = fin / mprediv * mmultiplier / postdiv - fpllo;
         if (merror < 0)
             merror = -merror;
-        if (merror < error)
+        if (merror < error && mmultiplier <= 128)
         {
             prediv = mprediv;
             multiplier = mmultiplier;
