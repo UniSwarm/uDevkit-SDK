@@ -227,19 +227,6 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 }
 
 /**
- * @brief Sets the system clock of the CPU, the system clock may be different of CPU
- * clock and peripherical clock
- * @param fosc desirate system frequency in Hz
- * @return 0 if ok, -1 in case of error
- */
-int sysclock_setClock(uint32_t fosc)
-{
-    //return sysclock_setClockWPLL(fosc);
-    sysclock_sysfreq = fosc;
-    return 0;
-}
-
-/**
  * @brief Internal function to set clock with PLL from XTAL or FRC
  * @param fosc desirate system frequency in Hz
  * @param src input source clock of PLL (SYSCLOCK_SRC_FRC or SYSCLOCK_SRC_POSC)
@@ -248,7 +235,11 @@ int sysclock_setClock(uint32_t fosc)
 int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 {
     uint32_t fin, fpllo;
-    uint16_t prediv, multiplier, postdiv;
+    uint16_t prediv = 1, multiplier = 1;
+    uint8_t postdiv, postdivBits;
+    uint16_t mprediv, mmultiplier;
+    int32_t merror, error;
+    uint8_t inputBit;
 
     if (sysclock_source() == SYSCLOCK_SRC_SPLL)
         return -1; // cannot change PLL when it is used
@@ -263,12 +254,12 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 #endif
     {
         fin = sysclock_sourceFreq(SYSCLOCK_SRC_FRC);
-        SPLLCONbits.PLLICLK = 1; // FRC as input
+        inputBit = 1; // FRC as input
     }
     else if (src == SYSCLOCK_SRC_POSC)
     {
         fin = sysclock_sourceFreq(SYSCLOCK_SRC_POSC);
-        SPLLCONbits.PLLICLK = 0; // POSC as input
+        inputBit = 0; // POSC as input
     }
     else
     {
@@ -277,24 +268,58 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 
     // post div
     postdiv = 32;
+    postdivBits = 0b101;
     while (fosc * postdiv > SYSCLOCK_FVCO_MAX && postdiv >= 2)
+    {
         postdiv = postdiv >> 1;
+        postdivBits--;
+    }
     if (postdiv < 2)
         return -1;
     fpllo = fosc * postdiv;
 
-    // multiplier
-    multiplier = 1;
-
-    // pre divisor
-    for (prediv = 1; prediv <= 8; prediv++)
+    // best pre divisor and multiplier computation
+    error = 0x7FFFFFFF;
+    for (mprediv = 1; mprediv <= 8; mprediv++)
     {
-        multiplier = fpllo / (fin / prediv);
+        mmultiplier = fpllo / (fin / mprediv);
+        merror = fin / mprediv * mmultiplier / postdiv - fpllo;
+        if (merror < 0)
+            merror = -merror;
+        if (merror < error)
+        {
+            prediv = mprediv;
+            multiplier = mmultiplier;
+            error = merror;
+        }
     }
 
-    sysclock_pll = 0;
+    // set prediv, post and multiplier in bits
+    disable_interrupt();
+    unlockClockConfig(); // unlock clock config (OSCCON is write protected)
+    SPLLCONbits.PLLICLK = inputBit;
+    SPLLCONbits.PLLODIV = postdivBits;
+    SPLLCONbits.PLLMULT = multiplier - 1;
+    SPLLCONbits.PLLIDIV = prediv - 1;
+    lockClockConfig();
+    enable_interrupt();
+
+    sysclock_pll = sysclock_getPLLClock();
 
     return 0;
+}
+
+/**
+ * @brief Sets the system clock of the CPU, the system clock may be different of CPU
+ * clock and peripherical clock
+ * @param fosc desirate system frequency in Hz
+ * @return 0 if ok, -1 in case of error
+ */
+int sysclock_setClock(uint32_t fosc)
+{
+    return sysclock_setPLLClock(fosc, SYSCLOCK_SRC_POSC);
+    /*sysclock_sysfreq = fosc;
+    return 0;*/
 }
 
 uint32_t sysclock_getPLLClock()
@@ -303,13 +328,9 @@ uint32_t sysclock_getPLLClock()
     uint16_t prediv, multiplier, postdiv;
 
     if (SPLLCONbits.PLLICLK == 1) // FRC as input
-    {
         fin = sysclock_sourceFreq(SYSCLOCK_SRC_FRC);
-    }
     else
-    {
         fin = sysclock_sourceFreq(SYSCLOCK_SRC_POSC);
-    }
     
     prediv = SPLLCONbits.PLLIDIV + 1;
     multiplier = SPLLCONbits.PLLMULT + 1;
