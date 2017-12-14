@@ -41,6 +41,18 @@ int board_init_io()
 
         U6RXR = 0b1101;        // RX6 ==> RPA15
         RPA4R = 0b01011;       // TX6 ==> RPA4
+
+        C1RXR = 0b1000;        // CAN1RX ==> RE14
+        RPE0R = 0b01100;       // CAN1TX ==> RE0
+
+        C2RXR = 0b1100;        // CAN2RX ==> RE1
+        RPE15R = 0b01100;      // CAN2TX ==> RE15
+
+        C3RXR = 0b1010;        // CAN3RX ==> RG6
+        RPC15R = 0b01100;      // CAN3TX ==> RC15
+
+        C4RXR = 0b0110;        // CAN4RX ==> RC2
+        RPB1R = 0b01100;       // CAN4TX ==> RB1
     lockIoConfig();
 #endif
 
