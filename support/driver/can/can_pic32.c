@@ -27,8 +27,7 @@ typedef struct {
         struct {
             unsigned used : 1;
             unsigned enabled : 1;
-            unsigned eid : 1;
-            unsigned : 5;
+            unsigned : 6;
         };
         uint8_t val;
     };
@@ -36,8 +35,7 @@ typedef struct {
 
 struct can_dev
 {
-    uint8_t mode;
-    CAN_VERSION canVersion;
+    CAN_MODE mode;
     uint32_t bitRate;
     uint8_t propagSeg;
     uint8_t s1Seg;
@@ -71,8 +69,8 @@ struct can_dev cans[] = {
 };
 
 /**
- * @brief Gives a free can device number and open it
- * @return can device number
+ * @brief Gives a free CAN bus number and open it
+ * @return CAN bus number
  */
 rt_dev_t can_getFreeDevice()
 {
@@ -97,8 +95,8 @@ rt_dev_t can_getFreeDevice()
 }
 
 /**
- * @brief Open an can from his can rt_dev_t
- * @param can can rt_dev_t id
+ * @brief Opens a CAN bus
+ * @param can CAN bus id
  * @return 0 if ok, -1 in case of error
  */
 int can_open(rt_dev_t device)
@@ -119,8 +117,8 @@ int can_open(rt_dev_t device)
 }
 
 /**
- * @brief Close and release an can
- * @param device can device number
+ * @brief Closes and release a CAN bus
+ * @param device CAN bus number
  * @return 0 if ok, -1 in case of error
  */
 int can_closeDevice(rt_dev_t device)
@@ -140,8 +138,8 @@ int can_closeDevice(rt_dev_t device)
 }
 
 /**
- * @brief Enable the specified can device
- * @param device can device number
+ * @brief Enables the specified CAN bus
+ * @param device CAN bus number
  * @return 0 if ok, -1 in case of error
  */
 int can_enable(rt_dev_t device)
@@ -168,8 +166,8 @@ int can_enable(rt_dev_t device)
 }
 
 /**
- * @brief Disable the specified can device
- * @param device can device number
+ * @brief Disables the specified CAN bus
+ * @param device CAN bus number
  * @return 0 if ok, -1 in case of error
  */
 int can_disable(rt_dev_t device)
@@ -184,12 +182,36 @@ int can_disable(rt_dev_t device)
     {
     case 0:
         _CAN1IE = 0;       // disable can global interrupt
+        C1CONbits.REQOP = 4;
+        while(C1CONbits.OPMOD != 4);
         C1CONbits.ON = 0;  // disable can
+        while(C1CONbits.CANBUSY == 1);
         break;
 #if CAN_COUNT>=2
     case 1:
         _CAN2IE = 0;       // disable can global interrupt
+        C2CONbits.REQOP = 4;
+        while(C2CONbits.OPMOD != 4);
         C2CONbits.ON = 0;  // disable can
+        while(C2CONbits.CANBUSY == 1);
+        break;
+#endif
+#if CAN_COUNT>=3
+    case 2:
+        _CAN3IE = 0;       // disable can global interrupt
+        C3CONbits.REQOP = 4;
+        while(C3CONbits.OPMOD != 4);
+        C3CONbits.ON = 0;  // disable can
+        while(C3CONbits.CANBUSY == 1);
+        break;
+#endif
+#if CAN_COUNT>=4
+    case 3:
+        _CAN4IE = 0;       // disable can global interrupt
+        C4CONbits.REQOP = 4;
+        while(C4CONbits.OPMOD != 4);
+        C4CONbits.ON = 0;  // disable can
+        while(C4CONbits.CANBUSY == 1);
         break;
 #endif
     }
@@ -198,31 +220,116 @@ int can_disable(rt_dev_t device)
 }
 
 /**
- * @brief Sets configuration (can version and mode) of the specified can device
- * @param device can device number
+ * @brief Sets configuration (can version and mode) of the specified CAN bus
+ * @param device CAN bus number
  * @param mode CAN mode of operation
- * @param canVersion version of CAN bus
  * @return 0 if ok, -1 in case of error
  */
-int can_setConfig(rt_dev_t device, uint8_t mode, CAN_VERSION canVersion)
+int can_setConfig(rt_dev_t device, CAN_MODE mode)
 {
-    uint8_t enabled = 0;
+    uint8_t can = MINOR(device);
+    uint8_t modeBits;
+    if (can >= CAN_COUNT)
+        return 0;
 
     // check parameters
+    switch (mode)
+    {
+    case CAN_MODE_NORMAL:
+        modeBits = 0b000;
+        break;
+    case CAN_MODE_LISTENONLY:
+        modeBits = 0b011;
+        break;
+    case CAN_MODE_LISTENALL:
+        modeBits = 0b111;
+        break;
+    case CAN_MODE_LOOPBACK:
+        modeBits = 0b010;
+        break;
+    case CAN_MODE_DISABLED:
+        modeBits = 0b001;
+        break;
+    case CAN_MODE_CONFIGURATION:
+        modeBits = 0b100;
+        break;
+    default:
+        return -1;
+    }
+    cans[can].mode = mode;
 
-    // disable can if it was already enabled
-    // TODO
-
-    // baud rate computation
-
-    if (enabled == 1)
-        can_enable(device);
+    switch (can)
+    {
+    case 0:
+        C1CONbits.ON = 1;
+        C1CONbits.REQOP = modeBits;
+        while (C1CONbits.OPMOD != modeBits);
+        break;
+#if CAN_COUNT>=2
+    case 1:
+        C2CONbits.ON = 1;
+        C2CONbits.REQOP = modeBits;
+        while (C2CONbits.OPMOD != modeBits);
+        break;
+#endif
+#if CAN_COUNT>=3
+    case 2:
+        C3CONbits.ON = 1;
+        C3CONbits.REQOP = modeBits;
+        while (C3CONbits.OPMOD != modeBits);
+        break;
+#endif
+#if CAN_COUNT>=4
+    case 3:
+        C4CONbits.ON = 1;
+        C4CONbits.REQOP = modeBits;
+        while (C4CONbits.OPMOD != modeBits);
+        break;
+#endif
+    }
 
     return 0;
 }
-uint8_t can_mode(rt_dev_t device);
-uint8_t can_canVersion(rt_dev_t device);
 
+/**
+ * @brief Returns the current bus mode of operation
+ * @param device CAN device number
+ * @return current mode of operation
+ */
+CAN_MODE can_mode(rt_dev_t device)
+{
+#if CAN_COUNT>=1
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+        return 0;
+
+    return cans[can].mode;
+#else
+    return 0;
+#endif
+}
+
+/**
+ * @brief Sets bit rate and segments timing
+ *
+ * Sum of all segments (propagSeg, s1Seg, s2Seg) + 1 must be contained in
+ * the range of 8 to 25 quantums.
+ *
+ * CAN Bit Timing (8-25 Tq) segments computation
+ *
+ * | Sync | Propag seg | Phase seg 1 | Phase seg 2 |
+ *
+ * | 1 Tq |   1-8 Tq   |   1-8 Tq    |   1-8 Tq    |
+ *
+ *                              sample point
+ *
+ * @param device CAN device number
+ * @param bitRate bit rate speed in bit/s
+ * @param propagSeg propagation segment duration in number of quantum (1-8)
+ * @param s1Seg segment 1 duration in number of quantum (1-8)
+ * @param s2Seg segment 2 duration in number of quantum (1-8)
+ * @return 0 if ok, -1 in case of error
+ */
 int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8_t s1Seg, uint8_t s2Seg)
 {
     uint8_t can = MINOR(device);
@@ -237,10 +344,6 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     if (quantum < 8 || quantum > 25)
         return -1;
 
-    // CAN Bit Timing (8-25 Tq) segments computation
-    // | Sync | Propag seg | Phase seg 1 | Phase seg 2 |
-    // | 1 Tq |   1-8 Tq   |   1-8 Tq    |   1-8 Tq    |
-    //                              sample point
     cans[can].bitRate = bitRate;
     cans[can].propagSeg = propagSeg;
     cans[can].s1Seg = s1Seg;
@@ -251,52 +354,56 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     switch (can)
     {
     case 0:
+        C1CONbits.ON = 1;
         C1CONbits.REQOP = 4;
         while (C1CONbits.OPMOD != 4);
 
-        C1CFGbits.SJW    = 1;          // Synchronization Jump Width (1-4)
+        C1CFGbits.SJW    = 0;          // Synchronization Jump Width (1-4)
         C1CFGbits.PRSEG  = propagSeg;  // Propagation Time Segment (1-8)
-        C1CFGbits.SEG1PH = s1Seg;      // Phase Buffer Segment 1 (1-8)
+        C1CFGbits.SEG1PH = s1Seg - 1;  // Phase Buffer Segment 1 (1-8)
         C1CFGbits.SEG2PHTS = 1;        // Phase Buffer Segment 2 is freely programmable
-        C1CFGbits.SEG2PH = s2Seg;      // Phase Buffer Segment 2 (1-8) SEG2PH ≤ SEG1PH
+        C1CFGbits.SEG2PH = s2Seg - 1;  // Phase Buffer Segment 2 (1-8) SEG2PH ≤ SEG1PH
         C1CFGbits.BRP    = bitRateDiv; // bit rate divisor (1-64) * 2
         break;
 #if CAN_COUNT>=2
     case 1:
+        C2CONbits.ON = 1;
         C2CONbits.REQOP = 4;
         while (C2CONbits.OPMOD != 4);
 
-        C2CFGbits.SJW    = 1;          // Synchronization Jump Width (1-4)
+        C2CFGbits.SJW    = 0;          // Synchronization Jump Width (1-4)
         C2CFGbits.PRSEG  = propagSeg;  // Propagation Time Segment (1-8)
-        C2CFGbits.SEG1PH = s1Seg;      // Phase Buffer Segment 1 (1-8)
+        C2CFGbits.SEG1PH = s1Seg - 1;  // Phase Buffer Segment 1 (1-8)
         C2CFGbits.SEG2PHTS = 1;        // Phase Buffer Segment 2 is freely programmable
-        C2CFGbits.SEG2PH = s2Seg;      // Phase Buffer Segment 2 (1-8) SEG2PH ≤ SEG1PH
+        C2CFGbits.SEG2PH = s2Seg - 1;  // Phase Buffer Segment 2 (1-8) SEG2PH ≤ SEG1PH
         C2CFGbits.BRP    = bitRateDiv; // bit rate divisor (1-64) * 2
         break;
 #endif
 #if CAN_COUNT>=3
     case 2:
+        C3CONbits.ON = 1;
         C3CONbits.REQOP = 4;
         while (C3CONbits.OPMOD != 4);
 
-        C3CFGbits.SJW    = 1;          // Synchronization Jump Width (1-4)
+        C3CFGbits.SJW    = 0;          // Synchronization Jump Width (1-4)
         C3CFGbits.PRSEG  = propagSeg;  // Propagation Time Segment (1-8)
-        C3CFGbits.SEG1PH = s1Seg;      // Phase Buffer Segment 1 (1-8)
+        C3CFGbits.SEG1PH = s1Seg - 1;  // Phase Buffer Segment 1 (1-8)
         C3CFGbits.SEG2PHTS = 1;        // Phase Buffer Segment 2 is freely programmable
-        C3CFGbits.SEG2PH = s2Seg;      // Phase Buffer Segment 2 (1-8) SEG2PH ≤ SEG1PH
+        C3CFGbits.SEG2PH = s2Seg - 1;  // Phase Buffer Segment 2 (1-8) SEG2PH ≤ SEG1PH
         C3CFGbits.BRP    = bitRateDiv; // bit rate divisor (1-64) * 2
         break;
 #endif
 #if CAN_COUNT>=4
     case 3:
+        C4CONbits.ON = 1;
         C4CONbits.REQOP = 4;
         while (C4CONbits.OPMOD != 4);
 
-        C4CFGbits.SJW    = 1;          // Synchronization Jump Width (1-4)
+        C4CFGbits.SJW    = 0;          // Synchronization Jump Width (1-4)
         C4CFGbits.PRSEG  = propagSeg;  // Propagation Time Segment (1-8)
-        C4CFGbits.SEG1PH = s1Seg;      // Phase Buffer Segment 1 (1-8)
+        C4CFGbits.SEG1PH = s1Seg - 1;  // Phase Buffer Segment 1 (1-8)
         C4CFGbits.SEG2PHTS = 1;        // Phase Buffer Segment 2 is freely programmable
-        C4CFGbits.SEG2PH = s2Seg;      // Phase Buffer Segment 2 (1-8) SEG2PH ≤ SEG1PH
+        C4CFGbits.SEG2PH = s2Seg - 1;  // Phase Buffer Segment 2 (1-8) SEG2PH ≤ SEG1PH
         C4CFGbits.BRP    = bitRateDiv; // bit rate divisor (1-64) * 2
         break;
 #endif
@@ -342,6 +449,11 @@ uint32_t can_effectiveBitRate(rt_dev_t device)
     return baudSpeed;
 }
 
+/**
+ * @brief Gets propagation segment duration in quantums
+ * @param device CAN device number
+ * @return propagation segment duration in quantums, 0 in case of error
+ */
 uint8_t can_propagSeg(rt_dev_t device)
 {
 #if CAN_COUNT>=1
@@ -355,6 +467,11 @@ uint8_t can_propagSeg(rt_dev_t device)
 #endif
 }
 
+/**
+ * @brief Gets segment 1 duration in quantums
+ * @param device CAN device number
+ * @return segment 1 duration in quantums, 0 in case of error
+ */
 uint8_t can_s1Seg(rt_dev_t device)
 {
 #if CAN_COUNT>=1
@@ -368,6 +485,11 @@ uint8_t can_s1Seg(rt_dev_t device)
 #endif
 }
 
+/**
+ * @brief Gets segment 2 duration in quantums
+ * @param device CAN device number
+ * @return segment 2 duration in quantums, 0 in case of error
+ */
 uint8_t can_s2Seg(rt_dev_t device)
 {
 #if CAN_COUNT>=1

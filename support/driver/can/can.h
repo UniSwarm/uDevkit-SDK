@@ -25,15 +25,15 @@ int can_disable(rt_dev_t device);
 
 // ======== bus settings =======
 typedef enum {
-    CAN_VERSION_1 = 0x0,        ///< CAN version 1 with standard 11 bits identifier
-    CAN_VERSION_2A,             ///< CAN version 2A, extended identifier are error
-    CAN_VERSION_2B_PASSIVE,     ///< CAN version 2B, extended ignored
-    CAN_VERSION_2B_ACTIVE       ///< CAN version 2B, work with extended 29 bits
-                                /// identifier and standard 11 bits identifier
-} CAN_VERSION;
-int can_setConfig(rt_dev_t device, uint8_t mode, CAN_VERSION canVersion);
-uint8_t can_mode(rt_dev_t device);
-uint8_t can_canVersion(rt_dev_t device);
+    CAN_MODE_NORMAL = 0x0,      ///< CAN normal mode of operation
+    CAN_MODE_LISTENONLY,        ///< CAN only listen mode
+    CAN_MODE_LISTENALL,         ///< CAN listen all without take care of adresses
+    CAN_MODE_LOOPBACK,          ///< CAN loopback mode for test purpose and self diagnostics
+    CAN_MODE_DISABLED,          ///< CAN disabled
+    CAN_MODE_CONFIGURATION      ///< CAN disabled
+} CAN_MODE;
+int can_setConfig(rt_dev_t device, CAN_MODE mode);
+CAN_MODE can_mode(rt_dev_t device);
 
 int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8_t s1Seg, uint8_t s2Seg);
 uint32_t can_bitRate(rt_dev_t device);
@@ -43,6 +43,13 @@ uint8_t can_s1Seg(rt_dev_t device);
 uint8_t can_s2Seg(rt_dev_t device);
 
 // ===== mailbox interface =====
+typedef enum {
+    CAN_VERSION_1 = 0x0,        ///< CAN version 1 with standard 11 bits identifier
+    CAN_VERSION_2A,             ///< CAN version 2A, extended identifier are error
+    CAN_VERSION_2B_PASSIVE,     ///< CAN version 2B, extended ignored
+    CAN_VERSION_2B_ACTIVE       ///< CAN version 2B, work with extended 29 bits
+                                /// identifier and standard 11 bits identifier
+} CAN_VERSION;
 // TODO
 
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) \
