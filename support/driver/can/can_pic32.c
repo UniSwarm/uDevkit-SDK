@@ -94,6 +94,7 @@ rt_dev_t can_getFreeDevice()
 #endif
 }
 
+unsigned int CANFIFO[32*4];
 /**
  * @brief Opens a CAN bus
  * @param can CAN bus id
@@ -109,6 +110,12 @@ int can_open(rt_dev_t device)
         return -1;
 
     cans[can].flags.used = 1;
+
+    // assign memory
+    C1FIFOBA = KVA_TO_PA(CANFIFO);
+    // fifo 0 (transmit)
+    C1FIFOCON0bits.FSIZE = 15;
+    C1FIFOCON0SET = 0x80;
 
     return 0;
 #else
@@ -225,7 +232,7 @@ int can_disable(rt_dev_t device)
  * @param mode CAN mode of operation
  * @return 0 if ok, -1 in case of error
  */
-int can_setConfig(rt_dev_t device, CAN_MODE mode)
+int can_setMode(rt_dev_t device, CAN_MODE mode)
 {
     uint8_t can = MINOR(device);
     uint8_t modeBits;
@@ -317,7 +324,7 @@ CAN_MODE can_mode(rt_dev_t device)
  *
  * CAN Bit Timing (8-25 Tq) segments computation
  *
- * | Sync | Propag seg | Phase seg 1 | Phase seg 2 |
+ * | Sync | Propag seg | Phase seg 1 |Phase seg 2 |
  *
  * | 1 Tq |   1-8 Tq   |   1-8 Tq    |   1-8 Tq    |
  *
@@ -340,6 +347,8 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
 
     if (propagSeg > 8 || s1Seg > 8 || s2Seg > 8)
         return -1;
+    if (propagSeg < 1 || s1Seg < 1 || s2Seg < 1)
+        return -1;
     quantum = propagSeg + s1Seg + s2Seg + 1;
     if (quantum < 8 || quantum > 25)
         return -1;
@@ -349,7 +358,10 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     cans[can].s1Seg = s1Seg;
     cans[can].s2Seg = s2Seg;
 
-    bitRateDiv = sysclock_periphFreq(SYSCLOCK_CLOCK_CAN) / (quantum * 2);
+    bitRateDiv = sysclock_periphFreq(SYSCLOCK_CLOCK_CAN) / (bitRate * quantum * 2);
+    if (bitRateDiv > 64)
+        bitRateDiv = 64;
+    bitRateDiv--;
 
     switch (can)
     {
@@ -358,12 +370,12 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
         C1CONbits.REQOP = 4;
         while (C1CONbits.OPMOD != 4);
 
-        C1CFGbits.SJW    = 0;          // Synchronization Jump Width (1-4)
-        C1CFGbits.PRSEG  = propagSeg;  // Propagation Time Segment (1-8)
-        C1CFGbits.SEG1PH = s1Seg - 1;  // Phase Buffer Segment 1 (1-8)
-        C1CFGbits.SEG2PHTS = 1;        // Phase Buffer Segment 2 is freely programmable
-        C1CFGbits.SEG2PH = s2Seg - 1;  // Phase Buffer Segment 2 (1-8) SEG2PH ≤ SEG1PH
-        C1CFGbits.BRP    = bitRateDiv; // bit rate divisor (1-64) * 2
+        C1CFGbits.SJW    = 0;               // Synchronization Jump Width (1-4)
+        C1CFGbits.PRSEG  = propagSeg - 1;   // Propagation Time Segment (1-8)
+        C1CFGbits.SEG1PH = s1Seg - 1;       // Phase Buffer Segment 1 (1-8)
+        C1CFGbits.SEG2PHTS = 1;             // Phase Buffer Segment 2 is freely programmable
+        C1CFGbits.SEG2PH = s2Seg - 1;       // Phase Buffer Segment 2 (1-8) SEG2PH >= SEG1PH
+        C1CFGbits.BRP    = bitRateDiv;      // bit rate divisor (1-64) * 2
         break;
 #if CAN_COUNT>=2
     case 1:
@@ -371,12 +383,12 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
         C2CONbits.REQOP = 4;
         while (C2CONbits.OPMOD != 4);
 
-        C2CFGbits.SJW    = 0;          // Synchronization Jump Width (1-4)
-        C2CFGbits.PRSEG  = propagSeg;  // Propagation Time Segment (1-8)
-        C2CFGbits.SEG1PH = s1Seg - 1;  // Phase Buffer Segment 1 (1-8)
-        C2CFGbits.SEG2PHTS = 1;        // Phase Buffer Segment 2 is freely programmable
-        C2CFGbits.SEG2PH = s2Seg - 1;  // Phase Buffer Segment 2 (1-8) SEG2PH ≤ SEG1PH
-        C2CFGbits.BRP    = bitRateDiv; // bit rate divisor (1-64) * 2
+        C2CFGbits.SJW    = 0;               // Synchronization Jump Width (1-4)
+        C2CFGbits.PRSEG  = propagSeg - 1;   // Propagation Time Segment (1-8)
+        C2CFGbits.SEG1PH = s1Seg - 1;       // Phase Buffer Segment 1 (1-8)
+        C2CFGbits.SEG2PHTS = 1;             // Phase Buffer Segment 2 is freely programmable
+        C2CFGbits.SEG2PH = s2Seg - 1;       // Phase Buffer Segment 2 (1-8) SEG2PH >= SEG1PH
+        C2CFGbits.BRP    = bitRateDiv;      // bit rate divisor (1-64) * 2
         break;
 #endif
 #if CAN_COUNT>=3
@@ -385,12 +397,12 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
         C3CONbits.REQOP = 4;
         while (C3CONbits.OPMOD != 4);
 
-        C3CFGbits.SJW    = 0;          // Synchronization Jump Width (1-4)
-        C3CFGbits.PRSEG  = propagSeg;  // Propagation Time Segment (1-8)
-        C3CFGbits.SEG1PH = s1Seg - 1;  // Phase Buffer Segment 1 (1-8)
-        C3CFGbits.SEG2PHTS = 1;        // Phase Buffer Segment 2 is freely programmable
-        C3CFGbits.SEG2PH = s2Seg - 1;  // Phase Buffer Segment 2 (1-8) SEG2PH ≤ SEG1PH
-        C3CFGbits.BRP    = bitRateDiv; // bit rate divisor (1-64) * 2
+        C3CFGbits.SJW    = 0;               // Synchronization Jump Width (1-4)
+        C3CFGbits.PRSEG  = propagSeg - 1;   // Propagation Time Segment (1-8)
+        C3CFGbits.SEG1PH = s1Seg - 1;       // Phase Buffer Segment 1 (1-8)
+        C3CFGbits.SEG2PHTS = 1;             // Phase Buffer Segment 2 is freely programmable
+        C3CFGbits.SEG2PH = s2Seg - 1;       // Phase Buffer Segment 2 (1-8) SEG2PH >= SEG1PH
+        C3CFGbits.BRP    = bitRateDiv;      // bit rate divisor (1-64) * 2
         break;
 #endif
 #if CAN_COUNT>=4
@@ -399,12 +411,12 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
         C4CONbits.REQOP = 4;
         while (C4CONbits.OPMOD != 4);
 
-        C4CFGbits.SJW    = 0;          // Synchronization Jump Width (1-4)
-        C4CFGbits.PRSEG  = propagSeg;  // Propagation Time Segment (1-8)
-        C4CFGbits.SEG1PH = s1Seg - 1;  // Phase Buffer Segment 1 (1-8)
-        C4CFGbits.SEG2PHTS = 1;        // Phase Buffer Segment 2 is freely programmable
-        C4CFGbits.SEG2PH = s2Seg - 1;  // Phase Buffer Segment 2 (1-8) SEG2PH ≤ SEG1PH
-        C4CFGbits.BRP    = bitRateDiv; // bit rate divisor (1-64) * 2
+        C4CFGbits.SJW    = 0;               // Synchronization Jump Width (1-4)
+        C4CFGbits.PRSEG  = propagSeg - 1;   // Propagation Time Segment (1-8)
+        C4CFGbits.SEG1PH = s1Seg - 1;       // Phase Buffer Segment 1 (1-8)
+        C4CFGbits.SEG2PHTS = 1;             // Phase Buffer Segment 2 is freely programmable
+        C4CFGbits.SEG2PH = s2Seg - 1;       // Phase Buffer Segment 2 (1-8) SEG2PH >= SEG1PH
+        C4CFGbits.BRP    = bitRateDiv;      // bit rate divisor (1-64) * 2
         break;
 #endif
     }
@@ -501,4 +513,41 @@ uint8_t can_s2Seg(rt_dev_t device)
 #else
     return 0;
 #endif
+}
+
+int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t size, CAN_FLAGS flags)
+{
+    unsigned int i;
+
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+        return 0;
+
+    CAN_TxMsgBuffer *buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C1FIFOUA0));
+
+    // clear the message header
+    buffer->messageWord[0] = 0;
+    buffer->messageWord[1] = 0;
+
+    // set can id
+    if ((flags & CAN_VERS2BA) == CAN_VERS2BA)
+    {
+        buffer->msgEID.IDE = 1;    // extended id
+        buffer->msgEID.EID = id;   // Message EID
+    }
+    buffer->msgSID.SID = id >> 18; // Message EID
+
+    if (flags & CAN_RTR)
+        buffer->msgEID.RTR = 1;
+
+    // set data and data size
+    if (size > 8)
+        size = 8;
+    buffer->msgEID.DLC = size; // Data Length
+    for (i=0; i<size; i++)
+        buffer->data[i] = data[i];
+
+    C1FIFOCON0SET = 0x2008; // Set the UINC and TXREQ bit
+
+    return 0;
 }

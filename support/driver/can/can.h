@@ -24,7 +24,8 @@ int can_enable(rt_dev_t device);
 int can_disable(rt_dev_t device);
 
 // ======== bus settings =======
-typedef enum {
+typedef enum
+{
     CAN_MODE_NORMAL = 0x0,      ///< CAN normal mode of operation
     CAN_MODE_LISTENONLY,        ///< CAN only listen mode
     CAN_MODE_LISTENALL,         ///< CAN listen all without take care of adresses
@@ -32,7 +33,7 @@ typedef enum {
     CAN_MODE_DISABLED,          ///< CAN disabled
     CAN_MODE_CONFIGURATION      ///< CAN disabled
 } CAN_MODE;
-int can_setConfig(rt_dev_t device, CAN_MODE mode);
+int can_setMode(rt_dev_t device, CAN_MODE mode);
 CAN_MODE can_mode(rt_dev_t device);
 
 int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8_t s1Seg, uint8_t s2Seg);
@@ -43,14 +44,17 @@ uint8_t can_s1Seg(rt_dev_t device);
 uint8_t can_s2Seg(rt_dev_t device);
 
 // ===== mailbox interface =====
-typedef enum {
-    CAN_VERSION_1 = 0x0,        ///< CAN version 1 with standard 11 bits identifier
-    CAN_VERSION_2A,             ///< CAN version 2A, extended identifier are error
-    CAN_VERSION_2B_PASSIVE,     ///< CAN version 2B, extended ignored
-    CAN_VERSION_2B_ACTIVE       ///< CAN version 2B, work with extended 29 bits
-                                /// identifier and standard 11 bits identifier
-} CAN_VERSION;
+typedef enum
+{
+    CAN_VERS1    = 0x00,     ///< CAN version 1 with standard 11 bits identifier
+    CAN_VERS2A   = 0x01,     ///< CAN version 2A, extended identifier are error
+    CAN_VERS2BP  = 0x02,     ///< CAN version 2B pasive, extended ignored
+    CAN_VERS2BA  = 0x03,     ///< CAN version 2B active, work with extended 29 bits
+                             /// identifier and standard 11 bits identifier
+    CAN_RTR      = 0x04      ///< Remote transmit request
+} CAN_FLAGS;
 // TODO
+int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t size, CAN_FLAGS flags);
 
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) \
  || defined(ARCHI_pic24hj) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) \
