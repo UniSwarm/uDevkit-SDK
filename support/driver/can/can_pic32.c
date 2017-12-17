@@ -43,6 +43,17 @@ struct can_dev
     can_status flags;
 };
 
+unsigned int CAN1FIFO[32*4];
+#if CAN_COUNT>=2
+unsigned int CAN2FIFO[32*4];
+#endif
+#if CAN_COUNT>=3
+unsigned int CAN3FIFO[32*4];
+#endif
+#if CAN_COUNT>=4
+unsigned int CAN4FIFO[32*4];
+#endif
+
 struct can_dev cans[] = {
     {
         .bitRate = 0,
@@ -94,7 +105,6 @@ rt_dev_t can_getFreeDevice()
 #endif
 }
 
-unsigned int CANFIFO[32*4];
 /**
  * @brief Opens a CAN bus
  * @param can CAN bus id
@@ -110,12 +120,6 @@ int can_open(rt_dev_t device)
         return -1;
 
     cans[can].flags.used = 1;
-
-    // assign memory
-    C1FIFOBA = KVA_TO_PA(CANFIFO);
-    // fifo 0 (transmit)
-    C1FIFOCON0bits.FSIZE = 15;
-    C1FIFOCON0SET = 0x80;
 
     return 0;
 #else
@@ -160,11 +164,37 @@ int can_enable(rt_dev_t device)
     switch (can)
     {
     case 0:
-        // TODO
+        // assign memory
+        C1FIFOBA = KVA_TO_PA(CAN1FIFO);
+        // fifo 0 (transmit)
+        C1FIFOCON0bits.FSIZE = 15;
+        C1FIFOCON0SET = 0x80;
         break;
 #if CAN_COUNT>=2
     case 1:
-        // TODO
+        // assign memory
+        C2FIFOBA = KVA_TO_PA(CAN2FIFO);
+        // fifo 0 (transmit)
+        C2FIFOCON0bits.FSIZE = 15;
+        C2FIFOCON0SET = 0x80;
+        break;
+#endif
+#if CAN_COUNT>=3
+    case 2:
+        // assign memory
+        C3FIFOBA = KVA_TO_PA(CAN3FIFO);
+        // fifo 0 (transmit)
+        C3FIFOCON0bits.FSIZE = 15;
+        C3FIFOCON0SET = 0x80;
+        break;
+#endif
+#if CAN_COUNT>=4
+    case 3:
+        // assign memory
+        C4FIFOBA = KVA_TO_PA(CAN4FIFO);
+        // fifo 0 (transmit)
+        C4FIFOCON0bits.FSIZE = 15;
+        C4FIFOCON0SET = 0x80;
         break;
 #endif
     }
@@ -523,7 +553,37 @@ int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t siz
     if (can >= CAN_COUNT)
         return 0;
 
-    CAN_TxMsgBuffer *buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C1FIFOUA0));
+    CAN_TxMsgBuffer *buffer;
+
+    switch (can)
+    {
+    case 0:
+        if (C1FIFOINT0bits.TXNFULLIF == 1)
+            return -1;
+        buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C1FIFOUA0));
+        break;
+#if CAN_COUNT>=2
+    case 1:
+        if (C2FIFOINT0bits.TXNFULLIF == 1)
+            return -1;
+        buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C2FIFOUA0));
+        break;
+#endif
+#if CAN_COUNT>=3
+    case 2:
+        if (C3FIFOINT0bits.TXNFULLIF == 1)
+            return -1;
+        buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C3FIFOUA0));
+        break;
+#endif
+#if CAN_COUNT>=4
+    case 3:
+        if (C4FIFOINT0bits.TXNFULLIF == 1)
+            return -1;
+        buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C4FIFOUA0));
+        break;
+#endif
+    }
 
     // clear the message header
     buffer->messageWord[0] = 0;
@@ -547,7 +607,27 @@ int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t siz
     for (i=0; i<size; i++)
         buffer->data[i] = data[i];
 
-    C1FIFOCON0SET = 0x2008; // Set the UINC and TXREQ bit
+    switch (can)
+    {
+    case 0:
+        C1FIFOCON0SET = 0x2008; // Set the UINC and TXREQ bit
+        break;
+#if CAN_COUNT>=2
+    case 1:
+        C2FIFOCON0SET = 0x2008; // Set the UINC and TXREQ bit
+        break;
+#endif
+#if CAN_COUNT>=3
+    case 2:
+        C3FIFOCON0SET = 0x2008; // Set the UINC and TXREQ bit
+        break;
+#endif
+#if CAN_COUNT>=4
+    case 3:
+        C4FIFOCON0SET = 0x2008; // Set the UINC and TXREQ bit
+        break;
+#endif
+    }
 
     return 0;
 }
