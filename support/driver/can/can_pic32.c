@@ -169,6 +169,20 @@ int can_enable(rt_dev_t device)
         // fifo 0 (transmit)
         C1FIFOCON0bits.FSIZE = 15;
         C1FIFOCON0SET = 0x80;
+        // fifo 1 (receive)
+        C1FIFOCON1bits.FSIZE = 15;
+        C1FIFOCON1CLR = 0x80;
+        // filter 1
+        C1FLTCON0bits.FSEL1 = 1;        // Store messages in FIFO1
+        C1FLTCON0bits.MSEL1 = 1;        // Use Mask 1
+        C1RXF1bits.SID = 0x000;         // Filter 1 EID
+        C1RXF1bits.EID = 0x00000;       // Filter 1 SID
+        C1RXF1bits.EXID = 1;            // Filter only EID messages
+        C1FLTCON0bits.FLTEN1 = 1;       // Enable the filter
+        // mask 1
+        C1RXM1bits.SID = 0x000;         // Ignore all bits in comparison
+        C1RXM1bits.EID = 0x00000;       // Ignore all bits in comparison
+        C1RXM1bits.MIDE = 1;            // Match only message types.
         break;
 #if CAN_COUNT>=2
     case 1:
@@ -177,6 +191,20 @@ int can_enable(rt_dev_t device)
         // fifo 0 (transmit)
         C2FIFOCON0bits.FSIZE = 15;
         C2FIFOCON0SET = 0x80;
+        // fifo 1 (receive)
+        C2FIFOCON1bits.FSIZE = 15;
+        C2FIFOCON1CLR = 0x80;
+        // filter 1
+        C2FLTCON0bits.FSEL1 = 1;        // Store messages in FIFO1
+        C2FLTCON0bits.MSEL1 = 1;        // Use Mask 1
+        C2RXF1bits.SID = 0x000;         // Filter 1 EID
+        C2RXF1bits.EID = 0x00000;       // Filter 1 SID
+        C2RXF1bits.EXID = 1;            // Filter only EID messages
+        C2FLTCON0bits.FLTEN1 = 1;       // Enable the filter
+        // mask 1
+        C2RXM1bits.SID = 0x000;         // Ignore all bits in comparison
+        C2RXM1bits.EID = 0x00000;       // Ignore all bits in comparison
+        C2RXM1bits.MIDE = 1;            // Match only message types.
         break;
 #endif
 #if CAN_COUNT>=3
@@ -186,6 +214,20 @@ int can_enable(rt_dev_t device)
         // fifo 0 (transmit)
         C3FIFOCON0bits.FSIZE = 15;
         C3FIFOCON0SET = 0x80;
+        // fifo 1 (receive)
+        C3FIFOCON1bits.FSIZE = 15;
+        C3FIFOCON1CLR = 0x80;
+        // filter 1
+        C3FLTCON0bits.FSEL1 = 1;        // Store messages in FIFO1
+        C3FLTCON0bits.MSEL1 = 1;        // Use Mask 1
+        C3RXF1bits.SID = 0x000;         // Filter 1 EID
+        C3RXF1bits.EID = 0x00000;       // Filter 1 SID
+        C3RXF1bits.EXID = 1;            // Filter only EID messages
+        C3FLTCON0bits.FLTEN1 = 1;       // Enable the filter
+        // mask 1
+        C3RXM1bits.SID = 0x000;         // Ignore all bits in comparison
+        C3RXM1bits.EID = 0x00000;       // Ignore all bits in comparison
+        C3RXM1bits.MIDE = 1;            // Match only message types.
         break;
 #endif
 #if CAN_COUNT>=4
@@ -195,6 +237,20 @@ int can_enable(rt_dev_t device)
         // fifo 0 (transmit)
         C4FIFOCON0bits.FSIZE = 15;
         C4FIFOCON0SET = 0x80;
+        // fifo 1 (receive)
+        C4FIFOCON1bits.FSIZE = 15;
+        C4FIFOCON1CLR = 0x80;
+        // filter 1
+        C4FLTCON0bits.FSEL1 = 1;        // Store messages in FIFO1
+        C4FLTCON0bits.MSEL1 = 1;        // Use Mask 1
+        C4RXF1bits.SID = 0x000;         // Filter 1 EID
+        C4RXF1bits.EID = 0x00000;       // Filter 1 SID
+        C4RXF1bits.EXID = 1;            // Filter only EID messages
+        C4FLTCON0bits.FLTEN1 = 1;       // Enable the filter
+        // mask 1
+        C4RXM1bits.SID = 0x000;         // Ignore all bits in comparison
+        C4RXM1bits.EID = 0x00000;       // Ignore all bits in comparison
+        C4RXM1bits.MIDE = 1;            // Match only message types.
         break;
 #endif
     }
@@ -553,7 +609,7 @@ int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t siz
     if (can >= CAN_COUNT)
         return 0;
 
-    CAN_TxMsgBuffer *buffer;
+    CAN_TxMsgBuffer *buffer = NULL;
 
     switch (can)
     {
@@ -630,4 +686,90 @@ int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t siz
     }
 
     return 0;
+}
+
+int can_rec(rt_dev_t device, uint8_t fifo, uint32_t *id, char *data, uint8_t *size, CAN_FLAGS *flags)
+{
+    int i;
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+        return 0;
+
+    CAN_FLAGS flagValue = 0;
+    CAN_RxMsgBuffer *buffer = NULL;
+
+    switch (can)
+    {
+    case 0:
+        if (C1FIFOINT1bits.RXNEMPTYIF != 1)
+            return 0;
+        buffer = PA_TO_KVA1(C1FIFOUA1);
+        break;
+#if CAN_COUNT>=2
+    case 1:
+        if (C2FIFOINT1bits.RXNEMPTYIF != 1)
+            return 0;
+        buffer = PA_TO_KVA1(C2FIFOUA1);
+        break;
+#endif
+#if CAN_COUNT>=3
+    case 2:
+        if (C3FIFOINT1bits.RXNEMPTYIF != 1)
+            return 0;
+        buffer = PA_TO_KVA1(C3FIFOUA1);
+        break;
+#endif
+#if CAN_COUNT>=4
+    case 3:
+        if (C4FIFOINT1bits.RXNEMPTYIF != 1)
+            return 0;
+        buffer = PA_TO_KVA1(C4FIFOUA1);
+        break;
+#endif
+    }
+
+    // ID
+    if (buffer->msgEID.IDE == 1)
+    {
+        flagValue = flagValue + CAN_VERS2BA; // extended ID
+        *id = buffer->msgEID.EID + (buffer->msgSID.SID << 18);
+    }
+    else
+    {
+        *id = buffer->msgSID.SID;
+    }
+
+    // data read and copy
+    for (i=0; i<buffer->msgEID.DLC; i++)
+		data[i] = buffer->data[i];
+    *size = buffer->msgEID.DLC;
+
+
+    switch (can)
+    {
+    case 0:
+        C1FIFOCON1SET = 0x2000; // mark as read
+        break;
+#if CAN_COUNT>=2
+    case 1:
+        C2FIFOCON1SET = 0x2000; // mark as read
+        break;
+#endif
+#if CAN_COUNT>=3
+    case 2:
+        C3FIFOCON1SET = 0x2000; // mark as read
+        break;
+#endif
+#if CAN_COUNT>=4
+    case 3:
+        C4FIFOCON1SET = 0x2000; // mark as read
+        break;
+#endif
+    }
+
+    // flags
+    if (flags != NULL)
+        *flags = flagValue;
+
+    return 1;
 }

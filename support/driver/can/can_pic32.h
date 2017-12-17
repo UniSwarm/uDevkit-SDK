@@ -145,4 +145,23 @@ typedef union
     uint32_t messageWord[4];   ///< CAN TX message organized as a set of 32 bit words
 } CAN_TxMsgBuffer;
 
+// ==== Receive buffer memory (dedicated to PIC32) =====
+typedef struct
+{
+    unsigned SID:11;    ///< CAN TX Message Standard ID. This value should be between 0x0 - 0x7FF
+    unsigned FILHIT:5;  ///< Filter which accepted this message
+    unsigned CMSGTS:16; ///< Time stamp of the received message. This is valid only if the Timestamping is enabled
+} CAN_RXMSG_SID;
+
+typedef union
+{
+    struct
+    {
+        CAN_RXMSG_SID msgSID;  ///< SID portion
+        CAN_MSGEID msgEID;     ///< EID portion
+        char data[8];          ///< data portion
+    };
+    uint32_t messageWord[4];   ///< CAN TX message organized as a set of 32 bit words
+} CAN_RxMsgBuffer;
+
 #endif // CAN_PIC32_H

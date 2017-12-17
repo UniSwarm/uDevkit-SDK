@@ -55,13 +55,14 @@ typedef enum
 } CAN_FLAGS;
 // TODO
 int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t size, CAN_FLAGS flags);
+int can_rec(rt_dev_t device, uint8_t fifo, uint32_t *id, char *data, uint8_t *size, CAN_FLAGS *flags);
 
-#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) \
+#if defined(ARCHI_dspic30f)
+ #include "can_dspic30f.h"
+#elif defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) \
  || defined(ARCHI_pic24hj) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) \
  || defined(ARCHI_dspic33ev)
  #include "can_pic24_dspic33.h"
-#elif defined(ARCHI_dspic30f)
- #include "can_dspic30f.h"
 #elif defined(ARCHI_pic32mx) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mzec) \
  || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
  #include "can_pic32.h"
