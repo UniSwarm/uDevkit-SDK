@@ -43,7 +43,9 @@ struct can_dev
     can_status flags;
 };
 
+#if CAN_COUNT>=1
 unsigned int CAN1FIFO[32*4];
+#endif
 #if CAN_COUNT>=2
 unsigned int CAN2FIFO[32*4];
 #endif
@@ -55,10 +57,12 @@ unsigned int CAN4FIFO[32*4];
 #endif
 
 struct can_dev cans[] = {
+#if CAN_COUNT>=1
     {
         .bitRate = 0,
         .flags = {{.val = CAN_FLAG_UNUSED}}
     },
+#endif
 #if CAN_COUNT>=2
     {
         .bitRate = 0,
@@ -155,6 +159,7 @@ int can_closeDevice(rt_dev_t device)
  */
 int can_enable(rt_dev_t device)
 {
+#if CAN_COUNT>=1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
@@ -256,6 +261,9 @@ int can_enable(rt_dev_t device)
     }
 
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -265,6 +273,7 @@ int can_enable(rt_dev_t device)
  */
 int can_disable(rt_dev_t device)
 {
+#if CAN_COUNT>=1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
@@ -310,6 +319,9 @@ int can_disable(rt_dev_t device)
     }
 
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -320,6 +332,7 @@ int can_disable(rt_dev_t device)
  */
 int can_setMode(rt_dev_t device, CAN_MODE mode)
 {
+#if CAN_COUNT>=1
     uint8_t can = MINOR(device);
     uint8_t modeBits;
     if (can >= CAN_COUNT)
@@ -382,6 +395,9 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
     }
 
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -425,6 +441,7 @@ CAN_MODE can_mode(rt_dev_t device)
  */
 int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8_t s1Seg, uint8_t s2Seg)
 {
+#if CAN_COUNT>=1
     uint8_t can = MINOR(device);
     uint8_t bitRateDiv;
     uint8_t quantum;
@@ -508,6 +525,9 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     }
 
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -535,16 +555,41 @@ uint32_t can_bitRate(rt_dev_t device)
  */
 uint32_t can_effectiveBitRate(rt_dev_t device)
 {
-    uint32_t baudSpeed;
-    uint16_t uBrg;
+#if CAN_COUNT>=1
 
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return 0;
 
-    // TODO
+    uint16_t bitRateDiv = 1;
+    uint8_t quantums = cans[can].propagSeg + cans[can].s1Seg + cans[can].s2Seg + 1;
 
-    return baudSpeed;
+    switch (can)
+    {
+    case 0:
+        bitRateDiv = (C1CFGbits.BRP + 1) << 1;      // bit rate divisor (1-64) * 2
+        break;
+#if CAN_COUNT>=2
+    case 1:
+        bitRateDiv = (C2CFGbits.BRP + 1) << 1;      // bit rate divisor (1-64) * 2
+        break;
+#endif
+#if CAN_COUNT>=3
+    case 2:
+        bitRateDiv = (C3CFGbits.BRP + 1) << 1;      // bit rate divisor (1-64) * 2
+        break;
+#endif
+#if CAN_COUNT>=4
+    case 3:
+        bitRateDiv = (C4CFGbits.BRP + 1) << 1;      // bit rate divisor (1-64) * 2
+        break;
+#endif
+    }
+
+    return sysclock_periphFreq(SYSCLOCK_CLOCK_CAN) / (bitRateDiv * quantums);
+#else
+    return 0;
+#endif
 }
 
 /**
@@ -603,6 +648,7 @@ uint8_t can_s2Seg(rt_dev_t device)
 
 int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t size, CAN_FLAGS flags)
 {
+#if CAN_COUNT>=1
     unsigned int i;
 
     uint8_t can = MINOR(device);
@@ -686,10 +732,14 @@ int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t siz
     }
 
     return 0;
+#else
+    return -1;
+#endif
 }
 
 int can_rec(rt_dev_t device, uint8_t fifo, uint32_t *id, char *data, uint8_t *size, CAN_FLAGS *flags)
 {
+#if CAN_COUNT>=1
     int i;
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
@@ -772,4 +822,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, uint32_t *id, char *data, uint8_t *si
         *flags = flagValue;
 
     return 1;
+#else
+    return -1;
+#endif
 }
