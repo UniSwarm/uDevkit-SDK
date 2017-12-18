@@ -531,9 +531,9 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
 }
 
 /**
- * @brief Returns the curent bit rate in bits/s
+ * @brief Returns the current bit rate in bits/s
  * @param device CAN device number
- * @return bit rate in bits/s if ok, 0 in case of error
+ * @return bit rate in bits/s if OK, 0 in case of error
  */
 uint32_t can_bitRate(rt_dev_t device)
 {
@@ -655,78 +655,97 @@ int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t siz
     if (can >= CAN_COUNT)
         return 0;
 
-    CAN_TxMsgBuffer *buffer = NULL;
+    CAN_TxMsgBuffer *buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C3FIFOUA0));
 
     switch (can)
     {
     case 0:
-        if (C1FIFOINT0bits.TXNFULLIF == 1)
-            return -1;
-        buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C1FIFOUA0));
+        if (C1FIFOINT0bits.TXNFULLIF == 0)
+            buffer = NULL;
+        else
+            buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C1FIFOUA0));
         break;
 #if CAN_COUNT>=2
     case 1:
-        if (C2FIFOINT0bits.TXNFULLIF == 1)
-            return -1;
-        buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C2FIFOUA0));
+        if (C2FIFOINT0bits.TXNFULLIF == 0)
+            buffer = NULL;
+        else
+            buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C2FIFOUA0));
         break;
 #endif
 #if CAN_COUNT>=3
     case 2:
-        if (C3FIFOINT0bits.TXNFULLIF == 1)
-            return -1;
-        buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C3FIFOUA0));
+        if (C3FIFOINT0bits.TXNFULLIF == 0)
+            buffer = NULL;
+        else
+            buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C3FIFOUA0));
         break;
 #endif
 #if CAN_COUNT>=4
     case 3:
-        if (C4FIFOINT0bits.TXNFULLIF == 1)
-            return -1;
-        buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C4FIFOUA0));
+        if (C4FIFOINT0bits.TXNFULLIF == 0)
+            buffer = NULL;
+        else
+            buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C4FIFOUA0));
         break;
 #endif
     }
 
-    // clear the message header
-    buffer->messageWord[0] = 0;
-    buffer->messageWord[1] = 0;
-
-    // set can id
-    if ((flags & CAN_VERS2BA) == CAN_VERS2BA)
+    if (buffer != NULL)
     {
-        buffer->msgEID.IDE = 1;    // extended id
-        buffer->msgEID.EID = id;   // Message EID
+        // clear the message header
+        buffer->messageWord[0] = 0;
+        buffer->messageWord[1] = 0;
+
+        // set can id
+        if ((flags & CAN_VERS2BA) == CAN_VERS2BA)
+        {
+            buffer->msgEID.IDE = 1;    // extended id
+            buffer->msgEID.EID = id;   // Message EID
+        }
+        buffer->msgSID.SID = id >> 18; // Message EID
+
+        if (flags & CAN_RTR)
+            buffer->msgEID.RTR = 1;
+
+        // set data and data size
+        if (size > 8)
+            size = 8;
+        buffer->msgEID.DLC = size; // Data Length
+        for (i=0; i<size; i++)
+            buffer->data[i] = data[i];
     }
-    buffer->msgSID.SID = id >> 18; // Message EID
-
-    if (flags & CAN_RTR)
-        buffer->msgEID.RTR = 1;
-
-    // set data and data size
-    if (size > 8)
-        size = 8;
-    buffer->msgEID.DLC = size; // Data Length
-    for (i=0; i<size; i++)
-        buffer->data[i] = data[i];
 
     switch (can)
     {
     case 0:
-        C1FIFOCON0SET = 0x2008; // Set the UINC and TXREQ bit
+        if (buffer != NULL)
+            C1FIFOCON0SET = 0x2008; // Set the UINC and TXREQ bit
+        else
+            C1FIFOCON0SET = 0x0008; // Set the TXREQ bit
         break;
 #if CAN_COUNT>=2
     case 1:
-        C2FIFOCON0SET = 0x2008; // Set the UINC and TXREQ bit
+        if (buffer != NULL)
+            C2FIFOCON0SET = 0x2008; // Set the UINC and TXREQ bit
+        else
+            C2FIFOCON0SET = 0x0008; // Set the TXREQ bit
         break;
 #endif
 #if CAN_COUNT>=3
     case 2:
-        C3FIFOCON0SET = 0x2008; // Set the UINC and TXREQ bit
+        if (buffer != NULL)
+            C3FIFOCON0SET = 0x2008; // Set the UINC and TXREQ bit
+        else
+            C3FIFOCON0SET = 0x0008; // Set the TXREQ bit
         break;
 #endif
 #if CAN_COUNT>=4
     case 3:
-        C4FIFOCON0SET = 0x2008; // Set the UINC and TXREQ bit
+        if (buffer != NULL)
+            C4FIFOCON0SET = 0x2008; // Set the UINC and TXREQ bit
+        else
+            C4FIFOCON0SET = 0x0008; // Set the TXREQ bit
         break;
 #endif
     }
