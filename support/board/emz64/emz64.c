@@ -20,8 +20,17 @@ int board_init_io()
 {
 #ifndef SIMULATOR
     // analog inputs
-    ANSELB = 0x0000;         // all analog inputs of port B as digital buffer
-	
+    ANSELB = 0x0018;         // all analog inputs of port B as digital buffer, unless RB3/4 for audio in/out
+    ANSELE = 0x0000;         // all analog inputs of port E as digital buffer
+    ANSELG = 0x0000;         // all analog inputs of port G as digital buffer
+
+    // remappable pins
+    // Unlock configuration pin
+    unlockIoConfig();
+    C1RXR = 0b0111;        // CAN1RX ==> RC13
+    RPC14R = 0b1111;       // CAN1TX ==> RC14
+    lockIoConfig();
+
     TRISFbits.TRISF1 = 0;    // OLED_RST
 #endif
 
