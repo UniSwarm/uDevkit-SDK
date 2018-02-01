@@ -19,9 +19,8 @@ tools:
 tests:
 	cd test && $(MAKE) all
 
-tests16:h
+tests16:
 	cd test/archtest && $(MAKE) pic16b
-
 
 tests32:
 	cd test/archtest && $(MAKE) pic32
