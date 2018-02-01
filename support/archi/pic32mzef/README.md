@@ -55,7 +55,7 @@ Base family.
 
 ### EFF / EFH devices
 
-EFE / EFG with 2 CAN devices.
+Same as EFE / EFG with 2 CAN devices.
 
 |EFF / EFH Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -78,7 +78,7 @@ EFE / EFG with 2 CAN devices.
 
 ### EFK / EFM devices
 
-EFE / EFG with 2 CAN devices and hardware crypto module.
+Same as EFE / EFG with 2 CAN devices and hardware crypto module.
 
 |EFK / EFM Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|

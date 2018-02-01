@@ -10,7 +10,7 @@ This family is splitted into two subfamilies :
 ## Main features
 
 |Feature|GPL|GPM|
-|-------|:-----:|
+|-------|:-----:|:-----:|
 |Core|32 bits|32 bits|
 |Performance|37 DMIPS|37 DMIPS|
 |Program memory|16kb - 66kb|66kb - 262kb|
