@@ -13,7 +13,11 @@ rt_dev_t pwm_m1, pwm_m2;
 // ========================== coders ===============================
 int c1 = 0, c2 = 0;
 int8_t c1_state = 0, c2_state = 0;
-const signed char encoder_value[16] = {0,-1,1,0,1,0,0,-1,-1,0,0,1,0,1,-1,0};
+const signed char encoder_value[16] = { 0, -1,  1,  0,
+                                        1,  0,  0, -1,
+                                       -1,  0,  0,  1,
+                                        0,  1, -1,  0};
+
 void process_coder()
 {
 	// c1_state => 0b0000 & previous_A & previous_B & A & B

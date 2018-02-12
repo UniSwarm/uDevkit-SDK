@@ -20,7 +20,7 @@ FONTS += Lucida_Console10
 MODULES += sensor
 SENSOR_DRIVERS = VL6180X
 
-SRC += main.c ihm.c motors.c html_fs_data.c restApi.c
+SRC += main.c ihm.c html_fs_data.c restApi.c
 
 all : hex
 
