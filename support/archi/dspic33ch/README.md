@@ -9,6 +9,8 @@ A lot of periphericals (UART, Timer...) are not compatible with others dsPIC ran
 
 This family have variation of flash memory, pin count and CAN FD for 5XX subfamily.
 
+Slave core is marked with final S1. Slave core does not have same peripherals. They have 4kb of shared ram and 24kb of flash.
+
 ## Main features
 
 |Feature|dsPIC33CH|
@@ -21,16 +23,18 @@ This family have variation of flash memory, pin count and CAN FD for 5XX subfami
 
 ## Common devices
 
-|Peripheral|UART|TIMER|I2C|SPI|SENT|CLC|QEI|CAN|
-|----------|:--:|:---:|:-:|:-:|:--:|:-:|:-:|:-:|
-|20X       |   2|    1|  2|  2|   2|  4|  1|  0|
-|50X       |   2|    1|  2|  2|   2|  4|  1|  1|
+|Peripheral |UART|TMR |OC  |IC  |I2C |SPI |CAN |SENT|CLC |QEI |PWM |MCCP|SCCP|
+|:----------|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+|MP20X      |   2|   1|   0|   0|   2|   2|   0|   2|   4|   1|   0|   8|   0|
+|MP20XS1    |   1|   1|   0|   0|   1|   1|   0|   0|   4|   1|   0|   4|   0|
+|MP50X      |   2|   1|   0|   0|   2|   2|   1|   2|   4|   1|   0|   8|   0|
+|MP50XS1    |   1|   1|   0|   0|   1|   1|   0|   0|   4|   1|   0|   4|   0|
 
 ## Devices list
 
-20 devices on november 2017, plus relative slave core with a final *S1* which are similar core.
+20 devices on february 2018, plus relative slave core with a final *S1* which are similar core.
 
-### 20X subfamily
+### MP20X subfamily
 
 Base device.
 
@@ -47,7 +51,7 @@ Base device.
 |[dsPIC33CH64MP208](http://microchip.com/wwwproducts/en/dsPIC33CH64MP208)  | 64 kb|20 kb|80|
 |[dsPIC33CH128MP208](http://microchip.com/wwwproducts/en/dsPIC33CH128MP208)|128 kb|20 kb|80|
 
-### 50X subfamily
+### MP50X subfamily
 
 Contains all functionnalities of 20X plus CAN FD device.
 
