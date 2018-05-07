@@ -14,7 +14,8 @@ SIM_SRC += gui_sim.c
 
 ########## SCREEN CONTROLER SUPPORT ##########
 
-ARCHI_SRC += $(addsuffix .c, $(GUI_DRIVERS))
+GUI_DRIVERS_SRC := $(addsuffix .c, $(GUI_DRIVERS))
+ARCHI_SRC += $(GUI_DRIVERS_SRC)
 HEADER += $(addsuffix .h, $(GUI_DRIVERS))
 
 $(OUT_PWD)/gui_driver.h : $(firstword $(MAKEFILE_LIST))
@@ -61,7 +62,7 @@ $(OUT_PWD)/%.o : $(OUT_PWD)/%.c
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 
 PICTURES_C := $(PICTURES)
-PICTURES_NAME := $(PICTURES)
+PICTURES_NAME := $(notdir $(PICTURES))
 PICTURES_C := $(PICTURES_C:.jpg=.jpg.c)
 PICTURES_NAME := $(PICTURES_NAME:.jpg=)
 PICTURES_C := $(PICTURES_C:.png=.png.c)
@@ -77,7 +78,7 @@ $(OUT_PWD)/pictures.h: $(firstword $(MAKEFILE_LIST))
 	@echo "$(YELLOW)generate pictures.h...$(NORM)"
 	@printf "#ifndef PICTURES_H\n#define PICTURES_H\n\n\
 	#include <stdint.h>\n#include <gui/picture.h>\n\
-	$(foreach PICTURE,$(PICTURES_NAME),\nextern const Picture $(PICTURE);)\n\n\
+	$(foreach PICTURE,$(PICTURES_NAME),\nextern const Picture $(notdir $(PICTURE));)\n\n\
 	#endif //PICTURES_H\
 	" > $(OUT_PWD)/pictures.h
 CONFIG_HEADERS += $(OUT_PWD)/pictures.h
@@ -100,7 +101,7 @@ CONFIG_HEADERS += $(OUT_PWD)/fonts.h
 $(OUT_PWD)/%.font.o : $(OUT_PWD)/%.font.c
 $(OUT_PWD)/%.font.c : $(IMG2RAW_EXE)
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "$(GREEN)IMG %-35s => %s$(NORM)\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@printf "$(GREEN)IMG %-35s => %s$(NORM)\n" $(notdir $*) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(IMG2RAW_EXE) -i $* -o  $(OUT_PWD)/$(notdir $@)
 	
 .SECONDARY: $(PICTURES_C) $(FONTS_C)
