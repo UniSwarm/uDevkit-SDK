@@ -4,7 +4,7 @@ clone_folder: c:\dev\rtprog
 clone_depth: 5
 
 init:
-  - set PATH=C:\msys64;C:\Qt\5.9.4\mingw53_32\bin;C:\MinGW\bin;%PATH%
+  - set PATH=C:\msys64;C:\Qt\5.10\mingw53_32\bin;C:\MinGW\bin;%PATH%
 
 build_script:
   - cd C:\dev\rtprog
