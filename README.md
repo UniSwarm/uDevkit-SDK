@@ -6,12 +6,12 @@
 
 A tool to simplify module inclusions in embedded systems.
 
-Currently works for all 16 bits and 32 bits Microchip devices (856 devices):
+Currently works for all 16 bits and 32 bits Microchip devices (862 devices):
 
-|Range|Famillies|List of devices|Device count|
-|-----|---------|:-------------:|-----------:|
-|Microchip 16bits|dsPIC30F, dsPIC33CH, dsPIC33CK, dsPIC33EP, dsPIC33EV, dsPIC33FJ, PIC24EP, PIC24F, PIC24FJ, PIC24FV and PIC24HJ|[list](support/archi/pic16b/README.md)|583|
-|Microchip 32bits|PIC32MM, PIC32MK, PIC32MX, PIC32MZDA, PIC32MZEC and PIC32MZEF|[list](support/archi/pic32/README.md)|273|
+|Range|Famillies|Device count|
+|-----|---------|-----------:|
+|[Microchip 16bits](support/archi/pic16b/README.md)|[dsPIC30F](support/archi/dspic30f/README.md), [dsPIC33CH](support/archi/dspic33ch/README.md), [dsPIC33CK](support/archi/dspic33ck/README.md), [dsPIC33EP](support/archi/dspic33ep/README.md), [dsPIC33EV](support/archi/dspic33ev/README.md), [dsPIC33FJ](support/archi/dspic33fj/README.md), [PIC24EP](support/archi/pic24ep/README.md), [PIC24F](support/archi/pic24f/README.md), [PIC24FJ](support/archi/pic24fj/README.md), [PIC24FV](support/archi/pic24fv/README.md) and [PIC24HJ](support/archi/pic24hj/README.md)|589|
+|[Microchip 32bits](support/archi/pic32/README.md)|[PIC32MM](support/archi/pic32mm/README.md), [PIC32MK](support/archi/pic32mk/README.md), [PIC32MX](support/archi/pic32mx/README.md), [PIC32MZDA](support/archi/pic32mzda/README.md), [PIC32MZEC](support/archi/pic32mzec/README.md) and [PIC32MZEF](support/archi/pic32mzef/README.md)|273|
 
 ## How to use ?
 RTprog want to be very easy to use with no non-standard system. To manage your
