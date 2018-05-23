@@ -227,8 +227,9 @@
  || defined(DEVICE_24FJ64GB204) || defined(DEVICE_24FJ64GB406) || defined(DEVICE_24FJ64GB410) \
  || defined(DEVICE_24FJ64GB412)
  #define ENHANCED_I2C
- #define I2C1CONbits I2C1CON1bits
- #define I2C2CONbits I2C2CON1bits
+ #define I2C1CONbits I2C1CONLbits
+ #define I2C2CONbits I2C2CONLbits
+ #define I2C3CONbits I2C3CONLbits
 #endif
 
 #define i2c(d) MKDEV(DEV_CLASS_I2C, (d)-1)
