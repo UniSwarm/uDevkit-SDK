@@ -19,7 +19,6 @@ Compiller specific, compilation flags or core dependent definition are contained
 |[pic24ep](pic24ep/README.md)|[pic16b](pic16b/README.md)|
 |[pic24f](pic24f/README.md)|[pic16b](pic16b/README.md)|
 |[pic24fj](pic24fj/README.md)|[pic16b](pic16b/README.md)|
-|[pic24fv](pic24fv/README.md)|[pic16b](pic16b/README.md)|
 |[pic24hj](pic24hj/README.md)|[pic16b](pic16b/README.md)|
 |[pic32](pic32/README.md)|[microchip](microchip/README.md)|
 |[pic32mk](pic32mk/README.md)|[pic32](pic32/README.md)|

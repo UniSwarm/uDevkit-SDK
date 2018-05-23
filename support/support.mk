@@ -11,6 +11,9 @@ ifndef ARCHI
     sed -e 's/.*\(^32MZ\)[0-9]\+\([ED][CFA]\).*/pic\L\1\2/'\
     -e 's/.*\(^[23][42][MEF][PVJKMX]\).*/pic\L\1/'\
     -e 's/.*\(^3[03][EFC][PVJKH]*\).*/dspic\L\1/')
+    ifeq ($(ARCHI),pic24fv)
+        ARCHI := pic24f
+    endif
 endif
 
 # include module definition file

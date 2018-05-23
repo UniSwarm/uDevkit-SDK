@@ -5,7 +5,7 @@
  *
  * @date March 12, 2017, 11:35 AM
  *
- * @brief Architecture low level definitions for PIC 16 bits
+ * @brief Architecture low level definitions for 16 bits dsPIC and PIC
  */
 
 #ifndef PIC16B_H
@@ -26,7 +26,7 @@
   #define disable_interrupt() INTCON2bits.GIE=0
 
  #elif defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_pic24f) \
-    || defined(ARCHI_pic24fj) || defined(ARCHI_pic24fv) || defined(ARCHI_pic24hj)
+    || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj)
   #define enable_interrupt() __builtin_disi(0)
   #define disable_interrupt() __builtin_disi(0x3FFF)
  #endif
