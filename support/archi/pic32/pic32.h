@@ -27,11 +27,11 @@
  #include <sys/attribs.h>
  #include <sys/kmem.h>
 
- #define unlockConfig() SYSKEY = 0; SYSKEY = 0xAA996655; SYSKEY = 0x556699AA;
- #define lockConfig() SYSKEY = 0x33333333;
+ #define unlockConfig() do {SYSKEY = 0; SYSKEY = 0xAA996655; SYSKEY = 0x556699AA; } while (0);
+ #define lockConfig() SYSKEY = 0x33333333
 
- #define unlockIoConfig() unlockConfig(); CFGCONbits.IOLOCK = 0;
- #define lockIoConfig() lockConfig(); CFGCONbits.IOLOCK = 1;
+ #define unlockIoConfig() do {unlockConfig(); CFGCONbits.IOLOCK = 0;} while (0);
+ #define lockIoConfig() do {CFGCONbits.IOLOCK = 1; lockConfig();} while (0);
 
 #else
  #define nop() {}
