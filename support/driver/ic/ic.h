@@ -40,11 +40,11 @@ uint8_t ic_mode(rt_dev_t device);
   #include "ic_pic24e_dspic33e.h"
  #endif
  #include "ic_pic24f_dspic30f_dspic33f.h"
-#elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec) \
- || defined(ARCHI_pic32mzef)
+#elif defined(ARCHI_pic32mk) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec) \
+   || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
  #include "ic_pic32.h"
 #else
- #error Unsuported ARCHI
+ #warning Unsuported ARCHI
 #endif
 
 #endif // IC_H
