@@ -1,7 +1,5 @@
 # dsPIC33CK support
 
-> Warning support based on a very low piece of information, may vary in few weeks, only preliminary support.
-
 dsPIC33CK family is a new generation of 16 bits microcontroller with DSP accelerator. Architechture and periphericals
 are similar to [dsPIC33CH](../dspic33ch/README.md).
 
@@ -23,13 +21,13 @@ This family have variation of flash memory, pin count and CAN FD for 5XX subfami
 
 |Peripheral      |UART|TMR |OC  |IC  |I2C |SPI |CAN |SENT|CLC |QEI |PWM |MCCP|SCCP|
 |:---------------|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|dsPIC33CK MP10X |   3|   1|   0|   0|   2|   3|   0|   2|   4|   2|   0|   5|   0|
-|dsPIC33CK MP20X |   3|   1|   0|   0|   3|   3|   0|   2|   4|   2|   0|   9|   0|
-|dsPIC33CK MP50X |   3|   1|   0|   0|   3|   3|   1|   2|   4|   2|   0|   9|   0|
+|dsPIC33CK MP10X |   3|   1|   0|   0|   2|   3|   0|   2|   4|   2|   8|   1|   4|
+|dsPIC33CK MP20X |   3|   1|   0|   0|   3|   3|   0|   2|   4|   2|   8|   1|   8|
+|dsPIC33CK MP50X |   3|   1|   0|   0|   3|   3|   1|   2|   4|   2|   8|   1|   8|
 
 ## Devices list
 
-44 devices on february 2018.
+44 devices on june 2018.
 
 ### MP10X subfamily
 
