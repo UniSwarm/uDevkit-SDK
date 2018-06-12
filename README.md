@@ -1,10 +1,10 @@
-# RTprog
+# uDevkit SDK
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
-[![Build Status](https://travis-ci.org/UniSwarm/rtprog.svg?branch=master)](https://travis-ci.org/UniSwarm/rtprog)
-[![Build status](https://ci.appveyor.com/api/projects/status/li3kw0ygw2381yhk?svg=true)](https://ci.appveyor.com/project/sebcaux/rtprog-vhyfl)
+[![Build Status](https://travis-ci.org/UniSwarm/uDevkit-SDK.svg?branch=master)](https://travis-ci.org/UniSwarm/uDevkit-SDK)
+[![Build status](https://ci.appveyor.com/api/projects/status/705wh874ftky5mx9?svg=true)](https://ci.appveyor.com/project/sebcaux/udevkit-sdk)
 
-A tool to simplify module inclusions in embedded systems.
+Embedded systems SDK for Uniswarm boards and others (dsPIC33, dsPIC30, PIC24 and PIC32 compatible) https://uniswarm.eu/udevkit
 
 Currently works for all 16 bits and 32 bits Microchip devices (862 devices):
 
@@ -14,24 +14,24 @@ Currently works for all 16 bits and 32 bits Microchip devices (862 devices):
 |[Microchip 32bits](support/archi/pic32/README.md)|[PIC32MM](support/archi/pic32mm/README.md), [PIC32MK](support/archi/pic32mk/README.md), [PIC32MX](support/archi/pic32mx/README.md), [PIC32MZDA](support/archi/pic32mzda/README.md), [PIC32MZEC](support/archi/pic32mzec/README.md) and [PIC32MZEF](support/archi/pic32mzef/README.md)|273|
 
 ## How to use ?
-RTprog want to be very easy to use with no non-standard system. To manage your
+uDevkit want to be very easy to use with no non-standard system. To manage your
 project, it is simply based on a single Makefile.
 
 Makefile example content :
 
 ```Makefile
-RTPROG = /home/toto/rtprog      # path to rtprog root directory
+UDEVKIT = /home/toto/uDevkit-sdk # path to uDevkit root directory
 
-PROJECT = myproject             # project name
-ROBOT = deltatips               # robot to use (or BOARD= if you want to choose only a board)
-OUT_PWD = build                 # output directory
+PROJECT = myproject              # project name
+ROBOT = deltatips                # robot to use (or BOARD= if you want to choose only a board)
+OUT_PWD = build                  # output directory
 
 DRIVERS += uart ax12 i2c usb_serial
 MODULES += cmdline mrobot
 
 SRC += main.c
 
-include $(RTPROG)/rtprog.mk
+include $(UDEVKIT)/rtprog.mk
 ```
 
 To build and program your board, simply launch :
@@ -44,7 +44,7 @@ make prog
 
 [Complete list of modules](support/module/README.md)
 
-An IDE named RtIDE is available as beta version : https://github.com/UniSwarm/rtide
+An IDE named RtIDE is available as beta version : https://github.com/UniSwarm/uDevkit-IDE
 
 ## Prepare repository
 
