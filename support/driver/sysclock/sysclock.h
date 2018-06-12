@@ -28,6 +28,8 @@
  || defined(ARCHI_pic32mk)
  #include "sysclock_pic32mz_mk.h"
 #else
+ typedef int SYSCLOCK_CLOCK;
+ typedef int SYSCLOCK_SOURCE;
  #error Unsuported ARCHI
 #endif
 

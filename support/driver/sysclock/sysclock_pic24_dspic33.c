@@ -330,6 +330,7 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     // calculate multiplier
     multiplier = fsys / fplli;
 
+  #ifdef ARCHI_pic24fj
     // set post-diviser
     if (postdiv == 2)
         CLKDIVbits.PLLPOST = 0b00; // PLL post div = 2
@@ -340,6 +341,7 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 
     // set pre-diviser
     CLKDIVbits.PLLPRE = prediv - 2; // PLL pre div = 1
+  #endif
 
     //                         (PLLFBD + 2)
     // Fosc = Fin * ----------------------------------
@@ -355,7 +357,7 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     }
     else
     {
-        __builtin_write_OSCCONH(SYSCLOCK_SRC_PPLL); // primariry osc input
+        __builtin_write_OSCCONH(SYSCLOCK_SRC_PPLL); // primary osc input
         __builtin_write_OSCCONL(OSCCON | 0x01);
         // Wait for Clock switch to occur
         while (OSCCONbits.COSC != SYSCLOCK_SRC_PPLL);

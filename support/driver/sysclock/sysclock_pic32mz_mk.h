@@ -64,7 +64,7 @@ typedef enum {
 typedef enum {
 #if defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
     SYSCLOCK_SRC_FRC2  = 0b111, ///< sysclock from Fast RC Oscillator (FRC) divided by FRCDIV
-    SYSCLOCK_SRC_BFRC  = 0b110, ///< backup FRC, cannot be chose by user
+    SYSCLOCK_SRC_BFRC  = 0b110, ///< backup FRC, cannot be choose by user
 #endif
     SYSCLOCK_SRC_LPRC  = 0b101, ///< Low-Power RC (LPRC) Oscillator
 #if defined(ARCHI_pic32mk)
