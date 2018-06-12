@@ -38,12 +38,12 @@ pic32mz: 32MZ1024ECH100 32MZ0512EFF100 32MZ2064DAH169
 
 a6screenboard rtboard rtboard1_1 swarmtips curiosity_PIC24F curiosity_32MM_USB curiosity_32MX470 emz64 swarmtips2 curiosity_32MZ_EF PIC32MK1024GPE_devboard :
 	@printf ">>> $(ORANGE)BOARD: $@$(NORM)\n"
-	@OUT_PWD=build_$@ BOARD=$@ $(MAKE) --no-print-directory -f Makefile.arch -j $(RULE) CCFLAGS=-DBOARD -O
+	@OUT_PWD=build_$@ BOARD=$@ $(MAKE) --no-print-directory -f Makefile.arch -j $(RULE) CCFLAGS=-DBOARD
 
 clean:
 	rm -rf build* log*
 
 %:
 	@printf ">>> $(ORANGE)PROC : $@$(NORM)\n"
-	@OUT_PWD=build_$@ DEVICE=$@ $(MAKE) --no-print-directory -f Makefile.arch -j $(RULE) -O
+	@OUT_PWD=build_$@ DEVICE=$@ $(MAKE) --no-print-directory -f Makefile.arch -j $(RULE)
 
