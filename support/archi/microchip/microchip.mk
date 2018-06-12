@@ -6,7 +6,10 @@ else
  IPE_EXE := ipecmd.sh
 endif
 
-DEV_PROG?=PK3  # default value pickit3 (PK3), possible value: real ice (RICE) or ICD3 (ICD3)
+DEV_PROG?=PK3  # default value pickit3 (PK3), possible value: real ice (RICE), ICD3/4 (ICD3) or pickit4 (PK4)
+ifeq (,$(filter $(DEV_PROG),PK3 PK4 ICD3 ICD4 RICE))
+ $(error Invalid DEV_PROG name '$(DEV_PROG)', choose between 'PK3', 'PK4', 'ICD3', 'ICD4' or 'RICE')
+endif
 prog : $(OUT_PWD)/$(PROJECT).hex
 	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -F$(PROJECT).hex -M -OL || true
 	@rm $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.*
@@ -28,7 +31,7 @@ $(OBJECTS) : $(CONFIG_HEADERS)
 $(OUT_PWD)/%.o : %.c
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "$(GREEN)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c  $< $(DEFINES) $(INCLUDEPATH) -o  $(OUT_PWD)/$(notdir $@)
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
 HEAP?=100
