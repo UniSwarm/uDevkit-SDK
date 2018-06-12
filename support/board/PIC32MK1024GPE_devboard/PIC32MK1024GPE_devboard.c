@@ -39,8 +39,8 @@ int board_init_io()
         U3RXR = 0b0101;        // RX3 ==> RPC7
         RPC6R = 0b00001;       // TX3 ==> RPC6
 
-        U6RXR = 0b1101;        // RX6 ==> RPA15
-        RPA4R = 0b01011;       // TX6 ==> RPA4
+        U4RXR = 0b1101;        // RX4 ==> RPD3
+        RPA12R = 0b00010;      // TX4 ==> RPA12
 
         C1RXR = 0b1000;        // CAN1RX ==> RE14
         RPE0R = 0b01100;       // CAN1TX ==> RE0

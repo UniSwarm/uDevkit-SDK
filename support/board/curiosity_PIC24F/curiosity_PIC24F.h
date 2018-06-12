@@ -23,7 +23,6 @@
 int board_init();
 
 #define BOARD_NAME "Curiosity_PIC24F"
-#define SYSCLOCK_XTAL 20000000
 #define SYSCLOCK_SOSC    32768
 
 // ==== pins define ====

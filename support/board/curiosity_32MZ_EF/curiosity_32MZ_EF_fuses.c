@@ -38,7 +38,7 @@
 #pragma config FPLLIDIV   = DIV_3
 #pragma config FPLLRNG    = RANGE_13_26_MHZ
 #pragma config FPLLICLK   = PLL_POSC
-#pragma config FPLLMULT   = MUL_50
+#pragma config FPLLMULT   = MUL_25
 #pragma config FPLLODIV   = DIV_2
 #pragma config UPLLFSEL   = FREQ_24MHZ
 /*** DEVCFG3 ***/

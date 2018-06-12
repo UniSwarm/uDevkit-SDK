@@ -35,8 +35,13 @@ int board_init_io()
     // remappable pins
     // Unlock configuration pin
     unlockIoConfig();
+        U1RXR  = 0b0011;        // RX1 ==> RPD10
+        RPD15R = 0b0001;        // TX1 ==> RPD15
+
         U2RXR = 0b1100;         // RX2 ==> RPC3
         RPC2R = 0b0010;         // TX2 ==> RPC2
+
+        RPD14R = 0b1101;        // REFCLKO4 ==> RPD14
     lockIoConfig();
 #endif
 
@@ -75,9 +80,8 @@ int board_setLed(uint8_t led, uint8_t state)
     return 0;
 }
 
-int board_toggleLed(uint8_t led, uint8_t state)
+int board_toggleLed(uint8_t led)
 {
-    int value = GPIO_HIGH;
     if(led >= LED_COUNT)
         return -1;
 

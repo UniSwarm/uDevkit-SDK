@@ -55,10 +55,12 @@ int8_t board_getButton(uint8_t button);
 #define AX12_UART 3
 
 // A6
-#define A6_RW LATDbits.LATD0           // A6 trancever direction
-#define A6_WRITE 1
-#define A6_READ 0
-#define A6_DE LATAbits.LATA6
+#define A6_RW LAADbits.LATA6           // A6 trancever direction
+#define A6_RW_PORT GPIO_PORTA
+#define A6_RW_PIN  6
+#define A6_RE LATDbits.LATD0
+#define A6_RE_PORT GPIO_PORTD
+#define A6_RE_PIN  0
 #define A6_UART 2
 
 // ESP8266
