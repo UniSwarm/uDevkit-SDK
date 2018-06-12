@@ -200,12 +200,12 @@ ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
 	ssize_t size_read;
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
-        return 0;
+        return -1;
 
     // TODO
     simulator_rec_task();
     size_read = simulator_recv(UART_SIM_MODULE, uart, UART_SIM_READ, data, size_max);
-    if(size_read<0)
+    if (size_read<0)
         size_read = 0;
 
     return size_read;

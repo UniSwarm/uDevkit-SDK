@@ -194,7 +194,9 @@ int uart_enable(rt_dev_t device)
         _U1TXIP = 3;    // interrupt priority for transmitor
         _U1TXIF = 0;    // clear transmit Flag
         _U1TXIE = 0;    // disable transmit interrupt
+    #ifndef ARCHI_pic32mk
         U1STAbits.UTXISEL = 0b10;  // transmit interrupt generated when buffer is empty
+    #endif
 
         U1MODEbits.UARTEN = 1;  // enable uart module
         U1STAbits.UTXEN = 1;    // enable transmiter
@@ -209,7 +211,9 @@ int uart_enable(rt_dev_t device)
         _U2TXIP = 3;    // interrupt priority for transmitor
         _U2TXIF = 0;    // clear transmit Flag
         _U2TXIE = 0;    // disable transmit interrupt
+    #ifndef ARCHI_pic32mk
         U2STAbits.UTXISEL = 0b10;  // transmit interrupt generated when buffer is empty
+    #endif
 
         U2MODEbits.UARTEN = 1;  // enable uart module
         U2STAbits.UTXEN = 1;    // enable transmiter
@@ -225,7 +229,9 @@ int uart_enable(rt_dev_t device)
         _U3TXIP = 3;    // interrupt priority for transmitor
         _U3TXIF = 0;    // clear transmit Flag
         _U3TXIE = 0;    // disable transmit interrupt
+    #ifndef ARCHI_pic32mk
         U3STAbits.UTXISEL = 0b10;  // transmit interrupt generated when buffer is empty
+    #endif
 
         U3MODEbits.UARTEN = 1;  // enable uart module
         U3STAbits.UTXEN = 1;    // enable transmiter
@@ -241,7 +247,9 @@ int uart_enable(rt_dev_t device)
         _U4TXIP = 3;    // interrupt priority for transmitor
         _U4TXIF = 0;    // clear transmit Flag
         _U4TXIE = 0;    // disable transmit interrupt
+    #ifndef ARCHI_pic32mk
         U4STAbits.UTXISEL = 0b10;  // transmit interrupt generated when buffer is empty
+    #endif
 
         U4MODEbits.UARTEN = 1;  // enable uart module
         U4STAbits.UTXEN = 1;    // enable transmiter
@@ -257,7 +265,9 @@ int uart_enable(rt_dev_t device)
         _U5TXIP = 3;    // interrupt priority for transmitor
         _U5TXIF = 0;    // clear transmit Flag
         _U5TXIE = 0;    // disable transmit interrupt
+    #ifndef ARCHI_pic32mk
         U5STAbits.UTXISEL = 0b10;  // transmit interrupt generated when buffer is empty
+    #endif
 
         U5MODEbits.UARTEN = 1;  // enable uart module
         U5STAbits.UTXEN = 1;    // enable transmiter
@@ -273,7 +283,9 @@ int uart_enable(rt_dev_t device)
         _U6TXIP = 3;    // interrupt priority for transmitor
         _U6TXIF = 0;    // clear transmit Flag
         _U6TXIE = 0;    // disable transmit interrupt
+    #ifndef ARCHI_pic32mk
         U6STAbits.UTXISEL = 0b10;  // transmit interrupt generated when buffer is empty
+    #endif
 
         U6MODEbits.UARTEN = 1;  // enable uart module
         U6STAbits.UTXEN = 1;    // enable transmiter
@@ -737,7 +749,13 @@ void __ISR(_UART3_RX_VECTOR, UIPR) U3RXInterrupt(void)
 void __ISR(_UART4_TX_VECTOR, UIPR) U4TXInterrupt(void)
 {
 #if defined(ARCHI_pic32mk)
-    _U4TXIF = 0; // 32MK Work around (errata 41)
+    //_U4TXIF = 0; // 32MK Work around (errata 41)
+    /*char uart_tmpchar[1];
+    while (!U4STAbits.UTXBF && fifo_pop(&uarts[3].buffTx, uart_tmpchar, 1) == 1)
+    {
+        U4TXREG = uart_tmpchar[0];
+    }*/
+#else
 #endif
     size_t i;
     char uart_tmpchar[8];

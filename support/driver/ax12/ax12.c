@@ -56,10 +56,11 @@ void ax12_receiveMode()
 void ax12_init(rt_dev_t uart, rt_dev_t txen, uint8_t inverted)
 {
     ax12_uart = uart;
+    uart_open(ax12_uart);
     uart_setBaudSpeed(ax12_uart, 1000000);
     uart_setBitConfig(ax12_uart, 8, UART_BIT_PARITY_NONE, 1);
     uart_enable(ax12_uart);
-    
+
     ax12_txen = txen;
     ax12_inverted = inverted;
     if (ax12_txen != NULLDEV)

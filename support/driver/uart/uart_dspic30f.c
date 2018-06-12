@@ -554,30 +554,6 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 #endif
 }
 
-int uart_flush(rt_dev_t device)
-{
-#if UART_COUNT>=1
-    uint8_t uart = MINOR(device);
-    if (uart >= UART_COUNT)
-        return -1;
-
-    switch (uart)
-    {
-    case 0:
-        while (U1STAbits.TRMT);
-        break;
-#if UART_COUNT>=2
-    case 1:
-        while (U2STAbits.TRMT);
-        break;
-#endif
-    }
-    return 0;
-#else
-    return -1;
-#endif
-}
-
 /**
  * @brief Gets number of data that could be read (in sw buffer)
  * @param device uart device number

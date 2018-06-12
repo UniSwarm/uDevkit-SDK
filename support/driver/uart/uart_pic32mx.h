@@ -64,7 +64,7 @@
  #define UART_COUNT 0
 #endif
 
- // interrupt bits helpers for MX (MX does not have IP interrupt priority)
+// interrupt bits helpers for MX (MX does not have IP interrupt priority)
 #ifndef _U1RXIE
  #if defined(DEVICE_32MX530F128H) || defined(DEVICE_32MX550F256H) || defined(DEVICE_32MX570F512H) \
   || defined(DEVICE_32MX530F128L) || defined(DEVICE_32MX550F256L) || defined(DEVICE_32MX570F512L) \

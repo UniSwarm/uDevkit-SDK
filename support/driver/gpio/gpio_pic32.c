@@ -247,7 +247,7 @@ void gpio_writeBit(rt_dev_t device, GPIO_VALUE value)
 /**
  * @brief Read a bit of a GPIO
  * @param device GPIO pin
- * @return curent value of the bit(GPIO_LOW / GPIO_HIGH)
+ * @return current value of the bit(GPIO_LOW / GPIO_HIGH)
  */
 GPIO_VALUE gpio_readBit(rt_dev_t device)
 {

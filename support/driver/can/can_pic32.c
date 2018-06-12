@@ -461,6 +461,10 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     cans[can].s1Seg = s1Seg;
     cans[can].s2Seg = s2Seg;
 
+    /* possible work arround for PIC32MK
+    if (can == 2 || can == 3)
+        quantum -= 2;*/
+
     bitRateDiv = sysclock_periphFreq(SYSCLOCK_CLOCK_CAN) / (bitRate * quantum * 2);
     if (bitRateDiv > 64)
         bitRateDiv = 64;
@@ -655,7 +659,7 @@ int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t siz
     if (can >= CAN_COUNT)
         return 0;
 
-    CAN_TxMsgBuffer *buffer = (CAN_TxMsgBuffer *) (PA_TO_KVA1(C3FIFOUA0));
+    CAN_TxMsgBuffer *buffer = NULL;
 
     switch (can)
     {
