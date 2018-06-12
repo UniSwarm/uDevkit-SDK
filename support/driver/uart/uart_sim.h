@@ -5,7 +5,7 @@
  *
  * @date November 05, 2016, 17:51 PM
  *
- * @brief Uart simulator support for rtprog for simulation purpose
+ * @brief Uart simulator support for udevkit for simulation purpose
  */
 
 #ifndef UART_SIM_H

@@ -19,7 +19,7 @@ SENSOR_DRIVERS = sharp
 
 SRC += main.c
 
-include $(RTPROG)/rtprog.mk
+include $(RTPROG)/udevkit.mk
 
 all : hex
 	@echo "DRIVERS asked         :" $(sort $(DRIVERS) $(BADDRIVERS))

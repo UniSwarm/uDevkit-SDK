@@ -5,7 +5,7 @@
  *
  * @date May 10, 2017, 13:00 PM
  *
- * @brief PWM support for rtprog simulator
+ * @brief PWM support for udevkit simulator
  */
 
 #include "pwm.h"

@@ -5,7 +5,7 @@
  *
  * @date July 11, 2017, 18:30 PM
  *
- * @brief System clock support for rtprog for PIC32MM family
+ * @brief System clock support for udevkit for PIC32MM family
  *
  * Implementation based on Microchip document DS60001329B :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/60001329b.pdf

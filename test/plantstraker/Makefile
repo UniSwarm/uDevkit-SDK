@@ -13,7 +13,7 @@ NETWORK_DRIVERS = esp8266
 
 SRC += main.c
 
-include $(RTPROG)/rtprog.mk
+include $(RTPROG)/udevkit.mk
 
 all: elf
 

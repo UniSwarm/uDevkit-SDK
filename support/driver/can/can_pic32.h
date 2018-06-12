@@ -5,7 +5,7 @@
  *
  * @date December 8 2017, 09:10 AM
  *
- * @brief CAN support for rtprog for PIC32MK, PIC32MX, PIC32MZDA,
+ * @brief CAN support for udevkit for PIC32MK, PIC32MX, PIC32MZDA,
  * PIC32MZEC and PIC32MZEF
  *
  * Implementation based on Microchip document DS61154C :

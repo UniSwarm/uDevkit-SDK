@@ -5,7 +5,7 @@
  *
  * @date April 13, 2016, 11:49 AM
  *
- * @brief Uart support for rtprog
+ * @brief Uart support for udevkit
  */
 
 #ifndef UART_H

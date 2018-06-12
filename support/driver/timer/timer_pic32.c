@@ -5,7 +5,7 @@
  *
  * @date March 01, 2016, 20:45 PM
  *
- * @brief Timer support for rtprog for PIC32MM, PIC32MK, PIC32MX,
+ * @brief Timer support for udevkit for PIC32MM, PIC32MK, PIC32MX,
  * PIC32MZDA, PIC32MZEC and PIC32MZEF
  *
  * Implementation based on Microchip document DS61105F :

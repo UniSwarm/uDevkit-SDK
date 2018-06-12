@@ -5,7 +5,7 @@
  *
  * @date October 06, 2016, 11:15 PM
  *
- * @brief I2C support for rtprog for PIC32MM, PIC32MK, PIC32MX,
+ * @brief I2C support for udevkit for PIC32MM, PIC32MK, PIC32MX,
  * PIC32MZDA, PIC32MZEC and PIC32MZEF
  */
 

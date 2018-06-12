@@ -5,7 +5,7 @@
  *
  * @date April 13, 2016, 11:49 AM
  *
- * @brief Uart simulator support for rtprog for simulation purpose
+ * @brief Uart simulator support for udevkit for simulation purpose
  */
 
 #include "uart.h"

@@ -22,14 +22,16 @@ void archi_init();
  #include "../support/archi/dspic33ev/dspic33ev.h"
 #elif defined(ARCHI_dspic33fj)
  #include "../support/archi/dspic33fj/dspic33fj.h"
+#elif defined(ARCHI_dspic33ch)
+ #include "../support/archi/dspic33ch/dspic33ch.h"
+#elif defined(ARCHI_dspic33ck)
+ #include "../support/archi/dspic33ck/dspic33ck.h"
 #elif defined(ARCHI_pic24ep)
  #include "../support/archi/pic24ep/pic24ep.h"
 #elif defined(ARCHI_pic24f)
  #include "../support/archi/pic24f/pic24f.h"
 #elif defined(ARCHI_pic24fj)
  #include "../support/archi/pic24fj/pic24fj.h"
-#elif defined(ARCHI_pic24fv)
- #include "../support/archi/pic24fv/pic24fv.h"
 #elif defined(ARCHI_pic24hj)
  #include "../support/archi/pic24hj/pic24hj.h"
 

@@ -1,13 +1,13 @@
 version: 0.{build}
 
-clone_folder: c:\dev\rtprog
+clone_folder: c:\dev\udevkit
 clone_depth: 5
 
 init:
   - set PATH=C:\msys64;C:\Qt\5.10\mingw53_32\bin;C:\MinGW\bin;%PATH%
 
 build_script:
-  - cd C:\dev\rtprog
+  - cd C:\dev\udevkit
   - mingw32-make tools MAKE=mingw32-make
 
 test: off

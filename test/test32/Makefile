@@ -14,7 +14,7 @@ MODULES += cmdline
 
 SRC += main.c
 
-include $(RTPROG)/rtprog.mk
+include $(RTPROG)/udevkit.mk
 
 all : hex
 	@echo "SRC asked         :" $(sort $(SRC) $(ARCHI_SRC))

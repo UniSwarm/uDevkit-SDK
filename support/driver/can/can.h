@@ -5,7 +5,7 @@
  *
  * @date December 8 2017, 09:10 AM
  *
- * @brief CAN low level support driver for rtprog
+ * @brief CAN low level support driver for udevkit
  */
 
 #ifndef CAN_H

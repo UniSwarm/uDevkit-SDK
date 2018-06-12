@@ -1,4 +1,4 @@
-# Contributing to RTprog
+# Contributing to uDevkit-SDK
 
 :+1: We are happy to learn that you want to contribute !
 
@@ -14,9 +14,9 @@ Before contributing, never forget the following points:
 
 ## How Can I Contribute?
 
-* Reporting bugs in [Issues](https://github.com/Robotips/rtprog/issues)
+* Reporting bugs in [Issues](https://github.com/UniSwarm/uDevkit-SDK/issues)
 
-* Pull requests in [Pull requests](https://github.com/Robotips/rtprog/pulls)
+* Pull requests in [Pull requests](https://github.com/UniSwarm/uDevkit-SDK/pulls)
 
 ## Styleguides
 

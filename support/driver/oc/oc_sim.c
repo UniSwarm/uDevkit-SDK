@@ -5,7 +5,7 @@
  *
  * @date May 10, 2017, 13:00 PM
  *
- * @brief OC support for rtprog simulator
+ * @brief OC support for udevkit simulator
  */
 
 #include "oc.h"

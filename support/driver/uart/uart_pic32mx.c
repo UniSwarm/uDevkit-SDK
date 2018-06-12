@@ -5,7 +5,7 @@
  *
  * @date June 07, 2017, 08:15 AM
  *
- * @brief Uart support for rtprog for PIC32MX
+ * @brief Uart support for udevkit for PIC32MX
  *
  * Implementation based on Microchip document DS61107G :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/61107G.pdf

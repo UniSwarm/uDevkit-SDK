@@ -50,7 +50,7 @@ build-doc/
 bin/*
 doc/*
 
-# rtprog generated files
+# udevkit generated files
 modules.h
 pictures.h
 fonts.h

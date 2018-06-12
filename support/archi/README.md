@@ -1,6 +1,6 @@
 # Architecture support
 
-RtProg supports for a large range of MCU families.
+uDevkit-SDK supports for a large range of MCU families.
 
 Each subdirectory contain a family or a subfamily that can include a parent family.
 

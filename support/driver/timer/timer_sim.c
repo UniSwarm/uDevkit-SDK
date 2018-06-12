@@ -5,7 +5,7 @@
  *
  * @date September 27, 2016, 11:37 AM
  *
- * @brief Timer support for rtprog for simulation purpose
+ * @brief Timer support for udevkit for simulation purpose
  */
 
 #include "timer.h"

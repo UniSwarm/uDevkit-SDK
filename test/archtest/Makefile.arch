@@ -11,4 +11,4 @@ SRC += main.c
 
 all : elf
 
-include $(RTPROG)/rtprog.mk
+include $(RTPROG)/udevkit.mk

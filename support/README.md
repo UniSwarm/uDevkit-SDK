@@ -15,7 +15,7 @@ Use :
 
 ## robot
 
-Robot support is the highest hardware support level for RTProg. It includes a board,
+Robot support is the highest hardware support level for uDevkit-SDK. It includes a board,
 mecanical properties and sensors of the robot.
 
 You can only define one robot in your project but it is optionnal. If you

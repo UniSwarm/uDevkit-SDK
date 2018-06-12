@@ -5,7 +5,7 @@
  *
  * @date June 17, 2016, 11:45 PM
  *
- * @brief System clock support for rtprog sim
+ * @brief System clock support for udevkit sim
  */
 
 #include <stdint.h>

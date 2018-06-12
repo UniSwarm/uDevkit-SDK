@@ -16,7 +16,7 @@ SENSOR_DRIVERS = VL6180X
 
 SRC += main.c steppers.c html_fs_data.c restApi.c
 
-include $(RTPROG)/rtprog.mk
+include $(RTPROG)/udevkit.mk
 
 all : hex
 

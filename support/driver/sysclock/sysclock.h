@@ -5,7 +5,7 @@
  *
  * @date April 11, 2016, 05:12 PM
  *
- * @brief System clock support for rtprog
+ * @brief System clock support for udevkit
  */
 
 #ifndef SYSCLOCK_H

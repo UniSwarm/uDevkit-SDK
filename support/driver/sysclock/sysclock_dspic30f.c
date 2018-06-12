@@ -5,7 +5,7 @@
  *
  * @date April 11, 2016, 05:12 PM
  *
- * @brief System clock support for rtprog for dsPIC30F
+ * @brief System clock support for udevkit for dsPIC30F
  *
  * Implementation based on Microchip documents DS70054E :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/70054e.pdf

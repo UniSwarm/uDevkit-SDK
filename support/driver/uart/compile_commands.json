@@ -1,0 +1,6 @@
+[
+  { "directory": "C:/Users/seb/Seafile/my_lib_rt/udevkit/support/driver/uart",
+    "command": "clang -Wno-ignored-attributes -Wno-attributes -D_HOSTED -I../../../include/ -IE:/soft/Microchip/xc16/v1.31/support/generic/h/ -IE:/soft/Microchip/xc16/v1.31/include/ -IE:/soft/Microchip/xc16/v1.31/support/dsPIC30F/h/ -D__dsPIC30F2020__ -DARCHI_dspic30f -DDEVICE_30F2020 -c -o uart_dspic30f.o uart_dspic30f.c",
+    "file": "uart_dspic30f.c" 
+  }
+]

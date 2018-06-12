@@ -3,7 +3,7 @@ MAKEFLAGS += --no-builtin-rules
 	MAKEFLAGS += -r
 CONFIG_HEADERS = $(OUT_PWD)/modules.h
 
-# variable that contain the root directory of rtprog
+# variable that contain the root directory of uDevkit-SDK
 RTPROG := $(dir $(lastword $(MAKEFILE_LIST)))
 
 # if OUT_PWD undefined, OUT_PWD is forced to build/ sub directory
@@ -26,13 +26,13 @@ endif
 # make all as default rule
 all:
 
-# uncomment this line when all C includes will be in RTProg
+# uncomment this line when all C includes will be in uDevkit-SDK
 # CCFLAGS += -nostdinc
 
 # include all support needed
 include $(RTPROG)/support/support.mk
 
-# include path set to the local project and rtprog include path
+# include path set to the local project and uDevkit-SDK include path
 INCLUDEPATH += -I. -I$(RTPROG)/include -I$(OUT_PWD)
 
 # cleaning rule project

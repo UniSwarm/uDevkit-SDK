@@ -24,7 +24,7 @@ SRC += main.c ihm.c html_fs_data.c restApi.c
 
 all : hex
 
-include $(RTPROG)/rtprog.mk
+include $(RTPROG)/udevkit.mk
 
 $(info SRC = $(SRC))
 

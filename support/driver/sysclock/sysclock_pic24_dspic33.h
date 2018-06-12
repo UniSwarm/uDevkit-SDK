@@ -5,7 +5,7 @@
  *
  * @date April 11, 2016, 05:12 PM
  *
- * @brief System clock support for rtprog for dsPIC33FJ, dsPIC33EP, dsPIC33EV,
+ * @brief System clock support for udevkit for dsPIC33FJ, dsPIC33EP, dsPIC33EV,
  * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
  *
  * Implementation based on Microchip documents DS70186D, DS70580C, DS70005131A, DS70307E :

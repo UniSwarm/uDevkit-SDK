@@ -11,7 +11,7 @@ NETWORK_DRIVERS = esp8266 a6
 
 SRC += main.c
 
-include $(RTPROG)/rtprog.mk
+include $(RTPROG)/udevkit.mk
 
 all: hex
 	@echo $(DRIVERS)

@@ -31,7 +31,7 @@ MODULES += cmdline mrobot
 
 SRC += main.c
 
-include $(UDEVKIT)/rtprog.mk
+include $(UDEVKIT)/udevkit.mk
 ```
 
 To build and program your board, simply launch :

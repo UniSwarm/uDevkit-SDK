@@ -9,7 +9,7 @@ MODULES += gui
 
 SRC += main.c
 
-include $(RTPROG)/rtprog.mk
+include $(RTPROG)/udevkit.mk
 
 all : hex
 	@echo OBJECTS: $(OBJECTS)

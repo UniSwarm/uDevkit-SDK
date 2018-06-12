@@ -1,10 +1,10 @@
-PROJECT_NAME           = "RTprog"
+PROJECT_NAME           = "uDevkit-SDK"
 PROJECT_BRIEF          = "A tool to simplify module inclusions in embedded systems"
 OUTPUT_DIRECTORY       = doc/
 OPTIMIZE_OUTPUT_FOR_C  = YES
 
-INPUT                  = .
+INPUT                  = support
 RECURSIVE              = YES
-EXCLUDE_PATTERNS       = */build/* */include/* */contrib/* */nbproject/* */distrib/*
+EXCLUDE_PATTERNS       = */build/* */include/* */contrib/* */nbproject/* */distrib/* tool/*
 
 GENERATE_TODOLIST      = YES

@@ -5,7 +5,7 @@
  *
  * @date March 01, 2016, 22:10 PM
  *
- * @brief System clock support for rtprog for PIC32MZ family (DA, EC and EF)
+ * @brief System clock support for udevkit for PIC32MZ family (DA, EC and EF)
  * and PIC32MK
  *
  * Implementation based on Microchip document DS60001250B :

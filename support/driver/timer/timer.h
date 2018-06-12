@@ -5,7 +5,7 @@
  *
  * @date April 10, 2016, 11:04 PM
  *
- * @brief Timers support for rtprog
+ * @brief Timers support for udevkit
  */
 
 #ifndef TIMER_H
