@@ -31,7 +31,7 @@ uint32_t sysclock_posc = 0;
 uint32_t sysclock_pll = 0;
 
 /**
- * @brief Gets the actual frequency on a particular peripherical bus clock
+ * @brief Gets the actual frequency on a particular peripheral bus clock
  * @param busClock id of the bus clock (1 periph bus clock), 0 for sysclock
  * @return bus frequency in Hz, 1 in case of error to not cause divide by 0
  */
@@ -246,7 +246,7 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 
 /**
  * @brief Sets the system clock of the CPU, the system clock may be different of CPU
- * clock and peripherical clock
+ * clock and peripheral clock
  * @param fosc desirate system frequency in Hz
  * @return 0 if ok, -1 in case of error
  */

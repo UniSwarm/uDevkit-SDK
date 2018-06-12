@@ -70,7 +70,7 @@ int uart_open(rt_dev_t device)
         return -1;
 
     uarts[uart].baudSpeed = 115200;
-    uarts[uart].bitLenght = 8;
+    uarts[uart].bitLength = 8;
     uarts[uart].bitStop = 1;
     uarts[uart].bitParity = UART_BIT_PARITY_NONE;
     uart_sendconfig(uart);
@@ -142,14 +142,14 @@ uint32_t uart_effectiveBaudSpeed(rt_dev_t device)
     return uarts[uart].baudSpeed;
 }
 
-int uart_setBitConfig(rt_dev_t device, uint8_t bitLenght,
+int uart_setBitConfig(rt_dev_t device, uint8_t bitLength,
                       uint8_t bitParity, uint8_t bitStop)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return -1;
 
-    uarts[uart].bitLenght = bitLenght;
+    uarts[uart].bitLength = bitLength;
     uarts[uart].bitStop = bitStop;
     uarts[uart].bitParity = bitParity;
     uart_sendconfig(uart);
@@ -157,13 +157,13 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLenght,
     return 0;
 }
 
-uint8_t uart_bitLenght(rt_dev_t device)
+uint8_t uart_bitLength(rt_dev_t device)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return 0;
 
-    return uarts[uart].bitLenght;
+    return uarts[uart].bitLength;
 }
 
 uint8_t uart_bitParity(rt_dev_t device)

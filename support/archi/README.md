@@ -2,9 +2,9 @@
 
 uDevkit-SDK supports for a large range of MCU families.
 
-Each subdirectory contain a family or a subfamily that can include a parent family.
+Each sub directory contains a family or a subfamily that can include a parent family.
 
-Compiller specific, compilation flags or core dependent definition are contained in theses supports.
+Compiler specific, compilation flags or core dependent definition are contained in these support.
 
 |Family name|Parent family|
 |-----------|-------------|

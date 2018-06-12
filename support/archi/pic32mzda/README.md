@@ -2,7 +2,7 @@
 
 PIC32MZ DA family is a high-performance 32 bits range with MMU, MPU and GPU designed for user graphic interface applications.
 It can embed up to 32Mb of internal memory or offer an interface for an external 128Mb DDR2.
-Compared to MZ EF/EC family, MZ DA add DDR memory, LCD controller, 2D graphic accelerator and SDIO inetrface.
+Compared to MZ EF/EC family, MZ DA add DDR memory, LCD controller, 2D graphic accelerator and SDIO interface.
 An hardware crypto module is optionally available.
 
 ## Main features

@@ -42,11 +42,11 @@ void cmdline_setDevice(rt_dev_t deviceIn, rt_dev_t deviceOut)
 char cmdline_escape = 0;
 char cmdline_buffread[BUFFREAD_SIZ];
 
-// curent line
+// current line
 unsigned int cmdline_id = 0, cmdline_end = 0;
 char cmdline_line[LINE_SIZ];
 
-// history and curent line
+// history and current line
 int cmdline_history_end = 0, cmdline_history_id = -1;
 char cmdline_oldline[HISTORY_MAX][LINE_SIZ];
 

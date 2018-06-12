@@ -357,21 +357,21 @@ uint32_t spi_effectiveFreq(rt_dev_t device)
 }
 
 /**
- * @brief Sets the bit lenght of the specified spi bus
+ * @brief Sets the bit length of the specified spi bus
  * @param device spi devive bus
- * @param bitLenght 8 bits or 16 bits
+ * @param bitLength 8 bits or 16 bits
  * @return 0 if ok, -1 in case of error
  */
-int spi_setBitLenght(rt_dev_t device, uint8_t bitLenght)
+int spi_setBitLenght(rt_dev_t device, uint8_t bitLength)
 {
     uint8_t bit16;
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)
         return -1;
 
-    if (bitLenght == 16)
+    if (bitLength == 16)
         bit16 = 1;
-    else if (bitLenght == 8)
+    else if (bitLength == 8)
         bit16 = 0;
     else
         return -1;
@@ -403,11 +403,11 @@ int spi_setBitLenght(rt_dev_t device, uint8_t bitLenght)
 }
 
 /**
- * @brief Gets the bit lenght of the spi bus
+ * @brief Gets the bit length of the spi bus
  * @param device spi devive bus
- * @return lenght of word in bits
+ * @return length of word in bits
  */
-uint8_t spi_bitLenght(rt_dev_t device)
+uint8_t spi_bitLength(rt_dev_t device)
 {
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)

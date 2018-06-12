@@ -26,7 +26,7 @@ uint32_t sysclock_pll = 0;
 #endif
 
 /**
- * @brief Gets the actual frequency on a particular peripherical bus clock
+ * @brief Gets the actual frequency on a particular peripheral bus clock
  * @param busClock id of the bus clock (1 periph bus clock), 0 for sysclock
  * @return bus frequency in Hz, 1 in case of error to not cause divide by 0
  */

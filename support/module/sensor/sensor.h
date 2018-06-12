@@ -5,7 +5,8 @@
  *
  * @date September 24, 2016, 14:56 PM
  *
- * @brief Sensor module to handle various types of sensors for RTProg
+ * @brief Sensor module to handle various types
+ * of sensors for uDevkit-SDK
  */
 
 #ifndef SENSOR_H

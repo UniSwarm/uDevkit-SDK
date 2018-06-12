@@ -9,7 +9,7 @@ This family is splitted into three variations :
 * ECM : ECG with 2 CAN devices and hardware crypto module
 
 Microchip recommends [PIC32MZEF family](../pic32mzef/README.md) for new design with
-same functionalities and a floating point unit
+same functionalities and a floating-point unit
 
 ## Main features
 

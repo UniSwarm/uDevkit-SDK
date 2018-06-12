@@ -5,7 +5,7 @@
  *
  * @date February 10, 2016, 09:32 PM
  *
- * @brief ESP8266 driver for RTProg network module
+ * @brief ESP8266 driver for uDevkit-SDK network module
  */
 
 #ifndef ESP8266_H

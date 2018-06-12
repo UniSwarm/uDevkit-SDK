@@ -6,7 +6,7 @@
  * @date April 18, 2016, 22:33 PM
  *
  * @brief Quadrature Encoder Interface support driver for dsPIC30F
- * Only one QEI device could be present in this architechture.
+ * Only one QEI device could be present in this architecture.
  *
  * Implementation based on Microchip document DS70063D :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/70063D.pdf

@@ -28,8 +28,8 @@ int spi_setfreq(rt_dev_t device, uint32_t freq);
 uint32_t spi_Freq(rt_dev_t device);
 uint32_t spi_effectiveFreq(rt_dev_t device);
 
-int spi_setBitLenght(rt_dev_t device, uint8_t bitLenght);
-uint8_t spi_bitLenght(rt_dev_t device);
+int spi_setBitLenght(rt_dev_t device, uint8_t bitLength);
+uint8_t spi_bitLength(rt_dev_t device);
 
 // ========= device write ========
 ssize_t spi_write(rt_dev_t device, const char *data, size_t size);

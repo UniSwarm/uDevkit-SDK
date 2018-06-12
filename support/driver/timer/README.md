@@ -25,7 +25,7 @@ In counter mode :
 // init timer
 rt_dev_t timer;
 timer = timer_getFreeDevice();
-timer_setCounter(timer, 1); // no diviser
+timer_setCounter(timer, 1); // no divider
 timer_enable(timer); // start to count
 
 uint16_t value;
@@ -50,19 +50,20 @@ timer_clearValue(timer); // clear count
 ### timer mode
 `int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)` Sets the period in us of the timer module to work in timer mode
 
-`uint32_t timer_periodMs(rt_dev_t device)` Returns the curent period in us
+`uint32_t timer_periodMs(rt_dev_t device)` Returns the current period in us
 
 ### counter mode
-`int timer_setCounter(rt_dev_t device, uint16_t diviser)` Returns the curent value of timer
+`int timer_setCounter(rt_dev_t device, uint16_t diviser)` Returns the current value of timer
 
 `int timer_clearValue(rt_dev_t device)` Reset the value of counter
 
-`int timer_setValue(rt_dev_t device, uint16_t value)` Sets the curent value of timer
+`int timer_setValue(rt_dev_t device, uint16_t value)` Sets the current value of timer
 
-`uint16_t timer_getValue(rt_dev_t device)` Returns the curent value of timer
+`uint16_t timer_getValue(rt_dev_t device)` Returns the current value of timer
 
 ## Development status
-+ Device assignation, open, basic config and hander call with interrupt works. No test done on counter mode, need more config.
++ Device assignation, open, basic configuration and handler call with interrupt works. No test done on counter mode, need
+to be more configurable.
 
 ### TODO :
 + Clarify API

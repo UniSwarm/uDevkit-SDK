@@ -30,7 +30,7 @@ Create a directory with the name of the driver in this directory :
 
 Add <driver-name>.mk in this directory. This file will be included by the makefile when a project ask the support for this driver.
 
-To avoid multiple inclusion of <driver-name>.mk, add this (exemple with timer) :
+To avoid multiple inclusion of <driver-name>.mk, add this (example with timer) :
 
 ```Makefile
 	ifndef TIMER_DRIVER

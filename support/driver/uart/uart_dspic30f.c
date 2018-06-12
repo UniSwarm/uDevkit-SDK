@@ -336,15 +336,15 @@ uint32_t uart_effectiveBaudSpeed(rt_dev_t device)
 }
 
 /**
- * @brief Sets the config bit (bit lenght, stop bits, parity) of the specified
+ * @brief Sets the config bit (bit length, stop bits, parity) of the specified
  * uart device
  * @param device uart device number
- * @param bitLenght
+ * @param bitLength
  * @param bitParity
  * @param bitStop
  * @return 0 if ok, -1 in case of error
  */
-int uart_setBitConfig(rt_dev_t device, uint8_t bitLenght,
+int uart_setBitConfig(rt_dev_t device, uint8_t bitLength,
                       uint8_t bitParity, uint8_t bitStop)
 {
 #if UART_COUNT>=1
@@ -356,7 +356,7 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLenght,
         return -1;
 
     flags = uarts[uart].flags;
-    if (bitLenght == 9)
+    if (bitLength == 9)
     {
         flags.bit9 = 1;
         flags.parity = UART_BIT_PARITY_NONE;
@@ -404,11 +404,11 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLenght,
 }
 
 /**
- * @brief Gets the bit lenght of the device
+ * @brief Gets the bit length of the device
  * @param device uart device number
- * @return lenght of bytes in bits
+ * @return length of bytes in bits
  */
-uint8_t uart_bitLenght(rt_dev_t device)
+uint8_t uart_bitLength(rt_dev_t device)
 {
 #if UART_COUNT>=1
     uint8_t uart = MINOR(device);

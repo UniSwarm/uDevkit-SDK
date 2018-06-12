@@ -32,10 +32,10 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed);
 uint32_t uart_baudSpeed(rt_dev_t device);
 uint32_t uart_effectiveBaudSpeed(rt_dev_t device);
 
-int uart_setBitConfig(rt_dev_t device, uint8_t bitLenght,
+int uart_setBitConfig(rt_dev_t device, uint8_t bitLength,
                                       uint8_t bitParity,
                                       uint8_t bitStop);
-uint8_t uart_bitLenght(rt_dev_t device);
+uint8_t uart_bitLength(rt_dev_t device);
 uint8_t uart_bitParity(rt_dev_t device);
 uint8_t uart_bitStop(rt_dev_t device);
 

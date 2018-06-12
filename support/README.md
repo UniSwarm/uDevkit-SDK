@@ -1,13 +1,13 @@
 # Support directory
 
-This directory contains differents level of support. All this support files
-are automatically added to your project by differents variables.
+This directory contains different levels of support. All theses support
+files are automatically added to your project by different variables.
 
 ## module
 
-A module is a set of functionnalities independant of the processor that you use.
+A module is a set of functionalities independent of the processor that you use.
 
-Use :
+Usage :
 
 	MODULES += cmd_line gui
 
@@ -16,12 +16,12 @@ Use :
 ## robot
 
 Robot support is the highest hardware support level for uDevkit-SDK. It includes a board,
-mecanical properties and sensors of the robot.
+mechanical properties and sensors of the robot.
 
-You can only define one robot in your project but it is optionnal. If you
+You can only define one robot in your project but it is optional. If you
 don't use it in your project, you need to define a board.
 
-Use :
+Usage :
 
 	ROBOT = deltatips
 
@@ -29,10 +29,10 @@ Use :
 
 ## board
 
-Board support defines an architechture and the processor used. It also map 
+Board support defines an architecture and the processor used. It also maps
 inputs and outputs of various devices to the board to the processor.
 
-Use :
+Usage :
 
 	BOARD = rtboard
 
@@ -41,21 +41,21 @@ Use :
 ## archi
 
 Archi support define compiler to use with specific options and low level
-architechture dependant code. You need to define the architechture family 
+architecture dependent code. You need to define the architecture family 
 and the complete processor reference.
 
-Use :
+Usage :
 
 	DEVICE = 33EP256MU806
 	ARCHI = dspic33ep
 
-[Advanced documentation and list of architechtures](archi/README.md)
+[Advanced documentation and list of architectures](archi/README.md)
 
 ## driver
 
-Low level driver dependant or not of the processor.
+Low level driver dependent or not of the processor.
 
-Use :
+Usage :
 
 	DRIVERS += uart spi timer
 

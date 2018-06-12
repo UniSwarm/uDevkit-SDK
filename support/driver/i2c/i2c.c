@@ -5,7 +5,7 @@
  *
  * @date March 01, 2016, 19:10 PM
  *
- * @brief I2C communication support driver, global function peripherical
+ * @brief I2C communication support driver, global function peripheral
  * independent
  */
 

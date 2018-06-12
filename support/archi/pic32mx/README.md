@@ -7,8 +7,8 @@ This family is splitted into multiple subfamilies :
 * MX1 / MX2: lower CPU power, USB on MX2xx, low pin count available
 * MX3 / MX4: two CPU speed available (105 or 150DMIP)
 * MX5: USB and CAN com, large memory
-* MX6: USB and ethernet com, large memory
-* MX7: USB, 2 CAN and ethernet com, large memory
+* MX6: USB and Ethernet com, large memory
+* MX7: USB, 2 CAN and Ethernet com, large memory
 
 ## Main features
 

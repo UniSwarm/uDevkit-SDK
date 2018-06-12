@@ -5,7 +5,7 @@
  *
  * @date February 10, 2016, 09:32 PM
  *
- * @brief ESP8266 driver in AT mode for RTProg network module
+ * @brief ESP8266 driver in AT mode for uDevkit-SDK network module
  */
 
 #include "esp8266.h"

@@ -52,7 +52,7 @@ while (1)
 `port_type gpio_readPort(rt_dev_t device)` Read GPIO port value (complete port)
 
 ## Development status
-Device assignation, config, send and read data fully functionnal
+Device assignation, configuration, write and read data fully functional
 
 ### TODO :
 + add special pins settings

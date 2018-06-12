@@ -1,6 +1,6 @@
 # PIC 16 bits support
 
-This architechture support file handle all 16 bits famillies of Microchip.
+This architecture support file handle all 16 bits families of Microchip.
 
 (589 devices on february 2018)
 

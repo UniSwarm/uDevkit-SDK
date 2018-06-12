@@ -67,7 +67,7 @@ i2c_writereg(i2c_bus, i2cPeriphAddr, i2cRegAddr, value, I2C_REG8 | I2C_REGADDR8)
 ### high level functions, registers level
 `uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t flags)` Read a register at address 'reg' in i2c chip with address 'address'
 
-`ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[], size_t size, uint8_t flags)` Read 'size' registers begining at address 'reg' in i2c chip with address 'address'
+`ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[], size_t size, uint8_t flags)` Read 'size' registers beginning at address 'reg' in i2c chip with address 'address'
 
 `int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value, uint8_t flags)` Write 'value' in register at address 'reg' in i2c chip with address 'address'
 
@@ -81,10 +81,10 @@ i2c_writereg(i2c_bus, i2cPeriphAddr, i2cRegAddr, value, I2C_REG8 | I2C_REGADDR8)
 
 * `I2C_READ_RESTART` (default) or `I2C_READ_STOPSTART` to indicate if device need a restart or a stop followed by a start between read transaction (both exists)
 
-This flag should be used with (|) pipes/logic or. It is not necessary to precice it if you use default value
+This flag should be used with (|) pipes/logic or. It is not necessary to precise it if you use default value
 
 ## Development status
-Device assignation, config, send and read data fully functionnal
+Device assignation, configuration, send and read data fully functional
 
 ### TODO :
 + review error return in high level function and i2c_getc

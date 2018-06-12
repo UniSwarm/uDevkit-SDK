@@ -5,7 +5,8 @@
  *
  * @date February 22, 2017, 15:28 PM
  *
- * @brief Network module to handle various types of network interfaces for RTProg
+ * @brief Network module to handle various types
+ * of network interfaces for uDevkit-SDK
  */
 
 #include "network.h"

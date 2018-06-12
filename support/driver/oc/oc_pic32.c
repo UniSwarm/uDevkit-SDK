@@ -594,9 +594,9 @@ int oc_setRVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
 }
 
 /**
- * @brief Returns the curent rVal value
+ * @brief Returns the current rVal value
  * @param device OC device number
- * @return curent rVal value
+ * @return current rVal value
  */
 uint32_t oc_rVal(rt_dev_t device)
 {
@@ -612,9 +612,9 @@ uint32_t oc_rVal(rt_dev_t device)
 }
 
 /**
- * @brief Returns the curent rVal value
+ * @brief Returns the current rVal value
  * @param device OC device number
- * @return curent rVal value
+ * @return current rVal value
  */
 uint32_t oc_rsVal(rt_dev_t device)
 {

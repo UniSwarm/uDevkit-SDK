@@ -3,9 +3,9 @@
 > Warning support based on a very low piece of information, may vary in few weeks, only preliminary support.
 
 dsPIC33CH family is the first dual core 16 bits range. The main core have 16 kb of dedicated RAM and the slave core 4 kb
-with a hardware MSI cache coherency protocol. Architechture and periphericals are similar to [dsPIC33CK](../dspic33ck/README.md).
+with a hardware MSI cache coherency protocol. Architecture and peripherals are similar to dsPIC33CK.
 
-A lot of periphericals (UART, Timer...) are not compatible with others dsPIC ranges. Full support of drivers may needs additionnal time.
+A lot of peripherals (UART, Timer...) are not compatible with others dsPIC ranges. Full support of drivers may needs additional time.
 
 This family have variation of flash memory, pin count and CAN FD for 5XX subfamily.
 

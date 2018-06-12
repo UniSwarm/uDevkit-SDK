@@ -19,21 +19,21 @@
 // bus clock
 typedef enum {
     SYSCLOCK_CLOCK_SYSCLK = 0x0,    ///< main sysclock
-    SYSCLOCK_CLOCK_PBCLK,           ///< peripherical bus
+    SYSCLOCK_CLOCK_PBCLK,           ///< peripheral bus
     SYSCLOCK_CLOCK_REFCLK           ///< reference clock module
 } SYSCLOCK_CLOCK;
 
 // periph clock assoc
 #define SYSCLOCK_CLOCK_CPU    SYSCLOCK_CLOCK_SYSCLK  ///< CPU clock bus
 #define SYSCLOCK_CLOCK_USB    SYSCLOCK_CLOCK_USBCLK  ///< USB clock bus
-#define SYSCLOCK_CLOCK_CAN    SYSCLOCK_CLOCK_PBCLK   ///< CAN clock bus mapped to peripherical bus 5
-#define SYSCLOCK_CLOCK_PMP    SYSCLOCK_CLOCK_PBCLK   ///< PMP clock bus mapped to peripherical bus 2
-#define SYSCLOCK_CLOCK_I2C    SYSCLOCK_CLOCK_PBCLK   ///< I2C clock bus mapped to peripherical bus 2
-#define SYSCLOCK_CLOCK_UART   SYSCLOCK_CLOCK_PBCLK   ///< UART clock bus mapped to peripherical bus 2
-#define SYSCLOCK_CLOCK_SPI    SYSCLOCK_CLOCK_PBCLK   ///< SPI clock bus mapped to peripherical bus 2
-#define SYSCLOCK_CLOCK_TIMER  SYSCLOCK_CLOCK_PBCLK   ///< TIMER clock bus mapped to peripherical bus 3
-#define SYSCLOCK_CLOCK_OC     SYSCLOCK_CLOCK_PBCLK   ///< OC clock bus mapped to peripherical bus 3
-#define SYSCLOCK_CLOCK_IC     SYSCLOCK_CLOCK_PBCLK   ///< IC clock bus mapped to peripherical bus 3
+#define SYSCLOCK_CLOCK_CAN    SYSCLOCK_CLOCK_PBCLK   ///< CAN clock bus mapped to peripheral bus 5
+#define SYSCLOCK_CLOCK_PMP    SYSCLOCK_CLOCK_PBCLK   ///< PMP clock bus mapped to peripheral bus 2
+#define SYSCLOCK_CLOCK_I2C    SYSCLOCK_CLOCK_PBCLK   ///< I2C clock bus mapped to peripheral bus 2
+#define SYSCLOCK_CLOCK_UART   SYSCLOCK_CLOCK_PBCLK   ///< UART clock bus mapped to peripheral bus 2
+#define SYSCLOCK_CLOCK_SPI    SYSCLOCK_CLOCK_PBCLK   ///< SPI clock bus mapped to peripheral bus 2
+#define SYSCLOCK_CLOCK_TIMER  SYSCLOCK_CLOCK_PBCLK   ///< TIMER clock bus mapped to peripheral bus 3
+#define SYSCLOCK_CLOCK_OC     SYSCLOCK_CLOCK_PBCLK   ///< OC clock bus mapped to peripheral bus 3
+#define SYSCLOCK_CLOCK_IC     SYSCLOCK_CLOCK_PBCLK   ///< IC clock bus mapped to peripheral bus 3
 
 // clock source
 typedef enum {

@@ -1,9 +1,9 @@
 # dsPIC33CK support
 
-dsPIC33CK family is a new generation of 16 bits microcontroller with DSP accelerator. Architechture and periphericals
+dsPIC33CK family is a new generation of 16 bits microcontroller with DSP accelerator. Architecture and peripherals
 are similar to [dsPIC33CH](../dspic33ch/README.md).
 
-A lot of periphericals (UART, Timer...) are not compatible with others dsPIC ranges. Full support of drivers may needs additionnal time.
+A lot of peripherals (UART, Timer...) are not compatible with others dsPIC ranges. Full support of drivers may needs additional time.
 
 This family have variation of flash memory, pin count and CAN FD for 5XX subfamily.
 

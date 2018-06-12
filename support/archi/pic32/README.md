@@ -1,6 +1,6 @@
 # PIC 32 bits support
 
-This architecture support file handle all 32 bits famillies of Microchip. compared to 16 bits, 32 bits range offers various advantages :
+This architecture support file handle all 32 bits families of Microchip. compared to 16 bits, 32 bits range offers various advantages :
 
 * C++ compiler support
 * larger memory addressing

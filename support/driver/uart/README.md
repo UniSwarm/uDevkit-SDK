@@ -39,9 +39,9 @@ uart_read(uart, buff, 20);
 
 `uint32_t uart_effectiveBaudSpeed(rt_dev_t device)` Gets the effective baud speed
 
-`int uart_setBitConfig(rt_dev_t device, uint8_t bitLenght, uint8_t bitParity, uint8_t bitStop)` Sets the config bit (bit lenght, stop bits, parity)
+`int uart_setBitConfig(rt_dev_t device, uint8_t bitLength, uint8_t bitParity, uint8_t bitStop)` Sets the configuration bit (bit length, stop bits, parity)
 
-`uint8_t uart_bitLenght(rt_dev_t device)` Gets the bit lenght of the device
+`uint8_t uart_bitLength(rt_dev_t device)` Gets the bit length of the device
 
 `uint8_t uart_bitParity(rt_dev_t device)` Gets the uart parity mode
 
@@ -51,17 +51,16 @@ uart_read(uart, buff, 20);
 `ssize_t uart_write(rt_dev_t device, const char *data, size_t size)` Writes data to uart device
 
 ### device read
-`ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)` Gets all the data readden by uart device
+`ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)` Gets all the data redden by uart device
 
 `size_t uart_datardy(rt_dev_t device)` Gets number of data that could be read (in sw buffer)
 
 ## Development status
-Device assignation, config, send and read data fully functionnal
+Device assignation, configuration, send and read data fully functional
 
 ### TODO :
 + error interrupt (only for pic24ep, pic24hj, dspic33ep, dspic33ev and PIC32MZ)
 + receive check flags
-+ use hw buffer for receive + almost empty interrupt config
 
 ## Supported architectures
 

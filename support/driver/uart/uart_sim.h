@@ -18,7 +18,7 @@ typedef struct
     uint32_t baudSpeed;
     uint8_t bitStop;
     uint8_t bitParity;
-    uint8_t bitLenght;
+    uint8_t bitLength;
     uint8_t enabled;
 } uart_dev;
 

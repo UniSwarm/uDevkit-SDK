@@ -18,10 +18,10 @@ uint32_t timer_freq = sysclock_periphFreq();
 ### global clock to set performance
 `int sysclock_setClock(uint32_t fosc)` Sets the system clock of the CPU, the system clock may be different of CPU
 
-### peripherical clocks and tree clocks
-`uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)` Gets the actual frequency on a particular peripherical bus clock
+### peripheral clocks and tree clocks
+`uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)` Gets the actual frequency on a particular peripheral bus clock
 
-`int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)` Change the divisor of the busClock given as argumen
+`int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)` Change the divisor of the busClock given as argument
 
 ### source clock
 `int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)` Return the actual frequency of the clock source
@@ -72,4 +72,3 @@ uint32_t timer_freq = sysclock_periphFreq();
 * dsPIC33FJxxxGP/MC : 7.37 +/- 0.375%
 * PIC24F/FJ: 8 +/- 0.05%
 * PIC24HJ: 7.37 +/- 0.375%
-

@@ -559,7 +559,7 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 }
 
 /**
- * @brief Returns the curent period in us
+ * @brief Returns the current period in us
  * @param device timer device number
  * @return period in us if ok, 0 in case of error
  */
@@ -600,7 +600,7 @@ int timer_setPeriodUs(rt_dev_t device, uint32_t periodUs)
 }
 
 /**
- * @brief Returns the curent period in us
+ * @brief Returns the current period in us
  * @param device timer device number
  * @return period in us if ok, 0 in case of error
  */
@@ -618,7 +618,7 @@ uint32_t timer_periodUs(rt_dev_t device)
 }
 
 /**
- * @brief Returns the curent value of timer
+ * @brief Returns the current value of timer
  * @param device timer device number
  * @return value if ok, 0 in case of error
  */
@@ -684,7 +684,7 @@ uint16_t timer_getValue(rt_dev_t device)
 }
 
 /**
- * @brief Sets the curent value of timer
+ * @brief Sets the current value of timer
  * @param device timer device number
  * @return 0 if ok, -1 in case of error
  */

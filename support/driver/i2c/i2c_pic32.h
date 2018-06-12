@@ -108,7 +108,7 @@
  #define I2C_COUNT 0
 #endif
 
-// I2C are disabled in MK familly until it will fixed ...
+// I2C are disabled in MK family until it will fixed ...
 #if defined(ARCHI_pic32mk)
  #undef I2C_COUNT
  #define I2C_COUNT 0

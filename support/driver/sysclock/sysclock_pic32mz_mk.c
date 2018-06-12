@@ -26,7 +26,7 @@ uint32_t sysclock_upll = 0;
 #endif
 
 /**
- * @brief Gets the actual frequency on a particular peripherical bus clock
+ * @brief Gets the actual frequency on a particular peripheral bus clock
  * @param busClock id of the bus clock (1 to 8 for PBCLK1 to PBCLK8), 0 for sysclock
  * @return bus frequency in Hz
  */
@@ -311,7 +311,7 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 
 /**
  * @brief Sets the system clock of the CPU, the system clock may be different of CPU
- * clock and peripherical clock
+ * clock and peripheral clock
  * @param fosc desirate system frequency in Hz
  * @return 0 if ok, -1 in case of error
  */
