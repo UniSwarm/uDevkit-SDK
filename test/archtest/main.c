@@ -11,7 +11,7 @@ char led=0;
 void tt()
 {
 #ifdef BOARD
-    board_toggleLed(0, led++);
+    board_toggleLed(0);
 #endif
 }
 
@@ -24,6 +24,8 @@ int main(void)
 #else
     archi_init();
 #endif
+    enable_interrupt();
+    //sysclock_setClock(20000000);
     //sysclock_setClockDiv(SYSCLOCK_CLOCK_TIMER, 32);
 
     // init timer

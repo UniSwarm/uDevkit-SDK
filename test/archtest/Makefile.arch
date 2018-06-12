@@ -4,7 +4,7 @@ PROJECT = archtest
 
 CCFLAGS += -Wall
 
-DRIVERS += sysclock uart timer i2c # oc pwm adc gpio
+DRIVERS += sysclock uart timer i2c gpio can # oc pwm adc
 # MODULES += cmdline
 
 SRC += main.c
