@@ -34,7 +34,7 @@ typedef struct
 // coders, geometry, location
 void mrobot_setCoderDev(rt_dev_t leftCoder_dev, rt_dev_t rightCoder_dev);
 void mrobot_setCoderWay(uint8_t leftCoder_way, uint8_t rightCoder_way);
-void mrobot_setCoderGeometry(float entrax, float stepLenght);
+void mrobot_setCoderGeometry(float entrax, float stepLength);
 void mrobot_setPose(MrobotPose pose);
 
 // motors control

@@ -26,9 +26,9 @@ void mrobot_setCoderWay(uint8_t leftCoder_way, uint8_t rightCoder_way)
     // TODO
 }
 
-void mrobot_setCoderGeometry(float entrax, float stepLenght)
+void mrobot_setCoderGeometry(float entrax, float stepLength)
 {
-    asserv_setCoderGeometry(entrax, stepLenght);
+    asserv_setCoderGeometry(entrax, stepLength);
 }
 
 void mrobot_setPose(MrobotPose pose)
@@ -143,10 +143,10 @@ float mrobot_nextKeypointDistance()
 
 float mrobot_speed()
 {
-    return asserv_currentSpeed() * asserv_stepLenght() * 1000.0;
+    return asserv_currentSpeed() * asserv_stepLength() * 1000.0;
 }
 
 float mrobot_targetSpeed()
 {
-    return mrobot_lastSpeed * asserv_stepLenght() * 1000.0;
+    return mrobot_lastSpeed * asserv_stepLength() * 1000.0;
 }

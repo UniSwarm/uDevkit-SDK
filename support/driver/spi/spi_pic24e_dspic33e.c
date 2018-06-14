@@ -362,7 +362,7 @@ uint32_t spi_effectiveFreq(rt_dev_t device)
  * @param bitLength 8 bits or 16 bits
  * @return 0 if ok, -1 in case of error
  */
-int spi_setBitLenght(rt_dev_t device, uint8_t bitLength)
+int spi_setBitLength(rt_dev_t device, uint8_t bitLength)
 {
     uint8_t bit16;
     uint8_t spi = MINOR(device);

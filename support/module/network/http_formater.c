@@ -39,10 +39,10 @@ void http_write_content_type(char *buffer, const char *content_type)
     strcat(buffer, "\r\n");
 }
 
-void http_write_content_lenght(char *buffer, unsigned int content_lenght)
+void http_write_content_length(char *buffer, unsigned int content_length)
 {
     strcat(buffer, "Content-Length: ");
-    // strcat(buffer, content_lenght);
+    // strcat(buffer, content_length);
     strcat(buffer, "\r\n");
 }
 

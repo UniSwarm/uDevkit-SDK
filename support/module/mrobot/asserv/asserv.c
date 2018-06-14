@@ -75,10 +75,10 @@ int asserv_init()
     return 0;
 }
 
-void asserv_setCoderGeometry(float entrax, float stepLenght)
+void asserv_setCoderGeometry(float entrax, float stepLength)
 {
     asserv_loc_coderentrax = entrax;
-    asserv_loc_coderstep = stepLenght;
+    asserv_loc_coderstep = stepLength;
 }
 
 float asserv_entrax()
@@ -86,7 +86,7 @@ float asserv_entrax()
     return asserv_loc_coderentrax;
 }
 
-float asserv_stepLenght()
+float asserv_stepLength()
 {
     return asserv_loc_coderstep;
 }

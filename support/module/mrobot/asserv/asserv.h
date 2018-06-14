@@ -15,9 +15,9 @@
 
 // ======= init and settings =======
 int asserv_init();
-void asserv_setCoderGeometry(float entrax, float stepLenght);
+void asserv_setCoderGeometry(float entrax, float stepLength);
 float asserv_entrax();
-float asserv_stepLenght();
+float asserv_stepLength();
 void asserv_setCoderDev(rt_dev_t leftCoder_dev, rt_dev_t rightCoder_dev);
 
 void asserv_setPid(uint16_t kp, uint16_t ki, uint16_t kd);

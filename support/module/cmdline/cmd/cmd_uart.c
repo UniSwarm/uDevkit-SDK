@@ -69,7 +69,7 @@ int cmd_uart(int argc, char **argv)
         }
         printf("Config: %lubds %d%c%d (%lubds)\r\n",
             uart_effectiveBaudSpeed(uart_dev),
-            (int)uart_bitLenght(uart_dev),
+            (int)uart_bitLength(uart_dev),
             parity,
             (int)uart_bitStop(uart_dev),
             uart_baudSpeed(uart_dev));
