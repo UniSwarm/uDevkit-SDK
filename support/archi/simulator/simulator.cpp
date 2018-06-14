@@ -35,7 +35,7 @@ void simulator_init()
 void simulator_end()
 {
     simulator_socket_end();
-    //puts("end simulator execution\n");
+    puts("end simulator execution\n");
 }
 
 void simulator_send(uint16_t moduleId, uint16_t periphId, uint16_t functionId, const char *data, size_t size)

@@ -1,4 +1,4 @@
-RTPROG = ../..
+UDEVKIT = ../..
 
 PROJECT = swarm2test
 BOARD = swarmtips2
@@ -24,7 +24,7 @@ SRC += main.c ihm.c html_fs_data.c restApi.c
 
 all : hex
 
-include $(RTPROG)/udevkit.mk
+include $(UDEVKIT)/udevkit.mk
 
 $(info SRC = $(SRC))
 

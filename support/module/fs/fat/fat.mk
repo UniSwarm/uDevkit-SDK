@@ -1,7 +1,7 @@
 ifndef FS_MODULE
 FS_MODULE=
 
-vpath %.c $(RTPROG)/contrib/fatfs/src
+vpath %.c $(UDEVKIT)/contrib/fatfs/src
 SRC += ff.c
 
 ARCHI_SRC += diskio.c

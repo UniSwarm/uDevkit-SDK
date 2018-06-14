@@ -10,7 +10,7 @@ ifndef BOARD
 endif
 
 ifdef BOARD
- BOARD_FILE = $(RTPROG)/support/board/$(BOARD)/$(BOARD).mk
+ BOARD_FILE = $(UDEVKIT)/support/board/$(BOARD)/$(BOARD).mk
  
  # check BOARD_FILE exists 
  ifeq ("$(wildcard $(BOARD_FILE))","")
@@ -20,5 +20,5 @@ ifdef BOARD
  # include the board file
  include $(BOARD_FILE)
  
- INCLUDEPATH += -I$(RTPROG)/support/board/$(BOARD)/
+ INCLUDEPATH += -I$(UDEVKIT)/support/board/$(BOARD)/
 endif

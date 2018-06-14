@@ -8,9 +8,9 @@ INCLUDEPATH:= $(INCLUDEPATH) -I$(DRIVERPATH)
 
 # 16bits and 32MM proc
 ifeq ($(ARCHI), $(filter $(ARCHI),pic24ep pic24fj dspic33ep pic32mm))
- vpath %.c $(RTPROG)/contrib/microchip/mla_usb/src
- vpath %.h $(RTPROG)/contrib/microchip/mla_usb/inc
- INCLUDEPATH:= $(INCLUDEPATH) -I$(RTPROG)/contrib/microchip/mla_usb/inc
+ vpath %.c $(UDEVKIT)/contrib/microchip/mla_usb/src
+ vpath %.h $(UDEVKIT)/contrib/microchip/mla_usb/inc
+ INCLUDEPATH:= $(INCLUDEPATH) -I$(UDEVKIT)/contrib/microchip/mla_usb/inc
  ARCHI_SRC += usb_device.c usb_device_generic.c system.c
 endif
 
@@ -29,9 +29,9 @@ endif
 
 # 32bits proc
 ifeq ($(ARCHI), $(filter $(ARCHI),pic32mzef pic32mzec))
- vpath %.c $(RTPROG)/contrib/microchip/harmony_usb/src
- vpath %.h $(RTPROG)/contrib/microchip/harmony_usb/include
- INCLUDEPATH:= $(INCLUDEPATH) -I$(RTPROG)/contrib/microchip/harmony_usb/include -I$(RTPROG)/contrib/microchip/harmony_usb/
+ vpath %.c $(UDEVKIT)/contrib/microchip/harmony_usb/src
+ vpath %.h $(UDEVKIT)/contrib/microchip/harmony_usb/include
+ INCLUDEPATH:= $(INCLUDEPATH) -I$(UDEVKIT)/contrib/microchip/harmony_usb/include -I$(UDEVKIT)/contrib/microchip/harmony_usb/
  ARCHI_SRC += usb_device.c
 endif
 

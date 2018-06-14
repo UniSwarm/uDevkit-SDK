@@ -1,4 +1,4 @@
-RTPROG = ../..
+UDEVKIT = ../..
 
 PROJECT = testproj
 BOARD = rtboard1_1
@@ -19,7 +19,7 @@ SENSOR_DRIVERS = sharp
 
 SRC += main.c
 
-include $(RTPROG)/udevkit.mk
+include $(UDEVKIT)/udevkit.mk
 
 all : hex
 	@echo "DRIVERS asked         :" $(sort $(DRIVERS) $(BADDRIVERS))

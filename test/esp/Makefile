@@ -1,4 +1,4 @@
-RTPROG = ../..
+UDEVKIT = ../..
 
 PROJECT = esp
 BOARD = rtboard1_1
@@ -14,7 +14,7 @@ SRC += main.c html_fs_data.c restApi.c
 all : hex
 
 
-include $(RTPROG)/udevkit.mk
+include $(UDEVKIT)/udevkit.mk
 
 html_fs_data.c: $(HTMLGEN_EXE) $(call rwildcard, html_fs/, *)
 	$(HTMLGEN_EXE) -i html_fs/ -o html_fs_data.c

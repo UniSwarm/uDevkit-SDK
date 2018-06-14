@@ -1,4 +1,4 @@
-RTPROG = ../..
+UDEVKIT = ../..
 
 PROJECT = simtest
 BOARD = a6screenboard
@@ -9,7 +9,7 @@ MODULES += gui
 
 SRC += main.c
 
-include $(RTPROG)/udevkit.mk
+include $(UDEVKIT)/udevkit.mk
 
 all : hex
 	@echo OBJECTS: $(OBJECTS)

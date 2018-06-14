@@ -21,13 +21,13 @@ CONFIG_HEADERS += $(OUT_PWD)/network_driver.h
 
 # HTMLGEN_EXE cmd
 ifeq ($(OS),Windows_NT)
- HTMLGEN_EXE := $(RTPROG)/bin/htmlGen.exe
+ HTMLGEN_EXE := $(UDEVKIT)/bin/htmlGen.exe
 else
- HTMLGEN_EXE := $(RTPROG)/bin/htmlGen
+ HTMLGEN_EXE := $(UDEVKIT)/bin/htmlGen
 endif
-$(HTMLGEN_EXE): $(RTPROG)/tool/htmlGen/htmlGen.cpp $(RTPROG)/tool/htmlGen/htmlGen.pro
+$(HTMLGEN_EXE): $(UDEVKIT)/tool/htmlGen/htmlGen.cpp $(UDEVKIT)/tool/htmlGen/htmlGen.pro
 	@echo "Building htmlGen..."
-	cd $(RTPROG)/tool/htmlGen/ && make
+	cd $(UDEVKIT)/tool/htmlGen/ && make
 rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
 
 endif

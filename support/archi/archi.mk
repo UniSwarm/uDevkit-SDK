@@ -1,7 +1,7 @@
 
 ARCHIPATH = $(dir $(lastword $(MAKEFILE_LIST)))
 
-ARCHI_FILE = $(RTPROG)/support/archi/$(ARCHI)/$(ARCHI).mk
+ARCHI_FILE = $(UDEVKIT)/support/archi/$(ARCHI)/$(ARCHI).mk
 
 # check BOARD_FILE exists 
 ifeq ("$(wildcard $(ARCHI_FILE))","")

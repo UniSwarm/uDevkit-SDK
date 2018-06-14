@@ -4,7 +4,7 @@ MAKEFLAGS += --no-builtin-rules
 CONFIG_HEADERS = $(OUT_PWD)/modules.h
 
 # variable that contain the root directory of uDevkit-SDK
-RTPROG := $(dir $(lastword $(MAKEFILE_LIST)))
+UDEVKIT := $(dir $(lastword $(MAKEFILE_LIST)))
 
 # if OUT_PWD undefined, OUT_PWD is forced to build/ sub directory
 ifndef OUT_PWD
@@ -30,10 +30,10 @@ all:
 # CCFLAGS += -nostdinc
 
 # include all support needed
-include $(RTPROG)/support/support.mk
+include $(UDEVKIT)/support/support.mk
 
 # include path set to the local project and uDevkit-SDK include path
-INCLUDEPATH += -I. -I$(RTPROG)/include -I$(OUT_PWD)
+INCLUDEPATH += -I. -I$(UDEVKIT)/include -I$(OUT_PWD)
 
 # cleaning rule project
 .PHONY: clean

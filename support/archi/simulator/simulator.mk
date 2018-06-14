@@ -7,18 +7,18 @@ OUT_SIM_PWD ?= simbuild
 ifeq ($(OS),Windows_NT)
   SIM_EXE := $(PROJECT).exe
   LIBS_SIM += -lws2_32
-  RTSIM_EXE := $(RTPROG)/bin/rtsim.exe
+  RTSIM_EXE := $(UDEVKIT)/bin/rtsim.exe
 else
   SIM_EXE := $(PROJECT)_sim
   LIBS_SIM += -pthread
-  RTSIM_EXE := $(RTPROG)/bin/rtsim
+  RTSIM_EXE := $(UDEVKIT)/bin/rtsim
 endif
 
-$(RTSIM_EXE): $(shell find $(RTPROG)/tool/rtsim/ \( -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.pro' \))
+$(RTSIM_EXE): $(shell find $(UDEVKIT)/tool/rtsim/ \( -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.pro' \))
 	@echo "Building rtsim..."
-	cd $(RTPROG)/tool/rtsim/ && make
+	cd $(UDEVKIT)/tool/rtsim/ && make
 
-SIMULATOR_PATH := $(RTPROG)/support/archi/simulator
+SIMULATOR_PATH := $(UDEVKIT)/support/archi/simulator
 DEFINES_SIM += -D SIMULATOR -I $(SIMULATOR_PATH) -g
 
 vpath %.c $(SIMULATOR_PATH)
@@ -48,7 +48,7 @@ $(OUT_PWD)/$(SIM_EXE) : $(SIM_OBJECTS)
 	$(VERB)$(CPPC_SIM) $(CCFLAGS) -o $(OUT_PWD)/$(SIM_EXE) $(addprefix $(OUT_PWD)/,$(notdir $(SIM_OBJECTS))) $(LIBS_SIM) $(DEFINES_SIM) -lm
 
 sim : $(OUT_PWD)/$(SIM_EXE) $(RTSIM_EXE)
-	killall rtsim || true
+	#killall rtsim || true
 	$(RTSIM_EXE) $(OUT_PWD)/$(SIM_EXE)
 
 sim-clean :

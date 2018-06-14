@@ -42,7 +42,7 @@ else                      # other compiler used
  CCFLAGS += -Wno-all
 endif
 
-vpath %.h $(RTPROG)/support/archi/pic16b/
+vpath %.h $(UDEVKIT)/support/archi/pic16b/
 HEADER += pic16b.h
 
 # debug flags for MPLAB X, experimental
@@ -53,4 +53,4 @@ HEADER += pic16b.h
 #CCFLAGS += -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -O0 -msmart-io=1 -msfr-warn=off
 #
 
--include $(RTPROG)/support/archi/microchip/microchip.mk
+-include $(UDEVKIT)/support/archi/microchip/microchip.mk

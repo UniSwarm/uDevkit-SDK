@@ -1,4 +1,4 @@
-RTPROG = ../..
+UDEVKIT = ../..
 
 DEV_PROG = RICE
 PROJECT = test32
@@ -14,7 +14,7 @@ MODULES += cmdline
 
 SRC += main.c
 
-include $(RTPROG)/udevkit.mk
+include $(UDEVKIT)/udevkit.mk
 
 all : hex
 	@echo "SRC asked         :" $(sort $(SRC) $(ARCHI_SRC))

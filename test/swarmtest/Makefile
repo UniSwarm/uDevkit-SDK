@@ -1,4 +1,4 @@
-RTPROG = ../..
+UDEVKIT = ../..
 
 PROJECT = swarmtest
 BOARD = swarmtips
@@ -16,7 +16,7 @@ SENSOR_DRIVERS = VL6180X
 
 SRC += main.c steppers.c html_fs_data.c restApi.c
 
-include $(RTPROG)/udevkit.mk
+include $(UDEVKIT)/udevkit.mk
 
 all : hex
 

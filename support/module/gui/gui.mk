@@ -29,13 +29,13 @@ CONFIG_HEADERS += $(OUT_PWD)/gui_driver.h
 ######### EXTERNAL RESSOURCE SUPPORT #########
 # IMG2RAW_EXE cmd
 ifeq ($(OS),Windows_NT)
- IMG2RAW_EXE := $(RTPROG)/bin/img2raw.exe
+ IMG2RAW_EXE := $(UDEVKIT)/bin/img2raw.exe
 else
- IMG2RAW_EXE := $(RTPROG)/bin/img2raw
+ IMG2RAW_EXE := $(UDEVKIT)/bin/img2raw
 endif
-$(IMG2RAW_EXE): $(RTPROG)/tool/img2raw/img2raw.cpp $(RTPROG)/tool/img2raw/img2raw.pro
+$(IMG2RAW_EXE): $(UDEVKIT)/tool/img2raw/img2raw.cpp $(UDEVKIT)/tool/img2raw/img2raw.pro
 	@echo "Building img2raw..."
-	cd $(RTPROG)/tool/img2raw/ && make
+	cd $(UDEVKIT)/tool/img2raw/ && make
 
 ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic30f dspic33fj dspic33ep dspic33ev))
  CCFLAGS_XC += -mlarge-code -mlarge-arrays -mlarge-data

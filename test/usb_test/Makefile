@@ -1,4 +1,4 @@
-RTPROG = ../..
+UDEVKIT = ../..
 
 PROJECT = usb_test
 BOARD = rtboard
@@ -11,7 +11,7 @@ NETWORK_DRIVERS = esp8266 a6
 
 SRC += main.c
 
-include $(RTPROG)/udevkit.mk
+include $(UDEVKIT)/udevkit.mk
 
 all: hex
 	@echo $(DRIVERS)

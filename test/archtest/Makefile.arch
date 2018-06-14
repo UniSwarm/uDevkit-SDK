@@ -1,4 +1,4 @@
-RTPROG = ../..
+UDEVKIT = ../..
 
 PROJECT = archtest
 
@@ -11,4 +11,4 @@ SRC += main.c
 
 all : elf
 
-include $(RTPROG)/udevkit.mk
+include $(UDEVKIT)/udevkit.mk

@@ -1,4 +1,4 @@
-RTPROG = ../..
+UDEVKIT = ../..
 
 FACE?=BEAR
 ifeq ($(FACE),BEAR)
@@ -29,7 +29,7 @@ NETWORK_DRIVERS = a6
 SRC += main.c
 FONTS += core14b core18b Lucida_Console10
 
-include $(RTPROG)/udevkit.mk
+include $(UDEVKIT)/udevkit.mk
 
 all : hex
 	@echo "DRIVERS asked         :" $(sort $(DRIVERS) $(BADDRIVERS))

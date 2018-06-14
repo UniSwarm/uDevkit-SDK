@@ -19,11 +19,4 @@ endif
 
 SIM_SRC += timer_sim.c
 
-test_timer:
-	xc16-gcc -DARCHI_dspic33ep -DDEVICE_33FJ16MC102 -mcpu=33FJ16MC102 -c -I$(RTPROG)include $(RTPROG)support/driver/periph/timer/timer_pic24_dspic30f_dspic33.c -o timer_pic24_dspic30f_dspic33.o
-	#xc16-gcc -DARCHI_pic24f -DDEVICE_24FJ64GB412 -mcpu=24FJ64GB412 -c -I$(RTPROG)include $(RTPROG)support/driver/periph/timer/timer_pic24_dspic30f_dspic33.c -o timer_pic24_dspic30f_dspic33.o
-	xc32-gcc -DARCHI_pic32mzef -DDEVICE_32MZ1024EFH144 -mprocessor=32MZ1024EFH144 -c -I$(RTPROG)include $(RTPROG)support/driver/periph/timer/timer_pic32.c -o timer_pic32.o
-	xc32-gcc -DARCHI_pic32mzef -DDEVICE_32MZ1024EFH064 -mprocessor=32MZ1024EFH064 -c -I$(RTPROG)include $(RTPROG)support/driver/periph/timer/timer_pic32.c -o timer_pic32.o
-	gcc -DARCHI_pic32mzef -DDEVICE_32MZ1024EFH064 -c -I$(RTPROG)include $(RTPROG)support/driver/periph/timer/timer_sim.c -o timer_sim.o
-
 endif

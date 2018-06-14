@@ -1,9 +1,9 @@
 
 # include robot definition file
-include $(RTPROG)/support/robot/robot.mk
+include $(UDEVKIT)/support/robot/robot.mk
 
 # include board definition file
-include $(RTPROG)/support/board/board.mk
+include $(UDEVKIT)/support/board/board.mk
 
 # check ARCHI variable exists, else auto detect from DEVICE
 ifndef ARCHI
@@ -17,19 +17,19 @@ ifndef ARCHI
 endif
 
 # include module definition file
-include $(RTPROG)/support/module/module.mk
+include $(UDEVKIT)/support/module/module.mk
 
 # include all drivers files
-include $(RTPROG)/support/driver/driver.mk
+include $(UDEVKIT)/support/driver/driver.mk
 
 # include all sys files
-include $(RTPROG)/support/sys/sys.mk
+include $(UDEVKIT)/support/sys/sys.mk
 
 # include archi definition file
-include $(RTPROG)/support/archi/archi.mk
+include $(UDEVKIT)/support/archi/archi.mk
 
 # include all simulator files
-include $(RTPROG)/support/archi/simulator/simulator.mk
+include $(UDEVKIT)/support/archi/simulator/simulator.mk
 
 # generate list of used drivers modules
 empty:=

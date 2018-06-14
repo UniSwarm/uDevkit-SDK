@@ -2,11 +2,11 @@
 MODULEPATH = $(dir $(lastword $(MAKEFILE_LIST)))
 
 define includemodule
- ifneq "$(wildcard $(RTPROG)/support/module/$(1)/$(1).mk)" ""
+ ifneq "$(wildcard $(UDEVKIT)/support/module/$(1)/$(1).mk)" ""
   ifeq (,$(findstring " $1 ",$(IMODULES)))
-   MODULE_FILES += $(RTPROG)/support/module/$(1)/$(1).mk
+   MODULE_FILES += $(UDEVKIT)/support/module/$(1)/$(1).mk
    IMODULES += $(1)
-   include $(RTPROG)/support/module/$(1)/$(1).mk
+   include $(UDEVKIT)/support/module/$(1)/$(1).mk
   endif
  else
   ifeq (,$(findstring $1,$(BADMODULES)))

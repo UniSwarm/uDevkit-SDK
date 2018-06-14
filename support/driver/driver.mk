@@ -2,11 +2,11 @@
 DRIVERPATH = $(dir $(lastword $(MAKEFILE_LIST)))
 
 define includedriver
- ifneq "$(wildcard $(RTPROG)/support/driver/$(1)/$(1).mk)" ""
+ ifneq "$(wildcard $(UDEVKIT)/support/driver/$(1)/$(1).mk)" ""
   ifeq (,$(findstring " $1 ",$(IDRIVERS)))
-   DRIVER_FILES += $(RTPROG)/support/driver/$(1)/$(1).mk
+   DRIVER_FILES += $(UDEVKIT)/support/driver/$(1)/$(1).mk
    IDRIVERS += $(1)
-   include $(RTPROG)/support/driver/$(1)/$(1).mk
+   include $(UDEVKIT)/support/driver/$(1)/$(1).mk
   endif
  else
   ifeq (,$(findstring $1,$(BADDRIVERS)))

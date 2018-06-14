@@ -1,4 +1,4 @@
-RTPROG = ../..
+UDEVKIT = ../..
 
 PROJECT = plantsTraker
 BOARD = rtboard1_1
@@ -13,7 +13,7 @@ NETWORK_DRIVERS = esp8266
 
 SRC += main.c
 
-include $(RTPROG)/udevkit.mk
+include $(UDEVKIT)/udevkit.mk
 
 all: elf
 
