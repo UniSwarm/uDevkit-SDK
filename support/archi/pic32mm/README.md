@@ -1,6 +1,6 @@
 # PIC32MM support
 
-PIC32MM family is a low power high-performance 32 bits range.
+PIC32MM family is a low power high-performance [32 bits](../pic32/README.md) range.
 
 This family is splitted into two subfamilies :
 
@@ -19,10 +19,23 @@ This family is splitted into two subfamilies :
 
 ## Common devices
 
-|Devices    |UART|TMR |OC  |IC  |I2C |SPI |CAN |SENT|CLC |QEI |PWM |MCCP|SCCP|
-|:----------|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|PIC32MM GPL|   2|   1|   0|   0|   0|   2|   0|   0|   2|   0|   0|   1|   2|
-|PIC32MM GPM|   3|   3|   0|   0|   3|   3|   0|   0|   4|   0|   0|   3|   6|
+|Peripheral      |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
+|:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
+|PIC32MM GPL     |        2|        1|        0|        0|        0|        2|        0|        0|        2|         0|         0|         1|         2|
+|PIC32MM GPM     |        3|        3|        0|        0|        3|        3|        0|        0|        4|         0|         0|         3|         6|
+
+[1]: ../../driver/uart
+[2]: ../../driver/timer
+[3]: ../../driver/oc
+[4]: ../../driver/ic
+[5]: ../../driver/i2c
+[6]: ../../driver/spi
+[7]: ../../driver/can
+[8]: ../../driver/sent
+[9]: ../../driver/clc
+[10]: ../../driver/qei
+[11]: ../../driver/pwm
+[12]: ../../driver/mccp
 
 ## Devices list
 

@@ -1,6 +1,6 @@
 # PIC32MZ EF support
 
-PIC32MZ EF family is a high-performance 32 bits range for Embedded Connectivity with hardware Floating point unit (FPU).
+PIC32MZ EF family is a high-performance [32 bits](../pic32/README.md) range for Embedded Connectivity with hardware Floating point unit (FPU).
 
 This family is splitted into three variations :
 
@@ -20,11 +20,24 @@ This family is splitted into three variations :
 
 ## Common devices
 
-|Devices         |UART|TMR |OC  |IC  |I2C |SPI |CAN |SENT|CLC |QEI |PWM |MCCP|SCCP|
-|:---------------|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|PIC32MZ EFE/EFG |   6|   9|   9|   9| 4-5| 4-6|   0|   0|   0|   0|   0|   0|   0|
-|PIC32MZ EFF/EFH |   6|   9|   9|   9| 4-5| 4-6|   2|   0|   0|   0|   0|   0|   0|
-|PIC32MZ EFK/EFM |   6|   9|   9|   9| 4-5| 4-6|   2|   0|   0|   0|   0|   0|   0|
+|Peripheral      |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
+|:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
+|PIC32MZ EFE/EFG |        6|        9|        9|        9|      4-5|      4-6|        0|        0|        0|         0|         0|         0|         0|
+|PIC32MZ EFF/EFH |        6|        9|        9|        9|      4-5|      4-6|        2|        0|        0|         0|         0|         0|         0|
+|PIC32MZ EFK/EFM |        6|        9|        9|        9|      4-5|      4-6|        2|        0|        0|         0|         0|         0|         0|
+
+[1]: ../../driver/uart
+[2]: ../../driver/timer
+[3]: ../../driver/oc
+[4]: ../../driver/ic
+[5]: ../../driver/i2c
+[6]: ../../driver/spi
+[7]: ../../driver/can
+[8]: ../../driver/sent
+[9]: ../../driver/clc
+[10]: ../../driver/qei
+[11]: ../../driver/pwm
+[12]: ../../driver/mccp
 
 ## Devices list
 

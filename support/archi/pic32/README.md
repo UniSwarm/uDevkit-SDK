@@ -9,11 +9,11 @@ This architecture support file handle all 32 bits families of Microchip. compare
 
 (273 devices on july 2017)
 
-|Famillies|List of devices|Device count|
-|---------|:-------------:|-----------:|
-|PIC32MK  |[list](../pic32mk/README.md)  | 12|
-|PIC32MM  |[list](../pic32mm/README.md)  | 21|
-|PIC32MX  |[list](../pic32mx/README.md)  |128|
-|PIC32MZDA|[list](../pic32mzda/README.md)| 40|
-|PIC32MZEC|[list](../pic32mzec/README.md)| 24|
-|PIC32MZEF|[list](../pic32mzef/README.md)| 48|
+|Famillies|Device count|
+|---------|-----------:|
+|[PIC32MK](../pic32mk/README.md)    | 12|
+|[PIC32MM](../pic32mm/README.md)    | 21|
+|[PIC32MX](../pic32mx/README.md)    |128|
+|[PIC32MZDA](../pic32mzda/README.md)| 40|
+|[PIC32MZEC](../pic32mzec/README.md)| 24|
+|[PIC32MZEF](../pic32mzef/README.md)| 48|

@@ -1,6 +1,6 @@
 # PIC32MZ DA support
 
-PIC32MZ DA family is a high-performance 32 bits range with MMU, MPU and GPU designed for user graphic interface applications.
+PIC32MZ DA family is a high-performance [32 bits](../pic32/README.md) range with MMU, MPU and GPU designed for user graphic interface applications.
 It can embed up to 32Mb of internal memory or offer an interface for an external 128Mb DDR2.
 Compared to MZ EF/EC family, MZ DA add DDR memory, LCD controller, 2D graphic accelerator and SDIO interface.
 An hardware crypto module is optionally available.
@@ -17,9 +17,22 @@ An hardware crypto module is optionally available.
 
 ## Common devices
 
-|Devices     |UART|TMR |OC  |IC  |I2C |SPI |CAN |SENT|CLC |QEI |PWM |MCCP|SCCP|
-|:-----------|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|PIC32MZ DA  |   6|   9|   9|   9|   5|   6|   2|   0|   0|   0|   0|   0|   0|
+|Peripheral      |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
+|:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
+|PIC32MZ DA      |        6|        9|        9|        9|        5|        6|        2|        0|        0|         0|         0|         0|         0|
+
+[1]: ../../driver/uart
+[2]: ../../driver/timer
+[3]: ../../driver/oc
+[4]: ../../driver/ic
+[5]: ../../driver/i2c
+[6]: ../../driver/spi
+[7]: ../../driver/can
+[8]: ../../driver/sent
+[9]: ../../driver/clc
+[10]: ../../driver/qei
+[11]: ../../driver/pwm
+[12]: ../../driver/mccp
 
 ## Devices list
 
