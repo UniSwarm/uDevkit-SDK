@@ -42,6 +42,8 @@ make prog
 
 [Complete list of drivers](support/driver/README.md)
 
+[Complete list of boards](support/board/README.md)
+
 [Complete list of modules](support/module/README.md)
 
 An IDE named RtIDE is available as beta version : https://github.com/UniSwarm/uDevkit-IDE
@@ -56,28 +58,33 @@ git submodule update
 ```
 
 ## dependencies
+
 ### Qt > 5.2
+
 GUI tools are based on Qt like RTsim or img2raw. https://www.qt.io/
 
-### MPLAB X IDE (to program Microchip devices with debugger)
+### MPLAB X IDE
+
 To program and debug the device (only IPE is needed to program)
 
 * windows : http://www.microchip.com/mplabx-ide-windows-installer
 * linux : http://www.microchip.com/mplabx-ide-linux-installer
 
-### XC16 compiler (gcc for Microchip 16 bits devices)
+### XC16 compiler
+
 Compiler for 16-bit devices (v1.26 minimum)
 
 * windows : http://www.microchip.com/mplabxc16windows
 * linux : http://www.microchip.com/mplabxc16linux
 
-### XC32 compiler (gcc for Microchip 32 bits devices)
+### XC32 compiler
+
 Compiler for 32-bit devices (v1.30 minimum)
 
 * windows : http://www.microchip.com/mplabxc32windows
 * linux : http://www.microchip.com/mplabxc32linux
 
 ### default Windows PATHs
-C:\\Program Files (x86)\\Microchip\\xc16\\v1.26\\bin
 
-C:\\Program Files (x86)\\Microchip\\MPLABX\\v3.45\\mplab_ipe
+* C:\\Program Files (x86)\\Microchip\\xc16\\v1.26\\bin
+* C:\\Program Files (x86)\\Microchip\\MPLABX\\v3.45\\mplab_ipe
