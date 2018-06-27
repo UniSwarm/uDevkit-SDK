@@ -1,6 +1,6 @@
 # dsPIC33CK support
 
-dsPIC33CK family is a new generation of 16 bits microcontroller with DSP accelerator. Architecture and peripherals
+dsPIC33CK family is a new generation of [16 bits](../pic16b/README.md) MCU with DSP accelerator. Architecture and peripherals
 are similar to [dsPIC33CH](../dspic33ch/README.md).
 
 A lot of peripherals (UART, Timer...) are not compatible with others dsPIC ranges. Full support of drivers may needs additional time.
@@ -19,11 +19,24 @@ This family have variation of flash memory, pin count and CAN FD for 5XX subfami
 
 ## Common devices
 
-|Peripheral      |UART|TMR |OC  |IC  |I2C |SPI |CAN |SENT|CLC |QEI |PWM |MCCP|SCCP|
-|:---------------|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|dsPIC33CK MP10X |   3|   1|   0|   0|   2|   3|   0|   2|   4|   2|   8|   1|   4|
-|dsPIC33CK MP20X |   3|   1|   0|   0|   3|   3|   0|   2|   4|   2|   8|   1|   8|
-|dsPIC33CK MP50X |   3|   1|   0|   0|   3|   3|   1|   2|   4|   2|   8|   1|   8|
+|Peripheral      |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
+|:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
+|dsPIC33CK MP10X |        3|        1|        0|        0|        2|        3|        0|        2|        4|         2|         8|         1|         4|
+|dsPIC33CK MP20X |        3|        1|        0|        0|        3|        3|        0|        2|        4|         2|         8|         1|         8|
+|dsPIC33CK MP50X |        3|        1|        0|        0|        3|        3|      1Fd|        2|        4|         2|         8|         1|         8|
+
+[1]: ../../driver/uart
+[2]: ../../driver/timer
+[3]: ../../driver/oc
+[4]: ../../driver/ic
+[5]: ../../driver/i2c
+[6]: ../../driver/spi
+[7]: ../../driver/can
+[8]: ../../driver/sent
+[9]: ../../driver/clc
+[10]: ../../driver/qei
+[11]: ../../driver/pwm
+[12]: ../../driver/mccp
 
 ## Devices list
 

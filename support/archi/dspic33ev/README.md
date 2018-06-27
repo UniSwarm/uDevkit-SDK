@@ -14,10 +14,23 @@ dsPIC33EV family is a robustified version of [dsPIC33EP](../dspic33ep/README.md)
 
 ## Common devices
 
-|Peripheral |UART|TMR |OC  |IC  |I2C |SPI |CAN |SENT|CLC |QEI |PWM |MCCP|SCCP|
-|:----------|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|GM00X      |   2|   5|   4|   4|   1|   2|   0|   2|   0|   0|   3|   0|   0|
-|GM10X      |   2|   5|   4|   4|   1|   2|   1|   2|   0|   0|   3|   0|   0|
+|Peripheral      |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
+|:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
+|GM00X           |        2|        5|        4|        4|        1|        2|        0|        2|        0|         0|         3|         0|         0|
+|GM10X           |        2|        5|        4|        4|        1|        2|        1|        2|        0|         0|         3|         0|         0|
+
+[1]: ../../driver/uart
+[2]: ../../driver/timer
+[3]: ../../driver/oc
+[4]: ../../driver/ic
+[5]: ../../driver/i2c
+[6]: ../../driver/spi
+[7]: ../../driver/can
+[8]: ../../driver/sent
+[9]: ../../driver/clc
+[10]: ../../driver/qei
+[11]: ../../driver/pwm
+[12]: ../../driver/mccp
 
 ## Devices list
 

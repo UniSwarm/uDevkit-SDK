@@ -1,9 +1,7 @@
 # dsPIC33CH support
 
-> Warning support based on a very low piece of information, may vary in few weeks, only preliminary support.
-
-dsPIC33CH family is the first dual core 16 bits range. The main core have 16 kb of dedicated RAM and the slave core 4 kb
-with a hardware MSI cache coherency protocol. Architecture and peripherals are similar to dsPIC33CK.
+dsPIC33CH family is the first Microchip dual core [16 bits](../pic16b/README.md) MCU. The main core have 16 kb of dedicated RAM and the slave core 4 kb
+with a hardware MSI cache coherency protocol. Architecture and peripherals are similar to [dsPIC33CK](../dspic33ck/README.md).
 
 A lot of peripherals (UART, Timer...) are not compatible with others dsPIC ranges. Full support of drivers may needs additional time.
 
@@ -23,12 +21,25 @@ Slave core is marked with final S1. Slave core does not have same peripherals. T
 
 ## Common devices
 
-|Peripheral |UART|TMR |OC  |IC  |I2C |SPI |CAN |SENT|CLC |QEI |PWM |MCCP|SCCP|
-|:----------|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|MP20X      |   2|   1|   0|   0|   2|   2|   0|   2|   4|   1|   0|   8|   0|
-|MP20XS1    |   1|   1|   0|   0|   1|   1|   0|   0|   4|   1|   0|   4|   0|
-|MP50X      |   2|   1|   0|   0|   2|   2|   1|   2|   4|   1|   0|   8|   0|
-|MP50XS1    |   1|   1|   0|   0|   1|   1|   0|   0|   4|   1|   0|   4|   0|
+|Peripheral      |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
+|:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
+|MP20X           |        2|        1|        0|        0|        2|        2|        0|        2|        4|         1|         0|         8|         0|
+|MP20XS1         |        1|        1|        0|        0|        1|        1|        0|        0|        4|         1|         0|         4|         0|
+|MP50X           |        2|        1|        0|        0|        2|        2|        1|        2|        4|         1|         0|         8|         0|
+|MP50XS1         |        1|        1|        0|        0|        1|        1|        0|        0|        4|         1|         0|         4|         0|
+
+[1]: ../../driver/uart
+[2]: ../../driver/timer
+[3]: ../../driver/oc
+[4]: ../../driver/ic
+[5]: ../../driver/i2c
+[6]: ../../driver/spi
+[7]: ../../driver/can
+[8]: ../../driver/sent
+[9]: ../../driver/clc
+[10]: ../../driver/qei
+[11]: ../../driver/pwm
+[12]: ../../driver/mccp
 
 ## Devices list
 

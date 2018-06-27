@@ -1,6 +1,6 @@
 # dsPIC33EP support
 
-dsPIC33EP family handle a lot of subfamilies with the same 16 bits high performance core.
+dsPIC33EP family handle a lot of subfamilies with the same [16 bits](../pic16b/README.md) high performance core.
 This range is very similar to [PIC24EP](../pic24ep/README.md) with an additional DSP core.
 
 ## Main features
@@ -14,34 +14,49 @@ This range is very similar to [PIC24EP](../pic24ep/README.md) with an additional
 
 ## Common devices
 
-|Peripheral|UART|TIMER|I2C|SPI|CLC|IC |OC |CAN|QEI|PWM|
-|----------|:--:|:---:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-|GS20X     |   1|    3|  1|  1|  0|  2|  2|  0|  0|  3|
-|GS50X     |   2|    5|  2|  2|  0|  8|  8|  0|  0|  5|
-|GS70X     |   2|    5|  2|  3|  4|  8|  8|  0|  0|  8|
-|GS80X     |   2|    5|  2|  3|  4|  8|  8|  2|  0|  8|
-|**GM30X** |   4|    9|  2|  3|  0|  8|  8|  2|  0|  6|
-|**GM60X** |   4|    9|  2|  3|  0|  8|  8|  2|  0|  6|
-|**GM70X** |   4|    9|  2|  3|  0|  8|  8|  2|  0|  6|
-|GP50X     |   2|    5|  2|  2|  0|  4|  4|  1|  0|  0|
-|GP80X     |   4|    9|  2|  4|  0| 16| 16|  2|  0|  0|
-|**MC20X** |   2|    5|  2|  2|  0|  4|  4|  0|  1|  3|
-|**MC50X** |   2|    5|  2|  2|  0|  4|  4|  1|  1|  3|
-|**MC80X** |   4|    9|  2|  4|  0| 16| 16|  2|  2|  4|
-|MU8XX     |   4|    9|  2|  4|  0| 16| 16|  2|  2|4-7|
+|Peripheral      |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
+|:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
+|GS20X           |        1|        3|        2|        2|        1|        1|        0|        0|        0|         0|         3|         0|         0|
+|GS50X           |        2|        5|        8|        8|        2|        2|        0|        0|        0|         0|         5|         0|         0|
+|GS70X           |        2|        5|        8|        8|        2|        3|        0|        4|        4|         0|         8|         4|         4|
+|GS80X           |        2|        5|        8|        8|        2|        3|        2|        4|        4|         0|         8|         4|         4|
+|**GM30X**       |        4|        9|        8|        8|        2|        3|        2|        0|        0|         0|         6|         0|         0|
+|**GM60X**       |        4|        9|        8|        8|        2|        3|        2|        0|        0|         0|         6|         0|         0|
+|**GM70X**       |        4|        9|        8|        8|        2|        3|        2|        0|        0|         0|         6|         0|         0|
+|GP50X           |        2|        5|        4|        4|        2|        2|        1|        0|        0|         0|         0|         0|         0|
+|GP80X           |        4|        9|       16|       16|        2|        4|        2|        0|        0|         0|         0|         0|         0|
+|**MC20X**       |        2|        5|        4|        4|        2|        2|        0|        0|        0|         1|         3|         0|         0|
+|**MC50X**       |        2|        5|        4|        4|        2|        2|        1|        0|        0|         1|         3|         0|         0|
+|**MC80X**       |        4|        9|       16|       16|        2|        4|        2|        0|        0|         2|         4|         0|         0|
+|MU8XX           |        4|        9|       16|       16|        2|        4|        2|        0|        0|         2|       4-7|         0|         0|
+
+[1]: ../../driver/uart
+[2]: ../../driver/timer
+[3]: ../../driver/oc
+[4]: ../../driver/ic
+[5]: ../../driver/i2c
+[6]: ../../driver/spi
+[7]: ../../driver/can
+[8]: ../../driver/sent
+[9]: ../../driver/clc
+[10]: ../../driver/qei
+[11]: ../../driver/pwm
+[12]: ../../driver/mccp
+
+## Devices list
 
 101 devices on november 2017.
 
-## GS family
+### GS family
 
-### GS20X subfamily
+#### GS20X subfamily
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
 |[dsPIC33EP16GS202](http://microchip.com/wwwproducts/en/dsPIC33EP16GS202)|16 kb|2 kb|28|
 |[dsPIC33EP32GS202](http://microchip.com/wwwproducts/en/dsPIC33EP32GS202)|33 kb|2 kb|28|
 
-### GS50X subfamily
+#### GS50X subfamily
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -58,7 +73,7 @@ This range is very similar to [PIC24EP](../pic24ep/README.md) with an additional
 |[dsPIC33EP32GS506](http://microchip.com/wwwproducts/en/dsPIC33EP32GS506)|33 kb|4 kb|64|
 |[dsPIC33EP64GS506](http://microchip.com/wwwproducts/en/dsPIC33EP64GS506)|67 kb|8 kb|64|
 
-### GS70X subfamily
+#### GS70X subfamily
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -69,7 +84,7 @@ This range is very similar to [PIC24EP](../pic24ep/README.md) with an additional
 |[dsPIC33EP64GS708](http://microchip.com/wwwproducts/en/dsPIC33EP64GS708)  | 67 kb|4 kb|80|
 |[dsPIC33EP128GS708](http://microchip.com/wwwproducts/en/dsPIC33EP128GS708)|131 kb|4 kb|80|
 
-### GS80X subfamily
+#### GS80X subfamily
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -82,9 +97,9 @@ This range is very similar to [PIC24EP](../pic24ep/README.md) with an additional
 |[dsPIC33EP64GS808](http://microchip.com/wwwproducts/en/dsPIC33EP64GS808)  | 67 kb|4 kb|80|
 |[dsPIC33EP128GS808](http://microchip.com/wwwproducts/en/dsPIC33EP128GS808)|131 kb|4 kb|80|
 
-## GM family
+### GM family
 
-### GM30X subfamily
+#### GM30X subfamily
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -98,7 +113,7 @@ This range is very similar to [PIC24EP](../pic24ep/README.md) with an additional
 |[dsPIC33EP256GM310](http://microchip.com/wwwproducts/en/dsPIC33EP256GM310)|262 kb|33 kb|100|
 |[dsPIC33EP512GM310](http://microchip.com/wwwproducts/en/dsPIC33EP512GM310)|525 kb|49 kb|100|
 
-### GM60X-70X subfamily
+#### GM60X-70X subfamily
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -112,9 +127,9 @@ This range is very similar to [PIC24EP](../pic24ep/README.md) with an additional
 |[dsPIC33EP256GM710](http://microchip.com/wwwproducts/en/dsPIC33EP256GM710)|262 kb|33 kb|100|
 |[dsPIC33EP512GM710](http://microchip.com/wwwproducts/en/dsPIC33EP512GM710)|525 kb|49 kb|100|
 
-## GP / MC / MU families
+### GP / MC / MU families
 
-### GP subfamily
+#### GP subfamily
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -136,7 +151,7 @@ This range is very similar to [PIC24EP](../pic24ep/README.md) with an additional
 |[dsPIC33EP512GP506](http://microchip.com/wwwproducts/en/dsPIC33EP512GP506)|525 kb|49 kb|64|
 |[dsPIC33EP512GP806](http://microchip.com/wwwproducts/en/dsPIC33EP512GP806)|525 kb|53 kb|64|
 
-### MC20X / MC50X / MC80X subfamilies
+#### MC20X / MC50X / MC80X subfamilies
 
 |Compatible MC20X devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -182,7 +197,7 @@ This range is very similar to [PIC24EP](../pic24ep/README.md) with an additional
 |---------|--:|--:|--:|
 |[dsPIC33EP512MC806](http://microchip.com/wwwproducts/en/dsPIC33EP512MC806)|525 kb|53 kb|64|
 
-### MU8XX subfamily
+#### MU8XX subfamily
 
 |Compatible MU8XX devices|Program|Data|Pins|
 |---------|--:|--:|--:|
