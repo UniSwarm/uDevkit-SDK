@@ -1,30 +1,40 @@
 # PIC32MK support
 
-PIC32MK family is a high-performance [32 bits](../pic32/README.md) range with FPU. All version include at least 1 USB communication module (2 modules in 100 pins package)
+PIC32MK family is a high-performance [32 bits](../pic32/README.md) range with FPU. All version include at least 1 USB communication module (2 modules in 100 pins package).
 
-This family is splitted into four subfamilies :
+All devices also contains 4 kb of EEPROM, operational amplifiers and Parallel Master Port.
+
+This family is splitted into six subfamilies :
 
 * GPD : Global Purpose
-* GPE : GPD with 4 CAN devices
-* MCF : GPD with 4 CAN devices and Motor Control special features (QEI and enhanced PWM)
-* MCM : GPD with 1 CAN Fd device and Motor Control special features (QEI and enhanced PWM)
+* GPD : GPD with ECC flash
+* GPE : GPD with 4 CAN peripherals
+* GPL : GPD with 4 CAN peripherals and ECC flash
+* MCF : GPD with 4 CAN peripherals and Motor Control special features (QEI and enhanced PWM)
+* MCM : GPD with 1 CAN Fd peripheral, Motor Control special features (QEI and enhanced PWM) and ECC flash
+
+Family documentation can be found here : http://ww1.microchip.com/downloads/en/DeviceDoc/60001402D.pdf .
+
+Devices with asterixis are future devices and not yet released.
 
 ## Main features
 
-|Feature|GPD - GPE - MCF - MCM|
-|-------|:------:|
-|Core|32 bits|
-|Performance|198 DMIPS|
-|Program memory|512kb - 1024kb|
-|Data memory|128kb - 256kb|
-|Pins|64-100|
+|Feature|GPD - GPE - MCF|GPK - GPL - MCM|
+|-------|:------:|:------:|
+|Core|32 bits|32 bits|
+|Performance|198 DMIPS|198 DMIPS|
+|Program memory|512kb - 1024kb|512kb - 1024kb **ECC Flash**|
+|Data memory|128kb - 256kb|128kb - 256kb|
+|Pins|64-100|64-100|
 
 ## Common devices
 
 |Peripheral      |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
 |:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
 |PIC32MK GPD     |        6|        9|       16|       16|        4|        6|        0|        0|        0|         0|         0|         0|         0|
+|PIC32MK GPK     |        6|        9|       16|       16|        4|        6|        0|        0|        0|         0|         0|         0|         0|
 |PIC32MK GPE     |        6|        9|       16|       16|        4|        6|        4|        0|        0|         0|         0|         0|         0|
+|PIC32MK GPL     |        6|        9|       16|       16|        4|        6|      1FD|        0|        0|         0|         0|         0|         0|
 |PIC32MK MCF     |        6|        9|       16|       16|        4|        6|        4|        0|        0|         6|        12|         0|         0|
 |PIC32MK MCM     |        6|        9|       16|       16|        4|        6|      1FD|        0|        0|         6|        12|         0|         0|
 
@@ -43,7 +53,7 @@ This family is splitted into four subfamilies :
 
 ## Devices list
 
-12 devices on december 2017.
+24 devices on June 2018.
 
 ### GPD devices
 
@@ -56,9 +66,20 @@ Global Purpose device
 |[PIC32MK0512GPD100](http://microchip.com/wwwproducts/en/PIC32MK0512GPD100)| 524 kb|131 kb|100|
 |[PIC32MK1024GPD100](http://microchip.com/wwwproducts/en/PIC32MK1024GPD100)|1024 kb|262 kb|100|
 
+### GPK devices
+
+Same as GPK with ECC flash.
+
+|GPK compatible devices|Program|Data|Pins|
+|---------|--:|--:|--:|
+|[*PIC32MK0512GPK064](http://microchip.com/wwwproducts/en/PIC32MK0512GPK064)| 524 kb| 131 kb| 64|
+|[*PIC32MK1024GPK064](http://microchip.com/wwwproducts/en/PIC32MK1024GPK064)|1049 kb| 262 kb| 64|
+|[*PIC32MK0512GPK100](http://microchip.com/wwwproducts/en/PIC32MK0512GPK100)| 524 kb| 131 kb|100|
+|[*PIC32MK1024GPK100](http://microchip.com/wwwproducts/en/PIC32MK1024GPK100)|1049 kb| 262 kb|100|
+
 ### GPE devices
 
-Same as GPD with 4 CAN devices.
+Same as GPD with 4 CAN peripherals.
 
 |GPE compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -67,9 +88,21 @@ Same as GPD with 4 CAN devices.
 |[PIC32MK0512GPE100](http://microchip.com/wwwproducts/en/PIC32MK0512GPE100)| 524 kb|131 kb|100|
 |[PIC32MK1024GPE100](http://microchip.com/wwwproducts/en/PIC32MK1024GPE100)|1024 kb|262 kb|100|
 
+### GPL devices
+
+Same as GPD with 1 CAN Fd peripheral and ECC flash.
+
+|GPL compatible devices|Program|Data|Pins|
+|---------|--:|--:|--:|
+|[*PIC32MK0512GPL064](http://microchip.com/wwwproducts/en/PIC32MK0512GPL064)| 524 kb| 131 kb| 64|
+|[*PIC32MK1024GPL064](http://microchip.com/wwwproducts/en/PIC32MK1024GPL064)|1049 kb| 262 kb| 64|
+|[*PIC32MK0512GPL100](http://microchip.com/wwwproducts/en/PIC32MK0512GPL100)| 524 kb| 131 kb|100|
+|[*PIC32MK1024GPL100](http://microchip.com/wwwproducts/en/PIC32MK1024GPL100)|1049 kb| 262 kb|100|
+
+
 ### MCF devices
 
-Same as GPD with 4 CAN devices, 6 QEI modules and 12 enhanced PWM.
+Same as GPD with 4 CAN peripherals, 6 QEI modules and 12 enhanced PWM.
 
 |MCF compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -80,7 +113,7 @@ Same as GPD with 4 CAN devices, 6 QEI modules and 12 enhanced PWM.
 
 ### MCM devices
 
-Same as GPD with 1 CAN FD device, 6 QEI modules and 12 enhanced PWM.
+Same as GPD with 1 CAN FD peripheral, 6 QEI modules, 12 enhanced PWM and ECC flash.
 
 |MCM compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|

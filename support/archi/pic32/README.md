@@ -7,11 +7,11 @@ This architecture support file handle all 32 bits families of Microchip. compare
 * code relocalisation
 * execution from RAM
 
-(273 devices on july 2017)
+(285 devices on June 2018)
 
 |Famillies|Device count|
 |---------|-----------:|
-|[PIC32MK](../pic32mk/README.md)    | 12|
+|[PIC32MK](../pic32mk/README.md)    | 24|
 |[PIC32MM](../pic32mm/README.md)    | 21|
 |[PIC32MX](../pic32mx/README.md)    |128|
 |[PIC32MZDA](../pic32mzda/README.md)| 40|
