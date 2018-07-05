@@ -4,9 +4,9 @@ GPIO_DRIVER=
 vpath %.c $(DRIVERPATH)
 vpath %.h $(DRIVERPATH)
 
-HEADER += gpio.h
+HEADER += gpio.h gpio_device.h
 
-ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic30f dspic33fj dspic33ep dspic33ev))
+ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic30f dspic33fj dspic33ep dspic33ev dspic33ch dspic33ck))
  ARCHI_SRC += gpio_pic24_dspic30f_dspic33.c
  HEADER += gpio_pic24_dspic30f_dspic33.h
 endif
