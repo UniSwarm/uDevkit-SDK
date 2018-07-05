@@ -28,6 +28,18 @@ int board_init_io()
     ANSELA = 0x0001;         // all analog inputs of port A as digital buffer unless RA0 for pot
     ANSELB = 0x0000;         // all analog inputs of port B as digital buffer
     ANSELC = 0x0000;         // all analog inputs of port C as digital buffer
+    ANSELD = 0x0000;         // all analog inputs of port D as digital buffer
+
+    // remappable pins
+    // Unlock configuration pin
+    OSCCONL = 0x46; OSCCONL = 0x57; RPCONbits.IOLOCK = 0;
+
+        // UART1 pins (wifi)
+        _U1RXR = 64;           // RX1 ==> RP64
+        _RP65R = _RPOUT_U1TX;  // TX1 ==> RP65
+
+    // Lock configuration pin
+    OSCCONL = 0x46; OSCCONL = 0x57; RPCONbits.IOLOCK = 1;
 #endif
 
     board_leds[0] = gpio_pin(GPIO_PORTE, 0);

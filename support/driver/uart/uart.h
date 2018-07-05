@@ -33,8 +33,8 @@ uint32_t uart_baudSpeed(rt_dev_t device);
 uint32_t uart_effectiveBaudSpeed(rt_dev_t device);
 
 int uart_setBitConfig(rt_dev_t device, uint8_t bitLength,
-                                      uint8_t bitParity,
-                                      uint8_t bitStop);
+                                       uint8_t bitParity,
+                                       uint8_t bitStop);
 uint8_t uart_bitLength(rt_dev_t device);
 uint8_t uart_bitParity(rt_dev_t device);
 uint8_t uart_bitStop(rt_dev_t device);
@@ -51,6 +51,8 @@ size_t uart_datardy(rt_dev_t device);
  || defined(ARCHI_pic24hj) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) \
  || defined(ARCHI_dspic33ev)
   #include "uart_pic24_dspic33.h"
+#elif defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
+  #include "uart_dspic33c.h"
 #elif defined(ARCHI_dspic30f)
   #include "uart_dspic30f.h"
 #elif defined(ARCHI_pic32mx)
