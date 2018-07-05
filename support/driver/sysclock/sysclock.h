@@ -20,6 +20,8 @@
  #include "sysclock_pic24_dspic33.h"
 #elif defined(ARCHI_dspic30f)
  #include "sysclock_dspic30f.h"
+#elif defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
+ #include "sysclock_dspic33c.h"
 #elif defined(ARCHI_pic32mx)
  #include "sysclock_pic32mx.h"
 #elif defined(ARCHI_pic32mm)
@@ -30,7 +32,7 @@
 #else
  typedef int SYSCLOCK_CLOCK;
  typedef int SYSCLOCK_SOURCE;
- #error Unsuported ARCHI
+ #error Unsuported ARCHI for sysclock driver.
 #endif
 
 int sysclock_setClock(uint32_t freq);
