@@ -6,7 +6,7 @@
  * @date June 09, 2016, 18:47 PM
  *
  * @brief I2C communication support driver for dsPIC30F, dsPIC33FJ, dsPIC33EP,
- * dsPIC33EV, PIC24F, PIC24FJ, PIC24EP and PIC24HJ
+ * dsPIC33CH, dsPIC33CK, dsPIC33EV, PIC24F, PIC24FJ, PIC24EP and PIC24HJ
  */
 
 #include "i2c.h"
