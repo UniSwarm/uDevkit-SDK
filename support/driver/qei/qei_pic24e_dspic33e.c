@@ -19,9 +19,9 @@
 
 #if !defined (QEI_COUNT) || QEI_COUNT==0
   #warning No device QEI periph on the current device
+#else
+  uint8_t qeis[QEI_COUNT] = {0};
 #endif
-
-uint8_t qeis[QEI_COUNT] = {0};
 
 /**
  * @brief Gives a free QEI device number and open it

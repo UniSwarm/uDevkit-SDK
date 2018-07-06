@@ -14,7 +14,7 @@ ifeq ($(ARCHI),dspic30f)
  ARCHI_SRC += qei_dspic30f.c
  HEADER += qei_dspic30f.h
 endif
-ifeq ($(ARCHI),$(filter $(ARCHI),pic24ep dspic33ep dspic33ev))
+ifeq ($(ARCHI),$(filter $(ARCHI),pic24ep dspic33ep dspic33ev dspic33ch dspic33ck))
  ARCHI_SRC += qei_pic24e_dspic33e.c
  HEADER += qei_pic24e_dspic33e.h
 endif
