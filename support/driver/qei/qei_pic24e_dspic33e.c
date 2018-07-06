@@ -2,11 +2,12 @@
  * @file qei_pic24e_dspic33e.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018
  *
  * @date April 18, 2016, 22:33 PM
  *
  * @brief Quadrature Encoder Interface support driver for dsPIC33EP,
- * dsPIC33EV and PIC24EP
+ * dsPIC33EV, PIC24EP, dsPIC33CH and dsPIC33CK
  *
  * Implementation based on Microchip document DS70601B :
  *   http://ww1.microchip.com/downloads/en/DeviceDoc/S15.pdf
