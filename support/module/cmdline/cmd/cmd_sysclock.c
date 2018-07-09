@@ -14,12 +14,12 @@ void cmd_sysclock_statusclk(SYSCLOCK_SOURCE source)
     int32_t freq = sysclock_sourceFreq(source);
     if (freq == -1)
         return;
-    /*while (freq >= 1000)
+    while (freq >= 1000)
     {
         freq /= 1000;
         idUnit++;
-    }*/
-    printf("%s: %ld %cHz\n", sysclock_sources_str[source], unit[idUnit], freq);
+    }
+    printf("%s: %ld %cHz\n", sysclock_sources_str[source], freq, unit[idUnit]);
 }
 
 void cmd_sysclock_status()
