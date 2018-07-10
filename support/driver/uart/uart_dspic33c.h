@@ -51,6 +51,6 @@
  #define UART_COUNT 0
 #endif
 
-#define UART_MAXBRG 0x0000FFFF    // 16 bits divisor
+#define UART_MAXBRG 0x000FFFFF    // 24 bits divisor
 
 #endif // UART_DSPIC33C_H

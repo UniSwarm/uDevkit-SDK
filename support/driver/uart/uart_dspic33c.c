@@ -260,7 +260,7 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 {
 #if UART_COUNT>=1
     uint32_t systemClockPeriph;
-    uint16_t uBrg;
+    uint32_t uBrg;
     uint8_t hs = 0;
     uint8_t enabled = 0;
 
@@ -281,7 +281,7 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
     uarts[uart].baudSpeed = baudSpeed;
 
     // baud rate computation
-    systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_UART);
+    systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_UART) * 2; // Fosc not divided by 2
     uBrg = systemClockPeriph / baudSpeed;
     if (uBrg >= UART_MAXBRG)
         uBrg = UART_MAXBRG;
@@ -297,23 +297,30 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
         hs = 1;
         uBrg = uBrg >> 2;
     }
+    uBrg--; // minus 1
 
     switch (uart)
     {
     case 0:
+        U1MODEHbits.BCLKSEL = 0b10; // FOSC source
         U1MODEbits.BRGH = hs;
-        U1BRG = uBrg - 1;
+        U1BRG = uBrg & 0xFFFF;
+        U1BRGH = uBrg >> 16;
         break;
 #if UART_COUNT>=2
     case 1:
+        U2MODEHbits.BCLKSEL = 0b10; // FOSC source
         U2MODEbits.BRGH = hs;
-        U2BRG = uBrg - 1;
+        U2BRG = uBrg & 0xFFFF;
+        U2BRGH = uBrg >> 16;
         break;
 #endif
 #if UART_COUNT>=3
     case 2:
+        U3MODEHbits.BCLKSEL = 0b10; // FOSC source
         U3MODEbits.BRGH = hs;
-        U3BRG = uBrg - 1;
+        U3BRG = uBrg & 0xFFFF;
+        U3BRGH = uBrg >> 16;
         break;
 #endif
     }
