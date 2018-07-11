@@ -1,8 +1,11 @@
 
 DRIVERPATH = $(dir $(lastword $(MAKEFILE_LIST)))
 
+BADDRIVERS =
+IDRIVERS =
+
 define includedriver
- ifneq "$(wildcard $(UDEVKIT)/support/driver/$(1)/$(1).mk)" ""
+ ifneq ("$(wildcard $(UDEVKIT)/support/driver/$(1)/$(1).mk)","")
   ifeq (,$(findstring " $1 ",$(IDRIVERS)))
    DRIVER_FILES += $(UDEVKIT)/support/driver/$(1)/$(1).mk
    IDRIVERS += $(1)

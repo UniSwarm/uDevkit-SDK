@@ -1,8 +1,11 @@
 
 MODULEPATH = $(dir $(lastword $(MAKEFILE_LIST)))
 
+BADMODULES =
+IMODULES =
+
 define includemodule
- ifneq "$(wildcard $(UDEVKIT)/support/module/$(1)/$(1).mk)" ""
+ ifneq ("$(wildcard $(UDEVKIT)/support/module/$(1)/$(1).mk)","")
   ifeq (,$(findstring " $1 ",$(IMODULES)))
    MODULE_FILES += $(UDEVKIT)/support/module/$(1)/$(1).mk
    IMODULES += $(1)
