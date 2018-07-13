@@ -90,7 +90,7 @@ rt_dev_t uart_getFreeDevice()
 }
 
 /**
- * @brief Open an uart from his uart rt_dev_t
+ * @brief Opens an uart from his uart rt_dev_t
  * @param uart uart rt_dev_t id
  * @return uart device number
  */
@@ -114,7 +114,7 @@ int uart_open(rt_dev_t device)
 }
 
 /**
- * @brief Close and release an uart
+ * @brief Closes and release an uart
  * @param device uart device number
  * @return 0 if ok, -1 in case of error
  */
@@ -135,7 +135,7 @@ int uart_close(rt_dev_t device)
 }
 
 /**
- * @brief Enable the specified uart device
+ * @brief Enables the specified uart device
  * @param device uart device number
  * @return 0 if ok, -1 in case of error
  */
@@ -190,7 +190,7 @@ int uart_enable(rt_dev_t device)
 }
 
 /**
- * @brief Disable the specified uart device
+ * @brief Disables the specified uart device
  * @param device uart device number
  * @return 0 if ok, -1 in case of error
  */
@@ -573,7 +573,7 @@ size_t uart_datardy(rt_dev_t device)
 }
 
 /**
- * @brief Gets all the data readden by uart device
+ * @brief Reads `size_max` data received by uart device
  * @param device uart device number
  * @param data output buffer where data will be copy
  * @param size_max maximum number of data to read (size of the buffer 'data')
