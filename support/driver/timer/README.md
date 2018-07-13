@@ -41,7 +41,7 @@ timer_clearValue(timer); // clear count
 #### timer_getFreeDevice
 
 ```C
-rt_dev_t timer_getFreeDevice()
+rt_dev_t timer_getFreeDevice();
 ```
 
 Gives a free timer device number
@@ -49,7 +49,7 @@ Gives a free timer device number
 #### timer_open
 
 ```C
-int timer_open(rt_dev_t device)
+int timer_open(rt_dev_t device);
 ```
 
 Open an timer
@@ -57,7 +57,7 @@ Open an timer
 #### timer_close
 
 ```C
-int timer_close(rt_dev_t device)
+int timer_close(rt_dev_t device);
 ```
 
 Close an timer
@@ -67,7 +67,7 @@ Close an timer
 #### timer_enable
 
 ```C
-int timer_enable(rt_dev_t device)
+int timer_enable(rt_dev_t device);
 ```
 
 Enable the specified timer device
@@ -75,7 +75,7 @@ Enable the specified timer device
 #### timer_disable
 
 ```C
-int timer_disable(rt_dev_t device)
+int timer_disable(rt_dev_t device);
 ```
 
 Disable the specified timer device
@@ -85,7 +85,7 @@ Disable the specified timer device
 #### timer_setPeriodMs
 
 ```C
-int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
+int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs);
 ```
 
 Sets the period in us of the timer module to work in timer mode
@@ -93,7 +93,7 @@ Sets the period in us of the timer module to work in timer mode
 #### timer_periodMs
 
 ```C
-uint32_t timer_periodMs(rt_dev_t device)
+uint32_t timer_periodMs(rt_dev_t device);
 ```
 
 Returns the current period in us
@@ -103,7 +103,7 @@ Returns the current period in us
 #### timer_setCounter
 
 ```C
-int timer_setCounter(rt_dev_t device, uint16_t diviser)
+int timer_setCounter(rt_dev_t device, uint16_t diviser);
 ```
 
 Returns the current value of timer
@@ -111,7 +111,7 @@ Returns the current value of timer
 #### timer_clearValue
 
 ```C
-int timer_clearValue(rt_dev_t device)
+int timer_clearValue(rt_dev_t device);
 ```
 
 Reset the value of counter
@@ -119,7 +119,7 @@ Reset the value of counter
 #### timer_setValue
 
 ```C
-int timer_setValue(rt_dev_t device, uint16_t value)
+int timer_setValue(rt_dev_t device, uint16_t value);
 ```
 
 Sets the current value of timer
@@ -127,7 +127,7 @@ Sets the current value of timer
 #### timer_getValue
 
 ```C
-uint16_t timer_getValue(rt_dev_t device)
+uint16_t timer_getValue(rt_dev_t device);
 ```
 
 Returns the current value of timer

@@ -10,7 +10,7 @@ int position;
 
 // init
 qei1 = qei(1);
-qei_setBitConfig(qei1, 8, UART_BIT_PARITY_NONE, 1);
+qei_setBitConfig(qei1, QEI_X4MODE);
 qei_enable(qei1);
 
 // qei read
@@ -31,7 +31,7 @@ Gives a free qei device number and opens it
 #### qei_open
 
 ```C
-int qei_open(rt_dev_t device)
+int qei_open(rt_dev_t device);
 ```
 Opens an qei
 

@@ -20,7 +20,7 @@ uint32_t timer_freq = sysclock_periphFreq();
 #### sysclock_setClock
 
 ```C
-int sysclock_setClock(uint32_t fosc)
+int sysclock_setClock(uint32_t fosc);
 ```
 
 Sets the system clock of the CPU, the system clock may be different of CPU
@@ -30,7 +30,7 @@ Sets the system clock of the CPU, the system clock may be different of CPU
 #### sysclock_periphFreq
 
 ```C
-uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
+uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock);
 ```
 
 Gets the actual frequency on a particular peripheral bus clock
@@ -38,7 +38,7 @@ Gets the actual frequency on a particular peripheral bus clock
 #### sysclock_setClockDiv
 
 ```C
-int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
+int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div);
 ```
 
 Change the divisor of the busClock given as argument
@@ -48,7 +48,7 @@ Change the divisor of the busClock given as argument
 #### sysclock_sourceFreq
 
 ```C
-int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
+int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source);
 ```
 
 Return the actual frequency of the clock source
@@ -56,7 +56,7 @@ Return the actual frequency of the clock source
 #### sysclock_setSourceFreq
 
 ```C
-int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq)
+int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq);
 ```
 
 Change a frequency of a source if it can be modified
@@ -64,7 +64,7 @@ Change a frequency of a source if it can be modified
 #### sysclock_source
 
 ```C
-SYSCLOCK_SOURCE sysclock_source()
+SYSCLOCK_SOURCE sysclock_source();
 ```
 
 Return the actual clock source for system clock
@@ -72,7 +72,7 @@ Return the actual clock source for system clock
 #### sysclock_switchSourceTo
 
 ```C
-int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
+int sysclock_switchSourceTo(SYSCLOCK_SOURCE source);
 ```
 
 Switch the source clock of sysclock to another one and wait for the change effective

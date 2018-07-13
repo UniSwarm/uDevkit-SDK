@@ -30,7 +30,7 @@ i2c_writereg(i2c_bus, i2cPeriphAddr, i2cRegAddr, value, I2C_REG8 | I2C_REGADDR8)
 #### i2c_getFreeDevice
 
 ```C
-rt_dev_t i2c_getFreeDevice()
+rt_dev_t i2c_getFreeDevice();
 ```
 
 Gives a free i2c bus device number
@@ -38,7 +38,7 @@ Gives a free i2c bus device number
 #### i2c_open
 
 ```C
-int i2c_open(rt_dev_t device)
+int i2c_open(rt_dev_t device);
 ```
 
 Open an i2c bus
@@ -46,7 +46,7 @@ Open an i2c bus
 #### i2c_close
 
 ```C
-int i2c_close(rt_dev_t device)
+int i2c_close(rt_dev_t device);
 ```
 
 Close an i2c bus
@@ -56,7 +56,7 @@ Close an i2c bus
 #### i2c_enable
 
 ```C
-int i2c_enable(rt_dev_t device)
+int i2c_enable(rt_dev_t device);
 ```
 
 Enable the specified i2c bus device
@@ -64,7 +64,7 @@ Enable the specified i2c bus device
 #### i2c_disable
 
 ```C
-int i2c_disable(rt_dev_t device)
+int i2c_disable(rt_dev_t device);
 ```
 
 Disable the specified i2c bus device
@@ -74,7 +74,7 @@ Disable the specified i2c bus device
 #### i2c_setBaudSpeed
 
 ```C
-int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
+int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed);
 ```
 
 Sets the speed of receive and transmit
@@ -82,7 +82,7 @@ Sets the speed of receive and transmit
 #### i2c_baudSpeed
 
 ```C
-uint32_t i2c_baudSpeed(rt_dev_t device)
+uint32_t i2c_baudSpeed(rt_dev_t device);
 ```
 
 Gets the true baud speed
@@ -90,7 +90,7 @@ Gets the true baud speed
 #### i2c_effectiveBaudSpeed
 
 ```C
-uint32_t i2c_effectiveBaudSpeed(rt_dev_t device)
+uint32_t i2c_effectiveBaudSpeed(rt_dev_t device);
 ```
 
 Gets the effective baud speed
@@ -98,7 +98,7 @@ Gets the effective baud speed
 #### i2c_setAddressWidth
 
 ```C
-int i2c_setAddressWidth(rt_dev_t device, uint8_t addressWidth)
+int i2c_setAddressWidth(rt_dev_t device, uint8_t addressWidth);
 ```
 
 Sets the address width of slaves
@@ -106,7 +106,7 @@ Sets the address width of slaves
 #### i2c_addressWidth
 
 ```C
-uint8_t i2c_addressWidth(rt_dev_t device)
+uint8_t i2c_addressWidth(rt_dev_t device);
 ```
 
 Gets the address width of slaves
@@ -116,7 +116,7 @@ Gets the address width of slaves
 #### i2c_start
 
 ```C
-int i2c_start(rt_dev_t device)
+int i2c_start(rt_dev_t device);
 ```
 
 Sends a start condition
@@ -124,7 +124,7 @@ Sends a start condition
 #### i2c_restart
 
 ```C
-int i2c_restart(rt_dev_t device)
+int i2c_restart(rt_dev_t device);
 ```
 
 Sends a restart condition
@@ -132,7 +132,7 @@ Sends a restart condition
 #### i2c_stop
 
 ```C
-int i2c_stop(rt_dev_t device)
+int i2c_stop(rt_dev_t device);
 ```
 
 Sends a stop condition
@@ -140,7 +140,7 @@ Sends a stop condition
 #### i2c_idle
 
 ```C
-int i2c_idle(rt_dev_t device)
+int i2c_idle(rt_dev_t device);
 ```
 
 Sends a idle condition
@@ -148,7 +148,7 @@ Sends a idle condition
 #### i2c_ack
 
 ```C
-int i2c_ack(rt_dev_t device)
+int i2c_ack(rt_dev_t device);
 ```
 
 Sends a ack condition
@@ -156,7 +156,7 @@ Sends a ack condition
 #### i2c_nack
 
 ```C
-int i2c_nack(rt_dev_t device)
+int i2c_nack(rt_dev_t device);
 ```
 
 Sends a nack condition
@@ -164,7 +164,7 @@ Sends a nack condition
 #### i2c_putc
 
 ```C
-int i2c_putc(rt_dev_t device, const char data)
+int i2c_putc(rt_dev_t device, const char data);
 ```
 
 Puts a byte
@@ -172,7 +172,7 @@ Puts a byte
 #### i2c_getc
 
 ```C
-uint8_t i2c_getc(rt_dev_t device)
+uint8_t i2c_getc(rt_dev_t device);
 ```
 
 Gets a byte
@@ -182,7 +182,7 @@ Gets a byte
 #### i2c_readreg
 
 ```C
-uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t flags)
+uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t flags);
 ```
 
 Read a register at address 'reg' in i2c chip with address 'address'
@@ -190,7 +190,7 @@ Read a register at address 'reg' in i2c chip with address 'address'
 #### i2c_readregs
 
 ```C
-ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[], size_t size, uint8_t flags)
+ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[], size_t size, uint8_t flags);
 ```
 
 Read 'size' registers beginning at address 'reg' in i2c chip with address 'address'
@@ -198,7 +198,7 @@ Read 'size' registers beginning at address 'reg' in i2c chip with address 'addre
 #### i2c_writereg
 
 ```C
-int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value, uint8_t flags)
+int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value, uint8_t flags);
 ```
 
 Write 'value' in register at address 'reg' in i2c chip with address 'address'
@@ -206,7 +206,7 @@ Write 'value' in register at address 'reg' in i2c chip with address 'address'
 #### i2c_writeregs
 
 ```C
-int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[], size_t size, uint8_t flags)
+int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[], size_t size, uint8_t flags);
 ```
 
 Write 'regs' in registers that start at address 'reg' in i2c chip

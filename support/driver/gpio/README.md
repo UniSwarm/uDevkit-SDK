@@ -31,7 +31,7 @@ while (1)
 #### gpio_pin
 
 ```C
-rt_dev_t gpio_pin(port, pin)
+rt_dev_t gpio_pin(port, pin);
 ```
 
 Macro to choose a bit of a port
@@ -39,7 +39,7 @@ Macro to choose a bit of a port
 #### gpio_setBitConfig
 
 ```C
-int gpio_setBitConfig(rt_dev_t device, uint16_t config)
+int gpio_setBitConfig(rt_dev_t device, uint16_t config);
 ```
 
 Set GPIO bit configuration (input / output / open-drain / pull-up / pull-down)
@@ -47,7 +47,7 @@ Set GPIO bit configuration (input / output / open-drain / pull-up / pull-down)
 #### gpio_setBit
 
 ```C
-void gpio_setBit(rt_dev_t device)
+void gpio_setBit(rt_dev_t device);
 ```
 
 Set a bit of a GPIO to 1 (HIGH)
@@ -55,7 +55,7 @@ Set a bit of a GPIO to 1 (HIGH)
 #### gpio_clearBit
 
 ```C
-void gpio_clearBit(rt_dev_t device)
+void gpio_clearBit(rt_dev_t device);
 ```
 
 Set a bit of a GPIO to 0 (LOW)
@@ -63,7 +63,7 @@ Set a bit of a GPIO to 0 (LOW)
 #### gpio_toggleBit
 
 ```C
-void gpio_toggleBit(rt_dev_t device)
+void gpio_toggleBit(rt_dev_t device);
 ```
 
 Toggle (invert) a bit of a GPIO from 1 to 0 or from 0 to 1
@@ -71,7 +71,7 @@ Toggle (invert) a bit of a GPIO from 1 to 0 or from 0 to 1
 #### gpio_writeBit
 
 ```C
-void gpio_writeBit(rt_dev_t device, GPIO_VALUE value)
+void gpio_writeBit(rt_dev_t device, GPIO_VALUE value);
 ```
 
 Write a specific value of a bit of a GPIO
@@ -79,7 +79,7 @@ Write a specific value of a bit of a GPIO
 #### gpio_readBit
 
 ```C
-GPIO_VALUE gpio_readBit(rt_dev_t device)
+GPIO_VALUE gpio_readBit(rt_dev_t device);
 ```
 
 Read a bit of a GPIO
@@ -89,7 +89,7 @@ Read a bit of a GPIO
 #### gpio_port
 
 ```C
-rt_dev_t gpio_port(port)
+rt_dev_t gpio_port(port);
 ```
 
 Macro to choose a whole port
@@ -97,7 +97,7 @@ Macro to choose a whole port
 #### gpio_setPortConfig
 
 ```C
-int gpio_setPortConfig(rt_dev_t device, uint16_t config)
+int gpio_setPortConfig(rt_dev_t device, uint16_t config);
 ```
 
 Set GPIO port configuration (input / output)
@@ -105,7 +105,7 @@ Set GPIO port configuration (input / output)
 #### gpio_writePort
 
 ```C
-void gpio_writePort(rt_dev_t device, port_type value)
+void gpio_writePort(rt_dev_t device, port_type value);
 ```
 
 Set GPIO port value (complete port)
@@ -113,7 +113,7 @@ Set GPIO port value (complete port)
 #### gpio_readPort
 
 ```C
-port_type gpio_readPort(rt_dev_t device)
+port_type gpio_readPort(rt_dev_t device);
 ```
 
 Read GPIO port value (complete port)

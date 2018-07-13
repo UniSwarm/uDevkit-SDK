@@ -1,27 +1,27 @@
-# drivers support
+# Drivers support
 
-Low level driver dependant or not of the processor.
+Low level drivers that dependant of the processor.
 
 Each driver must have a particular directory with the same name of the driver which contains a 'driver-name'.mk file.
 
 ## Actual drivers supported
 
-|Driver name|Description|
-|-----------|-----------|
-|[ax12](ax12/README.md)|ax12 servo motor driver|
-|[motor](motor/README.md)|motor abstraction drivers|
-|[adc](adc/README.md)|ADC analog converters driver|
-|[i2c](i2c/README.md)|I2C communication driver|
-|[ic](ic/README.md)|Input compare driver|
-|[oc](oc/README.md)|Output compare driver|
-|[pwm](pwm/README.md)|PWM driver|
-|[qei](qei/README.md)|Quadrature encoder driver|
-|[spi](spi/README.md)|SPI communication driver|
-|[sysclock](sysclock/README.md)|System clock|
-|[timer](timer/README.md)|Timer driver|
-|[uart](uart/README.md)|UART (serial) communication driver|
-|[usb_hal](usb_hal/README.md)|USB low layer driver|
-|[usb_serial](usb_serial/README.md)|USB CDC driver|
+|Driver name|Description|Status|
+|-----------|-----------|------|
+|[ax12](ax12/README.md)|ax12 servo motor driver|Experimental|
+|[motor](motor/README.md)|motor abstraction drivers|Experimental|
+|[adc](adc/README.md)|ADC analog converters driver|Experimental|
+|[i2c](i2c/README.md)|I2C communication driver|__Stable__|
+|[ic](ic/README.md)|Input compare driver|Implementation needed|
+|[oc](oc/README.md)|Output compare driver|Experimental|
+|[pwm](pwm/README.md)|PWM driver|Experimental|
+|[qei](qei/README.md)|Quadrature encoder driver|__Stable__|
+|[spi](spi/README.md)|SPI communication driver|Implementation needed|
+|[sysclock](sysclock/README.md)|System clock|__Stable__|
+|[timer](timer/README.md)|Timer driver|__Stable__|
+|[uart](uart/README.md)|UART (serial) communication driver|__Stable__|
+|[usb_hal](usb_hal/README.md)|USB low layer driver|Experimental|
+|[usb_serial](usb_serial/README.md)|USB CDC driver|Experimental|
 
 ## How to add a driver support?
 Create a directory with the name of the driver in this directory :
@@ -41,7 +41,7 @@ To avoid multiple inclusion of <driver-name>.mk, add this (example with timer) :
 	endif
 ```
 
-If the driver need the support of of another drivers, add it :
+If the driver need the support of another drivers, add it :
 
 ```Makefile
 	DRIVERS += another_driver
@@ -67,8 +67,8 @@ And for specific architecture :
 
 ```Makefile
 	ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ep dspic33fj))
-	 ARCHI_SRC += timer_dspic.c
-	 HEADER += timer_dspic.h
+	 ARCHI_SRC += timer_dspic33.c
+	 HEADER += timer_dspic33.h
 	endif
 	ifeq ($(ARCHI), pic24)
 	 ARCHI_SRC += timer_pic24.c

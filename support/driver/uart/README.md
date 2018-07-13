@@ -33,7 +33,7 @@ Gives a free uart device number and opens it
 #### uart_open
 
 ```C
-int uart_open(rt_dev_t device)
+int uart_open(rt_dev_t device);
 ```
 Opens an uart
 
