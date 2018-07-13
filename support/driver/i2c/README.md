@@ -1,4 +1,5 @@
-# i2c
+# I2C
+
 I2C driver support for hardware abstraction layer
 
 ## Minimalist code
@@ -24,54 +25,191 @@ i2c_writereg(i2c_bus, i2cPeriphAddr, i2cRegAddr, value, I2C_REG8 | I2C_REGADDR8)
 
 ## API
 
-### device assignation
-`rt_dev_t i2c_getFreeDevice()` Gives a free i2c bus device number
+### Device assignation
 
-`int i2c_open(rt_dev_t device)` Open an i2c bus
+#### i2c_getFreeDevice
 
-`int i2c_close(rt_dev_t device)` Close an i2c bus
+```C
+rt_dev_t i2c_getFreeDevice()
+```
 
-### device enable/disable
-`int i2c_enable(rt_dev_t device)` Enable the specified i2c bus device
+Gives a free i2c bus device number
 
-`int i2c_disable(rt_dev_t device)` Disable the specified i2c bus device
+#### i2c_open
 
-### device settings
-`int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)` Sets the speed of receive and transmit
+```C
+int i2c_open(rt_dev_t device)
+```
 
-`uint32_t i2c_baudSpeed(rt_dev_t device)` Gets the true baud speed
+Open an i2c bus
 
-`uint32_t i2c_effectiveBaudSpeed(rt_dev_t device)` Gets the effective baud speed
+#### i2c_close
 
-`int i2c_setAddressWidth(rt_dev_t device, uint8_t addressWidth)` Sets the address width of slaves
+```C
+int i2c_close(rt_dev_t device)
+```
 
-`uint8_t i2c_addressWidth(rt_dev_t device)` Gets the address width of slaves
+Close an i2c bus
 
-### device low level interface
-`int i2c_start(rt_dev_t device)` Sends a start condition
+### Device enable/disable
 
-`int i2c_restart(rt_dev_t device)` Sends a restart condition
+#### i2c_enable
 
-`int i2c_stop(rt_dev_t device)` Sends a stop condition
+```C
+int i2c_enable(rt_dev_t device)
+```
 
-`int i2c_idle(rt_dev_t device)` Sends a idle condition
+Enable the specified i2c bus device
 
-`int i2c_ack(rt_dev_t device)` Sends a ack condition
+#### i2c_disable
 
-`int i2c_nack(rt_dev_t device)` Sends a nack condition
+```C
+int i2c_disable(rt_dev_t device)
+```
 
-`int i2c_putc(rt_dev_t device, const char data)` Puts a byte
+Disable the specified i2c bus device
 
-`uint8_t i2c_getc(rt_dev_t device)` Gets a byte
+### Device settings
 
-### high level functions, registers level
-`uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t flags)` Read a register at address 'reg' in i2c chip with address 'address'
+#### i2c_setBaudSpeed
 
-`ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[], size_t size, uint8_t flags)` Read 'size' registers beginning at address 'reg' in i2c chip with address 'address'
+```C
+int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
+```
 
-`int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value, uint8_t flags)` Write 'value' in register at address 'reg' in i2c chip with address 'address'
+Sets the speed of receive and transmit
 
-`int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[], size_t size, uint8_t flags)` Write 'regs' in registers that start at address 'reg' in i2c chip
+#### i2c_baudSpeed
+
+```C
+uint32_t i2c_baudSpeed(rt_dev_t device)
+```
+
+Gets the true baud speed
+
+#### i2c_effectiveBaudSpeed
+
+```C
+uint32_t i2c_effectiveBaudSpeed(rt_dev_t device)
+```
+
+Gets the effective baud speed
+
+#### i2c_setAddressWidth
+
+```C
+int i2c_setAddressWidth(rt_dev_t device, uint8_t addressWidth)
+```
+
+Sets the address width of slaves
+
+#### i2c_addressWidth
+
+```C
+uint8_t i2c_addressWidth(rt_dev_t device)
+```
+
+Gets the address width of slaves
+
+### Device low level interface
+
+#### i2c_start
+
+```C
+int i2c_start(rt_dev_t device)
+```
+
+Sends a start condition
+
+#### i2c_restart
+
+```C
+int i2c_restart(rt_dev_t device)
+```
+
+Sends a restart condition
+
+#### i2c_stop
+
+```C
+int i2c_stop(rt_dev_t device)
+```
+
+Sends a stop condition
+
+#### i2c_idle
+
+```C
+int i2c_idle(rt_dev_t device)
+```
+
+Sends a idle condition
+
+#### i2c_ack
+
+```C
+int i2c_ack(rt_dev_t device)
+```
+
+Sends a ack condition
+
+#### i2c_nack
+
+```C
+int i2c_nack(rt_dev_t device)
+```
+
+Sends a nack condition
+
+#### i2c_putc
+
+```C
+int i2c_putc(rt_dev_t device, const char data)
+```
+
+Puts a byte
+
+#### i2c_getc
+
+```C
+uint8_t i2c_getc(rt_dev_t device)
+```
+
+Gets a byte
+
+### High level functions, registers level
+
+#### i2c_readreg
+
+```C
+uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t flags)
+```
+
+Read a register at address 'reg' in i2c chip with address 'address'
+
+#### i2c_readregs
+
+```C
+ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[], size_t size, uint8_t flags)
+```
+
+Read 'size' registers beginning at address 'reg' in i2c chip with address 'address'
+
+#### i2c_writereg
+
+```C
+int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value, uint8_t flags)
+```
+
+Write 'value' in register at address 'reg' in i2c chip with address 'address'
+
+#### i2c_writeregs
+
+```C
+int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[], size_t size, uint8_t flags)
+```
+
+Write 'regs' in registers that start at address 'reg' in i2c chip
 
 `flags` parameter should be use with the following flag :
 
@@ -84,26 +222,34 @@ i2c_writereg(i2c_bus, i2cPeriphAddr, i2cRegAddr, value, I2C_REG8 | I2C_REGADDR8)
 This flag should be used with (|) pipes/logic or. It is not necessary to precise it if you use default value
 
 ## Development status
+
 Device assignation, configuration, send and read data fully functional
 
-### TODO :
+### TODO
+
 + review error return in high level function and i2c_getc
 
 ## Supported architectures
 
-|Family|Implementation file|Implementation header|
-|------|-------------------|---------------------|
-|[pic24f](../../../archi/pic24f/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
-|[pic24fj](../../../archi/pic24fj/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
-|[pic24ep](../../../archi/pic24ep/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
-|[pic24hj](../../../archi/pic24hj/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
-|[dspic33fj](../../../archi/dspic33fj/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
-|[dspic33ep](../../../archi/dspic33ep/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
-|[dspic33ev](../../../archi/dspic33ev/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
-|[dspic30f](../../../archi/dspic30f/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c)|[i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
-|[pic32mm](../../../archi/pic32mm/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|
-|[pic32mk](../../../archi/pic32mk/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|
-|[pic32mx](../../../archi/pic32mx/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|
-|[pic32mzec](../../../archi/pic32mzec/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|
-|[pic32mzef](../../../archi/pic32mzef/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|
-|[pic32mzda](../../../archi/pic32mzda/README.md)|[i2c_pic32.c](i2c_pic32.c)|[i2c_pic32.h](i2c_pic32.h)|
+Header file : [i2c.h](i2c.h)
+
+High level implementation file : [i2c.c](i2c.c)
+
+|Family|Implementation file|
+|------|-------------------|
+|[pic24f](../../archi/pic24f/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c) / [i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[pic24fj](../../archi/pic24fj/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c) / [i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[pic24ep](../../archi/pic24ep/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c) / [i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[pic24hj](../../archi/pic24hj/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c) / [i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[dspic33fj](../../archi/dspic33fj/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c) / [i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[dspic33ep](../../archi/dspic33ep/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c) / [i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[dspic33ev](../../archi/dspic33ev/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c) / [i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[dspic30f](../../archi/dspic30f/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c) / [i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[dspic33ch](../../archi/dspic33ch/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c) / [i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[dspic33ck](../../archi/dspic33ck/README.md)|[i2c_pic24_dspic30f_dspic33.c](i2c_pic24_dspic30f_dspic33.c) / [i2c_pic24_dspic30f_dspic33.h](i2c_pic24_dspic30f_dspic33.h)|
+|[pic32mm](../../archi/pic32mm/README.md)|[i2c_pic32.c](i2c_pic32.c) / [i2c_pic32.h](i2c_pic32.h)|
+|[pic32mk](../../archi/pic32mk/README.md)|[i2c_pic32.c](i2c_pic32.c) / [i2c_pic32.h](i2c_pic32.h)|
+|[pic32mx](../../archi/pic32mx/README.md)|[i2c_pic32.c](i2c_pic32.c) / [i2c_pic32.h](i2c_pic32.h)|
+|[pic32mzec](../../archi/pic32mzec/README.md)|[i2c_pic32.c](i2c_pic32.c) / [i2c_pic32.h](i2c_pic32.h)|
+|[pic32mzef](../../archi/pic32mzef/README.md)|[i2c_pic32.c](i2c_pic32.c) / [i2c_pic32.h](i2c_pic32.h)|
+|[pic32mzda](../../archi/pic32mzda/README.md)|[i2c_pic32.c](i2c_pic32.c) / [i2c_pic32.h](i2c_pic32.h)|

@@ -1,4 +1,4 @@
-# uart
+# UART
 
 UART driver support for hardware abstraction layer.
 
