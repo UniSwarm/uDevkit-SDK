@@ -1,11 +1,11 @@
 # dsPIC33CH support
 
 dsPIC33CH family is the first Microchip *dual core* [16 bits](../pic16b/README.md) MCU. The main core have 16 kb of dedicated RAM and the slave core 4 kb
-with a hardware MSI cache coherency protocol. Architecture and peripherals are similar to [dsPIC33CK](../dspic33ck/README.md).
+with a hardware MSI cache coherency protocol. Architecture and peripherals are similar to [dsPIC33CK](../dspic33ck/README.md), the simple core version.
 
 A lot of peripherals (UART, Timer...) are not compatible with others dsPIC ranges. Full support of drivers may needs additional time.
 
-This family have variation of flash memory, pin count and CAN FD for 5XX subfamily.
+This family have variations of flash memory, pin count and CAN FD for 5XX subfamily.
 
 Slave core is marked with final S1. Slave core does not have same peripherals. They have 4kb of shared ram and 24kb of flash.
 
@@ -43,7 +43,7 @@ Slave core is marked with final S1. Slave core does not have same peripherals. T
 
 ## Devices list
 
-20 devices on June 2018, plus relative slave core with a final *S1* which are similar core.
+20 devices on July 2018, plus relative slave core with a final *S1* which are similar core.
 
 ### MP20X subfamily
 
@@ -101,7 +101,7 @@ virtual pins between them. VPins are usefull for synchronisations signals.
 
 ### sysclock
 
-A new PLL block appears in this line.
+A new PLL block appears in this line. Each core have one, but share the same clock sources.
 
 ### UART
 
@@ -128,4 +128,4 @@ PWM modules are more precises and offers more functionalities. A complete driver
 
 ### IOs
 
-A new interupt on change system are avilable, but still compatible with old drivers.
+A new interupt on change system are available, but still compatible with old drivers.

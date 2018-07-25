@@ -1,15 +1,15 @@
 # dsPIC33CK support
 
 dsPIC33CK family is a new generation of [16 bits](../pic16b/README.md) MCU with DSP accelerator. Architecture and peripherals
-are similar to [dsPIC33CH](../dspic33ch/README.md).
+are similar to [dsPIC33CH](../dspic33ch/README.md), the dual core version.
 
 A lot of peripherals (UART, Timer...) are not compatible with others dsPIC ranges. Full support of drivers may needs additional time.
 
-This family have variation of flash memory, pin count and CAN FD for 5XX subfamily.
+This family have variations of flash memory, pin count and CAN FD for 5XX subfamily.
 
 ## Main features
 
-|Feature|dsPIC33CH|
+|Feature|dsPIC33CK|
 |-------|:------:|
 |Core|16 bits|
 |Performance|100 DMIPS|
@@ -40,7 +40,7 @@ This family have variation of flash memory, pin count and CAN FD for 5XX subfami
 
 ## Devices list
 
-44 devices on june 2018.
+44 devices on July 2018.
 
 ### MP10X subfamily
 
@@ -106,3 +106,36 @@ Same functionalities of 20X plus CAN FD device.
 |[dsPIC33CK64MP508](http://microchip.com/wwwproducts/en/dsPIC33CK64MP508)  |  66 kb|   8 kb| 80|
 |[dsPIC33CK128MP508](http://microchip.com/wwwproducts/en/dsPIC33CK128MP508)| 134 kb|  16 kb| 80|
 |[dsPIC33CK256MP508](http://microchip.com/wwwproducts/en/dsPIC33CK256MP508)| 269 kb|  25 kb| 80|
+
+## New set of peripherals
+
+### sysclock
+
+A new PLL block appears in this line.
+
+### UART
+
+Fully reviewed UART peripherals. Bits have quite similar name but not always in the same register. In addition to
+UxMODE and UxSTAT, we can found UxMODEH and UxSTATH. This new version adds also integrated hardware protocols handler.
+
+Clock generation can be done from 4 differents sources of clock with a MUX and BRG have now a fractional mode.
+
+### Timer and SCCP
+
+A surprising thing at the first view of global features of dsPIC33CH is the only one present timer. This one is quite
+similar to old ones. SCCP replace it.
+
+SCCP peripherals are multi-functions. They can be one 32bits timer, two 16bits timers, an input capture, PWM or output
+capture.
+
+### CAN Fd
+
+CAN Fd module is completely different of ECAN from dsPIC33E. A complete driver write needs to be done.
+
+### PWM
+
+PWM modules are more precises and offers more functionalities. A complete driver write needs to be done.
+
+### IOs
+
+A new interupt on change system are available, but still compatible with old drivers.
