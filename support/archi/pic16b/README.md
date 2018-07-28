@@ -2,12 +2,12 @@
 
 This architecture support file handle all 16 bits families of Microchip.
 
-(610 devices on June 2018)
+(634 devices on June 2018)
 
 |Famillies|Device count|
 |---------|-----------:|
 |[dsPIC30F](../dspic30f/README.md)  | 29|
-|[dsPIC33CH](../dspic33ch/README.md)| 40|
+|[dsPIC33CH](../dspic33ch/README.md)| 64|
 |[dsPIC33CK](../dspic33ck/README.md)| 44|
 |[dsPIC33EP](../dspic33ep/README.md)|101|
 |[dsPIC33EV](../dspic33ev/README.md)| 32|
