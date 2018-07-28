@@ -60,12 +60,12 @@ typedef enum {
 #define SYSCLOCK_CLOCK_IC     SYSCLOCK_CLOCK_PBCLK  ///< IC clock bus mapped to peripheral bus
 
 /*
- *                  Fplli
- *        _________   |    _______
- *  Fin  |         |  v   |       |     _____       __________     __________ 
- * ----->| /PREDIV |----->|       |    |     |     |          |   |          |
- *       |_________|      |  PFD  |--->| VCO |-+-->| POSTDIV1 |-->| POSTDIV2 |--> Fsys
- *                     +->|       |    |_____| |   |__________|   |__________|
+ *                  Fplli                    FVco                            FPllo
+ *        _________   |    _______             |                               |
+ *  Fin  |         |  v   |       |     _____  |    __________     __________  |  ____ 
+ * ----->| /PREDIV |----->|       |    |     | v   |          |   |          | v |    |
+ *       |_________|      |  PFD  |--->| VCO |-+-->| POSTDIV1 |-->| POSTDIV2 |-->| /2 |--> Fsys
+ *                     +->|       |    |_____| |   |__________|   |__________|   |____|
  *                     |  |_______|            |
  *                     |        _______        |
  *                     |       |       |       |
@@ -73,7 +73,7 @@ typedef enum {
  *                             |_______|
  *
  *  SYSCLOCK_FPLLI_MIN > Fplli > SYSCLOCK_FPLLI_MAX
- *  SYSCLOCK_FSYS_MIN  > Fsys  > SYSCLOCK_FSYS_MAX
+ *  SYSCLOCK_PLLM_MIN  > FPllo > SYSCLOCK_PLLM_MAX
  */
 
 #if defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
@@ -95,6 +95,7 @@ typedef enum {
  #define SYSCLOCK_POSTDIV1_MAX 7
  #define SYSCLOCK_POSTDIV2_MIN 1
  #define SYSCLOCK_POSTDIV2_MAX 7
+ // POSTDIV1 >= POSTDIV2
 
  #define SYSCLOCK_PLLM_MIN 16
  #define SYSCLOCK_PLLM_MAX 200
@@ -106,7 +107,11 @@ typedef enum {
 #if defined(DEVICE_33CH128MP202S1) || defined(DEVICE_33CH128MP203S1) || defined(DEVICE_33CH128MP205S1) \
  || defined(DEVICE_33CH128MP206S1) || defined(DEVICE_33CH128MP208S1) || defined(DEVICE_33CH128MP502S1) \
  || defined(DEVICE_33CH128MP503S1) || defined(DEVICE_33CH128MP505S1) || defined(DEVICE_33CH128MP506S1) \
- || defined(DEVICE_33CH128MP508S1) || defined(DEVICE_33CH64MP202S1) || defined(DEVICE_33CH64MP203S1) \
+ || defined(DEVICE_33CH128MP508S1) || defined(DEVICE_33CH256MP205S1) || defined(DEVICE_33CH256MP206S1) \
+ || defined(DEVICE_33CH256MP208S1) || defined(DEVICE_33CH256MP505S1) || defined(DEVICE_33CH256MP506S1) \
+ || defined(DEVICE_33CH256MP508S1) || defined(DEVICE_33CH512MP205S1) || defined(DEVICE_33CH512MP206S1) \
+ || defined(DEVICE_33CH512MP208S1) || defined(DEVICE_33CH512MP505S1) || defined(DEVICE_33CH512MP506S1) \
+ || defined(DEVICE_33CH512MP508S1) || defined(DEVICE_33CH64MP202S1) || defined(DEVICE_33CH64MP203S1) \
  || defined(DEVICE_33CH64MP205S1) || defined(DEVICE_33CH64MP206S1) || defined(DEVICE_33CH64MP208S1) \
  || defined(DEVICE_33CH64MP502S1) || defined(DEVICE_33CH64MP503S1) || defined(DEVICE_33CH64MP505S1) \
  || defined(DEVICE_33CH64MP506S1) || defined(DEVICE_33CH64MP508S1) || defined(DEVICE_33CK128MP202) \
@@ -130,7 +135,11 @@ typedef enum {
 #elif defined(DEVICE_33CH128MP202) || defined(DEVICE_33CH128MP203) || defined(DEVICE_33CH128MP205) \
  || defined(DEVICE_33CH128MP206) || defined(DEVICE_33CH128MP208) || defined(DEVICE_33CH128MP502) \
  || defined(DEVICE_33CH128MP503) || defined(DEVICE_33CH128MP505) || defined(DEVICE_33CH128MP506) \
- || defined(DEVICE_33CH128MP508) || defined(DEVICE_33CH64MP202) || defined(DEVICE_33CH64MP203) \
+ || defined(DEVICE_33CH128MP508) || defined(DEVICE_33CH256MP205) || defined(DEVICE_33CH256MP206) \
+ || defined(DEVICE_33CH256MP208) || defined(DEVICE_33CH256MP505) || defined(DEVICE_33CH256MP506) \
+ || defined(DEVICE_33CH256MP508) || defined(DEVICE_33CH512MP205) || defined(DEVICE_33CH512MP206) \
+ || defined(DEVICE_33CH512MP208) || defined(DEVICE_33CH512MP505) || defined(DEVICE_33CH512MP506) \
+ || defined(DEVICE_33CH512MP508) || defined(DEVICE_33CH64MP202) || defined(DEVICE_33CH64MP203) \
  || defined(DEVICE_33CH64MP205) || defined(DEVICE_33CH64MP206) || defined(DEVICE_33CH64MP208) \
  || defined(DEVICE_33CH64MP502) || defined(DEVICE_33CH64MP503) || defined(DEVICE_33CH64MP505) \
  || defined(DEVICE_33CH64MP506) || defined(DEVICE_33CH64MP508)
@@ -140,5 +149,6 @@ typedef enum {
  #define SYSCLOCK_FSYS_MIN  1000000 //   1 MHz
 
 int sysclock_setPLLClock(uint32_t freq, uint8_t src);
+uint32_t sysclock_getPLLClock();
 
 #endif // SYSCLOCK_DSPIC33C_H
