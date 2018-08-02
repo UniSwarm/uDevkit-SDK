@@ -25,7 +25,7 @@ Slave core is marked with final S1. Slave core does not have same peripherals. T
 |:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
 |MP20X           |        2|        1|        0|        0|        2|        2|        0|        2|        4|         1|         0|         0|         8|
 |MP20XS1         |        1|        1|        0|        0|        1|        1|        0|        0|        4|         1|         0|         0|         4|
-|MP50X           |        2|        1|        0|        0|        2|        2|        1|        2|        4|         1|         0|         0|         8|
+|MP50X           |        2|        1|        0|        0|        2|        2|   1-2 Fd|        2|        4|         1|         0|         0|         8|
 |MP50XS1         |        1|        1|        0|        0|        1|        1|        0|        0|        4|         1|         0|         0|         4|
 
 [1]: ../../driver/uart
@@ -70,7 +70,7 @@ Base device.
 
 ### MP50X subfamily
 
-Contains all functionnalities of 20X plus CAN FD device.
+Contains all functionnalities of 20X plus CAN FD device (2 CAN Fd buses for 256k and 512k flash version).
 
 |Compatible devices|Program|Data|Slave program|Slave data|Pins|
 |---------|--:|--:|--:|--:|--:|
