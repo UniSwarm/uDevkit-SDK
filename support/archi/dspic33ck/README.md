@@ -23,7 +23,7 @@ This family have variations of flash memory, pin count and CAN FD for 5XX subfam
 |:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
 |dsPIC33CK MP10X |        3|        1|        0|        0|        2|        3|        0|        2|        4|         2|         8|         1|         4|
 |dsPIC33CK MP20X |        3|        1|        0|        0|        3|        3|        0|        2|        4|         2|         8|         1|         8|
-|dsPIC33CK MP50X |        3|        1|        0|        0|        3|        3|      1Fd|        2|        4|         2|         8|         1|         8|
+|dsPIC33CK MP50X |        3|        1|        0|        0|        3|        3|   1-2 Fd|        2|        4|         2|         8|         1|         8|
 
 [1]: ../../driver/uart
 [2]: ../../driver/timer
@@ -57,7 +57,7 @@ Base device.
 
 ### MP20X subfamily
 
-Same functionalities of 50X with more peripherals (MCCP, I2C) and more analog inputs and functionalities.
+Same functionalities of 10X with more peripherals (MCCP, I2C) and more analog inputs and functionalities.
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -83,7 +83,7 @@ Same functionalities of 50X with more peripherals (MCCP, I2C) and more analog in
 
 ### MP50X subfamily
 
-Same functionalities of 20X plus CAN FD device.
+Same functionalities of 20X plus CAN FD device (2 CAN Fd buses for 256k and 512k flash version).
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
