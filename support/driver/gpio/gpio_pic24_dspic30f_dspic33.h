@@ -2,11 +2,12 @@
  * @file gpio_pic24_dspic30f_dspic33.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018
  *
  * @date March 20, 2017, 18:39 AM
  *
- * @brief GPIO support driver for dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV,
- * dsPIC33CH, dsPIC33CK, PIC24F, PIC24FJ, PIC24EP and PIC24HJ
+ * @brief GPIO support driver for dsPIC30F, dsPIC33CH, dsPIC33CK, dsPIC33FJ,
+ * dsPIC33EP, dsPIC33EV, PIC24F, PIC24FJ, PIC24EP and PIC24HJ
  *
  * Implementation based on Microchip document DS70058D, DS70193D and DS70000598C :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/70058D.pdf (dsPIC30F)

@@ -2,11 +2,12 @@
  * @file gpio_pic24_dspic30f_dspic33.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018
  *
  * @date March 20, 2017, 18:39 AM
  *
- * @brief GPIO support driver for dsPIC30F, dsPIC33FJ, dsPIC33EP, dsPIC33EV,
- * PIC24F, PIC24FJ, PIC24EP and PIC24HJ
+ * @brief GPIO support driver for dsPIC30F, dsPIC33CH, dsPIC33CK, dsPIC33FJ,
+ * dsPIC33EP, dsPIC33EV, PIC24F, PIC24FJ, PIC24EP and PIC24HJ
  *
  * Implementation based on Microchip document DS70058D, DS70193D and DS70000598C :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/70058D.pdf (dsPIC30F)
@@ -27,6 +28,7 @@ void gpio_setBit(rt_dev_t device)
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
     uint16_t bit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
 
+    __builtin_disi(0x3FFF);
     switch(port)
     {
 #ifdef GPIO_HAVE_PORTA
@@ -85,6 +87,7 @@ void gpio_setBit(rt_dev_t device)
         break;
 #endif
     }
+    __builtin_disi(0);
 }
 
 /**
@@ -96,6 +99,7 @@ void gpio_clearBit(rt_dev_t device)
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
     uint16_t bit = ~(1 << (device & GPIO_MAX_PORTWIDTHMASK));
 
+    __builtin_disi(0x3FFF);
     switch(port)
     {
 #ifdef GPIO_HAVE_PORTA
@@ -154,6 +158,7 @@ void gpio_clearBit(rt_dev_t device)
         break;
 #endif
     }
+    __builtin_disi(0);
 }
 
 /**
@@ -165,6 +170,7 @@ void gpio_toggleBit(rt_dev_t device)
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
     uint16_t bit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
 
+    __builtin_disi(0x3FFF);
     switch(port)
     {
 #ifdef GPIO_HAVE_PORTA
@@ -223,6 +229,7 @@ void gpio_toggleBit(rt_dev_t device)
         break;
 #endif
     }
+    __builtin_disi(0);
 }
 
 /**
