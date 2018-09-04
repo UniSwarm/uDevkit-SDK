@@ -1,7 +1,7 @@
 /**
  * @file can.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Uniswarm 2017
+ * @copyright Uniswarm 2017-2018
  *
  * @date December 8 2017, 09:10 AM
  *
@@ -28,7 +28,7 @@ typedef enum
 {
     CAN_MODE_NORMAL = 0x0,      ///< CAN normal mode of operation
     CAN_MODE_LISTENONLY,        ///< CAN only listen mode
-    CAN_MODE_LISTENALL,         ///< CAN listen all without take care of adresses
+    CAN_MODE_LISTENALL,         ///< CAN listen all without taking care of adresses
     CAN_MODE_LOOPBACK,          ///< CAN loopback mode for test purpose and self diagnostics
     CAN_MODE_DISABLED,          ///< CAN disabled
     CAN_MODE_CONFIGURATION      ///< CAN disabled
@@ -59,6 +59,8 @@ int can_rec(rt_dev_t device, uint8_t fifo, uint32_t *id, char *data, uint8_t *si
 
 #if defined(ARCHI_dspic30f)
  #include "can_dspic30f.h"
+#elif defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
+ #include "can_dspic33c.h"
 #elif defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) \
  || defined(ARCHI_pic24hj) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) \
  || defined(ARCHI_dspic33ev)
