@@ -6,8 +6,8 @@
 
 void cmd_reg_help()
 {
-    puts("reg read <addr>");
-    puts("reg write <addr> <value>");
+    puts("reg read <hex-addr>");
+    puts("reg write <hex-addr> <hex-value>");
 }
 
 // TODO adapt for 16 bit device
@@ -20,7 +20,7 @@ int cmd_reg(int argc, char **argv)
     }
 
     // help
-    if (strcmp(argv[1], "help")==0)
+    if (strcmp(argv[1], "help") == 0)
     {
         cmd_reg_help();
         return 0;
@@ -33,14 +33,14 @@ int cmd_reg(int argc, char **argv)
     if (addr == 0)
         return 1;
 
-    if (strcmp(argv[1], "read")==0)
+    if (strcmp(argv[1], "read") == 0)
     {
-        char res[sizeof(int)*8+4];
-        uint32_t value = *addr;
+        char res[sizeof(int) * 8 + 4];
+        rt_reg_t value = *addr;
         uint8_t id = 0;
 
         // print in binary format
-        unsigned int mask;
+        rt_reg_t mask;
         #if (REGSIZE == 4)
             mask = 0x80000000;
         #else
@@ -53,12 +53,16 @@ int cmd_reg(int argc, char **argv)
             if ((mask & 0x00808080) != 0)
                 res[id++] = ' ';
         }
-        res[id]=0;
+        res[id] = 0;
 
         #if (REGSIZE == 4)
-            printf("0x%.8X : 0b%s\n", value, res);
+            printf("dec : %d\n", value);
+            printf("hex : 0x%.8X\n", value);
+            printf("bin : 0b%s\n", res);
         #else
-            printf("0x%.4X : 0b%s\n", value, res);
+            printf("dec : %d\n", value);
+            printf("hex : 0x%.4X\n", value);
+            printf("bin : 0b%s\n", res);
         #endif
         return 0;
     }
@@ -66,7 +70,7 @@ int cmd_reg(int argc, char **argv)
     if (argc < 4)
         return 1;
     volatile unsigned int value = (unsigned int)strtoul(argv[3], NULL, 16);
-    if (strcmp(argv[1], "write")==0)
+    if (strcmp(argv[1], "write") == 0)
     {
         *addr = value;
         printf("written\n");
