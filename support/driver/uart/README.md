@@ -6,17 +6,20 @@ UART driver support for hardware abstraction layer.
 
 ```C
 char buff[20];
-rt_dev_t uart;
+rt_dev_t uart4;
+ssize_t byteRead;
 
 // init
-uart = uart_getFreeDevice();
-uart_setBaudSpeed(uart, 115200);
-uart_setBitConfig(uart, 8, UART_BIT_PARITY_NONE, 1);
-uart_enable(uart);
+uart4 = uart(4);
+uart_open(uart4);
+uart_setBaudSpeed(uart4, 115200);
+uart_setBitConfig(uart4, 8, UART_BIT_PARITY_NONE, 1);
+uart_enable(uart4);
 
 // send and receive data
-uart_write(uart, "test\n", 5);
-uart_read(uart, buff, 20);
+uart_write(uart4, "test\n", 5);
+
+byteRead = uart_read(uart4, buff, 20); // reads up to 20 chars from uart 4 to buff and returns read byte count.
 ```
 
 ## API

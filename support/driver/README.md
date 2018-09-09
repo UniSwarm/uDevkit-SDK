@@ -11,6 +11,7 @@ Each driver must have a particular directory with the same name of the driver wh
 |[ax12](ax12/README.md)|ax12 servo motor driver|Experimental|
 |[motor](motor/README.md)|motor abstraction drivers|Experimental|
 |[adc](adc/README.md)|ADC analog converters driver|Experimental|
+|[can](can/README.md)|CAN bus driver|Experimental|
 |[i2c](i2c/README.md)|I2C communication driver|__Stable__|
 |[ic](ic/README.md)|Input compare driver|Implementation needed|
 |[oc](oc/README.md)|Output compare driver|Experimental|

@@ -52,7 +52,7 @@ Gives a free timer device number
 int timer_open(rt_dev_t device);
 ```
 
-Open an timer
+Opens a timer
 
 #### timer_close
 
@@ -60,7 +60,7 @@ Open an timer
 int timer_close(rt_dev_t device);
 ```
 
-Close an timer
+Closes a timer
 
 ### Device enable/disable
 
@@ -70,7 +70,7 @@ Close an timer
 int timer_enable(rt_dev_t device);
 ```
 
-Enable the specified timer device
+Enables the specified timer device
 
 #### timer_disable
 
@@ -78,7 +78,7 @@ Enable the specified timer device
 int timer_disable(rt_dev_t device);
 ```
 
-Disable the specified timer device
+Disables the specified timer device
 
 ### Timer mode
 
