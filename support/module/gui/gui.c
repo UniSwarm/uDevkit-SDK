@@ -2,6 +2,7 @@
  * @file gui.c
  * @author Sebastien CAUX (sebcaux) / Charles-Antoine NOURY (charlybigoud)
  * @copyright Robotips 2016
+ * @copyright UniSwarm 2017-2018
  *
  * @date April 25, 2016, 18:35 AM
  *
@@ -11,10 +12,9 @@
 #include "gui.h"
 #include "screenController/screenController.h"
 
-Color _gui_penColor;
-Color _gui_brushColor;
-uint16_t _gui_x, _gui_y;
-const Font *_gui_font;
+Color _gui_penColor = 1;
+Color _gui_brushColor = 0;
+const Font *_gui_font = NULL;
 
 void gui_init(rt_dev_t dev)
 {
@@ -26,8 +26,8 @@ void gui_fillScreen(Color color)
     uint16_t i,j;
     gui_ctrl_setRectScreen(0, 0, GUI_WIDTH, GUI_HEIGHT);
 
-    for (i=0; i<GUI_WIDTH; i++)
-        for (j=0; j<GUI_HEIGHT; j++)
+    for (i = 0; i<GUI_WIDTH; i++)
+        for (j = 0; j<GUI_HEIGHT; j++)
             gui_ctrl_write_data(color);
 }
 
@@ -38,16 +38,16 @@ void gui_fillScreen(Color color)
 void gui_dispImage(uint16_t x, uint16_t y, const Picture *pic)
 {
     uint16_t i,j;
-    unsigned long addr=0;
+    unsigned long addr = 0;
 
     //TODO: create warning if the image is too big
 
     // set rect image area space address
     gui_ctrl_setRectScreen(x, y, pic->width, pic->height);
 
-    for (i=0; i<pic->width; i++)
+    for (i = 0; i<pic->width; i++)
     {
-        for (j=0; j<pic->height; j++)
+        for (j = 0; j<pic->height; j++)
         {
             gui_ctrl_write_data(pic->data[addr]);
             ++addr;
@@ -173,8 +173,8 @@ void gui_drawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
     gui_ctrl_setRectScreen(x, y, w, h);
 
     // fill this rect with brush color
-    for (i=0; i<h; i++)
-        for (j=0;j<w;j++)
+    for (i = 0; i<h; i++)
+        for (j = 0;j<w;j++)
             gui_ctrl_write_data(_gui_brushColor);
 
     // restore full draw screen
@@ -201,7 +201,10 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
     uint16_t wcurrent;
     uint8_t out_of_rect = 0;
 
-    if (x>=GUI_WIDTH || y>=GUI_HEIGHT)
+    if (_gui_font == NULL)
+        return;
+
+    if (x >= GUI_WIDTH || y >= GUI_HEIGHT)
         return;
 
     // width calculation
@@ -321,11 +324,15 @@ const Font *gui_font()
 
 uint8_t gui_getFontHeight()
 {
+    if (_gui_font == NULL)
+        return 0;
     return _gui_font->height;
 }
 
 uint8_t gui_getFontWidth(const char c)
 {
+    if (_gui_font == NULL)
+        return 0;
     if (c < _gui_font->first || c > _gui_font->last)
         return 0;
     return _gui_font->letters[c - _gui_font->first]->width;
@@ -335,6 +342,8 @@ uint16_t gui_getFontTextWidth(const char *txt)
 {
     uint16_t width = 0;
     const char *c = txt;
+    if (_gui_font == NULL)
+        return 0;
     while (*c != '\0')
     {
         if (*c >= _gui_font->first && *c <= _gui_font->last)

@@ -2,6 +2,7 @@
  * @file gui.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
+ * @copyright UniSwarm 2017-2018
  *
  * @date April 25, 2016, 18:35 AM
  *
