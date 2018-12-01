@@ -7,13 +7,13 @@ All devices also contains 4 kb of EEPROM, operational amplifiers and Parallel Ma
 This family is splitted into six subfamilies :
 
 * GPD : Global Purpose
-* GPD : GPD with ECC flash
+* GPK : GPD with ECC flash
 * GPE : GPD with 4 CAN peripherals
-* GPL : GPD with 4 CAN peripherals and ECC flash
+* GPL : GPD with 4 CAN Fd peripherals and ECC flash
 * MCF : GPD with 4 CAN peripherals and Motor Control special features (QEI and enhanced PWM)
-* MCM : GPD with 1 CAN Fd peripheral, Motor Control special features (QEI and enhanced PWM) and ECC flash
+* MCM : GPD with 4 CAN Fd peripheral, Motor Control special features (QEI and enhanced PWM) and ECC flash
 
-Family documentation can be found here : http://ww1.microchip.com/downloads/en/DeviceDoc/60001402D.pdf .
+Family documentation can be found here : http://ww1.microchip.com/downloads/en/DeviceDoc/PIC32MK-General-Purpose-and-Motor-Control-%20(GPMC)-Family-Datasheet-60001402E.pdf .
 
 Devices with asterixis are future devices and not yet released.
 
@@ -34,9 +34,9 @@ Devices with asterixis are future devices and not yet released.
 |PIC32MK GPD     |        6|        9|       16|       16|        4|        6|        0|        0|        0|         0|         0|         0|         0|
 |PIC32MK GPK     |        6|        9|       16|       16|        4|        6|        0|        0|        0|         0|         0|         0|         0|
 |PIC32MK GPE     |        6|        9|       16|       16|        4|        6|        4|        0|        0|         0|         0|         0|         0|
-|PIC32MK GPL     |        6|        9|       16|       16|        4|        6|      1FD|        0|        0|         0|         0|         0|         0|
+|PIC32MK GPL     |        6|        9|       16|       16|        4|        6|     4 Fd|        0|        0|         0|         0|         0|         0|
 |PIC32MK MCF     |        6|        9|       16|       16|        4|        6|        4|        0|        0|         6|        12|         0|         0|
-|PIC32MK MCM     |        6|        9|       16|       16|        4|        6|      1FD|        0|        0|         6|        12|         0|         0|
+|PIC32MK MCM     |        6|        9|       16|       16|        4|        6|     4 Fd|        0|        0|         6|        12|         0|         0|
 
 [1]: ../../driver/uart
 [2]: ../../driver/timer
@@ -68,7 +68,7 @@ Global Purpose device
 
 ### GPK devices
 
-Same as GPK with ECC flash.
+Same as GPD with ECC flash.
 
 |GPK compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -90,7 +90,7 @@ Same as GPD with 4 CAN peripherals.
 
 ### GPL devices
 
-Same as GPD with 1 CAN Fd peripheral and ECC flash.
+Same as GPD with 4 CAN Fd peripheral and ECC flash.
 
 |GPL compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -113,7 +113,7 @@ Same as GPD with 4 CAN peripherals, 6 QEI modules and 12 enhanced PWM.
 
 ### MCM devices
 
-Same as GPD with 1 CAN FD peripheral, 6 QEI modules, 12 enhanced PWM and ECC flash.
+Same as GPD with 4 CAN Fd peripheral, 6 QEI modules, 12 enhanced PWM and ECC flash.
 
 |MCM compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
