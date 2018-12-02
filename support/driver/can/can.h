@@ -27,6 +27,7 @@ int can_disable(rt_dev_t device);
 typedef enum
 {
     CAN_MODE_NORMAL = 0x0,      ///< CAN normal mode of operation
+    CAN_MODE_NORMAL_FD,         ///< CAN normal FD mode of operation
     CAN_MODE_LISTENONLY,        ///< CAN only listen mode
     CAN_MODE_LISTENALL,         ///< CAN listen all without taking care of adresses
     CAN_MODE_LOOPBACK,          ///< CAN loopback mode for test purpose and self diagnostics
@@ -53,9 +54,15 @@ typedef enum
                              /// identifier and standard 11 bits identifier
     CAN_RTR      = 0x04      ///< Remote transmit request
 } CAN_FLAGS;
-// TODO
-int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t size, CAN_FLAGS flags);
-int can_rec(rt_dev_t device, uint8_t fifo, uint32_t *id, char *data, uint8_t *size, CAN_FLAGS *flags);
+
+typedef struct {
+    uint32_t id;
+    CAN_FLAGS flags;
+    uint8_t size;
+} CAN_MSG_HEADER;
+
+int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data);
+int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data);
 
 #if defined(ARCHI_dspic30f)
  #include "can_dspic30f.h"

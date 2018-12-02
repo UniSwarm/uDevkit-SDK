@@ -650,7 +650,7 @@ uint8_t can_s2Seg(rt_dev_t device)
 #endif
 }
 
-int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t size, CAN_FLAGS flags)
+int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
 #if CAN_COUNT>=1
     unsigned int i;
@@ -702,21 +702,21 @@ int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t siz
         buffer->messageWord[1] = 0;
 
         // set can id
-        if ((flags & CAN_VERS2BA) == CAN_VERS2BA)
+        if ((header->flags & CAN_VERS2BA) == CAN_VERS2BA)
         {
             buffer->msgEID.IDE = 1;    // extended id
-            buffer->msgEID.EID = id;   // Message EID
+            buffer->msgEID.EID = header->id & 0x3FFFF;   // Message EID
         }
-        buffer->msgSID.SID = id >> 18; // Message EID
+        buffer->msgSID.SID = header->id >> 18; // Message EID
 
-        if (flags & CAN_RTR)
+        if (header->flags & CAN_RTR)
             buffer->msgEID.RTR = 1;
 
         // set data and data size
-        if (size > 8)
-            size = 8;
-        buffer->msgEID.DLC = size; // Data Length
-        for (i=0; i<size; i++)
+        if (header->size > 8)
+            header->size = 8;
+        buffer->msgEID.DLC = header->size; // Data Length
+        for (i=0; i<header->size; i++)
             buffer->data[i] = data[i];
     }
 
@@ -760,7 +760,7 @@ int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t siz
 #endif
 }
 
-int can_rec(rt_dev_t device, uint8_t fifo, uint32_t *id, char *data, uint8_t *size, CAN_FLAGS *flags)
+int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
 #if CAN_COUNT>=1
     int i;
@@ -805,17 +805,17 @@ int can_rec(rt_dev_t device, uint8_t fifo, uint32_t *id, char *data, uint8_t *si
     if (buffer->msgEID.IDE == 1)
     {
         flagValue = flagValue + CAN_VERS2BA; // extended ID
-        *id = buffer->msgEID.EID + (buffer->msgSID.SID << 18);
+        header->id = buffer->msgEID.EID + (buffer->msgSID.SID << 18);
     }
     else
     {
-        *id = buffer->msgSID.SID;
+        header->id = buffer->msgSID.SID;
     }
 
     // data read and copy
-    for (i=0; i<buffer->msgEID.DLC; i++)
+    header->size = buffer->msgEID.DLC;
+    for (i=0; i<header->size; i++)
 		data[i] = buffer->data[i];
-    *size = buffer->msgEID.DLC;
 
 
     switch (can)
@@ -841,8 +841,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, uint32_t *id, char *data, uint8_t *si
     }
 
     // flags
-    if (flags != NULL)
-        *flags = flagValue;
+    header->flags = flagValue;
 
     return 1;
 #else
