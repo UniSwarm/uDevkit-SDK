@@ -13,12 +13,16 @@ can_enable(can);
 can_setMode(can, CAN_MODE_NORMAL);
 
 // send and receive data
-can_send(can, 0, 0x01AB45CD, "12345678", 8, CAN_VERS2BA);
+CAN_MSG_HEADER can_header;
+can_header.size = 8;
+can_header.id = 0x01AB45CD;
+can_header.flags = CAN_VERS2BA;
+can_send(can1, 0, &can_header, (char*)&cpt);
 
-uint32_t id;
 char rdata[8];
-uint8_t size;
-int r = can_rec(can, 0, &id, rdata, &size, NULL);
+int r = can_rec(can1, 0, &can_header, rdata);
+if (r == 1)
+    printf("%#08x\n", rdata);
 ```
 
 ## API
@@ -117,14 +121,14 @@ Gets the S2 segment length
 #### can_send
 
 ```C
-int can_send(rt_dev_t device, uint8_t fifo, uint32_t id, char *data, uint8_t size, CAN_FLAGS flags);
+int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data);
 ```
 Puts a message on fifo `fifo`
 
 #### can_rec
 
 ```C
-int can_rec(rt_dev_t device, uint8_t fifo, uint32_t *id, char *data, uint8_t *size, CAN_FLAGS *flags);
+int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data);
 ```
 Gets a message from fifo `fifo`, return 1 if a message is read
 

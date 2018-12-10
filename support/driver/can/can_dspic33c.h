@@ -91,8 +91,8 @@ typedef struct {
     uint16_t eid;
     uint16_t flags;
     uint16_t unused;
-    uint16_t timeStampL:16;
-    uint16_t timeStampH:16;
+    uint16_t timeStampL;
+    uint16_t timeStampH;
 } CAN_RxMsgBuffer;
 #define CAN_DSPIC33C_RX_DLC(rxbuffer)  ((rxbuffer)->flags & 0x000F)
 #define CAN_DSPIC33C_RX_IDE(rxbuffer)  ((rxbuffer)->flags & 0x0010)

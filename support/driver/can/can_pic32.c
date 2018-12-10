@@ -650,6 +650,13 @@ uint8_t can_s2Seg(rt_dev_t device)
 #endif
 }
 
+/**
+ * @brief Write a can message to fifo
+ * @param device CAN device number
+ * @param fifo fifo number to put the message
+ * @param header CAN message header struct (id, flags, data size)
+ * @return 0 if message is successfully putted inside fifo, -1 in case of error
+ */
 int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
 #if CAN_COUNT>=1
@@ -760,6 +767,13 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 #endif
 }
 
+/**
+ * @brief Read a can message to fifo
+ * @param device CAN device number
+ * @param fifo fifo number to read the message
+ * @param header CAN message header struct (id, flags, data size)
+ * @return 0 if message no readen, -1 in case of error, 1 if a message is readen
+ */
 int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
 #if CAN_COUNT>=1
@@ -841,6 +855,8 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     }
 
     // flags
+    if (buffer->msgEID.RTR == 1)
+        flagValue += CAN_RTR;
     header->flags = flagValue;
 
     return 1;

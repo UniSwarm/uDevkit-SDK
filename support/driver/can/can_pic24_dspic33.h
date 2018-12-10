@@ -13,8 +13,8 @@
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/70353C.pdf
  */
 
-#ifndef CAN_PIC24_dsPIC33_H
-#define CAN_PIC24_dsPIC33_H
+#ifndef CAN_PIC24_DSPIC33_H
+#define CAN_PIC24_DSPIC33_H
 
 #if defined(DEVICE_33EP128GP502) || defined(DEVICE_33EP128GP504) || defined(DEVICE_33EP128GP506) \
  || defined(DEVICE_33EP128MC502) || defined(DEVICE_33EP128MC504) || defined(DEVICE_33EP128MC506) \
@@ -71,4 +71,10 @@
  #define CAN_COUNT 0
 #endif
 
-#endif // CAN_PIC24_dsPIC33_H
+#if CAN_COUNT>0
+ #define CAN_FIFO_COUNT 32
+#else
+ #define CAN_FIFO_COUNT 0
+#endif
+
+#endif // CAN_PIC24_DSPIC33_H
