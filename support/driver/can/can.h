@@ -52,7 +52,8 @@ typedef enum
     CAN_VERS2BP  = 0x02,     ///< CAN version 2B pasive, extended ignored
     CAN_VERS2BA  = 0x03,     ///< CAN version 2B active, work with extended 29 bits
                              /// identifier and standard 11 bits identifier
-    CAN_RTR      = 0x04      ///< Remote transmit request
+    CAN_RTR      = 0x04,     ///< Remote transmit request
+    CAN_FDF      = 0x08      ///< CAN FD trame
 } CAN_FLAGS;
 
 typedef struct {
