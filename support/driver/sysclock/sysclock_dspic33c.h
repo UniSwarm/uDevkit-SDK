@@ -19,10 +19,19 @@
 
 // bus clock
 typedef enum {
-    SYSCLOCK_CLOCK_SYSCLK = 0x0,    ///< main sysclock
+    SYSCLOCK_CLOCK_FOSC = 0x0,      ///< Fosc
+    SYSCLOCK_CLOCK_SYSCLK,          ///< main sysclock, Fp
     SYSCLOCK_CLOCK_PBCLK,           ///< peripheral bus
     SYSCLOCK_CLOCK_REFCLK,          ///< reference clock module
-    SYSCLOCK_CLOCK_FRC              ///< FRC div
+    SYSCLOCK_CLOCK_FRC,             ///< FRC div
+    SYSCLOCK_CLOCK_VCO,             ///< PLL VCO
+    SYSCLOCK_CLOCK_VCO2,            ///< PLL VCO / 2
+    SYSCLOCK_CLOCK_VCO3,            ///< PLL VCO / 3
+    SYSCLOCK_CLOCK_VCO4,            ///< PLL VCO / 4
+    SYSCLOCK_CLOCK_AVCO,            ///< Auxiliary PLL VCO
+    SYSCLOCK_CLOCK_AVCO2,           ///< Auxiliary PLL VCO / 2
+    SYSCLOCK_CLOCK_AVCO3,           ///< Auxiliary PLL VCO / 3
+    SYSCLOCK_CLOCK_AVCO4            ///< Auxiliary PLL VCO / 4
 } SYSCLOCK_CLOCK;
 
 // clock source
@@ -148,8 +157,22 @@ typedef enum {
   #define SYSCLOCK_FSYS_MAX 120000000 //  120 MHz
   #define SYSCLOCK_FOSC_MAX 240000000 //  240 MHz
 #endif
- #define SYSCLOCK_FSYS_MIN  1000000 //   1 MHz
+#define SYSCLOCK_FSYS_MIN  1000000 //   1 MHz
 
+#if defined(DEVICE_33CH256MP205S1) || defined(DEVICE_33CH256MP206S1) || defined(DEVICE_33CH256MP208S1) \
+ || defined(DEVICE_33CH256MP505S1) || defined(DEVICE_33CH256MP506S1) || defined(DEVICE_33CH256MP508S1) \
+ || defined(DEVICE_33CH512MP205S1) || defined(DEVICE_33CH512MP206S1) || defined(DEVICE_33CH512MP208S1) \
+ || defined(DEVICE_33CH512MP505S1) || defined(DEVICE_33CH512MP506S1) || defined(DEVICE_33CH512MP508S1) \
+ || defined(DEVICE_33CH128MP202S1) || defined(DEVICE_33CH128MP203S1) || defined(DEVICE_33CH128MP205S1) \
+ || defined(DEVICE_33CH128MP206S1) || defined(DEVICE_33CH128MP208S1) || defined(DEVICE_33CH128MP502S1) \
+ || defined(DEVICE_33CH128MP503S1) || defined(DEVICE_33CH128MP505S1) || defined(DEVICE_33CH128MP506S1) \
+ || defined(DEVICE_33CH128MP508S1) || defined(DEVICE_33CH64MP202S1) || defined(DEVICE_33CH64MP203S1) \
+ || defined(DEVICE_33CH64MP205S1) || defined(DEVICE_33CH64MP206S1) || defined(DEVICE_33CH64MP208S1) \
+ || defined(DEVICE_33CH64MP502S1) || defined(DEVICE_33CH64MP503S1) || defined(DEVICE_33CH64MP505S1) \
+ || defined(DEVICE_33CH64MP506S1) || defined(DEVICE_33CH64MP508S1)
+  #define SYSCLOCK_NO_OSCTUNE
+#endif
+ 
 int sysclock_setPLLClock(uint32_t freq, uint8_t src);
 uint32_t sysclock_getPLLClock();
 
