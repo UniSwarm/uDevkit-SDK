@@ -261,7 +261,6 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 #if UART_COUNT>=1
     uint32_t systemClockPeriph;
     uint32_t uBrg;
-    uint8_t hs = 0;
     uint8_t enabled = 0;
 
     // check parameters
@@ -286,31 +285,18 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
     if (uBrg >= UART_MAXBRG)
         uBrg = UART_MAXBRG;
 
-    // high speed baud rate mode
-    if ((uBrg & 0x0F) == 0)
-    {
-        hs = 0;
-        uBrg = uBrg >> 4;
-    }
-    else
-    {
-        hs = 1;
-        uBrg = uBrg >> 2;
-    }
-    uBrg--; // minus 1
-
     switch (uart)
     {
     case 0:
         U1MODEHbits.BCLKSEL = 0b10; // FOSC source
-        U1MODEbits.BRGH = hs;
+        U1MODEHbits.BCLKMOD = 1;    // fractional mode
         U1BRG = uBrg & 0xFFFF;
         U1BRGH = uBrg >> 16;
         break;
 #if UART_COUNT>=2
     case 1:
         U2MODEHbits.BCLKSEL = 0b10; // FOSC source
-        U2MODEbits.BRGH = hs;
+        U2MODEHbits.BCLKMOD = 1;    // fractional mode
         U2BRG = uBrg & 0xFFFF;
         U2BRGH = uBrg >> 16;
         break;
@@ -318,7 +304,7 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 #if UART_COUNT>=3
     case 2:
         U3MODEHbits.BCLKSEL = 0b10; // FOSC source
-        U3MODEbits.BRGH = hs;
+        U3MODEHbits.BCLKMOD = 1;    // fractional mode
         U3BRG = uBrg & 0xFFFF;
         U3BRGH = uBrg >> 16;
         break;
@@ -343,7 +329,7 @@ uint32_t uart_baudSpeed(rt_dev_t device)
 {
 #if UART_COUNT>=1
     uint32_t baudSpeed;
-    uint16_t uBrg;
+    uint32_t uBrg;
     uint8_t hs;
 
     uint8_t uart = MINOR(device);
@@ -353,28 +339,21 @@ uint32_t uart_baudSpeed(rt_dev_t device)
     switch (uart)
     {
     case 0:
-        hs = U1MODEbits.BRGH;
-        uBrg = U1BRG + 1;
+        uBrg = U1BRG;
         break;
 #if UART_COUNT>=2
     case 1:
-        hs = U2MODEbits.BRGH;
-        uBrg = U2BRG + 1;
+        uBrg = U2BRG;
         break;
 #endif
 #if UART_COUNT>=3
     case 2:
-        hs = U3MODEbits.BRGH;
-        uBrg = U3BRG + 1;
+        uBrg = U3BRG;
         break;
 #endif
     }
 
     baudSpeed = sysclock_periphFreq(SYSCLOCK_CLOCK_UART) / uBrg;
-    if (hs == 1)
-        baudSpeed = baudSpeed >> 2;
-    else
-        baudSpeed = baudSpeed >> 4;
 
     return baudSpeed;
 #else
