@@ -106,7 +106,7 @@ void adc_calib()
 int adc_init()
 {
     // Configure the common ADC clock.
-    ADCON3Hbits.CLKSEL = 2;// clock from FRC oscillator
+    ADCON3Hbits.CLKSEL = 0;// clock from Fp oscillator
     ADCON3Hbits.CLKDIV = 0;// no clock divider (1:1)
 
     // Configure the cores’ ADC clock.
