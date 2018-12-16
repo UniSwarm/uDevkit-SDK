@@ -47,5 +47,5 @@ clean:
 
 %:
 	@printf ">>> $(ORANGE)PROC : $@$(NORM)\n"
-	@OUT_PWD=build_$@ DEVICE=$@ $(MAKE) --no-print-directory -f Makefile.arch -O -j $(RULE)
+	@OUT_PWD=build_$@ DEVICE=$@ $(MAKE) --no-print-directory -f Makefile.arch -j $(RULE)
 
