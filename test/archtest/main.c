@@ -41,6 +41,13 @@ int main(void)
     uart_setBaudSpeed(uartDbg, 115200);
     uart_setBitConfig(uartDbg, 8, UART_BIT_PARITY_NONE, 1);
     uart_enable(uartDbg);
+    
+    
+#if QEI_COUNT>=1
+    rt_dev_t qei1 = qei(0);
+    qei_open(qei1);
+    qei_enable(qei1);
+#endif
 
     // console init
     //cmdline_init();
