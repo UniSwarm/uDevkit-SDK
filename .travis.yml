@@ -4,11 +4,11 @@ group: edge
 
 env:
   global:
-    - XC16_URL="http://ww1.microchip.com/downloads/en/DeviceDoc/xc16-v1.33-full-install-linux-installer.run"
-    - XC16_PATH="/opt/microchip/xc16/v1.33/bin"
+    - XC16_URL="http://ww1.microchip.com/downloads/en/DeviceDoc/xc16-v1.35-full-install-linux-installer.run"
+    - XC16_PATH="/opt/microchip/xc16/v1.35/bin"
     - XC16_DL="$HOME/xc16.run"
-    - XC32_URL="http://ww1.microchip.com/downloads/en/DeviceDoc/xc32-v1.44-full-install-linux-installer.run"
-    - XC32_PATH="/opt/microchip/xc32/v1.44/bin"
+    - XC32_URL="http://ww1.microchip.com/downloads/en/DeviceDoc/xc32-v2.10-full-install-linux-installer.run"
+    - XC32_PATH="/opt/microchip/xc32/v2.10/bin"
     - XC32_DL="$HOME/xc32.run"
   matrix:
     - TEST=tools
