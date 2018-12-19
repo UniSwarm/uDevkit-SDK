@@ -182,7 +182,7 @@ int can_enable(rt_dev_t device)
 #if CAN_COUNT>=2
     case 1:
         C2FIFOBAH = 0x0000;
-        C2FIFOBAL = (uint16_t)(&CAN1FIFO);
+        C2FIFOBAL = (uint16_t)(&CAN2FIFO);
 
         // Configure TEF to save 5 messages
         C2CONLbits.BRSDIS = 0x0;
@@ -395,7 +395,7 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
         C1CONLbits.CON = 1;
         C1CONHbits.REQOP = 4;
         while (C1CONHbits.OPMOD != 4);
-        
+
         CANCLKCONbits.CANCLKSEL = 3;   // CAN Clock Source = VCO/2 = 640/2 = 320MHz
         CANCLKCONbits.CANCLKDIV = 4-1; // divide by 4 i.e. 320/4 = 80MHz
         CANCLKCONbits.CANCLKEN = 1;    // enabled
@@ -633,7 +633,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 }
 
 /**
- * @brief Read a can message to fifo
+ * @brief Read a can message from fifo
  * @param device CAN device number
  * @param fifo fifo number to read the message
  * @param header CAN message header struct (id, flags, data size)
@@ -675,7 +675,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     }
     else
         canId = CAN_DSPIC33C_RX_SID(buffer);
-    header->id = canId; 
+    header->id = canId;
 
     // data read and copy
     uint8_t size = CAN_DSPIC33C_RX_DLC(buffer);

@@ -51,25 +51,6 @@
  #define CAN_FILTER_COUNT 0
 #endif
 
-typedef struct {
-    unsigned DLC:4;
-    unsigned IDE:1;
-    unsigned RTR:1;
-    unsigned BRS:1;
-    unsigned FDF:1;
-    unsigned ESI:1;
-    unsigned SEQ:7;
-    unsigned unimplemented1:16;
-} CAN_TX_MSGOBJ_CTRL;
-
-// CANFD TX Message ID
-    typedef struct {
-    unsigned SID:11;
-    unsigned long EID:18;
-    unsigned SID11:1;
-    unsigned unimplemented1:2;
-} CAN_MSGOBJ_ID;
-
 // CAN TX Message Object
 typedef union {
     struct {

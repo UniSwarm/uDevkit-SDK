@@ -86,7 +86,7 @@ CAN Bit Timing (8-25 Tq) segments computation :
 ```C
 uint32_t can_bitRate(rt_dev_t device);
 ```
- Gets the true bit rate
+Gets the true bit rate
 
 #### can_effectiveBitRate
 
@@ -100,21 +100,21 @@ Gets the effective bit rate
 ```C
 uint8_t can_propagSeg(rt_dev_t device);
 ```
-Gets the propagation segment length
+Gets the current propagation segment length
 
 #### can_s1Seg
 
 ```C
 uint8_t can_s1Seg(rt_dev_t device);
 ```
-Gets the S1 segment length
+Gets the current S1 segment length
 
 #### can_s2Seg
 
 ```C
 uint8_t can_s2Seg(rt_dev_t device);
 ```
-Gets the S2 segment length
+Gets the current S2 segment length
 
 ### Device read / write
 
@@ -123,7 +123,7 @@ Gets the S2 segment length
 ```C
 int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data);
 ```
-Puts a message on fifo `fifo`
+Puts a message in fifo `fifo`
 
 #### can_rec
 
@@ -141,7 +141,6 @@ Device assignation, configuration, send and read data on fifo 0 only
 + multi fifo send / rec
 + fifo status
 + implementation on dsPIC33E/F
-+ implementation on dsPIC33C
 + interrupts
 
 ## Supported architectures

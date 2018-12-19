@@ -768,7 +768,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 }
 
 /**
- * @brief Read a can message to fifo
+ * @brief Read a can message from fifo
  * @param device CAN device number
  * @param fifo fifo number to read the message
  * @param header CAN message header struct (id, flags, data size)
