@@ -219,12 +219,17 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
     timers[timer].periodMs = periodMs;
 
     prvalue = sysclock_periphFreq(SYSCLOCK_CLOCK_TIMER) / 1000 * periodMs;
-    if(prvalue > 65535)
+    if (prvalue > 65535)
     {
-        div = 0b11;
-        prvalue >>= 8;
-        if(prvalue > 65535)
-            prvalue = 65535;
+        div = 0b01; // 8 divider
+        prvalue >>= 3;
+        if (prvalue > 65535)
+        {
+            div = 0b11; // 256 divider
+            prvalue >>= 5;
+            if (prvalue > 65535)
+                prvalue = 65535;
+        }
     }
 
     switch (timer)
@@ -313,9 +318,24 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 #if TIMER_COUNT>=1
 void __attribute__ ((interrupt, no_auto_psv)) _T1Interrupt()
 {
-    if(timers[0].handler)
+    if (timers[0].handler)
         (*timers[0].handler)();
 
     _T1IF = 0;
 }
 #endif
+
+void timer_reconfig()
+{
+    uint8_t i;
+    rt_dev_t device;
+
+    for (i = 0; i < TIMER_COUNT; i++)
+    {
+        if (timers[i].flags.used == 1)
+        {
+            device = MKDEV(DEV_CLASS_TIMER, i);
+            timer_setPeriodMs(device, timers[i].periodMs);
+        }
+    }
+}
