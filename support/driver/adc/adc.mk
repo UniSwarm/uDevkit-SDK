@@ -6,11 +6,11 @@ vpath %.h $(DRIVERPATH)
 
 HEADER += adc.h
 
-ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ch dspic33ck))
+ifeq ($(ARCHI), $(filter $(ARCHI), dspic33ch dspic33ck))
  ARCHI_SRC += adc_dspic33_sar12.c
  HEADER += adc_dspic33_sar12.h
 endif
-ifeq ($(ARCHI), dspic33ep dspic33ev)
+ifeq ($(ARCHI), $(filter $(ARCHI), dspic33ep dspic33ev))
  ifeq ($(DEVICE),$(filter $(DEVICE),33EP128GS702 33EP128GS704 33EP128GS705 \
    33EP128GS706 33EP128GS708 33EP128GS804 33EP128GS805 33EP128GS806 33EP128GS808 \
    33EP16GS202 33EP16GS502 33EP16GS504 33EP16GS505 33EP16GS506 33EP32GS202 \
@@ -23,7 +23,7 @@ ifeq ($(ARCHI), dspic33ep dspic33ev)
   HEADER += adc_pic24e_dspic33e.h
  endif
 endif
-ifeq ($(ARCHI),$(filter $(ARCHI), pic32mzef pic32mzda))
+ifeq ($(ARCHI),$(filter $(ARCHI), pic32mzef pic32mzda pic32mk))
  ARCHI_SRC += adc_pic32_sar12.c
  HEADER += adc_pic32_sar12.h
 endif
