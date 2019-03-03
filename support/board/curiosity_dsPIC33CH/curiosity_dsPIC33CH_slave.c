@@ -5,7 +5,7 @@
  *
  * @date July 5, 2018, 09:30 AM
  *
- * @brief Code for Curiosity dsPIC33CH board (DM330028)
+ * @brief Code for Curiosity dsPIC33CH board (DM330028), slave part
  * 
  * product page:
  *  http://www.microchip.com/developmenttools/ProductDetails/PartNO/DM330028
@@ -34,13 +34,6 @@ int board_init_io()
     // Unlock configuration pin
     unlockIoConfig();
 
-        // UART1 pins (micro bus A)
-        _U1RXR = 64;           // RX1 ==> RP64
-        _RP65R = _RPOUT_U1TX;  // TX1 ==> RP65
-
-        // UART2 pins (micro bus B)
-        _U2RXR = 58;           // RX2 ==> RP58
-        _RP59R = _RPOUT_U2TX;  // TX2 ==> RP59
 
     // Lock configuration pin
     lockIoConfig();
