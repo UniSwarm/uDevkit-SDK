@@ -24,8 +24,8 @@ int main(void)
     board_init();
     sysclock_setPLLClock(80000000, SYSCLOCK_SRC_POSC);
 
-    msi_program_slave(1, dspic33c_slave);
-    msi_start_slave(1);
+    msi_slave_program(1, dspic33c_slave);
+    msi_slave_start(1);
 
     //T1CONbits.TECS = 0b10;
     //T1CONbits.TON = 1;

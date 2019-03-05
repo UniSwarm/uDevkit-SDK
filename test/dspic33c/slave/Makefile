@@ -8,9 +8,7 @@ SLAVE = 1
 
 OUT_PWD = build
 
-CCFLAGS += -g -O1
-
-DRIVERS += sysclock timer gpio qei adc
+DRIVERS += sysclock timer gpio qei adc msi
 
 SRC += main.c
 

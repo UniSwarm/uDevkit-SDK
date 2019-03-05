@@ -7,7 +7,7 @@ BOARD = curiosity_dsPIC33CH
 
 OUT_PWD = build 
 
-CCFLAGS += -g -O1
+CCFLAGS += -g -O3
 
 DRIVERS += sysclock timer gpio uart qei i2c can adc msi
 
@@ -20,9 +20,13 @@ all : hex
 build/dspic33c_slave.s: slave/build/dspic33c_slave.elf
 	cd build; xc16-bin2hex ../slave/build/dspic33c_slave.elf --image dspic33c_slave || true
 
-.PHONY: slave/build/dspic33c_slave.elf
+.PHONY: slave/build/dspic33c_slave.elf clean-slave
 slave/build/dspic33c_slave.elf:
-	cd slave; make -j
+	cd slave; CCFLAGS="$(CCFLAGS)" $(MAKE)
+
+clean: clean-slave
+clean-slave:
+	cd slave; $(MAKE) clean
 
 all : hex
 
