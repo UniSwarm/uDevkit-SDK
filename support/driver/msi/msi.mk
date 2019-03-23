@@ -20,4 +20,6 @@ ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ch))
  endif
 endif
 
+SIM_SRC += msi_sim.c
+
 endif
