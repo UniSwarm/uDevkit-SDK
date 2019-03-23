@@ -28,17 +28,17 @@ int board_init();
 // ==== pins define ====
 // leds
 #define LED_COUNT 2
-#define LED1 LATEbits.LATA0
-#define LED2 LATEbits.LATA1
+#define LED1 0
+#define LED2 1
 int board_setLed(uint8_t led, uint8_t state);
 int board_toggleLed(uint8_t led);
 int8_t board_getLed(uint8_t led);
 
 // buttons
 #define BUTTON_COUNT 3
-#define BUTTON_1 PORTEbits.RE7
-#define BUTTON_2 PORTEbits.RE8
-#define BUTTON_3 PORTEbits.RE9
+#define BUTTON_1 0
+#define BUTTON_2 1
+#define BUTTON_3 2
 int8_t board_getButton(uint8_t button);
 
 #define ANPOT0 0

@@ -135,8 +135,8 @@
 #pragma config CPRC7 = MSTR     // Pin RC7 Ownership Bits->Master core owns pin.
 #pragma config CPRC8 = MSTR     // Pin RC8 Ownership Bits->Master core owns pin.
 #pragma config CPRC9 = MSTR     // Pin RC9 Ownership Bits->Master core owns pin.
-#pragma config CPRC10 = MSTR    // Pin RC10 Ownership Bits->Master core owns pin.
-#pragma config CPRC11 = MSTR    // Pin RC11 Ownership Bits->Master core owns pin.
+#pragma config CPRC10 = SLV1    // Pin RC10 Ownership Bits->Master core owns pin.
+#pragma config CPRC11 = SLV1    // Pin RC11 Ownership Bits->Master core owns pin.
 #pragma config CPRC12 = MSTR    // Pin RC12 Ownership Bits->Master core owns pin.
 #pragma config CPRC13 = MSTR    // Pin RC13 Ownership Bits->Master core owns pin.
 #pragma config CPRC14 = MSTR    // Pin RC14 Ownership Bits->Master core owns pin.
@@ -181,10 +181,10 @@
 // ################################# MSI configuration #################################
 // FMBXM
 #pragma config MBXM0 = M2S              // Mailbox 0 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
-#pragma config MBXM1 = S2M              // Mailbox 1 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
-#pragma config MBXM2 = S2M              // Mailbox 2 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
-#pragma config MBXM3 = S2M              // Mailbox 3 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
-#pragma config MBXM4 = S2M              // Mailbox 4 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
+#pragma config MBXM1 = M2S              // Mailbox 1 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
+#pragma config MBXM2 = M2S              // Mailbox 2 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
+#pragma config MBXM3 = M2S              // Mailbox 3 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
+#pragma config MBXM4 = M2S              // Mailbox 4 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
 #pragma config MBXM5 = S2M              // Mailbox 5 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
 #pragma config MBXM6 = S2M              // Mailbox 6 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
 #pragma config MBXM7 = S2M              // Mailbox 7 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
@@ -198,8 +198,8 @@
 #pragma config MBXM15 = S2M             // Mailbox 15 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
 
 // FMBXHS1
-#pragma config MBXHSA = MBX15           // Mailbox handshake protocol block A register assignment (MSIxMBXD15 assigned to mailbox handshake protocol block A)
-#pragma config MBXHSB = MBX15           // Mailbox handshake protocol block B register assignment (MSIxMBXD15 assigned to mailbox handshake protocol block B)
+#pragma config MBXHSA = MBX4            // Mailbox handshake protocol block A register assignment (MSIxMBXD4 assigned to mailbox handshake protocol block A)
+#pragma config MBXHSB = MBX9            // Mailbox handshake protocol block B register assignment (MSIxMBXD9 assigned to mailbox handshake protocol block B)
 #pragma config MBXHSC = MBX15           // Mailbox handshake protocol block C register assignment (MSIxMBXD15 assigned to mailbox handshake protocol block C)
 #pragma config MBXHSD = MBX15           // Mailbox handshake protocol block D register assignment (MSIxMBXD15 assigned to mailbox handshake protocol block D)
 

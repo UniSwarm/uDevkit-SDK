@@ -7,7 +7,7 @@ BOARD = curiosity_dsPIC33CH
 
 OUT_PWD = build 
 
-CCFLAGS += -g -O3
+CCFLAGS += -g -O1
 
 DRIVERS += sysclock timer gpio uart qei i2c can adc msi
 
