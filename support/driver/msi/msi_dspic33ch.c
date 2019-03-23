@@ -110,3 +110,33 @@ int msi_slave_verify_program(uint8_t slave_id, __eds__ unsigned char *program)
 
     return _program_slave(slave_id, 1, program);
 }
+
+int msi_protocol_write(uint8_t protocol, const unsigned char *data, uint8_t size)
+{
+    if (_DTRDYA == 1)
+        return -1;
+    uint16_t *ptr = (uint16_t *)data;
+    MSI1MBX0D = *(ptr++);
+    MSI1MBX1D = *(ptr++);
+    MSI1MBX2D = *(ptr++);
+    MSI1MBX3D = *(ptr++);
+    MSI1MBX4D = *(ptr++);
+    return 0;
+}
+
+int msi_protocol_read(uint8_t protocol, unsigned char *data, uint8_t max_size)
+{
+    if (_DTRDYB == 0)
+        return -1;
+    uint16_t *ptr = (uint16_t *)data;
+    *ptr = MSI1MBX5D;
+    ptr++;
+    *ptr = MSI1MBX6D;
+    ptr++;
+    *ptr = MSI1MBX7D;
+    ptr++;
+    *ptr = MSI1MBX8D;
+    ptr++;
+    *ptr = MSI1MBX9D;
+    return 0;
+}

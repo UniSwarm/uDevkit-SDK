@@ -11,6 +11,7 @@
 #ifndef MSI_H
 #define MSI_H
 
+#include <archi.h>
 #include <driver/device.h>
 
 #if defined(ARCHI_dspic33ch)
@@ -37,8 +38,22 @@ typedef enum
  int msi_slave_verify_program(uint8_t slave_id, __eds__ unsigned char *program);
 #endif
 
-#ifdef MSI_HAVE_MASTER_INTERFACE
- MSI_CORE_STATUS msi_master_status(uint8_t slave_id);
+#ifndef MSI_HAVE_MASTER_INTERFACE
+ MSI_CORE_STATUS msi_master_status();
 #endif
+
+// Mailboxes
+#define MSI_PROTOCOL_A 0
+#define MSI_PROTOCOL_B 1
+#define MSI_PROTOCOL_C 2
+#define MSI_PROTOCOL_D 3
+#define MSI_PROTOCOL_E 4
+#define MSI_PROTOCOL_F 5
+#define MSI_PROTOCOL_G 6
+#define MSI_PROTOCOL_H 7
+
+int msi_protocol_write(uint8_t protocol, const unsigned char *data, uint8_t size);
+
+int msi_protocol_read(uint8_t protocol, unsigned char *data, uint8_t max_size);
 
 #endif // MSI_H

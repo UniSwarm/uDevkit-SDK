@@ -19,7 +19,7 @@
  * @brief Gives the status of the master core
  * @return MSI_CORE_STATUS status enum
  */
- MSI_CORE_STATUS msi_slave_status()
+ MSI_CORE_STATUS msi_master_status()
 {
     if (SI1STATbits.MSTRST)
         return MSI_CORE_STATUS_RESETED;
@@ -35,4 +35,34 @@
     }
 
     return MSI_CORE_STATUS_RESETED;
+}
+
+int msi_protocol_write(uint8_t protocol, const unsigned char *data, uint8_t size)
+{
+    if (_DTRDYB == 1)
+        return -1;
+    uint16_t *ptr = (uint16_t *)data;
+    SI1MBX5D = *(ptr++);
+    SI1MBX6D = *(ptr++);
+    SI1MBX7D = *(ptr++);
+    SI1MBX8D = *(ptr++);
+    SI1MBX9D = *(ptr++);
+    return 0;
+}
+
+int msi_protocol_read(uint8_t protocol, unsigned char *data, uint8_t max_size)
+{
+    if (_DTRDYA == 0)
+        return -1;
+    uint16_t *ptr = (uint16_t *)data;
+    *ptr = SI1MBX0D;
+    ptr++;
+    *ptr = SI1MBX1D;
+    ptr++;
+    *ptr = SI1MBX2D;
+    ptr++;
+    *ptr = SI1MBX3D;
+    ptr++;
+    *ptr = SI1MBX4D;
+    return 0;
 }
