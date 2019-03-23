@@ -16,7 +16,7 @@ prog : $(OUT_PWD)/$(PROJECT).hex
 
 # special cmd for hex creation
 $(OUT_PWD)/$(PROJECT).hex : $(OUT_PWD)/$(PROJECT).elf
-	@printf "$(GREEN)µHX %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@printf "$(COMPCOLOR)µHX %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(HX) $(OUT_PWD)/$(PROJECT).elf
 
 elf : $(OUT_PWD)/$(PROJECT).elf
@@ -33,13 +33,13 @@ $(OBJECTS) : $(CONFIG_HEADERS)
 # rule to build OBJECTS to OUT_PWD and give dependencies
 $(OUT_PWD)/%.o : %.c
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "$(GREEN)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
 $(OUT_PWD)/%.o : %.S
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "$(GREEN)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
@@ -47,7 +47,7 @@ HEAP?=100
 
 # rule to link OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
-	@printf "$(GREEN)µLD %-35s => %s\n$(NORM)" "*.o" $(OUT_PWD)/$(PROJECT).elf
+	@printf "$(COMPCOLOR)µLD %-35s => %s\n$(NORM)" "*.o" $(OUT_PWD)/$(PROJECT).elf
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) -lc $(LDFLAGS_XC)
 
 .PHONY : showmem dbg.% dbg

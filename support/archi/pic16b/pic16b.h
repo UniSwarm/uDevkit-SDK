@@ -12,11 +12,12 @@
 #ifndef PIC16B_H
 #define PIC16B_H
 
-#ifndef SIMULATOR
+#ifndef __XC16
+    #define __prog__ 
+    #define __eds__ 
+#endif
 
-    #ifndef __XC16
-        #define __prog__
-    #endif
+#ifndef SIMULATOR
     #include <xc.h>
 
     #define nop() __builtin_nop()

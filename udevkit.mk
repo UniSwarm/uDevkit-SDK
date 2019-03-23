@@ -16,6 +16,12 @@ YELLOW:=$(shell command -v tput > /dev/null && tput setaf 3)
 GREEN:=$(shell command -v tput > /dev/null && tput setaf 2)
 NORM:=$(shell command -v tput > /dev/null && tput sgr0)
 
+ifndef SLAVE
+ COMPCOLOR:=$(GREEN)
+else
+ COMPCOLOR:=$(YELLOW)
+endif
+
 # VERBOSE variable to set the verbosity if VERBOSE=1
 ifdef VERBOSE
   VERB :=
