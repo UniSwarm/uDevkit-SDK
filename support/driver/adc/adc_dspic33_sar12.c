@@ -71,25 +71,25 @@ void adc_calib()
   #endif
 
   #ifdef ADC_HAVE_DEDICATED_CORE2
-    ADCAL0Lbits.CAL2EN = 1;             // Enable calibration for the dedicated core 2
-    ADCAL0Lbits.CAL2DIFF = 0;           // Single-ended input calibration
-    ADCAL0Lbits.CAL2RUN = 1;            // Start calibration
-    while (ADCAL0Lbits.CAL2RDY == 0);   // Poll for the calibration end
-    ADCAL0Lbits.CAL2DIFF = 1;           // Differential input calibration
-    ADCAL0Lbits.CAL2RUN = 1;            // Start calibration
-    while (ADCAL0Lbits.CAL2RDY == 0);   // Poll for the calibration end
-    ADCAL0Lbits.CAL2EN = 0;             // End the core 2 calibration
+    ADCAL0Hbits.CAL2EN = 1;             // Enable calibration for the dedicated core 2
+    ADCAL0Hbits.CAL2DIFF = 0;           // Single-ended input calibration
+    ADCAL0Hbits.CAL2RUN = 1;            // Start calibration
+    while (ADCAL0Hbits.CAL2RDY == 0);   // Poll for the calibration end
+    ADCAL0Hbits.CAL2DIFF = 1;           // Differential input calibration
+    ADCAL0Hbits.CAL2RUN = 1;            // Start calibration
+    while (ADCAL0Hbits.CAL2RDY == 0);   // Poll for the calibration end
+    ADCAL0Hbits.CAL2EN = 0;             // End the core 2 calibration
   #endif
 
   #ifdef ADC_HAVE_DEDICATED_CORE3
-    ADCAL0Lbits.CAL3EN = 1;             // Enable calibration for the dedicated core 3
-    ADCAL0Lbits.CAL3DIFF = 0;           // Single-ended input calibration
-    ADCAL0Lbits.CAL3RUN = 1;            // Start calibration
-    while (ADCAL0Lbits.CAL3RDY == 0);   // Poll for the calibration end
-    ADCAL0Lbits.CAL3DIFF = 1;           // Differential input calibration
-    ADCAL0Lbits.CAL3RUN = 1;            // Start calibration
-    while (ADCAL0Lbits.CAL3RDY == 0);   // Poll for the calibration end
-    ADCAL0Lbits.CAL3EN = 0;             // End the core 3 calibration
+    ADCAL0Hbits.CAL3EN = 1;             // Enable calibration for the dedicated core 3
+    ADCAL0Hbits.CAL3DIFF = 0;           // Single-ended input calibration
+    ADCAL0Hbits.CAL3RUN = 1;            // Start calibration
+    while (ADCAL0Hbits.CAL3RDY == 0);   // Poll for the calibration end
+    ADCAL0Hbits.CAL3DIFF = 1;           // Differential input calibration
+    ADCAL0Hbits.CAL3RUN = 1;            // Start calibration
+    while (ADCAL0Hbits.CAL3RDY == 0);   // Poll for the calibration end
+    ADCAL0Hbits.CAL3EN = 0;             // End the core 3 calibration
   #endif
 
     ADCAL1Hbits.CSHREN = 1;             // Enable calibration for the shared core
@@ -105,8 +105,10 @@ void adc_calib()
 
 int adc_init()
 {
+    #ifdef _ADC1MD
     _ADC1MD = 0;
     nop();
+    #endif
 
     // Configure the common ADC clock.
     ADCON3Hbits.CLKSEL = 0;     // clock from Fp oscillator
