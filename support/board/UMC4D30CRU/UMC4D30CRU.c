@@ -76,6 +76,14 @@ int board_init_io()
         // LED1
         RPA8R = 0b01000; // (OC9)
     lockIoConfig();
+
+    TRISGbits.TRISG7 = 0; // BM1
+    TRISBbits.TRISB9 = 0; // AM2
+    TRISDbits.TRISD8 = 0; // BM2
+    TRISDbits.TRISD6 = 0; // AM3
+    TRISDbits.TRISD5 = 0; // BM3
+    TRISGbits.TRISG8 = 0; // AM4
+    TRISGbits.TRISG10 = 0; // BM4
 #endif
 
     /*board_leds[1] = gpio_pin(GPIO_PORTB, 13);
@@ -93,14 +101,6 @@ int board_init_io()
     gpio_setBitConfig(board_buttons[2], GPIO_INPUT);*/
     
     //TRISAbits.TRISA8 = 0;
-
-    TRISGbits.TRISG7 = 0; // BM1
-    TRISBbits.TRISB9 = 0; // AM2
-    TRISDbits.TRISD8 = 0; // BM2
-    TRISDbits.TRISD6 = 0; // AM3
-    TRISDbits.TRISD5 = 0; // BM3
-    TRISGbits.TRISG8 = 0; // AM4
-    TRISGbits.TRISG10 = 0; // BM4
 
     return 0;
 }

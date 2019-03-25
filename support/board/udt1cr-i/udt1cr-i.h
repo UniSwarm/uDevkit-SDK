@@ -23,9 +23,12 @@ int board_init();
 
 // ==== pins define ====
 // leds
-#define LED_COUNT 2
-#define LED1 LATCbits.LATC15
-#define LED2 LATDbits.LATD10
+#define LED_COUNT 5
+#define LED1 0
+#define LED2 1
+#define LED3 2
+#define LED4 3
+#define LED5 4
 int board_setLed(uint8_t led, uint8_t state);
 int board_toggleLed(uint8_t led);
 int8_t board_getLed(uint8_t led);

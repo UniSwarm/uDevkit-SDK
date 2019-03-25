@@ -29,6 +29,9 @@ int board_init_io()
     unlockIoConfig();
     C1RXR = 0b0111;        // CAN1RX ==> RC13
     RPC14R = 0b1111;       // CAN1TX ==> RC14
+
+    U4RXR = 0b0011;        // U4RX ==> RD0
+    RPD4R = 0b0010;        // U4TX ==> RD4
     lockIoConfig();
 
     TRISFbits.TRISF1 = 0;    // OLED_RST

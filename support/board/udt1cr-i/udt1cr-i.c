@@ -52,10 +52,16 @@ int board_init_io()
     gpio_clearBit(iso_rs485_de_gpio);
     gpio_setBitConfig(iso_rs485_de_gpio, GPIO_OUTPUT);
 
-    board_leds[0] = gpio_pin(GPIO_PORTC, 15);
+    board_leds[0] = gpio_pin(GPIO_PORTD, 9);
     gpio_setBitConfig(board_leds[0], GPIO_OUTPUT);
     board_leds[1] = gpio_pin(GPIO_PORTD, 10);
     gpio_setBitConfig(board_leds[1], GPIO_OUTPUT);
+    board_leds[2] = gpio_pin(GPIO_PORTD, 11);
+    gpio_setBitConfig(board_leds[2], GPIO_OUTPUT);
+    board_leds[3] = gpio_pin(GPIO_PORTB, 6);
+    gpio_setBitConfig(board_leds[3], GPIO_OUTPUT);
+    board_leds[4] = gpio_pin(GPIO_PORTB, 8);
+    gpio_setBitConfig(board_leds[4], GPIO_OUTPUT);
 
     return 0;
 }

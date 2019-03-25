@@ -5,12 +5,10 @@
  *
  * @date November 28, 2018, 09:30 AM
  *
- * @brief Code for Curiosity dsPIC33CH board (DM330028)
+ * @brief Code for UIO44FR / UIO44FR-I board
  * 
  * product page:
- *  http://www.microchip.com/developmenttools/ProductDetails/PartNO/DM330028
- * datasheet:
- *  http://ww1.microchip.com/downloads/en/DeviceDoc/dsPIC33CH%20Curiosity%20Development%20Board.pdf
+ *  https://uniswarm.eu/uboards/uio/uio44fr
  */
 
 #ifndef UIO44FR_H
