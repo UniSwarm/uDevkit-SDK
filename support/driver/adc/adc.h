@@ -34,7 +34,7 @@ int16_t adc_getValue(uint8_t channel);
  #include "adc_dspic33_sar12.h"
 #elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
  #include "adc_pic24e_dspic33e.h"
-#elif defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
+#elif defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mk)
  #include "adc_pic32_sar12.h"
 #endif
 

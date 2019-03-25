@@ -84,16 +84,20 @@ int adc_init()
     ADCCMPCON2 = 0; // register to '0' ensures that the comparator is disabled.
     ADCCMPCON3 = 0; // Other registers are “don't care”.
     ADCCMPCON4 = 0;
-    ADCCMPCON5 = 0;
-    ADCCMPCON6 = 0;
+    #ifndef ARCHI_pic32mk
+     ADCCMPCON5 = 0;
+     ADCCMPCON6 = 0;
+    #endif
 
     // Configure ADCFLTRx
     ADCFLTR1 = 0; // No oversampling filters are used.
     ADCFLTR2 = 0;
     ADCFLTR3 = 0;
     ADCFLTR4 = 0;
-    ADCFLTR5 = 0;
-    ADCFLTR6 = 0;
+    #ifndef ARCHI_pic32mk
+     ADCFLTR5 = 0;
+     ADCFLTR6 = 0;
+    #endif
 
     // Set up the trigger sources
     ADCTRGSNS = 0; // Edge trigger
