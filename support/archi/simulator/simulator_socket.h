@@ -19,7 +19,8 @@
     #define SOCKET_MODE 0
 
 #elif defined (linux) || defined (LINUX) || defined (__linux__) \
-   || defined (unix) || defined (UNIX) || defined (__unix__)
+   || defined (unix) || defined (UNIX) || defined (__unix__) \
+   || defined (__APPLE__)
 
     #include <sys/types.h>
     #include <sys/socket.h>
