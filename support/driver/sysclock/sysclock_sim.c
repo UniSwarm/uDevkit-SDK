@@ -13,6 +13,7 @@
 #include "sysclock.h"
 
 uint32_t sysfreq;
+uint32_t pllfreq;
 
 int sysclock_setClock(uint32_t fosc)
 {
@@ -62,4 +63,15 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 {
     // TODO
     return 0;
+}
+
+int sysclock_setPLLClock(uint32_t freq, uint8_t src)
+{
+    pllfreq = freq;
+    return 0;
+}
+
+uint32_t sysclock_getPLLClock()
+{
+    return pllfreq;
 }
