@@ -125,10 +125,12 @@ int board_setLed(uint8_t led, uint8_t state)
     case 0:
         break;
     case 1:
+#ifndef SIMULATOR
         if (state & 1)
             LED2 = 1;
         else
             LED2 = 0;
+#endif
         break;
     }
     return 0;

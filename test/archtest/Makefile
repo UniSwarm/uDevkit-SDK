@@ -11,7 +11,7 @@ all:
 
 .PHONY: boards boards16 boards32
 boards: boards16 boards32
-boards16: a6screenboard rtboard rtboard1_1 swarmtips curiosity_PIC24F curiosity_dsPIC33CH
+boards16: a6screenboard rtboard rtboard1_1 swarmtips curiosity_PIC24F curiosity_dsPIC33CH uio44fr umc1bds32fr udt1cr-i
 boards32: curiosity_32MM_USB curiosity_32MX470 emz64 swarmtips2 curiosity_32MZ_EF PIC32MK1024GPE_devboard
 
 .PHONY: cpu_list allcpu
@@ -38,7 +38,7 @@ pic32mk: 32MK1024MCF100
 pic32mx: 32MX370F512L 32MX470F512H 32MX575F256H 32MX795F512L
 pic32mz: 32MZ1024ECH100 32MZ0512EFF100 32MZ2064DAH169
 
-a6screenboard rtboard rtboard1_1 swarmtips curiosity_PIC24F curiosity_dsPIC33CH curiosity_32MM_USB curiosity_32MX470 emz64 swarmtips2 curiosity_32MZ_EF PIC32MK1024GPE_devboard :
+a6screenboard rtboard rtboard1_1 swarmtips curiosity_PIC24F curiosity_dsPIC33CH curiosity_32MM_USB curiosity_32MX470 emz64 swarmtips2 curiosity_32MZ_EF PIC32MK1024GPE_devboard uio44fr umc1bds32fr udt1cr-i :
 	@printf ">>> $(ORANGE)BOARD: $@$(NORM)\n"
 	@OUT_PWD=build_$@ BOARD=$@ $(MAKE) --no-print-directory -f Makefile.arch -j $(RULE) CCFLAGS=-DBOARD
 

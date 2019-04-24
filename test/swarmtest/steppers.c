@@ -10,6 +10,7 @@ rt_dev_t stepper_timer;
 
 void setup_PWM(void)
 {
+#ifndef SIMULATOR
 	OC1CON1 = 0b0001110000000110;
 	OC1CON2 = 0b0000000000011111;
 	OC1R = 0;
@@ -29,36 +30,45 @@ void setup_PWM(void)
 	OC4CON2 = 0b0000000000011111;
 	OC4R = 0;
 	OC4RS = 1500;	// 20kz
+#endif
 }
 
 void setM1A(short v)
 {
     if(v >= 0)
     {
+#ifndef SIMULATOR
         OC1R = v;
         OC1CON2bits.OCINV = 0;
         M1A = 0;
+#endif
     }
     else
     {
+#ifndef SIMULATOR
         OC1R = -v;
         OC1CON2bits.OCINV = 1;
         M1A = 1;
+#endif
     }
 }
 void setM1B(short v)
 {
     if(v >= 0)
     {
+#ifndef SIMULATOR
         OC2R = v;
         OC2CON2bits.OCINV = 0;
         M1B = 0;
+#endif
     }
     else
     {
+#ifndef SIMULATOR
         OC2R = -v;
         OC2CON2bits.OCINV = 1;
         M1B = 1;
+#endif
     }
 }
 
@@ -66,30 +76,38 @@ void setM2A(short v)
 {
     if(v >= 0)
     {
+#ifndef SIMULATOR
         OC3R = v;
         OC3CON2bits.OCINV = 0;
         M2A = 0;
+#endif
     }
     else
     {
+#ifndef SIMULATOR
         OC3R = -v;
         OC3CON2bits.OCINV = 1;
         M2A = 1;
+#endif
     }
 }
 void setM2B(short v)
 {
     if(v >= 0)
     {
+#ifndef SIMULATOR
         OC4R = v;
         OC4CON2bits.OCINV = 0;
         M2B = 0;
+#endif
     }
     else
     {
+#ifndef SIMULATOR
         OC4R = -v;
         OC4CON2bits.OCINV = 1;
         M2B = 1;
+#endif
     }
 }
 

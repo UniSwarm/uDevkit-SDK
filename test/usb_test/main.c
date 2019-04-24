@@ -24,7 +24,7 @@ int main(void)
 
 	// warning keep this init order before remap support
 	network_init();
-	ax12_init();
+	ax12_init(uart(AX12_UART), gpio_pin(AX12_TXEN_PORT, AX12_TXEN_PIN), 0);
 
 	// uart debug init
 	uartDbg = uart_getFreeDevice();

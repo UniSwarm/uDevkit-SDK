@@ -13,7 +13,8 @@ DRIVERS += sysclock timer gpio uart qei i2c can adc msi
 
 MODULES += cmdline
 
-SRC += main.c build/dspic33c_slave.s
+SRC += main.c
+ARCHI_SRC += build/dspic33c_slave.s
 
 all : hex
 
