@@ -240,16 +240,42 @@ rt_dev_t timer_getFreeDevice()
 }
 
 /**
- * @brief Release a timer
+ * @brief Open a timer
  * @param device timer device number
  */
-void timer_releaseDevice(rt_dev_t device)
+int timer_open(rt_dev_t device)
 {
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
-        return;
+        return -1;
+    if (timers[timer].flags.used == 1)
+        return -1;
+
+    timers[timer].flags.used = 1;
+    timers[timer].handler = NULL;
+
+    return 0;
+}
+
+/**
+ * @brief Close a timer
+ * @param device timer device number
+ */
+int timer_close(rt_dev_t device)
+{
+#if TIMER_COUNT>=1
+    uint8_t timer = MINOR(device);
+    if (timer >= TIMER_COUNT)
+        return -1;
+
+    timer_disable(device);
 
     timers[timer].flags.val = TIMER_FLAG_UNUSED;
+
+    return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -333,6 +359,12 @@ int timer_disable(rt_dev_t device)
     return 0;
 }
 
+/**
+ * @brief Sets the handler function that will be called on timer interrupt
+ * @param device timer device number
+ * @param handler void funtion pointer or null to remove the handler
+ * @return 0 if ok, -1 in case of error
+ */
 int timer_setHandler(rt_dev_t device, void (*handler)(void))
 {
     uint8_t timer = MINOR(device);
