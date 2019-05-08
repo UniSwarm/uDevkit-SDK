@@ -123,7 +123,7 @@ rt_dev_t timer_getFreeDevice()
 
     if (i == TIMER_COUNT)
         return NULLDEV;
-    device = MKDEV(DEV_CLASS_UART, i);
+    device = MKDEV(DEV_CLASS_TIMER, i);
 
     timer_open(device);
 
@@ -409,6 +409,7 @@ int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
     if (timer >= TIMER_COUNT)
         return -1;
 
+    // TODO PR and TMR are 32 bit width on T2 to T9 on PIC32MK
     if (prvalue > 65535)
     {
         div = 0b111; // 256 divisor for type A (0b11) and for type B (0b111)
