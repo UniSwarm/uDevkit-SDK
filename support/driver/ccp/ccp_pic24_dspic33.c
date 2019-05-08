@@ -193,99 +193,99 @@ int ccp_enable(rt_dev_t device)
     {
     case 0:
         CCP1CON1Lbits.CCPON = 1;  // enable ccp module
-        _CCP1IF = 0;
+        _CCT1IF = 0;
         if (ccps[0].handler)
-            _CCP1IE = 1;
+            _CCT1IE = 1;
         else
-            _CCP1IE = 0;
-        _CCP1IP = 4;
+            _CCT1IE = 0;
+        _CCT1IP = 4;
         break;
 #if CCP_COUNT>=2
     case 1:
         CCP2CON1Lbits.CCPON = 1;  // enable ccp module
-        _CCP2IF = 0;
+        _CCT2IF = 0;
         if (ccps[1].handler)
-            _CCP2IE = 1;
+            _CCT2IE = 1;
         else
-            _CCP2IE = 0;
-        _CCP2IP = 4;
+            _CCT2IE = 0;
+        _CCT2IP = 4;
         break;
 #endif
 #if CCP_COUNT>=3
     case 2:
         CCP3CON1Lbits.CCPON = 1;  // enable ccp module
-        _CCP3IF = 0;
+        _CCT3IF = 0;
         if (ccps[2].handler)
-            _CCP3IE = 1;
+            _CCT3IE = 1;
         else
-            _CCP3IE = 0;
-        _CCP3IP = 4;
+            _CCT3IE = 0;
+        _CCT3IP = 4;
         break;
 #endif
 #if CCP_COUNT>=4
     case 3:
         CCP4CON1Lbits.CCPON = 1;  // enable ccp module
-        _CCP4IF = 0;
+        _CCT4IF = 0;
         if (ccps[3].handler)
-            _CCP4IE = 1;
+            _CCT4IE = 1;
         else
-            _CCP4IE = 0;
-        _CCP4IP = 4;
+            _CCT4IE = 0;
+        _CCT4IP = 4;
         break;
 #endif
 #if CCP_COUNT>=5
     case 4:
         CCP5CON1Lbits.CCPON = 1;  // enable ccp module
-        _CCP5IF = 0;
+        _CCT5IF = 0;
         if (ccps[4].handler)
-            _CCP5IE = 1;
+            _CCT5IE = 1;
         else
-            _CCP5IE = 0;
-        _CCP5IP = 4;
+            _CCT5IE = 0;
+        _CCT5IP = 4;
         break;
 #endif
 #if CCP_COUNT>=6
     case 5:
         CCP6CON1Lbits.CCPON = 1;  // enable ccp module
-        _CCP6IF = 0;
+        _CCT6IF = 0;
         if (ccps[5].handler)
-            _CCP6IE = 1;
+            _CCT6IE = 1;
         else
-            _CCP6IE = 0;
-        _CCP6IP = 4;
+            _CCT6IE = 0;
+        _CCT6IP = 4;
         break;
 #endif
 #if CCP_COUNT>=7
     case 6:
         CCP7CON1Lbits.CCPON = 1;  // enable ccp module
-        _CCP7IF = 0;
+        _CCT7IF = 0;
         if (ccps[6].handler)
-            _CCP7IE = 1;
+            _CCT7IE = 1;
         else
-            _CCP7IE = 0;
-        _CCP7IP = 4;
+            _CCT7IE = 0;
+        _CCT7IP = 4;
         break;
 #endif
 #if CCP_COUNT>=8
     case 7:
         CCP8CON1Lbits.CCPON = 1;  // enable ccp module
-        _CCP8IF = 0;
+        _CCT8IF = 0;
         if (ccps[7].handler)
-            _CCP8IE = 1;
+            _CCT8IE = 1;
         else
-            _CCP8IE = 0;
-        _CCP8IP = 4;
+            _CCT8IE = 0;
+        _CCT8IP = 4;
         break;
 #endif
 #if CCP_COUNT>=9
     case 8:
         CCP9CON1Lbits.CCPON = 1;  // enable ccp module
-        _CCP9IF = 0;
+        _CCT9IF = 0;
         if (ccps[8].handler)
-            _CCP9IE = 1;
+            _CCT9IE = 1;
         else
-            _CCP9IE = 0;
-        _CCP9IP = 4;
+            _CCT9IE = 0;
+        _CCT9IP = 4;
         break;
 #endif
     }
@@ -314,54 +314,54 @@ int ccp_disable(rt_dev_t device)
     {
     case 0:
         CCP1CON1Lbits.CCPON = 0;  // disable ccp module
-        _CCP1IE = 0;
+        _CCT1IE = 0;
         break;
 #if CCP_COUNT>=2
     case 1:
         CCP2CON1Lbits.CCPON = 0;  // disable ccp module
-        _CCP2IE = 0;
+        _CCT2IE = 0;
         break;
 #endif
 #if CCP_COUNT>=3
     case 2:
         CCP3CON1Lbits.CCPON = 0;  // disable ccp module
-        _CCP3IE = 0;
+        _CCT3IE = 0;
         break;
 #endif
 #if CCP_COUNT>=4
     case 3:
         CCP4CON1Lbits.CCPON = 0;  // disable ccp module
-        _CCP4IE = 0;
+        _CCT4IE = 0;
         break;
 #endif
 #if CCP_COUNT>=5
     case 4:
         CCP5CON1Lbits.CCPON = 0;  // disable ccp module
-        _CCP5IE = 0;
+        _CCT5IE = 0;
         break;
 #endif
 #if CCP_COUNT>=6
     case 5:
         CCP6CON1Lbits.CCPON = 0;  // disable ccp module
-        _CCP6IE = 0;
+        _CCT6IE = 0;
         break;
 #endif
 #if CCP_COUNT>=7
     case 6:
         CCP7CON1Lbits.CCPON = 0;  // disable ccp module
-        _CCP7IE = 0;
+        _CCT7IE = 0;
         break;
 #endif
 #if CCP_COUNT>=8
     case 7:
         CCP8CON1Lbits.CCPON = 0;  // disable ccp module
-        _CCP8IE = 0;
+        _CCT8IE = 0;
         break;
 #endif
 #if CCP_COUNT>=9
     case 8:
         CCP9CON1Lbits.CCPON = 0;  // disable ccp module
-        _CCP9IE = 0;
+        _CCT9IE = 0;
         break;
 #endif
     }
@@ -582,7 +582,9 @@ int ccp_setPeriodUs(rt_dev_t device, uint32_t periodUs)
 
     ccps[ccp].periodUs = periodUs;
 
-    prvalue = (float)sysclock_periphFreq(SYSCLOCK_CLOCK_CCP) / 1000000.0 * (float)periodUs;
+    prvalue = (float)sysclock_periphFreq(SYSCLOCK_CLOCK_CCP);
+    prvalue = prvalue / 1000000.0;
+    prvalue = prvalue * (float)periodUs;
 
     return ccp_setPeriod(device, (uint32_t)prvalue);
 #else
@@ -749,91 +751,91 @@ int ccp_setValue(rt_dev_t device, uint32_t value)
 }
 
 #if CCP_COUNT>=1
-void __attribute__ ((interrupt, no_auto_psv)) _CCP1Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT1Interrupt()
 {
     if (ccps[0].handler)
         (*ccps[0].handler)();
 
-    _CCP1IF = 0;
+    _CCT1IF = 0;
 }
 #endif
 
 #if CCP_COUNT>=2
-void __attribute__ ((interrupt, no_auto_psv)) _CCP2Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT2Interrupt()
 {
     if (ccps[1].handler)
         (*ccps[1].handler)();
 
-    _CCP2IF = 0;
+    _CCT2IF = 0;
 }
 #endif
 
 #if CCP_COUNT>=3
-void __attribute__ ((interrupt, no_auto_psv)) _CCP3Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT3Interrupt()
 {
     if (ccps[2].handler)
         (*ccps[2].handler)();
 
-    _CCP3IF = 0;
+    _CCT3IF = 0;
 }
 #endif
 
 #if CCP_COUNT>=4
-void __attribute__ ((interrupt, no_auto_psv)) _CCP4Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT4Interrupt()
 {
     if (ccps[3].handler)
         (*ccps[3].handler)();
 
-    _CCP4IF = 0;
+    _CCT4IF = 0;
 }
 #endif
 
 #if CCP_COUNT>=5
-void __attribute__ ((interrupt, no_auto_psv)) _CCP5Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT5Interrupt()
 {
     if (ccps[4].handler)
         (*ccps[4].handler)();
 
-    _CCP5IF = 0;
+    _CCT5IF = 0;
 }
 #endif
 
 #if CCP_COUNT>=6
-void __attribute__ ((interrupt, no_auto_psv)) _CCP6Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT6Interrupt()
 {
     if (ccps[5].handler)
         (*ccps[5].handler)();
 
-    _CCP6IF = 0;
+    _CCT6IF = 0;
 }
 #endif
 
 #if CCP_COUNT>=7
-void __attribute__ ((interrupt, no_auto_psv)) _CCP7Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT7Interrupt()
 {
     if (ccps[6].handler)
         (*ccps[6].handler)();
 
-    _CCP7IF = 0;
+    _CCT7IF = 0;
 }
 #endif
 
 #if CCP_COUNT>=8
-void __attribute__ ((interrupt, no_auto_psv)) _CCP8Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT8Interrupt()
 {
     if (ccps[7].handler)
         (*ccps[7].handler)();
 
-    _CCP8IF = 0;
+    _CCT8IF = 0;
 }
 #endif
 
 #if CCP_COUNT>=9
-void __attribute__ ((interrupt, no_auto_psv)) _CCP9Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT9Interrupt()
 {
     if (ccps[8].handler)
         (*ccps[8].handler)();
 
-    _CCP9IF = 0;
+    _CCT9IF = 0;
 }
 #endif
