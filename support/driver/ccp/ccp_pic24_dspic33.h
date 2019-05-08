@@ -1,14 +1,14 @@
 /**
  * @file ccp_pic24_dspic33.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018
+ * @copyright UniSwarm 2018-2019
  *
- * @date December 17, 2016, 23:00 PM
+ * @date December 17, 2018, 23:00 PM
  *
  * @brief CCP capture/compare/PWM/Timer support driver for PIC24 and dsPIC33C 
  *
- * Implementation based on Microchip document DS33035A :
- *  http://ww1.microchip.com/downloads/en/DeviceDoc/33035a.pdf
+ * Implementation based on Microchip document DS30003035B:
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/30003035b.pdf
  */
 
 #ifndef CCP_PIC24_DSPIC33_H

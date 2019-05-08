@@ -59,14 +59,13 @@ typedef enum {
 
 // periph clock assoc
 #define SYSCLOCK_CLOCK_CPU    SYSCLOCK_CLOCK_SYSCLK ///< CPU clock bus
-#define SYSCLOCK_CLOCK_CAN    SYSCLOCK_CLOCK_PBCLK  ///< CAN clock bus mapped to peripheral bus
+#define SYSCLOCK_CLOCK_CAN    SYSCLOCK_CLOCK_VCO2   ///< CAN clock bus mapped to peripheral bus
 #define SYSCLOCK_CLOCK_PMP    SYSCLOCK_CLOCK_PBCLK  ///< PMP clock bus mapped to peripheral bus
 #define SYSCLOCK_CLOCK_I2C    SYSCLOCK_CLOCK_PBCLK  ///< I2C clock bus mapped to peripheral bus
 #define SYSCLOCK_CLOCK_UART   SYSCLOCK_CLOCK_PBCLK  ///< UART clock bus mapped to peripheral bus
 #define SYSCLOCK_CLOCK_SPI    SYSCLOCK_CLOCK_PBCLK  ///< SPI clock bus mapped to peripheral bus
 #define SYSCLOCK_CLOCK_TIMER  SYSCLOCK_CLOCK_PBCLK  ///< TIMER clock bus mapped to peripheral bus
-#define SYSCLOCK_CLOCK_OC     SYSCLOCK_CLOCK_PBCLK  ///< OC clock bus mapped to peripheral bus
-#define SYSCLOCK_CLOCK_IC     SYSCLOCK_CLOCK_PBCLK  ///< IC clock bus mapped to peripheral bus
+#define SYSCLOCK_CLOCK_CCP    SYSCLOCK_CLOCK_PBCLK  ///< TIMER clock bus mapped to peripheral bus
 
 /*
  *                  Fplli                    FVco                            FPllo

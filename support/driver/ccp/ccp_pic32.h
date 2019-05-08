@@ -3,7 +3,7 @@
  * @author Sebastien CAUX (sebcaux)
  * @copyright UniSwarm 2018
  *
- * @date December 17, 2016, 23:00 PM
+ * @date December 17, 2018, 23:00 PM
  *
  * @brief CCP capture/compare/PWM/Timer support driver for PIC32MM
  *
