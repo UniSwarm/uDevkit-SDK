@@ -151,7 +151,7 @@ int adc_init()
 
 int16_t adc_getValue(uint8_t channel)
 {
-    if (channel > 25)
+    if (channel >= ADC_CHANNEL_COUNT)
         return 0;
     ADCON3Lbits.CNVCHSEL = channel;     // select channel to convert
     ADCON3Lbits.CNVRTCH = 1;            // Start sampling
