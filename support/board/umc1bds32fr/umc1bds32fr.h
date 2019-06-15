@@ -51,4 +51,23 @@ int8_t board_getButton(uint8_t button);
 #define BRIDGE_C_PWM 2
 #define BRIDGE_D_PWM 3
 
+// analog iputs
+#define TEMP_AB_ADC_CHAN 0
+#define TEMP_CD_ADC_CHAN 1
+#define V_BRIDGE_ADC_CHAN 2
+#define I_BRIDGE_ADC_CHAN 7
+
+#define BEMF_A_SADC_CHAN 1
+#define BEMF_B_SADC_CHAN 4
+#define BEMF_C_SADC_CHAN 0
+#define BEMF_D_SADC_CHAN 12
+#define V_BRIDGE_SADC_CHAN 16
+#define I_BRIDGE_SADC_CHAN 3
+#define I_A_SADC_CHAN 0
+#define I_A_PGA 1
+#define I_B_SADC_CHAN 1
+#define I_B_PGA 3
+#define I_CD_SADC_CHAN 14
+#define I_CD_PGA 2
+
 #endif // UMC1BDS32FR_H
