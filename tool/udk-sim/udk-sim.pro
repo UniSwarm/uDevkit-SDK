@@ -7,7 +7,7 @@ QT += serialport
 CONFIG += c++11
 
 DESTDIR = $$PWD/../../bin
-TARGET = rtsim
+TARGET = udk-sim
 
 TEMPLATE = app
 

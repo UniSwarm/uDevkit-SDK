@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
 
 SUBDIRS += a6kontrol \
-           rtsim \
+           udk-sim \
            img2raw

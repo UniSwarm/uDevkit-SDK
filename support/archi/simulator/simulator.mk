@@ -7,16 +7,16 @@ OUT_SIM_PWD ?= simbuild
 ifeq ($(OS),Windows_NT)
   SIM_EXE := $(PROJECT).exe
   LIBS_SIM += -lws2_32
-  RTSIM_EXE := $(UDEVKIT)/bin/rtsim.exe
+  RTSIM_EXE := $(UDEVKIT)/bin/udk-sim.exe
 else
   SIM_EXE := $(PROJECT)_sim
   LIBS_SIM += -pthread
-  RTSIM_EXE := $(UDEVKIT)/bin/rtsim
+  RTSIM_EXE := $(UDEVKIT)/bin/udk-sim
 endif
 
-$(RTSIM_EXE): $(shell find $(UDEVKIT)/tool/rtsim/ \( -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.pro' \))
-	@echo "Building rtsim..."
-	cd $(UDEVKIT)/tool/rtsim/ && make
+$(RTSIM_EXE): $(shell find $(UDEVKIT)/tool/udk-sim/ \( -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.pro' \))
+	@echo "Building udk-sim..."
+	cd $(UDEVKIT)/tool/udk-sim/ && make
 
 SIMULATOR_PATH := $(UDEVKIT)/support/archi/simulator
 DEFINES_SIM += -D SIMULATOR -I $(SIMULATOR_PATH) -g
@@ -50,7 +50,7 @@ $(OUT_PWD)/$(SIM_EXE) : $(SIM_OBJECTS)
 sim-exe: $(OUT_PWD)/$(SIM_EXE)
 
 sim : sim-exe $(RTSIM_EXE)
-	#killall rtsim || true
+	#killall udk-sim || true
 	$(RTSIM_EXE) $(OUT_PWD)/$(SIM_EXE)
 
 sim-clean :
