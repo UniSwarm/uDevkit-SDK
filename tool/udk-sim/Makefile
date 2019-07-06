@@ -2,7 +2,7 @@
 MAKE?=make
 
 NPROC:=$(shell nproc || echo 2)
-TOOL_NAME := udk-ide
+TOOL_NAME := udk-sim
 
 ifeq ($(OS),Windows_NT)
  TARGET_EXE := release
