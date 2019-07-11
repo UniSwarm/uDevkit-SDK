@@ -23,18 +23,21 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
+    app.setOrganizationName("UniSwarm");
+    app.setOrganizationDomain("UniSwarm");
+    app.setApplicationName("udk-sim");
 
     // create server and check if connected
-    if(!SimServer::instance()->isConnected())
+    if (!SimServer::instance()->isConnected())
     {
         qErrnoWarning("Server cannot connect to port");
         exit(1);
     }
 
-    MainWindow w(a.arguments());
+    MainWindow w(app.arguments());
 
     w.show();
 
-    return a.exec();
+    return app.exec();
 }

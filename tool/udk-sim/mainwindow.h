@@ -43,6 +43,15 @@ protected:
     SimProject *_simProject;
     QTextEdit *_logWidget;
 
+    void writeSettings();
+    void readSettings();
+    QList<QString> _oldProjects;
+    QList<QAction*> _oldProjectsActions;
+
+protected slots:
+    void openRecentFile();
+    void updateOldProjects();
+
     // QObject interface
 public:
     virtual bool event(QEvent *event);

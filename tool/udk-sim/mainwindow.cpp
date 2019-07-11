@@ -22,17 +22,21 @@
 #include <QFileDialog>
 #include <QMenuBar>
 #include <QDebug>
+#include <QSettings>
 
 #include "simserver.h"
 
 MainWindow::MainWindow(QStringList args)
 {
+    readSettings();
+
     _simProject = new SimProject(this);
 
     _logWidget = new QTextEdit();
     _logWidget->setReadOnly(true);
     setCentralWidget(_logWidget);
     createMenus();
+    updateOldProjects();
 
     connect(SimServer::instance(), SIGNAL(clientAdded(SimClient *)), this, SLOT(setClient(SimClient *)));
     connect(_simProject, SIGNAL(logAppended(QString)), _logWidget, SLOT(insertHtml(QString)));
@@ -68,6 +72,13 @@ bool MainWindow::openProject(const QString &path)
         return false;
     _simProject->start();
 
+    QString fullPath = QFileInfo(mpath).absoluteFilePath();
+    _oldProjects.removeOne(fullPath);
+    _oldProjects.prepend(fullPath);
+    if (_oldProjects.size() > 8)
+        _oldProjects.removeLast();
+    updateOldProjects();
+
     return true;
 }
 
@@ -88,12 +99,79 @@ void MainWindow::createMenus()
     openPrjAction->setShortcut(QKeySequence::Open);
     fileMenu->addAction(openPrjAction);
     connect(openPrjAction, SIGNAL(triggered()), this, SLOT(openProject()));
+    fileMenu->addSeparator();
+    for (int i=0; i < 8; i++)
+    {
+        QAction *recentAction = new QAction(this);
+        fileMenu->addAction(recentAction);
+        recentAction->setVisible(false);
+        connect(recentAction, SIGNAL(triggered()), this, SLOT(openRecentFile()));
+        _oldProjectsActions.append(recentAction);
+    }
+
+    fileMenu->addSeparator();
+    QAction *exitAction = new QAction(tr("E&xit"), this);
+    exitAction->setStatusTip(tr("Exits uConfig"));
+    exitAction->setShortcut(QKeySequence::Quit);
+    fileMenu->addAction(exitAction);
+    connect(exitAction, &QAction::triggered, this, &QMainWindow::close);
+}
+
+void MainWindow::writeSettings()
+{
+    QSettings settings(QApplication::organizationName(), QApplication::applicationName());
+
+    // old projects write
+    settings.beginWriteArray("projects");
+    for (int i = 0; i < _oldProjects.size() && i < 8; ++i)
+    {
+        settings.setArrayIndex(i);
+        QString path = _oldProjects[i];
+        settings.setValue("path", path);
+    }
+    settings.endArray();
+}
+
+void MainWindow::readSettings()
+{
+    QSettings settings(QApplication::organizationName(), QApplication::applicationName());
+
+    // old projects read
+    int size = settings.beginReadArray("projects");
+    for (int i = 0; i < size && i < 8; ++i)
+    {
+        settings.setArrayIndex(i);
+        QString path = settings.value("path", "").toString();
+        if (!_oldProjects.contains(path) && !path.isEmpty())
+            _oldProjects.append(path);
+    }
+    settings.endArray();
+}
+
+void MainWindow::openRecentFile()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+    if (action)
+        openProject(action->data().toString());
+}
+
+void MainWindow::updateOldProjects()
+{
+    for (int i=0; i<_oldProjects.size() && i < 8; i++)
+    {
+        QString path = _oldProjects[i];
+        _oldProjectsActions[i]->setVisible(true);
+        _oldProjectsActions[i]->setData(path);
+        _oldProjectsActions[i]->setText(QString("&%1. %2").arg(i+1).arg(path));
+        _oldProjectsActions[i]->setStatusTip(tr("Open recent project '")+path+"'");
+    }
 }
 
 bool MainWindow::event(QEvent *event)
 {
     if (event->type()==QEvent::Close)
     {
+        writeSettings();
         QApplication::quit();
     }
     return QMainWindow::event(event);
