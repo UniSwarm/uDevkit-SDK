@@ -39,7 +39,7 @@ MainWindow::MainWindow(QStringList args)
     updateOldProjects();
 
     connect(SimServer::instance(), SIGNAL(clientAdded(SimClient *)), this, SLOT(setClient(SimClient *)));
-    connect(_simProject, SIGNAL(logAppended(QString)), _logWidget, SLOT(insertHtml(QString)));
+    connect(_simProject, SIGNAL(logAppended(QString)), this, SLOT(appendLog(QString)));
 
     if (args.size()>1)
         openProject(args[1]);
@@ -165,6 +165,13 @@ void MainWindow::updateOldProjects()
         _oldProjectsActions[i]->setText(QString("&%1. %2").arg(i+1).arg(path));
         _oldProjectsActions[i]->setStatusTip(tr("Open recent project '")+path+"'");
     }
+}
+
+void MainWindow::appendLog(const QString &log)
+{
+    _logWidget->moveCursor(QTextCursor::End);
+    _logWidget->insertHtml(log);
+    _logWidget->moveCursor(QTextCursor::End);
 }
 
 bool MainWindow::event(QEvent *event)

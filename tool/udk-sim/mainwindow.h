@@ -51,6 +51,7 @@ protected:
 protected slots:
     void openRecentFile();
     void updateOldProjects();
+    void appendLog(const QString &log);
 
     // QObject interface
 public:
