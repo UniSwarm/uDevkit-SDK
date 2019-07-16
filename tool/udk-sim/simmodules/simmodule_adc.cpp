@@ -35,8 +35,10 @@ QWidget *SimModuleAdc::widget() const
 
 void SimModuleAdc::pushData(uint16_t functionId, const QByteArray &data)
 {
-    Q_UNUSED(functionId)
-    Q_UNUSED(data)
+    if (functionId == 0)
+    {
+        _adcWidget->setChannelCount(data[0]);
+    }
 }
 
 void SimModuleAdc::sendData(QByteArray str)

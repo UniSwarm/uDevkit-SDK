@@ -20,7 +20,7 @@
 #define ADCWIDGET_H
 
 #include <QWidget>
-#include <QDial>
+#include <QSlider>
 #include <QLabel>
 
 #include "driver/adc/adc.h"
@@ -35,6 +35,8 @@ public:
 
     void recData(const QString &data);
 
+    void setChannelCount(int channelCount);
+
 signals:
     void sendRequest(QByteArray data);
 
@@ -42,12 +44,13 @@ protected slots:
     void send();
 
 protected:
-    QDial *_dial;
+    QVector<QSlider *> _slidders;
     QLabel *_statusEnabled;
     QLabel *_params;
     void createWidget();
 
     uint16_t _idPeriph;
+    int _channelCount;
 };
 
 #endif // ADCWIDGET_H

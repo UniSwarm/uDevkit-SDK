@@ -11,11 +11,14 @@
 #include "adc_sim.h"
 #include "simulator.h"
 
-uint16_t adc_channels[100] = {0};
+#include <stdio.h>
+
+uint16_t adc_channels[ADC_CHANNEL_COUNT] = {0};
 
 int adc_init()
 {
     char data[3];
+    data[0] = ADC_CHANNEL_COUNT;
     simulator_send(ADC_SIM_MODULE, 0, ADC_SIM_CONFIG, data, 1);
 	return 0;
 }
@@ -23,21 +26,13 @@ int adc_init()
 int16_t adc_getValue(uint8_t channel)
 {
     ssize_t size_read;
-    char data[10];
     uint16_t value;
 
     simulator_rec_task();
-    size_read = simulator_recv(ADC_SIM_MODULE, 0, ADC_SIM_READ, data, 2);
-    
-    if (size_read <= 0)
-    {
-        value = adc_channels[channel];
-    }
-    else
-    {
-        value = *((uint16_t*)data);
-        adc_channels[channel] = value;
-    }
+    size_read = simulator_recv(ADC_SIM_MODULE, 0, ADC_SIM_READ, (char*)adc_channels, ADC_CHANNEL_COUNT * 2);
 
-    return value;
+    if (channel >= ADC_CHANNEL_COUNT)
+        return 0;
+
+    return adc_channels[channel];
 }
