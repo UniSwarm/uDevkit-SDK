@@ -1,5 +1,5 @@
 /**
- * @file can_sim.c
+ * @file can_sim.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Uniswarm 2018-2019
  *

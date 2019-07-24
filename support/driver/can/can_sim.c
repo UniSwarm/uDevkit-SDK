@@ -77,7 +77,7 @@ int can_open(rt_dev_t device)
 
     cans[can].used = 1;
     can_sendconfig(can);
-    
+
     struct ifreq ifr;
     struct sockaddr_can addr;
 
@@ -98,61 +98,61 @@ int can_open(rt_dev_t device)
 
     if (bind(soc, (struct sockaddr *)&addr, sizeof(addr)) < 0)
         return -1;
-    
-	return 0;
+
+    return 0;
 }
 
 int can_close(rt_dev_t device)
 {
-	uint8_t can = MINOR(device);
+    uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
 
     cans[can].used = 0;
     can_sendconfig(can);
-    
-	return 0;
+
+    return 0;
 }
 
 int can_enable(rt_dev_t device)
 {
-	uint8_t can = MINOR(device);
+    uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
 
     cans[can].enabled = 0;
     can_sendconfig(can);
-    
-	return 0;
+
+    return 0;
 }
 
 int can_disable(rt_dev_t device)
 {
-	uint8_t can = MINOR(device);
+    uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
 
     cans[can].enabled = 0;
     can_sendconfig(can);
-    
-	return 0;
+
+    return 0;
 }
 
 int can_setMode(rt_dev_t device, CAN_MODE mode)
 {
-	uint8_t can = MINOR(device);
+    uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
 
     cans[can].mode = mode;
     can_sendconfig(can);
-    
-	return 0;
+
+    return 0;
 }
 
 CAN_MODE can_mode(rt_dev_t device)
 {
-	uint8_t can = MINOR(device);
+    uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
 
@@ -161,7 +161,7 @@ CAN_MODE can_mode(rt_dev_t device)
 
 int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8_t s1Seg, uint8_t s2Seg)
 {
-	uint8_t can = MINOR(device);
+    uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
 
@@ -170,13 +170,13 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     cans[can].s1Seg = s1Seg;
     cans[can].s2Seg = s2Seg;
     can_sendconfig(can);
-    
-	return 0;
+
+    return 0;
 }
 
 uint32_t can_bitRate(rt_dev_t device)
 {
-	uint8_t can = MINOR(device);
+    uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
 
@@ -185,7 +185,7 @@ uint32_t can_bitRate(rt_dev_t device)
 
 uint32_t can_effectiveBitRate(rt_dev_t device)
 {
-	uint8_t can = MINOR(device);
+    uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
 
@@ -194,7 +194,7 @@ uint32_t can_effectiveBitRate(rt_dev_t device)
 
 uint8_t can_propagSeg(rt_dev_t device)
 {
-	uint8_t can = MINOR(device);
+    uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
 
@@ -203,7 +203,7 @@ uint8_t can_propagSeg(rt_dev_t device)
 
 uint8_t can_s1Seg(rt_dev_t device)
 {
-	uint8_t can = MINOR(device);
+    uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
 
@@ -212,7 +212,7 @@ uint8_t can_s1Seg(rt_dev_t device)
 
 uint8_t can_s2Seg(rt_dev_t device)
 {
-	uint8_t can = MINOR(device);
+    uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
 
@@ -221,11 +221,11 @@ uint8_t can_s2Seg(rt_dev_t device)
 
 int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
-	uint8_t can = MINOR(device);
+    uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
 
-    int retval, i;
+    int retval, i;
     struct can_frame frame;
 
     frame.can_id = header->id;
@@ -249,7 +249,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
     struct can_frame frame;
     int i;
-	ssize_t size_read;
+    ssize_t size_read;
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
         return -1;
