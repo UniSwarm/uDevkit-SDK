@@ -1,7 +1,8 @@
 /**
  * @file uart_dspic30f.c
- * @author Sebastien CAUX (sebcaux) \
+ * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2019
  *
  * @date August 09, 2016, 11:44 AM
  *
@@ -559,7 +560,7 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
  * @param device uart device number
  * @return number of data ready to read
  */
-size_t uart_datardy(rt_dev_t device)
+ssize_t uart_datardy(rt_dev_t device)
 {
 #if UART_COUNT>=1
     uint8_t uart = MINOR(device);
@@ -582,7 +583,7 @@ size_t uart_datardy(rt_dev_t device)
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
 {
 #if UART_COUNT>=1
-    size_t size_read;
+    ssize_t size_read;
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return 0;

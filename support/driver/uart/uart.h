@@ -2,6 +2,7 @@
  * @file uart.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2019
  *
  * @date April 13, 2016, 11:49 AM
  *
@@ -44,7 +45,7 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size);
 
 // ========= device read =========
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max);
-size_t uart_datardy(rt_dev_t device);
+ssize_t uart_datardy(rt_dev_t device);
 
 // ======= specific include =======
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) \

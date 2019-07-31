@@ -1,7 +1,8 @@
 /**
  * @file uart_pic32mz_mm_mk.h
- * @author Sebastien CAUX (sebcaux) \
+ * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2019
  *
  * @date October 06, 2016, 11:15 PM
  *

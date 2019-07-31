@@ -1,7 +1,7 @@
 /**
  * @file uart_dspic33.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018
+ * @copyright UniSwarm 2018-2019
  *
  * @date July 05, 2018, 13:24 PM
  *
@@ -280,7 +280,7 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
     uarts[uart].baudSpeed = baudSpeed;
 
     // baud rate computation
-    systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_UART) * 2; // Fosc not divided by 2
+    systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_FOSC);
     uBrg = systemClockPeriph / baudSpeed;
     if (uBrg >= UART_MAXBRG)
         uBrg = UART_MAXBRG;
@@ -330,7 +330,6 @@ uint32_t uart_baudSpeed(rt_dev_t device)
 #if UART_COUNT>=1
     uint32_t baudSpeed;
     uint32_t uBrg;
-    uint8_t hs;
 
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
@@ -635,7 +634,7 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
  * @param device uart device number
  * @return number of data ready to read
  */
-size_t uart_datardy(rt_dev_t device)
+ssize_t uart_datardy(rt_dev_t device)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
@@ -653,7 +652,7 @@ size_t uart_datardy(rt_dev_t device)
  */
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
 {
-    size_t size_read;
+    ssize_t size_read;
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return 0;

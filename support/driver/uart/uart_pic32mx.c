@@ -1,7 +1,8 @@
 /**
  * @file uart_pic32mx.c
- * @author Sebastien CAUX (sebcaux) \
+ * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2019
  *
  * @date June 07, 2017, 08:15 AM
  *
@@ -897,7 +898,7 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
  * @param device uart device number
  * @return number of data ready to read
  */
-size_t uart_datardy(rt_dev_t device)
+ssize_t uart_datardy(rt_dev_t device)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
@@ -915,7 +916,7 @@ size_t uart_datardy(rt_dev_t device)
  */
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
 {
-    size_t size_read;
+    ssize_t size_read;
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
         return 0;

@@ -2,6 +2,7 @@
  * @file uart_sim.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2019
  *
  * @date April 13, 2016, 11:49 AM
  *
