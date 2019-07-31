@@ -1,7 +1,7 @@
 /**
  * @file uio44fr.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018
+ * @copyright UniSwarm 2018-2019
  *
  * @date November 28, 2018, 09:30 AM
  *
@@ -31,7 +31,9 @@ int board_init();
 #define LED3 2
 #define LED4 3
 #define LED5 4 // RS485 err
+#define LED_RS485_ERR LED5
 #define LED6 5 // CAN err
+#define LED_CANFD_ERR LED6
 int board_setLed(uint8_t led, uint8_t state);
 int board_toggleLed(uint8_t led);
 int8_t board_getLed(uint8_t led);

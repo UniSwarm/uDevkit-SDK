@@ -1,7 +1,7 @@
 /**
  * @file uio44fr.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018
+ * @copyright UniSwarm 2018-2019
  *
  * @date November 28, 2018, 09:30 AM
  *
@@ -42,8 +42,6 @@ int board_init_io()
         // CAN fd 1
         _CAN1RXR = 53;          // CAN1RX ==> RP53
         _RP59R = _RPOUT_CAN1TX;   // CAN1TX ==> RP59
-
-    _RP46R = _RPOUT_REFO1;
 
     TRISDbits.TRISD1 = 0;  // DE
     TRISBbits.TRISB10 = 0; // RE
