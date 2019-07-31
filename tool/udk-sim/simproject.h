@@ -54,6 +54,7 @@ public slots:
 
 protected slots:
     void readProcess();
+    void finish(int exitCode, QProcess::ExitStatus exitStatus);
 
 protected:
     QString _exePath;

@@ -28,6 +28,7 @@ SimProject::SimProject(QObject *parent)
     connect(_process, SIGNAL(readyReadStandardOutput()), this, SLOT(readProcess()));
     connect(_process, SIGNAL(readyReadStandardError()), this, SLOT(readProcess()));
     connect(_process, SIGNAL(channelReadyRead(int)), this, SLOT(readProcess()));
+    connect(_process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(finish(int, QProcess::ExitStatus)));
     _valid = false;
 }
 
@@ -100,6 +101,17 @@ void SimProject::readProcess()
 
     log.replace('\n', "<br></br>");
     log.replace('\r', "");
+    emit logAppended(log);
+}
+
+void SimProject::finish(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    readProcess();
+    QString log;
+    if (exitStatus == QProcess::CrashExit)
+        log.append(QString("<span color='red'>Process crashed with error code %1</span>").arg(exitCode));
+    else
+        log.append(QString("<span color='0xFF0000'>Process finished with exitCode code %1</span>").arg(exitCode));
     emit logAppended(log);
 }
 
