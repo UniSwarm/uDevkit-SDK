@@ -1,5 +1,5 @@
 /*** DEVCFG0 ***/
-#pragma config DEBUG =      ON
+#pragma config DEBUG =      OFF
 #pragma config JTAGEN =     OFF
 #pragma config ICESEL =     ICS_PGx1
 #pragma config TRCEN =      OFF
