@@ -10,7 +10,7 @@ int position;
 
 // init
 qei1 = qei(1);
-qei_setBitConfig(qei1, QEI_X4MODE);
+qei_setConfig(qei1, QEI_X4MODE);
 qei_enable(qei1);
 
 // qei read
