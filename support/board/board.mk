@@ -1,6 +1,4 @@
 
-BOARDPATH = $(dir $(lastword $(MAKEFILE_LIST)))
-
 # check BOARD variable exists or DEVICE + ARCHI
 # BOARD does not have to be defined. A project can be setted BOARD (ie. working with a labdec) 
 ifndef BOARD
@@ -10,7 +8,15 @@ ifndef BOARD
 endif
 
 ifdef BOARD
- BOARD_FILE = $(UDEVKIT)/support/board/$(BOARD)/$(BOARD).mk
+ ifeq ($(patsubst %.mk,,$(lastword $(BOARD))),) # if BOARD endwith ".mk"
+  BOARD_FILE = $(BOARD)
+  INCLUDEPATH += -I$(dir $(BOARD_FILE))/
+  BOARDPATH = $(dir $(BOARD_FILE))/
+ else
+  BOARD_FILE = $(UDEVKIT)/support/board/$(BOARD)/$(BOARD).mk
+  INCLUDEPATH += -I$(UDEVKIT)/support/board/$(BOARD)/
+  BOARDPATH = $(UDEVKIT)/support/board/$(BOARD)/
+ endif
  
  # check BOARD_FILE exists 
  ifeq ("$(wildcard $(BOARD_FILE))","")
@@ -19,6 +25,4 @@ ifdef BOARD
  
  # include the board file
  include $(BOARD_FILE)
- 
- INCLUDEPATH += -I$(UDEVKIT)/support/board/$(BOARD)/
 endif
