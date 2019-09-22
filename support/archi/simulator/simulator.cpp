@@ -14,18 +14,19 @@
 #include "simulator_pthread.h"
 
 #include <signal.h>
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
 
 #include <map>
 #include <queue>
-#include <string>
+#include <vector>
 #include <iostream>
-std::map<uint64_t, std::queue<std::string> > packages;
+std::map<uint64_t, std::queue<std::vector<char>> > packages;
 
 void simulator_init()
 {
     atexit(simulator_end);
+    setbuf(stdout, NULL);
     //signal(SIGTERM, simulator_end);
 
     simulator_socket_init();
@@ -64,15 +65,15 @@ int simulator_rec_task()
         periphId = ((uint16_t*)data)[2];
         functionId = ((uint16_t*)data)[3];
         
-        std::string dataPacket(data + 8, sizePacket - 8);
+        std::vector<char> dataPacket(data + 8, data + sizePacket);
         uint64_t key = ((uint64_t)moduleId << 32) + ((uint64_t)periphId << 16) + functionId;
-        std::map<uint64_t, std::queue<std::string> >::iterator it = packages.find(key);
+        std::map<uint64_t, std::queue<std::vector<char> > >::iterator it = packages.find(key);
         
-        if(it == packages.end())
+        if (it == packages.end())
         {
-            std::queue<std::string> queue;
+            std::queue<std::vector<char> > queue;
             queue.push(dataPacket);
-            packages.insert(std::pair<uint64_t, std::queue<std::string> >(key, queue));
+            packages.insert(std::pair<uint64_t, std::queue<std::vector<char> > >(key, queue));
         }
         else
         {
@@ -80,7 +81,7 @@ int simulator_rec_task()
         }
         
         //dbg
-        data[size]=0;
+        data[size] = 0;
         //printf("module %d, periph %d, fct %d %s\n", moduleId, periphId, functionId, data + 8);
     }
     
@@ -90,14 +91,14 @@ int simulator_rec_task()
 int simulator_recv(uint16_t moduleId, uint16_t periphId, uint16_t functionId, char *data, size_t size)
 {
     uint64_t key = ((uint64_t)moduleId << 32) + ((uint64_t)periphId << 16) + functionId;
-    std::map<uint64_t, std::queue<std::string> >::iterator it = packages.find(key);
+    std::map<uint64_t, std::queue<std::vector<char> > >::iterator it = packages.find(key);
     if(it != packages.end())
     {
         if((*it).second.empty())
             return -1;
-        std::string package = (*it).second.front();
-        (*it).second.pop();
+        std::vector<char> package = (*it).second.front();
         memcpy(data, package.data(), package.size());
+        (*it).second.pop();
         return package.size();
     }
     return -1;

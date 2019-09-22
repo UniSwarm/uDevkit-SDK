@@ -18,7 +18,6 @@
 #include <pthread.h>
 
 #ifdef WIN32
-
   #include <windows.h>
   #define psleep(m_sec) Sleep ((m_sec))
 
@@ -27,12 +26,10 @@
     || defined (__APPLE__)
 
   #include <unistd.h>
-  #define psleep(m_sec) usleep ((m_sec * 1000))
+  #define psleep(m_sec) usleep ((m_sec) * 1000)
 
 #else
-
   #error pthread not supported for your platform
-
 #endif
 
 void simulator_pthread_init();

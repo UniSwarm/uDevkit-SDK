@@ -26,7 +26,7 @@ void simulator_socket_init()
 
     // socket creation
     simulator_sock = socket(AF_INET, SOCK_STREAM, 0);
-    if(simulator_sock == INVALID_SOCKET)
+    if (simulator_sock == INVALID_SOCKET)
     {
         perror("socket()");
         exit(errno);
@@ -38,7 +38,7 @@ void simulator_socket_init()
     ssin.sin_port = htons(SIM_SOCKET_PORT);
 
     // socket connection to host
-    if(connect(simulator_sock, (SOCKADDR*)&ssin, sizeof(ssin)) != SOCKET_ERROR)
+    if (connect(simulator_sock, (SOCKADDR*)&ssin, sizeof(ssin)) != SOCKET_ERROR)
         printf("Connected successfully to port %s %d\n", inet_ntoa(ssin.sin_addr), htons(ssin.sin_port));
     else
     {
@@ -59,7 +59,7 @@ void simulator_socket_end()
 
 void simulator_socket_send(char *data, size_t size)
 {
-    if(simulator_sock != 0)
+    if (simulator_sock != 0)
     {
         send(simulator_sock, data, size, 0);
     }
@@ -67,12 +67,12 @@ void simulator_socket_send(char *data, size_t size)
 
 int simulator_socket_read(char *data, size_t size)
 {
-    if(simulator_sock != 0)
+    if (simulator_sock != 0)
     {
         #if defined (WIN32) || defined (_WIN32)
             u_long ret;
             ioctlsocket(simulator_sock, FIONREAD, &ret);
-            if(ret==0)
+            if (ret == 0)
                 return 0;
         #endif
         return recv(simulator_sock, data, size, SOCKET_MODE);

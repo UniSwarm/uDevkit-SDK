@@ -15,6 +15,15 @@
 extern "C" {
 #endif
 
+#if defined (WIN32) || defined (_WIN32)
+    #define SIM_WIN
+
+#elif defined (linux) || defined (LINUX) || defined (__linux__) \
+   || defined (unix) || defined (UNIX) || defined (__unix__) \
+   || defined (__APPLE__)
+    #define SIM_UNIX
+#endif
+
 #include <stdint.h>
 #include <driver/device.h>
 

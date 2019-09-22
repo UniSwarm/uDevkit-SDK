@@ -13,8 +13,7 @@
 #ifndef SIMULATOR_SOCKET_H
 #define SIMULATOR_SOCKET_H
 
-#if   defined (WIN32) || defined (_WIN32)
-
+#if defined (WIN32) || defined (_WIN32)
     #include <winsock2.h>
     #define SOCKET_MODE 0
 
@@ -42,9 +41,7 @@
     typedef struct sockaddr SOCKADDR;
 
 #else
-
     #error socket not supported for your platform
-
 #endif
 
 #define SIM_SOCKET_PORT 1064
