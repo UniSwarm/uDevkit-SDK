@@ -136,7 +136,7 @@ int can_open(rt_dev_t device)
  * @param device CAN bus number
  * @return 0 if ok, -1 in case of error
  */
-int can_closeDevice(rt_dev_t device)
+int can_close(rt_dev_t device)
 {
 #if CAN_COUNT>=1
     uint8_t can = MINOR(device);
@@ -182,12 +182,12 @@ int can_enable(rt_dev_t device)
         C1FLTCON0bits.MSEL1 = 1;        // Use Mask 1
         C1RXF1bits.SID = 0x000;         // Filter 1 EID
         C1RXF1bits.EID = 0x00000;       // Filter 1 SID
-        C1RXF1bits.EXID = 1;            // Filter only EID messages
+        C1RXF1bits.EXID = 1;            // Filter EID messages
         C1FLTCON0bits.FLTEN1 = 1;       // Enable the filter
         // mask 1
         C1RXM1bits.SID = 0x000;         // Ignore all bits in comparison
         C1RXM1bits.EID = 0x00000;       // Ignore all bits in comparison
-        C1RXM1bits.MIDE = 1;            // Match only message types.
+        C1RXM1bits.MIDE = 0;            // Match all message types.
         break;
 #if CAN_COUNT>=2
     case 1:
@@ -204,12 +204,12 @@ int can_enable(rt_dev_t device)
         C2FLTCON0bits.MSEL1 = 1;        // Use Mask 1
         C2RXF1bits.SID = 0x000;         // Filter 1 EID
         C2RXF1bits.EID = 0x00000;       // Filter 1 SID
-        C2RXF1bits.EXID = 1;            // Filter only EID messages
+        C2RXF1bits.EXID = 1;            // Filter EID messages
         C2FLTCON0bits.FLTEN1 = 1;       // Enable the filter
         // mask 1
         C2RXM1bits.SID = 0x000;         // Ignore all bits in comparison
         C2RXM1bits.EID = 0x00000;       // Ignore all bits in comparison
-        C2RXM1bits.MIDE = 1;            // Match only message types.
+        C2RXM1bits.MIDE = 0;            // Match all message types.
         break;
 #endif
 #if CAN_COUNT>=3
@@ -713,8 +713,10 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
         {
             buffer->msgEID.IDE = 1;    // extended id
             buffer->msgEID.EID = header->id & 0x3FFFF;   // Message EID
+            buffer->msgSID.SID = header->id >> 18; // Message EID
         }
-        buffer->msgSID.SID = header->id >> 18; // Message EID
+        else
+            buffer->msgSID.SID = header->id; // Message EID
 
         if (header->flags & CAN_RTR)
             buffer->msgEID.RTR = 1;
