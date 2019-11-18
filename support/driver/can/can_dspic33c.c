@@ -43,10 +43,10 @@ struct can_dev
 };
 
 #if CAN_COUNT>=1
-uint32_t __attribute__((aligned(4))) CAN1FIFO[10*19];
+uint32_t __attribute__((aligned(4))) CAN1FIFO[40*19];
 #endif
 #if CAN_COUNT>=2
-uint32_t __attribute__((aligned(4))) CAN2FIFO[10*19];
+uint32_t __attribute__((aligned(4))) CAN2FIFO[40*19];
 #endif
 
 struct can_dev cans[] = {
@@ -117,7 +117,7 @@ int can_open(rt_dev_t device)
  * @param device CAN bus number
  * @return 0 if ok, -1 in case of error
  */
-int can_closeDevice(rt_dev_t device)
+int can_close(rt_dev_t device)
 {
 #if CAN_COUNT>=1
     uint8_t can = MINOR(device);
@@ -159,14 +159,14 @@ int can_enable(rt_dev_t device)
         //Don't save transmitted messages in TEF
         C1CONHbits.TXQEN = 0x1;
 
-        // FIFO1 as transmiter (5 messages)
-        C1FIFOCON1Hbits.FSIZE = 5-1;   //5 messages deep
-        C1FIFOCON1Hbits.PLSIZE = 0x7;  //64 bytes of data
+        // FIFO1 as transmiter (20 messages)
+        C1FIFOCON1Hbits.FSIZE = 20-1;   //20 messages deep
+        C1FIFOCON1Hbits.PLSIZE = 0x0;  //8 bytes of data
         C1FIFOCON1Lbits.TXEN = 1;      // Set TXEN bit, transmit fifo
 
-        // FIFO2 as receiver (5 messages)
-        C1FIFOCON2Hbits.FSIZE = 5-1;   //5 messages deep
-        C1FIFOCON2Hbits.PLSIZE = 0x7;  //64 bytes of data
+        // FIFO2 as receiver (20 messages)
+        C1FIFOCON2Hbits.FSIZE = 20-1;   //20 messages deep
+        C1FIFOCON2Hbits.PLSIZE = 0x0;  //8 bytes of data
         C1FIFOCON2Lbits.TXEN = 0;      // Clear TXEN bit, receive fifo
         // filter 0
         C1FLTCON0Lbits.F0BP = 2;        // Store messages in FIFO2
@@ -177,7 +177,7 @@ int can_enable(rt_dev_t device)
         // mask 0
         C1MASK0H = 0x000;         // Ignore all bits in comparison
         C1MASK0L = 0x00000;       // Ignore all bits in comparison
-        C1MASK0Hbits.MIDE = 1;            // Match only message types
+        C1MASK0Hbits.MIDE = 0;            // Match all message types
         break;
 #if CAN_COUNT>=2
     case 1:
@@ -190,14 +190,14 @@ int can_enable(rt_dev_t device)
         //Don't save transmitted messages in TEF
         C2CONHbits.TXQEN = 0x1;
 
-        // FIFO1 as transmiter (5 messages)
-        C2FIFOCON1Hbits.FSIZE = 5-1;   //5 messages deep
-        C2FIFOCON1Hbits.PLSIZE = 0x7;  //64 bytes of data
+        // FIFO1 as transmiter (20 messages)
+        C2FIFOCON1Hbits.FSIZE = 20-1;   //20 messages deep
+        C2FIFOCON1Hbits.PLSIZE = 0x0;  //8 bytes of data
         C2FIFOCON1Lbits.TXEN = 1;      // Set TXEN bit, transmit fifo
 
-        // FIFO2 as receiver (5 messages)
-        C2FIFOCON2Hbits.FSIZE = 5-1;   //5 messages deep
-        C2FIFOCON2Hbits.PLSIZE = 0x7;  //64 bytes of data
+        // FIFO2 as receiver (20 messages)
+        C2FIFOCON2Hbits.FSIZE = 20-1;   //20 messages deep
+        C2FIFOCON2Hbits.PLSIZE = 0x0;  //8 bytes of data
         C2FIFOCON2Lbits.TXEN = 0;      // Clear TXEN bit, receive fifo
         // filter 0
         C2FLTCON0Lbits.F0BP = 2;        // Store messages in FIFO2
@@ -208,7 +208,7 @@ int can_enable(rt_dev_t device)
         // mask 0
         C2MASK0H = 0x000;         // Ignore all bits in comparison
         C2MASK0L = 0x00000;       // Ignore all bits in comparison
-        C2MASK0Hbits.MIDE = 1;            // Match only message types
+        C2MASK0Hbits.MIDE = 0;            // Match all message types
         break;
 #endif
     }
@@ -411,10 +411,18 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
         C1DBTCFGLbits.SJW = 0; // Synchronization Jump Width (1-16)*/
 
         /* Set up the CANFD module for 1Mbps of Nominal bit rate speed and 2Mbps of Data bit rate. */
-        C1NBTCFGH = 0x003E;
-        C1NBTCFGL = 0x0F0F;
+        //C1NBTCFGH = 0x003E;
+        C1NBTCFGHbits.BRP = 0;      // Baud Rate Prescaler bits (1-256) div = 1
+        C1NBTCFGHbits.TSEG1 = 63-1;   // Phase Buffer Segment 1 (1-256) Tseg = 63
+
+        //C1NBTCFGL = 0x0F0F;
+        C1NBTCFGLbits.TSEG2 = 16-1; // Phase Buffer Segment 2 (1-128) Tseg2 = 16
+        C1NBTCFGLbits.SJW = 16-1;   // SWJ = 16
+
+        // CAN FD
         C1DBTCFGH = 0x001E;
         C1DBTCFGL = 0x0707;
+
         C1TDCH = 0x0002; //TDCMOD is Auto
         C1TDCL = 0x1F00;
 
@@ -589,7 +597,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
         buffer->sid = (header->id >> 18) + ((header->id & 0x001F) << 11); // Message SID
     }
     else
-        buffer->sid = header->id & 0x03FF; // Message SID
+        buffer->sid = header->id & 0x07FF; // Message SID
 
     if (header->flags & CAN_RTR)
         CAN_DSPIC33C_TX_SETRTR(buffer);
