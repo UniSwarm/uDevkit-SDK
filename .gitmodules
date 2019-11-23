@@ -1,6 +1,3 @@
 [submodule "contrib/microchip/mla_usb"]
 	path = contrib/microchip/mla_usb
 	url = https://github.com/MicrochipTech/mla_usb.git
-[submodule "contrib/fatfs"]
-	path = contrib/fatfs
-	url = https://github.com/Robotips/FatFs.git
