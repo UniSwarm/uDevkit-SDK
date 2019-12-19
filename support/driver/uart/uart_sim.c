@@ -185,6 +185,16 @@ uint8_t uart_bitStop(rt_dev_t device)
     return uarts[uart].bitStop;
 }
 
+int uart_transmitFinished(rt_dev_t device)
+{
+    int transmitFinished = -1;
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+        return -1;
+
+    return 1;
+}
+
 ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 {
     uint8_t uart = MINOR(device);

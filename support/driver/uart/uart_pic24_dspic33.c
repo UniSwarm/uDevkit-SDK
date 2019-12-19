@@ -903,6 +903,52 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 }
 
 /**
+ * @brief Notice if transmit hardware buffer is empty
+ * @param device uart device number
+ * @return 0 if buffer is not empty, 1 if the buffer is empty, -1 if device is not valid
+ */
+int uart_transmitFinished(rt_dev_t device)
+{
+    int transmitFinished = -1;
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+        return -1;
+
+    switch (uart)
+    {
+    case 0:
+        transmitFinished = U1STAbits.TRMT;
+        break;
+#if UART_COUNT>=2
+    case 1:
+        transmitFinished = U2STAbits.TRMT;
+        break;
+#endif
+#if UART_COUNT>=3
+    case 2:
+        transmitFinished = U3STAbits.TRMT;
+        break;
+#endif
+#if UART_COUNT>=4
+    case 3:
+        transmitFinished = U4STAbits.TRMT;
+        break;
+#endif
+#if UART_COUNT>=5
+    case 4:
+        transmitFinished = U5STAbits.TRMT;
+        break;
+#endif
+#if UART_COUNT>=6
+    case 5:
+        transmitFinished = U6STAbits.TRMT;
+        break;
+#endif
+    }
+    return transmitFinished;
+}
+
+/**
  * @brief Gets number of data that could be read (in sw buffer)
  * @param device uart device number
  * @return number of data ready to read

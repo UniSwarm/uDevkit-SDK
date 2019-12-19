@@ -42,6 +42,7 @@ uint8_t uart_bitStop(rt_dev_t device);
 
 // ========= device write ========
 ssize_t uart_write(rt_dev_t device, const char *data, size_t size);
+int uart_transmitFinished(rt_dev_t device);
 
 // ========= device read =========
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max);
