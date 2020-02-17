@@ -15,6 +15,7 @@
 #include "sysclock.h"
 
 #include <archi.h>
+#include <board.h>
 
 #include <stdio.h>
 
@@ -39,7 +40,7 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
     case SYSCLOCK_CLOCK_FOSC:
         return sysclock_sysfreq;
 
-    case SYSCLOCK_CLOCK_SYSCLK:
+    case SYSCLOCK_CLOCK_PBCLK:
         return sysclock_sysfreq >> 1;
 
     case SYSCLOCK_CLOCK_REFCLK:
@@ -48,7 +49,7 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
         return (sysclock_sysfreq >> 1) / div;
     }
 
-    case SYSCLOCK_CLOCK_PBCLK:
+    case SYSCLOCK_CLOCK_SYSCLK:
     {
         uint16_t div = 1;
         if (CLKDIVbits.DOZEN == 1)
@@ -339,10 +340,18 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     sysclock_pll = sysclock_getPLLClock();;
     sysclock_sysfreq = sysclock_pll;*/
 
-    CLKDIVbits.PLLPRE = 3; // N1=3
+#ifdef SYSCLOCK_POSC
+    if (SYSCLOCK_POSC == 8000000)
+        CLKDIVbits.PLLPRE = 1; // N1=1
+    else
+        CLKDIVbits.PLLPRE = 3; // N1=3
+#else
+    CLKDIVbits.PLLPRE = 1; // N1=1
+#endif
+
     PLLFBDbits.PLLFBDIV = 80; // M = 80 ==> 640MHz FVco
-    PLLDIVbits.POST1DIV = 2; // N2=2      ==> 320MHz
-    PLLDIVbits.POST2DIV = 1; // N3=1
+    PLLDIVbits.POST1DIV = 2; // N2 = 2  ==> 320MHz
+    PLLDIVbits.POST2DIV = 2; // N3 = 2
     __builtin_write_OSCCONH(0x03); // primary osc input
     __builtin_write_OSCCONL(OSCCON | 0x01);
 
@@ -354,10 +363,10 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     sysclock_pll = sysclock_getPLLClock();;
     sysclock_sysfreq = sysclock_pll >> 1;
 
-    REFOCONHbits.RODIV = 10; // /10
+    /*REFOCONHbits.RODIV = 10; // /10
     REFOCONLbits.ROSEL = 0b0001; // Fp (FOSC/2)
     REFOCONLbits.ROEN = 1;
-    REFOCONLbits.ROOUT = 1;
+    REFOCONLbits.ROOUT = 1;*/
 
     return 0;
 }
