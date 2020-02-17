@@ -1,7 +1,8 @@
 /**
  * @file timer_sim.c
- * @author Sebastien CAUX (sebcaux) \
- * @copyright Robotips 2016
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2020
  *
  * @date September 27, 2016, 11:37 AM
  *
@@ -449,6 +450,8 @@ int timer_setValue(rt_dev_t device, uint16_t value)
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
         return -1;
+
+    timers[timer].value = value;
 
     return 0;
 }
