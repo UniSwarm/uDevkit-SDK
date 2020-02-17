@@ -15,6 +15,7 @@
 #ifndef __XC16
     #define __prog__ 
     #define __eds__ 
+    #define __pack_upper_byte
 #endif
 
 #ifndef SIMULATOR
@@ -26,13 +27,13 @@
     || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
         #define enable_interrupt() INTCON2bits.GIE = 1
         #define disable_interrupt() INTCON2bits.GIE = 0
-        
+
         #define unlockClockConfig() do {OSCCONH = 0x78; OSCCONH = 0x9A;} while (0)
         #define lockClockConfig() {}
-        
+
         #define unlockIoConfig() do {OSCCONL = 0x46; OSCCONL = 0x57; RPCONbits.IOLOCK = 0;} while (0)
         #define lockIoConfig() do {OSCCONL = 0x46; OSCCONL = 0x57; RPCONbits.IOLOCK = 1;} while (0)
-    
+
     #elif defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_pic24f) \
     || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj)
         #define enable_interrupt() __builtin_disi(0)
@@ -40,6 +41,7 @@
     #endif
     
     #define archi_init() {}
+    #define reset() asm("RESET")
 
 #else
     #define nop() {}
@@ -49,6 +51,7 @@
     #define lockClockConfig() {}
     #define unlockIoConfig() {}
     #define lockIoConfig() {}
+    #define reset() {}
 #endif
 
 #define REGSIZE 2
