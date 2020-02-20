@@ -718,15 +718,22 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
         else
             buffer->msgSID.SID = header->id; // Message EID
 
+        // RTR
         if (header->flags & CAN_RTR)
+        {
             buffer->msgEID.RTR = 1;
-
-        // set data and data size
-        if (header->size > 8)
-            header->size = 8;
-        buffer->msgEID.DLC = header->size; // Data Length
-        for (i=0; i<header->size; i++)
-            buffer->data[i] = data[i];
+            header->size = 0;
+            buffer->msgEID.DLC = 0;
+        }
+        else
+        {
+            // set data and data size
+            if (header->size > 8)
+                header->size = 8;
+            buffer->msgEID.DLC = header->size; // Data Length
+            for (i=0; i<header->size; i++)
+                buffer->data[i] = data[i];
+        }
     }
 
     switch (can)
@@ -831,8 +838,14 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     // data read and copy
     header->size = buffer->msgEID.DLC;
     for (i=0; i<header->size; i++)
-		data[i] = buffer->data[i];
+	    data[i] = buffer->data[i];
 
+    // flags
+    if (buffer->msgEID.SRR == 1)
+    {
+        flagValue += CAN_RTR;
+    }
+    header->flags = flagValue;
 
     switch (can)
     {
