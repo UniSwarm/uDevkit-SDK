@@ -590,7 +590,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     if (can >= CAN_COUNT)
     {
         return -1;
-    {
+    }
     CAN_TxMsgBuffer *buffer = NULL;
 
     switch (can)
@@ -726,7 +726,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     if (CAN_DSPIC33C_RX_IDE(buffer))
     {
         flagValue += CAN_VERS2BA; // extended ID
-        canId =  ((uint32_t)CAN_DSPIC33C_RX_EIDH(buffer)<< 16) + CAN_DSPIC33C_RX_EIDL(buffer) + CAN_DSPIC33C_RX_SID(buffer) ;
+        canId = ((uint32_t)CAN_DSPIC33C_RX_EIDH(buffer) << 16) + CAN_DSPIC33C_RX_EIDL(buffer) + CAN_DSPIC33C_RX_SID(buffer);
     }
     else
     {
