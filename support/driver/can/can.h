@@ -65,6 +65,20 @@ typedef struct {
 int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data);
 int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data);
 
+// ===== filter interface =====
+typedef enum
+{
+    CAN_FRAME_STD  = 0x01,     ///< CAN standard frames only
+    CAN_FRAME_EXT  = 0x02,     ///< CAN extended frames only
+    CAN_FRAME_BOTH  = 0x03,     ///< CAN standard and extended frames
+} CAN_FRAME_FLAGS;
+int can_filterConfiguration(rt_dev_t device, CAN_FRAME_FLAGS frame,
+                            uint8_t nFilter, uint32_t idFilter, uint32_t mask,
+                            uint8_t fifo);
+int can_filterEnable(rt_dev_t device, uint8_t nFilter);
+int can_filterDisable(rt_dev_t device, uint8_t nFilter);
+
+
 #if defined(ARCHI_dspic30f)
  #include "can_dspic30f.h"
 #elif defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
