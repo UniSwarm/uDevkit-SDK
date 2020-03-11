@@ -57,11 +57,16 @@ rt_dev_t can_getFreeDevice()
     rt_dev_t device;
 
     for (i = 0; i < CAN_COUNT; i++)
+    {
         if (cans[i].used == 0)
+        {
             break;
-
+        }
+    }
     if (i == CAN_COUNT)
+    {
         return NULLDEV;
+    }
     device = MKDEV(DEV_CLASS_CAN, i);
 
     can_open(i);
@@ -73,8 +78,9 @@ int can_open(rt_dev_t device)
 {
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
-
+    }
     cans[can].used = 1;
     can_sendconfig(can);
 
@@ -84,20 +90,26 @@ int can_open(rt_dev_t device)
     /* open socket */
     soc = socket(PF_CAN, SOCK_RAW, CAN_RAW);
     if (soc < 0)
+    {
         return -1;
+    }
 
     addr.can_family = AF_CAN;
     strcpy(ifr.ifr_name, "can0");
 
     if (ioctl(soc, SIOCGIFINDEX, &ifr) < 0)
+    {
         return -1;
+    }
 
     addr.can_ifindex = ifr.ifr_ifindex;
 
     fcntl(soc, F_SETFL, O_NONBLOCK);
 
     if (bind(soc, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+    {
         return -1;
+    }
 
     return 0;
 }
@@ -106,7 +118,9 @@ int can_close(rt_dev_t device)
 {
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
+    }
 
     cans[can].used = 0;
     can_sendconfig(can);
@@ -118,7 +132,9 @@ int can_enable(rt_dev_t device)
 {
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
+    }
 
     cans[can].enabled = 0;
     can_sendconfig(can);
@@ -130,7 +146,9 @@ int can_disable(rt_dev_t device)
 {
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
+    }
 
     cans[can].enabled = 0;
     can_sendconfig(can);
@@ -142,7 +160,9 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
 {
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
+    }
 
     cans[can].mode = mode;
     can_sendconfig(can);
@@ -154,7 +174,9 @@ CAN_MODE can_mode(rt_dev_t device)
 {
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
+    }
 
     return cans[can].mode;
 }
@@ -163,7 +185,9 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
 {
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
+    }
 
     cans[can].bitRate = bitRate;
     cans[can].propagSeg = propagSeg;
@@ -178,7 +202,9 @@ uint32_t can_bitRate(rt_dev_t device)
 {
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
+    }
 
     return cans[can].bitRate;
 }
@@ -187,7 +213,9 @@ uint32_t can_effectiveBitRate(rt_dev_t device)
 {
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
+    }
 
     return cans[can].bitRate;
 }
@@ -196,7 +224,9 @@ uint8_t can_propagSeg(rt_dev_t device)
 {
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
+    }
 
     return cans[can].propagSeg;
 }
@@ -205,7 +235,9 @@ uint8_t can_s1Seg(rt_dev_t device)
 {
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
+    }
 
     return cans[can].s1Seg;
 }
@@ -214,7 +246,9 @@ uint8_t can_s2Seg(rt_dev_t device)
 {
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
+    }
 
     return cans[can].s2Seg;
 }
@@ -223,22 +257,34 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
+    }
 
     int retval, i;
     struct can_frame frame;
 
     frame.can_id = header->id;
+
+    if((header->flags & CAN_VERS2BA) == CAN_VERS2BA)
+    {
+        frame.can_id += 0x80000000;
+    }
+
     if (header->size > 8)
+    {
         header->size = 8;
+    }
     frame.can_dlc = header->size; // Data Length
     for (i=0; i < header->size; i++)
+    {
         frame.data[i] = data[i];
-
+    }
     retval = write(soc, &frame, sizeof(struct can_frame));
     if (retval != sizeof(struct can_frame))
+    {
         return -1;
-
+    }
 // TODO format data
     //simulator_send(CAN_SIM_MODULE, can, CAN_SIM_WRITE, data, size);
 
@@ -248,12 +294,13 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
     struct can_frame frame;
-    int i;
+    //int i;
     ssize_t size_read;
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
-
+    }
     // TODO
     /*simulator_rec_task();
     size_read = simulator_recv(CAN_SIM_MODULE, can, CAN_SIM_READ, data, 64);
@@ -263,11 +310,21 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     int recvbytes = read(soc, &frame, sizeof(struct can_frame));
     if (recvbytes >= 0)
     {
-        header->id = frame.can_id;
+        header->id = frame.can_id & 0x1FFFFFFF;
         header->size = frame.can_dlc; // Data Length
+        header->flags = 0;
+        if((frame.can_id & 0x80000000))
+        {
+            header->flags += CAN_VERS2BA;
+        }
+
+        /*printf("can%d  %X  [%d]", can, header->id, header->size);
         for (i=0; i < header->size; i++)
-            data[i] = frame.data[i];
-        printf("dlc = %d, data = %s\n", frame.can_dlc, frame.data);
+        {
+            data[i] = (char)frame.data[i];
+            printf("%02X ", frame.data[i]);
+        }
+        printf("\n");*/
         return 1;
     }
 // TODO format data
