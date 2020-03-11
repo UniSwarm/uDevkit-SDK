@@ -42,6 +42,13 @@ struct can_dev
     can_status flags;
 };
 
+typedef struct {
+    C1FLTOBJ0LBITS objl;
+    C1FLTOBJ0HBITS objh;
+    C1MASK0LBITS mskl;
+    C1MASK0HBITS mskh;
+} filter;
+
 #if CAN_COUNT>=1
 uint32_t __attribute__((aligned(4))) CAN1FIFO[40*19];
 #endif
@@ -802,4 +809,180 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 #else
     return -1;
 #endif
+}
+
+/**
+ * @brief Configure the specified CAN filter
+ * @param device CAN bus number,
+ * @param std filtering standard mode frames
+ * @param ext filtering extended mode frames
+ * @param nFilter number of the filter to configure
+ * @param idFilter Id bits use for the filter
+ - @param mask masked bits use for the filter
+ * @param fifo fifo number where the message is stored
+ * @return 0 if ok, -1 in case of error
+ */
+int can_filterConfiguration(rt_dev_t device,CAN_FRAME_FLAGS frame,
+                            uint8_t nFilter, uint32_t idFilter, uint32_t mask,
+                            uint8_t fifo)
+{
+#if CAN_COUNT >= 1
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    if ((nFilter > CAN_FILTER_COUNT) || (fifo > CAN_FIFO_COUNT))
+    {
+        return -1;
+    }
+
+    uint8_t MIDE, EXIDE;
+
+    if (frame == CAN_FRAME_STD)
+    {
+        MIDE = 1;
+        EXIDE = 0;
+    }
+    else if (frame == CAN_FRAME_EXT)
+    {
+        MIDE = 1;
+        EXIDE = 1;
+    }
+    else if (frame == CAN_FRAME_BOTH)
+    {
+        MIDE = 0;
+        EXIDE = 1;
+    }
+    else
+    {
+    return -1;
+    }
+
+    volatile uint8_t *con = NULL;
+    volatile filter *reg = NULL;
+
+    switch (can)
+    {
+    case 0:
+        can_filterDisable(device, nFilter);// Disable to configure
+
+        con = (uint8_t *)&C1FLTCON0L;
+        reg = (filter *)&C1FLTOBJ0L;
+
+        // filter configuration
+        reg[nFilter].objh.EXIDE = EXIDE & 0x01;
+        reg[nFilter].objh.EID = CAN_DSPIC33C_FILTER_EIDH(idFilter);
+        reg[nFilter].objl.EID = CAN_DSPIC33C_FILTER_EIDL(idFilter);
+        reg[nFilter].objl.SID = CAN_DSPIC33C_FILTER_SID(idFilter);
+        // mask configuration
+        reg[nFilter].mskh.MIDE = MIDE & 0x01;
+        reg[nFilter].mskh.MEID = CAN_DSPIC33C_FILTER_EIDH(mask);
+        reg[nFilter].mskl.MEID = CAN_DSPIC33C_FILTER_EIDL(mask);
+        reg[nFilter].mskl.MSID = CAN_DSPIC33C_FILTER_SID(mask);
+        // filter enable
+        con[nFilter] = fifo | (1 << 7);
+        break;
+#if CAN_COUNT >= 2
+    case 1:
+        con = (uint8_t *)&C2FLTCON0L;
+        reg = (filter *)&C2FLTOBJ0L;
+
+        // filter configuration
+        reg[nFilter].objh.EXIDE = EXIDE & 0x01;
+        reg[nFilter].objh.EID = EIDH(idFilter);
+        reg[nFilter].objl.EID = EIDL(idFilter);
+        reg[nFilter].objl.SID = SID(idFilter);
+        // mask configuration
+        reg[nFilter].mskh.MIDE = MIDE & 0x01;
+        reg[nFilter].mskh.MEID = EIDH(mask);
+        reg[nFilter].mskl.MEID = EIDL(mask);
+        reg[nFilter].mskl.MSID = SID(mask);
+        //filter enable
+        con[nFilter] = fifo | (1 << 7) ;
+        break;
+#endif
+    }
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * @brief Enables the specified CAN filter
+ * @param device CAN bus number
+ * @param nFilter number of the filter to enable
+ * @return 0 if ok, -1 in case of error
+ */
+int can_filterEnable(rt_dev_t device, uint8_t nFilter)
+{
+#if CAN_COUNT >= 1
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT || nFilter > CAN_FILTER_COUNT)
+    {
+        return -1;
+    }
+
+    volatile uint8_t *con = NULL;
+
+    switch (can)
+    {
+    case 0:
+        con = (uint8_t *)&C1FLTCON0L;
+        con[nFilter] = con[nFilter] | (1 << 7);  // Enable the filter
+        break;
+#if CAN_COUNT >= 2
+    case 1:
+        con = (uint8_t *)&C2FLTCON0L;
+        con[nFilter] = con[nFilter] | (1 << 7);  // Enable the filter
+        break;
+#endif
+    }
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * @brief Disables the specified CAN filter
+ * @param device CAN bus number
+ * @param nFilter number of the filter to disable
+ * @return 0 if ok, -1 in case of error
+ */
+int can_filterDisable(rt_dev_t device, uint8_t nFilter)
+{
+#if CAN_COUNT >= 1
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    volatile uint8_t *con = NULL;
+
+    if (nFilter > CAN_FILTER_COUNT)
+    {
+        return -1;
+    }
+
+    switch (can)
+    {
+    case 0:
+        con = (uint8_t *)&C1FLTCON0L;
+        con[nFilter] = con[nFilter] & 0x7F;  // Disable the filter
+        break;
+#if CAN_COUNT >= 2
+    case 1:
+        con = (uint8_t *)&C2FLTCON0L;
+        con[nFilter] = con[nFilter] & 0x7F;  // Disable the filter
+        break;
+#endif
+    }
+#else
+    return -1;
+#endif
+    return 0;
 }

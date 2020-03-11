@@ -294,7 +294,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
     struct can_frame frame;
-    //int i;
+    int i;
     ssize_t size_read;
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
@@ -318,16 +318,76 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
             header->flags += CAN_VERS2BA;
         }
 
-        /*printf("can%d  %X  [%d]", can, header->id, header->size);
+        //printf("can%d  %X  [%d]", can, header->id, header->size);
         for (i=0; i < header->size; i++)
         {
             data[i] = (char)frame.data[i];
-            printf("%02X ", frame.data[i]);
+            //printf("%02X ", frame.data[i]);
         }
-        printf("\n");*/
+        //printf("\n");
         return 1;
     }
 // TODO format data
 
     return 0;
+}
+
+int can_filterConfiguration(rt_dev_t device, CAN_FRAME_FLAGS frame,
+                            uint8_t nFilter, uint32_t idFilter, uint32_t mask,
+                            uint8_t fifo)
+{
+    uint8_t can = MINOR(device);
+
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    if ((nFilter > CAN_FILTER_COUNT) || (fifo > CAN_FIFO_COUNT))
+    {
+        return -1;
+    }
+
+   //TODO
+        // simulator_filterConfiguration
+
+    return 0;
+}
+
+int can_filterEnable(rt_dev_t device, uint8_t nFilter)
+{
+
+    uint8_t can = MINOR(device);
+
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    if (nFilter > CAN_FILTER_COUNT)
+    {
+        return -1;
+    }
+
+    //TODO
+        // simulator_filterEnable
+
+    return 0;
+}
+
+
+int can_filterDisable(rt_dev_t device, uint8_t nFilter)
+{
+    uint8_t can = MINOR(device);
+
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    //TODO
+        // simulator_filterDisable
+
+    return 0;
+
 }

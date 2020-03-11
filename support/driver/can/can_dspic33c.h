@@ -67,6 +67,7 @@ typedef union {
 #define CAN_DSPIC33C_TX_SETBRS(txbuffer) (txbuffer)->flags |= 0x0040
 #define CAN_DSPIC33C_TX_SETFDF(txbuffer) (txbuffer)->flags |= 0x0080
 
+// Can RX Message Object
 typedef struct {
     uint16_t sid;
     uint16_t eid;
@@ -83,5 +84,11 @@ typedef struct {
 #define CAN_DSPIC33C_RX_SID(rxbuffer)  ((uint32_t)(rxbuffer)->sid   & 0x07FF)
 #define CAN_DSPIC33C_RX_EIDL(rxbuffer) (((uint32_t)(rxbuffer)->sid  & 0xF800))
 #define CAN_DSPIC33C_RX_EIDH(rxbuffer) (((uint32_t)((rxbuffer)->eid & 0x1FFF)))
+
+// CAN filter
+
+#define CAN_DSPIC33C_FILTER_SID(idFilter) ((uint32_t)idFilter & 0x000007FF)
+#define CAN_DSPIC33C_FILTER_EIDL(idFilter) ((uint32_t)(idFilter >> 11) & 0x001F)
+#define CAN_DSPIC33C_FILTER_EIDH(idFilter) ((uint32_t)(idFilter >> 16) & 0x1FFF)
 
 #endif // CAN_DSPIC33C_H
