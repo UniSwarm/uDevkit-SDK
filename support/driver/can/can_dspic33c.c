@@ -42,12 +42,14 @@ struct can_dev
     can_status flags;
 };
 
-typedef struct {
-    C1FLTOBJ0LBITS objl;
-    C1FLTOBJ0HBITS objh;
-    C1MASK0LBITS mskl;
-    C1MASK0HBITS mskh;
-} filter;
+#if CAN_COUNT>=1
+    typedef struct {
+        C1FLTOBJ0LBITS objl;
+        C1FLTOBJ0HBITS objh;
+        C1MASK0LBITS mskl;
+        C1MASK0HBITS mskh;
+    } filter;
+#endif
 
 #if CAN_COUNT>=1
 uint32_t __attribute__((aligned(4))) CAN1FIFO[40*19];
@@ -828,17 +830,13 @@ int can_filterConfiguration(rt_dev_t device,CAN_FRAME_FLAGS frame,
 {
 #if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
-    if (can >= CAN_COUNT)
-    {
-        return -1;
-    }
-
-    if ((nFilter > CAN_FILTER_COUNT) || (fifo > CAN_FIFO_COUNT))
-    {
-        return -1;
-    }
-
+    volatile uint8_t *con = NULL;
+    volatile filter *reg = NULL;
     uint8_t MIDE, EXIDE;
+    if (can >= CAN_COUNT || nFilter >= CAN_FILTER_COUNT || fifo > CAN_FIFO_COUNT)
+    {
+        return -1;
+    }
 
     if (frame == CAN_FRAME_STD)
     {
@@ -857,11 +855,8 @@ int can_filterConfiguration(rt_dev_t device,CAN_FRAME_FLAGS frame,
     }
     else
     {
-    return -1;
+        return -1;
     }
-
-    volatile uint8_t *con = NULL;
-    volatile filter *reg = NULL;
 
     switch (can)
     {
@@ -920,12 +915,11 @@ int can_filterEnable(rt_dev_t device, uint8_t nFilter)
 {
 #if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
-    if (can >= CAN_COUNT || nFilter > CAN_FILTER_COUNT)
+    volatile uint8_t *con = NULL;
+    if (can >= CAN_COUNT || nFilter >= CAN_FILTER_COUNT)
     {
         return -1;
     }
-
-    volatile uint8_t *con = NULL;
 
     switch (can)
     {
@@ -956,14 +950,8 @@ int can_filterDisable(rt_dev_t device, uint8_t nFilter)
 {
 #if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
-    if (can >= CAN_COUNT)
-    {
-        return -1;
-    }
-
     volatile uint8_t *con = NULL;
-
-    if (nFilter > CAN_FILTER_COUNT)
+    if (can >= CAN_COUNT || nFilter >= CAN_FILTER_COUNT)
     {
         return -1;
     }
