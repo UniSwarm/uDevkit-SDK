@@ -75,11 +75,17 @@ rt_dev_t can_getFreeDevice()
     rt_dev_t device;
 
     for (i = 0; i < CAN_COUNT; i++)
+    {
         if (cans[i].flags.used == 0)
+        {
             break;
+        }
+    }
 
     if (i == CAN_COUNT)
+    {
         return NULLDEV;
+    }
     device = MKDEV(DEV_CLASS_CAN, i);
 
     can_open(device);
@@ -100,10 +106,13 @@ int can_open(rt_dev_t device)
 #if CAN_COUNT>=1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
+    }
     if (cans[can].flags.used == 1)
+    {
         return -1;
-
+    }
     cans[can].flags.used = 1;
 
     return 0;
@@ -122,8 +131,9 @@ int can_close(rt_dev_t device)
 #if CAN_COUNT>=1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
-
+    }
     can_disable(device);
 
     cans[can].flags.val = CAN_FLAG_UNUSED;
@@ -143,8 +153,9 @@ int can_enable(rt_dev_t device)
 #if CAN_COUNT>=1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
-
+    }
     cans[can].flags.enabled = 1;
 
     switch (can)
@@ -160,24 +171,24 @@ int can_enable(rt_dev_t device)
         C1CONHbits.TXQEN = 0x1;
 
         // FIFO1 as transmiter (20 messages)
-        C1FIFOCON1Hbits.FSIZE = 20-1;   //20 messages deep
+        C1FIFOCON1Hbits.FSIZE = 20-1;  //20 messages deep
         C1FIFOCON1Hbits.PLSIZE = 0x0;  //8 bytes of data
         C1FIFOCON1Lbits.TXEN = 1;      // Set TXEN bit, transmit fifo
 
         // FIFO2 as receiver (20 messages)
         C1FIFOCON2Hbits.FSIZE = 20-1;   //20 messages deep
-        C1FIFOCON2Hbits.PLSIZE = 0x0;  //8 bytes of data
-        C1FIFOCON2Lbits.TXEN = 0;      // Clear TXEN bit, receive fifo
+        C1FIFOCON2Hbits.PLSIZE = 0x0;   //8 bytes of data
+        C1FIFOCON2Lbits.TXEN = 0;       // Clear TXEN bit, receive fifo
         // filter 0
         C1FLTCON0Lbits.F0BP = 2;        // Store messages in FIFO2
-        C1FLTOBJ0H = 0x0000;     // Filter 0 ID
-        C1FLTOBJ0L = 0x00000;    // Filter 0 ID
+        C1FLTOBJ0H = 0x0000;            // Filter 0 ID
+        C1FLTOBJ0L = 0x0000;            // Filter 0 ID
         C1FLTOBJ0Hbits.EXIDE = 1;       // Filter only EID messages
         C1FLTCON0Lbits.FLTEN0 = 1;      // Enable the filter
         // mask 0
-        C1MASK0H = 0x000;         // Ignore all bits in comparison
-        C1MASK0L = 0x00000;       // Ignore all bits in comparison
-        C1MASK0Hbits.MIDE = 0;            // Match all message types
+        C1MASK0H = 0x0000;         // Ignore all bits in comparison
+        C1MASK0L = 0x0000;         // Ignore all bits in comparison
+        C1MASK0Hbits.MIDE = 0;     // Match all message types
         break;
 #if CAN_COUNT>=2
     case 1:
@@ -192,23 +203,23 @@ int can_enable(rt_dev_t device)
 
         // FIFO1 as transmiter (20 messages)
         C2FIFOCON1Hbits.FSIZE = 20-1;   //20 messages deep
-        C2FIFOCON1Hbits.PLSIZE = 0x0;  //8 bytes of data
-        C2FIFOCON1Lbits.TXEN = 1;      // Set TXEN bit, transmit fifo
+        C2FIFOCON1Hbits.PLSIZE = 0x0;   //8 bytes of data
+        C2FIFOCON1Lbits.TXEN = 1;       // Set TXEN bit, transmit fifo
 
         // FIFO2 as receiver (20 messages)
         C2FIFOCON2Hbits.FSIZE = 20-1;   //20 messages deep
-        C2FIFOCON2Hbits.PLSIZE = 0x0;  //8 bytes of data
-        C2FIFOCON2Lbits.TXEN = 0;      // Clear TXEN bit, receive fifo
+        C2FIFOCON2Hbits.PLSIZE = 0x0;   //8 bytes of data
+        C2FIFOCON2Lbits.TXEN = 0;       // Clear TXEN bit, receive fifo
         // filter 0
         C2FLTCON0Lbits.F0BP = 2;        // Store messages in FIFO2
         C2FLTOBJ0H = 0x0000;     // Filter 0 ID
-        C2FLTOBJ0L = 0x00000;    // Filter 0 ID
+        C2FLTOBJ0L = 0x0000;     // Filter 0 ID
         C2FLTOBJ0Hbits.EXIDE = 1;       // Filter only EID messages
         C2FLTCON0Lbits.FLTEN0 = 1;      // Enable the filter
         // mask 0
-        C2MASK0H = 0x000;         // Ignore all bits in comparison
-        C2MASK0L = 0x00000;       // Ignore all bits in comparison
-        C2MASK0Hbits.MIDE = 0;            // Match all message types
+        C2MASK0H = 0x0000;       // Ignore all bits in comparison
+        C2MASK0L = 0x0000;       // Ignore all bits in comparison
+        C2MASK0Hbits.MIDE = 0;   // Match all message types
         break;
 #endif
     }
@@ -229,8 +240,9 @@ int can_disable(rt_dev_t device)
 #if CAN_COUNT>=1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
-
+    }
     cans[can].flags.enabled = 0;
 
     switch (can)
@@ -271,8 +283,9 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
     uint8_t can = MINOR(device);
     uint8_t modeBits;
     if (can >= CAN_COUNT)
+    {
         return 0;
-
+    }
     // check parameters
     switch (mode)
     {
@@ -334,8 +347,9 @@ CAN_MODE can_mode(rt_dev_t device)
 #if CAN_COUNT>=1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return 0;
-
+    }
     return cans[can].mode;
 #else
     return 0;
@@ -370,16 +384,23 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     uint16_t bitRateDiv;
     uint8_t quantum;
     if (can >= CAN_COUNT)
+    {
         return 0;
+    }
 
     if (propagSeg > 8 || s1Seg > 8 || s2Seg > 8)
+    {
         return -1;
+    }
     if (propagSeg < 1 || s1Seg < 1 || s2Seg < 1)
+    {
         return -1;
+    }
     quantum = propagSeg + s1Seg + s2Seg + 1;
     if (quantum < 8 || quantum > 25)
+    {
         return -1;
-
+    }
     cans[can].bitRate = bitRate;
     cans[can].propagSeg = propagSeg;
     cans[can].s1Seg = s1Seg;
@@ -387,8 +408,9 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
 
     bitRateDiv = sysclock_periphFreq(SYSCLOCK_CLOCK_CAN) / (bitRate * quantum * 2);
     if (bitRateDiv > 256)
+    {
         bitRateDiv = 256;
-
+    }
     switch (can)
     {
     case 0:
@@ -450,8 +472,9 @@ uint32_t can_bitRate(rt_dev_t device)
 #if CAN_COUNT>=1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return 0;
-
+    }
     return cans[can].bitRate;
 #else
     return 0;
@@ -469,8 +492,9 @@ uint32_t can_effectiveBitRate(rt_dev_t device)
 
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return 0;
-
+    }
     uint16_t bitRateDiv = 1;
     uint8_t quantums = cans[can].propagSeg + cans[can].s1Seg + cans[can].s2Seg + 1;
 
@@ -502,8 +526,9 @@ uint8_t can_propagSeg(rt_dev_t device)
 #if CAN_COUNT>=1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return 0;
-
+    }
     return cans[can].propagSeg;
 #else
     return 0;
@@ -520,8 +545,9 @@ uint8_t can_s1Seg(rt_dev_t device)
 #if CAN_COUNT>=1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return 0;
-
+    }
     return cans[can].s1Seg;
 #else
     return 0;
@@ -538,8 +564,9 @@ uint8_t can_s2Seg(rt_dev_t device)
 #if CAN_COUNT>=1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return 0;
-
+    }
     return cans[can].s2Seg;
 #else
     return 0;
@@ -561,24 +588,33 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return -1;
-
+    {
     CAN_TxMsgBuffer *buffer = NULL;
 
     switch (can)
     {
     case 0:
         if (C1FIFOSTA1bits.TFNRFNIF == 0) // fifo full
+        {
             return -1;
+        }
         else
+        {
             buffer = (CAN_TxMsgBuffer *)C1FIFOUA1L;
+        }
         break;
 #if CAN_COUNT>=2
     case 1:
         if (C2FIFOSTA1bits.TFNRFNIF == 0) // fifo full
+        {
             return -1;
+        }
         else
+        {
             buffer = (CAN_TxMsgBuffer *)C2FIFOUA1L;
+        }
         break;
 #endif
     }
@@ -593,15 +629,18 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     if ((header->flags & CAN_VERS2BA) == CAN_VERS2BA)
     {
         CAN_DSPIC33C_TX_SETIDE(buffer);    // extended id
-        buffer->eid = (header->id >> 5) & 0x1FFF;   // Message EID
-        buffer->sid = (header->id >> 18) + ((header->id & 0x001F) << 11); // Message SID
+        buffer->sid = (header->id & 0xFFFF); // Message SID
+        buffer->eid = ((header->id >> 16) & 0x1FFF);   // Message EID
     }
     else
+    {
         buffer->sid = header->id & 0x07FF; // Message SID
+    }
 
     if (header->flags & CAN_RTR)
+    {
         CAN_DSPIC33C_TX_SETRTR(buffer);
-
+    }
     // set data and data size
     size = header->size;
     if (header->flags & CAN_FDF)
@@ -611,15 +650,18 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     else
     {
         if (size > 8)
+        {
             size = 8;
+        }
     }
     CAN_DSPIC33C_TX_SETDLC(buffer, header->size); // Data Length
 
     // data
     char *bufferData = (char*)buffer + 8;
     for (i=0; i<header->size; i++)
+    {
         bufferData[i] = data[i];
-
+    }
     switch (can)
     {
     case 0:
@@ -653,8 +695,9 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     int i;
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
+    {
         return 0;
-
+    }
     CAN_FLAGS flagValue = 0;
     CAN_RxMsgBuffer *buffer = NULL;
 
@@ -662,13 +705,17 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     {
     case 0:
         if (C1FIFOSTA2bits.TFNRFNIF == 0) // fifo empty
+        {
             return 0;
+        }
         buffer = (CAN_RxMsgBuffer*)C1FIFOUA2L;
         break;
 #if CAN_COUNT>=2
     case 1:
         if (C2FIFOSTA2bits.TFNRFNIF == 0) // fifo empty
+        {
             return 0;
+        }
         buffer = (CAN_RxMsgBuffer*)C2FIFOUA2L;
         break;
 #endif
@@ -679,10 +726,12 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     if (CAN_DSPIC33C_RX_IDE(buffer))
     {
         flagValue += CAN_VERS2BA; // extended ID
-        canId = (((uint32_t)CAN_DSPIC33C_RX_SID(buffer)) << 18) + CAN_DSPIC33C_RX_EIDH(buffer) + CAN_DSPIC33C_RX_EIDL(buffer);
+        canId =  ((uint32_t)CAN_DSPIC33C_RX_EIDH(buffer)<< 16) + CAN_DSPIC33C_RX_EIDL(buffer) + CAN_DSPIC33C_RX_SID(buffer) ;
     }
     else
+    {
         canId = CAN_DSPIC33C_RX_SID(buffer);
+    }
     header->id = canId;
 
     // data read and copy
@@ -718,11 +767,15 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     else
     {
         if (size > 8)
+        {
             size = 8;
+        }
     }
     char *bufferData = (char*)buffer + 8;
     for (i=0; i<size; i++)
-		data[i] = bufferData[i];
+    {
+        data[i] = bufferData[i];
+    }
     header->size = size;
 
     switch (can)
@@ -739,7 +792,9 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 
     // flags
     if (CAN_DSPIC33C_RX_RTR(buffer))
+    {
         flagValue += CAN_RTR;
+    }
 
     header->flags = flagValue;
 
