@@ -332,12 +332,10 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     return 0;
 }
 
-int can_filterConfiguration(rt_dev_t device, CAN_FRAME_FLAGS frame,
-                            uint8_t nFilter, uint32_t idFilter, uint32_t mask,
-                            uint8_t fifo)
+int can_filterConfiguration(rt_dev_t device, uint8_t nFilter, uint8_t fifo,
+			    uint32_t idFilter, uint32_t mask, CAN_FRAME_FORMAT_FLAGS frame)
 {
     uint8_t can = MINOR(device);
-
     if (can >= CAN_COUNT)
     {
         return -1;
@@ -358,7 +356,6 @@ int can_filterEnable(rt_dev_t device, uint8_t nFilter)
 {
 
     uint8_t can = MINOR(device);
-
     if (can >= CAN_COUNT)
     {
         return -1;
@@ -379,8 +376,12 @@ int can_filterEnable(rt_dev_t device, uint8_t nFilter)
 int can_filterDisable(rt_dev_t device, uint8_t nFilter)
 {
     uint8_t can = MINOR(device);
-
     if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    if (nFilter > CAN_FILTER_COUNT)
     {
         return -1;
     }

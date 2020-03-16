@@ -82,13 +82,12 @@ typedef struct {
 #define CAN_DSPIC33C_RX_BRS(rxbuffer)  ((rxbuffer)->flags & 0x0040)
 #define CAN_DSPIC33C_RX_FDF(rxbuffer)  ((rxbuffer)->flags & 0x0080)
 #define CAN_DSPIC33C_RX_SID(rxbuffer)  ((uint32_t)(rxbuffer)->sid   & 0x07FF)
-#define CAN_DSPIC33C_RX_EIDL(rxbuffer) (((uint32_t)(rxbuffer)->sid  & 0xF800))
-#define CAN_DSPIC33C_RX_EIDH(rxbuffer) (((uint32_t)((rxbuffer)->eid & 0x1FFF)))
+#define CAN_DSPIC33C_RX_EIDL(rxbuffer) (((uint32_t)(rxbuffer)->sid  & 0xF800) >> 11)
+#define CAN_DSPIC33C_RX_EIDH(rxbuffer) ((uint32_t)(rxbuffer)->eid << 5)
 
-// CAN filter
-
-#define CAN_DSPIC33C_FILTER_SID(idFilter) ((uint32_t)idFilter & 0x000007FF)
-#define CAN_DSPIC33C_FILTER_EIDL(idFilter) ((uint32_t)(idFilter >> 11) & 0x001F)
-#define CAN_DSPIC33C_FILTER_EIDH(idFilter) ((uint32_t)(idFilter >> 16) & 0x1FFF)
+// CAN filter Object
+#define CAN_filter_SID(idFilter) ((uint16_t)(idFilter >> 18) & 0x07FF)
+#define CAN_filter_EIDL(idFilter) ((uint16_t)(idFilter << 11) & 0xF800)
+#define CAN_filter_EIDH(idFilter) ((uint16_t)(idFilter >> 5) & 0x1FFF)
 
 #endif // CAN_DSPIC33C_H
