@@ -14,6 +14,11 @@ prog : $(OUT_PWD)/$(PROJECT).hex
 	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -F$(PROJECT).hex -M -OL || true
 	@rm $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.*
 
+.PHONY: read
+read :
+	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -GF$(PROJECT)_read.hex || true
+	@rm $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.*
+
 # special cmd for hex creation
 $(OUT_PWD)/$(PROJECT).hex : $(OUT_PWD)/$(PROJECT).elf
 	@printf "$(COMPCOLOR)µHX %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
