@@ -75,10 +75,14 @@ GPIO_VALUE gpio_readBit(rt_dev_t device)
     uint16_t bit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
     uint16_t value = 0;
 
-    if((value & bit) == 1)
+    if ((value & bit) == 1)
+    {
         return GPIO_HIGH;
+    }
     else
+    {
         return GPIO_LOW;
+    }
 }
 
 /**

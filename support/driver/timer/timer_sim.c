@@ -120,8 +120,10 @@ static void * timer1_handler (void * p_data)
     {
         psleep(timers[0].periodMs);
         timers[0].value++;
-        if(timers[0].handler)
+        if (timers[0].handler)
+        {
             (*timers[0].handler)();
+        }
     }
     return NULL;
 }
@@ -134,8 +136,10 @@ static void * timer2_handler (void * p_data)
     {
         psleep(timers[1].periodMs);
         timers[1].value++;
-        if(timers[1].handler)
+        if (timers[1].handler)
+        {
             (*timers[1].handler)();
+        }
     }
     return NULL;
 }
@@ -148,8 +152,10 @@ static void * timer3_handler (void * p_data)
     {
         psleep(timers[2].periodMs);
         timers[2].value++;
-        if(timers[2].handler)
+        if (timers[2].handler)
+        {
             (*timers[2].handler)();
+        }
     }
     return NULL;
 }
@@ -162,8 +168,10 @@ static void * timer4_handler (void * p_data)
     {
         psleep(timers[3].periodMs);
         timers[3].value++;
-        if(timers[3].handler)
+        if (timers[3].handler)
+        {
             (*timers[3].handler)();
+        }
     }
     return NULL;
 }
@@ -176,8 +184,10 @@ static void * timer5_handler (void * p_data)
     {
         psleep(timers[4].periodMs);
         timers[4].value++;
-        if(timers[4].handler)
+        if (timers[4].handler)
+        {
             (*timers[4].handler)();
+        }
     }
     return NULL;
 }
@@ -190,8 +200,10 @@ static void * timer6_handler (void * p_data)
     {
         psleep(timers[5].periodMs);
         timers[5].value++;
-        if(timers[5].handler)
+        if (timers[5].handler)
+        {
             (*timers[5].handler)();
+        }
     }
     return NULL;
 }
@@ -204,8 +216,10 @@ static void * timer7_handler (void * p_data)
     {
         psleep(timers[6].periodMs);
         timers[6].value++;
-        if(timers[6].handler)
+        if (timers[6].handler)
+        {
             (*timers[6].handler)();
+        }
     }
     return NULL;
 }
@@ -218,8 +232,10 @@ static void * timer8_handler (void * p_data)
     {
         psleep(timers[7].periodMs);
         timers[7].value++;
-        if(timers[7].handler)
+        if (timers[7].handler)
+        {
             (*timers[7].handler)();
+        }
     }
     return NULL;
 }
@@ -232,8 +248,10 @@ static void * timer9_handler (void * p_data)
     {
         psleep(timers[8].periodMs);
         timers[8].value++;
-        if(timers[8].handler)
+        if (timers[8].handler)
+        {
             (*timers[8].handler)();
+        }
     }
     return NULL;
 }
@@ -248,11 +266,17 @@ rt_dev_t timer_getFreeDevice()
     uint8_t i;
 
     for (i = 0; i < TIMER_COUNT; i++)
+    {
         if (timers[i].flags.used == 0)
+        {
             break;
+        }
+    }
 
     if (i == TIMER_COUNT)
+    {
         return NULLDEV;
+    }
 
     timers[i].flags.used = 1;
 
@@ -267,9 +291,13 @@ int timer_open(rt_dev_t device)
 {
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
     if (timers[timer].flags.used == 1)
+    {
         return -1;
+    }
 
     timers[timer].flags.used = 1;
     timers[timer].handler = NULL;
@@ -286,7 +314,9 @@ int timer_close(rt_dev_t device)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timer_disable(device);
 
@@ -307,7 +337,9 @@ int timer_enable(rt_dev_t device)
 {
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timers[timer].flags.enabled = 1;
 
@@ -370,7 +402,9 @@ int timer_disable(rt_dev_t device)
 {
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timers[timer].flags.enabled = 0;
 
@@ -389,7 +423,9 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
 {
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timers[timer].handler = handler;
 
@@ -405,7 +441,9 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 {
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timers[timer].periodMs = periodMs;
 
@@ -421,7 +459,9 @@ uint32_t timer_periodMs(rt_dev_t device)
 {
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return 0;
+    }
 
     return timers[timer].periodMs;
 }
@@ -435,7 +475,9 @@ uint16_t timer_getValue(rt_dev_t device)
 {
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return 0;
+    }
 
     return timers[timer].value;
 }
@@ -449,7 +491,9 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 {
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timers[timer].value = value;
 

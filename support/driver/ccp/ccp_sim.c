@@ -115,11 +115,17 @@ rt_dev_t ccp_getFreeDevice()
     rt_dev_t device;
 
     for (i = 0; i < CCP_COUNT; i++)
+    {
         if (ccps[i].flags.used == 0)
+        {
             break;
+        }
+    }
 
     if (i == CCP_COUNT)
+    {
         return NULLDEV;
+    }
     device = MKDEV(DEV_CLASS_CCP, i);
 
     ccp_open(device);
@@ -139,9 +145,13 @@ int ccp_open(rt_dev_t device)
 #if CCP_COUNT>=1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
+    {
         return -1;
+    }
     if (ccps[ccp].flags.used == 1)
+    {
         return -1;
+    }
 
     ccps[ccp].flags.used = 1;
     ccps[ccp].handler = NULL;
@@ -161,7 +171,9 @@ int ccp_close(rt_dev_t device)
 #if CCP_COUNT>=1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
+    {
         return -1;
+    }
 
     ccp_disable(device);
 
@@ -183,7 +195,9 @@ int ccp_enable(rt_dev_t device)
 #if CCP_COUNT>=1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
+    {
         return -1;
+    }
 
     ccps[ccp].flags.enabled = 1;
 
@@ -204,7 +218,9 @@ int ccp_disable(rt_dev_t device)
 #if CCP_COUNT>=1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
+    {
         return -1;
+    }
 
     ccps[ccp].flags.enabled = 0;
 
@@ -225,11 +241,15 @@ int ccp_setHandler(rt_dev_t device, void (*handler)(void))
 #if CCP_COUNT>=1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
+    {
         return -1;
+    }
 
     ccps[ccp].handler = handler;
     if (ccps[ccp].flags.enabled == 1)
+    {
         ccp_enable(device);
+    }
 
     return 0;
 #else
@@ -248,7 +268,9 @@ int ccp_setPeriod(rt_dev_t device, uint32_t prvalue)
 #if CCP_COUNT>=1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
+    {
         return -1;
+    }
 
 
     return 0;
@@ -267,7 +289,9 @@ uint32_t ccp_period(rt_dev_t device)
 #if CCP_COUNT>=1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
+    {
         return -1;
+    }
 
 
     return 0;
@@ -287,7 +311,9 @@ int ccp_setPeriodMs(rt_dev_t device, uint32_t periodMs)
     float prvalue;
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
+    {
         return -1;
+    }
 
     ccps[ccp].periodUs = periodMs * 1000;
 
@@ -307,7 +333,9 @@ uint32_t ccp_periodMs(rt_dev_t device)
 #if CCP_COUNT>=1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
+    {
         return 0;
+    }
 
     return ccps[ccp].periodUs / 1000;
 #else
@@ -326,7 +354,9 @@ int ccp_setPeriodUs(rt_dev_t device, uint32_t periodUs)
     float prvalue;
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
+    {
         return -1;
+    }
 
     ccps[ccp].periodUs = periodUs;
 
@@ -346,7 +376,9 @@ uint32_t ccp_periodUs(rt_dev_t device)
 #if CCP_COUNT>=1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
+    {
         return 0;
+    }
 
     return ccps[ccp].periodUs;
 #else
@@ -365,7 +397,9 @@ uint32_t ccp_getValue(rt_dev_t device)
     uint32_t value;
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
+    {
         return 0;
+    }
 
 
 
@@ -385,7 +419,9 @@ int ccp_setValue(rt_dev_t device, uint32_t value)
 #if CCP_COUNT>=1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
+    {
         return -1;
+    }
 
     return 0;
 #else

@@ -80,11 +80,17 @@ rt_dev_t spi_getFreeDevice()
     rt_dev_t device;
 
     for (i = 0; i < SPI_COUNT; i++)
+    {
         if (spis[i].flags.val == SPI_FLAG_UNUSED)
+        {
             break;
+        }
+    }
 
     if (i == SPI_COUNT)
+    {
         return NULLDEV;
+    }
     device = MKDEV(DEV_CLASS_SPI, i);
 
     spi_open(device);
@@ -100,9 +106,13 @@ int spi_open(rt_dev_t device)
 {
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)
+    {
         return -1;
+    }
     if (spis[spi].flags.used == 1)
+    {
         return -1;
+    }
 
     spis[spi].flags.used = 1;
     STATIC_FIFO_INIT(spis[spi].buff, SPI_BUFF_SIZE);
@@ -118,7 +128,9 @@ int spi_close(rt_dev_t device)
 {
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)
+    {
         return -1;
+    }
 
     spis[spi].flags.val = SPI_FLAG_UNUSED;
 
@@ -134,7 +146,9 @@ int spi_enable(rt_dev_t device)
 {
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)
+    {
         return -1;
+    }
 
     spis[spi].flags.enabled = 1;
 
@@ -172,7 +186,9 @@ int spi_disable(rt_dev_t device)
 {
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)
+    {
         return -1;
+    }
 
     spis[spi].flags.enabled = 0;
 
@@ -216,10 +232,14 @@ int spi_setFreq(rt_dev_t device, uint32_t freq)
 
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)
+    {
         return -1;
+    }
 
     if (freq == 0)
+    {
         return -1;
+    }
 
     spis[spi].freq = freq;
 
@@ -255,12 +275,16 @@ int spi_setFreq(rt_dev_t device, uint32_t freq)
         sdivp = 0x0; // primary = 64
         sdivs = sdiv >> 6;
         if (sdivs > 8)
+        {
             sdivs = 8;
+        }
     }
 
     // Do not set the Primary and Secondary prescalers to the value of 1:1 at the same time.
     if (sdivp == 0x3 && sdivs == 1)
+    {
         sdivs = 2;
+    }
 
     sdivs = ~(sdivs - 1);
 
@@ -295,7 +319,9 @@ int spi_setFreq(rt_dev_t device, uint32_t freq)
 
     // re enable device if it was already enabled
     if (enabled == 1)
+    {
         spi_enable(device);
+    }
 
     return 0;
 }
@@ -313,7 +339,9 @@ uint32_t spi_freq(rt_dev_t device)
 
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)
+    {
         return 0;
+    }
 
     // secondary divisor : 1 (0x7) to 8(0x0)
     sdivs = ~(spis[spi].sdivs) + 1;
@@ -351,7 +379,9 @@ uint32_t spi_effectiveFreq(rt_dev_t device)
 {
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)
+    {
         return 0;
+    }
 
     return spis[spi].freq;
 }
@@ -367,14 +397,22 @@ int spi_setBitLength(rt_dev_t device, uint8_t bitLength)
     uint8_t bit16;
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)
+    {
         return -1;
+    }
 
     if (bitLength == 16)
+    {
         bit16 = 1;
+    }
     else if (bitLength == 8)
+    {
         bit16 = 0;
+    }
     else
+    {
         return -1;
+    }
     spis[spi].flags.bit16 = bit16;
 
     switch (spi)
@@ -411,10 +449,14 @@ uint8_t spi_bitLength(rt_dev_t device)
 {
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)
+    {
         return 0;
+    }
 
     if (spis[spi].flags.bit16 == 1)
+    {
         return 16;
+    }
     return 8;
 }
 
@@ -422,7 +464,9 @@ ssize_t spi_write(rt_dev_t device, const char *data, size_t size)
 {
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)
+    {
         return -1;
+    }
 
     switch (spi)
     {
@@ -458,10 +502,14 @@ int spi_flush(rt_dev_t device)
 {
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)
+    {
         return -1;
+    }
 
     if (spis[spi].flags.enabled != 1)
+    {
         return -1;
+    }
 
     switch (spi)
     {
@@ -493,7 +541,9 @@ ssize_t spi_read(rt_dev_t device, char *data, size_t size_max)
     size_t size_read;
     uint8_t spi = MINOR(device);
     if (spi >= SPI_COUNT)
+    {
         return -1;
+    }
 
     size_read = fifo_pop(&spis[spi].buff, data, size_max);
 

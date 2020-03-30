@@ -192,11 +192,17 @@ rt_dev_t oc_getFreeDevice()
     rt_dev_t device;
 
     for (i = 0; i < OC_COUNT; i++)
+    {
         if (ocs[i].flags.used == 0)
+        {
             break;
+        }
+    }
 
     if (i == OC_COUNT)
+    {
         return NULLDEV;
+    }
     device = MKDEV(DEV_CLASS_OC, i);
 
     oc_open(device);
@@ -217,9 +223,13 @@ int oc_open(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
     if (ocs[oc].flags.used == 1)
+    {
         return -1;
+    }
 
     ocs[oc].flags.used = 1;
 
@@ -239,7 +249,9 @@ int oc_close(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     oc_disable(device);
 
@@ -255,10 +267,14 @@ int oc_setInternalMode(rt_dev_t device, uint8_t mode)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device), enabled = 0;
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     if (mode != OC_PIC32_DISABLE)
+    {
         enabled = 1;
+    }
 
     switch (oc)
     {
@@ -374,7 +390,9 @@ int oc_enable(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     ocs[oc].flags.enabled = 1;
 
@@ -394,7 +412,9 @@ int oc_disable(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     ocs[oc].flags.enabled = 0;
 
@@ -416,7 +436,9 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
     uint8_t imode = OC_PIC32_DISABLE;
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     ocs[oc].flags.mode = mode;
 
@@ -447,7 +469,9 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
     ocs[oc].flags.imode = imode;
 
     if (ocs[oc].flags.enabled)
+    {
         return oc_setInternalMode(device, imode);
+    }
     return 0;
 #else
     return -1;
@@ -464,7 +488,9 @@ uint8_t oc_mode(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return 0;
+    }
 
     return ocs[oc].flags.mode;
 #else
@@ -484,7 +510,9 @@ int oc_setRVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     ocs[oc].rVal = rVal;
     ocs[oc].rsVal = rsVal;
@@ -603,7 +631,9 @@ uint32_t oc_rVal(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return 0;
+    }
 
     return ocs[oc].rVal;
 #else
@@ -621,7 +651,9 @@ uint32_t oc_rsVal(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return 0;
+    }
 
     return ocs[oc].rsVal;
 #else
@@ -634,10 +666,14 @@ int oc_setTimer(rt_dev_t device, uint8_t timer)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     if (timer > 1)
+    {
         return -1; // invalid timer id
+    }
 
     ocs[oc].timer = timer;
 
@@ -734,16 +770,22 @@ rt_dev_t oc_getTimer(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return NULLDEV;
+    }
 
 #ifdef OC_HAVE_ALTERNATIVE_TIMER_SELECTION
     if (CFGCONbits.OCACLK == 0)
 #endif
     {
-        if(ocs[oc].timer == 0)
+        if (ocs[oc].timer == 0)
+        {
             return timer(2); // timer 2
+        }
         else
+        {
             return timer(3); // timer 3
+        }
     }
 #ifdef OC_HAVE_ALTERNATIVE_TIMER_SELECTION
     else
@@ -753,39 +795,55 @@ rt_dev_t oc_getTimer(rt_dev_t device)
         case 0:
         case 1:
         case 2:
-            if(ocs[oc].timer == 0)
+            if (ocs[oc].timer == 0)
+            {
                 return timer(4); // timer 4
+            }
             else
+            {
                 return timer(5); // timer 5
+            }
             break;
 #if OC_COUNT>=4
         case 3:
         case 4:
         case 5:
-            if(ocs[oc].timer == 0)
+            if (ocs[oc].timer == 0)
+            {
                 return timer(2); // timer 2
+            }
             else
+            {
                 return timer(3); // timer 3
+            }
             break;
 #endif
 #if OC_COUNT>=7
         case 6:
         case 7:
         case 8:
-            if(ocs[oc].timer == 0)
+            if (ocs[oc].timer == 0)
+            {
                 return timer(6); // timer 6
+            }
             else
+            {
                 return timer(7); // timer 7
+            }
             break;
 #endif
 #if OC_COUNT>=10
         case 9:
         case 10:
         case 11:
-            if(ocs[oc].timer == 0)
+            if (ocs[oc].timer == 0)
+            {
                 return timer(8); // timer 8
+            }
             else
+            {
                 return timer(9); // timer 9
+            }
             break;
 #endif
 #if OC_COUNT>=13
@@ -793,10 +851,14 @@ rt_dev_t oc_getTimer(rt_dev_t device)
         case 13:
         case 14:
         case 15:
-            if(ocs[oc].timer == 0)
+            if (ocs[oc].timer == 0)
+            {
                 return timer(2); // timer 2
+            }
             else
+            {
                 return timer(3); // timer 3
+            }
             break;
 #endif
         }

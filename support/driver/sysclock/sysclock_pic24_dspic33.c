@@ -38,16 +38,22 @@ uint32_t sysclock_pll = 0;
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
     if (sysclock_sysfreq == 0)
+    {
         sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
+    }
 
     if (busClock == SYSCLOCK_CLOCK_SYSCLK)
+    {
         return sysclock_sysfreq >> 1;
+    }
 
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
     {
         uint16_t div = 1;
         if (CLKDIVbits.DOZEN == 1)
+        {
             div = 1 << (CLKDIVbits.DOZE);
+        }
         return (sysclock_sysfreq >> 1) / div;
     }
     return 1;
@@ -67,12 +73,20 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
     if (busClock == SYSCLOCK_CLOCK_FRC)
     {
         if (div > 256)
+        {
             return -1;
+        }
         if (div == 256)
+        {
             udiv = 8;
+        }
         else
+        {
             for (udiv=0; div!=0; udiv++)
+            {
                 div >>= 1;
+            }
+        }
         udiv -= 1;
         CLKDIVbits.FRCDIV = udiv;
         return 0;
@@ -82,10 +96,16 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
     if (busClock == SYSCLOCK_CLOCK_REFCLK)
     {
         if (div > 32768)
+        {
             return -1;
+        }
         else
+        {
             for (udiv=0; div!=0; udiv++)
+            {
                 div >>= 1;
+            }
+        }
         udiv -= 1;
         REFOCONbits.RODIV = udiv;
         return 0;
@@ -94,13 +114,19 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
     {
         if (div == 1)
+        {
             CLKDIVbits.DOZEN = 0;
+        }
         else
         {
             if (div > 128)
+            {
                 return -1;
+            }
             for (udiv=0; div!=0; udiv++)
+            {
                 div >>= 1;
+            }
             udiv -= 1;
             CLKDIVbits.DOZE = udiv;
             CLKDIVbits.DOZEN = 1;
@@ -144,11 +170,15 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
     case SYSCLOCK_SRC_FRCDIV:
         osctune = OSCTUN;
         if (osctune >= 32)
+        {
             osctune = (osctune | 0xFFFFFFE0);
+        }
         freq = FRC_BASE_FREQ + osctune * OSCTUN_D;  // FRC
 
         if (source == SYSCLOCK_SRC_FRC16)
+        {
             freq = freq / 16;  // FRC /16
+        }
 
         if (source == SYSCLOCK_SRC_FRCDIV)
         {
@@ -158,9 +188,13 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
             div = 1 << CLKDIVbits.RCDIV;
 #endif
             if (div != 0b111)
+            {
                 div = 1 << div;
+            }
             else
+            {
                 div = 256;
+            }
 
             freq = freq / div; // FRC / div
         }
@@ -211,7 +245,9 @@ SYSCLOCK_SOURCE sysclock_source()
 int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 {
     if (OSCCONbits.CLKLOCK == 1)
+    {
         return -1; // Clocks and PLL are locked, source cannot be changed
+    }
 
     // disable interrupts
     disable_interrupt();
@@ -237,7 +273,9 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
     enable_interrupt();
 
     if (sysclock_source() != source)
+    {
         return -3; // Error when switch clock source
+    }
 
     sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
 
@@ -273,17 +311,25 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     uint16_t prediv, postdiv;
     
     if (src != SYSCLOCK_SRC_FRC && src != SYSCLOCK_SRC_POSC)
+    {
         return -4;
+    }
 
     if (fosc > SYSCLOCK_FOSC_MAX)
+    {
         return -1; // cannot generate fosc > SYSCLOCK_FOSC_MAX
+    }
 
     if (fosc < SYSCLOCK_FSYS_MIN / 8)
+    {
         return -1; // cannot generate fosc < SYSCLOCK_FSYS_MIN / 8
+    }
 
     fin = sysclock_sourceFreq(src);
     if (fin == 0)
+    {
         return -1;
+    }
 
     // calculate post-diviser and fsys
     postdiv = 2;
@@ -324,7 +370,9 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     // calculate pre-diviser to ensure Fplli < SYSCLOCK_FPLLI_MAX
     prediv = (fin / (SYSCLOCK_FPLLI_MAX + 1)) + 1;
     if (prediv < SYSCLOCK_N1_MIN)
+    {
         prediv = SYSCLOCK_N1_MIN;
+    }
     fplli = fin / prediv;
 
     // calculate multiplier
@@ -333,11 +381,17 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
   #ifdef ARCHI_pic24fj
     // set post-diviser
     if (postdiv == 2)
+    {
         CLKDIVbits.PLLPOST = 0b00; // PLL post div = 2
+    }
     if (postdiv == 4)
+    {
         CLKDIVbits.PLLPOST = 0b01; // PLL post div = 4
+    }
     if (postdiv == 8)
+    {
         CLKDIVbits.PLLPOST = 0b11; // PLL post div = 8
+    }
 
     // set pre-diviser
     CLKDIVbits.PLLPRE = prediv - 2; // PLL pre div = 1

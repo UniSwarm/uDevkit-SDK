@@ -29,13 +29,19 @@ uint32_t sysclock_pll = 0;
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
     if (sysclock_sysfreq == 0)
+    {
         sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
+    }
 
     if (busClock == SYSCLOCK_CLOCK_SYSCLK || busClock == SYSCLOCK_CLOCK_PBCLK)
+    {
         return sysclock_sysfreq;
+    }
 
     if (busClock == SYSCLOCK_CLOCK_REFCLK)
+    {
         return 1; // TODO implement me (refclock computation)
+    }
     return 1;
 }
 
@@ -49,7 +55,9 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
 {
     if (busClock != SYSCLOCK_CLOCK_REFCLK)  // bad index
+    {
         return -1;
+    }
 
     // TODO implement me
 
@@ -87,13 +95,19 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
     case SYSCLOCK_SRC_FRC:
         div = OSCCONbits.FRCDIV;
         if (div != 0b111)
+        {
             div = 1 << div;
+        }
         else
+        {
             div = 256;
+        }
 
         osctune = OSCTUN;
         if (osctune >= 32)
+        {
             osctune = (osctune | 0xFFFFFFE0);
+        }
 
         freq = (8000000 + osctune * 3750) / div; // 8MHz typical FRC, tuned by OSCTUN (+/- 1.5%), divided by FRCDIV
         break;
@@ -139,7 +153,9 @@ SYSCLOCK_SOURCE sysclock_source()
 int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 {
     if (OSCCONbits.CLKLOCK == 1)
+    {
         return -1; // Clocks and PLL are locked, source cannot be changed
+    }
 
     // disable interrupts
     disable_interrupt();
@@ -165,7 +181,9 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
     enable_interrupt();
 
     if (sysclock_source() != source)
+    {
         return -3; // Error when switch clock source
+    }
 
     return 0;
 }

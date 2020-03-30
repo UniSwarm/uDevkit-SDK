@@ -51,11 +51,15 @@ int qei_open(rt_dev_t device)
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei == 1)
+    {
         qei_state = qei_state | 0x01;
+    }
 #endif
 #if QEI_COUNT>=2
     if (qei == 2)
+    {
         qei_state = qei_state | 0x02;
+    }
 #endif
     return 0;
 }
@@ -70,13 +74,19 @@ int qei_close(rt_dev_t device)
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei >= QEI_COUNT)
+    {
         return -1;
+    }
     if (qei == 1)
+    {
         qei_state = qei_state & 0xFE;
+    }
 #endif
 #if QEI_COUNT>=2
     if (qei == 2)
+    {
         qei_state = qei_state & 0xFD;
+    }
 #endif
     return 0;
 }
@@ -91,9 +101,13 @@ int qei_enable(rt_dev_t device)
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei >= QEI_COUNT)
+    {
         return -1;
+    }
     if (qei > QEI_COUNT)
+    {
         return -1;
+    }
 #else
     return -1;
 #endif
@@ -115,7 +129,9 @@ int qei_disable(rt_dev_t device)
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei > QEI_COUNT)
+    {
         return -1;
+    }
 #else
     return -1;
 #endif

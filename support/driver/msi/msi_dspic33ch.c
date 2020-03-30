@@ -24,7 +24,9 @@
 int msi_slave_start(uint8_t slave_id)
 {
     if (slave_id != 1)
+    {
         return -1;
+    }
 
     _start_slave();
     return 0;
@@ -38,7 +40,9 @@ int msi_slave_start(uint8_t slave_id)
 int msi_slave_stop(uint8_t slave_id)
 {
     if (slave_id != 1)
+    {
         return -1;
+    }
 
     _stop_slave();
     return 0;
@@ -52,7 +56,9 @@ int msi_slave_stop(uint8_t slave_id)
 int msi_slave_reset(uint8_t slave_id)
 {
     if (slave_id != 1)
+    {
         return -1;
+    }
 
     _stop_slave();
     _start_slave();
@@ -67,10 +73,14 @@ int msi_slave_reset(uint8_t slave_id)
  MSI_CORE_STATUS msi_slave_status(uint8_t slave_id)
 {
     if (slave_id != 1)
+    {
         return -1;
+    }
 
     if (MSI1STATbits.SLVWDRST)
+    {
         return MSI_CORE_STATUS_RESETED;
+    }
 
     switch (MSI1STATbits.SLVPWR)
     {
@@ -93,7 +103,9 @@ int msi_slave_reset(uint8_t slave_id)
 int msi_slave_program(uint8_t slave_id, __eds__ unsigned char *program)
 {
     if (slave_id != 1)
+    {
         return -1;
+    }
 
     return _program_slave(slave_id, 0, program);
 }
@@ -106,7 +118,9 @@ int msi_slave_program(uint8_t slave_id, __eds__ unsigned char *program)
 int msi_slave_verify_program(uint8_t slave_id, __eds__ unsigned char *program)
 {
     if (slave_id != 1)
+    {
         return -1;
+    }
 
     return _program_slave(slave_id, 1, program);
 }
@@ -114,7 +128,9 @@ int msi_slave_verify_program(uint8_t slave_id, __eds__ unsigned char *program)
 int msi_protocol_write(uint8_t protocol, const unsigned char *data, uint8_t size)
 {
     if (_DTRDYA == 1)
+    {
         return -1;
+    }
     uint16_t *ptr = (uint16_t *)data;
     MSI1MBX0D = *(ptr++);
     MSI1MBX1D = *(ptr++);
@@ -127,7 +143,9 @@ int msi_protocol_write(uint8_t protocol, const unsigned char *data, uint8_t size
 int msi_protocol_read(uint8_t protocol, unsigned char *data, uint8_t max_size)
 {
     if (_DTRDYB == 0)
+    {
         return -1;
+    }
     uint16_t *ptr = (uint16_t *)data;
     *ptr = MSI1MBX5D;
     ptr++;

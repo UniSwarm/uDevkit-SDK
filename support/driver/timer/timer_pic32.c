@@ -118,11 +118,17 @@ rt_dev_t timer_getFreeDevice()
     rt_dev_t device;
 
     for (i = 0; i < TIMER_COUNT; i++)
+    {
         if (timers[i].flags.used == 0)
+        {
             break;
+        }
+    }
 
     if (i == TIMER_COUNT)
+    {
         return NULLDEV;
+    }
     device = MKDEV(DEV_CLASS_TIMER, i);
 
     timer_open(device);
@@ -142,9 +148,13 @@ int timer_open(rt_dev_t device)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
     if (timers[timer].flags.used == 1)
+    {
         return -1;
+    }
 
     timers[timer].flags.used = 1;
     timers[timer].handler = NULL;
@@ -164,7 +174,9 @@ int timer_close(rt_dev_t device)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timer_disable(device);
 
@@ -186,7 +198,9 @@ int timer_enable(rt_dev_t device)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timers[timer].flags.enabled = 1;
 
@@ -196,9 +210,13 @@ int timer_enable(rt_dev_t device)
         T1CONbits.ON = 1;  // enable timer module
         _T1IF = 0;
         if (timers[0].handler)
+        {
             _T1IE = 1;
+        }
         else
+        {
             _T1IE = 0;
+        }
         _T1IP = 4;
         break;
 #if TIMER_COUNT>=2
@@ -206,9 +224,13 @@ int timer_enable(rt_dev_t device)
         T2CONbits.ON = 1;  // enable timer module
         _T2IF = 0;
         if (timers[1].handler)
+        {
             _T2IE = 1;
+        }
         else
+        {
             _T2IE = 0;
+        }
         _T2IP = 4;
         break;
 #endif
@@ -217,9 +239,13 @@ int timer_enable(rt_dev_t device)
         T3CONbits.ON = 1;  // enable timer module
         _T3IF = 0;
         if (timers[2].handler)
+        {
             _T3IE = 1;
+        }
         else
+        {
             _T3IE = 0;
+        }
         _T3IP = 4;
         break;
 #endif
@@ -228,9 +254,13 @@ int timer_enable(rt_dev_t device)
         T4CONbits.ON = 1;  // enable timer module
         _T4IF = 0;
         if (timers[3].handler)
+        {
             _T4IE = 1;
+        }
         else
+        {
             _T4IE = 0;
+        }
         _T4IP = 4;
         break;
 #endif
@@ -239,9 +269,13 @@ int timer_enable(rt_dev_t device)
         T5CONbits.ON = 1;  // enable timer module
         _T5IF = 0;
         if (timers[4].handler)
+        {
             _T5IE = 1;
+        }
         else
+        {
             _T5IE = 0;
+        }
         _T5IP = 4;
         break;
 #endif
@@ -250,9 +284,13 @@ int timer_enable(rt_dev_t device)
         T6CONbits.ON = 1;  // enable timer module
         _T6IF = 0;
         if (timers[5].handler)
+        {
             _T6IE = 1;
+        }
         else
+        {
             _T6IE = 0;
+        }
         _T6IP = 4;
         break;
 #endif
@@ -261,9 +299,13 @@ int timer_enable(rt_dev_t device)
         T7CONbits.ON = 1;  // enable timer module
         _T7IF = 0;
         if (timers[6].handler)
+        {
             _T7IE = 1;
+        }
         else
+        {
             _T7IE = 0;
+        }
         _T7IP = 4;
         break;
 #endif
@@ -272,9 +314,13 @@ int timer_enable(rt_dev_t device)
         T8CONbits.ON = 1;  // enable timer module
         _T8IF = 0;
         if (timers[7].handler)
+        {
             _T8IE = 1;
+        }
         else
+        {
             _T8IE = 0;
+        }
         _T8IP = 4;
         break;
 #endif
@@ -283,9 +329,13 @@ int timer_enable(rt_dev_t device)
         T9CONbits.ON = 1;  // enable timer module
         _T9IF = 0;
         if (timers[8].handler)
+        {
             _T9IE = 1;
+        }
         else
+        {
             _T9IE = 0;
+        }
         _T9IP = 4;
         break;
 #endif
@@ -307,7 +357,9 @@ int timer_disable(rt_dev_t device)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timers[timer].flags.enabled = 0;
 
@@ -384,7 +436,9 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timers[timer].handler = handler;
     timer_enable(device);
@@ -407,7 +461,9 @@ int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
     uint8_t div = 0;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     // TODO PR and TMR are 32 bit width on T2 to T9 on PIC32MK
     if (prvalue > 65535)
@@ -415,7 +471,9 @@ int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
         div = 0b111; // 256 divisor for type A (0b11) and for type B (0b111)
         prvalue >>= 8;
         if (prvalue > 65535)
+        {
             prvalue = 65535;
+        }
     }
 
     switch (timer)
@@ -490,7 +548,9 @@ uint32_t timer_period(rt_dev_t device)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     switch (timer)
     {
@@ -547,7 +607,9 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
     float prvalue;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timers[timer].periodUs = periodMs * 1000;
 
@@ -569,7 +631,9 @@ uint32_t timer_periodMs(rt_dev_t device)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return 0;
+    }
 
     return timers[timer].periodUs / 1000;
 #else
@@ -588,7 +652,9 @@ int timer_setPeriodUs(rt_dev_t device, uint32_t periodUs)
     float prvalue;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timers[timer].periodUs = periodUs;
 
@@ -610,7 +676,9 @@ uint32_t timer_periodUs(rt_dev_t device)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return 0;
+    }
 
     return timers[timer].periodUs;
 #else
@@ -629,7 +697,9 @@ uint16_t timer_getValue(rt_dev_t device)
     uint16_t value;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return 0;
+    }
 
     switch (timer)
     {
@@ -694,7 +764,9 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     switch (timer)
     {
@@ -753,7 +825,9 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 void __ISR(_TIMER_1_VECTOR, TIPR) T1Interrupt(void)
 {
     if (timers[0].handler)
+    {
         (*timers[0].handler)();
+    }
 
     _T1IF = 0;
 }
@@ -763,7 +837,9 @@ void __ISR(_TIMER_1_VECTOR, TIPR) T1Interrupt(void)
 void __ISR(_TIMER_2_VECTOR, TIPR) T2Interrupt(void)
 {
     if (timers[1].handler)
+    {
         (*timers[1].handler)();
+    }
 
     _T2IF = 0;
 }
@@ -773,7 +849,9 @@ void __ISR(_TIMER_2_VECTOR, TIPR) T2Interrupt(void)
 void __ISR(_TIMER_3_VECTOR, TIPR) T3Interrupt(void)
 {
     if (timers[2].handler)
+    {
         (*timers[2].handler)();
+    }
 
     _T3IF = 0;
 }
@@ -783,7 +861,9 @@ void __ISR(_TIMER_3_VECTOR, TIPR) T3Interrupt(void)
 void __ISR(_TIMER_4_VECTOR, TIPR) T4Interrupt(void)
 {
     if (timers[3].handler)
+    {
         (*timers[3].handler)();
+    }
 
     _T4IF = 0;
 }
@@ -793,7 +873,9 @@ void __ISR(_TIMER_4_VECTOR, TIPR) T4Interrupt(void)
 void __ISR(_TIMER_5_VECTOR, TIPR) T5Interrupt(void)
 {
     if (timers[4].handler)
+    {
         (*timers[4].handler)();
+    }
 
     _T5IF = 0;
 }
@@ -803,7 +885,9 @@ void __ISR(_TIMER_5_VECTOR, TIPR) T5Interrupt(void)
 void __ISR(_TIMER_6_VECTOR, TIPR) T6Interrupt(void)
 {
     if (timers[5].handler)
+    {
         (*timers[5].handler)();
+    }
 
     _T6IF = 0;
 }
@@ -813,7 +897,9 @@ void __ISR(_TIMER_6_VECTOR, TIPR) T6Interrupt(void)
 void __ISR(_TIMER_7_VECTOR, TIPR) T7Interrupt(void)
 {
     if (timers[6].handler)
+    {
         (*timers[6].handler)();
+    }
 
     _T7IF = 0;
 }
@@ -823,7 +909,9 @@ void __ISR(_TIMER_7_VECTOR, TIPR) T7Interrupt(void)
 void __ISR(_TIMER_8_VECTOR, TIPR) T8Interrupt(void)
 {
     if (timers[7].handler)
+    {
         (*timers[7].handler)();
+    }
 
     _T8IF = 0;
 }
@@ -833,7 +921,9 @@ void __ISR(_TIMER_8_VECTOR, TIPR) T8Interrupt(void)
 void __ISR(_TIMER_9_VECTOR, TIPR) T9Interrupt(void)
 {
     if (timers[8].handler)
+    {
         (*timers[8].handler)();
+    }
 
     _T9IF = 0;
 }

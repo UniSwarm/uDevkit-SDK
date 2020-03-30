@@ -24,23 +24,37 @@ uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t fl
     uint16_t value = 0;
     i2c_start(device);
     if (i2c_putc(device, (uint8_t)(address & 0xFE)) == -1)
+    {
         return 0;
+    }
     if (flags & I2C_REGADDR16)
-        if(i2c_putc(device, (uint8_t)(reg>>8)) == -1)
+    {
+        if (i2c_putc(device, (uint8_t)(reg>>8)) == -1)
+        {
             return 0;
+        }
+    }
     if (i2c_putc(device, (uint8_t)(reg&0x00FF)) == -1)
+    {
         return 0;
+    }
     if (flags & I2C_READ_STOPSTART)
     {
         i2c_stop(device);
         i2c_start(device);
     }
     else
+    {
         i2c_restart(device);
+    }
     if (i2c_putc(device, address | 0x01) == -1)
+    {
         return 0;
+    }
     if (flags & I2C_REG16)
+    {
         value = i2c_getc(device)<<8;
+    }
     value += i2c_getc(device);
     i2c_nack(device);
     i2c_stop(device);
@@ -62,22 +76,34 @@ ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t re
 
     i2c_start(device);
     if (i2c_putc(device, (uint8_t)(address & 0xFE)) != 0)
+    {
         return -1;
+    }
     if (flags & I2C_REGADDR16)
+    {
         if (i2c_putc(device, (uint8_t)(reg>>8)) != 0)
+        {
             return -1;
+        }
+    }
     if (i2c_putc(device, (uint8_t)(reg&0x00FF)) != 0)
+    {
         return -1;
+    }
     if (flags & I2C_READ_STOPSTART)
     {
         i2c_stop(device);
         i2c_start(device);
     }
     else
+    {
         i2c_restart(device);
+    }
 
     if (i2c_putc(device, address | 0x01) != 0)
+    {
         return -1;
+    }
     ptrreg = regs;
     for (id=0; id<size; id++)
     {
@@ -88,8 +114,10 @@ ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t re
         }
         *ptrreg = i2c_getc(device);
         ptrreg++;
-        if(id!=size-1)
+        if (id!=size-1)
+        {
             i2c_ack(device);
+        }
         else
         {
             i2c_nack(device);
@@ -112,17 +140,31 @@ int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value
 {
     i2c_start(device);
     if (i2c_putc(device, (uint8_t)(address & 0xFE)) != 0)
+    {
         return -1;
+    }
     if (flags & I2C_REGADDR16)
+    {
         if (i2c_putc(device, (uint8_t)(reg>>8)) != 0)
+        {
             return -1;
+        }
+    }
     if (i2c_putc(device, (uint8_t)(reg&0x00FF)) != 0)
+    {
         return -1;
+    }
     if (flags & I2C_REG16)
+    {
         if (i2c_putc(device, (uint8_t)(value>>8)) != 0)
+        {
             return -1;
+        }
+    }
     if (i2c_putc(device, (uint8_t)(value&0x00FF)) != 0)
+    {
         return -1;
+    }
     i2c_stop(device);
     return 0;
 }
@@ -145,21 +187,35 @@ int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[
 
     i2c_start(device);
     if (i2c_putc(device, (uint8_t)(address & 0xFE)) != 0)
+    {
         return -1;
+    }
     if (flags & I2C_REGADDR16)
+    {
         if (i2c_putc(device, (uint8_t)(reg>>8)) != 0)
+        {
             return -1;
+        }
+    }
     if (i2c_putc(device, (uint8_t)(reg&0x00FF)) != 0)
+    {
         return -1;
+    }
 
     ptrreg = regs;
     for (id=0; id<size; id++)
     {
         if (flags & I2C_REG16)
+        {
             if (i2c_putc(device, *(ptrreg++)) != 0)
+            {
                 return -1;
+            }
+        }
         if (i2c_putc(device, *(ptrreg++)) != 0)
+        {
             return -1;
+        }
     }
     i2c_stop(device);
     return 0;

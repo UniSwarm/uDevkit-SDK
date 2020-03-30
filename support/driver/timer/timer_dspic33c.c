@@ -61,11 +61,17 @@ rt_dev_t timer_getFreeDevice()
     rt_dev_t device;
 
     for (i = 0; i < TIMER_COUNT; i++)
+    {
         if (timers[i].flags.used == 0)
+        {
             break;
+        }
+    }
 
     if (i == TIMER_COUNT)
+    {
         return NULLDEV;
+    }
     device = MKDEV(DEV_CLASS_TIMER, i);
 
     timer_open(device);
@@ -85,9 +91,13 @@ int timer_open(rt_dev_t device)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
     if (timers[timer].flags.used == 1)
+    {
         return -1;
+    }
 
     timers[timer].flags.used = 1;
     timers[timer].handler = NULL;
@@ -107,7 +117,9 @@ int timer_close(rt_dev_t device)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timer_disable(device);
 
@@ -129,7 +141,9 @@ int timer_enable(rt_dev_t device)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timers[timer].flags.enabled = 1;
 
@@ -139,9 +153,13 @@ int timer_enable(rt_dev_t device)
         T1CONbits.TON = 1;  // enable timer module
         _T1IF = 0;
         if (timers[0].handler)
+        {
             _T1IE = 1;
+        }
         else
+        {
             _T1IE = 0;
+        }
         _T1IP = 1;
         break;
     }
@@ -162,7 +180,9 @@ int timer_disable(rt_dev_t device)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timers[timer].flags.enabled = 0;
 
@@ -191,7 +211,9 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timers[timer].handler = handler;
     timer_enable(device);
@@ -214,7 +236,9 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
     uint8_t div = 0;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     timers[timer].periodMs = periodMs;
 
@@ -228,7 +252,9 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
             div = 0b11; // 256 divider
             prvalue >>= 5;
             if (prvalue > 65535)
+            {
                 prvalue = 65535;
+            }
         }
     }
 
@@ -256,7 +282,9 @@ uint32_t timer_periodMs(rt_dev_t device)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return 0;
+    }
 
     return timers[timer].periodMs;
 #else
@@ -275,7 +303,9 @@ uint16_t timer_getValue(rt_dev_t device)
     uint16_t value;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return 0;
+    }
 
     switch (timer)
     {
@@ -300,7 +330,9 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 #if TIMER_COUNT>=1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
+    {
         return -1;
+    }
 
     switch (timer)
     {
@@ -319,7 +351,9 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 void __attribute__ ((interrupt, no_auto_psv)) _T1Interrupt()
 {
     if (timers[0].handler)
+    {
         (*timers[0].handler)();
+    }
 
     _T1IF = 0;
 }

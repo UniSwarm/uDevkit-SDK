@@ -33,7 +33,9 @@ rt_dev_t qei_getFreeDevice()
     rt_dev_t device;
 
     if (qei_state == 0)
+    {
         return NULLDEV;
+    }
 
     device = MKDEV(DEV_CLASS_QEI, 0);
 
@@ -55,9 +57,13 @@ int qei_open(rt_dev_t device)
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei != 0)
+    {
         return -1;
+    }
     if (qei_state == 1)
+    {
         return -1;
+    }
 
     qei_state = 1;
 
@@ -77,7 +83,9 @@ int qei_close(rt_dev_t device)
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei != 0)
+    {
         return -1;
+    }
 
     qei_disable(device);
 
@@ -98,7 +106,9 @@ int qei_enable(rt_dev_t device)
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei != 0)
+    {
         return -1;
+    }
     QEICONbits.QEIM = 0b111; // TODO, review this taking care of setConfig
     return 0;
 #else
@@ -116,7 +126,9 @@ int qei_disable(rt_dev_t device)
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei != 0)
+    {
         return -1;
+    }
     QEICONbits.QEIM = 0;
     return 0;
 #else
@@ -135,7 +147,9 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei != 0)
+    {
         return -1;
+    }
     // TODO
     return 0;
 #else
@@ -153,7 +167,9 @@ uint16_t qei_getValue(rt_dev_t device)
   #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei != 0)
+    {
         return -1;
+    }
     return POSCNT;
 #else
     return 0;

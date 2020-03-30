@@ -33,10 +33,14 @@ uint32_t sysclock_pll = 0;
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
     if (sysclock_sysfreq == 0)
+    {
         sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
+    }
 
     if (busClock == SYSCLOCK_CLOCK_SYSCLK)
+    {
         return sysclock_sysfreq;
+    }
 
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
     {
@@ -64,15 +68,25 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
     {
         if (div == 1)
+        {
             udiv = 0b00;
+        }
         else if (div == 4)
+        {
             udiv = 0b01;
+        }
         else if (div == 16)
+        {
             udiv = 0b10;
+        }
         else if (div == 64)
+        {
             udiv = 0b11;
+        }
         else
+        {
             return -1;
+        }
         OSCCONbits.POST = udiv;
         return 0;
     }

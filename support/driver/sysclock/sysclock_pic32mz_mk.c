@@ -36,12 +36,18 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
     uint8_t divisor;
     
     if (sysclock_sysfreq == 0)
+    {
         sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
+    }
     
     if (busClock == SYSCLOCK_CLOCK_SYSCLK)
+    {
         return sysclock_sysfreq;
+    }
     if (busClock > SYSCLOCK_CLOCK_PBCLK8)
+    {
         return 1; // error, not return 0 to avoid divide by zero
+    }
     divisorAddr = &PB1DIV + (((uint8_t)busClock - 1) << 2);
     divisor = ((*divisorAddr) & 0x0000007F) + 1;
     return sysclock_sysfreq / divisor;
@@ -59,13 +65,21 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
     volatile uint32_t* divisorAddr;
 
     if (OSCCONbits.CLKLOCK == 1)
+    {
         return -1; // Clocks and PLL are locked, source cannot be changed
+    }
     if (busClock == SYSCLOCK_CLOCK_SYSCLK) // cannot change sysclock
+    {
         return -1;
+    }
     if (busClock > SYSCLOCK_CLOCK_PBCLK8)  // bad index
+    {
         return -1;
+    }
     if (div == 0 || div > 128)
+    {
         return -1; // bad divisor value
+    }
 
     // get divisor bus value
     divisorAddr = &PB1DIV + (((uint8_t)busClock - 1) << 2);
@@ -108,13 +122,19 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
     case SYSCLOCK_SRC_FRC:
         div = OSCCONbits.FRCDIV;
         if (div != 0b111)
+        {
             div = 1 << div;
+        }
         else
+        {
             div = 256;
+        }
 
         osctune = OSCTUN;
         if (osctune >= 32)
+        {
             osctune = (osctune | 0xFFFFFFE0);
+        }
 
         freq = (8000000 + osctune * 31250) / div; // 8MHz typical FRC, tuned by OSCTUN (+/- 12.5%), divided by FRCDIV
         break;
@@ -133,7 +153,9 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 
     case SYSCLOCK_SRC_SPLL:
         if (sysclock_pll == 0)
+        {
             sysclock_pll = sysclock_getPLLClock();
+        }
         freq = sysclock_pll;  // PLL out freq
         break;
 
@@ -175,7 +197,9 @@ SYSCLOCK_SOURCE sysclock_source()
     SYSCLOCK_SOURCE source = (SYSCLOCK_SOURCE)OSCCONbits.COSC;
 #ifdef SYSCLOCK_SRC_FRC2
     if (source == SYSCLOCK_SRC_FRC2)
+    {
         return SYSCLOCK_SRC_FRC;
+    }
 #endif
     return source;
 }
@@ -188,11 +212,15 @@ SYSCLOCK_SOURCE sysclock_source()
 int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 {
     if (OSCCONbits.CLKLOCK == 1)
+    {
         return -1; // Clocks and PLL are locked, source cannot be changed
+    }
 
 #ifdef SYSCLOCK_SRC_BFRC
     if (source == SYSCLOCK_SRC_BFRC)
+    {
         return -2; // cannot switch to backup FRC
+    }
 #endif
 
     // disable interrupts
@@ -219,7 +247,9 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
     enable_interrupt();
 
     if (sysclock_source() != source)
+    {
         return -3; // Error when switch clock source
+    }
 
     sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
 
@@ -242,10 +272,14 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     uint8_t inputBit;
 
     if (sysclock_source() == SYSCLOCK_SRC_SPLL)
+    {
         return -1; // cannot change PLL when it is used
+    }
 
     if (fosc > SYSCLOCK_FOSC_MAX)
+    {
         return -1; // cannot generate fosc > SYSCLOCK_FOSC_MAX
+    }
 
 #ifdef SYSCLOCK_SRC_FRC2
     if (src == SYSCLOCK_SRC_FRC2 || src == SYSCLOCK_SRC_FRC)
@@ -275,7 +309,9 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         postdivBits--;
     }
     if (postdiv < 2)
+    {
         return -1;
+    }
     fpllo = fosc * postdiv;
 
     // best pre divisor and multiplier computation
@@ -285,7 +321,9 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         mmultiplier = fpllo / (fin / mprediv);
         merror = fin / mprediv * mmultiplier / postdiv - fpllo;
         if (merror < 0)
+        {
             merror = -merror;
+        }
         if (merror < error && mmultiplier <= 128)
         {
             prediv = mprediv;
@@ -328,9 +366,13 @@ uint32_t sysclock_getPLLClock()
     uint16_t prediv, multiplier, postdiv;
 
     if (SPLLCONbits.PLLICLK == 1) // FRC as input
+    {
         fin = sysclock_sourceFreq(SYSCLOCK_SRC_FRC);
+    }
     else
+    {
         fin = sysclock_sourceFreq(SYSCLOCK_SRC_POSC);
+    }
     
     prediv = SPLLCONbits.PLLIDIV + 1;
     multiplier = SPLLCONbits.PLLMULT + 1;

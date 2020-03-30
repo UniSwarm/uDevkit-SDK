@@ -27,7 +27,9 @@ rt_dev_t pwm_getFreeDevice()
 {
     rt_dev_t dev = oc_getFreeDevice();
     if (dev != NULLDEV)
+    {
         dev = MKDEV(DEV_CLASS_PWM, MINOR(dev));
+    }
     return dev;
 }
 
@@ -61,7 +63,9 @@ int pwm_setFreq(rt_dev_t device, uint32_t freq)
     rt_dev_t timer = oc_getTimer(device);
     uint8_t pwm = MINOR(device);
     if (pwm >= PWM_COUNT)
+    {
         return -1;
+    }
 
     pwms[pwm].period = 1.0 / freq;
 
@@ -75,7 +79,9 @@ uint32_t pwm_freq(rt_dev_t device)
 {
     uint8_t pwm = MINOR(device);
     if (pwm >= PWM_COUNT)
+    {
         return -1;
+    }
 
     return pwms[pwm].freq;
 }
@@ -84,7 +90,9 @@ uint32_t pwm_freqVal(rt_dev_t device)
 {
     uint8_t pwm = MINOR(device);
     if (pwm >= PWM_COUNT)
+    {
         return -1;
+    }
 
     return pwms[pwm].period;
 }
@@ -94,7 +102,9 @@ int pwm_setDuty(rt_dev_t device, uint16_t duty) // 1000 => 100%
     uint8_t pwm = MINOR(device);
     uint16_t dutyR;
     if (pwm >= PWM_COUNT)
+    {
         return -1;
+    }
     
     pwms[pwm].duty = duty;
 
@@ -108,7 +118,9 @@ uint32_t pwm_duty(rt_dev_t device)
 {
     uint8_t pwm = MINOR(device);
     if (pwm >= PWM_COUNT)
+    {
         return -1;
+    }
 
     return pwms[pwm].duty;
 }

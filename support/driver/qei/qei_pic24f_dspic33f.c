@@ -33,11 +33,17 @@ rt_dev_t qei_getFreeDevice()
     rt_dev_t device;
 
     for (i = 0; i < QEI_COUNT; i++)
+    {
         if (qeis[i] == 0)
+        {
             break;
+        }
+    }
 
     if (i == QEI_COUNT)
+    {
         return NULLDEV;
+    }
     device = MKDEV(DEV_CLASS_QEI, i);
 
     qei_open(device);
@@ -58,9 +64,13 @@ int qei_open(rt_dev_t device)
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei >= QEI_COUNT)
+    {
         return -1;
+    }
     if (qeis[qei] == 1)
+    {
         return -1;
+    }
 
     qeis[qei] = 0b0000011100000000;
 
@@ -80,7 +90,9 @@ int qei_releaseDevice(rt_dev_t device)
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei >= QEI_COUNT)
+    {
         return -1;
+    }
 
     qei_disable(device);
 
@@ -101,18 +113,24 @@ int qei_enable(rt_dev_t device)
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei > QEI_COUNT)
+    {
         return -1;
+    }
 #else
     return -1;
 #endif
 
 #if QEI_COUNT>=1
     if (qei == 0)
+    {
         QEI1CON = qeis[1];
+    }
 #endif
 #if QEI_COUNT>=2
     if (qei == 1)
+    {
         QEI2CON = qeis[2];
+    }
 #endif
 
 #if QEI_COUNT>=1
@@ -130,18 +148,24 @@ int qei_disable(rt_dev_t device)
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei > QEI_COUNT)
+    {
         return -1;
+    }
 #else
     return -1;
 #endif
 
 #if QEI_COUNT>=1
     if (qei == 0)
+    {
         QEI1CONbits.QEIM = 0b000;
+    }
 #endif
 #if QEI_COUNT>=2
     if (qei == 1)
+    {
         QEI2CONbits.QEIM = 0b000;
+    }
 #endif
 
 #if QEI_COUNT>=1
@@ -171,11 +195,15 @@ qei_type qei_getValue(rt_dev_t device)
   #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei == 0)
+    {
         return POS1CNT;
+    }
   #endif
   #if QEI_COUNT>=2
     if (qei == 1)
+    {
         return POS2CNT;
+    }
   #endif
     return 0;
 }

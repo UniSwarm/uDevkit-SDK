@@ -22,7 +22,9 @@
  MSI_CORE_STATUS msi_master_status()
 {
     if (SI1STATbits.MSTRST)
+    {
         return MSI_CORE_STATUS_RESETED;
+    }
 
     switch (SI1STATbits.MSTPWR)
     {
@@ -40,7 +42,9 @@
 int msi_protocol_write(uint8_t protocol, const unsigned char *data, uint8_t size)
 {
     if (_DTRDYB == 1)
+    {
         return -1;
+    }
     uint16_t *ptr = (uint16_t *)data;
     SI1MBX5D = *(ptr++);
     SI1MBX6D = *(ptr++);
@@ -53,7 +57,9 @@ int msi_protocol_write(uint8_t protocol, const unsigned char *data, uint8_t size
 int msi_protocol_read(uint8_t protocol, unsigned char *data, uint8_t max_size)
 {
     if (_DTRDYA == 0)
+    {
         return -1;
+    }
     uint16_t *ptr = (uint16_t *)data;
     *ptr = SI1MBX0D;
     ptr++;

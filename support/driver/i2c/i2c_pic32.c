@@ -74,10 +74,14 @@ struct i2c_dev i2cs[] = {
 #ifdef I2C_NOI2C2
 rt_dev_t i2c(uint8_t d)
 {
-    if(d > 1)
+    if (d > 1)
+    {
         return MKDEV(DEV_CLASS_I2C, d-2);
+    }
     else
+    {
         return MKDEV(DEV_CLASS_I2C, d-1);
+    }
 }
 #endif
 
@@ -92,11 +96,17 @@ rt_dev_t i2c_getFreeDevice()
     rt_dev_t device;
 
     for (i = 0; i < I2C_COUNT; i++)
+    {
         if (i2cs[i].flags.val == I2C_FLAG_UNUSED)
+        {
             break;
+        }
+    }
 
     if (i == I2C_COUNT)
+    {
         return NULLDEV;
+    }
     device = MKDEV(DEV_CLASS_I2C, i);
 
     i2c_open(device);
@@ -117,9 +127,13 @@ int i2c_open(rt_dev_t device)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return -1;
+    }
     if (i2cs[i2c].flags.used == 1)
+    {
         return -1;
+    }
 
     i2cs[i2c].flags.used = 1;
     return 0;
@@ -138,7 +152,9 @@ int i2c_close(rt_dev_t device)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return -1;
+    }
 
     i2c_disable(device);
 
@@ -159,7 +175,9 @@ int i2c_enable(rt_dev_t device)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return -1;
+    }
 
     i2cs[i2c].flags.enabled = 1;
 
@@ -208,7 +226,9 @@ int i2c_disable(rt_dev_t device)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return -1;
+    }
 
     i2cs[i2c].flags.enabled = 0;
 
@@ -266,10 +286,14 @@ int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return -1;
+    }
 
     if (baudSpeed == 0)
+    {
         return -1;
+    }
 
     i2cs[i2c].baudSpeed = baudSpeed;
 
@@ -277,7 +301,9 @@ int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
     uBrg = (systemClockPeriph / baudSpeed) - (systemClockPeriph / I2C_FPGD) - 2;
 
     if (uBrg <= 1)
+    {
         uBrg = 2;
+    }
 
     switch (i2c)
     {
@@ -328,7 +354,9 @@ uint32_t i2c_baudSpeed(rt_dev_t device)
 
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return 0;
+    }
 
     switch (i2c)
     {
@@ -378,7 +406,9 @@ uint32_t i2c_effectiveBaudSpeed(rt_dev_t device)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return 0;
+    }
 
     return i2cs[i2c].baudSpeed;
 #else
@@ -397,14 +427,22 @@ int i2c_setAddressWidth(rt_dev_t device, uint8_t addressWidth)
     uint8_t addrW10;
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return 0;
+    }
 
     if (addressWidth == 7)
+    {
         addrW10 = 0;
+    }
     else if (addressWidth == 10)
+    {
         addrW10 = 1;
+    }
     else
+    {
         return -1;
+    }
 
     i2cs[i2c].flags.addrW10 = addrW10;
 
@@ -453,12 +491,18 @@ uint8_t i2c_addressWidth(rt_dev_t device)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return 0;
+    }
 
     if (i2cs[i2c].flags.addrW10 == 1)
+    {
         return 10;
+    }
     else
+    {
         return 7;
+    }
 #else
     return 0;
 #endif
@@ -474,7 +518,9 @@ int i2c_start(rt_dev_t device)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return 0;
+    }
 
     switch (i2c)
     {
@@ -526,7 +572,9 @@ int i2c_restart(rt_dev_t device)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return 0;
+    }
 
     switch (i2c)
     {
@@ -578,7 +626,9 @@ int i2c_stop(rt_dev_t device)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return 0;
+    }
 
     switch (i2c)
     {
@@ -630,7 +680,9 @@ int i2c_idle(rt_dev_t device)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return 0;
+    }
 
     switch (i2c)
     {
@@ -682,7 +734,9 @@ int i2c_ack(rt_dev_t device)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return 0;
+    }
 
     switch (i2c)
     {
@@ -739,7 +793,9 @@ int i2c_nack(rt_dev_t device)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return 0;
+    }
 
     switch (i2c)
     {
@@ -796,7 +852,9 @@ int i2c_putc(rt_dev_t device, const char data)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return 0;
+    }
 
     switch (i2c)
     {
@@ -804,65 +862,85 @@ int i2c_putc(rt_dev_t device, const char data)
     case I2C_NUM1:
         I2C1TRN = data;
         if (I2C1STATbits.IWCOL)       // write collision detection
+        {
             return -1;
+        }
 
         while (I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN ||
           I2C1CONbits.RSEN || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT); // wait iddle
 
         if (I2C1STATbits.ACKSTAT)   // test for ACK received
+        {
             return -1;
+        }
         break;
 #endif
 #ifdef I2C_NUM2
     case I2C_NUM2:
         I2C2TRN = data;
         if (I2C2STATbits.IWCOL)       // write collision detection
+        {
             return -1;
+        }
 
         while (I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN ||
           I2C2CONbits.RSEN || I2C2CONbits.ACKEN || I2C2STATbits.TRSTAT); // wait iddle
 
         if (I2C2STATbits.ACKSTAT)   // test for ACK received
+        {
             return -1;
+        }
         break;
 #endif
 #ifdef I2C_NUM3
     case I2C_NUM3:
         I2C3TRN = data;
         if (I2C3STATbits.IWCOL)       // write collision detection
+        {
             return -1;
+        }
 
         while (I2C3CONbits.SEN || I2C3CONbits.PEN || I2C3CONbits.RCEN ||
           I2C3CONbits.RSEN || I2C3CONbits.ACKEN || I2C3STATbits.TRSTAT); // wait iddle
 
         if (I2C3STATbits.ACKSTAT)   // test for ACK received
+        {
             return -1;
+        }
         break;
 #endif
 #ifdef I2C_NUM4
     case I2C_NUM4:
         I2C4TRN = data;
         if (I2C4STATbits.IWCOL)       // write collision detection
+        {
             return -1;
+        }
 
         while (I2C4CONbits.SEN || I2C4CONbits.PEN || I2C4CONbits.RCEN ||
           I2C4CONbits.RSEN || I2C4CONbits.ACKEN || I2C4STATbits.TRSTAT); // wait iddle
 
         if (I2C4STATbits.ACKSTAT)   // test for ACK received
+        {
             return -1;
+        }
         break;
 #endif
 #ifdef I2C_NUM5
     case I2C_NUM5:
         I2C5TRN = data;
         if (I2C5STATbits.IWCOL)       // write collision detection
+        {
             return -1;
+        }
 
         while (I2C5CONbits.SEN || I2C5CONbits.PEN || I2C5CONbits.RCEN ||
           I2C5CONbits.RSEN || I2C5CONbits.ACKEN || I2C5STATbits.TRSTAT); // wait iddle
 
         if (I2C5STATbits.ACKSTAT)   // test for ACK received
+        {
             return -1;
+        }
         break;
 #endif
     }
@@ -883,7 +961,9 @@ uint8_t i2c_getc(rt_dev_t device)
 #if I2C_COUNT>=1
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
+    {
         return 0;
+    }
 
     switch (i2c)
     {

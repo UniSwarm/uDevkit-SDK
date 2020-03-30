@@ -29,10 +29,14 @@ uint32_t sysclock_pll = 0;
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
     if (sysclock_sysfreq == 0)
+    {
         sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
+    }
 
     if (busClock == SYSCLOCK_CLOCK_SYSCLK)
+    {
         return sysclock_sysfreq;
+    }
 
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
     {
@@ -55,7 +59,9 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
     // checks
     // TODO
     if (busClock != SYSCLOCK_CLOCK_REFCLK && busClock != SYSCLOCK_CLOCK_PBCLK)  // bad index
+    {
         return -1;
+    }
 
     // TODO implement me
 
@@ -94,21 +100,31 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
     case SYSCLOCK_SRC_FRC16:
     case SYSCLOCK_SRC_FRCDIV:
         if (source == SYSCLOCK_SRC_FRC)
+        {
             div = 1;
+        }
         else if (source == SYSCLOCK_SRC_FRC16)
+        {
             div = 16;
+        }
         else
         {
             div = OSCCONbits.FRCDIV;
             if (div != 0b111)
+            {
                 div = 1 << div;
+            }
             else
+            {
                 div = 256;
+            }
         }
 
         osctune = OSCTUN;
         if (osctune >= 32)
+        {
             osctune = (osctune | 0xFFFFFFE0);
+        }
 
         freq = (8000000 + osctune * 31250) / div; // 8MHz typical FRC, tuned by OSCTUN (+/- 12.5%), divided by FRCDIV
         break;
@@ -158,11 +174,15 @@ SYSCLOCK_SOURCE sysclock_source()
 int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 {
     if (OSCCONbits.CLKLOCK == 1)
+    {
         return -1; // Clocks and PLL are locked, source cannot be changed
+    }
 
 #ifdef SYSCLOCK_SRC_BFRC
     if (source == SYSCLOCK_SRC_BFRC)
+    {
         return -2; // cannot switch to backup FRC
+    }
 #endif
 
     // disable interrupts
@@ -189,7 +209,9 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
     enable_interrupt();
 
     if (sysclock_source() != source)
+    {
         return -3; // Error when switch clock source
+    }
 
     sysclock_sysfreq = sysclock_sourceFreq(source);
 

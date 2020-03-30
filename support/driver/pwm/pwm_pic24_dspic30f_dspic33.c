@@ -18,7 +18,9 @@ rt_dev_t pwm_getFreeDevice()
 {
     rt_dev_t dev = oc_getFreeDevice();
     if (dev != NULLDEV)
+    {
         dev = MKDEV(DEV_CLASS_PWM, MINOR(dev));
+    }
     return dev;;
 }
 

@@ -143,11 +143,17 @@ rt_dev_t oc_getFreeDevice()
     rt_dev_t device;
 
     for (i = 0; i < OC_COUNT; i++)
+    {
         if (ocs[i].flags.used == 0)
+        {
             break;
+        }
+    }
 
     if (i == OC_COUNT)
+    {
         return NULLDEV;
+    }
     device = MKDEV(DEV_CLASS_OC, i);
 
     oc_open(device);
@@ -168,9 +174,13 @@ int oc_open(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
     if (ocs[oc].flags.used == 1)
+    {
         return -1;
+    }
 
     ocs[oc].flags.used = 1;
 
@@ -190,7 +200,9 @@ int oc_close(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     oc_disable(device);
 
@@ -206,7 +218,9 @@ int oc_setInternalMode(rt_dev_t device, uint8_t mode)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     switch (oc)
     {
@@ -306,7 +320,9 @@ int oc_enable(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     ocs[oc].flags.enabled = 1;
 
@@ -326,7 +342,9 @@ int oc_disable(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     ocs[oc].flags.enabled = 0;
 
@@ -348,7 +366,9 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
     uint8_t imode = OC_PIC24E_dsPIC33E_DISABLE;
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     ocs[oc].flags.mode = mode;
 
@@ -379,7 +399,9 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
     ocs[oc].flags.imode = imode;
 
     if (ocs[oc].flags.enabled)
+    {
         return oc_setInternalMode(device, imode);
+    }
     return 0;
 #else
     return -1;
@@ -396,7 +418,9 @@ uint8_t oc_mode(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return 0;
+    }
 
     return ocs[oc].flags.mode;
 #else
@@ -416,7 +440,9 @@ int oc_setRVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     ocs[oc].rVal = rVal;
     ocs[oc].rsVal = rsVal;
@@ -535,7 +561,9 @@ uint32_t oc_rVal(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     return ocs[oc].rVal;
 #else
@@ -553,7 +581,9 @@ uint32_t oc_rsVal(rt_dev_t device)
 #if OC_COUNT>=1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
+    {
         return -1;
+    }
 
     return ocs[oc].rsVal;
 #else
