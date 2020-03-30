@@ -11,7 +11,6 @@
 
 #include "nvm.h"
 
-#include <libpic30.h>
 #include <archi.h>
 
 /**
@@ -27,13 +26,13 @@ void nvm_read(uint32_t address, char *data, size_t size)
     offset = address;
     uint16_t data16h, data16l;
 
-    for (i = 0; i < size; offset+=2)
+    for (i = 0; i < size; offset += 2)
     {
         data16h = __builtin_tblrdh(offset);
         data16l = __builtin_tblrdl(offset);
-        data[i++] = (char)data16h;
-        data[i++] = (char)(data16l >> 8);
         data[i++] = (char)data16l;
+        data[i++] = (char)(data16l >> 8);
+        data[i++] = (char)data16h;
 
         if (offset == 0xFFFE)
         {
@@ -67,15 +66,16 @@ void nvm_erase_page(uint32_t address)
 void nvm_write_double_word(uint32_t address, char *data)
 {
     uint16_t offset;
+    unsigned char *udata = (unsigned char *)data;
 
     NVMCON = 0x4001;
     TBLPAG = 0xFA; // write latch upper address
 
-    __builtin_tblwtl(0, (uint16_t)(data[1] << 8) + data[0]);
-    __builtin_tblwth(0, (uint8_t)data[2]); // load write latches
+    __builtin_tblwtl(0, (((uint16_t)udata[1]) << 8) + udata[0]);
+    __builtin_tblwth(0, (uint8_t)udata[2]); // load write latches
 
-    __builtin_tblwtl(2, (uint16_t)(data[4] << 8) + data[3]);
-    __builtin_tblwth(2, (uint8_t)data[5]); // load write latches
+    __builtin_tblwtl(2, (((uint16_t)udata[4]) << 8) + udata[3]);
+    __builtin_tblwth(2, (uint8_t)udata[5]); // load write latches
 
     offset = address & 0x07FF;
     NVMADR = (address & 0xF800) + offset;
