@@ -13,15 +13,18 @@
 
 #include <driver/device.h>
 
+// ========= byte manipulation ========
+ssize_t nvm_read(uint32_t addr, char *data, size_t size);
+ssize_t nvm_write(uint32_t addr, char *data, size_t size);
 
-void nvm_read(uint32_t address, char *data, size_t size);
+// ========= page manipulation ========
+ssize_t nvm_writePage(uint32_t addr, char *data);
+ssize_t nvm_erasePage(uint32_t addr);
+ssize_t nvm_readPage(uint32_t addr, char *data);
 
-void nvm_erase_page(uint32_t address);
-
-void nvm_write(uint32_t address, char *data, size_t size);
-
-void nvm_write_double_word(uint32_t address, char *data);
-
+// =========  address and page number translation  ========
+uint16_t nvm_pageNumber(uint32_t addr);
+uint32_t nvm_pageAddress(uint16_t pageNum);
 
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) \
  || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33ep) \

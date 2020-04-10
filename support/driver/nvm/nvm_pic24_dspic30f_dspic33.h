@@ -12,12 +12,13 @@
 #ifndef NVM_PIC24_DSPIC30F_DSPIC33_H
 #define NVM_PIC24_DSPIC30F_DSPIC33_H
 
-typedef unsigned long prog_ptr;
-
 #if defined(ARCHI_dspic30f)
-  #define NVM_FLASH_PAGE     32
-  #define NVM_FLASH_ROW      32
+  #define NVM_FLASH_PAGE_BYTE     128
+  #define NVM_FLASH_PAGE_MASK   0xFFFFFF00
+  #define NVM_FLASH_PAGE_SHIFT    7
+  #define NVM_FLASH_ROW_BYTE      128
   #define NVM_HAS_FLASH
+
 
   #define NVM_EE_WORD         2
   #define NVM_EE_ROW         32
@@ -25,14 +26,19 @@ typedef unsigned long prog_ptr;
 
 #elif defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
  || defined(ARCHI_dspic33fj)
-  #define NVM_FLASH_PAGE     512
-  #define NVM_FLASH_ROW      64
+  #define NVM_FLASH_PAGE_BYTE     2048
+  #define NVM_FLASH_PAGE_MASK   0xFFFFF800
+  #define NVM_FLASH_PAGE_SHIFT    11
+  #define NVM_FLASH_ROW_BYTE      256
   #define NVM_HAS_FLASH
+
 
 #elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) \
  || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
-  #define NVM_FLASH_PAGE     1024
-  #define NVM_FLASH_ROW      128
+  #define NVM_FLASH_PAGE_BYTE     4096
+  #define NVM_FLASH_PAGE_MASK   0xFFFFF000
+  #define NVM_FLASH_PAGE_SHIFT    12
+  #define NVM_FLASH_ROW_BYTE      512
   #define NVM_HAS_FLASH
 
 #endif
