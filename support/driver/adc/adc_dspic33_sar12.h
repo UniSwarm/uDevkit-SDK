@@ -1,19 +1,20 @@
 /**
  * @file adc_dspic33_sar12.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018
+ * @copyright UniSwarm 2018-2020
  *
  * @date December 13, 2018, 09:26 AM
  *
  * @brief ADC driver support for dsPIC33E GS, dsPIC33CK and dsPIC33CH
  *
- * Implementation based on Microchip document DS70005213F :
- *  http://ww1.microchip.com/downloads/en/DeviceDoc/70005213f.pdf
+ * Implementation based on Microchip document DS70005213G :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/dsPIC33-PIC24-FRM,-12-Bit-High-Speed,-Multiple-SARs-ADC-Converter-DS70005213G.pdf
  */
 
 #ifndef ADC_DSPIC33_SAR12_H
 #define ADC_DSPIC33_SAR12_H
 
+// ====================================== Channel availability ======================================
 #if defined(DEVICE_33EP128GS702)
  #define ADC_CHANNEL_COUNT 11
 #elif defined(DEVICE_33EP16GS502) || defined(DEVICE_33EP32GS502) || defined(DEVICE_33EP64GS502)
@@ -75,6 +76,7 @@
  #define ADC_CHANNEL_COUNT 0
 #endif
 
+// ==================================== Dedicated core availability ====================================
 #if defined(DEVICE_33CH128MP202S1) || defined(DEVICE_33CH128MP203S1) || defined(DEVICE_33CH128MP205S1) \
  || defined(DEVICE_33CH128MP206S1) || defined(DEVICE_33CH128MP208S1) || defined(DEVICE_33CH128MP502S1) \
  || defined(DEVICE_33CH128MP503S1) || defined(DEVICE_33CH128MP505S1) || defined(DEVICE_33CH128MP506S1) \
@@ -118,6 +120,7 @@
  #define ADC_HAVE_DEDICATED_CORE3
 #endif
 
+// ================================= Autocalibration availability =================================
 #if defined(DEVICE_33EP128GS702) || defined(DEVICE_33EP128GS704) || defined(DEVICE_33EP128GS705) \
  || defined(DEVICE_33EP128GS706) || defined(DEVICE_33EP128GS708) || defined(DEVICE_33EP128GS804) \
  || defined(DEVICE_33EP128GS805) || defined(DEVICE_33EP128GS806) || defined(DEVICE_33EP128GS808) \

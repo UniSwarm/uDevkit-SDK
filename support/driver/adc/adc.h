@@ -2,7 +2,7 @@
  * @file adc.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
- * @copyright UniSwarm 2017-2018
+ * @copyright UniSwarm 2017-2020
  *
  * @date April 19, 2016, 10:56 AM
  *
@@ -18,6 +18,7 @@ int adc_init();
 //int adc_initchannel(uint8_t channel);
 //int adc_closechannel(uint8_t channel);
 
+int16_t adc_value(uint8_t channel);
 int16_t adc_getValue(uint8_t channel);
 //int adc_setSamplingPeriod(uint16_t priodMs);
 

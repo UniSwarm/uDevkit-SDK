@@ -1,7 +1,7 @@
 /**
  * @file adc_dspic33_sar12.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018
+ * @copyright UniSwarm 2018-2020
  *
  * @date December 13, 2018, 09:26 AM
  *
@@ -44,7 +44,9 @@ void adc_calib()
 #endif
 
     ADCON5Lbits.SHRPWR = 1;             // Turn on analog power for shared core
+#ifndef __MPLAB_DEBUGGER_SIMULATOR
     while (ADCON5Lbits.SHRRDY == 0);    // Wait when the shared core is ready for operation
+#endif
     ADCON3Hbits.SHREN = 1;              // Turn on digital power to enable triggers to the shared core
 
 #ifdef ADC_HAVE_AUTOCALIB
@@ -111,29 +113,30 @@ int adc_init()
     #endif
 
     // Configure the common ADC clock.
-    ADCON3Hbits.CLKSEL = 0;     // clock from Fp oscillator
-    ADCON3Hbits.CLKDIV = 0;     // no clock divider (1:1)
+    //ADCON3Hbits.CLKSEL = 0;     // clock from Fp oscillator
+    ADCON3Hbits.CLKSEL = 0b11;    // clock from FVCO/4 oscillator
+    ADCON3Hbits.CLKDIV = 3;       // no clock divider (1:4)
 
     // Configure the cores’ ADC clock.
 #ifdef ADC_HAVE_DEDICATED_CORE0
-    ADCORE0Hbits.ADCS = 0;      // clock divider (1:2)
+    ADCORE0Hbits.ADCS = 1;      // clock divider (1:2)
     ADCORE0Hbits.RES = 0b11;    // 12 bits
-    ADCORE0Lbits.SAMC = 0;      // 12 Tad
+    ADCORE0Lbits.SAMC = 11;     // 12 Tad
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE1
-    ADCORE1Hbits.ADCS = 0;      // clock divider (1:2)
+    ADCORE1Hbits.ADCS = 1;      // clock divider (1:2)
     ADCORE1Hbits.RES = 0b11;    // 12 bits
-    ADCORE1Lbits.SAMC = 0;      // 12 Tad
+    ADCORE1Lbits.SAMC = 11;     // 12 Tad
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE2
-    ADCORE2Hbits.ADCS = 0;      // clock divider (1:2)
+    ADCORE2Hbits.ADCS = 1;      // clock divider (1:2)
     ADCORE2Hbits.RES = 0b11;    // 12 bits
-    ADCORE2Lbits.SAMC = 0;      // 12 Tad
+    ADCORE2Lbits.SAMC = 11;     // 12 Tad
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE3
-    ADCORE3Hbits.ADCS = 0;      // clock divider (1:2)
+    ADCORE3Hbits.ADCS = 1;      // clock divider (1:2)
     ADCORE3Hbits.RES = 0b11;    // 12 bits
-    ADCORE3Lbits.SAMC = 0;      // 12 Tad
+    ADCORE3Lbits.SAMC = 11;     // 12 Tad
 #endif
 
     // Configure the ADC reference sources.
@@ -142,20 +145,43 @@ int adc_init()
     ADCON1Hbits.FORM = 0;       // integer format
 
     ADCON2Lbits.SHRADCS = 1;    // clock divider (1:2)
-    ADCON2Hbits.SHRSAMC = 10;   // 12 Tad
+    ADCON2Hbits.SHRSAMC = 11;   // 12 Tad
+    //ADCON1Lbits.NRE = 1; // Noise Reduction Enable bit, Holds conversion process for 1 T ADCORE when another core completes conversion to reduce noise between cores
 
     adc_calib();
 
     return 0;
 }
 
-int16_t adc_getValue(uint8_t channel)
+int16_t adc_value(uint8_t channel)
 {
     if (channel >= ADC_CHANNEL_COUNT)
-        return 0;
+    {
+        return -1;
+    }
+    return *(&ADCBUF0 + channel);       // Read the ADC conversion result
+}
+
+int16_t adc_getValue(uint8_t channel)
+{
+    uint16_t bitMask;
+    if (channel >= ADC_CHANNEL_COUNT)
+    {
+        return -1;
+    }
     ADCON3Lbits.CNVCHSEL = channel;     // select channel to convert
     ADCON3Lbits.CNVRTCH = 1;            // Start sampling
-    while (ADCON3Lbits.SWCTRG == 1);    // Wait for the conversion to complete
-    ADCON3Lbits.SWCTRG = 0;             // Clear conversion done status bit
+
+    if (channel < 16)
+    {
+        bitMask = (0x0001 << channel);
+        while ((ADSTATL & bitMask) == 0);
+    }
+    else
+    {
+        bitMask = (0x0001 << (channel - 16));
+        while ((ADSTATH & bitMask) == 0);
+    }
+
     return *(&ADCBUF0 + channel);       // Read the ADC conversion result
 }
