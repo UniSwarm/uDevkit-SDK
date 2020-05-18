@@ -584,6 +584,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 #if CAN_COUNT>=1
     unsigned int i;
     uint8_t size;
+    uint8_t dlc;
 
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
@@ -595,6 +596,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     switch (can)
     {
     case 0:
+        // while (C1FIFOCON1Lbits.TXREQ == 1);
         if (C1FIFOSTA1bits.TFNRFNIF == 0) // fifo full
         {
             return -1;
@@ -644,7 +646,44 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     size = header->size;
     if (header->flags & CAN_FDF)
     {
-        // TODO can Fd
+        if (size > 64)
+        {
+            size = 64;
+        }
+
+        // compute CAN Fd DLC
+        if (size <= 8)
+        {
+            dlc = size;
+        }
+        else if (size <= 12)
+        {
+            dlc = 9;
+        }
+        else if (size <= 16)
+        {
+            dlc = 10;
+        }
+        else if (size <= 20)
+        {
+            dlc = 11;
+        }
+        else if (size <= 24)
+        {
+            dlc = 12;
+        }
+        else if (size <= 32)
+        {
+            dlc = 13;
+        }
+        else if (size <= 48)
+        {
+            dlc = 14;
+        }
+        else
+        {
+            dlc = 15;
+        }
     }
     else
     {
@@ -652,8 +691,9 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
         {
             size = 8;
         }
+        dlc = size;
     }
-    CAN_DSPIC33C_TX_SETDLC(buffer, header->size); // Data Length
+    CAN_DSPIC33C_TX_SETDLC(buffer, dlc); // Data Length
 
     // data
     char *bufferData = (char*)buffer + 8;
