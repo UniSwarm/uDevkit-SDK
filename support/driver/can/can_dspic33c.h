@@ -1,14 +1,14 @@
 /**
  * @file can_dspic33c.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018
+ * @copyright UniSwarm 2018-2020
  *
  * @date September 4 2018, 15:05 PM
  *
  * @brief CAN communication support driver for dsPIC33CH, dsPIC33CK with CAN-Fd extension
  *
- * Implementation based on Microchip document DS70005340A :
- *  http://ww1.microchip.com/downloads/en/DeviceDoc/dsPIC33-PIC24-FRM-CAN-Flexible-Data-Rate-FD-Protocol-Module-70005340a.pdf
+ * Implementation based on Microchip document DS70005340B :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/dsPIC33-PIC24-FRM,-CAN-Flexible-Data-Rate-(FD)-Protocol-Module-DS70005340B.pdf
  */
 
 #ifndef CAN_DSPIC33C_H

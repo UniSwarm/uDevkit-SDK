@@ -1,14 +1,14 @@
 /**
  * @file can_dspic33c.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018
+ * @copyright UniSwarm 2018-2020
  *
  * @date September 8 2018, 09:05 AM
  *
  * @brief CAN communication support driver for dsPIC33CH, dsPIC33CK with CAN-Fd extension
  *
- * Implementation based on Microchip document DS70005340A :
- *  http://ww1.microchip.com/downloads/en/DeviceDoc/dsPIC33-PIC24-FRM-CAN-Flexible-Data-Rate-FD-Protocol-Module-70005340a.pdf
+ * Implementation based on Microchip document DS70005340B :
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/dsPIC33-PIC24-FRM,-CAN-Flexible-Data-Rate-(FD)-Protocol-Module-DS70005340B.pdf
  */
 
 #include "can.h"
@@ -167,9 +167,8 @@ int can_enable(rt_dev_t device)
 
         // Configure TEF to save 5 messages
         C1CONLbits.BRSDIS = 0x0;
-        C1CONHbits.STEF = 0x0;
-        //Don't save transmitted messages in TEF
-        C1CONHbits.TXQEN = 0x1;
+        C1CONHbits.STEF = 0x0;          //Don't save transmitted messages in TEF
+        C1CONHbits.TXQEN = 0x0;         // No TXQ
 
         // FIFO1 as transmiter (20 messages)
         C1FIFOCON1Hbits.FSIZE = 20-1;  //20 messages deep
@@ -198,9 +197,8 @@ int can_enable(rt_dev_t device)
 
         // Configure TEF to save 5 messages
         C2CONLbits.BRSDIS = 0x0;
-        C2CONHbits.STEF = 0x0;
-        //Don't save transmitted messages in TEF
-        C2CONHbits.TXQEN = 0x1;
+        C2CONHbits.STEF = 0x0;          //Don't save transmitted messages in TEF
+        C2CONHbits.TXQEN = 0x0;         // No TXQ
 
         // FIFO1 as transmiter (20 messages)
         C2FIFOCON1Hbits.FSIZE = 20-1;   //20 messages deep
@@ -321,7 +319,7 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
     case 0:
         C1CONLbits.CON = 1;
         C1CONHbits.REQOP = modeBits;
-        //while (C1CONHbits.OPMOD != modeBits);
+        while (C1CONHbits.OPMOD != modeBits);
         break;
 #if CAN_COUNT>=2
     case 1:
@@ -397,7 +395,7 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     {
         return -1;
     }
-    quantum = propagSeg + s1Seg + s2Seg + 1;
+    quantum = propagSeg + s1Seg + s2Seg + (uint8_t)1;
     if (quantum < 8 || quantum > 25)
     {
         return -1;
@@ -497,7 +495,7 @@ uint32_t can_effectiveBitRate(rt_dev_t device)
         return 0;
     }
     uint16_t bitRateDiv = 1;
-    uint8_t quantums = cans[can].propagSeg + cans[can].s1Seg + cans[can].s2Seg + 1;
+    uint8_t quantums = cans[can].propagSeg + cans[can].s1Seg + cans[can].s2Seg + (uint8_t)1;
 
     switch (can)
     {
