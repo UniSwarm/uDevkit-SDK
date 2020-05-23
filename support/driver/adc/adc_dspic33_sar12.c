@@ -24,157 +24,157 @@ struct adc_dev
 
 struct adc_dev adcs[] =
 {
-#if ADC_CHANNEL_COUNT >= 1
+#if ADC_CHANNEL_MAX >= 1
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 2
+#if ADC_CHANNEL_MAX >= 2
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 3
+#if ADC_CHANNEL_MAX >= 3
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 4
+#if ADC_CHANNEL_MAX >= 4
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 5
+#if ADC_CHANNEL_MAX >= 5
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 6
+#if ADC_CHANNEL_MAX >= 6
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 7
+#if ADC_CHANNEL_MAX >= 7
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 8
+#if ADC_CHANNEL_MAX >= 8
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 9
+#if ADC_CHANNEL_MAX >= 9
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 10
+#if ADC_CHANNEL_MAX >= 10
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 11
+#if ADC_CHANNEL_MAX >= 11
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 12
+#if ADC_CHANNEL_MAX >= 12
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 13
+#if ADC_CHANNEL_MAX >= 13
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 14
+#if ADC_CHANNEL_MAX >= 14
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 15
+#if ADC_CHANNEL_MAX >= 15
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 16
+#if ADC_CHANNEL_MAX >= 16
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 17
+#if ADC_CHANNEL_MAX >= 17
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 18
+#if ADC_CHANNEL_MAX >= 18
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 19
+#if ADC_CHANNEL_MAX >= 19
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 20
+#if ADC_CHANNEL_MAX >= 20
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 21
+#if ADC_CHANNEL_MAX >= 21
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 22
+#if ADC_CHANNEL_MAX >= 22
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 23
+#if ADC_CHANNEL_MAX >= 23
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 24
+#if ADC_CHANNEL_MAX >= 24
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 25
+#if ADC_CHANNEL_MAX >= 25
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 26
+#if ADC_CHANNEL_MAX >= 26
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 27
+#if ADC_CHANNEL_MAX >= 27
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 28
+#if ADC_CHANNEL_MAX >= 28
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 29
+#if ADC_CHANNEL_MAX >= 29
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 30
+#if ADC_CHANNEL_MAX >= 30
     {
         .handler = NULL,
     },
 #endif
-#if ADC_CHANNEL_COUNT >= 31
+#if ADC_CHANNEL_MAX >= 31
     {
         .handler = NULL,
     },
@@ -320,7 +320,7 @@ int adc_init()
 
 int16_t adc_value(uint8_t channel)
 {
-    if (channel >= ADC_CHANNEL_COUNT)
+    if (channel >= ADC_CHANNEL_MAX)
     {
         return -1;
     }
@@ -330,7 +330,7 @@ int16_t adc_value(uint8_t channel)
 int16_t adc_getValue(uint8_t channel)
 {
     uint16_t bitMask;
-    if (channel >= ADC_CHANNEL_COUNT)
+    if (channel >= ADC_CHANNEL_MAX)
     {
         return -1;
     }
@@ -353,7 +353,7 @@ int16_t adc_getValue(uint8_t channel)
 
 int adc_setHandler(uint8_t channel, void (*handler)(void))
 {
-    if (channel >= ADC_CHANNEL_COUNT)
+    if (channel >= ADC_CHANNEL_MAX)
     {
         return -1;
     }
@@ -365,187 +365,187 @@ int adc_setHandler(uint8_t channel, void (*handler)(void))
         _ADCAN0IF = 0;
         _ADCAN0IE = (handler != 0);
         break;
-#if ADC_CHANNEL_COUNT >= 2
+#ifdef ADC_HAVE_CH2
     case 1:
         _ADCAN1IF = 0;
         _ADCAN1IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 3
+#ifdef ADC_HAVE_CH3
     case 2:
         _ADCAN2IF = 0;
         _ADCAN2IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 4
+#ifdef ADC_HAVE_CH4
     case 3:
         _ADCAN3IF = 0;
         _ADCAN3IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 5
+#ifdef ADC_HAVE_CH5
     case 4:
         _ADCAN4IF = 0;
         _ADCAN4IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 6
+#ifdef ADC_HAVE_CH6
     case 5:
         _ADCAN5IF = 0;
         _ADCAN5IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 7
+#ifdef ADC_HAVE_CH7
     case 6:
         _ADCAN6IF = 0;
         _ADCAN6IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 8
+#ifdef ADC_HAVE_CH8
     case 7:
         _ADCAN7IF = 0;
         _ADCAN7IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 9
+#ifdef ADC_HAVE_CH9
     case 8:
         _ADCAN8IF = 0;
         _ADCAN8IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 10
+#ifdef ADC_HAVE_CH10
     case 9:
         _ADCAN9IF = 0;
         _ADCAN9IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 11
+#ifdef ADC_HAVE_CH11
     case 10:
         _ADCAN10IF = 0;
         _ADCAN10IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 12
+#ifdef ADC_HAVE_CH12
     case 11:
         _ADCAN11IF = 0;
         _ADCAN11IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 13
+#ifdef ADC_HAVE_CH13
     case 12:
         _ADCAN12IF = 0;
         _ADCAN12IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 14
+#ifdef ADC_HAVE_CH14
     case 13:
         _ADCAN13IF = 0;
         _ADCAN13IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 15
+#ifdef ADC_HAVE_CH15
     case 14:
         _ADCAN14IF = 0;
         _ADCAN14IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 16
+#ifdef ADC_HAVE_CH16
     case 15:
         _ADCAN15IF = 0;
         _ADCAN15IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 17
+#ifdef ADC_HAVE_CH17
     case 16:
         _ADCAN16IF = 0;
         _ADCAN16IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 18
+#ifdef ADC_HAVE_CH18
     case 17:
         _ADCAN17IF = 0;
         _ADCAN17IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 19
+#ifdef ADC_HAVE_CH19
     case 18:
         _ADCAN18IF = 0;
         _ADCAN18IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 20
+#ifdef ADC_HAVE_CH20
     case 19:
         _ADCAN19IF = 0;
         _ADCAN19IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 21
+#ifdef ADC_HAVE_CH21
     case 20:
         _ADCAN20IF = 0;
         _ADCAN20IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 22
+#ifdef ADC_HAVE_CH22
     case 21:
         _ADCAN21IF = 0;
         _ADCAN21IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 23
+#ifdef ADC_HAVE_CH23
     case 22:
         _ADCAN22IF = 0;
         _ADCAN22IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 24
+#ifdef ADC_HAVE_CH24
     case 23:
         _ADCAN23IF = 0;
         _ADCAN23IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 25
+#ifdef ADC_HAVE_CH25
     case 24:
         _ADCAN24IF = 0;
         _ADCAN24IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 26
+#ifdef ADC_HAVE_CH26
     case 25:
         _ADCAN25IF = 0;
         _ADCAN25IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 27
+#ifdef ADC_HAVE_CH27
     case 26:
         _ADCAN26IF = 0;
         _ADCAN26IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 28
+#ifdef ADC_HAVE_CH28
     case 27:
         _ADCAN27IF = 0;
         _ADCAN27IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 29
+#ifdef ADC_HAVE_CH29
     case 28:
         _ADCAN28IF = 0;
         _ADCAN28IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 30
+#ifdef ADC_HAVE_CH30
     case 29:
         _ADCAN29IF = 0;
         _ADCAN29IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 31
+#ifdef ADC_HAVE_CH31
     case 30:
         _ADCAN30IF = 0;
         _ADCAN30IE = (handler != 0);
         break;
 #endif
-#if ADC_CHANNEL_COUNT >= 32
+#ifdef ADC_HAVE_CH32
     case 31:
         _ADCAN31IF = 0;
         _ADCAN31IE = (handler != 0);
@@ -555,7 +555,7 @@ int adc_setHandler(uint8_t channel, void (*handler)(void))
     return 0;
 }
 
-#if ADC_CHANNEL_COUNT >= 1
+#ifdef ADC_HAVE_CH1
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN0Interrupt()
 {
     if (adcs[0].handler)
@@ -566,7 +566,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN0Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 2
+#ifdef ADC_HAVE_CH2
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN1Interrupt()
 {
     if (adcs[1].handler)
@@ -577,7 +577,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN1Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 3
+#ifdef ADC_HAVE_CH3
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN2Interrupt()
 {
     if (adcs[2].handler)
@@ -588,7 +588,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN2Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 4
+#ifdef ADC_HAVE_CH4
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN3Interrupt()
 {
     if (adcs[3].handler)
@@ -599,7 +599,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN3Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 5
+#ifdef ADC_HAVE_CH5
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN4Interrupt()
 {
     if (adcs[4].handler)
@@ -610,7 +610,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN4Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 6
+#ifdef ADC_HAVE_CH6
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN5Interrupt()
 {
     if (adcs[5].handler)
@@ -621,7 +621,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN5Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 7
+#ifdef ADC_HAVE_CH7
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN6Interrupt()
 {
     if (adcs[6].handler)
@@ -632,7 +632,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN6Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 8
+#ifdef ADC_HAVE_CH8
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN7Interrupt()
 {
     if (adcs[7].handler)
@@ -643,7 +643,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN7Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 9
+#ifdef ADC_HAVE_CH9
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN8Interrupt()
 {
     if (adcs[8].handler)
@@ -654,7 +654,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN8Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 10
+#ifdef ADC_HAVE_CH10
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN9Interrupt()
 {
     if (adcs[9].handler)
@@ -665,7 +665,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN9Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 11
+#ifdef ADC_HAVE_CH11
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN10Interrupt()
 {
     if (adcs[10].handler)
@@ -676,7 +676,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN10Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 12
+#ifdef ADC_HAVE_CH12
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN11Interrupt()
 {
     if (adcs[11].handler)
@@ -687,7 +687,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN11Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 13
+#ifdef ADC_HAVE_CH13
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN12Interrupt()
 {
     if (adcs[12].handler)
@@ -698,7 +698,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN12Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 14
+#ifdef ADC_HAVE_CH14
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN13Interrupt()
 {
     if (adcs[13].handler)
@@ -709,7 +709,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN13Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 15
+#ifdef ADC_HAVE_CH15
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN14Interrupt()
 {
     if (adcs[14].handler)
@@ -720,7 +720,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN14Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 16
+#ifdef ADC_HAVE_CH16
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN15Interrupt()
 {
     if (adcs[15].handler)
@@ -731,7 +731,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN15Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 17
+#ifdef ADC_HAVE_CH17
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN16Interrupt()
 {
     if (adcs[16].handler)
@@ -742,7 +742,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN16Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 18
+#ifdef ADC_HAVE_CH18
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN17Interrupt()
 {
     if (adcs[17].handler)
@@ -753,7 +753,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN17Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 19
+#ifdef ADC_HAVE_CH19
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN18Interrupt()
 {
     if (adcs[18].handler)
@@ -764,7 +764,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN18Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 20
+#ifdef ADC_HAVE_CH20
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN19Interrupt()
 {
     if (adcs[19].handler)
@@ -775,7 +775,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN19Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 21
+#ifdef ADC_HAVE_CH21
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN20Interrupt()
 {
     if (adcs[20].handler)
@@ -786,7 +786,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN20Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 22
+#ifdef ADC_HAVE_CH22
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN21Interrupt()
 {
     if (adcs[21].handler)
@@ -797,7 +797,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN21Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 23
+#ifdef ADC_HAVE_CH23
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN22Interrupt()
 {
     if (adcs[22].handler)
@@ -808,7 +808,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN22Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 24
+#ifdef ADC_HAVE_CH24
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN23Interrupt()
 {
     if (adcs[23].handler)
@@ -819,7 +819,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN23Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 25
+#ifdef ADC_HAVE_CH25
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN24Interrupt()
 {
     if (adcs[24].handler)
@@ -830,7 +830,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN24Interrupt()
 }
 #endif
 
-#if ADC_CHANNEL_COUNT >= 26
+#ifdef ADC_HAVE_CH26
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN25Interrupt()
 {
     if (adcs[25].handler)
