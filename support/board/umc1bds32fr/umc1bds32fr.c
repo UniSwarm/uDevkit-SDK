@@ -24,7 +24,7 @@ int board_init_io()
     // analog inputs
     ANSELA = 0x001F;         // all analog inputs of port A as analog
     ANSELB = 0x0006;         // all analog inputs of port B as digital buffer
-    ANSELC = 0x008F;         // all analog inputs of port C as digital buffer
+    ANSELC = 0x00CF;         // all analog inputs of port C as digital buffer
     ANSELD = 0xF000;         // all analog inputs of port D as digital buffer
     CNPUDbits.CNPUD10 = 1;
     CNPUDbits.CNPUD11 = 1;
