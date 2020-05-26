@@ -78,7 +78,6 @@ int can_filterConfiguration(rt_dev_t device, uint8_t nFilter, uint8_t fifo,
 int can_filterEnable(rt_dev_t device, uint8_t nFilter);
 int can_filterDisable(rt_dev_t device, uint8_t nFilter);
 
-
 #if defined(ARCHI_dspic30f)
  #include "can_dspic30f.h"
 #elif defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
@@ -90,6 +89,10 @@ int can_filterDisable(rt_dev_t device, uint8_t nFilter);
 #elif defined(ARCHI_pic32mx) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mzec) \
  || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
  #include "can_pic32.h"
+#endif
+
+#ifdef SIMULATOR
+ #include "can_sim.h"
 #endif
 
 #endif // CAN_H

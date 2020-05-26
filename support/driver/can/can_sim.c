@@ -1,7 +1,7 @@
 /**
  * @file can_sim.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright Uniswarm 2018-2019
+ * @copyright Uniswarm 2018-2020
  *
  * @date September 3 2018, 17:01 PM
  *
@@ -17,32 +17,44 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <fcntl.h>
-#include <sys/ioctl.h>
-#include <net/if.h>
-#include <linux/can.h>
-#include <linux/can/raw.h>
+
+#if defined (WIN32) || defined (_WIN32)
+    #include <winsock2.h>
+    #define SOCKET_MODE 0
+
+#elif defined (linux) || defined (LINUX) || defined (__linux__) \
+    || defined (unix) || defined (UNIX) || defined (__unix__) \
+    || defined (__APPLE__)
+    #include <fcntl.h>
+    #include <sys/ioctl.h>
+    #include <net/if.h>
+    #include <linux/can.h>
+    #include <linux/can/raw.h>
+#else
+  #error can sim not supported for your platform
+#endif
 
 int soc;
 int read_can_port;
-
 
 #if !defined (CAN_COUNT) || CAN_COUNT==0
     #warning No device
 #endif
 
-#include <stdio.h>
-
 can_dev cans[] = {
-    {.bitRate = 0},
+    {.bitRate = 0,
+    .bus = "can0"},
 #if CAN_COUNT>=2
-    {.bitRate = 0},
+    {.bitRate = 0,
+    .bus = "can1"}},
 #endif
 #if CAN_COUNT>=3
-    {.bitRate = 0},
+    {.bitRate = 0,
+    .bus = "can2"}},
 #endif
 #if CAN_COUNT>=4
-    {.bitRate = 0},
+    {.bitRate = 0,
+    .bus = "can3"}},
 #endif
 };
 
@@ -74,6 +86,17 @@ rt_dev_t can_getFreeDevice()
     return device;
 }
 
+int can_sim_setBus(rt_dev_t device, char *bus)
+{
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+    strcpy(cans[can].bus, bus);
+    return 0;
+}
+
 int can_open(rt_dev_t device)
 {
     uint8_t can = MINOR(device);
@@ -84,6 +107,7 @@ int can_open(rt_dev_t device)
     cans[can].used = 1;
     can_sendconfig(can);
 
+#ifdef SIM_UNIX
     struct ifreq ifr;
     struct sockaddr_can addr;
 
@@ -95,7 +119,7 @@ int can_open(rt_dev_t device)
     }
 
     addr.can_family = AF_CAN;
-    strcpy(ifr.ifr_name, "can0");
+    strcpy(ifr.ifr_name, cans[can].bus);
 
     if (ioctl(soc, SIOCGIFINDEX, &ifr) < 0)
     {
@@ -110,6 +134,7 @@ int can_open(rt_dev_t device)
     {
         return -1;
     }
+#endif
 
     return 0;
 }
@@ -261,6 +286,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
         return -1;
     }
 
+#ifdef SIM_UNIX
     int retval, i;
     struct can_frame frame;
 
@@ -287,13 +313,13 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     }
 // TODO format data
     //simulator_send(CAN_SIM_MODULE, can, CAN_SIM_WRITE, data, size);
+#endif
 
     return 1;
 }
 
 int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
-    struct can_frame frame;
     int i;
     ssize_t size_read;
     uint8_t can = MINOR(device);
@@ -307,27 +333,44 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     if (size_read < 0)
         size_read = 0;*/
 
+#ifdef SIM_UNIX
+    struct can_frame frame;
+
     int recvbytes = read(soc, &frame, sizeof(struct can_frame));
     if (recvbytes >= 0)
     {
         header->id = frame.can_id & 0x1FFFFFFF;
         header->size = frame.can_dlc; // Data Length
         header->flags = 0;
-        if((frame.can_id & 0x80000000))
+        if ((frame.can_id & 0x80000000))
         {
             header->flags += CAN_VERS2BA;
         }
+        if ((frame.can_id & CAN_RTR_FLAG) != 0)
+        {
+            header->flags += CAN_RTR;
+        }
 
-        //printf("can%d  %X  [%d]", can, header->id, header->size);
         for (i=0; i < header->size; i++)
         {
             data[i] = (char)frame.data[i];
-            //printf("%02X ", frame.data[i]);
         }
-        //printf("\n");
         return 1;
     }
-// TODO format data
+#endif
+
+    can_sim_frame sim_frame;
+    simulator_rec_task();
+    size_read = simulator_recv(CAN_SIM_MODULE, can, CAN_SIM_READ, (char*)&sim_frame, sizeof(sim_frame));
+    if (size_read < 0)
+        return 0;
+
+    header->id = sim_frame.can_id;
+    header->size = sim_frame.can_dlc; // Data Length
+    for (i=0; i < header->size; i++)
+        data[i] = sim_frame.data[i];
+    //printf("dlc = %d, data = %s\n", frame.can_dlc, frame.data);
+    // TODO format data
 
     return 0;
 }
@@ -367,7 +410,7 @@ int can_filterEnable(rt_dev_t device, uint8_t nFilter)
     }
 
     //TODO
-        // simulator_filterEnable
+    // simulator_filterEnable
 
     return 0;
 }
@@ -387,7 +430,7 @@ int can_filterDisable(rt_dev_t device, uint8_t nFilter)
     }
 
     //TODO
-        // simulator_filterDisable
+    // simulator_filterDisable
 
     return 0;
 
