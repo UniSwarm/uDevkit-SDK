@@ -19,7 +19,7 @@ $(UDKSIM_EXE): $(shell find $(UDEVKIT)/tool/udk-sim/ \( -name '*.h' -o -name '*.
 	cd $(UDEVKIT)/tool/udk-sim/ && make
 
 SIMULATOR_PATH := $(UDEVKIT)/support/archi/simulator
-DEFINES_SIM += -D SIMULATOR -I $(SIMULATOR_PATH) -g
+DEFINES_SIM += -D SIMULATOR -I $(SIMULATOR_PATH)
 
 vpath %.c $(SIMULATOR_PATH)
 vpath %.cpp $(SIMULATOR_PATH)
