@@ -25,14 +25,12 @@
  */
 ssize_t nvm_read(uint32_t addr, char *data, size_t size)
 {
-    uint32_t addrWord;
     uint16_t offset, i = 0;
     size_t sizeRemaining;
     ssize_t size_read;
 
-    addrWord = addr >> 1;       // translation from byte address to word address
-    TBLPAG = addrWord >> 16;
-    offset = addrWord;
+    TBLPAG = addr >> 16;
+    offset = addr;
     sizeRemaining = size;       // set the number of value to read
 
     while (sizeRemaining >= 3)  // read if there is more than 3 bytes to read
@@ -103,15 +101,15 @@ void nvm_writeDoubleWord(uint32_t addrWord, char *data)
  */
 ssize_t nvm_write(uint32_t addr, char *data, size_t size)
 {
-    uint32_t addrWord;
+    uint32_t currentAddr;
     size_t sizeRemaining, i;
     ssize_t size_write;
     char newData[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
 
-    addrWord = addr >> 1;   // translation from byte address to word address
+    currentAddr = addr;
     sizeRemaining = size;   // set the number of value to read
 
-    if ((addrWord & 0x0003) >= 2)  // if the address is not aligned
+    if ((currentAddr & 0x0003) >= 2)  // if the address is not aligned
     {
         if (sizeRemaining < 3)  // if less than 3 bytes to write
         {
@@ -130,17 +128,17 @@ ssize_t nvm_write(uint32_t addr, char *data, size_t size)
             sizeRemaining -= 3;
         }
 
-        addrWord = addrWord & 0xFFFFFFC;
-        nvm_writeDoubleWord(addrWord, newData);
+        currentAddr = currentAddr & 0xFFFFFFC;
+        nvm_writeDoubleWord(currentAddr, newData);
 
-        addrWord += 4;
+        currentAddr += 4;
         data += 3;
     }
 
     while (sizeRemaining > 6)  // if at least 6 bytes to write
     {
-        nvm_writeDoubleWord(addrWord, data);
-        addrWord += 4;
+        nvm_writeDoubleWord(currentAddr, data);
+        currentAddr += 4;
         data += 6;
         sizeRemaining -= 6;
     }
@@ -156,7 +154,7 @@ ssize_t nvm_write(uint32_t addr, char *data, size_t size)
             newData[i] = data[i];
         }
         sizeRemaining = 0;
-        nvm_writeDoubleWord(addrWord, newData);
+        nvm_writeDoubleWord(currentAddr, newData);
     }
     size_write = (size - sizeRemaining);
     return size_write;
@@ -187,11 +185,9 @@ ssize_t nvm_readPage(uint32_t addr, char *data)
  */
 ssize_t nvm_erasePage(uint32_t addr)
 {
-    uint32_t addrWord;
     ssize_t size_erase;
-    addrWord = addr >> 1;       // translation from byte address to word address
-    NVMADR = addrWord & 0xF800; // filter supposed to be on the other register
-    NVMADRU = addrWord >> 16;   // set target write addrof general segment
+    NVMADR = addr & 0xF800; // filter supposed to be on the other register
+    NVMADRU = addr >> 16;   // set target write addrof general segment
 
     NVMCON = 0x4003;
     size_erase = NVM_FLASH_PAGE_BYTE;
