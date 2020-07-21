@@ -8,6 +8,9 @@ ifndef BOARD
 endif
 
 ifdef BOARD
+ ifdef BOARD_VERSION
+  DEFINES += -DBOARD_VERSION=$(BOARD_VERSION)
+ endif
  ifeq ($(patsubst %.mk,,$(lastword $(BOARD))),) # if BOARD endwith ".mk"
   BOARD_FILE = $(BOARD)
   INCLUDEPATH += -I$(dir $(BOARD_FILE))/

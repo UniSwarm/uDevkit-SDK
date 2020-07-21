@@ -18,3 +18,5 @@ uDevkit-SDK supports for a large range of electronics boards.
 |[UDT1CR-I](udt1cr-i/)| **UniSwarm** | - | PIC32MZ2048EFH064 |
 |[UIO44FR](uio44fr/)| **UniSwarm** | - | dsPIC33CK256MP505 |
 |[UMC4D30CRU](UMC4D30CRU/)| **UniSwarm** | - | PIC32MK1024MCF100 |
+
+BOARD_VERSION define is used to specify the hardware board version.
