@@ -29,6 +29,7 @@ hex : $(OUT_PWD)/$(PROJECT).hex
 
 # construction of list of OBJECTS to build and include dependencies files if exist
 OBJECTS := $(SRC:.S=.o)
+OBJECTS := $(SRC:.s=.o)
 OBJECTS := $(notdir $(OBJECTS:.c=.o))
 OBJECTS := $(OBJECTS) $(notdir $(ARCHI_SRC:.c=.o))
 OBJECTS := $(addprefix $(OUT_PWD)/, $(OBJECTS))
@@ -43,6 +44,12 @@ $(OUT_PWD)/%.o : %.c
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
 $(OUT_PWD)/%.o : %.S
+	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
+	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
+	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
+
+$(OUT_PWD)/%.o : %.s
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
