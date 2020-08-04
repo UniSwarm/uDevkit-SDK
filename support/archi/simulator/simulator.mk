@@ -23,7 +23,6 @@ DEFINES_SIM += -D SIMULATOR -I $(SIMULATOR_PATH)
 
 vpath %.c $(SIMULATOR_PATH)
 vpath %.cpp $(SIMULATOR_PATH)
-vpath %.c $(OUT_PWD)
 SIM_SRC += simulator.cpp simulator_socket.c simulator_pthread.c
 
 # simulator support

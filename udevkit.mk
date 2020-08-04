@@ -44,7 +44,7 @@ INCLUDEPATH += -I. -I$(UDEVKIT)/include -I$(OUT_PWD)
 # cleaning rule project
 .PHONY: clean
 clean: sim-clean
-	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c
+	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c $(OUT_PWD)/*.h $(OUT_PWD)/*.s
 	rm -f $(OUT_PWD)/$(PROJECT).elf $(OUT_PWD)/$(PROJECT).hex
 	rm -f $(CONFIG_HEADERS)
 
@@ -55,6 +55,10 @@ $(DISTRIB_PWD)/%.c : %.c
 	@printf "$(GREEN)cp %-35s => %s$(NORM)\n" $(notdir $<) $(DISTRIB_PWD)/$(notdir $@)
 	$(VERB)cp $< $(DISTRIB_PWD)/$(notdir $@)
 $(DISTRIB_PWD)/%.h : %.h
+	@test -d $(DISTRIB_PWD) || mkdir -p $(DISTRIB_PWD)
+	@printf "$(GREEN)cp %-35s => %s$(NORM)\n" $(notdir $<) $(DISTRIB_PWD)/$(notdir $@)
+	$(VERB)cp $< $(DISTRIB_PWD)/$(notdir $@)
+$(DISTRIB_PWD)/%.s : %.s
 	@test -d $(DISTRIB_PWD) || mkdir -p $(DISTRIB_PWD)
 	@printf "$(GREEN)cp %-35s => %s$(NORM)\n" $(notdir $<) $(DISTRIB_PWD)/$(notdir $@)
 	$(VERB)cp $< $(DISTRIB_PWD)/$(notdir $@)

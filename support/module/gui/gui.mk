@@ -3,7 +3,6 @@ GUI_MODULE=
 
 vpath %.c $(MODULEPATH)
 vpath %.c $(MODULEPATH)/screenController
-vpath %.c $(OUT_PWD)
 
 vpath %.h $(MODULEPATH)
 vpath %.h $(MODULEPATH)/screenController

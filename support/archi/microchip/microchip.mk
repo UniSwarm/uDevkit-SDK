@@ -74,3 +74,6 @@ dbg : $(OUT_PWD)/$(PROJECT).elf
 # shows a disassembly listing of the symbol after the dot
 dbg.% : $(OUT_PWD)/$(PROJECT).elf
 	$(VERB)$(OBJDUMP) -S $(OUT_PWD)/$(PROJECT).elf |sed -n -e '/^[a-f0-9]\+ <_*$*>:/,/^[a-f0-9]\+ <_.*>:/ p'
+
+vpath %.h $(OUT_PWD)
+vpath %.c $(OUT_PWD)
