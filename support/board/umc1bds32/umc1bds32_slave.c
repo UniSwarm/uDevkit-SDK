@@ -11,7 +11,7 @@
  *  https://uniswarm.eu/uboards/umc/umc1bds32fr
  */
 
-#include "umc1bds32fr.h"
+#include "umc1bds32.h"
 
 #include "driver/sysclock.h"
 #include "driver/gpio.h"
