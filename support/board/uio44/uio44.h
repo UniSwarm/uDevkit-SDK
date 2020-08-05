@@ -1,14 +1,14 @@
 /**
- * @file uio44fr.h
+ * @file uio44.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright UniSwarm 2018-2019
  *
  * @date November 28, 2018, 09:30 AM
  *
- * @brief Code for UIO44FR / UIO44FR-I board
+ * @brief Code for UIO44(FR) / UIO44(FR)-I board
  * 
  * product page:
- *  https://uniswarm.eu/uboards/uio/uio44fr
+ *  https://uniswarm.eu/uboards/uio/uio44
  */
 
 #ifndef UIO44FR_H

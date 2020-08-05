@@ -9,6 +9,6 @@ vpath %.h $(dir $(lastword $(MAKEFILE_LIST)))
 
 DRIVERS += gpio
 
-SRC += uio44fr.c
-HEADER += uio44fr.h
-ARCHI_SRC += uio44fr_fuses.c
+SRC += uio44.c
+HEADER += uio44.h
+ARCHI_SRC += uio44_fuses.c

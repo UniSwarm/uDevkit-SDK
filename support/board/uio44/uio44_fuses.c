@@ -11,6 +11,9 @@
 // FBSLIM
 #pragma config BSLIM = 8191          // Boot Segment Flash Page Address Limit bits->
 
+// FBOOT
+#pragma config BTMODE = 0b11         // Single Partition Mode
+
 // FOSCSEL
 #pragma config FNOSC = FRC           // Oscillator Source Selection->Primary
 #pragma config IESO = ON             // Two-speed Oscillator Start-up Enable bit->Start up device with FRC, then switch to user-selected oscillator source
