@@ -12,12 +12,21 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    QString picFilter = "DSPIC33(C|E.*GS)";
-    QString sfrFilter = "ADCBUF[0-9]+";
+#ifdef WIN32
+    QString edsPath = "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/";
+#else
+    QString edsPath = "/opt/microchip/mplabx/v5.40/packs/Microchip/";
+    // QString edsPath = "/opt/microchip/mplabx/v5.25/packs/Microchip/";
+#endif
+    QString picFilter = "(DSPIC33|PIC24)[CE]";
+    QString sfrFilter = "ADCBUF([0-9]+)";
+    QString deviceName = "ADC";
+    QString outputFileName = "adc_dspic33.h";
 
     QStringList fileList;
     QRegularExpression picFileRegExp(picFilter);
-    QDirIterator it("/opt/microchip/mplabx/v5.40/packs/Microchip/", QStringList("*.PIC"), QDir::AllEntries | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+    QDirIterator it(edsPath, QStringList("*.PIC"), QDir::AllEntries | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+    int fileCount = 0;
     while (it.hasNext())
     {
         const QString &fileName = it.next();
@@ -26,15 +35,20 @@ int main(int argc, char *argv[])
         {
             fileList << fileName;
         }
+        fileCount++;
     }
+    qDebug() << fileList.count() << "files matches on" << fileCount << "files.";
 
     QMultiMap<QString, QString> adbuffCpu;
     QMultiMap<QString, QString> cpuAadbuff;
 
     QRegularExpression sfrRegExp(sfrFilter);
+    int fi = 0;
     for (const QString &fileName : fileList)
     {
+        QFileInfo fileInfo(fileName);
         QStringList sfrList;
+        qDebug() << ++fi << "/" << fileList.count() << fileInfo.fileName();
         EDCParser parser(fileName);
         for (const EDCSFRDef &sfr : parser.sfrs())
         {
@@ -44,9 +58,10 @@ int main(int argc, char *argv[])
             }
         }
 
-        for (int i=0; i<64; i++)
+        for (int i = 0; i < 64; i++)
         {
-            QString adBuff = QString("ADCBUF%1").arg(i);
+            QString adBuff = sfrFilter;
+            adBuff.replace(QRegularExpression("\\(.*\\)"), QString::number(i));
             if (sfrList.contains(adBuff))
             {
                 QString deviceName = parser.name();
@@ -58,7 +73,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    CWritter cwriter("adBuff.c");
+    CWritter cwriter(outputFileName);
 
     // count / max
     QMultiMap<uint, QString> buffCount;
@@ -68,9 +83,10 @@ int main(int argc, char *argv[])
         QStringList adBuff = cpuAadbuff.values(cpu);
         QCollator coll;
         coll.setNumericMode(true);
-        std::sort(adBuff.begin(), adBuff.end(), [&](const QString& s1, const QString& s2){ return coll.compare(s1, s2) < 0; });
+        std::sort(adBuff.begin(), adBuff.end(), [&](const QString &s1, const QString &s2) { return coll.compare(s1, s2) < 0; });
 
-        int max = adBuff.last().mid(6).toUInt() + 1;
+        QRegularExpressionMatch match = sfrRegExp.match(adBuff.last());
+        int max = match.captured(1).toInt() + 1;
         int count = adBuff.count();
         buffCount.insert(count, cpu);
         buffMax.insert(max, cpu);
@@ -80,24 +96,30 @@ int main(int argc, char *argv[])
         cwriter.writeIfDefList(buffCount.values(count));
 
         QStringList defines, values;
-        defines << "ADC_CHANNEL_COUNT";
+        defines << deviceName + "_COUNT";
         values << QString::number(count);
         cwriter.writeDefList(defines, values);
     }
-    cwriter.writeIfDefListEnd();
-    cwriter << "\n";
+    if (!buffCount.uniqueKeys().isEmpty())
+    {
+        cwriter.writeIfDefListEnd();
+        cwriter << "\n";
+    }
 
     for (uint max : buffMax.uniqueKeys())
     {
         cwriter.writeIfDefList(buffMax.values(max));
 
         QStringList defines, values;
-        defines << "ADC_CHANNEL_MAX";
+        defines << deviceName + "_CHANNEL_MAX";
         values << QString::number(max);
         cwriter.writeDefList(defines, values);
     }
-    cwriter.writeIfDefListEnd();
-    cwriter << "\n";
+    if (!buffMax.uniqueKeys().isEmpty())
+    {
+        cwriter.writeIfDefListEnd();
+        cwriter << "\n";
+    }
 
     // have channel
     QMultiMap<QStringList, QString> adbuffCpuList;
@@ -111,7 +133,9 @@ int main(int argc, char *argv[])
         QStringList defines;
         for (QString def : adbuffCpuList.values(cpus))
         {
-            defines << "ADC_HAVE_CH" + def.mid(6);
+            QRegularExpressionMatch match = sfrRegExp.match(def);
+            int idDef = match.captured(1).toInt();
+            defines << QString("%1_HAVE_CH%2").arg(deviceName).arg(idDef);
         }
         cwriter.writeDefList(defines);
         cwriter.writeIfDefListEnd();
