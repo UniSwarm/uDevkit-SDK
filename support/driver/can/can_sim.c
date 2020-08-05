@@ -46,15 +46,15 @@ can_dev cans[] = {
     .bus = "can0"},
 #if CAN_COUNT>=2
     {.bitRate = 0,
-    .bus = "can1"}},
+    .bus = "can1"},
 #endif
 #if CAN_COUNT>=3
     {.bitRate = 0,
-    .bus = "can2"}},
+    .bus = "can2"},
 #endif
 #if CAN_COUNT>=4
     {.bitRate = 0,
-    .bus = "can3"}},
+    .bus = "can3"},
 #endif
 };
 
