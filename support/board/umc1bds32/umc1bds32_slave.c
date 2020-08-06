@@ -88,5 +88,6 @@ int8_t board_getLed(uint8_t led)
 
 int8_t board_getButton(uint8_t button)
 {
+    UNUSED(button);
     return -1;
 }

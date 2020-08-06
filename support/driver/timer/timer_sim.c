@@ -40,7 +40,7 @@ struct timer_dev
     void (*handler)(void);
 };
 
-struct timer_dev timers[] = {
+static struct timer_dev timers[] = {
     {
         .periodMs = 1000,
         .value = 0,
@@ -116,6 +116,7 @@ struct timer_dev timers[] = {
 #if TIMER_COUNT>=1
 static void * timer1_handler (void * p_data)
 {
+    UNUSED(p_data);
     while (1)
     {
         psleep(timers[0].periodMs);

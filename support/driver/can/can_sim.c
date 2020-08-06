@@ -34,8 +34,7 @@
   #error can sim not supported for your platform
 #endif
 
-int soc;
-int read_can_port;
+static int soc;
 
 #if !defined (CAN_COUNT) || CAN_COUNT==0
     #warning No device
@@ -280,6 +279,8 @@ uint8_t can_s2Seg(rt_dev_t device)
 
 int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
+    UNUSED(fifo);
+
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {
@@ -320,6 +321,8 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 
 int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
+    UNUSED(fifo);
+
     int i;
     ssize_t size_read;
     uint8_t can = MINOR(device);
@@ -363,12 +366,16 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     simulator_rec_task();
     size_read = simulator_recv(CAN_SIM_MODULE, can, CAN_SIM_READ, (char*)&sim_frame, sizeof(sim_frame));
     if (size_read < 0)
+    {
         return 0;
+    }
 
     header->id = sim_frame.can_id;
     header->size = sim_frame.can_dlc; // Data Length
     for (i=0; i < header->size; i++)
+    {
         data[i] = sim_frame.data[i];
+    }
     //printf("dlc = %d, data = %s\n", frame.can_dlc, frame.data);
     // TODO format data
 
@@ -378,6 +385,10 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 int can_filterConfiguration(rt_dev_t device, uint8_t nFilter, uint8_t fifo,
 			    uint32_t idFilter, uint32_t mask, CAN_FRAME_FORMAT_FLAGS frame)
 {
+    UNUSED(idFilter);
+    UNUSED(mask);
+    UNUSED(frame);
+
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {

@@ -13,6 +13,8 @@
 
 #include <driver/device.h>
 
+#define UNUSED(x) (void)(x)
+
 // ====== bus assignation ======
 #define can(d) MKDEV(DEV_CLASS_CAN, (d)-1)
 rt_dev_t can_getFreeDevice();

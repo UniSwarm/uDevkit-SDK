@@ -38,7 +38,7 @@ struct ccp_dev
     void (*handler)(void);
 };
 
-struct ccp_dev ccps[] = {
+static struct ccp_dev ccps[] = {
 #if CCP_COUNT>=1
     {
         .periodUs = 0,
@@ -265,6 +265,8 @@ int ccp_setHandler(rt_dev_t device, void (*handler)(void))
  */
 int ccp_setPeriod(rt_dev_t device, uint32_t prvalue)
 {
+    UNUSED(prvalue);
+
 #if CCP_COUNT>=1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
@@ -275,6 +277,7 @@ int ccp_setPeriod(rt_dev_t device, uint32_t prvalue)
 
     return 0;
 #else
+    UNUSED(device);
     return -1;
 #endif
 }
@@ -292,7 +295,6 @@ uint32_t ccp_period(rt_dev_t device)
     {
         return -1;
     }
-
 
     return 0;
 #else
@@ -416,6 +418,8 @@ uint32_t ccp_getValue(rt_dev_t device)
  */
 int ccp_setValue(rt_dev_t device, uint32_t value)
 {
+    UNUSED(value);
+
 #if CCP_COUNT>=1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
@@ -425,6 +429,7 @@ int ccp_setValue(rt_dev_t device, uint32_t value)
 
     return 0;
 #else
+    UNUSED(device);
     return -1;
 #endif
 }

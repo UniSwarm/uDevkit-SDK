@@ -14,6 +14,8 @@
 
 #include <driver/device.h>
 
+#define UNUSED(x) (void)(x)
+
 // ======= specific include =======
 #if defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) \
  || defined(ARCHI_dspic33fj)

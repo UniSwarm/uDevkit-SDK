@@ -182,6 +182,8 @@ int qei_disable(rt_dev_t device)
  */
 int qei_setConfig(rt_dev_t device, uint16_t config)
 {
+    UNUSED(config);
+
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei == 0)
@@ -244,6 +246,9 @@ qei_type qei_getValue(rt_dev_t device)
 
 int qei_setHomeValue(rt_dev_t device, qei_type home)
 {
+    UNUSED(device);
+    UNUSED(home);
+
     // TODO implement me
     return 0;
 }

@@ -21,7 +21,8 @@
 #include <queue>
 #include <vector>
 #include <iostream>
-std::map<uint64_t, std::queue<std::vector<char>> > packages;
+
+static std::map<uint64_t, std::queue<std::vector<char>> > packages;
 
 void simulator_init()
 {
@@ -90,15 +91,21 @@ int simulator_rec_task()
 
 int simulator_recv(uint16_t moduleId, uint16_t periphId, uint16_t functionId, char *data, size_t size)
 {
+    UNUSED(size);
+
     uint64_t key = ((uint64_t)moduleId << 32) + ((uint64_t)periphId << 16) + functionId;
     std::map<uint64_t, std::queue<std::vector<char> > >::iterator it = packages.find(key);
     if(it != packages.end())
     {
         if((*it).second.empty())
+        {
             return -1;
+        }
+
         std::vector<char> package = (*it).second.front();
         memcpy(data, package.data(), package.size());
         (*it).second.pop();
+
         return package.size();
     }
     return -1;

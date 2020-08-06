@@ -13,7 +13,7 @@
 
 #include <stdio.h>
 
-uint16_t adc_channels[ADC_CHANNEL_COUNT] = {0};
+static uint16_t adc_channels[ADC_CHANNEL_COUNT] = {0};
 
 int adc_init()
 {
@@ -26,10 +26,11 @@ int adc_init()
 int16_t adc_getValue(uint8_t channel)
 {
     ssize_t size_read;
-    uint16_t value;
 
     simulator_rec_task();
     size_read = simulator_recv(ADC_SIM_MODULE, 0, ADC_SIM_READ, (char*)adc_channels, ADC_CHANNEL_COUNT * 2);
+
+    UNUSED(size_read);
 
     if (channel >= ADC_CHANNEL_COUNT)
         return 0;

@@ -16,9 +16,7 @@
  */
 void gpio_setBit(rt_dev_t device)
 {
-    uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
-    uint16_t bit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
-
+    UNUSED(device);
 }
 
 /**
@@ -27,9 +25,7 @@ void gpio_setBit(rt_dev_t device)
  */
 void gpio_clearBit(rt_dev_t device)
 {
-    uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
-    uint16_t bit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
-
+    UNUSED(device);
 }
 
 /**
@@ -38,9 +34,7 @@ void gpio_clearBit(rt_dev_t device)
  */
 void gpio_toggleBit(rt_dev_t device)
 {
-    uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
-    uint16_t bit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
-
+    UNUSED(device);
 }
 
 /**
@@ -72,8 +66,10 @@ void gpio_writeBit(rt_dev_t device, GPIO_VALUE value)
 GPIO_VALUE gpio_readBit(rt_dev_t device)
 {
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
-    uint16_t bit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
+    uint16_t bit = (uint16_t)(1 << (device & GPIO_MAX_PORTWIDTHMASK));
     uint16_t value = 0;
+
+    UNUSED(port);
 
     if ((value & bit) == 1)
     {
@@ -93,8 +89,8 @@ GPIO_VALUE gpio_readBit(rt_dev_t device)
  */
 int gpio_setBitConfig(rt_dev_t device, uint16_t config)
 {
-    uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
-    uint16_t bit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
+    UNUSED(device);
+    UNUSED(config);
 
     return 0;
 }
@@ -106,8 +102,8 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
  */
 void gpio_writePort(rt_dev_t device, port_type value)
 {
-    uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
-
+    UNUSED(device);
+    UNUSED(value);
 }
 
 /**
@@ -117,7 +113,7 @@ void gpio_writePort(rt_dev_t device, port_type value)
  */
 port_type gpio_readPort(rt_dev_t device)
 {
-    uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
+    UNUSED(device);
 
     return 0;
 }
@@ -130,7 +126,8 @@ port_type gpio_readPort(rt_dev_t device)
  */
 int gpio_setPortConfig(rt_dev_t device, uint16_t config)
 {
-    uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
+    UNUSED(device);
+    UNUSED(config);
 
     return 0;
 }

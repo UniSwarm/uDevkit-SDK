@@ -24,6 +24,9 @@
 
 ssize_t device_write(rt_dev_t device, const char *data, size_t size)
 {
+    UNUSED(data);
+    UNUSED(size);
+
     switch (MAJOR(device))
     {
 #ifdef USE_uart
@@ -49,6 +52,9 @@ ssize_t device_write(rt_dev_t device, const char *data, size_t size)
 
 ssize_t device_read(rt_dev_t device, char *data, size_t size_max)
 {
+    UNUSED(data);
+    UNUSED(size_max);
+
     switch (MAJOR(device))
     {
 #ifdef USE_uart

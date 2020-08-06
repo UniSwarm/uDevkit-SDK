@@ -18,6 +18,8 @@
 
 #include <stdint.h>
 
+#define UNUSED(x) (void)(x)
+
 int board_init();
 
 #define BOARD_NAME "UMC1BDS32FR"

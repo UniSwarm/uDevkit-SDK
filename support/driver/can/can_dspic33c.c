@@ -581,6 +581,8 @@ uint8_t can_s2Seg(rt_dev_t device)
  */
 int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
+    UNUSED(fifo);
+
 #if CAN_COUNT>=1
     unsigned int i;
     uint8_t size;
@@ -730,6 +732,8 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
  */
 int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
+    UNUSED(fifo);
+
 #if CAN_COUNT>=1
     int i;
     uint8_t can = MINOR(device);

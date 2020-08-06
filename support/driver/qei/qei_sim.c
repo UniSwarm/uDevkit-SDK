@@ -10,7 +10,7 @@
 
 #include "qei_sim.h"
 
-uint8_t qei_state = 0;
+static uint8_t qei_state = 0;
 
 /**
  * @brief Gives a free QEI device number and open it
@@ -152,7 +152,8 @@ int qei_disable(rt_dev_t device)
 int qei_setConfig(rt_dev_t device, uint16_t config)
 {
     // TODO SIM
-
+    UNUSED(device);
+    UNUSED(config);
     return 0;
 }
 
@@ -163,6 +164,8 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
  */
 qei_type qei_getValue(rt_dev_t device)
 {
+    UNUSED(device);
+
     qei_type tmp32 = 0;
 
     // TODO SIM
@@ -172,6 +175,9 @@ qei_type qei_getValue(rt_dev_t device)
 
 int qei_setHomeValue(rt_dev_t device, qei_type home)
 {
+    UNUSED(device);
+    UNUSED(home);
+
     // TODO implement me
 
     return 0;

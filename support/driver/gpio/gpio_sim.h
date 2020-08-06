@@ -13,4 +13,6 @@
 
 #include "gpio.h"
 
+#define UNUSED(x) (void)(x)
+
 #endif // GPIO_SIM_H

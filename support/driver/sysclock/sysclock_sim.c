@@ -12,8 +12,8 @@
 
 #include "sysclock.h"
 
-uint32_t sysfreq;
-uint32_t pllfreq;
+static uint32_t sysfreq;
+static uint32_t pllfreq;
 
 int sysclock_setClock(uint32_t fosc)
 {
@@ -33,12 +33,15 @@ uint32_t sysclock_getCPUSystemClock()
 
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
+    UNUSED(busClock);
     // TODO
     return sysfreq / 2;
 }
 
 int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
 {
+    UNUSED(busClock);
+    UNUSED(div);
     // TODO
     return 0;
 }
@@ -51,22 +54,29 @@ SYSCLOCK_SOURCE sysclock_source()
 
 int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq)
 {
+    UNUSED(source);
+    UNUSED(freq);
+
     return 0;
 }
 
 int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 {
+    UNUSED(source);
+
     return 0;
 }
 
 int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 {
+    UNUSED(source);
     // TODO
     return 0;
 }
 
 int sysclock_setPLLClock(uint32_t freq, uint8_t src)
 {
+    UNUSED(src);
     pllfreq = freq;
     return 0;
 }
