@@ -14,8 +14,6 @@
 #include <archi.h>
 #include <driver/device.h>
 
-#define UNUSED(x) (void)(x)
-
 #if defined(ARCHI_dspic33ch)
  #include "msi_dspic33ch.h"
 #else

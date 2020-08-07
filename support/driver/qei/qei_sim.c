@@ -152,8 +152,8 @@ int qei_disable(rt_dev_t device)
 int qei_setConfig(rt_dev_t device, uint16_t config)
 {
     // TODO SIM
-    UNUSED(device);
-    UNUSED(config);
+    UDK_UNUSED(device);
+    UDK_UNUSED(config);
     return 0;
 }
 
@@ -164,7 +164,7 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
  */
 qei_type qei_getValue(rt_dev_t device)
 {
-    UNUSED(device);
+    UDK_UNUSED(device);
 
     qei_type tmp32 = 0;
 
@@ -175,8 +175,8 @@ qei_type qei_getValue(rt_dev_t device)
 
 int qei_setHomeValue(rt_dev_t device, qei_type home)
 {
-    UNUSED(device);
-    UNUSED(home);
+    UDK_UNUSED(device);
+    UDK_UNUSED(home);
 
     // TODO implement me
 

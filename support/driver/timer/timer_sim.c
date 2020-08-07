@@ -116,7 +116,7 @@ static struct timer_dev timers[] = {
 #if TIMER_COUNT>=1
 static void * timer1_handler (void * p_data)
 {
-    UNUSED(p_data);
+    UDK_UNUSED(p_data);
     while (1)
     {
         psleep(timers[0].periodMs);

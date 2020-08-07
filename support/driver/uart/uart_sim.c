@@ -217,7 +217,7 @@ int uart_transmitFinished(rt_dev_t device)
 {
     int transmitFinished = -1;
 
-    UNUSED(transmitFinished);
+    UDK_UNUSED(transmitFinished);
 
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)

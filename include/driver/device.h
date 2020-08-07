@@ -14,6 +14,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#define UDK_UNUSED(x) (void)(x)
+
 #if !defined(__MINGW32__) && !defined(_MSC_VER) && !defined(__XC32)
 
  #if !defined(_SIZE_T_DEFINED) && !defined(__SIZE_TYPE__) && !defined(_SIZE_T) && !defined(_SIZET) && !defined(_BSD_SIZE_T_DEFINED_)

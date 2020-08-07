@@ -16,7 +16,7 @@
  */
 void gpio_setBit(rt_dev_t device)
 {
-    UNUSED(device);
+    UDK_UNUSED(device);
 }
 
 /**
@@ -25,7 +25,7 @@ void gpio_setBit(rt_dev_t device)
  */
 void gpio_clearBit(rt_dev_t device)
 {
-    UNUSED(device);
+    UDK_UNUSED(device);
 }
 
 /**
@@ -34,7 +34,7 @@ void gpio_clearBit(rt_dev_t device)
  */
 void gpio_toggleBit(rt_dev_t device)
 {
-    UNUSED(device);
+    UDK_UNUSED(device);
 }
 
 /**
@@ -69,7 +69,7 @@ GPIO_VALUE gpio_readBit(rt_dev_t device)
     uint16_t bit = (uint16_t)(1 << (device & GPIO_MAX_PORTWIDTHMASK));
     uint16_t value = 0;
 
-    UNUSED(port);
+    UDK_UNUSED(port);
 
     if ((value & bit) == 1)
     {
@@ -89,8 +89,8 @@ GPIO_VALUE gpio_readBit(rt_dev_t device)
  */
 int gpio_setBitConfig(rt_dev_t device, uint16_t config)
 {
-    UNUSED(device);
-    UNUSED(config);
+    UDK_UNUSED(device);
+    UDK_UNUSED(config);
 
     return 0;
 }
@@ -102,8 +102,8 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
  */
 void gpio_writePort(rt_dev_t device, port_type value)
 {
-    UNUSED(device);
-    UNUSED(value);
+    UDK_UNUSED(device);
+    UDK_UNUSED(value);
 }
 
 /**
@@ -113,7 +113,7 @@ void gpio_writePort(rt_dev_t device, port_type value)
  */
 port_type gpio_readPort(rt_dev_t device)
 {
-    UNUSED(device);
+    UDK_UNUSED(device);
 
     return 0;
 }
@@ -126,8 +126,8 @@ port_type gpio_readPort(rt_dev_t device)
  */
 int gpio_setPortConfig(rt_dev_t device, uint16_t config)
 {
-    UNUSED(device);
-    UNUSED(config);
+    UDK_UNUSED(device);
+    UDK_UNUSED(config);
 
     return 0;
 }

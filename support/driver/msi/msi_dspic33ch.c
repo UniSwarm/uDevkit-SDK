@@ -127,8 +127,8 @@ int msi_slave_verify_program(uint8_t slave_id, __eds__ unsigned char *program)
 
 int msi_protocol_write(uint8_t protocol, const unsigned char *data, uint8_t size)
 {
-    UNUSED(protocol);
-    UNUSED(size);
+    UDK_UNUSED(protocol);
+    UDK_UNUSED(size);
 
     if (_DTRDYA == 1)
     {
@@ -145,8 +145,8 @@ int msi_protocol_write(uint8_t protocol, const unsigned char *data, uint8_t size
 
 int msi_protocol_read(uint8_t protocol, unsigned char *data, uint8_t max_size)
 {
-    UNUSED(protocol);
-    UNUSED(max_size);
+    UDK_UNUSED(protocol);
+    UDK_UNUSED(max_size);
 
     if (_DTRDYB == 0)
     {

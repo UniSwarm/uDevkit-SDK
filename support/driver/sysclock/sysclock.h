@@ -12,8 +12,7 @@
 #define SYSCLOCK_H
 
 #include <stdint.h>
-
-#define UNUSED(x) (void)(x)
+#include <driver/device.h>
 
 // ======= specific include =======
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) \

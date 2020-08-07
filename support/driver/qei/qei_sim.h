@@ -13,6 +13,4 @@
 
 #include "qei.h"
 
-#define UNUSED(x) (void)(x)
-
 #endif // QEI_SIM_H

@@ -319,8 +319,8 @@ int sysclock_setClock(uint32_t fosc)
  */
 int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 {
-    UNUSED(src);
-    UNUSED(fosc);
+    UDK_UNUSED(src);
+    UDK_UNUSED(fosc);
 
     /*uint32_t fin, fplli, fsys;
     uint16_t multiplier;

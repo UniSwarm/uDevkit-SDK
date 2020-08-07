@@ -279,7 +279,7 @@ uint8_t can_s2Seg(rt_dev_t device)
 
 int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
-    UNUSED(fifo);
+    UDK_UNUSED(fifo);
 
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
@@ -321,7 +321,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 
 int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
-    UNUSED(fifo);
+    UDK_UNUSED(fifo);
 
     int i;
     ssize_t size_read;
@@ -385,9 +385,9 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 int can_filterConfiguration(rt_dev_t device, uint8_t nFilter, uint8_t fifo,
 			    uint32_t idFilter, uint32_t mask, CAN_FRAME_FORMAT_FLAGS frame)
 {
-    UNUSED(idFilter);
-    UNUSED(mask);
-    UNUSED(frame);
+    UDK_UNUSED(idFilter);
+    UDK_UNUSED(mask);
+    UDK_UNUSED(frame);
 
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)

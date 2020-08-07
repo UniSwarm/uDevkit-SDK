@@ -30,7 +30,7 @@ int16_t adc_getValue(uint8_t channel)
     simulator_rec_task();
     size_read = simulator_recv(ADC_SIM_MODULE, 0, ADC_SIM_READ, (char*)adc_channels, ADC_CHANNEL_COUNT * 2);
 
-    UNUSED(size_read);
+    UDK_UNUSED(size_read);
 
     if (channel >= ADC_CHANNEL_COUNT)
         return 0;
