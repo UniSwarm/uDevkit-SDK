@@ -34,12 +34,21 @@
   #error can sim not supported for your platform
 #endif
 
-static int soc;
-
 #if !defined (CAN_COUNT) || CAN_COUNT==0
-    #warning No device
+	#warning No device
 #endif
 
+/****************************************************************************************/
+/*          Privates functions                                                          */
+void can_sendconfig(uint8_t can);
+
+/****************************************************************************************/
+/*          External variable                                                           */
+
+
+/****************************************************************************************/
+/*          Local variable                                                              */
+int soc;
 can_dev cans[] = {
     {.bitRate = 0,
     .bus = "can0"},

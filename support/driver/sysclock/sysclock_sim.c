@@ -12,6 +12,17 @@
 
 #include "sysclock.h"
 
+/****************************************************************************************/
+/*          Privates functions                                                          */
+uint32_t sysclock_getClock(void);
+uint32_t sysclock_getCPUSystemClock(void);
+
+/****************************************************************************************/
+/*          External variable                                                           */
+
+
+/****************************************************************************************/
+/*          Local variable                                                              */
 static uint32_t sysfreq;
 static uint32_t pllfreq;
 

@@ -22,6 +22,18 @@
 
 #include <stdio.h>
 
+/****************************************************************************************/
+/*          Privates functions                                                          */
+void uart_sendconfig(uint8_t uart);
+void uart_closeDevice(rt_dev_t device);
+
+/****************************************************************************************/
+/*          External variable                                                           */
+
+
+/****************************************************************************************/
+/*          Local variable                                                              */
+
 uart_dev uarts[] = {
     {.baudSpeed=0},
 #if UART_COUNT>=2
