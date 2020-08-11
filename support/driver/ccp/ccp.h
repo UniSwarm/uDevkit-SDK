@@ -14,7 +14,7 @@
 #include <driver/device.h>
 
 // ====== device assignation ======
-#define ccp(d) MKDEV(DEV_CLASS_CCP, (d-1))
+#define ccp(d) MKDEV(DEV_CLASS_CCP, (d - 1))
 rt_dev_t ccp_getFreeDevice();
 int ccp_open(rt_dev_t device);
 int ccp_close(rt_dev_t device);
@@ -24,6 +24,19 @@ int ccp_enable(rt_dev_t device);
 int ccp_disable(rt_dev_t device);
 
 int ccp_setHandler(rt_dev_t device, void (*handler)(void));
+
+typedef enum
+{
+    CCP_MODE_TIMER = 0x0,  ///< CCP in timer mode
+    CCP_MODE_PWM = 0x1,    ///< CCP in PWM mode
+    CCP_MODE_PWMC = 0x2,   ///< CCP in center PWM mode
+    CCP_MODE_OCH = 0x3,    ///< CCP in output compare mode, output high
+    CCP_MODE_OCL = 0x4,    ///< CCP in output compare mode, output low
+    CCP_MODE_OCT = 0x5,    ///< CCP in output compare mode, output toggle
+} CCP_MODE;
+int ccp_setMode(rt_dev_t device, CCP_MODE mode);
+
+int ccp_setCompare(rt_dev_t device, uint16_t cmpA, uint16_t cmpB);
 
 // ========= timer mode ===========
 int ccp_setPeriodMs(rt_dev_t device, uint32_t periodMs);
@@ -38,13 +51,12 @@ int ccp_setValue(rt_dev_t device, uint32_t value);
 uint32_t ccp_getValue(rt_dev_t device);
 
 // ======= specific include =======
-#if defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_dspic33ch) \
-   || defined(ARCHI_dspic33ck)
- #include "ccp_pic24_dspic33.h"
+#if defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
+#    include "ccp_pic24_dspic33.h"
 #elif defined(ARCHI_pic32mm)
- #include "ccp_pic32.h"
+#    include "ccp_pic32.h"
 #else
- #warning "Unsupported ARCHI"
+#    warning "Unsupported ARCHI"
 #endif
 
-#endif // CCP_H
+#endif  // CCP_H

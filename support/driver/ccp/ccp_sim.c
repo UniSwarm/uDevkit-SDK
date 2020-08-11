@@ -258,6 +258,58 @@ int ccp_setHandler(rt_dev_t device, void (*handler)(void))
 }
 
 /**
+ * @brief Sets the CCP mode (PWM, timer, OC, IC, ...)
+ * @param device ccp device number
+ * @param mode mode to set
+ * @return 0 if ok, -1 in case of error
+ */
+int ccp_setMode(rt_dev_t device, CCP_MODE mode)
+{
+    UDK_UNUSED(mode);
+
+#if CCP_COUNT>=1
+    uint8_t ccp = MINOR(device);
+    if (ccp >= CCP_COUNT)
+    {
+        return -1;
+    }
+
+    //TODO
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * @brief Sets both comparator for Dual edge / PWM mode
+ * @param device ccp device number
+ * @param cmpA value of A comparator
+ * @param cmpB value of B comparator
+ * @return 0 if ok, -1 in case of error
+ */
+int ccp_setCompare(rt_dev_t device, uint16_t cmpA, uint16_t cmpB)
+{
+    UDK_UNUSED(cmpA);
+    UDK_UNUSED(cmpB);
+
+#if CCP_COUNT>=1
+    uint8_t ccp = MINOR(device);
+    if (ccp >= CCP_COUNT)
+    {
+        return -1;
+    }
+
+    //TODO
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
  * @brief Sets the internal period
  * @param device ccp device number
  * @param prvalue reset value of ccp, does not consider the time

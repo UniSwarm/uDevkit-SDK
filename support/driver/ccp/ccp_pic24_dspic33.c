@@ -1,7 +1,7 @@
 /**
  * @file ccp_pic24_dspic33.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2019
+ * @copyright UniSwarm 2019-2020
  *
  * @date May 08, 2019, 09:40 AM
  *
@@ -17,7 +17,7 @@
 #include <archi.h>
 
 #if !defined (CCP_COUNT) || CCP_COUNT==0
-  #warning "No uart on the current device or unknow device"
+  #warning "No CCP on the current device or unknow device"
 #endif
 
 #define CCP_FLAG_UNUSED  0x00
@@ -443,6 +443,223 @@ int ccp_setHandler(rt_dev_t device, void (*handler)(void))
     if (ccps[ccp].flags.enabled == 1)
     {
         ccp_enable(device);
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * @brief Sets the CCP mode (PWM, timer, OC, IC, ...)
+ * @param device ccp device number
+ * @param mode mode to set
+ * @return 0 if ok, -1 in case of error
+ */
+int ccp_setMode(rt_dev_t device, CCP_MODE mode)
+{
+#if CCP_COUNT>=1
+    uint8_t ccp = MINOR(device);
+    uint8_t modeBit = 0;
+    uint8_t t32bit = 0;
+    uint8_t icBit = 0;
+    uint8_t outBit = 0;
+    if (ccp >= CCP_COUNT)
+    {
+        return -1;
+    }
+
+    switch (mode)
+    {
+        case CCP_MODE_TIMER:
+            modeBit = 0b0000; // mode
+            t32bit = 1; // 32 bits mode
+            icBit = 0; // Output compare / PWM
+            outBit = 0; // Output pin off
+            break;
+        case CCP_MODE_PWM:
+            modeBit = 0b0101; // mode
+            t32bit = 0; // 16 bits mode
+            icBit = 0; // Output compare / PWM
+            outBit = 1; // Output pin onff
+            break;
+        case CCP_MODE_PWMC:
+            modeBit = 0b0110; // mode
+            t32bit = 0; // 16 bits mode
+            icBit = 0; // Output compare / PWM
+            outBit = 1; // Output pin onff
+            break;
+        case CCP_MODE_OCH:
+            modeBit = 0b0001; // mode
+            t32bit = 1; // 32 bits mode
+            icBit = 0; // Output compare / PWM
+            outBit = 1; // Output pin onff
+            break;
+        case CCP_MODE_OCL:
+            modeBit = 0b0010; // mode
+            t32bit = 1; // 32 bits mode
+            icBit = 0; // Output compare / PWM
+            outBit = 1; // Output pin onff
+            break;
+        case CCP_MODE_OCT:
+            modeBit = 0b0011; // mode
+            t32bit = 1; // 32 bits mode
+            icBit = 0; // Output compare / PWM
+            outBit = 1; // Output pin onff
+            break;
+    }
+
+    switch (ccp)
+    {
+    case 0:
+        CCP1CON1Lbits.MOD = modeBit;
+        CCP1CON1Lbits.T32 = t32bit;
+        CCP1CON1Lbits.CCSEL = icBit;
+        CCP1CON2Hbits.OCAEN = outBit;
+        break;
+#if CCP_COUNT>=2
+    case 1:
+        CCP2CON1Lbits.MOD = modeBit;
+        CCP2CON1Lbits.T32 = t32bit;
+        CCP2CON1Lbits.CCSEL = icBit;
+        CCP2CON2Hbits.OCAEN = outBit;
+        break;
+#endif
+#if CCP_COUNT>=3
+    case 2:
+        CCP3CON1Lbits.MOD = modeBit;
+        CCP3CON1Lbits.T32 = t32bit;
+        CCP3CON1Lbits.CCSEL = icBit;
+        CCP3CON2Hbits.OCAEN = outBit;
+        break;
+#endif
+#if CCP_COUNT>=4
+    case 3:
+        CCP4CON1Lbits.MOD = modeBit;
+        CCP4CON1Lbits.T32 = t32bit;
+        CCP4CON1Lbits.CCSEL = icBit;
+        CCP4CON2Hbits.OCAEN = outBit;
+        break;
+#endif
+#if CCP_COUNT>=5
+    case 4:
+        CCP5CON1Lbits.MOD = modeBit;
+        CCP5CON1Lbits.T32 = t32bit;
+        CCP5CON1Lbits.CCSEL = icBit;
+        CCP5CON2Hbits.OCAEN = outBit;
+        break;
+#endif
+#if CCP_COUNT>=6
+    case 5:
+        CCP6CON1Lbits.MOD = modeBit;
+        CCP6CON1Lbits.T32 = t32bit;
+        CCP6CON1Lbits.CCSEL = icBit;
+        CCP6CON2Hbits.OCAEN = outBit;
+        break;
+#endif
+#if CCP_COUNT>=7
+    case 6:
+        CCP7CON1Lbits.MOD = modeBit;
+        CCP7CON1Lbits.T32 = t32bit;
+        CCP7CON1Lbits.CCSEL = icBit;
+        CCP7CON2Hbits.OCAEN = outBit;
+        break;
+#endif
+#if CCP_COUNT>=8
+    case 7:
+        CCP8CON1Lbits.MOD = modeBit;
+        CCP8CON1Lbits.T32 = t32bit;
+        CCP8CON1Lbits.CCSEL = icBit;
+        CCP8CON2Hbits.OCAEN = outBit;
+        break;
+#endif
+#if CCP_COUNT>=9
+    case 8:
+        CCP9CON1Lbits.MOD = modeBit;
+        CCP9CON1Lbits.T32 = t32bit;
+        CCP9CON1Lbits.CCSEL = icBit;
+        CCP9CON2Hbits.OCAEN = outBit;
+        break;
+#endif
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * @brief Sets both comparator for Dual edge / PWM mode
+ * @param device ccp device number
+ * @param cmpA value of A comparator
+ * @param cmpB value of B comparator
+ * @return 0 if ok, -1 in case of error
+ */
+int ccp_setCompare(rt_dev_t device, uint16_t cmpA, uint16_t cmpB)
+{
+#if CCP_COUNT>=1
+    uint8_t ccp = MINOR(device);
+    if (ccp >= CCP_COUNT)
+    {
+        return -1;
+    }
+
+    switch (ccp)
+    {
+    case 0:
+        CCP1RA = cmpA;
+        CCP1RB = cmpB;
+        break;
+#if CCP_COUNT>=2
+    case 1:
+        CCP2RA = cmpA;
+        CCP2RB = cmpB;
+        break;
+#endif
+#if CCP_COUNT>=3
+    case 2:
+        CCP3RA = cmpA;
+        CCP3RB = cmpB;
+        break;
+#endif
+#if CCP_COUNT>=4
+    case 3:
+        CCP4RA = cmpA;
+        CCP4RB = cmpB;
+        break;
+#endif
+#if CCP_COUNT>=5
+    case 4:
+        CCP5RA = cmpA;
+        CCP5RB = cmpB;
+        break;
+#endif
+#if CCP_COUNT>=6
+    case 5:
+        CCP6RA = cmpA;
+        CCP6RB = cmpB;
+        break;
+#endif
+#if CCP_COUNT>=7
+    case 6:
+        CCP7RA = cmpA;
+        CCP7RB = cmpB;
+        break;
+#endif
+#if CCP_COUNT>=8
+    case 7:
+        CCP8RA = cmpA;
+        CCP8RB = cmpB;
+        break;
+#endif
+#if CCP_COUNT>=9
+    case 8:
+        CCP9RA = cmpA;
+        CCP9RB = cmpB;
+        break;
+#endif
     }
 
     return 0;
