@@ -59,7 +59,7 @@ int board_init_io()
 
     TRISCbits.TRISC8 = 0;  // DE
     TRISBbits.TRISB4 = 0;  // RE
-    LATCbits.LATC8 = 1;
+    LATCbits.LATC8 = 0;
 
     // Lock configuration pin
     lockIoConfig();
@@ -90,19 +90,27 @@ int board_init()
 int board_setLed(uint8_t led, uint8_t state)
 {
     if(led >= LED_COUNT)
+    {
         return -1;
+    }
 
     if (state & 1)
+    {
         gpio_setBit(board_leds[led]);
+    }
     else
+    {
         gpio_clearBit(board_leds[led]);
+    }
     return 0;
 }
 
 int board_toggleLed(uint8_t led)
 {
     if(led >= LED_COUNT)
+    {
         return -1;
+    }
 
     gpio_toggleBit(board_leds[led]);
     return 0;
@@ -111,12 +119,15 @@ int board_toggleLed(uint8_t led)
 int8_t board_getLed(uint8_t led)
 {
     if(led >= LED_COUNT)
+    {
         return -1;
+    }
 
     return gpio_readBit(board_leds[led]);
 }
 
 int8_t board_getButton(uint8_t button)
 {
+    UDK_UNUSED(button);
     return -1;
 }
