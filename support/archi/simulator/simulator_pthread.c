@@ -1,7 +1,8 @@
 /**
  * @file simulator_pthread.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2020
  *
  * @date November 12, 2016, 22:11 PM
  *
@@ -15,4 +16,3 @@
 void simulator_pthread_init()
 {
 }
-

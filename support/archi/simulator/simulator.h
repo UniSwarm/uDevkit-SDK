@@ -1,7 +1,8 @@
  /**
  * @file simulator.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2020
  *
  * @date November 3, 2016, 22:44 PM
  *

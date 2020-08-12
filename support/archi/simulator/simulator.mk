@@ -21,9 +21,11 @@ $(UDKSIM_EXE): $(shell find $(UDEVKIT)/tool/udk-sim/ \( -name '*.h' -o -name '*.
 SIMULATOR_PATH := $(UDEVKIT)/support/archi/simulator
 DEFINES_SIM += -D SIMULATOR -I $(SIMULATOR_PATH)
 
+vpath %.h $(SIMULATOR_PATH)
 vpath %.c $(SIMULATOR_PATH)
 vpath %.cpp $(SIMULATOR_PATH)
 SIM_SRC += simulator.cpp simulator_socket.c simulator_pthread.c
+HEADER += simulator.h simulator_socket.h simulator_pthread.h
 
 # simulator support
 SIM_OBJECTS := $(addprefix $(OUT_PWD)/, $(notdir $(SRC:.c=_simo.o) $(patsubst %.cpp,%_simcppo.o,$(SIM_SRC:.c=_simo.o))))
@@ -43,7 +45,7 @@ $(OUT_PWD)/%_simcppo.o : %.cpp
 
 # rule to link SIM_OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(SIM_EXE) : $(SIM_OBJECTS)
-	@printf "$(COMPCOLOR)LD %-36s => %s$(NORM)\n" "*.o" $(OUT_PWD)/$(PROJECT).elf
+	@printf "$(COMPCOLOR)LD %-36s => %s$(NORM)\n" "*.o" $(OUT_PWD)/$(SIM_EXE)
 	$(VERB)$(CPPC_SIM) $(CCFLAGS) -o $(OUT_PWD)/$(SIM_EXE) $(addprefix $(OUT_PWD)/,$(notdir $(SIM_OBJECTS))) $(LIBS_SIM) $(DEFINES_SIM) -lm
 
 sim-exe: $(OUT_PWD)/$(SIM_EXE)
