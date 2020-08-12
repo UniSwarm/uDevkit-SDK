@@ -177,7 +177,7 @@ int uart_enable(rt_dev_t device)
 
         _U1TXIP = 5;    // interrupt priority for transmitor
         _U1TXIF = 0;    // clear transmit Flag
-        _U1TXIE = 1;    // disable transmit interrupt
+        _U1TXIE = 1;    // enable transmit interrupt
 
         U1STAHbits.UTXISEL = 0b001; // only one byte in buffer or less
 
@@ -193,7 +193,7 @@ int uart_enable(rt_dev_t device)
 
         _U2TXIP = 5;    // interrupt priority for transmitor
         _U2TXIF = 0;    // clear transmit Flag
-        _U2TXIE = 1;    // disable transmit interrupt
+        _U2TXIE = 1;    // enable transmit interrupt
 
         U2STAHbits.UTXISEL = 0b001; // only one byte in buffer or less
 
@@ -210,7 +210,7 @@ int uart_enable(rt_dev_t device)
 
         _U3TXIP = 5;    // interrupt priority for transmitor
         _U3TXIF = 0;    // clear transmit Flag
-        _U3TXIE = 1;    // disable transmit interrupt
+        _U3TXIE = 1;    // enable transmit interrupt
 
         U3STAHbits.UTXISEL = 0b001; // only one byte in buffer or less
 

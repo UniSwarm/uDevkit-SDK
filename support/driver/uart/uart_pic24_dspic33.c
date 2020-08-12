@@ -197,7 +197,7 @@ int uart_enable(rt_dev_t device)
 
         _U1TXIP = 5;    // interrupt priority for transmitor
         _U1TXIF = 0;    // clear transmit Flag
-        _U1TXIE = 1;    // disable transmit interrupt
+        _U1TXIE = 1;    // enable transmit interrupt
 
         U1STAbits.UTXISEL1 = 1;
         U1STAbits.UTXISEL0 = 0;
@@ -216,7 +216,7 @@ int uart_enable(rt_dev_t device)
 
         _U2TXIP = 5;    // interrupt priority for transmitor
         _U2TXIF = 0;    // clear transmit Flag
-        _U2TXIE = 1;    // disable transmit interrupt
+        _U2TXIE = 1;    // enable transmit interrupt
 
         U2STAbits.UTXISEL1 = 1;
         U2STAbits.UTXISEL0 = 0;
@@ -236,7 +236,7 @@ int uart_enable(rt_dev_t device)
 
         _U3TXIP = 5;    // interrupt priority for transmitor
         _U3TXIF = 0;    // clear transmit Flag
-        _U3TXIE = 1;    // disable transmit interrupt
+        _U3TXIE = 1;    // enable transmit interrupt
 
         U3STAbits.UTXISEL1 = 1;
         U3STAbits.UTXISEL0 = 0;
@@ -256,7 +256,7 @@ int uart_enable(rt_dev_t device)
 
         _U4TXIP = 5;    // interrupt priority for transmitor
         _U4TXIF = 0;    // clear transmit Flag
-        _U4TXIE = 1;    // disable transmit interrupt
+        _U4TXIE = 1;    // enable transmit interrupt
 
         U4STAbits.UTXISEL1 = 1;
         U4STAbits.UTXISEL0 = 0;
@@ -276,7 +276,7 @@ int uart_enable(rt_dev_t device)
 
         _U5TXIP = 5;    // interrupt priority for transmitor
         _U5TXIF = 0;    // clear transmit Flag
-        _U5TXIE = 1;    // disable transmit interrupt
+        _U5TXIE = 1;    // enable transmit interrupt
 
         U5STAbits.UTXISEL1 = 1;
         U5STAbits.UTXISEL0 = 0;
@@ -296,7 +296,7 @@ int uart_enable(rt_dev_t device)
 
         _U6TXIP = 5;    // interrupt priority for transmitor
         _U6TXIF = 0;    // clear transmit Flag
-        _U6TXIE = 1;    // disable transmit interrupt
+        _U6TXIE = 1;    // enable transmit interrupt
 
         U6STAbits.UTXISEL1 = 1;
         U6STAbits.UTXISEL0 = 0;
