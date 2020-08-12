@@ -1,13 +1,14 @@
 /**
  * @file buffer.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2020
  *
  * @date August 03, 2016, 16:30 PM
  *
  * @brief Buffer for string construction
  */
- 
+
 #include "sys/buffer.h"
 
 void buffer_init(Buffer *buffer, char *data, size_t size)
@@ -37,13 +38,14 @@ void buffer_aint(Buffer *buffer, const int i)
     div_t res;
     int n = i;
     uint8_t pos = 0, size = 0;
-    
+
     // int to string conversion (reversed)
-    if(i < 0)
+    if (i < 0)
     {
         n = -i;
         size++;
     }
+
     do
     {
         res = div(n, 10);
@@ -51,15 +53,18 @@ void buffer_aint(Buffer *buffer, const int i)
         buff[pos] = res.rem + '0';
         pos++;
     } while (n != 0);
+
     size += pos;
-    
+
     // buffer size checking
-    if(buffer->size + size >= buffer->data_size)
+    if (buffer->size + size >= buffer->data_size)
+    {
         return;
+    }
     buffer->size += size;
-    
+
     // copy char with reverse order
-    if(i < 0)
+    if (i < 0)
     {
         (*buffer->tail) = '-';
         buffer->tail++;
@@ -76,10 +81,12 @@ void buffer_aint(Buffer *buffer, const int i)
 void buffer_achar(Buffer *buffer, const char c)
 {
     // buffer size checking
-    if(buffer->size + 1 >= buffer->data_size)
+    if (buffer->size + 1 >= buffer->data_size)
+    {
         return;
+    }
     buffer->size++;
-    
+
     // append char and update tail and size
     (*buffer->tail) = c;
     buffer->tail++;
@@ -89,13 +96,15 @@ void buffer_achar(Buffer *buffer, const char c)
 void buffer_astring(Buffer *buffer, const char *str)
 {
     const char *ptr = str;
-    
+
     // buffer size checking
     size_t size = strlen(str);
-    if(buffer->size + size >= buffer->data_size)
+    if (buffer->size + size >= buffer->data_size)
+    {
         size = buffer->data_size - buffer->size - 1;
+    }
     buffer->size += size;
-    
+
     // copy char with reverse order
     while (size != 0)
     {
