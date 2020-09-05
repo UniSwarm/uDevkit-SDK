@@ -2,6 +2,7 @@
  * @file gpio_sim.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
+ * @copyright UniSwarm 2018-2020
  *
  * @date June 13, 2017, 15:10 PM 
  * 

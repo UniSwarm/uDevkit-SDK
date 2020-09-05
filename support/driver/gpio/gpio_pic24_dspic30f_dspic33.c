@@ -2,7 +2,7 @@
  * @file gpio_pic24_dspic30f_dspic33.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018
+ * @copyright UniSwarm 2018-2020
  *
  * @date March 20, 2017, 18:39 AM
  *

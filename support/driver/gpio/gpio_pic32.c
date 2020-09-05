@@ -2,6 +2,7 @@
  * @file gpio_pic32.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2020
  *
  * @date June 6, 2017, 11:02 AM
  *

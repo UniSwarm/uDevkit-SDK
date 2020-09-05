@@ -2,6 +2,7 @@
  * @file gpio.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2020
  *
  * @date March 20, 2017, 20:38 AM
  *
