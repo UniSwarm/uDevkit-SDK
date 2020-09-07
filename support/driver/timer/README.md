@@ -1,13 +1,13 @@
 # Timer / counter
 
-Timer/counter driver support for hardware abstraction layer.
+Timer / counter driver support for hardware abstraction layer.
 
 ## Minimalist code
 
 In timer mode, with callback handler :
 
 ```C
-void tt()
+void timer100ms_fn()
 {
     puts("tt");
 }
@@ -16,7 +16,7 @@ void tt()
 rt_dev_t timer;
 timer = timer_getFreeDevice();
 timer_setPeriodMs(timer, 100);
-timer_setHandler(timer, tt);
+timer_setHandler(timer, timer100ms_fn);
 timer_enable(timer); // tt function will be called every 100ms
 ```
 
@@ -88,7 +88,7 @@ Disables the specified timer device
 int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs);
 ```
 
-Sets the period in us of the timer module to work in timer mode
+Sets the period in ms of the timer module to work in timer mode
 
 #### timer_periodMs
 
@@ -96,7 +96,40 @@ Sets the period in us of the timer module to work in timer mode
 uint32_t timer_periodMs(rt_dev_t device);
 ```
 
+Returns the current period in ms
+
+#### timer_setPeriodUs
+
+```C
+int timer_setPeriodUs(rt_dev_t device, uint32_t periodUs);
+```
+
+Sets the period in us of the timer module to work in timer mode
+
+#### timer_periodMs
+
+```C
+uint32_t timer_periodUs(rt_dev_t device);
+```
+
 Returns the current period in us
+
+#### timer_setPeriod
+
+```C
+int timer_setPeriodUs(rt_dev_t device, uint32_t period);
+```
+
+Sets the period in low level units. If the period is greatter than the PR register size,
+the pre divider is adapted
+
+#### timer_period
+
+```C
+uint32_t timer_period(rt_dev_t device);
+```
+
+Returns the current period in low level units
 
 ### Counter mode
 
@@ -134,7 +167,7 @@ Returns the current value of timer
 
 ## Development status
 
-+ Device assignation, open, basic configuration and handler call with interrupt works. No test done on counter mode, need
++ Device assignation, open, basic configuration and handler call with interrupt works. No test done on counter mode, need 
 to be more configurable.
 
 ### TODO
