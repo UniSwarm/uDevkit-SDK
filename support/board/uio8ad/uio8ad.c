@@ -91,22 +91,22 @@ int board_init_io()
     _board_leds[LED1R] = ccp(1);
     ccp_open(_board_leds[LED1R]);
     ccp_setMode(_board_leds[LED1R], CCP_MODE_PWM);
-    ccp_setPeriod(_board_leds[LED1R], 0x7FF);
-    ccp_setCompare(_board_leds[LED1R], 0, 0x7FF);
+    ccp_setPeriod(_board_leds[LED1R], 0x7F8);
+    ccp_setCompare(_board_leds[LED1R], 0, 0x7F8);
     ccp_enable(_board_leds[LED1R]);
 
     _board_leds[LED1G] = ccp(2);
     ccp_open(_board_leds[LED1G]);
     ccp_setMode(_board_leds[LED1G], CCP_MODE_PWM);
-    ccp_setPeriod(_board_leds[LED1G], 0x7FF);
-    ccp_setCompare(_board_leds[LED1G], 0, 0x7FF);
+    ccp_setPeriod(_board_leds[LED1G], 0x7F8);
+    ccp_setCompare(_board_leds[LED1G], 0, 0x7F8);
     ccp_enable(_board_leds[LED1G]);
 
     _board_leds[LED1B] = ccp(3);
     ccp_open(_board_leds[LED1B]);
     ccp_setMode(_board_leds[LED1B], CCP_MODE_PWM);
-    ccp_setPeriod(_board_leds[LED1B], 0x7FF);
-    ccp_setCompare(_board_leds[LED1B], 0, 0x7FF);
+    ccp_setPeriod(_board_leds[LED1B], 0x7F8);
+    ccp_setCompare(_board_leds[LED1B], 0, 0x7F8);
     ccp_enable(_board_leds[LED1B]);
 
     _board_analogin[0] = BOARD_IN0_ADC_CHAN;
@@ -169,7 +169,7 @@ int board_setLed(uint8_t led, uint8_t state)
     }
     else
     {
-        ccp_setCompare(_board_leds[led - LED1R], 0, state << 3);
+        ccp_setCompare(_board_leds[led], 0, (uint16_t)state << 3);
     }
     return 0;
 }
