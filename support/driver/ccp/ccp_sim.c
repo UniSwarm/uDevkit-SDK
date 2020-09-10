@@ -1,7 +1,7 @@
 /**
  * @file ccp_sim.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2019
+ * @copyright UniSwarm 2019-2020
  *
  * @date June 09, 2019, 00:50 AM
  *
@@ -10,17 +10,20 @@
 
 #include "ccp.h"
 
-#include "simulator.h"
 #include "driver/sysclock.h"
+#include "simulator.h"
 
-#if !defined (CCP_COUNT) || CCP_COUNT==0
-  #warning "No CCP on the current device or unknow device"
+#if !defined(CCP_COUNT) || CCP_COUNT == 0
+#    warning "No CCP on the current device or unknow device"
 #endif
 
-#define CCP_FLAG_UNUSED  0x00
-typedef struct {
-    union {
-        struct {
+#define CCP_FLAG_UNUSED 0x00
+typedef struct
+{
+    union
+    {
+        struct
+        {
             unsigned used : 1;
             unsigned enabled : 1;
             unsigned bit32 : 1;
@@ -32,77 +35,195 @@ typedef struct {
 
 struct ccp_dev
 {
-    pthread_t thread_timer;
+    pthread_t thread_ccp;
     uint32_t periodUs;
+    uint32_t value;
     ccp_status flags;
     void (*handler)(void);
 };
 
 static struct ccp_dev ccps[] = {
-#if CCP_COUNT>=1
-    {
-        .periodUs = 0,
-        .flags = {{.val = CCP_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if CCP_COUNT >= 1
+    {.periodUs = 0, .flags = {{.val = CCP_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if CCP_COUNT>=2
-    {
-        .periodUs = 0,
-        .flags = {{.val = CCP_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if CCP_COUNT >= 2
+    {.periodUs = 0, .flags = {{.val = CCP_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if CCP_COUNT>=3
-    {
-        .periodUs = 0,
-        .flags = {{.val = CCP_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if CCP_COUNT >= 3
+    {.periodUs = 0, .flags = {{.val = CCP_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if CCP_COUNT>=4
-    {
-        .periodUs = 0,
-        .flags = {{.val = CCP_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if CCP_COUNT >= 4
+    {.periodUs = 0, .flags = {{.val = CCP_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if CCP_COUNT>=5
-    {
-        .periodUs = 0,
-        .flags = {{.val = CCP_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if CCP_COUNT >= 5
+    {.periodUs = 0, .flags = {{.val = CCP_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if CCP_COUNT>=6
-    {
-        .periodUs = 0,
-        .flags = {{.val = CCP_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if CCP_COUNT >= 6
+    {.periodUs = 0, .flags = {{.val = CCP_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if CCP_COUNT>=7
-    {
-        .periodUs = 0,
-        .flags = {{.val = CCP_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if CCP_COUNT >= 7
+    {.periodUs = 0, .flags = {{.val = CCP_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if CCP_COUNT>=8
-    {
-        .periodUs = 0,
-        .flags = {{.val = CCP_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if CCP_COUNT >= 8
+    {.periodUs = 0, .flags = {{.val = CCP_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if CCP_COUNT>=9
-    {
-        .periodUs = 0,
-        .flags = {{.val = CCP_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if CCP_COUNT >= 9
+    {.periodUs = 0, .flags = {{.val = CCP_FLAG_UNUSED}}, .handler = NULL},
 #endif
 };
+
+#if CCP_COUNT >= 1
+static void *ccp1_handler(void *p_data)
+{
+    UDK_UNUSED(p_data);
+    while (1)
+    {
+        usleep(ccps[0].periodUs);
+        ccps[0].value++;
+        if (ccps[0].handler)
+        {
+            (*ccps[0].handler)();
+        }
+    }
+    return NULL;
+}
+#endif
+
+#if CCP_COUNT >= 2
+static void *ccp2_handler(void *p_data)
+{
+    UDK_UNUSED(p_data);
+    while (1)
+    {
+        psleep(ccps[1].periodUs);
+        ccps[1].value++;
+        if (ccps[1].handler)
+        {
+            (*ccps[1].handler)();
+        }
+    }
+    return NULL;
+}
+#endif
+
+#if CCP_COUNT >= 3
+static void *ccp3_handler(void *p_data)
+{
+    UDK_UNUSED(p_data);
+    while (1)
+    {
+        psleep(ccps[2].periodUs);
+        ccps[2].value++;
+        if (ccps[2].handler)
+        {
+            (*ccps[2].handler)();
+        }
+    }
+    return NULL;
+}
+#endif
+
+#if CCP_COUNT >= 4
+static void *ccp4_handler(void *p_data)
+{
+    UDK_UNUSED(p_data);
+    while (1)
+    {
+        psleep(ccps[3].periodUs);
+        ccps[3].value++;
+        if (ccps[3].handler)
+        {
+            (*ccps[3].handler)();
+        }
+    }
+    return NULL;
+}
+#endif
+
+#if CCP_COUNT >= 5
+static void *ccp5_handler(void *p_data)
+{
+    UDK_UNUSED(p_data);
+    while (1)
+    {
+        psleep(ccps[4].periodUs);
+        ccps[4].value++;
+        if (ccps[4].handler)
+        {
+            (*ccps[4].handler)();
+        }
+    }
+    return NULL;
+}
+#endif
+
+#if CCP_COUNT >= 6
+static void *ccp6_handler(void *p_data)
+{
+    UDK_UNUSED(p_data);
+    while (1)
+    {
+        psleep(ccps[5].periodUs);
+        ccps[5].value++;
+        if (ccps[5].handler)
+        {
+            (*ccps[5].handler)();
+        }
+    }
+    return NULL;
+}
+#endif
+
+#if CCP_COUNT >= 7
+static void *ccp7_handler(void *p_data)
+{
+    UDK_UNUSED(p_data);
+    while (1)
+    {
+        psleep(ccps[6].periodUs);
+        ccps[6].value++;
+        if (ccps[6].handler)
+        {
+            (*ccps[6].handler)();
+        }
+    }
+    return NULL;
+}
+#endif
+
+#if CCP_COUNT >= 8
+static void *ccp8_handler(void *p_data)
+{
+    UDK_UNUSED(p_data);
+    while (1)
+    {
+        psleep(ccps[7].periodUs);
+        ccps[7].value++;
+        if (ccps[7].handler)
+        {
+            (*ccps[7].handler)();
+        }
+    }
+    return NULL;
+}
+#endif
+
+#if CCP_COUNT >= 9
+static void *ccp9_handler(void *p_data)
+{
+    UDK_UNUSED(p_data);
+    while (1)
+    {
+        psleep(ccps[8].periodUs);
+        ccps[8].value++;
+        if (ccps[8].handler)
+        {
+            (*ccps[8].handler)();
+        }
+    }
+    return NULL;
+}
+#endif
 
 /**
  * @brief Gives a free ccp device number
@@ -110,7 +231,7 @@ static struct ccp_dev ccps[] = {
  */
 rt_dev_t ccp_getFreeDevice()
 {
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     uint8_t i;
     rt_dev_t device;
 
@@ -142,7 +263,7 @@ rt_dev_t ccp_getFreeDevice()
  */
 int ccp_open(rt_dev_t device)
 {
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
     {
@@ -168,7 +289,7 @@ int ccp_open(rt_dev_t device)
  */
 int ccp_close(rt_dev_t device)
 {
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
     {
@@ -192,7 +313,7 @@ int ccp_close(rt_dev_t device)
  */
 int ccp_enable(rt_dev_t device)
 {
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
     {
@@ -201,6 +322,52 @@ int ccp_enable(rt_dev_t device)
 
     ccps[ccp].flags.enabled = 1;
 
+    switch (ccp)
+    {
+        case 0:
+            pthread_create(&ccps[ccp].thread_ccp, NULL, ccp1_handler, NULL);
+            break;
+#if CCP_COUNT >= 2
+        case 1:
+            pthread_create(&ccps[ccp].thread_ccp, NULL, ccp2_handler, NULL);
+            break;
+#endif
+#if CCP_COUNT >= 3
+        case 2:
+            pthread_create(&ccps[ccp].thread_ccp, NULL, ccp3_handler, NULL);
+            break;
+#endif
+#if CCP_COUNT >= 4
+        case 3:
+            pthread_create(&ccps[ccp].thread_ccp, NULL, ccp4_handler, NULL);
+            break;
+#endif
+#if CCP_COUNT >= 5
+        case 4:
+            pthread_create(&ccps[ccp].thread_ccp, NULL, ccp5_handler, NULL);
+            break;
+#endif
+#if CCP_COUNT >= 6
+        case 5:
+            pthread_create(&ccps[ccp].thread_ccp, NULL, ccp6_handler, NULL);
+            break;
+#endif
+#if CCP_COUNT >= 7
+        case 6:
+            pthread_create(&ccps[ccp].thread_ccp, NULL, ccp7_handler, NULL);
+            break;
+#endif
+#if CCP_COUNT >= 8
+        case 7:
+            pthread_create(&ccps[ccp].thread_ccp, NULL, ccp8_handler, NULL);
+            break;
+#endif
+#if CCP_COUNT >= 9
+        case 8:
+            pthread_create(&ccps[ccp].thread_ccp, NULL, ccp9_handler, NULL);
+            break;
+#endif
+    }
 
     return 0;
 #else
@@ -215,7 +382,7 @@ int ccp_enable(rt_dev_t device)
  */
 int ccp_disable(rt_dev_t device)
 {
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
     {
@@ -238,7 +405,7 @@ int ccp_disable(rt_dev_t device)
  */
 int ccp_setHandler(rt_dev_t device, void (*handler)(void))
 {
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
     {
@@ -258,7 +425,7 @@ int ccp_setHandler(rt_dev_t device, void (*handler)(void))
 }
 
 /**
- * @brief Sets the CCP mode (PWM, timer, OC, IC, ...)
+ * @brief Sets the CCP mode (PWM, ccp, OC, IC, ...)
  * @param device ccp device number
  * @param mode mode to set
  * @return 0 if ok, -1 in case of error
@@ -267,14 +434,14 @@ int ccp_setMode(rt_dev_t device, CCP_MODE mode)
 {
     UDK_UNUSED(mode);
 
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
     {
         return -1;
     }
 
-    //TODO
+    // TODO
 
     return 0;
 #else
@@ -294,14 +461,14 @@ int ccp_setCompare(rt_dev_t device, uint16_t cmpA, uint16_t cmpB)
     UDK_UNUSED(cmpA);
     UDK_UNUSED(cmpB);
 
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
     {
         return -1;
     }
 
-    //TODO
+    // TODO
 
     return 0;
 #else
@@ -319,13 +486,12 @@ int ccp_setPeriod(rt_dev_t device, uint32_t prvalue)
 {
     UDK_UNUSED(prvalue);
 
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
     {
         return -1;
     }
-
 
     return 0;
 #else
@@ -341,7 +507,7 @@ int ccp_setPeriod(rt_dev_t device, uint32_t prvalue)
  */
 uint32_t ccp_period(rt_dev_t device)
 {
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
     {
@@ -361,7 +527,7 @@ uint32_t ccp_period(rt_dev_t device)
  */
 int ccp_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 {
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     float prvalue;
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
@@ -384,7 +550,7 @@ int ccp_setPeriodMs(rt_dev_t device, uint32_t periodMs)
  */
 uint32_t ccp_periodMs(rt_dev_t device)
 {
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
     {
@@ -404,7 +570,7 @@ uint32_t ccp_periodMs(rt_dev_t device)
  */
 int ccp_setPeriodUs(rt_dev_t device, uint32_t periodUs)
 {
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     float prvalue;
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
@@ -427,7 +593,7 @@ int ccp_setPeriodUs(rt_dev_t device, uint32_t periodUs)
  */
 uint32_t ccp_periodUs(rt_dev_t device)
 {
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
     {
@@ -447,15 +613,13 @@ uint32_t ccp_periodUs(rt_dev_t device)
  */
 uint32_t ccp_getValue(rt_dev_t device)
 {
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     uint32_t value;
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
     {
         return 0;
     }
-
-
 
     return value;
 #else
@@ -472,7 +636,7 @@ int ccp_setValue(rt_dev_t device, uint32_t value)
 {
     UDK_UNUSED(value);
 
-#if CCP_COUNT>=1
+#if CCP_COUNT >= 1
     uint8_t ccp = MINOR(device);
     if (ccp >= CCP_COUNT)
     {
@@ -485,4 +649,3 @@ int ccp_setValue(rt_dev_t device, uint32_t value)
     return -1;
 #endif
 }
-
