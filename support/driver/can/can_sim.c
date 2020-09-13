@@ -8,8 +8,8 @@
  * @brief CAN udevkit simulator support for simulation purpose
  */
 
-#include "can.h"
 #include "can_sim.h"
+#include "can.h"
 #include "simulator.h"
 
 #include "driver/sysclock.h"
@@ -18,24 +18,24 @@
 #include <stdio.h>
 #include <string.h>
 
-#if defined (WIN32) || defined (_WIN32)
-    #include <winsock2.h>
-    #define SOCKET_MODE 0
+#if defined(WIN32) || defined(_WIN32)
+#    include <winsock2.h>
+#    define SOCKET_MODE 0
+SOCKET sim_can;
 
-#elif defined (linux) || defined (LINUX) || defined (__linux__) \
-    || defined (unix) || defined (UNIX) || defined (__unix__) \
-    || defined (__APPLE__)
-    #include <fcntl.h>
-    #include <sys/ioctl.h>
-    #include <net/if.h>
-    #include <linux/can.h>
-    #include <linux/can/raw.h>
+#elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__) || \
+    defined(__APPLE__)
+#    include <fcntl.h>
+#    include <linux/can.h>
+#    include <linux/can/raw.h>
+#    include <net/if.h>
+#    include <sys/ioctl.h>
 #else
-  #error can sim not supported for your platform
+#    error can sim not supported for your platform
 #endif
 
-#if !defined (CAN_COUNT) || CAN_COUNT==0
-	#warning No device
+#if !defined(CAN_COUNT) || CAN_COUNT == 0
+#    warning No device
 #endif
 
 /****************************************************************************************/
@@ -45,30 +45,25 @@ void can_sendconfig(uint8_t can);
 /****************************************************************************************/
 /*          External variable                                                           */
 
-
 /****************************************************************************************/
 /*          Local variable                                                              */
 int soc;
 can_dev cans[] = {
-    {.bitRate = 0,
-    .bus = "can0"},
-#if CAN_COUNT>=2
-    {.bitRate = 0,
-    .bus = "can1"},
+    {.bitRate = 0, .bus = "can0"},
+#if CAN_COUNT >= 2
+    {.bitRate = 0, .bus = "can1"},
 #endif
-#if CAN_COUNT>=3
-    {.bitRate = 0,
-    .bus = "can2"},
+#if CAN_COUNT >= 3
+    {.bitRate = 0, .bus = "can2"},
 #endif
-#if CAN_COUNT>=4
-    {.bitRate = 0,
-    .bus = "can3"},
+#if CAN_COUNT >= 4
+    {.bitRate = 0, .bus = "can3"},
 #endif
 };
 
 void can_sendconfig(uint8_t can)
 {
-    simulator_send(CAN_SIM_MODULE, can, CAN_SIM_CONFIG, (char*)&cans[can], sizeof(can_dev));
+    simulator_send(CAN_SIM_MODULE, can, CAN_SIM_CONFIG, (char *)&cans[can], sizeof(can_dev));
 }
 
 rt_dev_t can_getFreeDevice()
@@ -143,6 +138,39 @@ int can_open(rt_dev_t device)
         return -1;
     }
 #endif
+#ifdef SIM_WIN
+    SOCKADDR_IN ssin;
+
+#    if defined(WIN32) || defined(_WIN32)
+    WSADATA WSAData;
+    WSAStartup(MAKEWORD(2, 2), &WSAData);
+#    endif
+
+    // socket creation
+    sim_can = socket(AF_INET, SOCK_STREAM, 0);
+    if (sim_can == INVALID_SOCKET)
+    {
+        perror("socket()");
+        exit(errno);
+    }
+
+    // socket config
+    ssin.sin_addr.s_addr = inet_addr("127.0.0.1");
+    ssin.sin_family = AF_INET;
+    ssin.sin_port = htons(35468);
+
+    // socket connection to host
+    if (connect(sim_can, (SOCKADDR *)&ssin, sizeof(ssin)) != SOCKET_ERROR)
+    {
+        printf("Connected successfully to port %s %d\n", inet_ntoa(ssin.sin_addr), htons(ssin.sin_port));
+    }
+    else
+    {
+        printf("Cannot connect to port %d\n", SIM_SOCKET_PORT);
+        closesocket(sim_can);
+        sim_can = 0;
+    }
+#endif
 
     return 0;
 }
@@ -158,6 +186,14 @@ int can_close(rt_dev_t device)
     cans[can].used = 0;
     can_sendconfig(can);
 
+#ifdef SIM_WIN
+#    if defined(WIN32)
+    WSACleanup();
+#    endif
+
+    closesocket(sim_can);
+#endif
+
     return 0;
 }
 
@@ -171,6 +207,11 @@ int can_enable(rt_dev_t device)
 
     cans[can].enabled = 0;
     can_sendconfig(can);
+
+#ifdef SIM_WIN
+    send(sim_can, "connect:can0\n", 13, 0);
+    usleep(100);
+#endif
 
     return 0;
 }
@@ -302,7 +343,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 
     frame.can_id = header->id;
 
-    if((header->flags & CAN_VERS2BA) == CAN_VERS2BA)
+    if ((header->flags & CAN_VERS2BA) == CAN_VERS2BA)
     {
         frame.can_id += 0x80000000;
     }
@@ -311,8 +352,8 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     {
         header->size = 8;
     }
-    frame.can_dlc = header->size; // Data Length
-    for (i=0; i < header->size; i++)
+    frame.can_dlc = header->size;  // Data Length
+    for (i = 0; i < header->size; i++)
     {
         frame.data[i] = data[i];
     }
@@ -321,11 +362,48 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     {
         return -1;
     }
-// TODO format data
-    //simulator_send(CAN_SIM_MODULE, can, CAN_SIM_WRITE, data, size);
+#endif
+
+#ifdef SIM_WIN
+    char sockdata[20];
+    int id;
+    id = sprintf(sockdata, "can0:%d##", header->id);
+    for (int i = 0; i < header->size; i++)
+    {
+        sprintf(sockdata + id, "%02X", (unsigned char)data[i]);
+        id += 2;
+    }
+    sockdata[id] = '\n';
+    send(sim_can, sockdata, id + 1, 0);
 #endif
 
     return 1;
+}
+
+#ifdef SIM_WIN
+static const char RemoteRequestFlag = 'R';
+static const char ExtendedFormatFlag = 'X';
+static const char FlexibleDataRateFlag = 'F';
+static const char BitRateSwitchFlag = 'B';
+static const char ErrorStateFlag = 'E';
+static const char LocalEchoFlag = 'L';
+#endif
+
+unsigned char hexToChar(unsigned char h)
+{
+    if (h >= '0' && h <= '9')
+    {
+        return h - '0';
+    }
+    if (h >= 'a' && h <= 'f')
+    {
+        return h - 'a' + 10;
+    }
+    if (h >= 'A' && h <= 'F')
+    {
+        return h - 'A' + 10;
+    }
+    return 0;
 }
 
 int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
@@ -339,11 +417,6 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     {
         return -1;
     }
-    // TODO
-    /*simulator_rec_task();
-    size_read = simulator_recv(CAN_SIM_MODULE, can, CAN_SIM_READ, data, 64);
-    if (size_read < 0)
-        size_read = 0;*/
 
 #ifdef SIM_UNIX
     struct can_frame frame;
@@ -352,7 +425,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     if (recvbytes >= 0)
     {
         header->id = frame.can_id & 0x1FFFFFFF;
-        header->size = frame.can_dlc; // Data Length
+        header->size = frame.can_dlc;  // Data Length
         header->flags = 0;
         if ((frame.can_id & 0x80000000))
         {
@@ -363,7 +436,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
             header->flags += CAN_RTR;
         }
 
-        for (i=0; i < header->size; i++)
+        for (i = 0; i < header->size; i++)
         {
             data[i] = (char)frame.data[i];
         }
@@ -371,28 +444,60 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     }
 #endif
 
-    can_sim_frame sim_frame;
-    simulator_rec_task();
-    size_read = simulator_recv(CAN_SIM_MODULE, can, CAN_SIM_READ, (char*)&sim_frame, sizeof(sim_frame));
-    if (size_read < 0)
+#ifdef SIM_WIN
+    char sockdata[50];
+    u_long ret;
+    ioctlsocket(sim_can, FIONREAD, &ret);
+    if (ret == 0)
+    {
+        return 0;
+    }
+    int size = recv(sim_can, sockdata, 50, SOCKET_MODE);
+    if (size < 0)
     {
         return 0;
     }
 
-    header->id = sim_frame.can_id;
-    header->size = sim_frame.can_dlc; // Data Length
-    for (i=0; i < header->size; i++)
+    int id;
+    int pos;
+    sscanf(sockdata, "%d#%n", &id, &pos);
+    header->id = id;
+    header->flags = 0;
+    while (sockdata[pos] != '#')
     {
-        data[i] = sim_frame.data[i];
+        if (sockdata[pos] == RemoteRequestFlag)
+        {
+            header->flags += CAN_RTR;
+        }
+        if (sockdata[pos] == ExtendedFormatFlag)
+        {
+            header->flags += CAN_VERS2BA;
+        }
+        pos++;
     }
-    //printf("dlc = %d, data = %s\n", frame.can_dlc, frame.data);
-    // TODO format data
+    pos++;
+    header->size = (size - pos - 1) / 2;
+    if (header->size > 8)
+    {
+        header->size = 8;
+    }
+    for (i = 0; i < header->size; i++)
+    {
+        data[i] = hexToChar(sockdata[pos]) * 16 + hexToChar(sockdata[pos + 1]);
+        pos += 2;
+    }
+    return 1;
+#endif
 
     return 0;
 }
 
-int can_filterConfiguration(rt_dev_t device, uint8_t nFilter, uint8_t fifo,
-			    uint32_t idFilter, uint32_t mask, CAN_FRAME_FORMAT_FLAGS frame)
+int can_filterConfiguration(rt_dev_t device,
+                            uint8_t nFilter,
+                            uint8_t fifo,
+                            uint32_t idFilter,
+                            uint32_t mask,
+                            CAN_FRAME_FORMAT_FLAGS frame)
 {
     UDK_UNUSED(idFilter);
     UDK_UNUSED(mask);
@@ -409,8 +514,8 @@ int can_filterConfiguration(rt_dev_t device, uint8_t nFilter, uint8_t fifo,
         return -1;
     }
 
-   //TODO
-        // simulator_filterConfiguration
+    // TODO
+    // simulator_filterConfiguration
 
     return 0;
 }
@@ -429,12 +534,11 @@ int can_filterEnable(rt_dev_t device, uint8_t nFilter)
         return -1;
     }
 
-    //TODO
+    // TODO
     // simulator_filterEnable
 
     return 0;
 }
-
 
 int can_filterDisable(rt_dev_t device, uint8_t nFilter)
 {
@@ -449,9 +553,8 @@ int can_filterDisable(rt_dev_t device, uint8_t nFilter)
         return -1;
     }
 
-    //TODO
+    // TODO
     // simulator_filterDisable
 
     return 0;
-
 }

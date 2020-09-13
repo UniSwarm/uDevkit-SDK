@@ -22,24 +22,23 @@
 #    include <windows.h>
 #    define psleep(m_sec) Sleep((m_sec))
 
-void usleep(__int64 usec) 
-{ 
-    HANDLE timer; 
-    LARGE_INTEGER ft; 
+/*void usleep(__int64 usec)
+{
+    HANDLE timer;
+    LARGE_INTEGER ft;
 
     ft.QuadPart = -(10 * usec); // Convert to 100 nanosecond interval, negative value indicates relative time
 
-    timer = CreateWaitableTimer(NULL, TRUE, NULL); 
+    timer = CreateWaitableTimer(NULL, TRUE, NULL);
     SetWaitableTimer(timer, &ft, 0, NULL, NULL, 0);
-    WaitForSingleObject(timer, INFINITE); 
-    CloseHandle(timer); 
-}
+    WaitForSingleObject(timer, INFINITE);
+    CloseHandle(timer);
+}*/
 
-#elif defined (linux) || defined (LINUX) || defined (__linux__) \
-   || defined (unix) || defined (UNIX) || defined (__unix__) \
-   || defined (__APPLE__)
+#elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__) || \
+    defined(__APPLE__)
 #    include <unistd.h>
-#    define psleep(m_sec) usleep((m_sec) * 1000)
+#    define psleep(m_sec) usleep((m_sec)*1000)
 
 #else
 #    error pthread not supported for your platform

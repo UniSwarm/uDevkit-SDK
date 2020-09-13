@@ -11,6 +11,8 @@
 #ifndef CAN_SIM_H
 #define CAN_SIM_H
 
+#include <driver/device.h>
+
 #include <stdint.h>
 
 typedef struct

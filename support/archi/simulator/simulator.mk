@@ -50,9 +50,9 @@ $(OUT_PWD)/$(SIM_EXE) : $(SIM_OBJECTS)
 
 sim-exe: $(OUT_PWD)/$(SIM_EXE)
 
-sim : sim-exe $(UDKSIM_EXE)
+sim : sim-exe
 	#killall udk-sim || true
-	$(UDKSIM_EXE) $(OUT_PWD)/$(SIM_EXE)
+	$(OUT_PWD)/$(SIM_EXE)
 
 sim-clean :
 	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c
