@@ -7,22 +7,45 @@ HX = xc16-bin2hex
 SIM = sim30
 OBJDUMP = xc16-objdump
 
+XC16_PATH = $(abspath $(dir $(lastword $(shell whereis -b xc16-gcc)))..)/
+ifeq ("$(LK_SCRIPT)","")
+ LK_SCRIPT = p$(DEVICE).gld
+endif
+
 ifeq ("$(CC)","xc16-gcc") # XC16 compiler used
  CCFLAGS_XC += -no-legacy-libc
  CCFLAGS_XC += -mcpu=$(DEVICE)
  CCFLAGS_XC += -mno-eds-warn
- LDFLAGS_XC += -Wl,--heap=$(HEAP),-Tp$(DEVICE).gld
+ LDFLAGS_XC += -Wl,--heap=$(HEAP),-T$(LK_SCRIPT)
  CCFLAGS += -Wall
 
+ ifeq ($(ARCHI),$(filter $(ARCHI),dspic30f))
+  LDFLAGS_XC += -Wl,-L$(XC16_PATH)support/dsPIC30F/gld/
+ endif
+ ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24hj))
+  LDFLAGS_XC += -Wl,-L$(XC16_PATH)support/PIC24F/gld/ -Wl,-L$(XC16_PATH)support/PIC24H/gld/
+ endif
+ ifeq ($(ARCHI),$(filter $(ARCHI),pic24ep))
+  LDFLAGS_XC += -Wl,-L$(XC16_PATH)support/PIC24E/gld/
+ endif
+ ifeq ($(ARCHI),$(filter $(ARCHI),dspic33fj))
+  LDFLAGS_XC += -Wl,-L$(XC16_PATH)support/dsPIC33F/gld/
+ endif
+ ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ep dspic33ev))
+  LDFLAGS_XC += -Wl,-L$(XC16_PATH)support/dsPIC33E/gld/
+ endif
+ ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ck dspic33ch))
+  LDFLAGS_XC += -Wl,-DLD_PATH=$(XC16_PATH)support/dsPIC33C/gld/
+ endif
+
 else                      # other compiler used
- XC16_PATH = $(abspath $(dir $(lastword $(shell whereis -b xc16-gcc)))..)/
  DEFPROC := $(shell echo $(DEVICE) |\
     sed -e 's/.*\(^[23][42][MEF].*\).*/PIC\1/'\
     -e 's/.*\(^3[03][EFC][PVJHK]*.*\).*/dsPIC\1/')
  CCFLAGS += -D_HOSTED -D__$(DEFPROC)__ -D__XC16__ -D__prog__ -D__pack_upper_byte 
  CCFLAGS += -Wno-attributes -Wno-unknown-pragmas
  CCFLAGS += -I$(XC16_PATH)include/ -I$(XC16_PATH)support/generic/h/
- 
+
  ifeq ($(ARCHI),$(filter $(ARCHI),dspic30f))
   CCFLAGS += -D__dsPIC30F__ -I$(XC16_PATH)support/dsPIC30F/h/
  endif
