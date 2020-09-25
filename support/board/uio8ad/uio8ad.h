@@ -73,4 +73,11 @@ int board_setIO(uint8_t io, uint16_t state);
 #define BOARD_IN7_ADC_CHAN 14
 uint8_t board_analogin(uint8_t io);
 
+// Page adress
+#define ADRESS_PAGE_1_COM   0x52000
+#define ADRESS_PAGE_2_MS    0x53000
+#define ADRESS_PAGE_3_APP   0x54000
+#define ADRESS_PAGE_4_APP   0x55000
+#define ADRESS_PAGE_5_CAL   0x56000
+
 #endif  // UIO8AD_H
