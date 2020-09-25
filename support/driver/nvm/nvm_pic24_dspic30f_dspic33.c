@@ -29,6 +29,7 @@ ssize_t nvm_read(uint32_t addr, char *data, size_t size)
     size_t sizeRemaining;
     ssize_t size_read;
 
+    addr >>= 1;
     TBLPAG = addr >> 16;
     offset = addr;
     sizeRemaining = size;       // set the number of value to read
@@ -106,6 +107,7 @@ ssize_t nvm_write(uint32_t addr, char *data, size_t size)
     ssize_t size_write;
     char newData[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
 
+    addr >>= 1;
     currentAddr = addr;
     sizeRemaining = size;   // set the number of value to read
 
@@ -186,6 +188,8 @@ ssize_t nvm_readPage(uint32_t addr, char *data)
 ssize_t nvm_erasePage(uint32_t addr)
 {
     ssize_t size_erase;
+
+    addr >>= 1;
     NVMADR = addr & 0xF800; // filter supposed to be on the other register
     NVMADRU = addr >> 16;   // set target write addrof general segment
 
@@ -209,6 +213,8 @@ ssize_t nvm_writePage(uint32_t addr, char *data)
     uint32_t pageAddr;
     size_t pageSize;
     ssize_t size_write;
+
+    addr >>= 1;
     pageAddr = addr & NVM_FLASH_PAGE_MASK;      // align the address with top of page
     pageSize = (NVM_FLASH_PAGE_BYTE >> 2) * 3;  // calculate the exact number of byte
     /* only 3 out of 4 bytes are useful because of phantom byte */
