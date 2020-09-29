@@ -411,7 +411,6 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     UDK_UNUSED(fifo);
 
     int i;
-    ssize_t size_read;
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {
