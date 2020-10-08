@@ -59,7 +59,14 @@ int8_t board_getButton(uint8_t button);
 #define BOARD_OUT6_PWM_CHAN 1
 #define BOARD_OUT7_PWM_CHAN 8
 #define BOARD_OUT8_PWM_CHAN 6
+typedef enum {
+    DO_OFF,
+    DO_OPEN_DRAIN,
+    DO_OPEN_SOURCE,
+    DO_PUSH_PULL
+} DO_MODE;
 int board_setIO(uint8_t io, uint16_t state);
+int board_setIOMode(uint8_t io, DO_MODE mode);
 
 // Analog input
 #define ANALOGIN_COUNT     8

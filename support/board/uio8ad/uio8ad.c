@@ -18,7 +18,9 @@
 #include <driver/sysclock.h>
 
 rt_dev_t _board_leds[LED_COUNT];
-rt_dev_t _board_outs[OUT_COUNT];
+rt_dev_t _board_outs_H[OUT_COUNT];
+rt_dev_t _board_outs_L[OUT_COUNT];
+DO_MODE _board_outs_mode[OUT_COUNT];
 rt_dev_t _board_analogin[ANALOGIN_COUNT];
 
 int board_init_io()
@@ -53,8 +55,8 @@ int board_init_io()
     TRISCbits.TRISC5 = 0;   // out0L
     TRISCbits.TRISC10 = 0;  // out1H
     TRISCbits.TRISC11 = 0;  // out1L
-    TRISDbits.TRISD0 = 0;   // out2H
-    TRISDbits.TRISD1 = 0;   // out2L
+    TRISDbits.TRISD1 = 0;   // out2H
+    TRISDbits.TRISD0 = 0;   // out2L
     TRISBbits.TRISB10 = 0;  // out3H
     TRISBbits.TRISB11 = 0;  // out3L
 
@@ -118,23 +120,43 @@ int board_init_io()
     _board_analogin[6] = BOARD_IN6_ADC_CHAN;
     _board_analogin[7] = BOARD_IN7_ADC_CHAN;
 
-    _board_outs[0] = GPIO_PC05;
-    gpio_setBitConfig(_board_outs[0], GPIO_OUTPUT);
-    _board_outs[1] = GPIO_PC11;
-    gpio_setBitConfig(_board_outs[1], GPIO_OUTPUT);
-    _board_outs[2] = GPIO_PD01;
-    gpio_setBitConfig(_board_outs[2], GPIO_OUTPUT);
-    _board_outs[3] = GPIO_PB11;
-    gpio_setBitConfig(_board_outs[3], GPIO_OUTPUT);
+    // Low side output pins definition and configuration
+    _board_outs_L[0] = GPIO_PC05;
+    gpio_setBitConfig(_board_outs_L[0], GPIO_OUTPUT);
+    _board_outs_L[1] = GPIO_PC11;
+    gpio_setBitConfig(_board_outs_L[1], GPIO_OUTPUT);
+    _board_outs_L[2] = GPIO_PD00;
+    gpio_setBitConfig(_board_outs_L[2], GPIO_OUTPUT);
+    _board_outs_L[3] = GPIO_PB11;
+    gpio_setBitConfig(_board_outs_L[3], GPIO_OUTPUT);
 
-    _board_outs[4] = GPIO_PB13;
-    gpio_setBitConfig(_board_outs[4], GPIO_OUTPUT);
-    _board_outs[5] = GPIO_PB15;
-    gpio_setBitConfig(_board_outs[5], GPIO_OUTPUT);
-    _board_outs[6] = GPIO_PC13;
-    gpio_setBitConfig(_board_outs[6], GPIO_OUTPUT);
-    _board_outs[7] = GPIO_PC15;
-    gpio_setBitConfig(_board_outs[7], GPIO_OUTPUT);
+    _board_outs_L[4] = GPIO_PB13;
+    gpio_setBitConfig(_board_outs_L[4], GPIO_OUTPUT);
+    _board_outs_L[5] = GPIO_PB15;
+    gpio_setBitConfig(_board_outs_L[5], GPIO_OUTPUT);
+    _board_outs_L[6] = GPIO_PC13;
+    gpio_setBitConfig(_board_outs_L[6], GPIO_OUTPUT);
+    _board_outs_L[7] = GPIO_PC15;
+    gpio_setBitConfig(_board_outs_L[7], GPIO_OUTPUT);
+
+    // High side output pins definition and configuration
+    _board_outs_H[0] = GPIO_PC04;
+    gpio_setBitConfig(_board_outs_H[0], GPIO_OUTPUT);
+    _board_outs_H[1] = GPIO_PC10;
+    gpio_setBitConfig(_board_outs_H[1], GPIO_OUTPUT);
+    _board_outs_H[2] = GPIO_PD01;
+    gpio_setBitConfig(_board_outs_H[2], GPIO_OUTPUT);
+    _board_outs_H[3] = GPIO_PB10;
+    gpio_setBitConfig(_board_outs_H[3], GPIO_OUTPUT);
+
+    _board_outs_H[4] = GPIO_PB12;
+    gpio_setBitConfig(_board_outs_H[4], GPIO_OUTPUT);
+    _board_outs_H[5] = GPIO_PB14;
+    gpio_setBitConfig(_board_outs_H[5], GPIO_OUTPUT);
+    _board_outs_H[6] = GPIO_PC12;
+    gpio_setBitConfig(_board_outs_H[6], GPIO_OUTPUT);
+    _board_outs_H[7] = GPIO_PC14;
+    gpio_setBitConfig(_board_outs_H[7], GPIO_OUTPUT);
 
     return 0;
 }
@@ -208,14 +230,64 @@ int board_setIO(uint8_t io, uint16_t state)
         return -1;
     }
 
-    if (state & 1)
-    {
-        gpio_setBit(_board_outs[io]);
+    switch(_board_outs_mode[io]) {
+    case DO_OFF:
+        gpio_clearBit(_board_outs_L[io]);
+        gpio_clearBit(_board_outs_H[io]);
+        break;
+    case DO_OPEN_DRAIN:
+        gpio_clearBit(_board_outs_H[io]);
+        nop(); // mosfet transition time
+        if (state & 1)
+        {
+            gpio_setBit(_board_outs_L[io]);
+        }
+        else
+        {
+            gpio_clearBit(_board_outs_L[io]);
+        }
+        break;
+    case DO_OPEN_SOURCE:
+        gpio_clearBit(_board_outs_L[io]);
+        
+        if (state & 1)
+        {
+            gpio_setBit(_board_outs_H[io]);
+        }
+        else
+        {
+            gpio_clearBit(_board_outs_H[io]);
+        }
+        break;
+    case DO_PUSH_PULL:
+        if (state & 1)
+        {
+            gpio_clearBit(_board_outs_L[io]);
+            // no need to put a delay to avoid a high side / low side mosfet overlap
+            // the discharge rate of the low side mosfet is much faster than high side buildup
+            gpio_setBit(_board_outs_H[io]);
+        }
+        else
+        {
+            gpio_clearBit(_board_outs_H[io]);
+            nop(); // mosfet transition time
+            gpio_setBit(_board_outs_L[io]);
+        }
+        break;
     }
-    else
+    
+    return 0;
+}
+
+// IO mode modification will only be changed at the next write on the IO
+int board_setIOMode(uint8_t io, DO_MODE mode) {
+    if (io >= OUT_COUNT)
     {
-        gpio_clearBit(_board_outs[io]);
+        return -1;
     }
+
+    _board_outs_mode[io] = mode;
+
     return 0;
 }
 
