@@ -10,8 +10,10 @@ DEV_PROG?=PK3  # default value pickit3 (PK3), possible value: real ice (RICE), I
 ifeq (,$(filter $(DEV_PROG),PKOB PK3 PK4 ICD3 ICD4 RICE))
  $(error Invalid DEV_PROG name '$(DEV_PROG)', choose between 'PKOB', 'PK3', 'PK4', 'ICD3', 'ICD4' or 'RICE')
 endif
+
+IPEFLAGS ?= -M
 prog : $(OUT_PWD)/$(PROJECT).hex
-	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -F$(PROJECT).hex -MC -OL $(IPEFLAGS) || true
+	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -F$(PROJECT).hex -OL $(IPEFLAGS) || true
 	@rm $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.*
 
 .PHONY: read
