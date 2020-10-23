@@ -6,15 +6,23 @@ DEV_PROG ?= ICD4
 vpath %.c $(dir $(lastword $(MAKEFILE_LIST)))
 vpath %.h $(dir $(lastword $(MAKEFILE_LIST)))
 
-DRIVERS += gpio
+DRIVERS += gpio ccp
 
 HEADER += umc1bds32.h
 
 ifdef SLAVE
- DEVICE = 33CH128MP506S1
+ ifeq ($(BOARD_VERSION),$(filter $(BOARD_VERSION),110 111))
+  DEVICE = 33CH512MP508S1
+ else
+  DEVICE = 33CH128MP506S1
+ endif
  SRC += umc1bds32_slave.c
 else
- DEVICE = 33CH128MP506
+ ifeq ($(BOARD_VERSION),$(filter $(BOARD_VERSION),110 111))
+  DEVICE = 33CH512MP508
+ else
+  DEVICE = 33CH128MP506
+ endif
  SRC += umc1bds32.c
  ARCHI_SRC += umc1bds32_fuses.c
 endif

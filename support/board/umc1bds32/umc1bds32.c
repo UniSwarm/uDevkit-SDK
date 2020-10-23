@@ -1,20 +1,21 @@
 /**
  * @file umc1bds32fr.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018
+ * @copyright UniSwarm 2019-2020
  *
  * @date March 1, 2019, 09:35 AM
  *
  * @brief Code for UMC1BDS32FR / UMC1BDS32FR-I board
- * 
+ *
  * product page:
  *  https://uniswarm.eu/uboards/umc/umc1bds32fr
  */
 
 #include "umc1bds32.h"
 
-#include "driver/sysclock.h"
+#include "driver/ccp.h"
 #include "driver/gpio.h"
+#include "driver/sysclock.h"
 
 /****************************************************************************************/
 /*          Privates functions                                                          */
@@ -31,40 +32,58 @@ int board_init_io()
 {
 #ifndef SIMULATOR
     // analog inputs
-    ANSELA = 0x001F;         // all analog inputs of port A as analog
-    ANSELB = 0x0006;         // all analog inputs of port B as digital buffer
-    ANSELC = 0x00CF;         // all analog inputs of port C as digital buffer
-    ANSELD = 0xF000;         // all analog inputs of port D as digital buffer
+    ANSELA = 0x001F;  // all analog inputs of port A as analog
+#    if BOARD_VERSION < 110
+    ANSELB = 0x0006;  // all analog inputs of port B as digital buffer
+#    else
+    ANSELB = 0x008E;  // all analog inputs of port B as digital buffer
+#    endif
+    ANSELC = 0x00CF;  // all analog inputs of port C as digital buffer
+#    if BOARD_VERSION < 110
+    ANSELD = 0xF000;  // all analog inputs of port D as digital buffer
+#    else
+    ANSELD = 0x1000;  // all analog inputs of port D as digital buffer
+#    endif
+
+#    if BOARD_VERSION < 110
     CNPUDbits.CNPUD10 = 1;
     CNPUDbits.CNPUD11 = 1;
+#    else
+    CNPUDbits.CNPUD14 = 1;
+#    endif
 
     // remappable pins
     // Unlock configuration pin
     unlockIoConfig();
 
-        // UART1 pins (RS485)
-        _U1RXR = 70;           // RX1 ==> RP70
-        _RP57R = _RPOUT_U1TX;  // TX1 ==> RP57
+    // UART1 pins (RS485)
+    _U1RXR = 70;           // RX1 ==> RP70
+    _RP57R = _RPOUT_U1TX;  // TX1 ==> RP57
 
-        // UART2 pins (dbg out only)
-        //_RP61R = _RPOUT_U2TX;  // TX2 ==> RP61
+    // UART2 pins (dbg out only)
+    //_RP61R = _RPOUT_U2TX;  // TX2 ==> RP61
 
-        // CAN fd 1
-        _CAN1RXR = 69;          // CAN1RX ==> RP69
-        _RP71R = _RPOUT_CAN1TX;   // CAN1TX ==> RP71
+    // CAN fd 1
+    _CAN1RXR = 69;           // CAN1RX ==> RP69
+    _RP71R = _RPOUT_CAN1TX;  // CAN1TX ==> RP71
 
-        _QEIA1R = 47;
-        _QEIB1R = 46;
-        _QEINDX1R = 60;
+#    if BOARD_VERSION < 110
+    _QEIA1R = 47;
+    _QEIB1R = 46;
+    _QEINDX1R = 60;
+#    else
+    // TODO
+#    endif
 
     TRISCbits.TRISC8 = 0;  // DE
+#    if BOARD_VERSION < 110
     TRISBbits.TRISB4 = 0;  // RE
+#    endif
     LATCbits.LATC8 = 0;
-
-    // Lock configuration pin
-    lockIoConfig();
 #endif
 
+    // init leds
+#if BOARD_VERSION < 110
     board_leds[0] = gpio_pin(GPIO_PORTC, 14);
     gpio_setBitConfig(board_leds[0], GPIO_OUTPUT);
     board_leds[1] = gpio_pin(GPIO_PORTC, 13);
@@ -73,6 +92,39 @@ int board_init_io()
     gpio_setBitConfig(board_leds[2], GPIO_OUTPUT);
     board_leds[3] = gpio_pin(GPIO_PORTD, 9);
     gpio_setBitConfig(board_leds[3], GPIO_OUTPUT);
+#else
+    _RP43R = _RPOUT_OCM3;  // led1R = RP43
+    _RP42R = _RPOUT_OCM4;  // led1G = RP42
+    _RP44R = _RPOUT_OCM5;  // led1B = RP44
+    _RP47R = _RPOUT_OCM6;  // led2R = RP47
+    _RP45R = _RPOUT_OCM7;  // led2G = RP45
+    _RP46R = _RPOUT_OCM8;  // led2B = RP46
+    uint8_t led;
+    for (led = 0; led < LED_COUNT; led++)
+    {
+        board_leds[led] = ccp(led + 3);
+        ccp_open(board_leds[led]);
+        ccp_setMode(board_leds[led], CCP_MODE_PWM);
+        ccp_setPeriod(board_leds[led], 0x7F8);
+        ccp_setCompare(board_leds[led], 0, 0);
+        ccp_enable(board_leds[led]);
+    }
+#endif
+
+    // power
+#if BOARD_VERSION >= 110
+    TRISEbits.TRISE2 = 0;  // 12Ven in out mode
+    LATEbits.LATE2 = 0;  // 12Ven disable
+
+    TRISCbits.TRISC12 = 0;  // poweren in out mode
+    LATCbits.LATC12 = 0;  // poweren disable
+
+    TRISDbits.TRISD14 = 0;  // bridgeen in out mode
+    LATDbits.LATD14 = 1;  // bridgeen disable
+#endif
+
+    // Lock configuration pin
+    lockIoConfig();
 
     return 0;
 }
@@ -89,41 +141,51 @@ int board_init()
 
 int board_setLed(uint8_t led, uint8_t state)
 {
-    if(led >= LED_COUNT)
+    if (led >= LED_COUNT)
     {
         return -1;
     }
 
+#if BOARD_VERSION < 110
     if (state & 1)
     {
-        gpio_setBit(board_leds[led]);
+        return gpio_setBit(board_leds[led]);
     }
     else
     {
-        gpio_clearBit(board_leds[led]);
+        return gpio_clearBit(board_leds[led]);
     }
-    return 0;
+
+#else
+    return ccp_setCompare(board_leds[led], 0, 0x7F8 - (state << 3));
+#endif
 }
 
 int board_toggleLed(uint8_t led)
 {
-    if(led >= LED_COUNT)
+    if (led >= LED_COUNT)
     {
         return -1;
     }
 
+#if BOARD_VERSION < 110
     gpio_toggleBit(board_leds[led]);
+#endif
     return 0;
 }
 
 int8_t board_getLed(uint8_t led)
 {
-    if(led >= LED_COUNT)
+    if (led >= LED_COUNT)
     {
         return -1;
     }
 
+#if BOARD_VERSION < 110
     return gpio_readBit(board_leds[led]);
+#else
+    return 0;
+#endif
 }
 
 int8_t board_getButton(uint8_t button)

@@ -14,7 +14,7 @@
 #pragma config BSLIM = 8191          // Boot Segment Flash Page Address Limit bits->
 
 // FOSCSEL
-#pragma config FNOSC = FRC           // Oscillator Source Selection->Primary
+#pragma config FNOSC = PRI          // Oscillator Source Selection->Primary
 #pragma config IESO = ON             // Two-speed Oscillator Start-up Enable bit->Start up device with FRC, then switch to user-selected oscillator source
 
 // FOSC
@@ -159,6 +159,26 @@
 #pragma config CPRD13 = MSTR    // Pin RD13 Ownership Bits->Master core owns pin
 #pragma config CPRD14 = MSTR    // Pin RD14 Ownership Bits->Master core owns pin
 #pragma config CPRD15 = MSTR    // Pin RD15 Ownership Bits->Master core owns pin
+
+#if BOARD_VERSION >= 110
+// FCFGPRE0
+#pragma config CPRE0 = MSTR     // Pin RE0 Ownership Bits->Master core owns pin
+#pragma config CPRE1 = MSTR     // Pin RE1 Ownership Bits->Master core owns pin
+#pragma config CPRE2 = MSTR     // Pin RE2 Ownership Bits->Master core owns pin
+#pragma config CPRE3 = MSTR     // Pin RE3 Ownership Bits->Master core owns pin
+#pragma config CPRE4 = MSTR     // Pin RE4 Ownership Bits->Master core owns pin
+#pragma config CPRE5 = MSTR     // Pin RE5 Ownership Bits->Master core owns pin
+#pragma config CPRE6 = MSTR     // Pin RE6 Ownership Bits->Master core owns pin
+#pragma config CPRE7 = MSTR     // Pin RE7 Ownership Bits->Master core owns pin
+#pragma config CPRE8 = MSTR     // Pin RE8 Ownership Bits->Master core owns pin
+#pragma config CPRE9 = MSTR     // Pin RE9 Ownership Bits->Master core owns pin
+#pragma config CPRE10 = MSTR    // Pin RE10 Ownership Bits->Master core owns pin
+#pragma config CPRE11 = MSTR    // Pin RE11 Ownership Bits->Master core owns pin
+#pragma config CPRE12 = MSTR    // Pin RE12 Ownership Bits->Master core owns pin
+#pragma config CPRE13 = MSTR    // Pin RE13 Ownership Bits->Master core owns pin
+#pragma config CPRE14 = MSTR    // Pin RE14 Ownership Bits->Master core owns pin
+#pragma config CPRE15 = MSTR    // Pin RE15 Ownership Bits->Master core owns pin
+#endif
 
 // ################################# MSI configuration #################################
 // FMBXM
