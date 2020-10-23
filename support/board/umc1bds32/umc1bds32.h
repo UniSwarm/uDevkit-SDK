@@ -70,4 +70,11 @@ int8_t board_getButton(uint8_t button);
 #define I_CD_SADC_CHAN     14
 #define I_CD_PGA           2
 
+// Page adress
+#define ADRESS_PAGE_1_COM   0x26000
+#define ADRESS_PAGE_2_MS    0x27000
+#define ADRESS_PAGE_3_APP   0x28000
+#define ADRESS_PAGE_4_APP   0x29000
+#define ADRESS_PAGE_5_CAL   0x2A000
+
 #endif  // UMC1BDS32FR_H
