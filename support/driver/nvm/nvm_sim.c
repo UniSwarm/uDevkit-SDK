@@ -21,20 +21,23 @@ void nvm_init()
 {
     char temp[TAILLE_BUF];
 
-    char path[100];
-    strcat(path, "./");
+    char path[50];
     strcat(path, BOARD_NAME);
     strcat(path, ".bin");
 
-    fileNvm = fopen(path, "w+b");
+    fileNvm = fopen(path, "rb+");
     if (fileNvm == NULL)
     {
-        printf("Error open file\n");
-        return;
-    }
+        fileNvm = fopen(path, "w+b");
+        if (fileNvm == NULL)
+        {
+            printf("Error open file\n");
+            return;
+        }
 
-    memset(temp, 255, TAILLE_BUF);
-    fwrite(temp, sizeof (temp), 1, fileNvm);
+        memset(temp, 255, TAILLE_BUF);
+        fwrite(temp, sizeof (temp), 1, fileNvm);
+    }
 }
 
 /**
