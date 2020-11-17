@@ -10,6 +10,9 @@
  * Implementation based on Microchip document DS70005278B :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/dsPIC33-PIC24-FRM-Master-Slave-Interface-MSI-Module-70005278b.pdf
  */
+
+#ifndef MSI_DSPIC33CH_H
+#define MSI_DSPIC33CH_H
  
 #if defined(DEVICE_33CH128MP202) || defined(DEVICE_33CH128MP203) || defined(DEVICE_33CH128MP205) \
  || defined(DEVICE_33CH128MP206) || defined(DEVICE_33CH128MP208) || defined(DEVICE_33CH128MP502) \
@@ -64,3 +67,8 @@
  #define MSI_MAILBOX_COUNT 16
  #define MSI_PROTOCOL_COUNT 8
 #endif
+
+#define MSI_PROTOCOL_M2S 0
+#define MSI_PROTOCOL_S2M 1
+
+#endif // MSI_DSPIC33CH_H
