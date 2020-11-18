@@ -21,7 +21,7 @@
  * @param slave_id slave id, first one is 1
  * @return 0 if ok, -1 in case of error
  */
-int msi_slave_start(uint8_t slave_id)
+int msi_slave_start(const uint8_t slave_id)
 {
     if (slave_id != 1)
     {
@@ -37,7 +37,7 @@ int msi_slave_start(uint8_t slave_id)
  * @param slave_id slave id, first one is 1
  * @return 0 if ok, -1 in case of error
  */
-int msi_slave_stop(uint8_t slave_id)
+int msi_slave_stop(const uint8_t slave_id)
 {
     if (slave_id != 1)
     {
@@ -53,7 +53,7 @@ int msi_slave_stop(uint8_t slave_id)
  * @param slave_id slave id, first one is 1
  * @return 0 if ok, -1 in case of error
  */
-int msi_slave_reset(uint8_t slave_id)
+int msi_slave_reset(const uint8_t slave_id)
 {
     if (slave_id != 1)
     {
@@ -65,12 +65,19 @@ int msi_slave_reset(uint8_t slave_id)
     return 0;
 }
 
+MSI_CORE_STATUS msi_master_status(void)
+{
+    // SI1STAT
+    // TODO IMPLEMENT ME
+    return MSI_CORE_STATUS_STARTED;
+}
+
 /**
  * @brief Gives the status of the slave with id `slave_id`
  * @param slave_id slave id, first one is 1
  * @return MSI_CORE_STATUS status enum
  */
- MSI_CORE_STATUS msi_slave_status(uint8_t slave_id)
+MSI_CORE_STATUS msi_slave_status(const uint8_t slave_id)
 {
     if (slave_id != 1)
     {
@@ -82,14 +89,15 @@ int msi_slave_reset(uint8_t slave_id)
         return MSI_CORE_STATUS_RESETED;
     }
 
+    // TODO FIXME
     switch (MSI1STATbits.SLVPWR)
     {
-    case 0b00:
-        return MSI_CORE_STATUS_LOWPOWERRUN;
-    case 0b01:
-        return MSI_CORE_STATUS_STARTED;
-    case 0b10:
-        return MSI_CORE_STATUS_SLEEPED;
+        case 0b00:
+            return MSI_CORE_STATUS_LOWPOWERRUN;
+        case 0b01:
+            return MSI_CORE_STATUS_STARTED;
+        case 0b10:
+            return MSI_CORE_STATUS_SLEEPED;
     }
 
     return MSI_CORE_STATUS_RESETED;
@@ -100,7 +108,7 @@ int msi_slave_reset(uint8_t slave_id)
  * @param slave_id slave id, first one is 1
  * @return 0 if ok, -1 in case of error
  */
-int msi_slave_program(uint8_t slave_id, __eds__ unsigned char *program)
+int msi_slave_program(const uint8_t slave_id, __eds__ unsigned char *program)
 {
     if (slave_id != 1)
     {
@@ -115,7 +123,7 @@ int msi_slave_program(uint8_t slave_id, __eds__ unsigned char *program)
  * @param slave_id slave id, first one is 1
  * @return 0 if ok, -1 in case of error
  */
-int msi_slave_verify_program(uint8_t slave_id, __eds__ unsigned char *program)
+int msi_slave_verify_program(const uint8_t slave_id, __eds__ unsigned char *program)
 {
     if (slave_id != 1)
     {
@@ -125,7 +133,7 @@ int msi_slave_verify_program(uint8_t slave_id, __eds__ unsigned char *program)
     return _program_slave(slave_id, 1, program);
 }
 
-int msi_protocol_write(uint8_t protocol, const unsigned char *data, uint8_t size)
+int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_t size)
 {
     UDK_UNUSED(protocol);
     UDK_UNUSED(size);
@@ -143,7 +151,22 @@ int msi_protocol_write(uint8_t protocol, const unsigned char *data, uint8_t size
     return 0;
 }
 
-int msi_protocol_read(uint8_t protocol, unsigned char *data, uint8_t max_size)
+/**
+ * @brief Gets number of data that could be read (in sw buffer)
+ * @param protocol protocol id
+ * @return 0 if mail is full and can not be written, 1 if OK, -1 if protocol is not valid
+ */
+int msi_protocol_canWrite(const uint8_t protocol)
+{
+    UDK_UNUSED(protocol);
+    if (_DTRDYA == 1)  // MailBox is full
+    {
+        return 0;
+    }
+    return 1;
+}
+
+int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_size)
 {
     UDK_UNUSED(protocol);
     UDK_UNUSED(max_size);
@@ -163,4 +186,19 @@ int msi_protocol_read(uint8_t protocol, unsigned char *data, uint8_t max_size)
     ptr++;
     *ptr = MSI1MBX9D;
     return 0;
+}
+
+/**
+ * @brief Gets number of data that could be read (in sw buffer)
+ * @param protocol protocol id
+ * @return 0 if mail is empty, 1 if OK to be read, -1 if protocol is not valid
+ */
+int msi_protocol_canRead(const uint8_t protocol)
+{
+    UDK_UNUSED(protocol);
+    if (_DTRDYB == 0)  // MailBox is empty
+    {
+        return 0;
+    }
+    return 1;
 }

@@ -15,9 +15,9 @@
 #include <driver/device.h>
 
 #if defined(ARCHI_dspic33ch)
- #include "msi_dspic33ch.h"
+#    include "msi_dspic33ch.h"
 #else
- #warning Unsuported ARCHI
+#    warning Unsuported ARCHI
 #endif
 
 typedef enum
@@ -29,17 +29,17 @@ typedef enum
 } MSI_CORE_STATUS;
 
 #ifdef MSI_HAVE_MASTER_INTERFACE
- int msi_slave_start(uint8_t slave_id);
- int msi_slave_stop(uint8_t slave_id);
- int msi_slave_reset(uint8_t slave_id);
- MSI_CORE_STATUS msi_slave_status(uint8_t slave_id);
+int msi_slave_start(const uint8_t slave_id);
+int msi_slave_stop(const uint8_t slave_id);
+int msi_slave_reset(const uint8_t slave_id);
+MSI_CORE_STATUS msi_slave_status(const uint8_t slave_id);
 
- int msi_slave_program(uint8_t slave_id, __eds__ unsigned char *program);
- int msi_slave_verify_program(uint8_t slave_id, __eds__ unsigned char *program);
+int msi_slave_program(const uint8_t slave_id, __eds__ unsigned char *program);
+int msi_slave_verify_program(const uint8_t slave_id, __eds__ unsigned char *program);
 #endif
 
 #ifndef MSI_HAVE_MASTER_INTERFACE
- MSI_CORE_STATUS msi_master_status();
+MSI_CORE_STATUS msi_master_status(void);
 #endif
 
 // Mailboxes
@@ -52,8 +52,10 @@ typedef enum
 #define MSI_PROTOCOL_G 6
 #define MSI_PROTOCOL_H 7
 
-int msi_protocol_write(uint8_t protocol, const unsigned char *data, uint8_t size);
+int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_t size);
+int msi_protocol_canWrite(const uint8_t protocol);
 
-int msi_protocol_read(uint8_t protocol, unsigned char *data, uint8_t max_size);
+int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_size);
+int msi_protocol_canRead(const uint8_t protocol);
 
-#endif // MSI_H
+#endif  // MSI_H
