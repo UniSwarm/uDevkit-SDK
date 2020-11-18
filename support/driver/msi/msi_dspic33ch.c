@@ -65,13 +65,6 @@ int msi_slave_reset(const uint8_t slave_id)
     return 0;
 }
 
-MSI_CORE_STATUS msi_master_status(void)
-{
-    // SI1STAT
-    // TODO IMPLEMENT ME
-    return MSI_CORE_STATUS_STARTED;
-}
-
 /**
  * @brief Gives the status of the slave with id `slave_id`
  * @param slave_id slave id, first one is 1

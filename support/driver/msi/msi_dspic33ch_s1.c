@@ -19,7 +19,7 @@
  * @brief Gives the status of the master core
  * @return MSI_CORE_STATUS status enum
  */
- MSI_CORE_STATUS msi_master_status()
+ MSI_CORE_STATUS msi_master_status(void)
 {
     if (SI1STATbits.MSTRST)
     {
@@ -39,7 +39,7 @@
     return MSI_CORE_STATUS_RESETED;
 }
 
-int msi_protocol_write(uint8_t protocol, const unsigned char *data, uint8_t size)
+int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_t size)
 {
     UDK_UNUSED(protocol);
     UDK_UNUSED(size);
@@ -57,7 +57,22 @@ int msi_protocol_write(uint8_t protocol, const unsigned char *data, uint8_t size
     return 0;
 }
 
-int msi_protocol_read(uint8_t protocol, unsigned char *data, uint8_t max_size)
+/**
+ * @brief Gets number of data that could be read (in sw buffer)
+ * @param protocol protocol id
+ * @return 0 if mail is full and can not be written, 1 if OK, -1 if protocol is not valid
+ */
+int msi_protocol_canWrite(const uint8_t protocol)
+{
+    UDK_UNUSED(protocol);
+    if (_DTRDYB == 1)  // MailBox is full
+    {
+        return 0;
+    }
+    return 1;
+}
+
+int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_size)
 {
     UDK_UNUSED(protocol);
     UDK_UNUSED(max_size);
@@ -77,4 +92,19 @@ int msi_protocol_read(uint8_t protocol, unsigned char *data, uint8_t max_size)
     ptr++;
     *ptr = SI1MBX4D;
     return 0;
+}
+
+/**
+ * @brief Gets number of data that could be read (in sw buffer)
+ * @param protocol protocol id
+ * @return 0 if mail is empty, 1 if OK to be read, -1 if protocol is not valid
+ */
+int msi_protocol_canRead(const uint8_t protocol)
+{
+    UDK_UNUSED(protocol);
+    if (_DTRDYA == 0)  // MailBox is empty
+    {
+        return 0;
+    }
+    return 1;
 }
