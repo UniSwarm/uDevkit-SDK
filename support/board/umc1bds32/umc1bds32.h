@@ -8,7 +8,7 @@
  * @brief Code for UMC1BDS32FR / UMC1BDS32FR-I board
  *
  * product page:
- *  https://uniswarm.eu/uboards/umc/umc1bds32fr
+ *  https://uniswarm.eu/uboards/umc/umc1bds32
  */
 
 #ifndef UMC1BDS32FR_H
@@ -62,10 +62,11 @@ int8_t board_getButton(uint8_t button);
 #    define BRIDGE_C_PWM 2
 #    define BRIDGE_D_PWM 3
 #else
-#    define BRIDGE_A_PWM 2
-#    define BRIDGE_B_PWM 1
-#    define BRIDGE_C_PWM 3
-#    define BRIDGE_D_PWM 4
+#    define BRIDGE_POWEREN_PWM 4
+#    define BRIDGE_A_PWM       2
+#    define BRIDGE_B_PWM       1
+#    define BRIDGE_C_PWM       3
+#    define BRIDGE_D_PWM       4
 #endif
 
 // analog iputs

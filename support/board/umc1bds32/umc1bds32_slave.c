@@ -88,6 +88,8 @@ int board_setLed(uint8_t led, uint8_t state)
     {
         gpio_clearBit(board_leds[led]);
     }
+#else
+    UDK_UNUSED(state);
 #endif
     return 0;
 }

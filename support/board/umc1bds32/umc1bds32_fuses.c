@@ -1,3 +1,15 @@
+/**
+ * @file umc1bds32fr.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright UniSwarm 2019-2020
+ *
+ * @date March 1, 2019, 09:35 AM
+ *
+ * @brief Fuses configuration for UMC1BDS32FR / UMC1BDS32FR-I board
+ *
+ * product page:
+ *  https://uniswarm.eu/uboards/umc/umc1bds32
+ */
 
 // ################################# Master configuration #################################
 // FSEC
@@ -182,11 +194,11 @@
 
 // ################################# MSI configuration #################################
 // FMBXM
-#pragma config MBXM0 = M2S              // Mailbox 0 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
-#pragma config MBXM1 = M2S              // Mailbox 1 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
-#pragma config MBXM2 = M2S              // Mailbox 2 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
-#pragma config MBXM3 = M2S              // Mailbox 3 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
-#pragma config MBXM4 = M2S              // Mailbox 4 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
+#pragma config MBXM0 = M2S              // Mailbox 0 data direction (Mailbox register configured for Master data read (Master to Slave data transfer)
+#pragma config MBXM1 = M2S              // Mailbox 1 data direction (Mailbox register configured for Master data read (Master to Slave data transfer)
+#pragma config MBXM2 = M2S              // Mailbox 2 data direction (Mailbox register configured for Master data read (Master to Slave data transfer)
+#pragma config MBXM3 = M2S              // Mailbox 3 data direction (Mailbox register configured for Master data read (Master to Slave data transfer)
+#pragma config MBXM4 = M2S              // Mailbox 4 data direction (Mailbox register configured for Master data read (Master to Slave data transfer)
 #pragma config MBXM5 = S2M              // Mailbox 5 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
 #pragma config MBXM6 = S2M              // Mailbox 6 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
 #pragma config MBXM7 = S2M              // Mailbox 7 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)

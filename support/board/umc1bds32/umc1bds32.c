@@ -8,7 +8,7 @@
  * @brief Code for UMC1BDS32FR / UMC1BDS32FR-I board
  *
  * product page:
- *  https://uniswarm.eu/uboards/umc/umc1bds32fr
+ *  https://uniswarm.eu/uboards/umc/umc1bds32
  */
 
 #include "umc1bds32.h"
@@ -36,20 +36,20 @@ int board_init_io()
 #    if BOARD_VERSION < 110
     ANSELB = 0x0006;  // all analog inputs of port B as digital buffer
 #    else
-    ANSELB = 0x008E;  // all analog inputs of port B as digital buffer
+    ANSELB = 0x008E;        // all analog inputs of port B as digital buffer
 #    endif
     ANSELC = 0x00CF;  // all analog inputs of port C as digital buffer
 #    if BOARD_VERSION < 110
     ANSELD = 0xF000;  // all analog inputs of port D as digital buffer
 #    else
-    ANSELD = 0x1000;  // all analog inputs of port D as digital buffer
+    ANSELD = 0x1000;        // all analog inputs of port D as digital buffer
 #    endif
 
 #    if BOARD_VERSION < 110
-    CNPUDbits.CNPUD10 = 1;
-    CNPUDbits.CNPUD11 = 1;
+    CNPUDbits.CNPUD10 = 1;  // pullup STO in1
+    CNPUDbits.CNPUD11 = 1;  // pullup STO in2
 #    else
-    CNPUDbits.CNPUD14 = 1;
+    CNPUDbits.CNPUD14 = 1;  // pullup reset button
 #    endif
 
     // remappable pins
@@ -60,9 +60,6 @@ int board_init_io()
     _U1RXR = 70;           // RX1 ==> RP70
     _RP57R = _RPOUT_U1TX;  // TX1 ==> RP57
 
-    // UART2 pins (dbg out only)
-    //_RP61R = _RPOUT_U2TX;  // TX2 ==> RP61
-
     // CAN fd 1
     _CAN1RXR = 69;           // CAN1RX ==> RP69
     _RP71R = _RPOUT_CAN1TX;  // CAN1TX ==> RP71
@@ -72,12 +69,14 @@ int board_init_io()
     _QEIB1R = 46;
     _QEINDX1R = 60;
 #    else
-    // TODO
+    _QEIA1R = 61;           // same pins as slaves for the moment
+    _QEIB1R = 62;
+    _QEINDX1R = 63;
 #    endif
 
-    TRISCbits.TRISC8 = 0;  // DE
+    TRISCbits.TRISC8 = 0;  // RS485 DE
 #    if BOARD_VERSION < 110
-    TRISBbits.TRISB4 = 0;  // RE
+    TRISBbits.TRISB4 = 0;  // RS485 RE
 #    endif
     LATCbits.LATC8 = 0;
 #endif
@@ -93,12 +92,14 @@ int board_init_io()
     board_leds[3] = gpio_pin(GPIO_PORTD, 9);
     gpio_setBitConfig(board_leds[3], GPIO_OUTPUT);
 #else
+#    ifndef SIMULATOR
     _RP43R = _RPOUT_OCM3;  // led1R = RP43
     _RP42R = _RPOUT_OCM4;  // led1G = RP42
     _RP44R = _RPOUT_OCM5;  // led1B = RP44
     _RP47R = _RPOUT_OCM6;  // led2R = RP47
     _RP45R = _RPOUT_OCM7;  // led2G = RP45
     _RP46R = _RPOUT_OCM8;  // led2B = RP46
+#    endif
     uint8_t led;
     for (led = 0; led < LED_COUNT; led++)
     {
@@ -106,21 +107,37 @@ int board_init_io()
         ccp_open(board_leds[led]);
         ccp_setMode(board_leds[led], CCP_MODE_PWM);
         ccp_setPeriod(board_leds[led], 0x7F8);
-        ccp_setCompare(board_leds[led], 0, 0);
+        ccp_setCompare(board_leds[led], 0, 0x7F8);
         ccp_enable(board_leds[led]);
     }
 #endif
 
-    // power
-#if BOARD_VERSION >= 110
+#ifndef SIMULATOR
+#    if BOARD_VERSION >= 110
+    // ==== power
+    LATEbits.LATE2 = 0;    // 12Ven disable
     TRISEbits.TRISE2 = 0;  // 12Ven in out mode
-    LATEbits.LATE2 = 0;  // 12Ven disable
 
+    LATCbits.LATC12 = 0;    // poweren disable
     TRISCbits.TRISC12 = 0;  // poweren in out mode
-    LATCbits.LATC12 = 0;  // poweren disable
 
+    LATDbits.LATD14 = 1;    // bridgedis
     TRISDbits.TRISD14 = 0;  // bridgeen in out mode
-    LATDbits.LATD14 = 1;  // bridgeen disable
+
+    // ==== sensor 1
+    LATEbits.LATE11 = 0;    // QEI1A_Rxen disable
+    TRISEbits.TRISE11 = 0;  // QEI1A_Rxen
+    LATEbits.LATE10 = 0;    // QEI1A_Txen disable
+    TRISEbits.TRISE10 = 0;  // QEI1A_Txen
+
+    LATDbits.LATD8 = 0;    // QEI1B_Rxen disable
+    TRISDbits.TRISD8 = 0;  // QEI1B_Rxen
+    LATDbits.LATD9 = 0;    // QEI1B_Txen disable
+    TRISDbits.TRISD9 = 0;  // QEI1B_Txen
+
+    LATEbits.LATE9 = 0;    // QEI1I_Rxen disable
+    TRISEbits.TRISE9 = 0;  // QEI1I_Rxen
+#    endif
 #endif
 
     // Lock configuration pin
