@@ -69,12 +69,24 @@ int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_
     return 0;
 }
 
+int msi_protocol_canWrite(const uint8_t protocol)
+{
+    UDK_UNUSED(protocol);
+    return 1;
+}
+
 int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_size)
 {
     UDK_UNUSED(protocol);
     UDK_UNUSED(data);
     UDK_UNUSED(max_size);
     return 0;
+}
+
+int msi_protocol_canRead(const uint8_t protocol)
+{
+    UDK_UNUSED(protocol);
+    return 1;
 }
 #endif
 
@@ -87,11 +99,23 @@ int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_
     return 0;
 }
 
+int msi_protocol_canWrite(const uint8_t protocol)
+{
+    UDK_UNUSED(protocol);
+    return 1;
+}
+
 int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_size)
 {
     UDK_UNUSED(protocol);
     UDK_UNUSED(data);
     UDK_UNUSED(max_size);
     return 0;
+}
+
+int msi_protocol_canRead(const uint8_t protocol)
+{
+    UDK_UNUSED(protocol);
+    return 1;
 }
 #endif
