@@ -8,7 +8,10 @@
  * @brief CAN udevkit simulator support for simulation purpose
  */
 
+#define _DEFAULT_SOURCE
+
 #include "can_sim.h"
+
 #include "can.h"
 #include "simulator.h"
 
@@ -23,8 +26,8 @@
 #    define SOCKET_MODE 0
 SOCKET sim_can;
 
-#elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__) || \
-    defined(__APPLE__)
+#elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__)    \
+    || defined(__APPLE__)
 #    include <fcntl.h>
 #    include <linux/can.h>
 #    include <linux/can/raw.h>
@@ -138,6 +141,7 @@ int can_open(rt_dev_t device)
         return -1;
     }
 #endif
+
 #ifdef SIM_WIN
     SOCKADDR_IN ssin;
 
@@ -169,6 +173,12 @@ int can_open(rt_dev_t device)
         printf("Cannot connect to port %d\n", SIM_SOCKET_PORT);
         closesocket(sim_can);
         sim_can = 0;
+    }
+    u_long ret;
+    ioctlsocket(sim_can, FIONREAD, &ret);
+    if (ret == 0)
+    {
+        return 0;
     }
 #endif
 
@@ -446,13 +456,8 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 #ifdef SIM_WIN
     char sockdata[50];
     u_long ret;
-    ioctlsocket(sim_can, FIONREAD, &ret);
-    if (ret == 0)
-    {
-        return 0;
-    }
     int size = recv(sim_can, sockdata, 50, SOCKET_MODE);
-    if (size < 0)
+    if (size <= 0)
     {
         return 0;
     }
