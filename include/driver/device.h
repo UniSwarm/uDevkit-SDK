@@ -1,7 +1,8 @@
 /**
  * @file device.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2021
  *
  * @date June 7, 2016, 11:47 PM
  *
