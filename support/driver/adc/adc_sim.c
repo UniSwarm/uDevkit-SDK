@@ -37,3 +37,8 @@ int16_t adc_getValue(uint8_t channel)
 
     return adc_channels[channel];
 }
+
+int16_t adc_value(uint8_t channel)
+{
+    return 0;
+}
