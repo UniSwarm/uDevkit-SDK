@@ -293,29 +293,29 @@ int adc_init()
 
     // Configure the common ADC clock.
     // ADCON3Hbits.CLKSEL = 0b01;     // clock from Fp oscillator
-    ADCON3Hbits.CLKSEL = 0b00;  // clock from FP (FOSC /2)
-    ADCON3Hbits.CLKDIV = 3;     // no clock divider (1:4)
+    ADCON3Hbits.CLKSEL = 0b00;   // clock from FP (FOSC /2)
+    ADCON3Hbits.CLKDIV = 1 - 1;  // 1/1 divider (1:1)
 
     // Configure the cores’ ADC clock.
 #ifdef ADC_HAVE_DEDICATED_CORE0
-    ADCORE0Hbits.ADCS = 1;    // clock divider (1:2)
-    ADCORE0Hbits.RES = 0b11;  // 12 bits
-    ADCORE0Lbits.SAMC = 0;    // 12 Tad delay before sampling
+    ADCORE0Hbits.ADCS = 2 - 1;  // clock divider (1:2)
+    ADCORE0Hbits.RES = 0b11;    // 12 bits
+    ADCORE0Lbits.SAMC = 0;      // 12 Tad delay before sampling
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE1
-    ADCORE1Hbits.ADCS = 1;    // clock divider (1:2)
-    ADCORE1Hbits.RES = 0b11;  // 12 bits
-    ADCORE1Lbits.SAMC = 0;    // 12 Tad
+    ADCORE1Hbits.ADCS = 2 - 1;  // clock divider (1:2)
+    ADCORE1Hbits.RES = 0b11;    // 12 bits
+    ADCORE1Lbits.SAMC = 0;      // 12 Tad
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE2
-    ADCORE2Hbits.ADCS = 1;    // clock divider (1:2)
-    ADCORE2Hbits.RES = 0b11;  // 12 bits
-    ADCORE2Lbits.SAMC = 0;    // 12 Tad
+    ADCORE2Hbits.ADCS = 2 - 1;  // clock divider (1:2)
+    ADCORE2Hbits.RES = 0b11;    // 12 bits
+    ADCORE2Lbits.SAMC = 0;      // 12 Tad
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE3
-    ADCORE3Hbits.ADCS = 1;    // clock divider (1:2)
-    ADCORE3Hbits.RES = 0b11;  // 12 bits
-    ADCORE3Lbits.SAMC = 0;    // 12 Tad
+    ADCORE3Hbits.ADCS = 2 - 1;  // clock divider (1:2)
+    ADCORE3Hbits.RES = 0b11;    // 12 bits
+    ADCORE3Lbits.SAMC = 0;      // 12 Tad
 #endif
 
     // Configure the ADC reference sources.
@@ -323,9 +323,9 @@ int adc_init()
     // Configure the integer of fractional output format.
     ADCON1Hbits.FORM = 0;  // integer format
 
-    ADCON2Lbits.SHRADCS = 1;    // clock divider (1:2)
-    ADCON1Hbits.SHRRES = 0b11;  // 12 bits
-    ADCON2Hbits.SHRSAMC = 15;   // 16 Tad
+    ADCON2Lbits.SHRADCS = 0b0000001;  // clock divider (1:2)
+    ADCON1Hbits.SHRRES = 0b11;        // 12 bits
+    ADCON2Hbits.SHRSAMC = 16 - 1;     // 16 Tad
     // ADCON1Lbits.NRE = 1; // Noise Reduction Enable bit, Holds conversion process for 1 T ADCORE when another core
     // completes conversion to reduce noise between cores
 
