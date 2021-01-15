@@ -22,8 +22,7 @@ struct adc_dev
     void (*handler)(int16_t);
 };
 
-struct adc_dev adcs[] =
-{
+struct adc_dev adcs[] = {
 #if ADC_CHANNEL_MAX >= 1
     {
         .handler = NULL,
@@ -183,136 +182,152 @@ struct adc_dev adcs[] =
 
 void adc_calib()
 {
-    ADCON5Hbits.WARMTIME = 15;          // Set initialization time to maximum
+    ADCON5Hbits.WARMTIME = 15;  // Set initialization time to maximum
 
-    ADCON1Lbits.ADON = 1;               // Turn on ADC module
+    ADCON1Lbits.ADON = 1;  // Turn on ADC module
 
 #ifdef ADC_HAVE_DEDICATED_CORE0
-    ADCON5Lbits.C0PWR = 1;              // Turn on analog power for dedicated core 0
-    while (ADCON5Lbits.C0RDY == 0);     // Wait when the core 0 is ready for operation
-    ADCON3Hbits.C0EN = 1;               // Turn on digital power to enable triggers to the core 0
+    ADCON5Lbits.C0PWR = 1;  // Turn on analog power for dedicated core 0
+    while (ADCON5Lbits.C0RDY == 0)
+        ;                  // Wait when the core 0 is ready for operation
+    ADCON3Hbits.C0EN = 1;  // Turn on digital power to enable triggers to the core 0
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE1
-    ADCON5Lbits.C1PWR = 1;              // Turn on analog power for dedicated core 1
-    while (ADCON5Lbits.C1RDY == 0);     // Wait when the core 1 is ready for operation
-    ADCON3Hbits.C1EN = 1;               // Turn on digital power to enable triggers to the core 1
+    ADCON5Lbits.C1PWR = 1;  // Turn on analog power for dedicated core 1
+    while (ADCON5Lbits.C1RDY == 0)
+        ;                  // Wait when the core 1 is ready for operation
+    ADCON3Hbits.C1EN = 1;  // Turn on digital power to enable triggers to the core 1
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE2
-    ADCON5Lbits.C2PWR = 1;              // Turn on analog power for dedicated core 1
-    while (ADCON5Lbits.C2RDY == 0);     // Wait when the core 1 is ready for operation
-    ADCON3Hbits.C2EN = 1;               // Turn on digital power to enable triggers to the core 1
+    ADCON5Lbits.C2PWR = 1;  // Turn on analog power for dedicated core 1
+    while (ADCON5Lbits.C2RDY == 0)
+        ;                  // Wait when the core 1 is ready for operation
+    ADCON3Hbits.C2EN = 1;  // Turn on digital power to enable triggers to the core 1
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE3
-    ADCON5Lbits.C3PWR = 1;              // Turn on analog power for dedicated core 1
-    while (ADCON5Lbits.C3RDY == 0);     // Wait when the core 1 is ready for operation
-    ADCON3Hbits.C3EN = 1;               // Turn on digital power to enable triggers to the core 1
+    ADCON5Lbits.C3PWR = 1;  // Turn on analog power for dedicated core 1
+    while (ADCON5Lbits.C3RDY == 0)
+        ;                  // Wait when the core 1 is ready for operation
+    ADCON3Hbits.C3EN = 1;  // Turn on digital power to enable triggers to the core 1
 #endif
 
-    ADCON5Lbits.SHRPWR = 1;             // Turn on analog power for shared core
+    ADCON5Lbits.SHRPWR = 1;  // Turn on analog power for shared core
 #ifndef __MPLAB_DEBUGGER_SIMULATOR
-    while (ADCON5Lbits.SHRRDY == 0);    // Wait when the shared core is ready for operation
+    while (ADCON5Lbits.SHRRDY == 0)
+        ;  // Wait when the shared core is ready for operation
 #endif
-    ADCON3Hbits.SHREN = 1;              // Turn on digital power to enable triggers to the shared core
+    ADCON3Hbits.SHREN = 1;  // Turn on digital power to enable triggers to the shared core
 
 #ifdef ADC_HAVE_AUTOCALIB
-  #ifdef ADC_HAVE_DEDICATED_CORE0
-    ADCAL0Lbits.CAL0EN = 1;             // Enable calibration for the dedicated core 0
-    ADCAL0Lbits.CAL0DIFF = 0;           // Single-ended input calibration
-    ADCAL0Lbits.CAL0RUN = 1;            // Start calibration
-    while (ADCAL0Lbits.CAL0RDY == 0);   // Poll for the calibration end
-    ADCAL0Lbits.CAL0DIFF = 1;           // Differential input calibration
-    ADCAL0Lbits.CAL0RUN = 1;            // Start calibration
-    while (ADCAL0Lbits.CAL0RDY == 0);   // Poll for the calibration end
-    ADCAL0Lbits.CAL0EN = 0;             // End the core 0 calibration
-  #endif
+#    ifdef ADC_HAVE_DEDICATED_CORE0
+    ADCAL0Lbits.CAL0EN = 1;    // Enable calibration for the dedicated core 0
+    ADCAL0Lbits.CAL0DIFF = 0;  // Single-ended input calibration
+    ADCAL0Lbits.CAL0RUN = 1;   // Start calibration
+    while (ADCAL0Lbits.CAL0RDY == 0)
+        ;                      // Poll for the calibration end
+    ADCAL0Lbits.CAL0DIFF = 1;  // Differential input calibration
+    ADCAL0Lbits.CAL0RUN = 1;   // Start calibration
+    while (ADCAL0Lbits.CAL0RDY == 0)
+        ;                    // Poll for the calibration end
+    ADCAL0Lbits.CAL0EN = 0;  // End the core 0 calibration
+#    endif
 
-  #ifdef ADC_HAVE_DEDICATED_CORE1
-    ADCAL0Lbits.CAL1EN = 1;             // Enable calibration for the dedicated core 1
-    ADCAL0Lbits.CAL1DIFF = 0;           // Single-ended input calibration
-    ADCAL0Lbits.CAL1RUN = 1;            // Start calibration
-    while (ADCAL0Lbits.CAL1RDY == 0);   // Poll for the calibration end
-    ADCAL0Lbits.CAL1DIFF = 1;           // Differential input calibration
-    ADCAL0Lbits.CAL1RUN = 1;            // Start calibration
-    while (ADCAL0Lbits.CAL1RDY == 0);   // Poll for the calibration end
-    ADCAL0Lbits.CAL1EN = 0;             // End the core 1 calibration
-  #endif
+#    ifdef ADC_HAVE_DEDICATED_CORE1
+    ADCAL0Lbits.CAL1EN = 1;    // Enable calibration for the dedicated core 1
+    ADCAL0Lbits.CAL1DIFF = 0;  // Single-ended input calibration
+    ADCAL0Lbits.CAL1RUN = 1;   // Start calibration
+    while (ADCAL0Lbits.CAL1RDY == 0)
+        ;                      // Poll for the calibration end
+    ADCAL0Lbits.CAL1DIFF = 1;  // Differential input calibration
+    ADCAL0Lbits.CAL1RUN = 1;   // Start calibration
+    while (ADCAL0Lbits.CAL1RDY == 0)
+        ;                    // Poll for the calibration end
+    ADCAL0Lbits.CAL1EN = 0;  // End the core 1 calibration
+#    endif
 
-  #ifdef ADC_HAVE_DEDICATED_CORE2
-    ADCAL0Hbits.CAL2EN = 1;             // Enable calibration for the dedicated core 2
-    ADCAL0Hbits.CAL2DIFF = 0;           // Single-ended input calibration
-    ADCAL0Hbits.CAL2RUN = 1;            // Start calibration
-    while (ADCAL0Hbits.CAL2RDY == 0);   // Poll for the calibration end
-    ADCAL0Hbits.CAL2DIFF = 1;           // Differential input calibration
-    ADCAL0Hbits.CAL2RUN = 1;            // Start calibration
-    while (ADCAL0Hbits.CAL2RDY == 0);   // Poll for the calibration end
-    ADCAL0Hbits.CAL2EN = 0;             // End the core 2 calibration
-  #endif
+#    ifdef ADC_HAVE_DEDICATED_CORE2
+    ADCAL0Hbits.CAL2EN = 1;    // Enable calibration for the dedicated core 2
+    ADCAL0Hbits.CAL2DIFF = 0;  // Single-ended input calibration
+    ADCAL0Hbits.CAL2RUN = 1;   // Start calibration
+    while (ADCAL0Hbits.CAL2RDY == 0)
+        ;                      // Poll for the calibration end
+    ADCAL0Hbits.CAL2DIFF = 1;  // Differential input calibration
+    ADCAL0Hbits.CAL2RUN = 1;   // Start calibration
+    while (ADCAL0Hbits.CAL2RDY == 0)
+        ;                    // Poll for the calibration end
+    ADCAL0Hbits.CAL2EN = 0;  // End the core 2 calibration
+#    endif
 
-  #ifdef ADC_HAVE_DEDICATED_CORE3
-    ADCAL0Hbits.CAL3EN = 1;             // Enable calibration for the dedicated core 3
-    ADCAL0Hbits.CAL3DIFF = 0;           // Single-ended input calibration
-    ADCAL0Hbits.CAL3RUN = 1;            // Start calibration
-    while (ADCAL0Hbits.CAL3RDY == 0);   // Poll for the calibration end
-    ADCAL0Hbits.CAL3DIFF = 1;           // Differential input calibration
-    ADCAL0Hbits.CAL3RUN = 1;            // Start calibration
-    while (ADCAL0Hbits.CAL3RDY == 0);   // Poll for the calibration end
-    ADCAL0Hbits.CAL3EN = 0;             // End the core 3 calibration
-  #endif
+#    ifdef ADC_HAVE_DEDICATED_CORE3
+    ADCAL0Hbits.CAL3EN = 1;    // Enable calibration for the dedicated core 3
+    ADCAL0Hbits.CAL3DIFF = 0;  // Single-ended input calibration
+    ADCAL0Hbits.CAL3RUN = 1;   // Start calibration
+    while (ADCAL0Hbits.CAL3RDY == 0)
+        ;                      // Poll for the calibration end
+    ADCAL0Hbits.CAL3DIFF = 1;  // Differential input calibration
+    ADCAL0Hbits.CAL3RUN = 1;   // Start calibration
+    while (ADCAL0Hbits.CAL3RDY == 0)
+        ;                    // Poll for the calibration end
+    ADCAL0Hbits.CAL3EN = 0;  // End the core 3 calibration
+#    endif
 
-    ADCAL1Hbits.CSHREN = 1;             // Enable calibration for the shared core
-    ADCAL1Hbits.CSHRDIFF = 0;           // Single-ended input calibration
-    ADCAL1Hbits.CSHRRUN = 1;            // Start calibration
-    while (ADCAL1Hbits.CSHRRDY == 0);   // Poll for the calibration end
-    ADCAL1Hbits.CSHRDIFF = 1;           // Differential input calibration
-    ADCAL1Hbits.CSHRRUN = 1;            // Start calibration
-    while (ADCAL1Hbits.CSHRRDY == 0);   // Poll for the calibration end
-    ADCAL1Hbits.CSHREN = 0;             // End the shared core calibration
+    ADCAL1Hbits.CSHREN = 1;    // Enable calibration for the shared core
+    ADCAL1Hbits.CSHRDIFF = 0;  // Single-ended input calibration
+    ADCAL1Hbits.CSHRRUN = 1;   // Start calibration
+    while (ADCAL1Hbits.CSHRRDY == 0)
+        ;                      // Poll for the calibration end
+    ADCAL1Hbits.CSHRDIFF = 1;  // Differential input calibration
+    ADCAL1Hbits.CSHRRUN = 1;   // Start calibration
+    while (ADCAL1Hbits.CSHRRDY == 0)
+        ;                    // Poll for the calibration end
+    ADCAL1Hbits.CSHREN = 0;  // End the shared core calibration
 #endif
 }
 
 int adc_init()
 {
-    #ifdef _ADC1MD
+#ifdef _ADC1MD
     _ADC1MD = 0;
     nop();
-    #endif
+#endif
 
     // Configure the common ADC clock.
-    //ADCON3Hbits.CLKSEL = 0b01;     // clock from Fp oscillator
-    ADCON3Hbits.CLKSEL = 0b00;    // clock from FP (FOSC /2)
-    ADCON3Hbits.CLKDIV = 3;       // no clock divider (1:4)
+    // ADCON3Hbits.CLKSEL = 0b01;     // clock from Fp oscillator
+    ADCON3Hbits.CLKSEL = 0b00;  // clock from FP (FOSC /2)
+    ADCON3Hbits.CLKDIV = 3;     // no clock divider (1:4)
 
     // Configure the cores’ ADC clock.
 #ifdef ADC_HAVE_DEDICATED_CORE0
-    ADCORE0Hbits.ADCS = 1;      // clock divider (1:2)
-    ADCORE0Hbits.RES = 0b11;    // 12 bits
-    ADCORE0Lbits.SAMC = 0;     // 12 Tad delay before sampling
+    ADCORE0Hbits.ADCS = 1;    // clock divider (1:2)
+    ADCORE0Hbits.RES = 0b11;  // 12 bits
+    ADCORE0Lbits.SAMC = 0;    // 12 Tad delay before sampling
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE1
-    ADCORE1Hbits.ADCS = 1;      // clock divider (1:2)
-    ADCORE1Hbits.RES = 0b11;    // 12 bits
-    ADCORE1Lbits.SAMC = 0;     // 12 Tad
+    ADCORE1Hbits.ADCS = 1;    // clock divider (1:2)
+    ADCORE1Hbits.RES = 0b11;  // 12 bits
+    ADCORE1Lbits.SAMC = 0;    // 12 Tad
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE2
-    ADCORE2Hbits.ADCS = 1;      // clock divider (1:2)
-    ADCORE2Hbits.RES = 0b11;    // 12 bits
-    ADCORE2Lbits.SAMC = 0;     // 12 Tad
+    ADCORE2Hbits.ADCS = 1;    // clock divider (1:2)
+    ADCORE2Hbits.RES = 0b11;  // 12 bits
+    ADCORE2Lbits.SAMC = 0;    // 12 Tad
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE3
-    ADCORE3Hbits.ADCS = 1;      // clock divider (1:2)
-    ADCORE3Hbits.RES = 0b11;    // 12 bits
-    ADCORE3Lbits.SAMC = 0;     // 12 Tad
+    ADCORE3Hbits.ADCS = 1;    // clock divider (1:2)
+    ADCORE3Hbits.RES = 0b11;  // 12 bits
+    ADCORE3Lbits.SAMC = 0;    // 12 Tad
 #endif
 
     // Configure the ADC reference sources.
-    ADCON3Lbits.REFSEL = 0;     // AVdd as voltage reference
+    ADCON3Lbits.REFSEL = 0;  // AVdd as voltage reference
     // Configure the integer of fractional output format.
-    ADCON1Hbits.FORM = 0;       // integer format
+    ADCON1Hbits.FORM = 0;  // integer format
 
-    ADCON2Lbits.SHRADCS = 1;     // clock divider (1:2)
-    ADCON1Hbits.SHRRES = 0b11;   // 12 bits
-    ADCON2Hbits.SHRSAMC = 15;    // 16 Tad
-    //ADCON1Lbits.NRE = 1; // Noise Reduction Enable bit, Holds conversion process for 1 T ADCORE when another core completes conversion to reduce noise between cores
+    ADCON2Lbits.SHRADCS = 1;    // clock divider (1:2)
+    ADCON1Hbits.SHRRES = 0b11;  // 12 bits
+    ADCON2Hbits.SHRSAMC = 15;   // 16 Tad
+    // ADCON1Lbits.NRE = 1; // Noise Reduction Enable bit, Holds conversion process for 1 T ADCORE when another core
+    // completes conversion to reduce noise between cores
 
     adc_calib();
 
@@ -325,7 +340,7 @@ int16_t adc_value(uint8_t channel)
     {
         return -1;
     }
-    return *(&ADCBUF0 + channel);       // Read the ADC conversion result
+    return *(&ADCBUF0 + channel);  // Read the ADC conversion result
 }
 
 int16_t adc_getValue(uint8_t channel)
@@ -335,21 +350,23 @@ int16_t adc_getValue(uint8_t channel)
     {
         return -1;
     }
-    ADCON3Lbits.CNVCHSEL = channel;     // select channel to convert
-    ADCON3Lbits.CNVRTCH = 1;            // Start sampling
+    ADCON3Lbits.CNVCHSEL = channel;  // select channel to convert
+    ADCON3Lbits.CNVRTCH = 1;         // Start sampling
 
     if (channel < 16)
     {
         bitMask = (0x0001 << channel);
-        while ((ADSTATL & bitMask) == 0);
+        while ((ADSTATL & bitMask) == 0)
+            ;
     }
     else
     {
         bitMask = (0x0001 << (channel - 16));
-        while ((ADSTATH & bitMask) == 0);
+        while ((ADSTATH & bitMask) == 0)
+            ;
     }
 
-    return *(&ADCBUF0 + channel);       // Read the ADC conversion result
+    return *(&ADCBUF0 + channel);  // Read the ADC conversion result
 }
 
 int adc_setHandler(uint8_t channel, void (*handler)(int16_t))
@@ -363,196 +380,196 @@ int adc_setHandler(uint8_t channel, void (*handler)(int16_t))
     switch (channel)
     {
 #ifdef ADC_HAVE_CH0
-    case 0:
-        _ADCAN0IF = 0;
-        _ADCAN0IE = (handler != 0);
-        break;
+        case 0:
+            _ADCAN0IF = 0;
+            _ADCAN0IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH1
-    case 1:
-        _ADCAN1IF = 0;
-        _ADCAN1IE = (handler != 0);
-        break;
+        case 1:
+            _ADCAN1IF = 0;
+            _ADCAN1IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH2
-    case 2:
-        _ADCAN2IF = 0;
-        _ADCAN2IE = (handler != 0);
-        break;
+        case 2:
+            _ADCAN2IF = 0;
+            _ADCAN2IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH3
-    case 3:
-        _ADCAN3IF = 0;
-        _ADCAN3IE = (handler != 0);
-        break;
+        case 3:
+            _ADCAN3IF = 0;
+            _ADCAN3IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH4
-    case 4:
-        _ADCAN4IF = 0;
-        _ADCAN4IE = (handler != 0);
-        break;
+        case 4:
+            _ADCAN4IF = 0;
+            _ADCAN4IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH5
-    case 5:
-        _ADCAN5IF = 0;
-        _ADCAN5IE = (handler != 0);
-        break;
+        case 5:
+            _ADCAN5IF = 0;
+            _ADCAN5IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH6
-    case 6:
-        _ADCAN6IF = 0;
-        _ADCAN6IE = (handler != 0);
-        break;
+        case 6:
+            _ADCAN6IF = 0;
+            _ADCAN6IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH7
-    case 7:
-        _ADCAN7IF = 0;
-        _ADCAN7IE = (handler != 0);
-        break;
+        case 7:
+            _ADCAN7IF = 0;
+            _ADCAN7IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH8
-    case 8:
-        _ADCAN8IF = 0;
-        _ADCAN8IE = (handler != 0);
-        break;
+        case 8:
+            _ADCAN8IF = 0;
+            _ADCAN8IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH9
-    case 9:
-        _ADCAN9IF = 0;
-        _ADCAN9IE = (handler != 0);
-        break;
+        case 9:
+            _ADCAN9IF = 0;
+            _ADCAN9IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH10
-    case 10:
-        _ADCAN10IF = 0;
-        _ADCAN10IE = (handler != 0);
-        break;
+        case 10:
+            _ADCAN10IF = 0;
+            _ADCAN10IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH11
-    case 11:
-        _ADCAN11IF = 0;
-        _ADCAN11IE = (handler != 0);
-        break;
+        case 11:
+            _ADCAN11IF = 0;
+            _ADCAN11IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH12
-    case 12:
-        _ADCAN12IF = 0;
-        _ADCAN12IE = (handler != 0);
-        break;
+        case 12:
+            _ADCAN12IF = 0;
+            _ADCAN12IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH13
-    case 13:
-        _ADCAN13IF = 0;
-        _ADCAN13IE = (handler != 0);
-        break;
+        case 13:
+            _ADCAN13IF = 0;
+            _ADCAN13IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH14
-    case 14:
-        _ADCAN14IF = 0;
-        _ADCAN14IE = (handler != 0);
-        break;
+        case 14:
+            _ADCAN14IF = 0;
+            _ADCAN14IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH15
-    case 15:
-        _ADCAN15IF = 0;
-        _ADCAN15IE = (handler != 0);
-        break;
+        case 15:
+            _ADCAN15IF = 0;
+            _ADCAN15IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH16
-    case 16:
-        _ADCAN16IF = 0;
-        _ADCAN16IE = (handler != 0);
-        break;
+        case 16:
+            _ADCAN16IF = 0;
+            _ADCAN16IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH17
-    case 17:
-        _ADCAN17IF = 0;
-        _ADCAN17IE = (handler != 0);
-        break;
+        case 17:
+            _ADCAN17IF = 0;
+            _ADCAN17IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH18
-    case 18:
-        _ADCAN18IF = 0;
-        _ADCAN18IE = (handler != 0);
-        break;
+        case 18:
+            _ADCAN18IF = 0;
+            _ADCAN18IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH19
-    case 19:
-        _ADCAN19IF = 0;
-        _ADCAN19IE = (handler != 0);
-        break;
+        case 19:
+            _ADCAN19IF = 0;
+            _ADCAN19IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH20
-    case 20:
-        _ADCAN20IF = 0;
-        _ADCAN20IE = (handler != 0);
-        break;
+        case 20:
+            _ADCAN20IF = 0;
+            _ADCAN20IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH21
-    case 21:
-        _ADCAN21IF = 0;
-        _ADCAN21IE = (handler != 0);
-        break;
+        case 21:
+            _ADCAN21IF = 0;
+            _ADCAN21IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH22
-    case 22:
-        _ADCAN22IF = 0;
-        _ADCAN22IE = (handler != 0);
-        break;
+        case 22:
+            _ADCAN22IF = 0;
+            _ADCAN22IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH23
-    case 23:
-        _ADCAN23IF = 0;
-        _ADCAN23IE = (handler != 0);
-        break;
+        case 23:
+            _ADCAN23IF = 0;
+            _ADCAN23IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH24
-    case 24:
-        _ADCAN24IF = 0;
-        _ADCAN24IE = (handler != 0);
-        break;
+        case 24:
+            _ADCAN24IF = 0;
+            _ADCAN24IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH25
-    case 25:
-        _ADCAN25IF = 0;
-        _ADCAN25IE = (handler != 0);
-        break;
+        case 25:
+            _ADCAN25IF = 0;
+            _ADCAN25IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH26
-    case 26:
-        _ADCAN26IF = 0;
-        _ADCAN26IE = (handler != 0);
-        break;
+        case 26:
+            _ADCAN26IF = 0;
+            _ADCAN26IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH27
-    case 27:
-        _ADCAN27IF = 0;
-        _ADCAN27IE = (handler != 0);
-        break;
+        case 27:
+            _ADCAN27IF = 0;
+            _ADCAN27IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH28
-    case 28:
-        _ADCAN28IF = 0;
-        _ADCAN28IE = (handler != 0);
-        break;
+        case 28:
+            _ADCAN28IF = 0;
+            _ADCAN28IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH29
-    case 29:
-        _ADCAN29IF = 0;
-        _ADCAN29IE = (handler != 0);
-        break;
+        case 29:
+            _ADCAN29IF = 0;
+            _ADCAN29IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH30
-    case 30:
-        _ADCAN30IF = 0;
-        _ADCAN30IE = (handler != 0);
-        break;
+        case 30:
+            _ADCAN30IF = 0;
+            _ADCAN30IE = (handler != 0);
+            break;
 #endif
 #ifdef ADC_HAVE_CH31
-    case 31:
-        _ADCAN31IF = 0;
-        _ADCAN31IE = (handler != 0);
-        break;
+        case 31:
+            _ADCAN31IF = 0;
+            _ADCAN31IE = (handler != 0);
+            break;
 #endif
     }
     return 0;
