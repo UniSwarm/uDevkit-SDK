@@ -107,7 +107,7 @@ int board_init_io()
         ccp_open(board_leds[led]);
         ccp_setMode(board_leds[led], CCP_MODE_PWM);
         ccp_setPeriod(board_leds[led], 0x7F8);
-        ccp_setCompare(board_leds[led], 0, 0x7F8);
+        ccp_setCompare(board_leds[led], 0, 0x7FF);
         ccp_enable(board_leds[led]);
     }
 #endif
@@ -174,7 +174,7 @@ int board_setLed(uint8_t led, uint8_t state)
     }
 
 #else
-    return ccp_setCompare(board_leds[led], 0, 0x7F8 - (state << 3));
+    return ccp_setCompare(board_leds[led], 0, 0x7FF - (state << 3));
 #endif
 }
 
