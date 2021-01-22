@@ -38,7 +38,7 @@ int board_init_io()
 #    else
     ANSELB = 0x008E;        // all analog inputs of port B as digital buffer
 #    endif
-    ANSELC = 0x00CF;  // all analog inputs of port C as digital buffer
+    ANSELC = 0x00C8;  // all analog inputs of port C as digital buffer
 #    if BOARD_VERSION < 110
     ANSELD = 0xF000;  // all analog inputs of port D as digital buffer
 #    else
@@ -69,9 +69,9 @@ int board_init_io()
     _QEIB1R = 46;
     _QEINDX1R = 60;
 #    else
-    _QEIA1R = 61;           // same pins as slaves for the moment
-    _QEIB1R = 62;
-    _QEINDX1R = 63;
+    _QEIA1R = 49;           // same pins as slaves for the moment
+    _QEIB1R = 50;
+    _QEINDX1R = 48;
 #    endif
 
     TRISCbits.TRISC8 = 0;  // RS485 DE
