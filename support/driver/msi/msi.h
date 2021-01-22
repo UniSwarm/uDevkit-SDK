@@ -1,7 +1,7 @@
 /**
  * @file msi.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018
+ * @copyright UniSwarm 2018-2021
  *
  * @date March 2, 10:00 AM
  *

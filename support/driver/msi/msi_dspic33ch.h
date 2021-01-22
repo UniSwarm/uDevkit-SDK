@@ -71,4 +71,7 @@
 #define MSI_PROTOCOL_M2S 0
 #define MSI_PROTOCOL_S2M 1
 
+#define MSI_PROTOCOL_M2S2 2
+#define MSI_PROTOCOL_S2M2 3
+
 #endif // MSI_DSPIC33CH_H

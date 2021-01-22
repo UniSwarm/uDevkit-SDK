@@ -128,20 +128,35 @@ int msi_slave_verify_program(const uint8_t slave_id, __eds__ unsigned char *prog
 
 int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_t size)
 {
-    UDK_UNUSED(protocol);
     UDK_UNUSED(size);
 
-    if (_DTRDYA == 1)
+    if (protocol == MSI_PROTOCOL_M2S)
     {
-        return -1;
+        if (_DTRDYA == 1)
+        {
+            return -1;
+        }
+        uint16_t *ptr = (uint16_t *)data;
+        MSI1MBX0D = *(ptr++);
+        MSI1MBX1D = *(ptr++);
+        MSI1MBX2D = *(ptr++);
+        MSI1MBX3D = *(ptr++);
+        MSI1MBX4D = *(ptr++);
+        return 0;
     }
-    uint16_t *ptr = (uint16_t *)data;
-    MSI1MBX0D = *(ptr++);
-    MSI1MBX1D = *(ptr++);
-    MSI1MBX2D = *(ptr++);
-    MSI1MBX3D = *(ptr++);
-    MSI1MBX4D = *(ptr++);
-    return 0;
+    if (protocol == MSI_PROTOCOL_M2S2)
+    {
+        if (_DTRDYC == 1)
+        {
+            return -1;
+        }
+        uint16_t *ptr = (uint16_t *)data;
+        MSI1MBX10D = *(ptr++);
+        MSI1MBX11D = *(ptr++);
+        MSI1MBX12D = *(ptr++);
+        return 0;
+    }
+    return -1;
 }
 
 /**
@@ -151,34 +166,63 @@ int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_
  */
 int msi_protocol_canWrite(const uint8_t protocol)
 {
-    UDK_UNUSED(protocol);
-    if (_DTRDYA == 1)  // MailBox is full
+    if (protocol == MSI_PROTOCOL_M2S)
     {
-        return 0;
+        if (_DTRDYA == 1)  // MailBox is full
+        {
+            return 0;
+        }
+        return 1;
     }
-    return 1;
+    if (protocol == MSI_PROTOCOL_M2S2)
+    {
+        if (_DTRDYC == 1)  // MailBox is full
+        {
+            return 0;
+        }
+        return 1;
+    }
+    return -1;
 }
 
 int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_size)
 {
-    UDK_UNUSED(protocol);
     UDK_UNUSED(max_size);
 
-    if (_DTRDYB == 0)
+    if (protocol == MSI_PROTOCOL_S2M)
     {
-        return -1;
+        if (_DTRDYB == 0)
+        {
+            return -1;
+        }
+        uint16_t *ptr = (uint16_t *)data;
+        *ptr = MSI1MBX5D;
+        ptr++;
+        *ptr = MSI1MBX6D;
+        ptr++;
+        *ptr = MSI1MBX7D;
+        ptr++;
+        *ptr = MSI1MBX8D;
+        ptr++;
+        *ptr = MSI1MBX9D;
+        return 0;
     }
-    uint16_t *ptr = (uint16_t *)data;
-    *ptr = MSI1MBX5D;
-    ptr++;
-    *ptr = MSI1MBX6D;
-    ptr++;
-    *ptr = MSI1MBX7D;
-    ptr++;
-    *ptr = MSI1MBX8D;
-    ptr++;
-    *ptr = MSI1MBX9D;
-    return 0;
+
+    if (protocol == MSI_PROTOCOL_S2M2)
+    {
+        if (_DTRDYD == 0)
+        {
+            return -1;
+        }
+        uint16_t *ptr = (uint16_t *)data;
+        *ptr = MSI1MBX13D;
+        ptr++;
+        *ptr = MSI1MBX14D;
+        ptr++;
+        *ptr = MSI1MBX15D;
+        return 0;
+    }
+    return -1;
 }
 
 /**
@@ -188,10 +232,22 @@ int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_s
  */
 int msi_protocol_canRead(const uint8_t protocol)
 {
-    UDK_UNUSED(protocol);
-    if (_DTRDYB == 0)  // MailBox is empty
+    if (protocol == MSI_PROTOCOL_S2M)
     {
-        return 0;
+        if (_DTRDYB == 0)  // MailBox is empty
+        {
+            return 0;
+        }
+        return 1;
     }
-    return 1;
+
+    if (protocol == MSI_PROTOCOL_S2M2)
+    {
+        if (_DTRDYD == 0)  // MailBox is empty
+        {
+            return 0;
+        }
+        return 1;
+    }
+    return -1;
 }
