@@ -204,9 +204,9 @@
 #pragma config MBXM7 = S2M              // Mailbox 7 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
 #pragma config MBXM8 = S2M              // Mailbox 8 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
 #pragma config MBXM9 = S2M              // Mailbox 9 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
-#pragma config MBXM10 = S2M             // Mailbox 10 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
-#pragma config MBXM11 = S2M             // Mailbox 11 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
-#pragma config MBXM12 = S2M             // Mailbox 12 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
+#pragma config MBXM10 = M2S             // Mailbox 10 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
+#pragma config MBXM11 = M2S             // Mailbox 11 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
+#pragma config MBXM12 = M2S             // Mailbox 12 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
 #pragma config MBXM13 = S2M             // Mailbox 13 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
 #pragma config MBXM14 = S2M             // Mailbox 14 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
 #pragma config MBXM15 = S2M             // Mailbox 15 data direction (Mailbox register configured for Master data read (Slave to Master data transfer)
@@ -214,7 +214,7 @@
 // FMBXHS1
 #pragma config MBXHSA = MBX4            // Mailbox handshake protocol block A register assignment (MSIxMBXD4 assigned to mailbox handshake protocol block A)
 #pragma config MBXHSB = MBX9            // Mailbox handshake protocol block B register assignment (MSIxMBXD9 assigned to mailbox handshake protocol block B)
-#pragma config MBXHSC = MBX15           // Mailbox handshake protocol block C register assignment (MSIxMBXD15 assigned to mailbox handshake protocol block C)
+#pragma config MBXHSC = MBX12           // Mailbox handshake protocol block C register assignment (MSIxMBXD15 assigned to mailbox handshake protocol block C)
 #pragma config MBXHSD = MBX15           // Mailbox handshake protocol block D register assignment (MSIxMBXD15 assigned to mailbox handshake protocol block D)
 
 // FMBXHS2
@@ -226,8 +226,8 @@
 // FMBXHSEN
 #pragma config HSAEN = ON               // Mailbox A data flow control protocol block enable (Mailbox data flow control handshake protocol block enabled)
 #pragma config HSBEN = ON               // Mailbox B data flow control protocol block enable (Mailbox data flow control handshake protocol block enabled)
-#pragma config HSCEN = OFF              // Mailbox C data flow control protocol block enable (Mailbox data flow control handshake protocol block disabled)
-#pragma config HSDEN = OFF              // Mailbox D data flow control protocol block enable (Mailbox data flow control handshake protocol block disabled)
+#pragma config HSCEN = ON               // Mailbox C data flow control protocol block enable (Mailbox data flow control handshake protocol block disabled)
+#pragma config HSDEN = ON               // Mailbox D data flow control protocol block enable (Mailbox data flow control handshake protocol block disabled)
 #pragma config HSEEN = OFF              // Mailbox E data flow control protocol block enable (Mailbox data flow control handshake protocol block disabled)
 #pragma config HSFEN = OFF              // Mailbox F data flow control protocol block enable (Mailbox data flow control handshake protocol block disabled)
 #pragma config HSGEN = OFF              // Mailbox G data flow control protocol block enable (Mailbox data flow control handshake protocol block disabled)
