@@ -16,7 +16,6 @@ ifeq ("$(CC)","xc16-gcc") # XC16 compiler used
  CCFLAGS_XC += -no-legacy-libc
  CCFLAGS_XC += -mcpu=$(DEVICE)
  CCFLAGS_XC += -mno-eds-warn
- CCFLAGS_XC += -mlarge-code
  LDFLAGS_XC += -Wl,--heap=$(HEAP),-T$(LK_SCRIPT)
  CCFLAGS += -Wall
 
