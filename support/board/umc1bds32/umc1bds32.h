@@ -69,6 +69,12 @@ int8_t board_getButton(uint8_t button);
 #    define BRIDGE_D_PWM       4
 #endif
 
+// hall sensors
+#define BLDC_1_HALL_HIGH_STATE 1
+#define BLDC_1_HALL_A PORTCbits.RC1
+#define BLDC_1_HALL_B PORTCbits.RC2
+#define BLDC_1_HALL_C PORTCbits.RC0
+
 // analog iputs
 #define TEMP_AB_ADC_CHAN  0
 #define TEMP_CD_ADC_CHAN  1
