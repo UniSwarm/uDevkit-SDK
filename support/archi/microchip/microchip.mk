@@ -62,7 +62,7 @@ HEAP?=100
 # rule to link OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	@printf "$(COMPCOLOR)µLD %-35s => %s\n$(NORM)" "*.o" $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) -lc $(LDFLAGS_XC)
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) -lc $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map"
 
 .PHONY : showmem dbg.% dbg
 # prints memory report
