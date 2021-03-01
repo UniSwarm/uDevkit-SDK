@@ -1,7 +1,7 @@
 /**
  * @file uart_dspic33.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018-2019
+ * @copyright UniSwarm 2018-2021
  *
  * @date July 05, 2018, 13:24 PM
  *

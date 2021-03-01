@@ -1,7 +1,7 @@
 /**
  * @file uart_dspic33.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018-2019
+ * @copyright UniSwarm 2018-2021
  *
  * @date July 05, 2018, 13:24 PM
  *
@@ -48,6 +48,19 @@ struct uart_dev
     STATIC_FIFO(buffTx, UART_BUFFTX_SIZE);
 };
 
+#if UART_COUNT>=1
+void __attribute__ ((interrupt, no_auto_psv)) _U1TXInterrupt(void);
+void __attribute__ ((interrupt, no_auto_psv)) _U1RXInterrupt(void);
+#endif
+#if UART_COUNT>=2
+void __attribute__ ((interrupt, no_auto_psv)) _U2TXInterrupt(void);
+void __attribute__ ((interrupt, no_auto_psv)) _U2RXInterrupt(void);
+#endif
+#if UART_COUNT>=3
+void __attribute__ ((interrupt, no_auto_psv)) _U3TXInterrupt(void);
+void __attribute__ ((interrupt, no_auto_psv)) _U3RXInterrupt(void);
+#endif
+
 struct uart_dev uarts[] = {
 #if UART_COUNT>=1
     {
@@ -73,7 +86,7 @@ struct uart_dev uarts[] = {
  * @brief Gives a free uart device number and open it
  * @return uart device number
  */
-rt_dev_t uart_getFreeDevice()
+rt_dev_t uart_getFreeDevice(void)
 {
 #if UART_COUNT>=1
     uint8_t i;

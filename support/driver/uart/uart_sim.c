@@ -2,7 +2,7 @@
  * @file uart_sim.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018-2019
+ * @copyright UniSwarm 2018-2021
  *
  * @date April 13, 2016, 11:49 AM
  *
@@ -58,7 +58,7 @@ void uart_sendconfig(uint8_t uart)
     simulator_send(UART_SIM_MODULE, uart, UART_SIM_CONFIG, (char*)&uarts[uart], sizeof(uart_dev));
 }
 
-rt_dev_t uart_getFreeDevice()
+rt_dev_t uart_getFreeDevice(void)
 {
     uint8_t i;
     rt_dev_t device;

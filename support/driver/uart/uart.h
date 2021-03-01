@@ -2,7 +2,7 @@
  * @file uart.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018-2019
+ * @copyright UniSwarm 2018-2021
  *
  * @date April 13, 2016, 11:49 AM
  *
@@ -20,7 +20,7 @@
 
 // ====== device assignation ======
 #define uart(d) MKDEV(DEV_CLASS_UART, (d)-1)
-rt_dev_t uart_getFreeDevice();
+rt_dev_t uart_getFreeDevice(void);
 int uart_open(rt_dev_t device);
 int uart_close(rt_dev_t device);
 
