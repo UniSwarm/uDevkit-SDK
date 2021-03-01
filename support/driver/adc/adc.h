@@ -14,7 +14,7 @@
 
 #include <stdint.h>
 
-int adc_init();
+int adc_init(void);
 //int adc_initchannel(uint8_t channel);
 //int adc_closechannel(uint8_t channel);
 

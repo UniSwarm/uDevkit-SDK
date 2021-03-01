@@ -17,7 +17,7 @@
 
 static uint16_t adc_channels[ADC_CHANNEL_COUNT] = {0};
 
-int adc_init()
+int adc_init(void)
 {
     char data[3];
     data[0] = ADC_CHANNEL_COUNT;

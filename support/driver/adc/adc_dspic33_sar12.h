@@ -14,6 +14,8 @@
 #ifndef ADC_DSPIC33_SAR12_H
 #define ADC_DSPIC33_SAR12_H
 
+#include "adc.h"
+
 // ====================================== Channel availability ======================================
 #if defined(DEVICE_33EP128GS702)
  #define ADC_CHANNEL_COUNT 11
