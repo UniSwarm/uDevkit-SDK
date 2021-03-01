@@ -1,7 +1,7 @@
 /**
  * @file timer_dspic33c.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018-2020
+ * @copyright UniSwarm 2018-2021
  *
  * @date June 01, 2018, 05:28 PM
  *
@@ -40,6 +40,10 @@ struct timer_dev
     void (*handler)(void);
 };
 
+#if TIMER_COUNT>=1
+void __attribute__ ((interrupt, no_auto_psv)) _T1Interrupt(void);
+#endif
+
 struct timer_dev timers[] = {
 #if TIMER_COUNT>=1
     {
@@ -54,7 +58,7 @@ struct timer_dev timers[] = {
  * @brief Gives a free timer device number
  * @return timer device number
  */
-rt_dev_t timer_getFreeDevice()
+rt_dev_t timer_getFreeDevice(void)
 {
 #if TIMER_COUNT>=1
     uint8_t i;
@@ -441,7 +445,7 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 }
 
 #if TIMER_COUNT>=1
-void __attribute__ ((interrupt, no_auto_psv)) _T1Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _T1Interrupt(void)
 {
     if (timers[0].handler)
     {

@@ -2,7 +2,7 @@
  * @file timer.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018-2020
+ * @copyright UniSwarm 2018-2021
  *
  * @date April 10, 2016, 11:04 PM
  *
@@ -16,7 +16,7 @@
 
 // ====== device assignation ======
 #define timer(d) MKDEV(DEV_CLASS_TIMER, (d-1))
-rt_dev_t timer_getFreeDevice();
+rt_dev_t timer_getFreeDevice(void);
 int timer_open(rt_dev_t device);
 int timer_close(rt_dev_t device);
 

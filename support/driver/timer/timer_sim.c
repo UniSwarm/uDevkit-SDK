@@ -2,7 +2,7 @@
  * @file timer_sim.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018-2020
+ * @copyright UniSwarm 2018-2021
  *
  * @date September 27, 2016, 11:37 AM
  *
@@ -228,7 +228,7 @@ static void *timer9_handler(void *p_data)
  * @brief Gives a free timer device number
  * @return timer device number
  */
-rt_dev_t timer_getFreeDevice()
+rt_dev_t timer_getFreeDevice(void)
 {
     uint8_t i;
 
