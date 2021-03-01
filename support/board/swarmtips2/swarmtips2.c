@@ -32,7 +32,7 @@ uint8_t board_led_state = 0;
 rt_dev_t swarmtips2_i2c_tof;
 rt_dev_t swarmtips2_i2c_ihm;
 
-int board_init_io()
+int board_init_io(void)
 {
 #ifndef SIMULATOR
     int i;
@@ -102,7 +102,7 @@ int board_init_io()
     return 0;
 }
 
-int board_init_ledpwm()
+int board_init_ledpwm(void)
 {
 #ifndef SIMULATOR
     OC7CON = 0x0000;
@@ -130,7 +130,7 @@ int board_init_ledpwm()
     return 0;
 }
 
-int board_init_tof()
+int board_init_tof(void)
 {
     int i;
     swarmtips2_i2c_tof = i2c(TOF_I2C_BUS);
@@ -165,17 +165,17 @@ int board_init_tof()
     return 0;
 }
 
-rt_dev_t board_i2c_tof()
+rt_dev_t board_i2c_tof(void)
 {
     return swarmtips2_i2c_tof;
 }
 
-rt_dev_t board_i2c_ihm()
+rt_dev_t board_i2c_ihm(void)
 {
     return swarmtips2_i2c_ihm;
 }
 
-int board_init_buzzer()
+int board_init_buzzer(void)
 {
 #ifndef SIMULATOR
     OC1CON = 0x0000;// Turn off the OC1 when performing the setup
@@ -210,7 +210,7 @@ void board_buzz(uint16_t freq)
 #endif
 }
 
-int board_init_ihm()
+int board_init_ihm(void)
 {
     // i2c ihm board
     swarmtips2_i2c_ihm = i2c(IHM_I2C_BUS);
@@ -251,7 +251,7 @@ int8_t board_getButton(uint8_t button)
     return 0;
 }
 
-float board_getPowerVoltage()
+float board_getPowerVoltage(void)
 {
 #ifdef USE_adc
     uint16_t value = adc_getValue(BOARD_VOLT_IN);
@@ -261,7 +261,7 @@ float board_getPowerVoltage()
 #endif
 }
 
-int board_init()
+int board_init(void)
 {
     sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, 24000000); // 24MHz
     archi_init();

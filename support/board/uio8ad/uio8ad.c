@@ -23,7 +23,7 @@ rt_dev_t _board_outs_L[OUT_COUNT];
 DO_MODE _board_outs_mode[OUT_COUNT];
 rt_dev_t _board_analogin[ANALOGIN_COUNT];
 
-int board_init_io()
+int board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
@@ -161,7 +161,7 @@ int board_init_io()
     return 0;
 }
 
-int board_init()
+int board_init(void)
 {
     sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, SYSCLOCK_POSC);
     archi_init();

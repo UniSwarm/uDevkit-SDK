@@ -15,7 +15,7 @@
 
 // ======== device assignation ========
 #define oc(d) MKDEV(DEV_CLASS_OC, (d)-1)
-rt_dev_t oc_getFreeDevice();
+rt_dev_t oc_getFreeDevice(void);
 int oc_open(rt_dev_t device);
 int oc_close(rt_dev_t device);
 

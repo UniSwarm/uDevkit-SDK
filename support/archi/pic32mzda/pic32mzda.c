@@ -10,7 +10,7 @@
 
 #include <archi.h>
 
-void archi_init()
+void archi_init(void)
 {
     // Prefetch-cache: Enable prefetch for PFM (any PFM instructions or data)
     PRECONbits.PREFEN = 3;

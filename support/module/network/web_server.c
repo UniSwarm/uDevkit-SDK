@@ -23,12 +23,12 @@ void (*web_server_restApi)(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *bu
 
 const Fs_FilesList *web_server_file_list = NULL;
 
-void web_server_init()
+void web_server_init(void)
 {
     // services init
 }
 
-void web_server_task()
+void web_server_task(void)
 {
     if (esp8266_getRec() != 1)
         return;

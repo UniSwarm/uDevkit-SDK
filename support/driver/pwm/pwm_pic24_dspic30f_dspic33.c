@@ -14,7 +14,7 @@
 // !!! This implementation only support oc periph at the time
 
 
-rt_dev_t pwm_getFreeDevice()
+rt_dev_t pwm_getFreeDevice(void)
 {
     rt_dev_t dev = oc_getFreeDevice();
     if (dev != NULLDEV)

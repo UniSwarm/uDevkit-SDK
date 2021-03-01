@@ -18,7 +18,7 @@ rt_dev_t iso_en_gpio;
 rt_dev_t iso_rs485_re_gpio;
 rt_dev_t iso_rs485_de_gpio;
 
-int board_init_io()
+int board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
@@ -66,7 +66,7 @@ int board_init_io()
     return 0;
 }
 
-int board_init()
+int board_init(void)
 {
     sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, 24000000); // 24MHz
     archi_init();
@@ -110,17 +110,17 @@ int8_t board_getButton(uint8_t button)
     return 0;
 }
 
-rt_dev_t board_iso_en_gpio()
+rt_dev_t board_iso_en_gpio(void)
 {
     return iso_en_gpio;
 }
 
-rt_dev_t board_iso_rs485_re_gpio()
+rt_dev_t board_iso_rs485_re_gpio(void)
 {
     return iso_rs485_re_gpio;
 }
 
-rt_dev_t board_iso_rs485_de_gpio()
+rt_dev_t board_iso_rs485_de_gpio(void)
 {
     return iso_rs485_de_gpio;
 }

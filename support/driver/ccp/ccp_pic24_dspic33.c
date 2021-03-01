@@ -138,7 +138,7 @@ struct ccp_dev ccps[] = {
  * @brief Gives a free ccp device number
  * @return ccp device number
  */
-rt_dev_t ccp_getFreeDevice()
+rt_dev_t ccp_getFreeDevice(void)
 {
 #if CCP_COUNT>=1
     uint8_t i;

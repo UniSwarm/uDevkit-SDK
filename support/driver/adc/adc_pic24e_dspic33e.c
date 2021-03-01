@@ -16,7 +16,7 @@
 #include <archi.h>
 #include <stdint.h>
 
-int adc_init()
+int adc_init(void)
 {
     AD1CON1 = 0;
     AD1CON1bits.ASAM = 0;      // Manual sample

@@ -173,6 +173,6 @@ typedef enum {
 #endif
  
 int sysclock_setPLLClock(uint32_t freq, uint8_t src);
-uint32_t sysclock_getPLLClock();
+uint32_t sysclock_getPLLClock(void);
 
 #endif // SYSCLOCK_DSPIC33C_H

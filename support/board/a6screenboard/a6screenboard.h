@@ -14,7 +14,7 @@
 #include <archi.h>
 #include <stdint.h>
 
-int board_init();
+int board_init(void);
 
 #define BOARD_NAME "a6screenboard"
 

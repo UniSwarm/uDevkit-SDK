@@ -21,7 +21,7 @@
 STATIC_FIFO(usb_serial_buffrx, UARTSERIAL_BUFFRX_SIZE);
 uint8_t usb_serial_buffer[64];
 
-void usb_serial_init()
+void usb_serial_init(void)
 {
 	SYSTEM_Initialize(SYSTEM_STATE_USB_START);
     USBDeviceInit();
@@ -29,14 +29,14 @@ void usb_serial_init()
     STATIC_FIFO_INIT(usb_serial_buffrx, UARTSERIAL_BUFFRX_SIZE);
 }
 
-rt_dev_t usb_serial_getFreeDevice()
+rt_dev_t usb_serial_getFreeDevice(void)
 {
     usb_serial_init();
 
     return MKDEV(DEV_CLASS_USB_SERIAL, 0);
 }
 
-void usb_serial_task()
+void usb_serial_task(void)
 {
     uint16_t size_rec;
 

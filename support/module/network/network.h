@@ -22,7 +22,7 @@
 
 #include "web_server.h"
 
-void network_init();
-void network_task();
+void network_init(void);
+void network_task(void);
 
 #endif // NETWORK_H

@@ -54,6 +54,7 @@ int16_t adc_value(uint8_t channel)
 
 int adc_setHandler(uint8_t channel, void (*handler)(int16_t))
 {
+    UDK_UNUSED(handler);
     if (channel >= ADC_CHANNEL_COUNT)
     {
         return 0;

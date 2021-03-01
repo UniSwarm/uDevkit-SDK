@@ -74,7 +74,7 @@ struct spi_dev spis[] = {
  * @brief Gives a free spi bus device number and open it
  * @return spi bus device number
  */
-rt_dev_t spi_getFreeDevice()
+rt_dev_t spi_getFreeDevice(void)
 {
     uint8_t i;
     rt_dev_t device;

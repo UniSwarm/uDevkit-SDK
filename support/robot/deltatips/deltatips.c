@@ -14,7 +14,7 @@
 #include "driver/qei.h"
 #include "driver/motor.h"
 
-int robot_init()
+int robot_init(void)
 {
     rt_dev_t leftCoder_dev, rightCoder_dev;
 

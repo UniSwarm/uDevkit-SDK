@@ -457,7 +457,7 @@ void __attribute__ ((interrupt, no_auto_psv)) _T1Interrupt(void)
 #endif
 
 /*
-void timer_reconfig()
+void timer_reconfig(void)
 {
     uint8_t i;
     rt_dev_t device;

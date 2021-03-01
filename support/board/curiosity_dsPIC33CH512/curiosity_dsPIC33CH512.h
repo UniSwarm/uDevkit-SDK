@@ -20,7 +20,7 @@
 
 #include <stdint.h>
 
-int board_init();
+int board_init(void);
 
 #define BOARD_NAME "Curiosity_dsPIC33CH512"
 #define SYSCLOCK_POSC    8000000 // 8MHz

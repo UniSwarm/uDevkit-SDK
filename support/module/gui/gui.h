@@ -54,14 +54,14 @@ void gui_drawText(uint16_t x1, uint16_t y1, const char *txt);
 void gui_drawTextRect(uint16_t x1, uint16_t y1, uint16_t w, uint16_t h, const char *txt, uint8_t flags);
 
 void gui_setFont(const Font *font);
-const Font *gui_font();
+const Font *gui_font(void);
 
-uint8_t gui_getFontHeight();
+uint8_t gui_getFontHeight(void);
 uint8_t gui_getFontWidth(const char c);
 uint16_t gui_getFontTextWidth(const char *txt);
 
 // screen driver properties
-uint16_t gui_screenWidth();
-uint16_t gui_screenHeight();
+uint16_t gui_screenWidth(void);
+uint16_t gui_screenHeight(void);
 
 #endif // GUI_H

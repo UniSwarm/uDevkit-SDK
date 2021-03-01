@@ -20,7 +20,7 @@
 
 #include <stdint.h>
 
-int board_init();
+int board_init(void);
 
 #define BOARD_NAME "UMC4D30CRU"
 #define SYSCLOCK_XTAL 24000000

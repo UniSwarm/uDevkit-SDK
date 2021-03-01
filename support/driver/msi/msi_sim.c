@@ -54,7 +54,7 @@ int msi_slave_verify_program(const uint8_t slave_id, __eds__ unsigned char *prog
 #endif
 
 #ifndef MSI_HAVE_MASTER_INTERFACE
-MSI_CORE_STATUS msi_master_status()
+MSI_CORE_STATUS msi_master_status(void)
 {
     return 0;
 }

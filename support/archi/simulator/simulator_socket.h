@@ -46,8 +46,8 @@ typedef struct sockaddr SOCKADDR;
 
 #define SIM_SOCKET_PORT 1064
 
-void simulator_socket_init();
-void simulator_socket_end();
+void simulator_socket_init(void);
+void simulator_socket_end(void);
 void simulator_socket_send(char *data, size_t size);
 int simulator_socket_read(char *data, size_t size);
 

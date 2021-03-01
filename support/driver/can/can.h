@@ -15,7 +15,7 @@
 
 // ====== bus assignation ======
 #define can(d) MKDEV(DEV_CLASS_CAN, (d)-1)
-rt_dev_t can_getFreeDevice();
+rt_dev_t can_getFreeDevice(void);
 int can_open(rt_dev_t device);
 int can_close(rt_dev_t device);
 

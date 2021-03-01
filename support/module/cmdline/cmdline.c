@@ -50,7 +50,7 @@ char cmdline_line[LINE_SIZ];
 int cmdline_history_end = 0, cmdline_history_id = -1;
 char cmdline_oldline[HISTORY_MAX][LINE_SIZ];
 
-void cmdline_endofline()
+void cmdline_endofline(void)
 {
     char cmd[10];
     if(cmdline_id == cmdline_end)
@@ -60,7 +60,7 @@ void cmdline_endofline()
     cmdline_id = cmdline_end;
 }
 
-void cmdline_startofline()
+void cmdline_startofline(void)
 {
     char cmd[10];
     if(cmdline_id==0)
@@ -70,7 +70,7 @@ void cmdline_startofline()
     cmdline_id = 0;
 }
 
-void cmdline_right()
+void cmdline_right(void)
 {
     char cmd[10];
     if(cmdline_id==cmdline_end)
@@ -81,7 +81,7 @@ void cmdline_right()
     device_write(cmdline_device_out, cmd, strlen(cmd)); // move cursor 1 line right
 }
 
-void cmdline_left()
+void cmdline_left(void)
 {
     char cmd[10];
     if(cmdline_id==0)
@@ -109,7 +109,7 @@ void cmdline_replaceLineContent(char *newline)
         device_write(cmdline_device_out, cmdline_line, cmdline_end);
 }
 
-void cmdline_up()
+void cmdline_up(void)
 {
     if(cmdline_history_id >= cmdline_history_end)
         return;
@@ -117,7 +117,7 @@ void cmdline_up()
     cmdline_replaceLineContent(cmdline_oldline[cmdline_history_id]);
 }
 
-void cmdline_down()
+void cmdline_down(void)
 {
     if(cmdline_history_id == 0)
     {
@@ -131,14 +131,14 @@ void cmdline_down()
     cmdline_replaceLineContent(cmdline_oldline[cmdline_history_id]);
 }
 
-void cmdline_clear()
+void cmdline_clear(void)
 {
     char cmd[10];
     cmdline_curses_clear(cmd);
     device_write(cmdline_device_out, cmd, strlen(cmd));
 }
 
-void cmdline_reset()
+void cmdline_reset(void)
 {
     char cmd[10];
     cmdline_id = 0;
@@ -150,7 +150,7 @@ void cmdline_reset()
     device_write(cmdline_device_out, "> ", 2);
 }
 
-void cmdline_init()
+void cmdline_init(void)
 {
     cmdline_clear();
     cmdline_reset();
@@ -218,7 +218,7 @@ void cmdline_pushchar(char c)
     }
 }
 
-void cmdline_backspace()
+void cmdline_backspace(void)
 {
     int i;
     char cmd[10];
@@ -238,7 +238,7 @@ void cmdline_backspace()
     cmdline_end--;
 }
 
-uint8_t cmdline_getLine()
+uint8_t cmdline_getLine(void)
 {
     char c;
     ssize_t byte_read = device_read(cmdline_device_in, cmdline_buffread, BUFFREAD_SIZ);
@@ -351,7 +351,7 @@ uint8_t cmdline_getLine()
     return 0;
 }
 
-void cmdline_task()
+void cmdline_task(void)
 {
 	if(cmdline_getLine()!=0)
     {

@@ -93,7 +93,7 @@ struct uart_dev uarts[] = {
  * @brief Gives a free uart device number and open it
  * @return uart device number
  */
-rt_dev_t uart_getFreeDevice()
+rt_dev_t uart_getFreeDevice(void)
 {
 #if UART_COUNT>=1
     uint8_t i;

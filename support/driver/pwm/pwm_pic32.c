@@ -24,7 +24,7 @@ struct pwm_dev
 
 struct pwm_dev pwms[PWM_COUNT];
 
-rt_dev_t pwm_getFreeDevice()
+rt_dev_t pwm_getFreeDevice(void)
 {
     rt_dev_t dev = oc_getFreeDevice();
     if (dev != NULLDEV)

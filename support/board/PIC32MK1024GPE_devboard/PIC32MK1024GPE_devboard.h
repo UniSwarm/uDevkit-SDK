@@ -21,7 +21,7 @@
 
 #include <stdint.h>
 
-int board_init();
+int board_init(void);
 
 #define BOARD_NAME "PIC32MK1024GPE_DEVBOARD"
 #define SYSCLOCK_XTAL 12000000

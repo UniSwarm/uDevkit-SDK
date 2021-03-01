@@ -10,7 +10,7 @@
 
 #include <archi.h>
 
-void archi_init()
+void archi_init(void)
 {
     // enable multiple vector interrupts
     INTCONSET = _INTCON_MVEC_MASK;

@@ -32,12 +32,12 @@ int sysclock_setClock(uint32_t fosc)
     return 0;
 }
 
-uint32_t sysclock_getClock()
+uint32_t sysclock_getClock(void)
 {
     return sysfreq;
 }
 
-uint32_t sysclock_getCPUSystemClock()
+uint32_t sysclock_getCPUSystemClock(void)
 {
     return sysfreq >> 1;
 }
@@ -57,7 +57,7 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
     return 0;
 }
 
-SYSCLOCK_SOURCE sysclock_source()
+SYSCLOCK_SOURCE sysclock_source(void)
 {
     // TODO
     return 0;
@@ -92,7 +92,7 @@ int sysclock_setPLLClock(uint32_t freq, uint8_t src)
     return 0;
 }
 
-uint32_t sysclock_getPLLClock()
+uint32_t sysclock_getPLLClock(void)
 {
     return pllfreq;
 }

@@ -15,7 +15,7 @@
 
 // ====== device assignation ======
 #define pwm(d) MKDEV(DEV_CLASS_PWM, (d)-1)
-rt_dev_t pwm_getFreeDevice();
+rt_dev_t pwm_getFreeDevice(void);
 int pwm_open(rt_dev_t device);
 int pwm_close(rt_dev_t device);
 

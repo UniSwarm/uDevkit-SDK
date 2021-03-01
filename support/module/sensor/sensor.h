@@ -34,7 +34,7 @@ typedef struct
     uint32_t sample_period;
 } Sensor;
 
-uint8_t sensor_count();
+uint8_t sensor_count(void);
 Sensor *sensor_get(uint8_t s);
 uint8_t sensor_add(Sensor *sensor);
 

@@ -11,14 +11,14 @@
 #include "usb_serial_sim.h"
 #include "simulator.h"
 
-rt_dev_t usb_serial_getFreeDevice()
+rt_dev_t usb_serial_getFreeDevice(void)
 {
     // TODO SIM
 
     return MKDEV(DEV_CLASS_USB_SERIAL, 0);
 }
 
-void usb_serial_task()
+void usb_serial_task(void)
 {
     // TODO SIM
 }

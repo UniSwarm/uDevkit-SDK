@@ -69,7 +69,7 @@ void can_sendconfig(uint8_t can)
     simulator_send(CAN_SIM_MODULE, can, CAN_SIM_CONFIG, (char *)&cans[can], sizeof(can_dev));
 }
 
-rt_dev_t can_getFreeDevice()
+rt_dev_t can_getFreeDevice(void)
 {
     uint8_t i;
     rt_dev_t device;

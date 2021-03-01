@@ -138,7 +138,7 @@ STATIC_BUFFER(esp8266_txBuff, 100);
 /**
  * @brief Internal function to initailise UART to ESP8266
  */
-void esp8266_uart_init()
+void esp8266_uart_init(void)
 {
     // uart init
     esp8266_uart = uart(ESP8266_UART);
@@ -151,7 +151,7 @@ void esp8266_uart_init()
 /**
  * @brief Initailise driver for ESP8266
  */
-void esp8266_init()
+void esp8266_init(void)
 {
     esp8266_uart_init();
 
@@ -162,7 +162,7 @@ void esp8266_init()
 /**
  * @brief Task to call periodically
  */
-void esp8266_task()
+void esp8266_task(void)
 {
     char esp8266_rxBuff[200];
     ssize_t read_size;
@@ -637,7 +637,7 @@ char *esp8266_protectstr(char *destination, const char *source)
  * @brief Gives the current status of AT response
  * @return current status
  */
-ESP8266_STATUS esp8266_getStatus()
+ESP8266_STATUS esp8266_getStatus(void)
 {
     return esp8266_state;
 }
@@ -646,7 +646,7 @@ ESP8266_STATUS esp8266_getStatus()
  * @brief Give the id of the last socket received
  * @return socket id
  */
-uint8_t esp8266_getRecSocket()
+uint8_t esp8266_getRecSocket(void)
 {
     return esp8266_socket;
 }
@@ -655,7 +655,7 @@ uint8_t esp8266_getRecSocket()
  * @brief Reads the last packet received
  * @return pointer to data
  */
-char *esp8266_getRecData()
+char *esp8266_getRecData(void)
 {
     return esp8266_dataPacket;
 }
@@ -664,7 +664,7 @@ char *esp8266_getRecData()
  * @brief Gives the last packet received size in bytes
  * @return size of packet
  */
-uint16_t esp8266_getRecSize()
+uint16_t esp8266_getRecSize(void)
 {
     return esp8266_sizePacket;
 }
@@ -673,7 +673,7 @@ uint16_t esp8266_getRecSize()
  * @brief Check if packet is received by a socket
  * @return 0 if no packet is received, 1 else
  */
-uint8_t esp8266_getRec()
+uint8_t esp8266_getRec(void)
 {
     if (esp8266_flagPacket == 1)
     {
@@ -836,7 +836,7 @@ int esp8266_connect_ap(char *ssid, char *pw)
  * @brief Disconnects the station of the current access point
  * @return 0 if OK
  */
-int esp8266_disconnect_ap()
+int esp8266_disconnect_ap(void)
 {
     esp8266_send_cmd("AT+CWQAP\r\n");
     esp8266_currentCmd = ESP8266_CMD_DISCONNECTAP;
@@ -915,7 +915,7 @@ void esp8266_server_create(uint16_t port)
 /**
  * @brief Destroy the local server
  */
-void esp8266_server_destroy()
+void esp8266_server_destroy(void)
 {
     esp8266_send_cmd("AT+CIPSERVER=0\r\n");
     esp8266_currentCmd = ESP8266_CMD_SERVERDESTROY;
@@ -925,7 +925,7 @@ void esp8266_server_destroy()
  * @brief Gets the station IP
  * @return string current IP
  */
-char *esp8266_getIp()
+char *esp8266_getIp(void)
 {
     return esp8266_ip;
 }
@@ -934,7 +934,7 @@ char *esp8266_getIp()
  * @brief Gets the station MAC
  * @return string current MAC
  */
-char *esp8266_getMac()
+char *esp8266_getMac(void)
 {
     return esp8266_mac;
 }

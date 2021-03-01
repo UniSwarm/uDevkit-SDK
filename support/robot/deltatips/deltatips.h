@@ -13,7 +13,7 @@
 
 #include "board.h"
 
-int robot_init();
+int robot_init(void);
 
 #define ROBOT_NAME "deltaTips"
 

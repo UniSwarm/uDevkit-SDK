@@ -13,7 +13,7 @@
 
 #include "web_server.h"
 
-void network_init()
+void network_init(void)
 {
     #ifdef USE_esp8266
         esp8266_init();
@@ -21,7 +21,7 @@ void network_init()
     #endif
 }
 
-void network_task()
+void network_task(void)
 {
 #ifdef USE_esp8266
     esp8266_task();

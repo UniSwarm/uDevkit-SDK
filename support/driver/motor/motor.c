@@ -60,7 +60,7 @@ void setup_PWM4(void)
 #endif
 // TODO/>
 
-int motor_init()
+int motor_init(void)
 {
 #ifdef M1A
     setup_PWM1();

@@ -185,7 +185,7 @@ struct oc_dev ocs[] = {
  * @brief Gives a free OC device number
  * @return OC device number
  */
-rt_dev_t oc_getFreeDevice()
+rt_dev_t oc_getFreeDevice(void)
 {
 #if OC_COUNT>=1
     uint8_t i;

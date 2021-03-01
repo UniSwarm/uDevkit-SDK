@@ -66,14 +66,14 @@ void SYSTEM_Initialize( SYSTEM_STATE state )
 }
 
 #if defined(USB_INTERRUPT) && defined(ARCHI_pic32mm)
-void __ISR(_USB_VECTOR, IPL4AUTO) USBInterrupt ()
+void __ISR(_USB_VECTOR, IPL4AUTO) USBInterrupt (void)
 {
     USBDeviceTasks();
 }
 #endif
 
 #if defined(USB_INTERRUPT) && defined(ARCHI_dspic33ep)
-void __attribute__((interrupt, auto_psv)) _USB1Interrupt()
+void __attribute__((interrupt, auto_psv)) _USB1Interrupt(void)
 {
     USBDeviceTasks();
 }

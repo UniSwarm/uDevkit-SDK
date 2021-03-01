@@ -16,7 +16,7 @@
 
 #include <stdint.h>
 
-int board_init();
+int board_init(void);
 
 #define BOARD_NAME "UDT1CRI_H"
 #define SYSCLOCK_XTAL 24000000
@@ -43,8 +43,8 @@ int8_t board_getButton(uint8_t button);
 #define UART_ID_DBG 1
 
 // ios
-rt_dev_t board_iso_en_gpio();
-rt_dev_t board_iso_rs485_re_gpio();
-rt_dev_t board_iso_rs485_de_gpio();
+rt_dev_t board_iso_en_gpio(void);
+rt_dev_t board_iso_rs485_re_gpio(void);
+rt_dev_t board_iso_rs485_de_gpio(void);
 
 #endif // UDT1CRI_H

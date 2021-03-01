@@ -16,7 +16,7 @@
 
 #include <archi.h>
 
-int adc_init()
+int adc_init(void)
 {
     // initialize ADC calibration setting
     ADC0CFG = DEVADC0;

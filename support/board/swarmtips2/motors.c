@@ -18,7 +18,7 @@ const signed char encoder_value[16] = { 0, -1,  1,  0,
                                        -1,  0,  0,  1,
                                         0,  1, -1,  0};
 
-void process_coder()
+void process_coder(void)
 {
 	// c1_state => 0b0000 & previous_A & previous_B & A & B
 	c1_state = (c1_state<<2) & 0b00001100;
@@ -39,12 +39,12 @@ void process_coder()
     motors_task();
 }
 
-int getC1()
+int getC1(void)
 {
     return c1;
 }
 
-int getC2()
+int getC2(void)
 {
     return c2;
 }
@@ -93,7 +93,7 @@ void motors_applyCommand(int16_t m1, int16_t m2)
     }
 }
 
-void motors_init()
+void motors_init(void)
 {
     // timer coders
     rt_dev_t timer;
@@ -134,7 +134,7 @@ void motors_rotate(int16_t angle)
     fc2 = c2 - (float)angle / 1.85;
 }
 
-void motors_task()
+void motors_task(void)
 {
     int16_t err1, err2;
     if (motors_stop_i == 1 || motors_state_i == Motors_State_Stop)
@@ -165,12 +165,12 @@ void motors_task()
     motors_applyCommand(err1, err2);
 }
 
-void motors_start()
+void motors_start(void)
 {
     motors_stop_i = 0;
 }
 
-void motors_stop()
+void motors_stop(void)
 {
     motors_stop_i = 1;
 }
@@ -180,7 +180,7 @@ void motors_setSpeed(int16_t speed)
     motors_speed_i = speed;
 }
 
-Motors_State motors_state()
+Motors_State motors_state(void)
 {
     return motors_state_i;
 }

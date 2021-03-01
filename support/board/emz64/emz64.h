@@ -15,7 +15,7 @@
 
 #include <stdint.h>
 
-int board_init();
+int board_init(void);
 
 #define BOARD_NAME "PIC32-EMZ64"
 #define SYSCLOCK_XTAL 24000000

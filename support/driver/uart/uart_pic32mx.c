@@ -90,7 +90,7 @@ struct uart_dev uarts[] = {
  * @brief Gives a free uart device number and open it
  * @return uart device number
  */
-rt_dev_t uart_getFreeDevice()
+rt_dev_t uart_getFreeDevice(void)
 {
 #if UART_COUNT>=1
     uint8_t i;
@@ -673,7 +673,7 @@ uint8_t uart_bitStop(rt_dev_t device)
 }
 
 #if UART_COUNT>=1
-void uart_1_tx()
+void uart_1_tx(void)
 {
     char uart_tmpchar[1];
     while (!U1STAbits.UTXBF && fifo_pop(&uarts[0].buffTx, uart_tmpchar, 1) == 1)
@@ -705,7 +705,7 @@ void __ISR(_UART_1_VECTOR, IPL3SOFT) U1Interrupt(void)
 #endif
 
 #if UART_COUNT>=2
-void uart_2_tx()
+void uart_2_tx(void)
 {
     char uart_tmpchar[1];
     while (!U2STAbits.UTXBF && fifo_pop(&uarts[1].buffTx, uart_tmpchar, 1) == 1)
@@ -737,7 +737,7 @@ void __ISR(_UART_2_VECTOR, IPL3SOFT) U2Interrupt(void)
 #endif
 
 #if UART_COUNT>=3
-void uart_3_tx()
+void uart_3_tx(void)
 {
     char uart_tmpchar[1];
     while (!U3STAbits.UTXBF && fifo_pop(&uarts[2].buffTx, uart_tmpchar, 1) == 1)
@@ -769,7 +769,7 @@ void __ISR(_UART_3_VECTOR, IPL3SOFT) U3Interrupt(void)
 #endif
 
 #if UART_COUNT>=4
-void uart_4_tx()
+void uart_4_tx(void)
 {
     char uart_tmpchar[1];
     while (!U4STAbits.UTXBF && fifo_pop(&uarts[3].buffTx, uart_tmpchar, 1) == 1)
@@ -801,7 +801,7 @@ void __ISR(_UART_4_VECTOR, IPL3SOFT) U4Interrupt(void)
 #endif
 
 #if UART_COUNT>=5
-void uart_5_tx()
+void uart_5_tx(void)
 {
     char uart_tmpchar[1];
     while (!U5STAbits.UTXBF && fifo_pop(&uarts[4].buffTx, uart_tmpchar, 1) == 1)
@@ -833,7 +833,7 @@ void __ISR(_UART_5_VECTOR, IPL3SOFT) U5Interrupt(void)
 #endif
 
 #if UART_COUNT>=6
-void uart_6_tx()
+void uart_6_tx(void)
 {
     char uart_tmpchar[1];
     while (!U6STAbits.UTXBF && fifo_pop(&uarts[5].buffTx, uart_tmpchar, 1) == 1)

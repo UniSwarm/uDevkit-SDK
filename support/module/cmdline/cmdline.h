@@ -14,8 +14,8 @@
 #include <stdint.h>
 #include "driver/device.h"
 
-void cmdline_init();
+void cmdline_init(void);
 void cmdline_setDevice(rt_dev_t deviceIn, rt_dev_t deviceOut);
-void cmdline_task();
+void cmdline_task(void);
 
 #endif // CMDLINE_H

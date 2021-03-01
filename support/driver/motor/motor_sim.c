@@ -11,7 +11,7 @@
 #include "motor_sim.h"
 #include "driver/adc.h"
 
-int motor_init()
+int motor_init(void)
 {
     return 0;
 }

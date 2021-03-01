@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <archi.h>
 
-void cmd_reg_help()
+void cmd_reg_help(void)
 {
     puts("reg read <hex-addr>");
     puts("reg write <hex-addr> <hex-value>");

@@ -63,7 +63,7 @@ void gui_setPenColor(uint16_t color)
     _gui_penColor = color;
 }
 
-uint16_t gui_penColor()
+uint16_t gui_penColor(void)
 {
     return _gui_penColor;
 }
@@ -73,7 +73,7 @@ void gui_setBrushColor(uint16_t color)
     _gui_brushColor = color;
 }
 
-uint16_t gui_brushColor()
+uint16_t gui_brushColor(void)
 {
     return _gui_brushColor;
 }
@@ -317,12 +317,12 @@ void gui_setFont(const Font *font)
     _gui_font = font;
 }
 
-const Font *gui_font()
+const Font *gui_font(void)
 {
     return _gui_font;
 }
 
-uint8_t gui_getFontHeight()
+uint8_t gui_getFontHeight(void)
 {
     if (_gui_font == NULL)
         return 0;
@@ -354,12 +354,12 @@ uint16_t gui_getFontTextWidth(const char *txt)
     return width;
 }
 
-uint16_t gui_screenWidth()
+uint16_t gui_screenWidth(void)
 {
     return GUI_WIDTH;
 }
 
-uint16_t gui_screenHeight()
+uint16_t gui_screenHeight(void)
 {
     return GUI_HEIGHT;
 }

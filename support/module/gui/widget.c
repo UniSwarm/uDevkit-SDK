@@ -17,7 +17,7 @@ Widget widgets[WIDGET_COUNT];
 // internal functions
 void widget_draw(Widget *widget);
 
-void widget_init()
+void widget_init(void)
 {
     int i;
     for(i=0; i<WIDGET_COUNT; i++)

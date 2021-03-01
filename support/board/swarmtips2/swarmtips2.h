@@ -17,7 +17,7 @@
 
 #include <driver/device.h>
 
-int board_init();
+int board_init(void);
 
 #define BOARD_NAME "swarmtips2"
 
@@ -38,12 +38,12 @@ int8_t board_getLed(uint8_t led);
 #define BUTTON_COUNT 3
 int8_t board_getButton(uint8_t button);
 
-rt_dev_t board_i2c_tof();
-rt_dev_t board_i2c_ihm();
+rt_dev_t board_i2c_tof(void);
+rt_dev_t board_i2c_ihm(void);
 
 void board_buzz(uint16_t freq);
 
-float board_getPowerVoltage();
+float board_getPowerVoltage(void);
 
 // ====== charger ======
 #define CHARGER_CE       LATBbits.LATB11

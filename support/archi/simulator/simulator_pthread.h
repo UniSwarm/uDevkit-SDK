@@ -37,6 +37,6 @@ int nanosleep(const struct timespec *req, struct timespec *rem);
 #    error pthread not supported for your platform
 #endif
 
-void simulator_pthread_init();
+void simulator_pthread_init(void);
 
 #endif  // SIMULATOR_PTHREAD_H

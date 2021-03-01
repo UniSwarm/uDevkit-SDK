@@ -20,7 +20,7 @@
 
 #include <stdint.h>
 
-int board_init();
+int board_init(void);
 
 #define BOARD_NAME "Curiosity_PIC24F"
 #define SYSCLOCK_SOSC    32768

@@ -20,6 +20,6 @@ ssize_t a6_read(char *data, size_t size_max);
 
 void a6_writeShort(uint16_t channel, uint16_t value);
 
-void a6_task();
+void a6_task(void);
 
 #endif // A6_H

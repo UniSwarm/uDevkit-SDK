@@ -112,7 +112,7 @@ struct timer_dev timers[] = {
  * @brief Gives a free timer device number
  * @return timer device number
  */
-rt_dev_t timer_getFreeDevice()
+rt_dev_t timer_getFreeDevice(void)
 {
 #if TIMER_COUNT>=1
     uint8_t i;
@@ -931,7 +931,7 @@ void __ISR(_TIMER_9_VECTOR, TIPR) T9Interrupt(void)
 #endif
 
 
-/*void timer_reconfig()
+/*void timer_reconfig(void)
 {
     uint8_t i;
     rt_dev_t device;

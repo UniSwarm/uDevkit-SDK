@@ -18,7 +18,7 @@
 
 #include <stdint.h>
 
-int board_init();
+int board_init(void);
 
 #define BOARD_NAME "UIO44FR"
 #define SYSCLOCK_POSC    24000000 // 24MHz

@@ -20,7 +20,7 @@ uint8_t ax12_inverted;
 /**
  * @brief Set the device the send mode
  */
-void ax12_sendMode()
+void ax12_sendMode(void)
 {
     if (ax12_txen != NULLDEV)
     {
@@ -35,7 +35,7 @@ void ax12_sendMode()
 /**
  * @brief Set the device to receive mode
  */
-void ax12_receiveMode()
+void ax12_receiveMode(void)
 {
     //idr = 0;
     if (ax12_txen != NULLDEV)

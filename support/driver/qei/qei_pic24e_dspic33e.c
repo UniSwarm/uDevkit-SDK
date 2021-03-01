@@ -27,7 +27,7 @@
  * @brief Gives a free QEI device number and open it
  * @return QEI device number
  */
-rt_dev_t qei_getFreeDevice()
+rt_dev_t qei_getFreeDevice(void)
 {
 #if QEI_COUNT>=1
     uint8_t i;

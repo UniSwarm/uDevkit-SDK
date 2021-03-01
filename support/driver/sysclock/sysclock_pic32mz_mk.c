@@ -192,7 +192,7 @@ int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq)
  * @brief Return the actual clock source for system clock
  * @return SYSCLOCK_SOURCE enum corresponding to actual clock source
  */
-SYSCLOCK_SOURCE sysclock_source()
+SYSCLOCK_SOURCE sysclock_source(void)
 {
     SYSCLOCK_SOURCE source = (SYSCLOCK_SOURCE)OSCCONbits.COSC;
 #ifdef SYSCLOCK_SRC_FRC2
@@ -360,7 +360,7 @@ int sysclock_setClock(uint32_t fosc)
     return 0;*/
 }
 
-uint32_t sysclock_getPLLClock()
+uint32_t sysclock_getPLLClock(void)
 {
     uint32_t fin, fpllo;
     uint16_t prediv, multiplier, postdiv;

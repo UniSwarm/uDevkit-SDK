@@ -13,7 +13,7 @@
 
 #include <stdio.h>
 
-void simulator_pthread_init()
+void simulator_pthread_init(void)
 {
 }
 

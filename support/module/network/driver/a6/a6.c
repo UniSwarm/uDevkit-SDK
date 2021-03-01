@@ -69,6 +69,6 @@ void a6_writeShort(uint16_t channel, uint16_t value)
     data[5]=0x6A;
 }
 
-void a6_task()
+void a6_task(void)
 {
 }

@@ -14,7 +14,7 @@
 #include "driver/device.h"
 #include "board.h"
 
-int motor_init();
+int motor_init(void);
 
 int motor_setPower(rt_dev_t device, int16_t power);
 int16_t motor_getCurrent(rt_dev_t device);

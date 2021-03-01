@@ -15,7 +15,7 @@
 
 // ====== device assignation ======
 // i2c(d) different switch archi, define in archi specific headers
-rt_dev_t i2c_getFreeDevice();
+rt_dev_t i2c_getFreeDevice(void);
 int i2c_open(rt_dev_t device);
 int i2c_close(rt_dev_t device);
 

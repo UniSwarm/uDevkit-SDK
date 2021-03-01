@@ -17,7 +17,7 @@
 static FILE *fileNvm;
 #define TAILLE_BUF 0xAF000
 
-void nvm_init()
+void nvm_init(void)
 {
     char temp[TAILLE_BUF];
 

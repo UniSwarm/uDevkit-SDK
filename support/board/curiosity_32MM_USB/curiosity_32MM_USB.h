@@ -20,7 +20,7 @@
 
 #include <stdint.h>
 
-int board_init();
+int board_init(void);
 
 #define BOARD_NAME "Curiosity_MM_USB"
 #define SYSCLOCK_XTAL 20000000

@@ -15,7 +15,7 @@
 
 #include <stdint.h>
 
-int board_init();
+int board_init(void);
 
 #define BOARD_NAME "rtboard1_1"
 #define SYSCLOCK_XTAL 8000000

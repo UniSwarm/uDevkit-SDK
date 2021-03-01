@@ -37,7 +37,7 @@
 
 // ====== device assignation ======
 #define qei(d) MKDEV(DEV_CLASS_QEI, (d)-1)
-rt_dev_t qei_getFreeDevice();
+rt_dev_t qei_getFreeDevice(void);
 int qei_open(rt_dev_t device);
 int qei_close(rt_dev_t device);
 

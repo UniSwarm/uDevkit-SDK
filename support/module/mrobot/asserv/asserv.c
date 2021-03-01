@@ -65,7 +65,7 @@ void asserv_task();
 void asserv_locTask();
 void asserv_controlTask();
 
-int asserv_init()
+int asserv_init(void)
 {
     asserv_timer = timer_getFreeDevice();
     timer_setPeriodMs(asserv_timer, 1);
@@ -81,12 +81,12 @@ void asserv_setCoderGeometry(float entrax, float stepLength)
     asserv_loc_coderstep = stepLength;
 }
 
-float asserv_entrax()
+float asserv_entrax(void)
 {
     return asserv_loc_coderentrax;
 }
 
-float asserv_stepLength()
+float asserv_stepLength(void)
 {
     return asserv_loc_coderstep;
 }
@@ -102,14 +102,14 @@ void asserv_setCoderDev(rt_dev_t leftCoder_dev, rt_dev_t rightCoder_dev)
     qei_enable(coder2);
 }
 
-void asserv_task()
+void asserv_task(void)
 {
     asserv_locTask();
     asserv_controlTask();
 }
 
 long int c1, c2;
-void asserv_locTask()
+void asserv_locTask(void)
 {
     c1 = qei_getValue(coder1);
     c2 = qei_getValue(coder2);
@@ -140,12 +140,12 @@ void asserv_setDest(int32_t x, int32_t y)
     asserv_yf = y;
 }
 
-int32_t asserv_xDest()
+int32_t asserv_xDest(void)
 {
     return asserv_xf;
 }
 
-int32_t asserv_yDest()
+int32_t asserv_yDest(void)
 {
     return asserv_yf;
 }
@@ -164,7 +164,7 @@ void asserv_setSpeed(int16_t speed)
     }
 }
 
-int16_t asserv_speed()
+int16_t asserv_speed(void)
 {
     if(asserv_way == Asserv_Way_Back)
         return -asserv_mspeed;
@@ -172,7 +172,7 @@ int16_t asserv_speed()
         return asserv_mspeed;
 }
 
-int16_t asserv_currentSpeed()
+int16_t asserv_currentSpeed(void)
 {
     return (v1 + v2) / 2;
 }
@@ -184,22 +184,22 @@ void asserv_setPid(uint16_t kp, uint16_t ki, uint16_t kd)
     asserv_kd = kd;
 }
 
-uint16_t asserv_getP()
+uint16_t asserv_getP(void)
 {
     return asserv_kp;
 }
 
-uint16_t asserv_getI()
+uint16_t asserv_getI(void)
 {
     return asserv_ki;
 }
 
-uint16_t asserv_getD()
+uint16_t asserv_getD(void)
 {
     return asserv_kd;
 }
 
-Asserv_State asserv_state()
+Asserv_State asserv_state(void)
 {
     return masserv_state;
 }
@@ -210,7 +210,7 @@ void asserv_setMode(Asserv_Mode mode)
 }
 
 int i = 0;
-void asserv_controlTask()
+void asserv_controlTask(void)
 {
     float consds, consdt;
     float consV1, consV2;
@@ -444,22 +444,22 @@ void asserv_setPos(float x, float y, float t)
     td = asserv_t;
 }
 
-float asserv_getXPos()
+float asserv_getXPos(void)
 {
     return asserv_x;
 }
 
-float asserv_getYPos()
+float asserv_getYPos(void)
 {
     return asserv_y;
 }
 
-float asserv_getTPos()
+float asserv_getTPos(void)
 {
     return asserv_t;
 }
 
-float asserv_getDistance()
+float asserv_getDistance(void)
 {
     return distance;
 }

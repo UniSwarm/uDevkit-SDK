@@ -16,7 +16,7 @@ static uint8_t qei_state = 0;
  * @brief Gives a free QEI device number and open it
  * @return QEI device number
  */
-rt_dev_t qei_getFreeDevice()
+rt_dev_t qei_getFreeDevice(void)
 {
     rt_dev_t device;
 #if QEI_COUNT>=1

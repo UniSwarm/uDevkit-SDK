@@ -32,7 +32,7 @@ void gui_ctrl_write_command(uint8_t cmd)
     i2c_writereg(i2c_screenbus, OLED_I2C_ADDR, 0, cmd, 0);
 }
 
-void ssd1306_increment()
+void ssd1306_increment(void)
 {
     ssd1306_y++;
     if (ssd1306_y >= ssd1306_recty + ssd1306_recth)
@@ -50,7 +50,7 @@ void gui_ctrl_write_data(uint16_t data)
     ssd1306_increment();
 }
 
-void gui_ctrl_update()
+void gui_ctrl_update(void)
 {
     uint16_t i;
     uint8_t *pix;

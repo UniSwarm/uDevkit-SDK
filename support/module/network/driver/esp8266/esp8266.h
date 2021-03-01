@@ -13,9 +13,9 @@
 
 #include <stdint.h>
 
-void esp8266_init();
+void esp8266_init(void);
 
-void esp8266_task();
+void esp8266_task(void);
 
 #define esp8266_send_cmd(cmd) uart_write(esp8266_uart, (cmd), strlen(cmd))
 void esp8266_send_cmddat(char data[], uint16_t size);
@@ -38,7 +38,7 @@ typedef enum
 } ESP8266_ECN;
 int esp8266_ap_setConfig(char *ssid, char *pw, ESP8266_ECN pw_ecn, uint8_t channel);
 int esp8266_connect_ap(char *ssid, char *pw);
-int esp8266_disconnect_ap();
+int esp8266_disconnect_ap(void);
 
 // ======== tcp/ip layer =========
 uint8_t esp8266_open_tcp_socket(char *ip_domain, uint16_t port);
@@ -48,7 +48,7 @@ void esp8266_write_socket_string(uint8_t sock, char *str);
 void esp8266_close_socket(uint8_t sock);
 
 void esp8266_server_create(uint16_t port);
-void esp8266_server_destroy();
+void esp8266_server_destroy(void);
 
 typedef enum
 {
@@ -56,14 +56,14 @@ typedef enum
     ESP8266_STATUS_READY
 
 } ESP8266_STATUS;
-ESP8266_STATUS esp8266_getStatus();
+ESP8266_STATUS esp8266_getStatus(void);
 
-uint8_t esp8266_getRec();
-uint8_t esp8266_getRecSocket();
-char *esp8266_getRecData();
-uint16_t esp8266_getRecSize();
+uint8_t esp8266_getRec(void);
+uint8_t esp8266_getRecSocket(void);
+char *esp8266_getRecData(void);
+uint16_t esp8266_getRecSize(void);
 
-char *esp8266_getIp();
-char *esp8266_getMac();
+char *esp8266_getIp(void);
+char *esp8266_getMac(void);
 
 #endif   // ESP8266_H

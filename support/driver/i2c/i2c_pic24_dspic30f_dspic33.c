@@ -61,7 +61,7 @@ struct i2c_dev i2cs[] = {
  * @brief Gives a free i2c bus device number and open it
  * @return i2c bus device number
  */
-rt_dev_t i2c_getFreeDevice()
+rt_dev_t i2c_getFreeDevice(void)
 {
 #if I2C_COUNT>=1
     uint8_t i;

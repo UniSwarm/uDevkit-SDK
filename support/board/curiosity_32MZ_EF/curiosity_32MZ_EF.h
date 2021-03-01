@@ -20,7 +20,7 @@
 
 #include <stdint.h>
 
-int board_init();
+int board_init(void);
 
 #define BOARD_NAME "Curiosity_MZ_EF"
 #define SYSCLOCK_XTAL 24000000

@@ -15,7 +15,7 @@
 
 // ====== device assignation ======
 #define ic(d) MKDEV(DEV_CLASS_IC, (d)-1)
-rt_dev_t ic_getFreeDevice();
+rt_dev_t ic_getFreeDevice(void);
 int ic_open(rt_dev_t device);
 int ic_close(rt_dev_t device);
 

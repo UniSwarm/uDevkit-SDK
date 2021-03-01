@@ -16,7 +16,7 @@
 #include <stdint.h>
 #include <driver/device.h>
 
-int board_init();
+int board_init(void);
 
 #define BOARD_NAME "swarmtips"
 
@@ -49,7 +49,7 @@ int8_t board_getButton(uint8_t button);
 // ESP8266
 #define ESP8266_UART 1
 
-rt_dev_t board_i2c_tof();
+rt_dev_t board_i2c_tof(void);
 #define TOF_ADDR       0x52
 
 

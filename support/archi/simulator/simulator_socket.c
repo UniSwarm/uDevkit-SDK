@@ -16,7 +16,7 @@
 
 SOCKET simulator_sock;
 
-void simulator_socket_init()
+void simulator_socket_init(void)
 {
     SOCKADDR_IN ssin;
 
@@ -51,7 +51,7 @@ void simulator_socket_init()
     }
 }
 
-void simulator_socket_end()
+void simulator_socket_end(void)
 {
 #if defined(WIN32)
     WSACleanup();

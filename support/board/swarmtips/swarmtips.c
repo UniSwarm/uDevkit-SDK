@@ -23,7 +23,7 @@ rt_dev_t board_leds[LED_COUNT];
 
 rt_dev_t swarmtips_i2c_tof;
 
-int board_init_io()
+int board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
@@ -70,7 +70,7 @@ int board_init_io()
     return 0;
 }
 
-int board_init()
+int board_init(void)
 {
     uint16_t i, j;
     archi_init();
@@ -91,7 +91,7 @@ int board_init()
     return 0;
 }
 
-rt_dev_t board_i2c_tof()
+rt_dev_t board_i2c_tof(void)
 {
     return swarmtips_i2c_tof;
 }

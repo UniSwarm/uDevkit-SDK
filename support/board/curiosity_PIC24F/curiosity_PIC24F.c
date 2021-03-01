@@ -21,7 +21,7 @@
 rt_dev_t board_leds[LED_COUNT];
 rt_dev_t board_buttons[BUTTON_COUNT];
 
-int board_init_io()
+int board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
@@ -43,7 +43,7 @@ int board_init_io()
     return 0;
 }
 
-int board_init()
+int board_init(void)
 {
     sysclock_setSourceFreq(SYSCLOCK_SRC_SOSC, 32768); // 32kHz
     archi_init();

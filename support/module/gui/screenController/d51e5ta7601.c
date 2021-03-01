@@ -59,7 +59,7 @@ void gui_ctrl_write_data(uint16_t data)
     SCREEN_CS = 1;
 }
 
-uint16_t gui_ctrl_read_data()
+uint16_t gui_ctrl_read_data(void)
 {
     uint16_t data;
     SCREEN_PORT_INPUT;

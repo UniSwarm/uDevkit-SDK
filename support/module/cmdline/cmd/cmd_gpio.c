@@ -3,7 +3,7 @@
 
 #include "cmd_stdio.h"
 
-void cmd_gpio_help()
+void cmd_gpio_help(void)
 {
     puts("gpio <gpio-pin>");
     puts("gpio <gpio-pin> set");

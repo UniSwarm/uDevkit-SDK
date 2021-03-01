@@ -15,7 +15,7 @@
 
 // ====== device assignation ======
 #define spi(d) MKDEV(DEV_CLASS_SPI, (d)-1)
-rt_dev_t spi_getFreeDevice();
+rt_dev_t spi_getFreeDevice(void);
 int spi_open(rt_dev_t device);
 int spi_close(rt_dev_t device);
 

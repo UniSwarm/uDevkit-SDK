@@ -8,7 +8,7 @@
 
 int16_t mrobot_lastSpeed = 0;
 
-void mrobot_init()
+void mrobot_init(void)
 {
 #ifndef SIMULATOR
     asserv_init();
@@ -51,32 +51,32 @@ void mrobot_setMotorPid(int16_t kp, int16_t ki, int16_t kd)
     asserv_setPid(kp, ki, kd);
 }
 
-int16_t mrobot_motorGetP()
+int16_t mrobot_motorGetP(void)
 {
     return asserv_getP();
 }
 
-int16_t mrobot_motorGetI()
+int16_t mrobot_motorGetI(void)
 {
     return asserv_getI();
 }
 
-int16_t mrobot_motorGetD()
+int16_t mrobot_motorGetD(void)
 {
     return asserv_getD();
 }
 
-void mrobot_pause()
+void mrobot_pause(void)
 {
     asserv_setSpeed(0);
 }
 
-void mrobot_restart()
+void mrobot_restart(void)
 {
     asserv_setSpeed(mrobot_lastSpeed);
 }
 
-void mrobot_stop()
+void mrobot_stop(void)
 {
     asserv_setDest(asserv_getXPos(), asserv_getXPos());
 }
@@ -119,7 +119,7 @@ MrobotPoint mapToLocal(MrobotPoint pointGlobal)
     return pointLocal;
 }
 
-MrobotPose mrobot_pose()
+MrobotPose mrobot_pose(void)
 {
     MrobotPose pose;
     pose.x = asserv_getXPos();
@@ -128,7 +128,7 @@ MrobotPose mrobot_pose()
     return pose;
 }
 
-MrobotPoint mrobot_nextKeypoint()
+MrobotPoint mrobot_nextKeypoint(void)
 {
     MrobotPoint point;
     point.x = asserv_xDest();
@@ -136,17 +136,17 @@ MrobotPoint mrobot_nextKeypoint()
     return point;
 }
 
-float mrobot_nextKeypointDistance()
+float mrobot_nextKeypointDistance(void)
 {
     return asserv_getDistance();
 }
 
-float mrobot_speed()
+float mrobot_speed(void)
 {
     return asserv_currentSpeed() * asserv_stepLength() * 1000.0;
 }
 
-float mrobot_targetSpeed()
+float mrobot_targetSpeed(void)
 {
     return mrobot_lastSpeed * asserv_stepLength() * 1000.0;
 }

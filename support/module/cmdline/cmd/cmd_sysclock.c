@@ -22,7 +22,7 @@ void cmd_sysclock_statusclk(SYSCLOCK_SOURCE source)
     printf("%s: %ld %cHz\n", sysclock_sources_str[source], freq, unit[idUnit]);
 }
 
-void cmd_sysclock_status()
+void cmd_sysclock_status(void)
 {
     int source;
     printf("Current clock source: %s\n", sysclock_sources_str[sysclock_source()]);
