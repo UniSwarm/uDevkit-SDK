@@ -1,7 +1,7 @@
 /**
  * @file ccp.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2019
+ * @copyright UniSwarm 2019-2021
  *
  * @date May 08, 2019, 09:40 AM
  *
@@ -15,7 +15,7 @@
 
 // ====== device assignation ======
 #define ccp(d) MKDEV(DEV_CLASS_CCP, (d - 1))
-rt_dev_t ccp_getFreeDevice();
+rt_dev_t ccp_getFreeDevice(void);
 int ccp_open(rt_dev_t device);
 int ccp_close(rt_dev_t device);
 

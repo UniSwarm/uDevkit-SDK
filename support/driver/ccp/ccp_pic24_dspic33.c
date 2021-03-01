@@ -1,7 +1,7 @@
 /**
  * @file ccp_pic24_dspic33.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2019-2020
+ * @copyright UniSwarm 2019-2021
  *
  * @date May 08, 2019, 09:40 AM
  *
@@ -39,6 +39,34 @@ struct ccp_dev
     ccp_status flags;
     void (*handler)(void);
 };
+
+#if CCP_COUNT>=1
+void __attribute__ ((interrupt, no_auto_psv)) _CCT1Interrupt(void);
+#endif
+#if CCP_COUNT>=2
+void __attribute__ ((interrupt, no_auto_psv)) _CCT2Interrupt(void);
+#endif
+#if CCP_COUNT>=3
+void __attribute__ ((interrupt, no_auto_psv)) _CCT3Interrupt(void);
+#endif
+#if CCP_COUNT>=4
+void __attribute__ ((interrupt, no_auto_psv)) _CCT4Interrupt(void);
+#endif
+#if CCP_COUNT>=5
+void __attribute__ ((interrupt, no_auto_psv)) _CCT5Interrupt(void);
+#endif
+#if CCP_COUNT>=6
+void __attribute__ ((interrupt, no_auto_psv)) _CCT6Interrupt(void);
+#endif
+#if CCP_COUNT>=7
+void __attribute__ ((interrupt, no_auto_psv)) _CCT7Interrupt(void);
+#endif
+#if CCP_COUNT>=8
+void __attribute__ ((interrupt, no_auto_psv)) _CCT8Interrupt(void);
+#endif
+#if CCP_COUNT>=9
+void __attribute__ ((interrupt, no_auto_psv)) _CCT9Interrupt(void);
+#endif
 
 struct ccp_dev ccps[] = {
 #if CCP_COUNT>=1
@@ -1040,7 +1068,7 @@ int ccp_setValue(rt_dev_t device, uint32_t value)
 }
 
 #if CCP_COUNT>=1
-void __attribute__ ((interrupt, no_auto_psv)) _CCT1Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT1Interrupt(void)
 {
     if (ccps[0].handler)
     {
@@ -1052,7 +1080,7 @@ void __attribute__ ((interrupt, no_auto_psv)) _CCT1Interrupt()
 #endif
 
 #if CCP_COUNT>=2
-void __attribute__ ((interrupt, no_auto_psv)) _CCT2Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT2Interrupt(void)
 {
     if (ccps[1].handler)
     {
@@ -1064,7 +1092,7 @@ void __attribute__ ((interrupt, no_auto_psv)) _CCT2Interrupt()
 #endif
 
 #if CCP_COUNT>=3
-void __attribute__ ((interrupt, no_auto_psv)) _CCT3Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT3Interrupt(void)
 {
     if (ccps[2].handler)
     {
@@ -1076,7 +1104,7 @@ void __attribute__ ((interrupt, no_auto_psv)) _CCT3Interrupt()
 #endif
 
 #if CCP_COUNT>=4
-void __attribute__ ((interrupt, no_auto_psv)) _CCT4Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT4Interrupt(void)
 {
     if (ccps[3].handler)
     {
@@ -1088,7 +1116,7 @@ void __attribute__ ((interrupt, no_auto_psv)) _CCT4Interrupt()
 #endif
 
 #if CCP_COUNT>=5
-void __attribute__ ((interrupt, no_auto_psv)) _CCT5Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT5Interrupt(void)
 {
     if (ccps[4].handler)
     {
@@ -1100,7 +1128,7 @@ void __attribute__ ((interrupt, no_auto_psv)) _CCT5Interrupt()
 #endif
 
 #if CCP_COUNT>=6
-void __attribute__ ((interrupt, no_auto_psv)) _CCT6Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT6Interrupt(void)
 {
     if (ccps[5].handler)
     {
@@ -1112,7 +1140,7 @@ void __attribute__ ((interrupt, no_auto_psv)) _CCT6Interrupt()
 #endif
 
 #if CCP_COUNT>=7
-void __attribute__ ((interrupt, no_auto_psv)) _CCT7Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT7Interrupt(void)
 {
     if (ccps[6].handler)
     {
@@ -1124,7 +1152,7 @@ void __attribute__ ((interrupt, no_auto_psv)) _CCT7Interrupt()
 #endif
 
 #if CCP_COUNT>=8
-void __attribute__ ((interrupt, no_auto_psv)) _CCT8Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT8Interrupt(void)
 {
     if (ccps[7].handler)
     {
@@ -1136,7 +1164,7 @@ void __attribute__ ((interrupt, no_auto_psv)) _CCT8Interrupt()
 #endif
 
 #if CCP_COUNT>=9
-void __attribute__ ((interrupt, no_auto_psv)) _CCT9Interrupt()
+void __attribute__ ((interrupt, no_auto_psv)) _CCT9Interrupt(void)
 {
     if (ccps[8].handler)
     {
