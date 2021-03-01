@@ -2,6 +2,7 @@
  * @file widget.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
+ * @copyright UniSwarm 2018-2021
  *
  * @date November 06, 2016, 22:16 PM
  *

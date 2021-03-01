@@ -2,6 +2,7 @@
  * @file i2c.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2021
  *
  * @date June 09, 2016, 18:47 PM
  *

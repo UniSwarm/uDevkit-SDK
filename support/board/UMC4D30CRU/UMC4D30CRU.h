@@ -1,7 +1,7 @@
 /**
  * @file UMC4D30CRU.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018
+ * @copyright UniSwarm 2018-2021
  *
  * @date March 21, 2018, 20:00 PM
  *

@@ -1,7 +1,7 @@
 /**
  * @file uio8ad.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2020
+ * @copyright UniSwarm 2020-2021
  *
  * @date August 31, 2020, 11:30 AM
  *

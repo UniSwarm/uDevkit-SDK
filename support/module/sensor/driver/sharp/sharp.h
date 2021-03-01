@@ -2,6 +2,7 @@
  * @file sharp.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
+ * @copyright UniSwarm 2018-2021
  *
  * @date avril 28, 2016, 13:34  
  * 

@@ -2,7 +2,7 @@
  * @file buffer.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018-2020
+ * @copyright UniSwarm 2018-2021
  *
  * @date August 03, 2016, 16:30 PM
  *

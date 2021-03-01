@@ -2,6 +2,7 @@
  * @file cmdline.h
  * @author Sebastien CAUX (sebcaux) \
  * @copyright Robotips 2016
+ * @copyright UniSwarm 2018-2021
  *
  * @date October 10, 2016, 10:44 PM
  *

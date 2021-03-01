@@ -2,6 +2,7 @@
  * @file VL6180X.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
+ * @copyright UniSwarm 2018-2021
  *
  * @date February 05, 2017, 18:51 PM
  *

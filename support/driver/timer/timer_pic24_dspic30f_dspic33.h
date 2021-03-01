@@ -2,6 +2,7 @@
  * @file timer_pic24_dspic30f_dspic33.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2021
  *
  * @date September 27, 2016, 23:11 PM
  *

@@ -2,6 +2,7 @@
  * @file emz64.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
+ * @copyright UniSwarm 2018-2021
  *
  * @date March 01, 2017, 06:09 PM
  *

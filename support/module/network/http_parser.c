@@ -2,6 +2,7 @@
  * @file http_parser.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2021
  *
  * @date June 2, 2016, 11:45 AM
  *

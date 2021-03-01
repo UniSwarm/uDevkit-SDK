@@ -2,6 +2,7 @@
  * @file a6.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
+ * @copyright UniSwarm 2018-2021
  *
  * @date June 25, 2016, 15:30 PM
  *

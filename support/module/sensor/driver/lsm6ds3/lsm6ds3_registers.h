@@ -2,6 +2,7 @@
  * @file lsm6ds3_registers.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
+ * @copyright UniSwarm 2018-2021
  *
  * @date October 13, 2017, 14:37 PM
  *

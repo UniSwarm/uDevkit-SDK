@@ -1,7 +1,7 @@
 /**
  * @file curiosity_dsPIC33CH.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018
+ * @copyright UniSwarm 2018-2021
  *
  * @date July 5, 2018, 09:30 AM
  *

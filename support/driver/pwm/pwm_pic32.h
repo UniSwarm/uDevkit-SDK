@@ -2,6 +2,7 @@
  * @file pwm_pic32.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
+ * @copyright UniSwarm 2018-2021
  *
  * @date May 10, 2017, 13:00 PM
  *

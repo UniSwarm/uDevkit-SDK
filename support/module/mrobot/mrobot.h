@@ -2,6 +2,7 @@
  * @file mrobot.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
+ * @copyright UniSwarm 2018-2021
  *
  * @date November 07, 2016, 23:10
  *

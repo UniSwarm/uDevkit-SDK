@@ -1,7 +1,7 @@
 /**
  * @file umc1bds32fr_slave.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2019-2020
+ * @copyright UniSwarm 2019-2021
  *
  * @date March 1, 2019, 09:35 AM
  *

@@ -2,6 +2,7 @@
  * @file curiosity_32MZ_EF.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
+ * @copyright UniSwarm 2018-2021
  *
  * @date July 25, 2017, 11:20 AM
  *

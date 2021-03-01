@@ -1,7 +1,7 @@
 /**
  * @file can_sim.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Uniswarm 2018-2020
+ * @copyright UniSwarm 2018-2021
  *
  * @date April 28 2019, 23:01 PM
  *

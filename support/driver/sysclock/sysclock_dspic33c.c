@@ -1,7 +1,7 @@
 /**
  * @file sysclock_dspic33c.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright Uniswarm 2018
+ * @copyright UniSwarm 2018-2021
  *
  * @date May 28, 2018, 02:28 PM
  *

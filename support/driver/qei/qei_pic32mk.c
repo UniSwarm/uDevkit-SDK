@@ -2,6 +2,7 @@
  * @file qei_pic32mk.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
+ * @copyright UniSwarm 2018-2021
  *
  * @date June 19, 2017, 21:40 PM
  *

@@ -2,6 +2,7 @@
  * @file can_dspic30f.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2021
  *
  * @date May 06, 2016, 11:34 AM
  *

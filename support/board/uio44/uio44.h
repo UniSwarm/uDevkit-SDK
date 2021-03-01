@@ -1,7 +1,7 @@
 /**
  * @file uio44.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018-2019
+ * @copyright UniSwarm 2018-2021
  *
  * @date November 28, 2018, 09:30 AM
  *
