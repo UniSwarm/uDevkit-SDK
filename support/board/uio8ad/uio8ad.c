@@ -21,7 +21,7 @@ rt_dev_t _board_leds[LED_COUNT];
 rt_dev_t _board_outs_H[OUT_COUNT];
 rt_dev_t _board_outs_L[OUT_COUNT];
 DO_MODE _board_outs_mode[OUT_COUNT];
-rt_dev_t _board_analogin[ANALOGIN_COUNT];
+uint8_t _board_analogin[ANALOGIN_COUNT];
 
 int board_init_io(void)
 {
@@ -230,57 +230,62 @@ int board_setIO(uint8_t io, uint16_t state)
         return -1;
     }
 
-    switch(_board_outs_mode[io]) {
-    case DO_OFF:
-        gpio_clearBit(_board_outs_L[io]);
-        gpio_clearBit(_board_outs_H[io]);
-        break;
-    case DO_OPEN_DRAIN:
-        gpio_clearBit(_board_outs_H[io]);
-        nop(); // mosfet transition time
-        if (state & 1)
-        {
-            gpio_setBit(_board_outs_L[io]);
-        }
-        else
-        {
+    switch (_board_outs_mode[io])
+    {
+        case DO_OFF:
             gpio_clearBit(_board_outs_L[io]);
-        }
-        break;
-    case DO_OPEN_SOURCE:
-        gpio_clearBit(_board_outs_L[io]);
-        
-        if (state & 1)
-        {
-            gpio_setBit(_board_outs_H[io]);
-        }
-        else
-        {
             gpio_clearBit(_board_outs_H[io]);
-        }
-        break;
-    case DO_PUSH_PULL:
-        if (state & 1)
-        {
+            break;
+
+        case DO_OPEN_DRAIN:
+            gpio_clearBit(_board_outs_H[io]);
+            nop();  // mosfet transition time
+            if (state & 1)
+            {
+                gpio_setBit(_board_outs_L[io]);
+            }
+            else
+            {
+                gpio_clearBit(_board_outs_L[io]);
+            }
+            break;
+
+        case DO_OPEN_SOURCE:
             gpio_clearBit(_board_outs_L[io]);
-            // no need to put a delay to avoid a high side / low side mosfet overlap
-            // the discharge rate of the low side mosfet is much faster than high side buildup
-            gpio_setBit(_board_outs_H[io]);
-        }
-        else
-        {
-            gpio_clearBit(_board_outs_H[io]);
-            nop(); // mosfet transition time
-            gpio_setBit(_board_outs_L[io]);
-        }
-        break;
+
+            if (state & 1)
+            {
+                gpio_setBit(_board_outs_H[io]);
+            }
+            else
+            {
+                gpio_clearBit(_board_outs_H[io]);
+            }
+            break;
+
+        case DO_PUSH_PULL:
+            if (state & 1)
+            {
+                gpio_clearBit(_board_outs_L[io]);
+                // no need to put a delay to avoid a high side / low side mosfet overlap
+                // the discharge rate of the low side mosfet is much faster than high side buildup
+                gpio_setBit(_board_outs_H[io]);
+            }
+            else
+            {
+                gpio_clearBit(_board_outs_H[io]);
+                nop();  // mosfet transition time
+                gpio_setBit(_board_outs_L[io]);
+            }
+            break;
     }
-    
+
     return 0;
 }
 
 // IO mode modification will only be changed at the next write on the IO
-int board_setIOMode(uint8_t io, DO_MODE mode) {
+int board_setIOMode(uint8_t io, DO_MODE mode)
+{
     if (io >= OUT_COUNT)
     {
         return -1;
