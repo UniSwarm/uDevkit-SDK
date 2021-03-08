@@ -18,6 +18,7 @@
 
 rt_dev_t board_leds[LED_COUNT];
 rt_dev_t board_outs[OUT_COUNT];
+uint8_t _board_analogin[ANALOGIN_COUNT];
 
 int board_init_io(void)
 {
@@ -50,6 +51,10 @@ int board_init_io(void)
     // Lock configuration pin
     lockIoConfig();
 #endif
+    _board_analogin[0] = BOARD_IN0_ADC_CHAN;
+    _board_analogin[1] = BOARD_IN1_ADC_CHAN;
+    _board_analogin[2] = BOARD_IN2_ADC_CHAN;
+    _board_analogin[3] = BOARD_IN3_ADC_CHAN;
 
     board_leds[0] = gpio_pin(GPIO_PORTB, 8);
     gpio_setBitConfig(board_leds[0], GPIO_OUTPUT);
@@ -131,7 +136,7 @@ int8_t board_getButton(uint8_t button)
     return 0;
 }
 
-int board_setIO(uint8_t io, uint8_t state)
+int board_setIO(uint8_t io, uint16_t state)
 {
     if (io >= OUT_COUNT)
     {
@@ -147,4 +152,28 @@ int board_setIO(uint8_t io, uint8_t state)
         gpio_clearBit(board_outs[io]);
     }
     return 0;
+}
+
+int board_setIOMode(uint8_t io, DO_MODE mode)
+{
+    if (io >= OUT_COUNT)
+    {
+        return -1;
+    }
+
+    if (mode != DO_OPEN_DRAIN)
+    {
+        return -2;
+    }
+
+    return 0;
+}
+
+uint8_t board_analogin(uint8_t io)
+{
+    if (io >= ANALOGIN_COUNT)
+    {
+        return 0;
+    }
+    return _board_analogin[io];
 }

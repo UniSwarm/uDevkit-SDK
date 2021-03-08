@@ -1,8 +1,8 @@
 
-DEVICE = 33CK256MP505
 ARCHI = dspic33ck
+DEVICE = 33CK256MP505
 
-DEV_PROG ?= PKOB
+DEV_PROG ?= ICD4
 
 vpath %.c $(dir $(lastword $(MAKEFILE_LIST)))
 vpath %.h $(dir $(lastword $(MAKEFILE_LIST)))
