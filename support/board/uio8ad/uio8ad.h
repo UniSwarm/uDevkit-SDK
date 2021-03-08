@@ -69,6 +69,7 @@ int board_setIO(uint8_t io, uint16_t state);
 int board_setIOMode(uint8_t io, DO_MODE mode);
 
 // Analog input
+#define VOLTAGEIN_ADC_CHAN 7
 #define ANALOGIN_COUNT     8
 #define BOARD_IN0_ADC_CHAN 12
 #define BOARD_IN1_ADC_CHAN 0
