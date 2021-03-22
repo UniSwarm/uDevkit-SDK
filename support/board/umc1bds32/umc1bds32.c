@@ -42,7 +42,7 @@ int board_init_io(void)
 #    if BOARD_VERSION < 110
     ANSELD = 0xF000;  // all analog inputs of port D as digital buffer
 #    else
-    ANSELD = 0x1000;        // all analog inputs of port D as digital buffer
+    ANSELD = 0x1C00;        // all analog inputs of port D as digital buffer
 #    endif
 
 #    if BOARD_VERSION < 110

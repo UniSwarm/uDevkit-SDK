@@ -97,7 +97,6 @@ int8_t board_getButton(uint8_t button);
 #    define I_CD_PGA         2
 #else
 #    define BEMF_A_SADC_CHAN 12
-#    define BEMF_B_SADC_CHAN 4
 #    define BEMF_C_SADC_CHAN 11
 #    define BEMF_D_SADC_CHAN 14
 #    define I_A_SADC_CHAN    18
@@ -109,6 +108,14 @@ int8_t board_getButton(uint8_t button);
 #    define I_CD_SADC_CHAN   0
 #    define I_CD_CMP         1
 #    define I_CD_PGA         1
+#    define ANI1_SADC_CHAN   6
+#    if BOARD_VERSION < 111
+#        define BEMF_B_SADC_CHAN 4
+#        define ANI2_SADC_CHAN   8
+#    else
+#        define BEMF_B_SADC_CHAN 17
+#        define ANI2_SADC_CHAN   13
+#    endif
 #endif
 
 // Page adress
