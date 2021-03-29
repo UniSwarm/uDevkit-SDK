@@ -196,17 +196,6 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
 
         POS1CNTL = 0;
         POS1CNTH = 0;
-        /*
-        QEI1IOCbits.QEAPOL = 1;
-        QEI1IOCbits.QEBPOL = 1;
-        QEI1IOCbits.IDXPOL = 1;
-        */
-        QEI1CONbits.PIMOD = 6;
-        //QEI1CONbits.IMV = 3;
-        QEI1LECL = 0;
-        QEI1LECH = 0;
-        QEI1GECL = 10000-1;
-        QEI1GECH = 0;
 
         return 0;
     }
@@ -293,12 +282,6 @@ qei_type qei_getValue(rt_dev_t device)
     uint8_t qei = MINOR(device);
     if (qei == 0)
     {
-        QEI1CONbits.PIMOD = 6;
-        QEI1LECL = 0;
-        QEI1LECH = 0;
-        QEI1GECL = 10000-1;
-        QEI1GECH = 0;
-
         tmp32 = (uint32_t) POS1CNTL;
         tmp32 += (uint32_t) POS1HLD << 16;
     }
