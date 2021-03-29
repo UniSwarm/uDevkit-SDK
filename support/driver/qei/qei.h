@@ -51,6 +51,7 @@ int qei_disable(rt_dev_t device);
 #define QEI_I_INV    0x08
 #define QEI_I_EN     0x10
 #define QEI_X4MODE   0x20
+int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider);
 int qei_setConfig(rt_dev_t device, uint16_t config);
 
 // ======= device write/read ======

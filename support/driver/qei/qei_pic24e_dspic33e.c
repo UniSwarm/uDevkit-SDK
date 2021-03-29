@@ -196,6 +196,17 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
 
         POS1CNTL = 0;
         POS1CNTH = 0;
+        /*
+        QEI1IOCbits.QEAPOL = 1;
+        QEI1IOCbits.QEBPOL = 1;
+        QEI1IOCbits.IDXPOL = 1;
+        */
+        QEI1CONbits.PIMOD = 6;
+        //QEI1CONbits.IMV = 3;
+        QEI1LECL = 0;
+        QEI1LECH = 0;
+        QEI1GECL = 10000-1;
+        QEI1GECH = 0;
 
         return 0;
     }
@@ -219,6 +230,58 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
 }
 
 /**
+ * Configure the hardware input filter on QEIx A, B and I
+ * @param device QEI device number
+ * @param divider Clock divider
+ * @return 0 if ok, -1 in case of error
+ */
+int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider)
+{
+#if QEI_COUNT>=1
+    uint8_t qei = MINOR(device);
+
+    uint8_t fltren;
+    if (divider == 0)
+    {
+        fltren = 0;
+    }
+    else
+    {
+        fltren = 1;
+
+        uint8_t shift = 0;
+        // find the position number of the first bit, rounded up
+        // ex : input 64 -> output 6
+        // ex : input 65 -> output 7
+        while ((shift < 16) && !((divider-1) & 0x8000))
+        {
+            divider <<= 1;
+            shift++;
+        }
+        divider = 16-shift;
+    }
+
+    if (qei == 0)
+    {
+        QEI1IOCbits.FLTREN = fltren;
+        QEI1IOCbits.QFDIV = divider;
+
+        return 0;
+    }
+#endif
+#if QEI_COUNT>=2
+    if (qei == 1)
+    {
+        QEI2IOCbits.FLTREN = fltren;
+        QEI2IOCbits.QFDIV = divider;
+
+        return 0;
+    }
+#endif
+    return -1;
+}
+
+/**
  * Returns the actual position of the specified QEI
  * @param device QEI device number
  * @return position
@@ -230,6 +293,12 @@ qei_type qei_getValue(rt_dev_t device)
     uint8_t qei = MINOR(device);
     if (qei == 0)
     {
+        QEI1CONbits.PIMOD = 6;
+        QEI1LECL = 0;
+        QEI1LECH = 0;
+        QEI1GECL = 10000-1;
+        QEI1GECH = 0;
+
         tmp32 = (uint32_t) POS1CNTL;
         tmp32 += (uint32_t) POS1HLD << 16;
     }

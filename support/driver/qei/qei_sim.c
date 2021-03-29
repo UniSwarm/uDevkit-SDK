@@ -159,6 +159,20 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
 }
 
 /**
+ * Configure the hardware input filter on QEIx A, B and I
+ * @param device QEI device number
+ * @param divider Clock divider
+ * @return 0 if ok, -1 in case of error
+ */
+int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider)
+{
+    // TODO implement me
+    UDK_UNUSED(device);
+    UDK_UNUSED(dividerg);
+    return 0;
+}
+
+/**
  * Returns the actual position of the specified QEI
  * @param device QEI device number
  * @return position
