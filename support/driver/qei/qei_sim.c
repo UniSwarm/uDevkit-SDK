@@ -168,7 +168,7 @@ int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider)
 {
     // TODO implement me
     UDK_UNUSED(device);
-    UDK_UNUSED(dividerg);
+    UDK_UNUSED(divider);
     return 0;
 }
 
