@@ -175,7 +175,8 @@ int can_open(rt_dev_t device)
         sim_can = 0;
     }
     u_long ret;
-    ioctlsocket(sim_can, FIONREAD, &ret);
+    u_long ul = 1;
+    ioctlsocket(sim_can, FIONBIO, (unsigned long *) &ul);
     if (ret == 0)
     {
         return 0;
