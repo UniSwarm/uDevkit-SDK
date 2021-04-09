@@ -28,7 +28,7 @@ int msi_slave_start(const uint8_t slave_id)
         return -1;
     }
 
-    _start_slave();
+    start_slave();
     return 0;
 }
 
@@ -44,7 +44,7 @@ int msi_slave_stop(const uint8_t slave_id)
         return -1;
     }
 
-    _stop_slave();
+    stop_slave();
     return 0;
 }
 
@@ -60,8 +60,8 @@ int msi_slave_reset(const uint8_t slave_id)
         return -1;
     }
 
-    _stop_slave();
-    _start_slave();
+    stop_slave();
+    start_slave();
     return 0;
 }
 
@@ -108,7 +108,7 @@ int msi_slave_program(const uint8_t slave_id, __eds__ unsigned char *program)
         return -1;
     }
 
-    return _program_slave(slave_id, 0, program);
+    return program_slave(slave_id, 0, program);
 }
 
 /**
@@ -123,7 +123,7 @@ int msi_slave_verify_program(const uint8_t slave_id, __eds__ unsigned char *prog
         return -1;
     }
 
-    return _program_slave(slave_id, 1, program);
+    return program_slave(slave_id, 1, program);
 }
 
 int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_t size)

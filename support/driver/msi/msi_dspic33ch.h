@@ -68,6 +68,16 @@
  #define MSI_PROTOCOL_COUNT 8
 #endif
 
+#if __XC16_VERSION__ >= 1070
+#    define start_slave() _start_secondary()
+#    define stop_slave()  _stop_secondary()
+#    define program_slave(s, v, i)  _program_secondary((s), (v), (i))
+#else
+#    define start_slave() _start_slave()
+#    define stop_slave()  _stop_slave()
+#    define program_slave(s, v, i)  _program_slave((s), (v), (i))
+#endif
+
 #define MSI_PROTOCOL_M2S 0
 #define MSI_PROTOCOL_S2M 1
 
