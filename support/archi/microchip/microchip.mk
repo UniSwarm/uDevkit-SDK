@@ -44,6 +44,7 @@ $(OUT_PWD)/%.o : %.c
 	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
+	$(VERB)$(OBJDUMP) -S $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.lst
 
 $(OUT_PWD)/%.o : %.S
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
@@ -71,7 +72,7 @@ showmem : $(OUT_PWD)/$(PROJECT).elf
 
 # lists symbol present in final elf
 dbg : $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(OBJDUMP) -t $(OUT_PWD)/$(PROJECT).elf |grep "F .text" |sort -k6
+	$(VERB)$(OBJDUMP) -S $(OUT_PWD)/$(PROJECT).elf |grep "F .text" |sort -k6
 
 # shows a disassembly listing of the symbol after the dot
 dbg.% : $(OUT_PWD)/$(PROJECT).elf
