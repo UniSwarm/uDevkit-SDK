@@ -51,8 +51,9 @@ int qei_disable(rt_dev_t device);
 #define QEI_I_INV    0x08
 #define QEI_I_EN     0x10
 #define QEI_X4MODE   0x20
-int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider);
 int qei_setConfig(rt_dev_t device, uint16_t config);
+int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider);
+int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum);
 
 // ======= device write/read ======
 qei_type qei_getValue(rt_dev_t device);

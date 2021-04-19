@@ -271,6 +271,19 @@ int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider)
 }
 
 /**
+ * Set QEI position counter to work in modulo mode
+ * @param device QEI device number
+ * @param minimum The position counter minimum value. will loop to the maximum value
+ * @param maximum The position counter maximum value. will loop to the minimum value
+ * @return 0 if ok, -1 in case of error
+ */
+int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum)
+{
+    // TODO implement me
+    return 0;
+}
+
+/**
  * Returns the actual position of the specified QEI
  * @param device QEI device number
  * @return position

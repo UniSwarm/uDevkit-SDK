@@ -271,6 +271,44 @@ int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider)
 }
 
 /**
+ * Set QEI position counter to work in modulo mode
+ * @param device QEI device number
+ * @param minimum The position counter minimum value. will loop to the maximum value
+ * @param maximum The position counter maximum value. will loop to the minimum value
+ * @return 0 if ok, -1 in case of error
+ */
+int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum)
+{
+#if QEI_COUNT >= 1
+    uint8_t qei = MINOR(device);
+
+    if (qei == 0)
+    {
+        QEI1CONbits.PIMOD = 6;  // modulo count mode for position counter
+        QEI1LECL = minimum & 0xFFFF;
+        QEI1LECH = (minimum >> 16) & 0xFFFF;
+        QEI1GECL = maximum & 0xFFFF;
+        QEI1GECH = (maximum >> 16) & 0xFFFF;
+
+        return 0;
+    }
+#endif
+#if QEI_COUNT >= 2
+    if (qei == 1)
+    {
+        QEI2CONbits.PIMOD = 6;  // modulo count mode for position counter
+        QEI2LECL = minimum & 0xFFFF;
+        QEI2LECH = (minimum >> 16) & 0xFFFF;
+        QEI2GECL = maximum & 0xFFFF;
+        QEI2GECH = (maximum >> 16) & 0xFFFF;
+
+        return 0;
+    }
+#endif
+    return -1;
+}
+
+/**
  * Returns the actual position of the specified QEI
  * @param device QEI device number
  * @return position
