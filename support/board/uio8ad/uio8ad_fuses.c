@@ -1,11 +1,11 @@
 // FSEC
 #pragma config BWRP = OFF            // Boot Segment Write-Protect bit->Boot Segment may be written
-#pragma config BSS = DISABLED        // Boot Segment Code-Protect Level bits->No Protection (other than BWRP)
+#pragma config BSS = STNDRD          // Boot Segment Code-Protect Level bits->Standard security
 #pragma config BSEN = OFF            // Boot Segment Control bit->No Boot Segment
 #pragma config GWRP = OFF            // General Segment Write-Protect bit->General Segment may be written
-#pragma config GSS = DISABLED        // General Segment Code-Protect Level bits->No Protection (other than GWRP)
+#pragma config GSS = STNDRD          // General Segment Code-Protect Level bits->Standard security
 #pragma config CWRP = OFF            // Configuration Segment Write-Protect bit->Configuration Segment may be written
-#pragma config CSS = DISABLED        // Configuration Segment Code-Protect Level bits->No Protection (other than CWRP)
+#pragma config CSS = STNDRD          // Configuration Segment Code-Protect Level bits->Standard security
 #pragma config AIVTDIS = OFF         // Alternate Interrupt Vector Table bit->Disabled AIVT
 
 // FBSLIM

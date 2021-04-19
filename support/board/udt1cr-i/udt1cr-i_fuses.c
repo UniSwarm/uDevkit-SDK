@@ -1,3 +1,6 @@
+/*** DEVCP0 ***/
+#pragma config CP =         ON
+
 /*** DEVCFG0 ***/
 #pragma config DEBUG =      OFF
 #pragma config JTAGEN =     OFF
