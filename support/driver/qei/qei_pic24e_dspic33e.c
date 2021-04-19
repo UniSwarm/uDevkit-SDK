@@ -182,8 +182,6 @@ int qei_disable(rt_dev_t device)
  */
 int qei_setConfig(rt_dev_t device, uint16_t config)
 {
-    UDK_UNUSED(config);
-
 #if QEI_COUNT>=1
     uint8_t qei = MINOR(device);
     if (qei == 0)
@@ -196,6 +194,10 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
 
         POS1CNTL = 0;
         POS1CNTH = 0;
+
+        QEI1IOCbits.QEAPOL = config & QEI_AB_INV;
+        QEI1IOCbits.QEBPOL = config & QEI_AB_INV;
+        QEI1IOCbits.IDXPOL = config & QEI_I_INV;
 
         return 0;
     }
