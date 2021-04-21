@@ -8,35 +8,38 @@
  * @brief NVM (non volatile memory) support for uDevKit SDK simulator
  */
 
-#include "simulator.h"
 #include "board.h"
+#include "simulator.h"
 
 #include <archi.h>
 #include <string.h>
 
-static FILE *fileNvm;
-#define TAILLE_BUF 0xAF000
+#define __PROGRAM_LENGTH 512000
+
+static FILE *nvm_file;
+
+void nvm_init(void);
 
 void nvm_init(void)
 {
-    char temp[TAILLE_BUF];
-
-    char path[50];
+    char path[50] = "";
     strcat(path, BOARD_NAME);
     strcat(path, ".bin");
 
-    fileNvm = fopen(path, "rb+");
-    if (fileNvm == NULL)
+    nvm_file = fopen(path, "rb+");
+    if (nvm_file == NULL)
     {
-        fileNvm = fopen(path, "w+b");
-        if (fileNvm == NULL)
+        char temp[__PROGRAM_LENGTH];
+
+        nvm_file = fopen(path, "wb+");
+        if (nvm_file == NULL)
         {
-            printf("Error open file\n");
+            printf("[nvm] Error open file %s\n", path);
             return;
         }
 
-        memset(temp, 255, TAILLE_BUF);
-        fwrite(temp, sizeof (temp), 1, fileNvm);
+        memset(temp, 255, __PROGRAM_LENGTH);
+        fwrite(temp, sizeof(temp), 1, nvm_file);
     }
 }
 
@@ -52,16 +55,15 @@ ssize_t nvm_read(uint32_t addr, char *data, size_t size)
     uint8_t i = 0;
     uint8_t j = 0;
 
-    if (fileNvm == NULL)
+    if (nvm_file == NULL)
     {
         nvm_init();
     }
 
-    fseek(fileNvm, addr, SEEK_SET);
+    fseek(nvm_file, addr, SEEK_SET);
 
-
-    uint8_t sizeEff = (uint8_t)((double)((double)size / 3) *4);
-    fread(d, sizeEff, 1, fileNvm);
+    uint8_t sizeEff = (uint8_t)((double)((double)size / 3) * 4);
+    fread(d, sizeEff, 1, nvm_file);
 
     for (i = 0; i < sizeEff; i++)
     {
@@ -105,11 +107,11 @@ void nvm_writeDoubleWord(uint32_t addrWord, char *data)
 ssize_t nvm_write(uint32_t addr, char *data, size_t size)
 {
     UDK_UNUSED(size);
-    if (fileNvm == NULL)
+    if (nvm_file == NULL)
     {
         nvm_init();
     }
-    fseek(fileNvm, addr, SEEK_SET);
+    fseek(nvm_file, addr, SEEK_SET);
 
     char tab[8] = {0};
     tab[0] = data[0];
@@ -120,6 +122,6 @@ ssize_t nvm_write(uint32_t addr, char *data, size_t size)
     tab[5] = data[4];
     tab[6] = data[5];
     tab[7] = 0;
-    fwrite(tab, sizeof(tab), 1, fileNvm);
+    fwrite(tab, sizeof(tab), 1, nvm_file);
     return 0;
 }
