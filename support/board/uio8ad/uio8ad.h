@@ -59,7 +59,8 @@ int8_t board_getButton(uint8_t button);
 #define BOARD_OUT6_PWM_CHAN 1
 #define BOARD_OUT7_PWM_CHAN 8
 #define BOARD_OUT8_PWM_CHAN 6
-typedef enum {
+typedef enum
+{
     DO_OFF,
     DO_OPEN_DRAIN,
     DO_OPEN_SOURCE,
@@ -67,6 +68,7 @@ typedef enum {
 } DO_MODE;
 int board_setIO(uint8_t io, uint16_t state);
 int board_setIOMode(uint8_t io, DO_MODE mode);
+int board_setIOPWMFrequency(uint8_t io, uint8_t frequency);
 
 // Analog input
 #define VOLTAGEIN_ADC_CHAN 7
@@ -82,10 +84,10 @@ int board_setIOMode(uint8_t io, DO_MODE mode);
 uint8_t board_analogin(uint8_t io);
 
 // Page adress
-#define ADRESS_PAGE_1_COM   0x52000
-#define ADRESS_PAGE_2_MS    0x53000
-#define ADRESS_PAGE_3_APP   0x54000
-#define ADRESS_PAGE_4_APP   0x55000
-#define ADRESS_PAGE_5_CAL   0x56000
+#define ADRESS_PAGE_1_COM 0x52000
+#define ADRESS_PAGE_2_MS  0x53000
+#define ADRESS_PAGE_3_APP 0x54000
+#define ADRESS_PAGE_4_APP 0x55000
+#define ADRESS_PAGE_5_CAL 0x56000
 
 #endif  // UIO8AD_H

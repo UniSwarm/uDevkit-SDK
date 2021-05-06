@@ -247,10 +247,20 @@ int board_setIOMode(uint8_t io, DO_MODE mode)
     {
         return -1;
     }
-    
+
     pwm_setIOMode(io, mode);
-    
+
     return 0;
+}
+
+int board_setIOPWMFrequency(uint8_t io, uint8_t frequency)
+{
+    if (io >= OUT_COUNT)
+    {
+        return -1;
+    }
+
+    return pwm_setFrequency(io, frequency);
 }
 
 uint8_t board_analogin(uint8_t io)
