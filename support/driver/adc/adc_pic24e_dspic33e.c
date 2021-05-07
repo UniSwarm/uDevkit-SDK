@@ -43,6 +43,36 @@ int adc_init(void)
     return 0;
 }
 
+int adc_setMasterClock(uint8_t source, uint16_t divider)
+{
+    UDK_UNUSED(source);
+    UDK_UNUSED(divider);
+    
+    // TODO implement
+    
+    return 0;
+}
+
+int adc_setCoreClockDivider(uint8_t core, uint16_t divider)
+{
+    UDK_UNUSED(core);
+    UDK_UNUSED(divider);
+    
+    // TODO implement
+    
+    return 0;
+}
+
+int adc_setCoreResolution(uint8_t core, uint16_t resolution)
+{
+    UDK_UNUSED(core);
+    UDK_UNUSED(resolution);
+    
+    // TODO implement
+    
+    return 0;
+}
+
 int16_t adc_getValue(uint8_t channel)
 {
     AD1CHS0 = channel;          // select channel to convert

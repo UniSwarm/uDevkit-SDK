@@ -404,13 +404,97 @@ int adc_init(void)
     // Configure the integer of fractional output format.
     ADCON1Hbits.FORM = 0;  // integer format
 
-    ADCON2Lbits.SHRADCS = 0b0000001;  // clock divider (1:2)
-    ADCON1Hbits.SHRRES = 0b11;        // 12 bits
-    ADCON2Hbits.SHRSAMC = 16 - 1;     // 16 Tad
+    ADCON2Lbits.SHRADCS = 2 - 1;   // clock divider (1:2)
+    ADCON1Hbits.SHRRES = 0b11;     // 12 bits
+    ADCON2Hbits.SHRSAMC = 16 - 1;  // 16 Tad
     // ADCON1Lbits.NRE = 1; // Noise Reduction Enable bit, Holds conversion process for 1 T ADCORE when another core
     // completes conversion to reduce noise between cores
 
     adc_calib();
+
+    return 0;
+}
+
+int adc_setMasterClock(uint8_t source, uint16_t divider)
+{
+    // Configure the common ADC clock.
+    ADCON3Hbits.CLKSEL = source;
+
+    if (divider < 1)
+    {
+        divider = 1;
+    }
+
+    ADCON3Hbits.CLKDIV = divider - 1;
+
+    return 0;
+}
+
+int adc_setCoreClockDivider(uint8_t core, uint16_t divider)
+{
+    if (divider < 1)
+    {
+        divider = 1;
+    }
+
+    switch (core)
+    {
+#ifdef ADC_HAVE_DEDICATED_CORE0
+        case 0:
+            ADCORE0Hbits.ADCS = divider - 1;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE1
+        case 1:
+            ADCORE1Hbits.ADCS = divider - 1;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE2
+        case 2:
+            ADCORE2Hbits.ADCS = divider - 1;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE3
+        case 3:
+            ADCORE3Hbits.ADCS = divider - 1;
+            break;
+#endif
+        default:  // shared core
+            ADCON2Lbits.SHRADCS = divider - 1;
+            break;
+    }
+
+    return 0;
+}
+
+int adc_setCoreResolution(uint8_t core, uint16_t resolution)
+{
+    switch (core)
+    {
+#ifdef ADC_HAVE_DEDICATED_CORE0
+        case 0:
+            ADCORE0Hbits.RES = resolution;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE1
+        case 1:
+            ADCORE1Hbits.RES = resolution;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE2
+        case 2:
+            ADCORE2Hbits.RES = resolution;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE3
+        case 3:
+            ADCORE3Hbits.RES = resolution;
+            break;
+#endif
+        default:  // shared core
+            ADCON1Hbits.SHRRES = resolution;
+            break;
+    }
 
     return 0;
 }
