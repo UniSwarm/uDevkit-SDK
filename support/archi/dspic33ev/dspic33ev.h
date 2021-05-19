@@ -14,4 +14,4 @@
 
 #include "../dspic33ep/dspic33ep.h"
 
-#endif // DSPIC33EV_H
+#endif  // DSPIC33EV_H

@@ -14,4 +14,4 @@
 
 #include "../pic32/pic32.h"
 
-#endif // PIC32MK_H
+#endif  // PIC32MK_H

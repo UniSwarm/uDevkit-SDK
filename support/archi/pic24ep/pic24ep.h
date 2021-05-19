@@ -14,4 +14,4 @@
 
 #include "../pic16b/pic16b.h"
 
-#endif // PIC24EP_H
+#endif  // PIC24EP_H

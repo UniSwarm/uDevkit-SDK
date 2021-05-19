@@ -14,5 +14,4 @@
 
 #include "../pic16b/pic16b.h"
 
-#endif // DSPIC33FJ_H
-
+#endif  // DSPIC33FJ_H

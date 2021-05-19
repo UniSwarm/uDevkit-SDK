@@ -14,4 +14,4 @@
 
 #include "../pic24ep/pic24ep.h"
 
-#endif // DSPIC33EP_H
+#endif  // DSPIC33EP_H

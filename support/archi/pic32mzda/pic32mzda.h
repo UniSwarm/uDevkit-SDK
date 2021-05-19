@@ -14,4 +14,4 @@
 
 #include "../pic32/pic32.h"
 
-#endif // PIC32MZDA_H
+#endif  // PIC32MZDA_H

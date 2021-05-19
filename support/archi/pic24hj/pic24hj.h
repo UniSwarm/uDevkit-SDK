@@ -14,4 +14,4 @@
 
 #include "../pic24fj/pic24fj.h"
 
-#endif // PIC24HJ_H
+#endif  // PIC24HJ_H

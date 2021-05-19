@@ -15,4 +15,4 @@
 
 #define ARCHI_HAVE_DUAL_CORE
 
-#endif // DSPIC33CH_H
+#endif  // DSPIC33CH_H
