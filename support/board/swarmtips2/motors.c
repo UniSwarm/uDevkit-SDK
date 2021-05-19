@@ -1,7 +1,18 @@
+/**
+ * @file motor.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2021
+ *
+ * @date April 15, 2017, 01:16 AM
+ *
+ * @brief Code for swarmtips2 from Robotips
+ */
+
 #include "motors.h"
 
-#include "modules.h"
 #include "board.h"
+#include "modules.h"
 
 Motors_State motors_state_i = Motors_State_Stop;
 uint8_t motors_stop_i = 1;
@@ -13,28 +24,33 @@ rt_dev_t pwm_m1, pwm_m2;
 // ========================== coders ===============================
 int c1 = 0, c2 = 0;
 int8_t c1_state = 0, c2_state = 0;
-const signed char encoder_value[16] = { 0, -1,  1,  0,
-                                        1,  0,  0, -1,
-                                       -1,  0,  0,  1,
-                                        0,  1, -1,  0};
+const signed char encoder_value[16] = {0, -1, 1, 0, 1, 0, 0, -1, -1, 0, 0, 1, 0, 1, -1, 0};
 
 void process_coder(void)
 {
-	// c1_state => 0b0000 & previous_A & previous_B & A & B
-	c1_state = (c1_state<<2) & 0b00001100;
-	if (C1A == 1)
-        c1_state+=2;
-	if (C1B == 1)
-        c1_state+=1;
-	c1 += encoder_value[c1_state];
+    // c1_state => 0b0000 & previous_A & previous_B & A & B
+    c1_state = (c1_state << 2) & 0b00001100;
+    if (C1A == 1)
+    {
+        c1_state += 2;
+    }
+    if (C1B == 1)
+    {
+        c1_state += 1;
+    }
+    c1 += encoder_value[c1_state];
 
-	// c2_state => 0b0000 & previous_A & previous_B & A & B
-	c2_state = (c2_state<<2) & 0b00001100;
-	if (C2A == 1)
-        c2_state+=1;
-	if (C2B == 1)
-        c2_state+=2;
-	c2 += encoder_value[c2_state];
+    // c2_state => 0b0000 & previous_A & previous_B & A & B
+    c2_state = (c2_state << 2) & 0b00001100;
+    if (C2A == 1)
+    {
+        c2_state += 1;
+    }
+    if (C2B == 1)
+    {
+        c2_state += 2;
+    }
+    c2 += encoder_value[c2_state];
 
     motors_task();
 }
@@ -53,43 +69,43 @@ void motors_applyCommand(int16_t m1, int16_t m2)
 {
     if (m1 > 0)
     {
-        #ifndef SIMULATOR
-            M1DIR = 1;
-        #endif
+#ifndef SIMULATOR
+        M1DIR = 1;
+#endif
         pwm_setDuty(pwm_m1, 1000 - m1);
     }
     else
     {
-        #ifndef SIMULATOR
-            M1DIR = 0;
-        #endif
+#ifndef SIMULATOR
+        M1DIR = 0;
+#endif
         pwm_setDuty(pwm_m1, m1);
     }
     if (m2 > 0)
     {
-        #ifndef SIMULATOR
-            M2DIR = 1;
-        #endif
+#ifndef SIMULATOR
+        M2DIR = 1;
+#endif
         pwm_setDuty(pwm_m2, 1000 - m2);
     }
     else
     {
-        #ifndef SIMULATOR
-            M2DIR = 0;
-        #endif
+#ifndef SIMULATOR
+        M2DIR = 0;
+#endif
         pwm_setDuty(pwm_m2, m2);
     }
     if (m1 == 0 && m2 == 0)
     {
-        #ifndef SIMULATOR
-            BOOST_SLEEP = 1;
-        #endif
+#ifndef SIMULATOR
+        BOOST_SLEEP = 1;
+#endif
     }
     else
     {
-        #ifndef SIMULATOR
-            BOOST_SLEEP = 0;
-        #endif
+#ifndef SIMULATOR
+        BOOST_SLEEP = 0;
+#endif
     }
 }
 
@@ -145,22 +161,36 @@ void motors_task(void)
 
     err1 = (fc1 - c1) * 30;
     if (err1 > -100 && err1 < 100)
+    {
         err1 = 0;
+    }
     if (err1 > motors_speed_i)
+    {
         err1 = motors_speed_i;
+    }
     if (err1 < -motors_speed_i)
+    {
         err1 = -motors_speed_i;
+    }
 
     err2 = (fc2 - c2) * 30;
     if (err2 > -100 && err2 < 100)
+    {
         err2 = 0;
+    }
     if (err2 > motors_speed_i)
+    {
         err2 = motors_speed_i;
+    }
     if (err2 < -motors_speed_i)
+    {
         err2 = -motors_speed_i;
+    }
 
     if (err1 == 0 && err2 == 0)
+    {
         motors_state_i = Motors_State_Stop;
+    }
 
     motors_applyCommand(err1, err2);
 }

@@ -7,7 +7,7 @@
  * @date October 25, 2017, 17:13 AM
  *
  * @brief Code for PIC32MK1024GPE dev board board (DM320106)
- * 
+ *
  * product page:
  *  http://www.microchip.com/Developmenttools/ProductDetails.aspx?PartNO=DM320106
  * datasheet:
@@ -24,25 +24,25 @@
 
 int board_init(void);
 
-#define BOARD_NAME "PIC32MK1024GPE_DEVBOARD"
+#define BOARD_NAME    "PIC32MK1024GPE_DEVBOARD"
 #define SYSCLOCK_XTAL 12000000
-#define SYSCLOCK_SOSC    32768
+#define SYSCLOCK_SOSC 32768
 
 // ==== pins define ====
 // leds
 #define LED_COUNT 3
-#define LED1 LATGbits.LATG12
-#define LED2 LATGbits.LATG13
-#define LED3 LATGbits.LATG14
+#define LED1      LATGbits.LATG12
+#define LED2      LATGbits.LATG13
+#define LED3      LATGbits.LATG14
 int board_setLed(uint8_t led, uint8_t state);
 int board_toggleLed(uint8_t led);
 int8_t board_getLed(uint8_t led);
 
 // buttons
 #define BUTTON_COUNT 3
-#define BUTTON_1 PORTGbits.RG11
-#define BUTTON_2 PORTFbits.RF13
-#define BUTTON_3 PORTFbits.RF12
+#define BUTTON_1     PORTGbits.RG11
+#define BUTTON_2     PORTFbits.RF13
+#define BUTTON_3     PORTFbits.RF12
 int8_t board_getButton(uint8_t button);
 
-#endif // PIC32MK1024GPE_DEVBOARD_H
+#endif  // PIC32MK1024GPE_DEVBOARD_H

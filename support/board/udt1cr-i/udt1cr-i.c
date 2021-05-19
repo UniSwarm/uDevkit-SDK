@@ -10,8 +10,8 @@
 
 #include "udt1cr-i.h"
 
-#include "driver/sysclock.h"
 #include "driver/gpio.h"
+#include "driver/sysclock.h"
 
 rt_dev_t board_leds[LED_COUNT];
 rt_dev_t iso_en_gpio;
@@ -22,21 +22,21 @@ int board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
-    ANSELB = 0x0000;         // all analog inputs of port B as digital buffer
-    ANSELE = 0x0000;         // all analog inputs of port E as digital buffer
-    ANSELG = 0x0000;         // all analog inputs of port G as digital buffer
+    ANSELB = 0x0000;  // all analog inputs of port B as digital buffer
+    ANSELE = 0x0000;  // all analog inputs of port E as digital buffer
+    ANSELG = 0x0000;  // all analog inputs of port G as digital buffer
 
     // remappable pins
     // Unlock configuration pin
     unlockIoConfig();
-    C2RXR = 0b0001;        // CAN2RX ==> RG6
-    RPG9R = 0b1111;        // CAN2TX ==> RG9
+    C2RXR = 0b0001;  // CAN2RX ==> RG6
+    RPG9R = 0b1111;  // CAN2TX ==> RG9
 
-    U3RXR = 0b0001;        // U3RX ==> RG7
-    RPG8R = 0b0001;        // U3TX ==> RG8
+    U3RXR = 0b0001;  // U3RX ==> RG7
+    RPG8R = 0b0001;  // U3TX ==> RG8
 
     // UART 1 dbg
-    RPB3R = 0b0001;        // U1TX ==> RB3
+    RPB3R = 0b0001;  // U1TX ==> RB3
     lockIoConfig();
 #endif
 
@@ -68,7 +68,7 @@ int board_init_io(void)
 
 int board_init(void)
 {
-    sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, 24000000); // 24MHz
+    sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, 24000000);  // 24MHz
     archi_init();
 
     board_init_io();
@@ -78,20 +78,28 @@ int board_init(void)
 
 int board_setLed(uint8_t led, uint8_t state)
 {
-    if(led >= LED_COUNT)
+    if (led >= LED_COUNT)
+    {
         return -1;
+    }
 
     if (state & 1)
+    {
         gpio_setBit(board_leds[led]);
+    }
     else
+    {
         gpio_clearBit(board_leds[led]);
+    }
     return 0;
 }
 
 int board_toggleLed(uint8_t led)
 {
-    if(led >= LED_COUNT)
+    if (led >= LED_COUNT)
+    {
         return -1;
+    }
 
     gpio_toggleBit(board_leds[led]);
     return 0;
@@ -99,8 +107,10 @@ int board_toggleLed(uint8_t led)
 
 int8_t board_getLed(uint8_t led)
 {
-    if(led >= LED_COUNT)
+    if (led >= LED_COUNT)
+    {
         return -1;
+    }
 
     return gpio_readBit(board_leds[led]);
 }

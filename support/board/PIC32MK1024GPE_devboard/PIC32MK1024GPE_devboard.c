@@ -7,7 +7,7 @@
  * @date October 25, 2017, 17:13 AM
  *
  * @brief Code for PIC32MK1024GPE dev board board (DM320106)
- * 
+ *
  * product page:
  *  http://www.microchip.com/Developmenttools/ProductDetails.aspx?PartNO=DM320106
  * datasheet:
@@ -17,8 +17,8 @@
 
 #include "PIC32MK1024GPE_devboard.h"
 
-#include "driver/sysclock.h"
 #include "driver/gpio.h"
+#include "driver/sysclock.h"
 
 rt_dev_t board_leds[LED_COUNT];
 rt_dev_t board_buttons[BUTTON_COUNT];
@@ -27,33 +27,33 @@ int board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
-    ANSELA = 0x0000;         // all analog inputs of port A as digital buffer
-    ANSELB = 0x0000;         // all analog inputs of port B as digital buffer
-    ANSELC = 0x0000;         // all analog inputs of port C as digital buffer
-    ANSELD = 0x0000;         // all analog inputs of port D as digital buffer
-    ANSELE = 0x0000;         // all analog inputs of port E as digital buffer
-    ANSELG = 0x0000;         // all analog inputs of port G as digital buffer
+    ANSELA = 0x0000;  // all analog inputs of port A as digital buffer
+    ANSELB = 0x0000;  // all analog inputs of port B as digital buffer
+    ANSELC = 0x0000;  // all analog inputs of port C as digital buffer
+    ANSELD = 0x0000;  // all analog inputs of port D as digital buffer
+    ANSELE = 0x0000;  // all analog inputs of port E as digital buffer
+    ANSELG = 0x0000;  // all analog inputs of port G as digital buffer
 
     // remappable pins
     // Unlock configuration pin
     unlockIoConfig();
-        U3RXR = 0b0101;        // RX3 ==> RPC7
-        RPC6R = 0b00001;       // TX3 ==> RPC6
+    U3RXR = 0b0101;   // RX3 ==> RPC7
+    RPC6R = 0b00001;  // TX3 ==> RPC6
 
-        U4RXR = 0b1101;        // RX4 ==> RPD3
-        RPA12R = 0b00010;      // TX4 ==> RPA12
+    U4RXR = 0b1101;    // RX4 ==> RPD3
+    RPA12R = 0b00010;  // TX4 ==> RPA12
 
-        C1RXR = 0b1000;        // CAN1RX ==> RE14
-        RPE0R = 0b01100;       // CAN1TX ==> RE0
+    C1RXR = 0b1000;   // CAN1RX ==> RE14
+    RPE0R = 0b01100;  // CAN1TX ==> RE0
 
-        C2RXR = 0b1100;        // CAN2RX ==> RE1
-        RPE15R = 0b01100;      // CAN2TX ==> RE15
+    C2RXR = 0b1100;    // CAN2RX ==> RE1
+    RPE15R = 0b01100;  // CAN2TX ==> RE15
 
-        C3RXR = 0b1010;        // CAN3RX ==> RG6
-        RPC15R = 0b01100;      // CAN3TX ==> RC15
+    C3RXR = 0b1010;    // CAN3RX ==> RG6
+    RPC15R = 0b01100;  // CAN3TX ==> RC15
 
-        C4RXR = 0b0110;        // CAN4RX ==> RC2
-        RPB1R = 0b01100;       // CAN4TX ==> RB1
+    C4RXR = 0b0110;   // CAN4RX ==> RC2
+    RPB1R = 0b01100;  // CAN4TX ==> RB1
     lockIoConfig();
 #endif
 
@@ -76,8 +76,8 @@ int board_init_io(void)
 
 int board_init(void)
 {
-    sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, 12000000); // 12MHz
-    sysclock_setSourceFreq(SYSCLOCK_SRC_SOSC, 32768); // 12MHz
+    sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, 12000000);  // 12MHz
+    sysclock_setSourceFreq(SYSCLOCK_SRC_SOSC, 32768);     // 12MHz
     archi_init();
 
     board_init_io();
@@ -87,20 +87,28 @@ int board_init(void)
 
 int board_setLed(uint8_t led, uint8_t state)
 {
-    if(led >= LED_COUNT)
+    if (led >= LED_COUNT)
+    {
         return -1;
+    }
 
     if (state & 1)
+    {
         gpio_setBit(board_leds[led]);
+    }
     else
+    {
         gpio_clearBit(board_leds[led]);
+    }
     return 0;
 }
 
 int board_toggleLed(uint8_t led)
 {
-    if(led >= LED_COUNT)
+    if (led >= LED_COUNT)
+    {
         return -1;
+    }
 
     gpio_toggleBit(board_leds[led]);
     return 0;
@@ -108,8 +116,10 @@ int board_toggleLed(uint8_t led)
 
 int8_t board_getLed(uint8_t led)
 {
-    if(led >= LED_COUNT)
+    if (led >= LED_COUNT)
+    {
         return -1;
+    }
 
     return gpio_readBit(board_leds[led]);
 }
@@ -117,11 +127,15 @@ int8_t board_getLed(uint8_t led)
 int8_t board_getButton(uint8_t button)
 {
     GPIO_VALUE value;
-    if(button >= BUTTON_COUNT)
+    if (button >= BUTTON_COUNT)
+    {
         return -1;
+    }
 
     value = gpio_readBit(board_buttons[button]);
     if (value == GPIO_HIGH)
+    {
         return 0;
+    }
     return 1;
 }

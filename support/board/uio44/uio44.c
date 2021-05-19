@@ -6,15 +6,15 @@
  * @date November 28, 2018, 09:30 AM
  *
  * @brief Code for UIO44(FR) / UIO44(FR)-I board
- * 
+ *
  * product page:
  *  https://uniswarm.eu/uboards/uio/uio44
  */
 
 #include "uio44.h"
 
-#include "driver/sysclock.h"
 #include "driver/gpio.h"
+#include "driver/sysclock.h"
 
 rt_dev_t board_leds[LED_COUNT];
 rt_dev_t board_outs[OUT_COUNT];
@@ -24,28 +24,28 @@ int board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
-    ANSELA = 0xFFFF;         // all analog inputs of port A as digital buffer unless RA0-3
-    ANSELB = 0xE200;         // all analog inputs of port B as digital buffer
-    ANSELC = 0x4B4F;         // all analog inputs of port C as digital buffer
-    ANSELD = 0xF4FD;         // all analog inputs of port D as digital buffer
+    ANSELA = 0xFFFF;  // all analog inputs of port A as digital buffer unless RA0-3
+    ANSELB = 0xE200;  // all analog inputs of port B as digital buffer
+    ANSELC = 0x4B4F;  // all analog inputs of port C as digital buffer
+    ANSELD = 0xF4FD;  // all analog inputs of port D as digital buffer
 
     // remappable pins
     // Unlock configuration pin
     unlockIoConfig();
 
-        // UART1 pins (RS485)
-        _U1RXR = 52;           // RX1 ==> RP52
-        _RP58R = _RPOUT_U1TX;  // TX1 ==> RP58
+    // UART1 pins (RS485)
+    _U1RXR = 52;           // RX1 ==> RP52
+    _RP58R = _RPOUT_U1TX;  // TX1 ==> RP58
 
-        // UART2 pins (dbg out only)
-        //_RP61R = _RPOUT_U2TX;  // TX2 ==> RP61
+    // UART2 pins (dbg out only)
+    //_RP61R = _RPOUT_U2TX;  // TX2 ==> RP61
 
-        // CAN fd 1
-        _CAN1RXR = 53;          // CAN1RX ==> RP53
-        _RP59R = _RPOUT_CAN1TX;   // CAN1TX ==> RP59
+    // CAN fd 1
+    _CAN1RXR = 53;           // CAN1RX ==> RP53
+    _RP59R = _RPOUT_CAN1TX;  // CAN1TX ==> RP59
 
-    TRISDbits.TRISD1 = 0;  // DE
-    TRISBbits.TRISB10 = 0; // RE
+    TRISDbits.TRISD1 = 0;   // DE
+    TRISBbits.TRISB10 = 0;  // RE
     LATDbits.LATD1 = 1;
 
     // Lock configuration pin

@@ -14,8 +14,8 @@
 
 #include <archi.h>
 
-#include <stdint.h>
 #include <driver/device.h>
+#include <stdint.h>
 
 int board_init(void);
 
@@ -24,12 +24,12 @@ int board_init(void);
 // ==== pins define ====
 
 // voltage measurement
-#define BOARD_VOLT_IN 8 // RB8		// analog board voltage channel
+#define BOARD_VOLT_IN 8  // RB8		// analog board voltage channel
 
 // leds
 #define LED_COUNT 3
-#define LED1 LATBbits.LATB3
-#define LED2 LATDbits.LATD11
+#define LED1      LATBbits.LATB3
+#define LED2      LATDbits.LATD11
 int board_setLed(uint8_t led, uint8_t state);
 int board_toggleLed(uint8_t led);
 int8_t board_getLed(uint8_t led);
@@ -38,11 +38,11 @@ int8_t board_getLed(uint8_t led);
 int8_t board_getButton(uint8_t button);
 
 // motors pins
-#define M1A LATEbits.LATE4          // A pin direction
-#define M1B LATEbits.LATE6          // B pin direction
+#define M1A LATEbits.LATE4  // A pin direction
+#define M1B LATEbits.LATE6  // B pin direction
 
-#define M2A LATEbits.LATE1          // A pin direction
-#define M2B LATEbits.LATE3          // B pin direction
+#define M2A LATEbits.LATE1  // A pin direction
+#define M2B LATEbits.LATE3  // B pin direction
 
 // ==== motor config ====
 #define MOTOR_COUNT 2
@@ -51,7 +51,6 @@ int8_t board_getButton(uint8_t button);
 #define ESP8266_UART 1
 
 rt_dev_t board_i2c_tof(void);
-#define TOF_ADDR       0x52
+#define TOF_ADDR 0x52
 
-
-#endif // SWARMTIPS_H
+#endif  // SWARMTIPS_H

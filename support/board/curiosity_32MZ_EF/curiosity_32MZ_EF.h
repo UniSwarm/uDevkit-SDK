@@ -7,7 +7,7 @@
  * @date July 25, 2017, 11:20 AM
  *
  * @brief Code for Curiosity 32MZ EF board (DM320103)
- * 
+ *
  * product page:
  *  http://www.microchip.com/Developmenttools/ProductDetails.aspx?PartNO=DM320103
  * datasheet:
@@ -23,23 +23,23 @@
 
 int board_init(void);
 
-#define BOARD_NAME "Curiosity_MZ_EF"
+#define BOARD_NAME    "Curiosity_MZ_EF"
 #define SYSCLOCK_XTAL 24000000
 //#define SYSCLOCK_SOSC    32768
 
 // ==== pins define ====
 // leds
 #define LED_COUNT 3
-#define LED1 LATEbits.LATE3
-#define LED2 LATEbits.LATE4
-#define LED3 LATEbits.LATE6
+#define LED1      LATEbits.LATE3
+#define LED2      LATEbits.LATE4
+#define LED3      LATEbits.LATE6
 int board_setLed(uint8_t led, uint8_t state);
 int board_toggleLed(uint8_t led);
 int8_t board_getLed(uint8_t led);
 
 // buttons
 #define BUTTON_COUNT 1
-#define BUTTON_1 PORTGbits.RG12
+#define BUTTON_1     PORTGbits.RG12
 int8_t board_getButton(uint8_t button);
 
-#endif // CURIOSITY_32MZ_EF_H
+#endif  // CURIOSITY_32MZ_EF_H
