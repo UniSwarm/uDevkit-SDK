@@ -14,10 +14,10 @@
 #include <stdint.h>
 
 #ifdef XC16
-  #define __space_prog__ __attribute__((space(prog)))
+#    define __space_prog__ __attribute__((space(prog)))
 #else
-  #define __prog__
-  #define __space_prog__
+#    define __prog__
+#    define __space_prog__
 #endif
 
 /**
@@ -26,13 +26,13 @@
  */
 typedef struct
 {
-    //metadata
+    // metadata
     uint16_t width;
     uint16_t height;
 
-    //data
+    // data
     __prog__ const uint16_t *data;
 
 } Picture;
 
-#endif // PICTURE_H
+#endif  // PICTURE_H

@@ -15,16 +15,16 @@
 
 typedef struct
 {
-	uint8_t width;
-	const char* data;
+    uint8_t width;
+    const char *data;
 } Letter;
 
 typedef struct
 {
-	uint8_t height;
-	char first;
-	char last;
-	const Letter** letters;
+    uint8_t height;
+    char first;
+    char last;
+    const Letter **letters;
 } Font;
 
-#endif // _FONT_
+#endif  // _FONT_
