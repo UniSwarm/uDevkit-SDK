@@ -27,7 +27,7 @@ int i2c_disable(rt_dev_t device);
 // ======== device settings =======
 #define I2C_BAUD_100K 100000
 #define I2C_BAUD_400K 400000
-#define I2C_BAUD_1M 1000000
+#define I2C_BAUD_1M   1000000
 int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed);
 uint32_t i2c_baudSpeed(rt_dev_t device);
 uint32_t i2c_effectiveBaudSpeed(rt_dev_t device);
@@ -60,16 +60,15 @@ int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value
 int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[], size_t size, uint8_t flags);
 
 // ======= specific include =======
-#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) \
- || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) \
- || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) || defined(ARCHI_dspic33ch) \
- || defined(ARCHI_dspic33ck)
- #include "i2c_pic24_dspic30f_dspic33.h"
-#elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mx) \
-|| defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
- #include "i2c_pic32.h"
+#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj)                \
+    || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)     \
+    || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
+#    include "i2c_pic24_dspic30f_dspic33.h"
+#elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec)           \
+    || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
+#    include "i2c_pic32.h"
 #else
- #warning Unsuported ARCHI
+#    warning Unsuported ARCHI
 #endif
 
-#endif // I2C_H
+#endif  // I2C_H

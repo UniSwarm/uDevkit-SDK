@@ -29,62 +29,62 @@ void gpio_setBit(rt_dev_t device)
     uint16_t bit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
 
     __builtin_disi(0x3FFF);
-    switch(port)
+    switch (port)
     {
 #ifdef GPIO_HAVE_PORTA
-    case 0:
-        LATA |= bit;
-        break;
+        case 0:
+            LATA |= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTB
-    case 1:
-        LATB |= bit;
-        break;
+        case 1:
+            LATB |= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTC
-    case 2:
-        LATC |= bit;
-        break;
+        case 2:
+            LATC |= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTD
-    case 3:
-        LATD |= bit;
-        break;
+        case 3:
+            LATD |= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTE
-    case 4:
-        LATE |= bit;
-        break;
+        case 4:
+            LATE |= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTF
-    case 5:
-        LATF |= bit;
-        break;
+        case 5:
+            LATF |= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTG
-    case 6:
-        LATG |= bit;
-        break;
+        case 6:
+            LATG |= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTH
-    case 7:
-        LATH |= bit;
-        break;
+        case 7:
+            LATH |= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTI
-    case 8:
-        LATI |= bit;
-        break;
+        case 8:
+            LATI |= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTJ
-    case 9:
-        LATJ |= bit;
-        break;
+        case 9:
+            LATJ |= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTK
-    case 10:
-        LATK |= bit;
-        break;
+        case 10:
+            LATK |= bit;
+            break;
 #endif
     }
     __builtin_disi(0);
@@ -100,62 +100,62 @@ void gpio_clearBit(rt_dev_t device)
     uint16_t bit = ~(1 << (device & GPIO_MAX_PORTWIDTHMASK));
 
     __builtin_disi(0x3FFF);
-    switch(port)
+    switch (port)
     {
 #ifdef GPIO_HAVE_PORTA
-    case 0:
-        LATA &= bit;
-        break;
+        case 0:
+            LATA &= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTB
-    case 1:
-        LATB &= bit;
-        break;
+        case 1:
+            LATB &= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTC
-    case 2:
-        LATC &= bit;
-        break;
+        case 2:
+            LATC &= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTD
-    case 3:
-        LATD &= bit;
-        break;
+        case 3:
+            LATD &= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTE
-    case 4:
-        LATE &= bit;
-        break;
+        case 4:
+            LATE &= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTF
-    case 5:
-        LATF &= bit;
-        break;
+        case 5:
+            LATF &= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTG
-    case 6:
-        LATG &= bit;
-        break;
+        case 6:
+            LATG &= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTH
-    case 7:
-        LATH &= bit;
-        break;
+        case 7:
+            LATH &= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTI
-    case 8:
-        LATI &= bit;
-        break;
+        case 8:
+            LATI &= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTJ
-    case 9:
-        LATJ &= bit;
-        break;
+        case 9:
+            LATJ &= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTK
-    case 10:
-        LATK &= bit;
-        break;
+        case 10:
+            LATK &= bit;
+            break;
 #endif
     }
     __builtin_disi(0);
@@ -171,62 +171,62 @@ void gpio_toggleBit(rt_dev_t device)
     uint16_t bit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
 
     __builtin_disi(0x3FFF);
-    switch(port)
+    switch (port)
     {
 #ifdef GPIO_HAVE_PORTA
-    case 0:
-        LATA ^= bit;
-        break;
+        case 0:
+            LATA ^= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTB
-    case 1:
-        LATB ^= bit;
-        break;
+        case 1:
+            LATB ^= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTC
-    case 2:
-        LATC ^= bit;
-        break;
+        case 2:
+            LATC ^= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTD
-    case 3:
-        LATD ^= bit;
-        break;
+        case 3:
+            LATD ^= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTE
-    case 4:
-        LATE ^= bit;
-        break;
+        case 4:
+            LATE ^= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTF
-    case 5:
-        LATF ^= bit;
-        break;
+        case 5:
+            LATF ^= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTG
-    case 6:
-        LATG ^= bit;
-        break;
+        case 6:
+            LATG ^= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTH
-    case 7:
-        LATH ^= bit;
-        break;
+        case 7:
+            LATH ^= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTI
-    case 8:
-        LATI ^= bit;
-        break;
+        case 8:
+            LATI ^= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTJ
-    case 9:
-        LATJ ^= bit;
-        break;
+        case 9:
+            LATJ ^= bit;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTK
-    case 10:
-        LATK ^= bit;
-        break;
+        case 10:
+            LATK ^= bit;
+            break;
 #endif
     }
     __builtin_disi(0);
@@ -239,17 +239,19 @@ void gpio_toggleBit(rt_dev_t device)
  */
 void gpio_writeBit(rt_dev_t device, GPIO_VALUE value)
 {
-    switch(value)
+    switch (value)
     {
-    case GPIO_LOW:
-        gpio_clearBit(device);
-        break;
-    case GPIO_HIGH:
-        gpio_setBit(device);
-        break;
-    case GPIO_TOGGLE:
-        gpio_toggleBit(device);
-        break;
+        case GPIO_LOW:
+            gpio_clearBit(device);
+            break;
+
+        case GPIO_HIGH:
+            gpio_setBit(device);
+            break;
+
+        case GPIO_TOGGLE:
+            gpio_toggleBit(device);
+            break;
     }
 }
 
@@ -264,62 +266,62 @@ GPIO_VALUE gpio_readBit(rt_dev_t device)
     uint16_t mbit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
     uint16_t value = 0;
 
-    switch(port)
+    switch (port)
     {
 #ifdef GPIO_HAVE_PORTA
-    case 0:
-        value = PORTA;
-        break;
+        case 0:
+            value = PORTA;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTB
-    case 1:
-        value = PORTB;
-        break;
+        case 1:
+            value = PORTB;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTC
-    case 2:
-        value = PORTC;
-        break;
+        case 2:
+            value = PORTC;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTD
-    case 3:
-        value = PORTD;
-        break;
+        case 3:
+            value = PORTD;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTE
-    case 4:
-        value = PORTE;
-        break;
+        case 4:
+            value = PORTE;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTF
-    case 5:
-        value = PORTF;
-        break;
+        case 5:
+            value = PORTF;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTG
-    case 6:
-        value = PORTG;
-        break;
+        case 6:
+            value = PORTG;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTH
-    case 7:
-        value = PORTH;
-        break;
+        case 7:
+            value = PORTH;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTI
-    case 8:
-        value = PORTI;
-        break;
+        case 8:
+            value = PORTI;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTJ
-    case 9:
-        value = PORTJ;
-        break;
+        case 9:
+            value = PORTJ;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTK
-    case 10:
-        value = PORTK;
-        break;
+        case 10:
+            value = PORTK;
+            break;
 #endif
     }
 
@@ -344,483 +346,483 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
     uint16_t bit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
 
-    switch(port)
+    switch (port)
     {
 #ifdef GPIO_HAVE_PORTA
-    case 0:
-        if (config & GPIO_OUTPUT)
-        {
-            TRISA &= ~bit; // set as output
-        }
-        else
-        {
-            TRISA |= bit;  // set as input
-        }
+        case 0:
+            if (config & GPIO_OUTPUT)
+            {
+                TRISA &= ~bit;  // set as output
+            }
+            else
+            {
+                TRISA |= bit;  // set as input
+            }
 
-    #ifdef ODCA
-        if (config & GPIO_OPENDRAIN)
-        {
-            ODCA |= bit; // enable open drain
-        }
-        else
-        {
-            ODCA &= ~bit; // disable open drain
-        }
-    #endif
-    #ifdef CNPUA
-        if (config & GPIO_PULLUP)
-        {
-            CNPUA |= bit; // enable pull-up
-        }
-        else
-        {
-            CNPUA &= ~bit; // disable pull-up
-        }
-    #endif
-    #ifdef CNPDA
-        if (config & GPIO_PULLDOWN)
-        {
-            CNPDA |= bit; // enable pull-down
-        }
-        else
-        {
-            CNPDA &= ~bit; // disable pull-down
-        }
-    #endif
-        break;
+#    ifdef ODCA
+            if (config & GPIO_OPENDRAIN)
+            {
+                ODCA |= bit;  // enable open drain
+            }
+            else
+            {
+                ODCA &= ~bit;  // disable open drain
+            }
+#    endif
+#    ifdef CNPUA
+            if (config & GPIO_PULLUP)
+            {
+                CNPUA |= bit;  // enable pull-up
+            }
+            else
+            {
+                CNPUA &= ~bit;  // disable pull-up
+            }
+#    endif
+#    ifdef CNPDA
+            if (config & GPIO_PULLDOWN)
+            {
+                CNPDA |= bit;  // enable pull-down
+            }
+            else
+            {
+                CNPDA &= ~bit;  // disable pull-down
+            }
+#    endif
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTB
-    case 1:
-        if (config & GPIO_OUTPUT)
-        {
-            TRISB &= ~bit; // set as output
-        }
-        else
-        {
-            TRISB |= bit;  // set as input;
-        }
+        case 1:
+            if (config & GPIO_OUTPUT)
+            {
+                TRISB &= ~bit;  // set as output
+            }
+            else
+            {
+                TRISB |= bit;  // set as input;
+            }
 
-    #ifdef ODCB
-        if (config & GPIO_OPENDRAIN)
-        {
-            ODCB |= bit; // enable open drain
-        }
-        else
-        {
-            ODCB &= ~bit; // disable open drain
-        }
-    #endif
-    #ifdef CNPUB
-        if (config & GPIO_PULLUP)
-        {
-            CNPUB |= bit; // enable pull-up
-        }
-        else
-        {
-            CNPUB &= ~bit; // disable pull-up
-        }
-    #endif
-    #ifdef CNPDB
-        if (config & GPIO_PULLDOWN)
-        {
-            CNPDB |= bit; // enable pull-down
-        }
-        else
-        {
-            CNPDB &= ~bit; // disable pull-down
-        }
-    #endif
-        break;
+#    ifdef ODCB
+            if (config & GPIO_OPENDRAIN)
+            {
+                ODCB |= bit;  // enable open drain
+            }
+            else
+            {
+                ODCB &= ~bit;  // disable open drain
+            }
+#    endif
+#    ifdef CNPUB
+            if (config & GPIO_PULLUP)
+            {
+                CNPUB |= bit;  // enable pull-up
+            }
+            else
+            {
+                CNPUB &= ~bit;  // disable pull-up
+            }
+#    endif
+#    ifdef CNPDB
+            if (config & GPIO_PULLDOWN)
+            {
+                CNPDB |= bit;  // enable pull-down
+            }
+            else
+            {
+                CNPDB &= ~bit;  // disable pull-down
+            }
+#    endif
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTC
-    case 2:
-        if (config & GPIO_OUTPUT)
-        {
-            TRISC &= ~bit; // set as output
-        }
-        else
-        {
-            TRISC |= bit;  // set as input;
-        }
+        case 2:
+            if (config & GPIO_OUTPUT)
+            {
+                TRISC &= ~bit;  // set as output
+            }
+            else
+            {
+                TRISC |= bit;  // set as input;
+            }
 
-    #ifdef ODCC
-        if (config & GPIO_OPENDRAIN)
-        {
-            ODCC |= bit; // enable open drain
-        }
-        else
-        {
-            ODCC &= ~bit; // disable open drain
-        }
-    #endif
-    #ifdef CNPUC
-        if (config & GPIO_PULLUP)
-        {
-            CNPUC |= bit; // enable pull-up
-        }
-        else
-        {
-            CNPUC &= ~bit; // disable pull-up
-        }
-    #endif
-    #ifdef CNPDC
-        if (config & GPIO_PULLDOWN)
-        {
-            CNPDC |= bit; // enable pull-down
-        }
-        else
-        {
-            CNPDC &= ~bit; // disable pull-down
-        }
-    #endif
-        break;
+#    ifdef ODCC
+            if (config & GPIO_OPENDRAIN)
+            {
+                ODCC |= bit;  // enable open drain
+            }
+            else
+            {
+                ODCC &= ~bit;  // disable open drain
+            }
+#    endif
+#    ifdef CNPUC
+            if (config & GPIO_PULLUP)
+            {
+                CNPUC |= bit;  // enable pull-up
+            }
+            else
+            {
+                CNPUC &= ~bit;  // disable pull-up
+            }
+#    endif
+#    ifdef CNPDC
+            if (config & GPIO_PULLDOWN)
+            {
+                CNPDC |= bit;  // enable pull-down
+            }
+            else
+            {
+                CNPDC &= ~bit;  // disable pull-down
+            }
+#    endif
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTD
-    case 3:
-        if (config & GPIO_OUTPUT)
-        {
-            TRISD &= ~bit; // set as output
-        }
-        else
-        {
-            TRISD |= bit;  // set as input;
-        }
+        case 3:
+            if (config & GPIO_OUTPUT)
+            {
+                TRISD &= ~bit;  // set as output
+            }
+            else
+            {
+                TRISD |= bit;  // set as input;
+            }
 
-    #ifdef ODCD
-        if (config & GPIO_OPENDRAIN)
-        {
-            ODCD |= bit; // enable open drain
-        }
-        else
-        {
-            ODCD &= ~bit; // disable open drain
-        }
-    #endif
-    #ifdef CNPUD
-        if (config & GPIO_PULLUP)
-        {
-            CNPUD |= bit; // enable pull-up
-        }
-        else
-        {
-            CNPUD &= ~bit; // disable pull-up
-        }
-    #endif
-    #ifdef CNPDD
-        if (config & GPIO_PULLDOWN)
-        {
-            CNPDD |= bit; // enable pull-down
-        }
-        else
-        {
-            CNPDD &= ~bit; // disable pull-down
-        }
-    #endif
-        break;
+#    ifdef ODCD
+            if (config & GPIO_OPENDRAIN)
+            {
+                ODCD |= bit;  // enable open drain
+            }
+            else
+            {
+                ODCD &= ~bit;  // disable open drain
+            }
+#    endif
+#    ifdef CNPUD
+            if (config & GPIO_PULLUP)
+            {
+                CNPUD |= bit;  // enable pull-up
+            }
+            else
+            {
+                CNPUD &= ~bit;  // disable pull-up
+            }
+#    endif
+#    ifdef CNPDD
+            if (config & GPIO_PULLDOWN)
+            {
+                CNPDD |= bit;  // enable pull-down
+            }
+            else
+            {
+                CNPDD &= ~bit;  // disable pull-down
+            }
+#    endif
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTE
-    case 4:
-        if (config & GPIO_OUTPUT)
-        {
-            TRISE &= ~bit; // set as output
-        }
-        else
-        {
-            TRISE |= bit;  // set as input;
-        }
+        case 4:
+            if (config & GPIO_OUTPUT)
+            {
+                TRISE &= ~bit;  // set as output
+            }
+            else
+            {
+                TRISE |= bit;  // set as input;
+            }
 
-    #ifdef ODCE
-        if (config & GPIO_OPENDRAIN)
-        {
-            ODCE |= bit; // enable open drain
-        }
-        else
-        {
-            ODCE &= ~bit; // disable open drain
-        }
-    #endif
-    #ifdef CNPUE
-        if (config & GPIO_PULLUP)
-        {
-            CNPUE |= bit; // enable pull-up
-        }
-        else
-        {
-            CNPUE &= ~bit; // disable pull-up
-        }
-    #endif
-    #ifdef CNPDE
-        if (config & GPIO_PULLDOWN)
-        {
-            CNPDE |= bit; // enable pull-down
-        }
-        else
-        {
-            CNPDE &= ~bit; // disable pull-down
-        }
-    #endif
-        break;
+#    ifdef ODCE
+            if (config & GPIO_OPENDRAIN)
+            {
+                ODCE |= bit;  // enable open drain
+            }
+            else
+            {
+                ODCE &= ~bit;  // disable open drain
+            }
+#    endif
+#    ifdef CNPUE
+            if (config & GPIO_PULLUP)
+            {
+                CNPUE |= bit;  // enable pull-up
+            }
+            else
+            {
+                CNPUE &= ~bit;  // disable pull-up
+            }
+#    endif
+#    ifdef CNPDE
+            if (config & GPIO_PULLDOWN)
+            {
+                CNPDE |= bit;  // enable pull-down
+            }
+            else
+            {
+                CNPDE &= ~bit;  // disable pull-down
+            }
+#    endif
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTF
-    case 5:
-        if (config & GPIO_OUTPUT)
-        {
-            TRISF &= ~bit; // set as output
-        }
-        else
-        {
-            TRISF |= bit;  // set as input;
-        }
+        case 5:
+            if (config & GPIO_OUTPUT)
+            {
+                TRISF &= ~bit;  // set as output
+            }
+            else
+            {
+                TRISF |= bit;  // set as input;
+            }
 
-    #ifdef ODCF
-        if (config & GPIO_OPENDRAIN)
-        {
-            ODCF |= bit; // enable open drain
-        }
-        else
-        {
-            ODCF &= ~bit; // disable open drain
-        }
-    #endif
-    #ifdef CNPUF
-        if (config & GPIO_PULLUP)
-        {
-            CNPUF |= bit; // enable pull-up
-        }
-        else
-        {
-            CNPUF &= ~bit; // disable pull-up
-        }
-    #endif
-    #ifdef CNPDF
-        if (config & GPIO_PULLDOWN)
-        {
-            CNPDF |= bit; // enable pull-down
-        }
-        else
-        {
-            CNPDF &= ~bit; // disable pull-down
-        }
-    #endif
-        break;
+#    ifdef ODCF
+            if (config & GPIO_OPENDRAIN)
+            {
+                ODCF |= bit;  // enable open drain
+            }
+            else
+            {
+                ODCF &= ~bit;  // disable open drain
+            }
+#    endif
+#    ifdef CNPUF
+            if (config & GPIO_PULLUP)
+            {
+                CNPUF |= bit;  // enable pull-up
+            }
+            else
+            {
+                CNPUF &= ~bit;  // disable pull-up
+            }
+#    endif
+#    ifdef CNPDF
+            if (config & GPIO_PULLDOWN)
+            {
+                CNPDF |= bit;  // enable pull-down
+            }
+            else
+            {
+                CNPDF &= ~bit;  // disable pull-down
+            }
+#    endif
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTG
-    case 6:
-        if (config & GPIO_OUTPUT)
-        {
-            TRISG &= ~bit; // set as output
-        }
-        else
-        {
-            TRISG |= bit;  // set as input;
-        }
+        case 6:
+            if (config & GPIO_OUTPUT)
+            {
+                TRISG &= ~bit;  // set as output
+            }
+            else
+            {
+                TRISG |= bit;  // set as input;
+            }
 
-    #ifdef ODCG
-        if (config & GPIO_OPENDRAIN)
-        {
-            ODCG |= bit; // enable open drain
-        }
-        else
-        {
-            ODCG &= ~bit; // disable open drain
-        }
-    #endif
-    #ifdef CNPUG
-        if (config & GPIO_PULLUP)
-        {
-            CNPUG |= bit; // enable pull-up
-        }
-        else
-        {
-            CNPUG &= ~bit; // disable pull-up
-        }
-    #endif
-    #ifdef CNPDG
-        if (config & GPIO_PULLDOWN)
-        {
-            CNPDG |= bit; // enable pull-down
-        }
-        else
-        {
-            CNPDG &= ~bit; // disable pull-down
-        }
-    #endif
-        break;
+#    ifdef ODCG
+            if (config & GPIO_OPENDRAIN)
+            {
+                ODCG |= bit;  // enable open drain
+            }
+            else
+            {
+                ODCG &= ~bit;  // disable open drain
+            }
+#    endif
+#    ifdef CNPUG
+            if (config & GPIO_PULLUP)
+            {
+                CNPUG |= bit;  // enable pull-up
+            }
+            else
+            {
+                CNPUG &= ~bit;  // disable pull-up
+            }
+#    endif
+#    ifdef CNPDG
+            if (config & GPIO_PULLDOWN)
+            {
+                CNPDG |= bit;  // enable pull-down
+            }
+            else
+            {
+                CNPDG &= ~bit;  // disable pull-down
+            }
+#    endif
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTH
-    case 7:
-        if (config & GPIO_OUTPUT)
-        {
-            TRISH &= ~bit; // set as output
-        }
-        else
-        {
-            TRISH |= bit;  // set as input;
-        }
+        case 7:
+            if (config & GPIO_OUTPUT)
+            {
+                TRISH &= ~bit;  // set as output
+            }
+            else
+            {
+                TRISH |= bit;  // set as input;
+            }
 
-    #ifdef ODCH
-        if (config & GPIO_OPENDRAIN)
-        {
-            ODCH |= bit; // enable open drain
-        }
-        else
-        {
-            ODCH &= ~bit; // disable open drain
-        }
-    #endif
-    #ifdef CNPUH
-        if (config & GPIO_PULLUP)
-        {
-            CNPUH |= bit; // enable pull-up
-        }
-        else
-        {
-            CNPUH &= ~bit; // disable pull-up
-        }
-    #endif
-    #ifdef CNPDH
-        if (config & GPIO_PULLDOWN)
-        {
-            CNPDH |= bit; // enable pull-down
-        }
-        else
-        {
-            CNPDH &= ~bit; // disable pull-down
-        }
-    #endif
-        break;
+#    ifdef ODCH
+            if (config & GPIO_OPENDRAIN)
+            {
+                ODCH |= bit;  // enable open drain
+            }
+            else
+            {
+                ODCH &= ~bit;  // disable open drain
+            }
+#    endif
+#    ifdef CNPUH
+            if (config & GPIO_PULLUP)
+            {
+                CNPUH |= bit;  // enable pull-up
+            }
+            else
+            {
+                CNPUH &= ~bit;  // disable pull-up
+            }
+#    endif
+#    ifdef CNPDH
+            if (config & GPIO_PULLDOWN)
+            {
+                CNPDH |= bit;  // enable pull-down
+            }
+            else
+            {
+                CNPDH &= ~bit;  // disable pull-down
+            }
+#    endif
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTI
-    case 8:
-        if (config & GPIO_OUTPUT)
-        {
-            TRISI &= ~bit; // set as output
-        }
-        else
-        {
-            TRISI |= bit;  // set as input;
-        }
+        case 8:
+            if (config & GPIO_OUTPUT)
+            {
+                TRISI &= ~bit;  // set as output
+            }
+            else
+            {
+                TRISI |= bit;  // set as input;
+            }
 
-    #ifdef ODCI
-        if (config & GPIO_OPENDRAIN)
-        {
-            ODCI |= bit; // enable open drain
-        }
-        else
-        {
-            ODCI &= ~bit; // disable open drain
-        }
-    #endif
-    #ifdef CNPUI
-        if (config & GPIO_PULLUP)
-        {
-            CNPUI |= bit; // enable pull-up
-        }
-        else
-        {
-            CNPUI &= ~bit; // disable pull-up
-        }
-    #endif
-    #ifdef CNPDI
-        if (config & GPIO_PULLDOWN)
-        {
-            CNPDI |= bit; // enable pull-down
-        }
-        else
-        {
-            CNPDI &= ~bit; // disable pull-down
-        }
-    #endif
-        break;
+#    ifdef ODCI
+            if (config & GPIO_OPENDRAIN)
+            {
+                ODCI |= bit;  // enable open drain
+            }
+            else
+            {
+                ODCI &= ~bit;  // disable open drain
+            }
+#    endif
+#    ifdef CNPUI
+            if (config & GPIO_PULLUP)
+            {
+                CNPUI |= bit;  // enable pull-up
+            }
+            else
+            {
+                CNPUI &= ~bit;  // disable pull-up
+            }
+#    endif
+#    ifdef CNPDI
+            if (config & GPIO_PULLDOWN)
+            {
+                CNPDI |= bit;  // enable pull-down
+            }
+            else
+            {
+                CNPDI &= ~bit;  // disable pull-down
+            }
+#    endif
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTJ
-    case 9:
-        if (config & GPIO_OUTPUT)
-        {
-            TRISJ &= ~bit; // set as output
-        }
-        else
-        {
-            TRISJ |= bit;  // set as input;
-        }
+        case 9:
+            if (config & GPIO_OUTPUT)
+            {
+                TRISJ &= ~bit;  // set as output
+            }
+            else
+            {
+                TRISJ |= bit;  // set as input;
+            }
 
-    #ifdef ODCJ
-        if (config & GPIO_OPENDRAIN)
-        {
-            ODCJ |= bit; // enable open drain
-        }
-        else
-        {
-            ODCJ &= ~bit; // disable open drain
-        }
-    #endif
-    #ifdef CNPUJ
-        if (config & GPIO_PULLUP)
-        {
-            CNPUJ |= bit; // enable pull-up
-        }
-        else
-        {
-            CNPUJ &= ~bit; // disable pull-up
-        }
-    #endif
-    #ifdef CNPDJ
-        if (config & GPIO_PULLDOWN)
-        {
-            CNPDJ |= bit; // enable pull-down
-        }
-        else
-        {
-            CNPDJ &= ~bit; // disable pull-down
-        }
-    #endif
-        break;
+#    ifdef ODCJ
+            if (config & GPIO_OPENDRAIN)
+            {
+                ODCJ |= bit;  // enable open drain
+            }
+            else
+            {
+                ODCJ &= ~bit;  // disable open drain
+            }
+#    endif
+#    ifdef CNPUJ
+            if (config & GPIO_PULLUP)
+            {
+                CNPUJ |= bit;  // enable pull-up
+            }
+            else
+            {
+                CNPUJ &= ~bit;  // disable pull-up
+            }
+#    endif
+#    ifdef CNPDJ
+            if (config & GPIO_PULLDOWN)
+            {
+                CNPDJ |= bit;  // enable pull-down
+            }
+            else
+            {
+                CNPDJ &= ~bit;  // disable pull-down
+            }
+#    endif
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTK
-    case 10:
-        if (config & GPIO_OUTPUT)
-        {
-            TRISK &= ~bit; // set as output
-        }
-        else
-        {
-            TRISK |= bit;  // set as input;
-        }
+        case 10:
+            if (config & GPIO_OUTPUT)
+            {
+                TRISK &= ~bit;  // set as output
+            }
+            else
+            {
+                TRISK |= bit;  // set as input;
+            }
 
-    #ifdef ODCK
-        if (config & GPIO_OPENDRAIN)
-        {
-            ODCK |= bit; // enable open drain
-        }
-        else
-        {
-            ODCK &= ~bit; // disable open drain
-        }
-    #endif
-    #ifdef CNPUK
-        if (config & GPIO_PULLUP)
-        {
-            CNPUK |= bit; // enable pull-up
-        }
-        else
-        {
-            CNPUK &= ~bit; // disable pull-up
-        }
-    #endif
-    #ifdef CNPDK
-        if (config & GPIO_PULLDOWN)
-        {
-            CNPDK |= bit; // enable pull-down
-        }
-        else
-        {
-            CNPDK &= ~bit; // disable pull-down
-        }
-    #endif
-        break;
+#    ifdef ODCK
+            if (config & GPIO_OPENDRAIN)
+            {
+                ODCK |= bit;  // enable open drain
+            }
+            else
+            {
+                ODCK &= ~bit;  // disable open drain
+            }
+#    endif
+#    ifdef CNPUK
+            if (config & GPIO_PULLUP)
+            {
+                CNPUK |= bit;  // enable pull-up
+            }
+            else
+            {
+                CNPUK &= ~bit;  // disable pull-up
+            }
+#    endif
+#    ifdef CNPDK
+            if (config & GPIO_PULLDOWN)
+            {
+                CNPDK |= bit;  // enable pull-down
+            }
+            else
+            {
+                CNPDK &= ~bit;  // disable pull-down
+            }
+#    endif
+            break;
 #endif
-    default:
-        return -1;
+        default:
+            return -1;
     }
 
     return 0;
@@ -835,62 +837,62 @@ void gpio_writePort(rt_dev_t device, port_type value)
 {
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
 
-    switch(port)
+    switch (port)
     {
 #ifdef GPIO_HAVE_PORTA
-    case 0:
-        LATA = value;
-        break;
+        case 0:
+            LATA = value;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTB
-    case 1:
-        LATB = value;
-        break;
+        case 1:
+            LATB = value;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTC
-    case 2:
-        LATC = value;
-        break;
+        case 2:
+            LATC = value;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTD
-    case 3:
-        LATD = value;
-        break;
+        case 3:
+            LATD = value;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTE
-    case 4:
-        LATE = value;
-        break;
+        case 4:
+            LATE = value;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTF
-    case 5:
-        LATF = value;
-        break;
+        case 5:
+            LATF = value;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTG
-    case 6:
-        LATG = value;
-        break;
+        case 6:
+            LATG = value;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTH
-    case 7:
-        LATH = value;
-        break;
+        case 7:
+            LATH = value;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTI
-    case 8:
-        LATI = value;
-        break;
+        case 8:
+            LATI = value;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTJ
-    case 9:
-        LATJ = value;
-        break;
+        case 9:
+            LATJ = value;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTK
-    case 10:
-        LATK = value;
-        break;
+        case 10:
+            LATK = value;
+            break;
 #endif
     }
 }
@@ -904,51 +906,51 @@ port_type gpio_readPort(rt_dev_t device)
 {
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
 
-    switch(port)
+    switch (port)
     {
 #ifdef GPIO_HAVE_PORTA
-    case 0:
-        return PORTA;
+        case 0:
+            return PORTA;
 #endif
 #ifdef GPIO_HAVE_PORTB
-    case 1:
-        return PORTB;
+        case 1:
+            return PORTB;
 #endif
 #ifdef GPIO_HAVE_PORTC
-    case 2:
-        return PORTC;
+        case 2:
+            return PORTC;
 #endif
 #ifdef GPIO_HAVE_PORTD
-    case 3:
-        return PORTD;
+        case 3:
+            return PORTD;
 #endif
 #ifdef GPIO_HAVE_PORTE
-    case 4:
-        return PORTE;
+        case 4:
+            return PORTE;
 #endif
 #ifdef GPIO_HAVE_PORTF
-    case 5:
-        return PORTF;
+        case 5:
+            return PORTF;
 #endif
 #ifdef GPIO_HAVE_PORTG
-    case 6:
-        return PORTG;
+        case 6:
+            return PORTG;
 #endif
 #ifdef GPIO_HAVE_PORTH
-    case 7:
-        return PORTH;
+        case 7:
+            return PORTH;
 #endif
 #ifdef GPIO_HAVE_PORTI
-    case 8:
-        return PORTI;
+        case 8:
+            return PORTI;
 #endif
 #ifdef GPIO_HAVE_PORTJ
-    case 9:
-        return PORTJ;
+        case 9:
+            return PORTJ;
 #endif
 #ifdef GPIO_HAVE_PORTK
-    case 10:
-        return PORTK;
+        case 10:
+            return PORTK;
 #endif
     }
 
@@ -975,65 +977,65 @@ int gpio_setPortConfig(rt_dev_t device, uint16_t config)
         trisValue = 0xFFFF;
     }
 
-    switch(port)
+    switch (port)
     {
 #ifdef GPIO_HAVE_PORTA
-    case 0:
-        TRISA = trisValue;
-        break;
+        case 0:
+            TRISA = trisValue;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTB
-    case 1:
-        TRISB = trisValue;
-        break;
+        case 1:
+            TRISB = trisValue;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTC
-    case 2:
-        TRISC = trisValue;
-        break;
+        case 2:
+            TRISC = trisValue;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTD
-    case 3:
-        TRISD = trisValue;
-        break;
+        case 3:
+            TRISD = trisValue;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTE
-    case 4:
-        TRISE = trisValue;
-        break;
+        case 4:
+            TRISE = trisValue;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTF
-    case 5:
-        TRISF = trisValue;
-        break;
+        case 5:
+            TRISF = trisValue;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTG
-    case 6:
-        TRISG = trisValue;
-        break;
+        case 6:
+            TRISG = trisValue;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTH
-    case 7:
-        TRISH = trisValue;
-        break;
+        case 7:
+            TRISH = trisValue;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTI
-    case 8:
-        TRISI = trisValue;
-        break;
+        case 8:
+            TRISI = trisValue;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTJ
-    case 9:
-        TRISJ = trisValue;
-        break;
+        case 9:
+            TRISJ = trisValue;
+            break;
 #endif
 #ifdef GPIO_HAVE_PORTK
-    case 10:
-        TRISK = trisValue;
-        break;
+        case 10:
+            TRISK = trisValue;
+            break;
 #endif
-    default:
-        return -1;
+        default:
+            return -1;
     }
 
     return 0;

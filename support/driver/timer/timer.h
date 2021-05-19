@@ -15,7 +15,7 @@
 #include <driver/device.h>
 
 // ====== device assignation ======
-#define timer(d) MKDEV(DEV_CLASS_TIMER, (d-1))
+#define timer(d) MKDEV(DEV_CLASS_TIMER, (d - 1))
 rt_dev_t timer_getFreeDevice(void);
 int timer_open(rt_dev_t device);
 int timer_close(rt_dev_t device);
@@ -42,17 +42,16 @@ int timer_setValue(rt_dev_t device, uint16_t value);
 uint16_t timer_getValue(rt_dev_t device);
 
 // ======= specific include =======
-#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) \
- || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) \
- || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
- #include "timer_pic24_dspic30f_dspic33.h"
+#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj)                \
+    || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
+#    include "timer_pic24_dspic30f_dspic33.h"
 #elif defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
- #include "timer_dspic33c.h"
-#elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mx) \
-   || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
- #include "timer_pic32.h"
+#    include "timer_dspic33c.h"
+#elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec)           \
+    || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
+#    include "timer_pic32.h"
 #else
- #warning "Unsupported ARCHI"
+#    warning "Unsupported ARCHI"
 #endif
 
-#endif // TIMER_H
+#endif  // TIMER_H

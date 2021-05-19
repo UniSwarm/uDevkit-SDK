@@ -5,7 +5,7 @@
  * @copyright UniSwarm 2018-2021
  *
  * @date November 28, 2016, 20:35 PM
- * 
+ *
  * @brief Support for simulator motors control
  */
 
@@ -14,4 +14,4 @@
 
 #include "motor.h"
 
-#endif // MOTOR_SIM_H
+#endif  // MOTOR_SIM_H

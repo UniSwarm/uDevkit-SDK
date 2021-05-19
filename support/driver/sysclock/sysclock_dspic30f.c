@@ -46,7 +46,7 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
     {
 #ifndef SYSCLOCK_NOPOST
-        uint16_t div = OSCCONbits.POST << 1; // (0, 4, 16, 64)
+        uint16_t div = OSCCONbits.POST << 1;  // (0, 4, 16, 64)
         return sysclock_sysfreq >> div;
 #else
         return sysclock_sysfreq;
@@ -93,7 +93,7 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
     }
 #endif
 
-    return -1;   // bad index
+    return -1;  // bad index
 }
 
 /**
@@ -105,17 +105,21 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 {
     switch (source)
     {
-    case SYSCLOCK_SRC_LPRC:
-        return 512000;        // 512kHz LPRC
-    case SYSCLOCK_SRC_SOSC:
-        return sysclock_sosc; // external secondary oscillator
-    case SYSCLOCK_SRC_POSC:
-        return sysclock_posc; // external primary oscillator
-    case SYSCLOCK_SRC_FRC:
-        return 8000000;       // FRC  // TODO integrate OSCTUNE
+        case SYSCLOCK_SRC_LPRC:
+            return 512000;  // 512kHz LPRC
+
+        case SYSCLOCK_SRC_SOSC:
+            return sysclock_sosc;  // external secondary oscillator
+
+        case SYSCLOCK_SRC_POSC:
+            return sysclock_posc;  // external primary oscillator
+
+        case SYSCLOCK_SRC_FRC:
+            return 8000000;  // FRC  // TODO integrate OSCTUNE
+
 #ifdef SYSCLOCK_SRC_PLL
-    case SYSCLOCK_SRC_PLL:
-        return sysclock_pll;       // FRC  // TODO integrate OSCTUNE
+        case SYSCLOCK_SRC_PLL:
+            return sysclock_pll;  // FRC  // TODO integrate OSCTUNE
 #endif
     }
     return -1;

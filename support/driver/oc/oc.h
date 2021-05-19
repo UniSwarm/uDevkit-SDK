@@ -25,16 +25,16 @@ int oc_enable(rt_dev_t device);
 int oc_disable(rt_dev_t device);
 
 // ========== device settings =========
-#define OC_MODE_INVALID           0x00 ///< OC Off
-#define OC_MODE_PWM               0x01 ///< OC in PWM mode, edge aligned
-#define OC_MODE_PWM_CENTER        0x02 ///< OC in PWM mode, center aligned
+#define OC_MODE_INVALID    0x00  ///< OC Off
+#define OC_MODE_PWM        0x01  ///< OC in PWM mode, edge aligned
+#define OC_MODE_PWM_CENTER 0x02  ///< OC in PWM mode, center aligned
 
-#define OC_MODE_SINGLE_LOW        0x10 ///< OC force output pin low on R value match event
-#define OC_MODE_SINGLE_HIGH       0x11 ///< OC force output pin high on R value match event
-#define OC_MODE_CONTINOUS_TOGGLE  0x12 ///< OC toggle output pin on R value match event
+#define OC_MODE_SINGLE_LOW       0x10  ///< OC force output pin low on R value match event
+#define OC_MODE_SINGLE_HIGH      0x11  ///< OC force output pin high on R value match event
+#define OC_MODE_CONTINOUS_TOGGLE 0x12  ///< OC toggle output pin on R value match event
 
-#define OC_MODE_SINGLE_LOWHIGH    0x20 ///< OC force output pin high on R match and force to low on RS (one time)
-#define OC_MODE_CONTINOUS_LOWHIGH 0x21 ///< Same as OC_MODE_SINGLE_LOWHIGH but infinite
+#define OC_MODE_SINGLE_LOWHIGH    0x20  ///< OC force output pin high on R match and force to low on RS (one time)
+#define OC_MODE_CONTINOUS_LOWHIGH 0x21  ///< Same as OC_MODE_SINGLE_LOWHIGH but infinite
 
 int oc_setMode(rt_dev_t device, uint8_t mode);
 uint8_t oc_mode(rt_dev_t device);
@@ -45,22 +45,21 @@ uint32_t oc_rsVal(rt_dev_t device);
 
 // ========= specific includes ========
 #if defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
- #include "oc_pic24e_dspic33e.h"
-#elif defined(ARCHI_pic24f) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) \
-   || defined(ARCHI_dspic33fj)
- #include "oc_pic24f_dspic30f_dspic33f.h"
+#    include "oc_pic24e_dspic33e.h"
+#elif defined(ARCHI_pic24f) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj)
+#    include "oc_pic24f_dspic30f_dspic33f.h"
 #elif defined(ARCHI_pic24fj)
- #if defined(DEVICE_24FJ16MC101) || defined(DEVICE_24FJ16MC102) || defined(DEVICE_24FJ32MC101) \
-  || defined(DEVICE_24FJ32MC102) || defined(DEVICE_24FJ32MC104)
-  #include "oc_pic24f_dspic30f_dspic33f.h"
- #else
-  #include "oc_pic24e_dspic33e.h"
- #endif
-#elif defined(ARCHI_pic32mk) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec) \
-   || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
- #include "oc_pic32.h"
+#    if defined(DEVICE_24FJ16MC101) || defined(DEVICE_24FJ16MC102) || defined(DEVICE_24FJ32MC101)                      \
+        || defined(DEVICE_24FJ32MC102) || defined(DEVICE_24FJ32MC104)
+#        include "oc_pic24f_dspic30f_dspic33f.h"
+#    else
+#        include "oc_pic24e_dspic33e.h"
+#    endif
+#elif defined(ARCHI_pic32mk) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)         \
+    || defined(ARCHI_pic32mzda)
+#    include "oc_pic32.h"
 #else
- #warning Unsuported ARCHI
+#    warning Unsuported ARCHI
 #endif
 
-#endif // OC_H
+#endif  // OC_H

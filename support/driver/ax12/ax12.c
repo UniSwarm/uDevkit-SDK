@@ -11,8 +11,8 @@
 
 #include "ax12.h"
 
-//uint8_t idr = 255;
-//uint8_t buffr[30];
+// uint8_t idr = 255;
+// uint8_t buffr[30];
 uint8_t ax12_trame[20];
 rt_dev_t ax12_uart;
 rt_dev_t ax12_txen;
@@ -26,11 +26,15 @@ void ax12_sendMode(void)
     if (ax12_txen != NULLDEV)
     {
         if (ax12_inverted == 0)
+        {
             gpio_setBit(ax12_txen);
+        }
         else
+        {
             gpio_clearBit(ax12_txen);
+        }
     }
-    //idr = 0;
+    // idr = 0;
 }
 
 /**
@@ -38,13 +42,17 @@ void ax12_sendMode(void)
  */
 void ax12_receiveMode(void)
 {
-    //idr = 0;
+    // idr = 0;
     if (ax12_txen != NULLDEV)
     {
         if (ax12_inverted == 0)
+        {
             gpio_clearBit(ax12_txen);
+        }
         else
+        {
             gpio_setBit(ax12_txen);
+        }
     }
 }
 
@@ -65,7 +73,9 @@ void ax12_init(rt_dev_t uart, rt_dev_t txen, uint8_t inverted)
     ax12_txen = txen;
     ax12_inverted = inverted;
     if (ax12_txen != NULLDEV)
+    {
         gpio_setBitConfig(ax12_txen, GPIO_OUTPUT);
+    }
 }
 
 /**
@@ -85,7 +95,7 @@ void ax12_send_char(uint8_t ax_id, uint8_t param, uint8_t val)
     ax12_trame[4] = INST_WRITE;
     ax12_trame[5] = param;
     ax12_trame[6] = val;
-    ax12_trame[7] = ~(uint8_t)(ax12_trame[2]+ax12_trame[3]+ax12_trame[4]+ax12_trame[5]+ax12_trame[6]);
+    ax12_trame[7] = ~(uint8_t)(ax12_trame[2] + ax12_trame[3] + ax12_trame[4] + ax12_trame[5] + ax12_trame[6]);
 
     uart_write(ax12_uart, ax12_trame, 8);
 }
@@ -107,8 +117,9 @@ void ax12_send_1_short(uint8_t ax_id, uint8_t param, uint16_t val)
     ax12_trame[4] = INST_WRITE;
     ax12_trame[5] = param;
     ax12_trame[6] = (char)val;
-    ax12_trame[7] = (char)((short)val>>8);
-    ax12_trame[8] = ~(uint8_t)(ax12_trame[2]+ax12_trame[3]+ax12_trame[4]+ax12_trame[5]+ax12_trame[6]+ax12_trame[7]);
+    ax12_trame[7] = (char)((short)val >> 8);
+    ax12_trame[8] =
+        ~(uint8_t)(ax12_trame[2] + ax12_trame[3] + ax12_trame[4] + ax12_trame[5] + ax12_trame[6] + ax12_trame[7]);
 
     uart_write(ax12_uart, ax12_trame, 9);
 }
@@ -131,10 +142,11 @@ void ax12_send_2_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2
     ax12_trame[4] = INST_WRITE;
     ax12_trame[5] = param;
     ax12_trame[6] = (char)val;
-    ax12_trame[7] = (char)((short)val>>8);
+    ax12_trame[7] = (char)((short)val >> 8);
     ax12_trame[8] = (char)val2;
-    ax12_trame[9] = (char)((short)val2>>8);
-    ax12_trame[10] = ~(uint8_t)(ax12_trame[2]+ax12_trame[3]+ax12_trame[4]+ax12_trame[5]+ax12_trame[6]+ax12_trame[7]+ax12_trame[8]+ax12_trame[9]);
+    ax12_trame[9] = (char)((short)val2 >> 8);
+    ax12_trame[10] = ~(uint8_t)(ax12_trame[2] + ax12_trame[3] + ax12_trame[4] + ax12_trame[5] + ax12_trame[6]
+                                + ax12_trame[7] + ax12_trame[8] + ax12_trame[9]);
 
     uart_write(ax12_uart, ax12_trame, 11);
 }
@@ -158,12 +170,13 @@ void ax12_send_3_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2
     ax12_trame[4] = INST_WRITE;
     ax12_trame[5] = param;
     ax12_trame[6] = (char)val;
-    ax12_trame[7] = (char)((short)val>>8);
+    ax12_trame[7] = (char)((short)val >> 8);
     ax12_trame[8] = (char)val2;
-    ax12_trame[9] = (char)((short)val2>>8);
+    ax12_trame[9] = (char)((short)val2 >> 8);
     ax12_trame[10] = (char)val3;
-    ax12_trame[11] = (char)((short)val3>>8);
-    ax12_trame[12] = ~(uint8_t)(ax12_trame[2]+ax12_trame[3]+ax12_trame[4]+ax12_trame[5]+ax12_trame[6]+ax12_trame[7]+ax12_trame[8]+ax12_trame[9]+ax12_trame[10]+ax12_trame[11]);
+    ax12_trame[11] = (char)((short)val3 >> 8);
+    ax12_trame[12] = ~(uint8_t)(ax12_trame[2] + ax12_trame[3] + ax12_trame[4] + ax12_trame[5] + ax12_trame[6]
+                                + ax12_trame[7] + ax12_trame[8] + ax12_trame[9] + ax12_trame[10] + ax12_trame[11]);
 
     uart_write(ax12_uart, ax12_trame, 13);
 }
@@ -204,7 +217,8 @@ void ax12_send_3_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2
     for(i = 6;i<20;i++) if(buffr[i] = =0xFF && buffr[i+1] = =0xFF) break;
     if(buffr[i+1]! = 0xFF) return 0;
     if(buffr[i+2]! = ax_id) return 0;
-    sum = ~(uint8_t)(buffr[i+2]+buffr[i+3]+buffr[i+4]+buffr[i+5]+buffr[i+6]+buffr[i+7]+buffr[i+8]+buffr[i+9]+buffr[i+10]);
+    sum =
+~(uint8_t)(buffr[i+2]+buffr[i+3]+buffr[i+4]+buffr[i+5]+buffr[i+6]+buffr[i+7]+buffr[i+8]+buffr[i+9]+buffr[i+10]);
     if(buffr[i+11]! = sum) return 0;
     *pos = (uint16_t)buffr[i+6]*256+buffr[i+5];
     *speed = (uint16_t)buffr[i+8]*256+buffr[i+7];
@@ -219,7 +233,7 @@ void ax12_send_3_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2
 {
     uint8_t i;
     for (i = 0; i<30; i++)
-    	buffr[i] = 0;
+        buffr[i] = 0;
 }*/
 
 /**

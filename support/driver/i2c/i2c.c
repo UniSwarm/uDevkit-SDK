@@ -10,7 +10,7 @@
  * independent
  */
 
- #include "i2c.h"
+#include "i2c.h"
 
 /**
  * @brief Read a register at address 'reg' in i2c chip with address 'address'
@@ -30,12 +30,12 @@ uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t fl
     }
     if (flags & I2C_REGADDR16)
     {
-        if (i2c_putc(device, (uint8_t)(reg>>8)) == -1)
+        if (i2c_putc(device, (uint8_t)(reg >> 8)) == -1)
         {
             return 0;
         }
     }
-    if (i2c_putc(device, (uint8_t)(reg&0x00FF)) == -1)
+    if (i2c_putc(device, (uint8_t)(reg & 0x00FF)) == -1)
     {
         return 0;
     }
@@ -54,7 +54,7 @@ uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t fl
     }
     if (flags & I2C_REG16)
     {
-        value = i2c_getc(device)<<8;
+        value = i2c_getc(device) << 8;
     }
     value += i2c_getc(device);
     i2c_nack(device);
@@ -82,12 +82,12 @@ ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t re
     }
     if (flags & I2C_REGADDR16)
     {
-        if (i2c_putc(device, (uint8_t)(reg>>8)) != 0)
+        if (i2c_putc(device, (uint8_t)(reg >> 8)) != 0)
         {
             return -1;
         }
     }
-    if (i2c_putc(device, (uint8_t)(reg&0x00FF)) != 0)
+    if (i2c_putc(device, (uint8_t)(reg & 0x00FF)) != 0)
     {
         return -1;
     }
@@ -106,16 +106,16 @@ ssize_t i2c_readregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t re
         return -1;
     }
     ptrreg = regs;
-    for (id=0; id<size; id++)
+    for (id = 0; id < size; id++)
     {
         if (flags & I2C_REG16)
         {
-            *ptrreg = i2c_getc(device)<<8;
+            *ptrreg = i2c_getc(device) << 8;
             ptrreg++;
         }
         *ptrreg = i2c_getc(device);
         ptrreg++;
-        if (id!=size-1)
+        if (id != size - 1)
         {
             i2c_ack(device);
         }
@@ -146,23 +146,23 @@ int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value
     }
     if (flags & I2C_REGADDR16)
     {
-        if (i2c_putc(device, (uint8_t)(reg>>8)) != 0)
+        if (i2c_putc(device, (uint8_t)(reg >> 8)) != 0)
         {
             return -1;
         }
     }
-    if (i2c_putc(device, (uint8_t)(reg&0x00FF)) != 0)
+    if (i2c_putc(device, (uint8_t)(reg & 0x00FF)) != 0)
     {
         return -1;
     }
     if (flags & I2C_REG16)
     {
-        if (i2c_putc(device, (uint8_t)(value>>8)) != 0)
+        if (i2c_putc(device, (uint8_t)(value >> 8)) != 0)
         {
             return -1;
         }
     }
-    if (i2c_putc(device, (uint8_t)(value&0x00FF)) != 0)
+    if (i2c_putc(device, (uint8_t)(value & 0x00FF)) != 0)
     {
         return -1;
     }
@@ -193,18 +193,18 @@ int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[
     }
     if (flags & I2C_REGADDR16)
     {
-        if (i2c_putc(device, (uint8_t)(reg>>8)) != 0)
+        if (i2c_putc(device, (uint8_t)(reg >> 8)) != 0)
         {
             return -1;
         }
     }
-    if (i2c_putc(device, (uint8_t)(reg&0x00FF)) != 0)
+    if (i2c_putc(device, (uint8_t)(reg & 0x00FF)) != 0)
     {
         return -1;
     }
 
     ptrreg = regs;
-    for (id=0; id<size; id++)
+    for (id = 0; id < size; id++)
     {
         if (flags & I2C_REG16)
         {

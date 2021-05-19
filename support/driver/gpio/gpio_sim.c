@@ -4,8 +4,8 @@
  * @copyright Robotips 2017
  * @copyright UniSwarm 2018-2021
  *
- * @date June 13, 2017, 15:10 PM 
- * 
+ * @date June 13, 2017, 15:10 PM
+ *
  * @brief GPIO support driver for simulation purpose
  */
 
@@ -45,17 +45,19 @@ void gpio_toggleBit(rt_dev_t device)
  */
 void gpio_writeBit(rt_dev_t device, GPIO_VALUE value)
 {
-    switch(value)
+    switch (value)
     {
-    case GPIO_LOW:
-        gpio_clearBit(device);
-        break;
-    case GPIO_HIGH:
-        gpio_setBit(device);
-        break;
-    case GPIO_TOGGLE:
-        gpio_toggleBit(device);
-        break;
+        case GPIO_LOW:
+            gpio_clearBit(device);
+            break;
+
+        case GPIO_HIGH:
+            gpio_setBit(device);
+            break;
+
+        case GPIO_TOGGLE:
+            gpio_toggleBit(device);
+            break;
     }
 }
 

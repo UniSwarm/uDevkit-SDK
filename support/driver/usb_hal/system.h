@@ -12,6 +12,6 @@ typedef enum
     SYSTEM_STATE_USB_RESUME
 } SYSTEM_STATE;
 
-void SYSTEM_Initialize( SYSTEM_STATE state );
+void SYSTEM_Initialize(SYSTEM_STATE state);
 
-#endif //SYSTEM_H
+#endif  // SYSTEM_H

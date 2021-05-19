@@ -16,10 +16,10 @@
 
 #include <archi.h>
 
-#if !defined (QEI_COUNT) || QEI_COUNT==0
-  #warning No device QEI periph on the current device
+#if !defined(QEI_COUNT) || QEI_COUNT == 0
+#    warning No device QEI periph on the current device
 #else
-  uint8_t qeis[QEI_COUNT] = {0};
+uint8_t qeis[QEI_COUNT] = {0};
 #endif
 
 /**
@@ -28,7 +28,7 @@
  */
 rt_dev_t qei_getFreeDevice(void)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t i;
     rt_dev_t device;
 
@@ -61,7 +61,7 @@ rt_dev_t qei_getFreeDevice(void)
  */
 int qei_open(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei >= QEI_COUNT)
     {
@@ -87,7 +87,7 @@ int qei_open(rt_dev_t device)
  */
 int qei_close(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei >= QEI_COUNT)
     {
@@ -110,7 +110,7 @@ int qei_close(rt_dev_t device)
  */
 int qei_enable(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei > QEI_COUNT)
     {
@@ -120,37 +120,37 @@ int qei_enable(rt_dev_t device)
     return -1;
 #endif
 
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     switch (qei)
     {
-    case 0:
-        QEI1CONbits.QEIEN = 1;
-        break;
-#if QEI_COUNT>=2
-    case 1:
-        QEI2CONbits.QEIEN = 1;
-        break;
-#endif
-#if QEI_COUNT>=3
-    case 2:
-        QEI3CONbits.QEIEN = 1;
-        break;
-#endif
-#if QEI_COUNT>=4
-    case 3:
-        QEI4CONbits.QEIEN = 1;
-        break;
-#endif
-#if QEI_COUNT>=5
-    case 4:
-        QEI5CONbits.QEIEN = 1;
-        break;
-#endif
-#if QEI_COUNT>=6
-    case 5:
-        QEI6CONbits.QEIEN = 1;
-        break;
-#endif
+        case 0:
+            QEI1CONbits.QEIEN = 1;
+            break;
+#    if QEI_COUNT >= 2
+        case 1:
+            QEI2CONbits.QEIEN = 1;
+            break;
+#    endif
+#    if QEI_COUNT >= 3
+        case 2:
+            QEI3CONbits.QEIEN = 1;
+            break;
+#    endif
+#    if QEI_COUNT >= 4
+        case 3:
+            QEI4CONbits.QEIEN = 1;
+            break;
+#    endif
+#    if QEI_COUNT >= 5
+        case 4:
+            QEI5CONbits.QEIEN = 1;
+            break;
+#    endif
+#    if QEI_COUNT >= 6
+        case 5:
+            QEI6CONbits.QEIEN = 1;
+            break;
+#    endif
     }
     return 0;
 #endif
@@ -163,7 +163,7 @@ int qei_enable(rt_dev_t device)
  */
 int qei_disable(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei > QEI_COUNT)
     {
@@ -173,37 +173,37 @@ int qei_disable(rt_dev_t device)
     return -1;
 #endif
 
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     switch (qei)
     {
-    case 0:
-        QEI1CONbits.QEIEN = 0;
-        break;
-#if QEI_COUNT>=2
-    case 1:
-        QEI2CONbits.QEIEN = 0;
-        break;
-#endif
-#if QEI_COUNT>=3
-    case 2:
-        QEI3CONbits.QEIEN = 0;
-        break;
-#endif
-#if QEI_COUNT>=4
-    case 3:
-        QEI4CONbits.QEIEN = 0;
-        break;
-#endif
-#if QEI_COUNT>=5
-    case 4:
-        QEI5CONbits.QEIEN = 0;
-        break;
-#endif
-#if QEI_COUNT>=6
-    case 5:
-        QEI6CONbits.QEIEN = 0;
-        break;
-#endif
+        case 0:
+            QEI1CONbits.QEIEN = 0;
+            break;
+#    if QEI_COUNT >= 2
+        case 1:
+            QEI2CONbits.QEIEN = 0;
+            break;
+#    endif
+#    if QEI_COUNT >= 3
+        case 2:
+            QEI3CONbits.QEIEN = 0;
+            break;
+#    endif
+#    if QEI_COUNT >= 4
+        case 3:
+            QEI4CONbits.QEIEN = 0;
+            break;
+#    endif
+#    if QEI_COUNT >= 5
+        case 4:
+            QEI5CONbits.QEIEN = 0;
+            break;
+#    endif
+#    if QEI_COUNT >= 6
+        case 5:
+            QEI6CONbits.QEIEN = 0;
+            break;
+#    endif
     }
     return 0;
 #endif
@@ -217,7 +217,7 @@ int qei_disable(rt_dev_t device)
  */
 int qei_setConfig(rt_dev_t device, uint16_t config)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei > QEI_COUNT)
     {
@@ -227,32 +227,32 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
     return -1;
 #endif
 
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     switch (qei)
     {
-    case 0:
-        // TODO implement me
-        break;
-#if QEI_COUNT>=2
-    case 1:
-        break;
-#endif
-#if QEI_COUNT>=3
-    case 2:
-        break;
-#endif
-#if QEI_COUNT>=4
-    case 3:
-        break;
-#endif
-#if QEI_COUNT>=5
-    case 4:
-        break;
-#endif
-#if QEI_COUNT>=6
-    case 5:
-        break;
-#endif
+        case 0:
+            // TODO implement me
+            break;
+#    if QEI_COUNT >= 2
+        case 1:
+            break;
+#    endif
+#    if QEI_COUNT >= 3
+        case 2:
+            break;
+#    endif
+#    if QEI_COUNT >= 4
+        case 3:
+            break;
+#    endif
+#    if QEI_COUNT >= 5
+        case 4:
+            break;
+#    endif
+#    if QEI_COUNT >= 6
+        case 5:
+            break;
+#    endif
     }
     return 0;
 #endif
@@ -290,32 +290,32 @@ int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum)
  */
 qei_type qei_getValue(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     switch (qei)
     {
-    case 0:
-        return POS1CNT;
-#if QEI_COUNT>=2
-    case 1:
-        return POS2CNT;
-#endif
-#if QEI_COUNT>=3
-    case 2:
-        return POS3CNT;
-#endif
-#if QEI_COUNT>=4
-    case 3:
-        return POS4CNT;
-#endif
-#if QEI_COUNT>=5
-    case 4:
-        return POS5CNT;
-#endif
-#if QEI_COUNT>=6
-    case 5:
-        return POS6CNT;
-#endif
+        case 0:
+            return POS1CNT;
+#    if QEI_COUNT >= 2
+        case 1:
+            return POS2CNT;
+#    endif
+#    if QEI_COUNT >= 3
+        case 2:
+            return POS3CNT;
+#    endif
+#    if QEI_COUNT >= 4
+        case 3:
+            return POS4CNT;
+#    endif
+#    if QEI_COUNT >= 5
+        case 4:
+            return POS5CNT;
+#    endif
+#    if QEI_COUNT >= 6
+        case 5:
+            return POS6CNT;
+#    endif
     }
     return 0;
 #endif

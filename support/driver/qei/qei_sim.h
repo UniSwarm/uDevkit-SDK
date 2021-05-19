@@ -14,4 +14,4 @@
 
 #include "qei.h"
 
-#endif // QEI_SIM_H
+#endif  // QEI_SIM_H

@@ -14,4 +14,4 @@
 
 #include "usb_serial.h"
 
-#endif // USB_SERIAL_SIM_H
+#endif  // USB_SERIAL_SIM_H

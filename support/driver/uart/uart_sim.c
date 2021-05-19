@@ -9,15 +9,15 @@
  * @brief Uart simulator support for udevkit for simulation purpose
  */
 
-#include "uart.h"
 #include "uart_sim.h"
 #include "simulator.h"
+#include "uart.h"
 
 #include "driver/sysclock.h"
 #include "sys/fifo.h"
 
-#if !defined (UART_COUNT) || UART_COUNT==0
-    #warning No device
+#if !defined(UART_COUNT) || UART_COUNT == 0
+#    warning No device
 #endif
 
 #include <stdio.h>
@@ -30,32 +30,31 @@ void uart_closeDevice(rt_dev_t device);
 /****************************************************************************************/
 /*          External variable                                                           */
 
-
 /****************************************************************************************/
 /*          Local variable                                                              */
 
 uart_dev uarts[] = {
-    {.baudSpeed=0},
-#if UART_COUNT>=2
-    {.baudSpeed=0},
+    {.baudSpeed = 0},
+#if UART_COUNT >= 2
+    {.baudSpeed = 0},
 #endif
-#if UART_COUNT>=3
-    {.baudSpeed=0},
+#if UART_COUNT >= 3
+    {.baudSpeed = 0},
 #endif
-#if UART_COUNT>=4
-    {.baudSpeed=0},
+#if UART_COUNT >= 4
+    {.baudSpeed = 0},
 #endif
-#if UART_COUNT>=5
-    {.baudSpeed=0},
+#if UART_COUNT >= 5
+    {.baudSpeed = 0},
 #endif
-#if UART_COUNT>=6
-    {.baudSpeed=0},
+#if UART_COUNT >= 6
+    {.baudSpeed = 0},
 #endif
 };
 
 void uart_sendconfig(uint8_t uart)
 {
-    simulator_send(UART_SIM_MODULE, uart, UART_SIM_CONFIG, (char*)&uarts[uart], sizeof(uart_dev));
+    simulator_send(UART_SIM_MODULE, uart, UART_SIM_CONFIG, (char *)&uarts[uart], sizeof(uart_dev));
 }
 
 rt_dev_t uart_getFreeDevice(void)
@@ -175,8 +174,7 @@ uint32_t uart_effectiveBaudSpeed(rt_dev_t device)
     return uarts[uart].baudSpeed;
 }
 
-int uart_setBitConfig(rt_dev_t device, uint8_t bitLength,
-                      uint8_t bitParity, uint8_t bitStop)
+int uart_setBitConfig(rt_dev_t device, uint8_t bitLength, uint8_t bitParity, uint8_t bitStop)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
@@ -255,7 +253,7 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
 {
-	ssize_t size_read;
+    ssize_t size_read;
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
     {
@@ -265,7 +263,7 @@ ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
     // TODO
     simulator_rec_task();
     size_read = simulator_recv(UART_SIM_MODULE, uart, UART_SIM_READ, data, size_max);
-    if (size_read<0)
+    if (size_read < 0)
     {
         size_read = 0;
     }

@@ -30,8 +30,10 @@ MSI_CORE_STATUS msi_master_status(void)
     {
         case 0b00:
             return MSI_CORE_STATUS_LOWPOWERRUN;
+
         case 0b01:
             return MSI_CORE_STATUS_STARTED;
+
         case 0b10:
             return MSI_CORE_STATUS_SLEEPED;
     }

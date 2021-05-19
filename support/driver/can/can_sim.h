@@ -7,7 +7,7 @@
  *
  * @brief CAN udevkit simulator support for simulation purpose
  */
- 
+
 #ifndef CAN_SIM_H
 #define CAN_SIM_H
 
@@ -42,9 +42,9 @@ typedef struct
 #define CAN_SIM_READ   0x0003
 
 #ifndef SIMULATOR
- #define can_sim_setBus(device, bus) 0
+#    define can_sim_setBus(device, bus) 0
 #else
- int can_sim_setBus(rt_dev_t device, char *bus);
+int can_sim_setBus(rt_dev_t device, char *bus);
 #endif
 
-#endif // CAN_SIM_H
+#endif  // CAN_SIM_H

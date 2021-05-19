@@ -17,10 +17,10 @@
 
 #include <archi.h>
 
-#if !defined (QEI_COUNT) || QEI_COUNT==0
-  #warning No device QEI periph on the current device
+#if !defined(QEI_COUNT) || QEI_COUNT == 0
+#    warning No device QEI periph on the current device
 #else
-  uint16_t qeis[QEI_COUNT] = {0};
+uint16_t qeis[QEI_COUNT] = {0};
 #endif
 
 /**
@@ -29,7 +29,7 @@
  */
 rt_dev_t qei_getFreeDevice(void)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t i;
     rt_dev_t device;
 
@@ -62,7 +62,7 @@ rt_dev_t qei_getFreeDevice(void)
  */
 int qei_open(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei >= QEI_COUNT)
     {
@@ -88,7 +88,7 @@ int qei_open(rt_dev_t device)
  */
 int qei_releaseDevice(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei >= QEI_COUNT)
     {
@@ -111,7 +111,7 @@ int qei_releaseDevice(rt_dev_t device)
  */
 int qei_enable(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei > QEI_COUNT)
     {
@@ -121,20 +121,20 @@ int qei_enable(rt_dev_t device)
     return -1;
 #endif
 
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     if (qei == 0)
     {
         QEI1CON = qeis[1];
     }
 #endif
-#if QEI_COUNT>=2
+#if QEI_COUNT >= 2
     if (qei == 1)
     {
         QEI2CON = qeis[2];
     }
 #endif
 
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     return 0;
 #endif
 }
@@ -146,7 +146,7 @@ int qei_enable(rt_dev_t device)
  */
 int qei_disable(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei > QEI_COUNT)
     {
@@ -156,20 +156,20 @@ int qei_disable(rt_dev_t device)
     return -1;
 #endif
 
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     if (qei == 0)
     {
         QEI1CONbits.QEIM = 0b000;
     }
 #endif
-#if QEI_COUNT>=2
+#if QEI_COUNT >= 2
     if (qei == 1)
     {
         QEI2CONbits.QEIM = 0b000;
     }
 #endif
 
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     return 0;
 #endif
 }
@@ -218,19 +218,19 @@ int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum)
  */
 qei_type qei_getValue(rt_dev_t device)
 {
-  #if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei == 0)
     {
         return POS1CNT;
     }
-  #endif
-  #if QEI_COUNT>=2
+#endif
+#if QEI_COUNT >= 2
     if (qei == 1)
     {
         return POS2CNT;
     }
-  #endif
+#endif
     return 0;
 }
 

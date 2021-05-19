@@ -17,17 +17,20 @@
 
 #include "timer.h"
 
-#include <driver/sysclock.h>
 #include <archi.h>
+#include <driver/sysclock.h>
 
-#if !defined (TIMER_COUNT) || TIMER_COUNT==0
-  #warning "No uart on the current device or unknow device"
+#if !defined(TIMER_COUNT) || TIMER_COUNT == 0
+#    warning "No uart on the current device or unknow device"
 #endif
 
-#define TIMER_FLAG_UNUSED  0x00
-typedef struct {
-    union {
-        struct {
+#define TIMER_FLAG_UNUSED 0x00
+typedef struct
+{
+    union
+    {
+        struct
+        {
             unsigned used : 1;
             unsigned enabled : 1;
             unsigned bit32 : 1;
@@ -45,68 +48,32 @@ struct timer_dev
 };
 
 struct timer_dev timers[] = {
-#if TIMER_COUNT>=1
-    {
-        .periodMs = 0,
-        .flags = {{.val = TIMER_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if TIMER_COUNT >= 1
+    {.periodMs = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if TIMER_COUNT>=2
-    {
-        .periodMs = 0,
-        .flags = {{.val = TIMER_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if TIMER_COUNT >= 2
+    {.periodMs = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if TIMER_COUNT>=3
-    {
-        .periodMs = 0,
-        .flags = {{.val = TIMER_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if TIMER_COUNT >= 3
+    {.periodMs = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if TIMER_COUNT>=4
-    {
-        .periodMs = 0,
-        .flags = {{.val = TIMER_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if TIMER_COUNT >= 4
+    {.periodMs = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if TIMER_COUNT>=5
-    {
-        .periodMs = 0,
-        .flags = {{.val = TIMER_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if TIMER_COUNT >= 5
+    {.periodMs = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if TIMER_COUNT>=6
-    {
-        .periodMs = 0,
-        .flags = {{.val = TIMER_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if TIMER_COUNT >= 6
+    {.periodMs = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if TIMER_COUNT>=7
-    {
-        .periodMs = 0,
-        .flags = {{.val = TIMER_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if TIMER_COUNT >= 7
+    {.periodMs = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if TIMER_COUNT>=8
-    {
-        .periodMs = 0,
-        .flags = {{.val = TIMER_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if TIMER_COUNT >= 8
+    {.periodMs = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
-#if TIMER_COUNT>=9
-    {
-        .periodMs = 0,
-        .flags = {{.val = TIMER_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if TIMER_COUNT >= 9
+    {.periodMs = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
 };
 
@@ -116,7 +83,7 @@ struct timer_dev timers[] = {
  */
 rt_dev_t timer_getFreeDevice(void)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t i;
     rt_dev_t device;
 
@@ -148,7 +115,7 @@ rt_dev_t timer_getFreeDevice(void)
  */
 int timer_open(rt_dev_t device)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -174,7 +141,7 @@ int timer_open(rt_dev_t device)
  */
 int timer_close(rt_dev_t device)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -198,7 +165,7 @@ int timer_close(rt_dev_t device)
  */
 int timer_enable(rt_dev_t device)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -209,139 +176,139 @@ int timer_enable(rt_dev_t device)
 
     switch (timer)
     {
-    case 0:
-        T1CONbits.TON = 1;  // enable timer module
-        _T1IF = 0;
-        if (timers[0].handler)
-        {
-            _T1IE = 1;
-        }
-        else
-        {
-            _T1IE = 0;
-        }
-        _T1IP = 4;
-        break;
-#if TIMER_COUNT>=2
-    case 1:
-        T2CONbits.TON = 1;  // enable timer module
-        _T2IF = 0;
-        if (timers[1].handler)
-        {
-            _T2IE = 1;
-        }
-        else
-        {
-            _T2IE = 0;
-        }
-        _T2IP = 4;
-        break;
-#endif
-#if TIMER_COUNT>=3
-    case 2:
-        T3CONbits.TON = 1;  // enable timer module
-        _T3IF = 0;
-        if (timers[2].handler)
-        {
-            _T3IE = 1;
-        }
-        else
-        {
-            _T3IE = 0;
-        }
-        _T3IP = 4;
-        break;
-#endif
-#if TIMER_COUNT>=4
-    case 3:
-        T4CONbits.TON = 1;  // enable timer module
-        _T4IF = 0;
-        if (timers[3].handler)
-        {
-            _T4IE = 1;
-        }
-        else
-        {
-            _T4IE = 0;
-        }
-        _T4IP = 4;
-        break;
-#endif
-#if TIMER_COUNT>=5
-    case 4:
-        T5CONbits.TON = 1;  // enable timer module
-        _T5IF = 0;
-        if (timers[4].handler)
-        {
-            _T5IE = 1;
-        }
-        else
-        {
-            _T5IE = 0;
-        }
-        _T5IP = 4;
-        break;
-#endif
-#if TIMER_COUNT>=6
-    case 5:
-        T6CONbits.TON = 1;  // enable timer module
-        _T6IF = 0;
-        if (timers[5].handler)
-        {
-            _T6IE = 1;
-        }
-        else
-        {
-            _T6IE = 0;
-        }
-        _T6IP = 4;
-        break;
-#endif
-#if TIMER_COUNT>=7
-    case 6:
-        T7CONbits.TON = 1;  // enable timer module
-        _T7IF = 0;
-        if (timers[6].handler)
-        {
-            _T7IE = 1;
-        }
-        else
-        {
-            _T7IE = 0;
-        }
-        _T7IP = 4;
-        break;
-#endif
-#if TIMER_COUNT>=8
-    case 7:
-        T8CONbits.TON = 1;  // enable timer module
-        _T8IF = 0;
-        if (timers[7].handler)
-        {
-            _T8IE = 1;
-        }
-        else
-        {
-            _T8IE = 0;
-        }
-        _T8IP = 4;
-        break;
-#endif
-#if TIMER_COUNT>=9
-    case 8:
-        T9CONbits.TON = 1;  // enable timer module
-        _T9IF = 0;
-        if (timers[8].handler)
-        {
-            _T9IE = 1;
-        }
-        else
-        {
-            _T9IE = 0;
-        }
-        _T9IP = 4;
-        break;
-#endif
+        case 0:
+            T1CONbits.TON = 1;  // enable timer module
+            _T1IF = 0;
+            if (timers[0].handler)
+            {
+                _T1IE = 1;
+            }
+            else
+            {
+                _T1IE = 0;
+            }
+            _T1IP = 4;
+            break;
+#    if TIMER_COUNT >= 2
+        case 1:
+            T2CONbits.TON = 1;  // enable timer module
+            _T2IF = 0;
+            if (timers[1].handler)
+            {
+                _T2IE = 1;
+            }
+            else
+            {
+                _T2IE = 0;
+            }
+            _T2IP = 4;
+            break;
+#    endif
+#    if TIMER_COUNT >= 3
+        case 2:
+            T3CONbits.TON = 1;  // enable timer module
+            _T3IF = 0;
+            if (timers[2].handler)
+            {
+                _T3IE = 1;
+            }
+            else
+            {
+                _T3IE = 0;
+            }
+            _T3IP = 4;
+            break;
+#    endif
+#    if TIMER_COUNT >= 4
+        case 3:
+            T4CONbits.TON = 1;  // enable timer module
+            _T4IF = 0;
+            if (timers[3].handler)
+            {
+                _T4IE = 1;
+            }
+            else
+            {
+                _T4IE = 0;
+            }
+            _T4IP = 4;
+            break;
+#    endif
+#    if TIMER_COUNT >= 5
+        case 4:
+            T5CONbits.TON = 1;  // enable timer module
+            _T5IF = 0;
+            if (timers[4].handler)
+            {
+                _T5IE = 1;
+            }
+            else
+            {
+                _T5IE = 0;
+            }
+            _T5IP = 4;
+            break;
+#    endif
+#    if TIMER_COUNT >= 6
+        case 5:
+            T6CONbits.TON = 1;  // enable timer module
+            _T6IF = 0;
+            if (timers[5].handler)
+            {
+                _T6IE = 1;
+            }
+            else
+            {
+                _T6IE = 0;
+            }
+            _T6IP = 4;
+            break;
+#    endif
+#    if TIMER_COUNT >= 7
+        case 6:
+            T7CONbits.TON = 1;  // enable timer module
+            _T7IF = 0;
+            if (timers[6].handler)
+            {
+                _T7IE = 1;
+            }
+            else
+            {
+                _T7IE = 0;
+            }
+            _T7IP = 4;
+            break;
+#    endif
+#    if TIMER_COUNT >= 8
+        case 7:
+            T8CONbits.TON = 1;  // enable timer module
+            _T8IF = 0;
+            if (timers[7].handler)
+            {
+                _T8IE = 1;
+            }
+            else
+            {
+                _T8IE = 0;
+            }
+            _T8IP = 4;
+            break;
+#    endif
+#    if TIMER_COUNT >= 9
+        case 8:
+            T9CONbits.TON = 1;  // enable timer module
+            _T9IF = 0;
+            if (timers[8].handler)
+            {
+                _T9IE = 1;
+            }
+            else
+            {
+                _T9IE = 0;
+            }
+            _T9IP = 4;
+            break;
+#    endif
     }
 
     return 0;
@@ -357,7 +324,7 @@ int timer_enable(rt_dev_t device)
  */
 int timer_disable(rt_dev_t device)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -368,58 +335,58 @@ int timer_disable(rt_dev_t device)
 
     switch (timer)
     {
-    case 0:
-        T1CONbits.TON = 0;  // disable timer module
-        _T1IE = 0;
-        break;
-#if TIMER_COUNT>=2
-    case 1:
-        T2CONbits.TON = 0;  // disable timer module
-        _T2IE = 0;
-        break;
-#endif
-#if TIMER_COUNT>=3
-    case 2:
-        T3CONbits.TON = 0;  // disable timer module
-        _T3IE = 0;
-        break;
-#endif
-#if TIMER_COUNT>=4
-    case 3:
-        T4CONbits.TON = 0;  // disable timer module
-        _T4IE = 0;
-        break;
-#endif
-#if TIMER_COUNT>=5
-    case 4:
-        T5CONbits.TON = 0;  // disable timer module
-        _T5IE = 0;
-        break;
-#endif
-#if TIMER_COUNT>=6
-    case 5:
-        T6CONbits.TON = 0;  // disable timer module
-        _T6IE = 0;
-        break;
-#endif
-#if TIMER_COUNT>=7
-    case 6:
-        T7CONbits.TON = 0;  // disable timer module
-        _T7IE = 0;
-        break;
-#endif
-#if TIMER_COUNT>=8
-    case 7:
-        T8CONbits.TON = 0;  // disable timer module
-        _T8IE = 0;
-        break;
-#endif
-#if TIMER_COUNT>=9
-    case 8:
-        T9CONbits.TON = 0;  // disable timer module
-        _T9IE = 0;
-        break;
-#endif
+        case 0:
+            T1CONbits.TON = 0;  // disable timer module
+            _T1IE = 0;
+            break;
+#    if TIMER_COUNT >= 2
+        case 1:
+            T2CONbits.TON = 0;  // disable timer module
+            _T2IE = 0;
+            break;
+#    endif
+#    if TIMER_COUNT >= 3
+        case 2:
+            T3CONbits.TON = 0;  // disable timer module
+            _T3IE = 0;
+            break;
+#    endif
+#    if TIMER_COUNT >= 4
+        case 3:
+            T4CONbits.TON = 0;  // disable timer module
+            _T4IE = 0;
+            break;
+#    endif
+#    if TIMER_COUNT >= 5
+        case 4:
+            T5CONbits.TON = 0;  // disable timer module
+            _T5IE = 0;
+            break;
+#    endif
+#    if TIMER_COUNT >= 6
+        case 5:
+            T6CONbits.TON = 0;  // disable timer module
+            _T6IE = 0;
+            break;
+#    endif
+#    if TIMER_COUNT >= 7
+        case 6:
+            T7CONbits.TON = 0;  // disable timer module
+            _T7IE = 0;
+            break;
+#    endif
+#    if TIMER_COUNT >= 8
+        case 7:
+            T8CONbits.TON = 0;  // disable timer module
+            _T8IE = 0;
+            break;
+#    endif
+#    if TIMER_COUNT >= 9
+        case 8:
+            T9CONbits.TON = 0;  // disable timer module
+            _T9IE = 0;
+            break;
+#    endif
     }
 
     return 0;
@@ -436,7 +403,7 @@ int timer_disable(rt_dev_t device)
  */
 int timer_setHandler(rt_dev_t device, void (*handler)(void))
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -459,7 +426,7 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
  */
 int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint32_t prvalue;
     uint8_t div = 0;
     uint8_t timer = MINOR(device);
@@ -471,7 +438,7 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
     timers[timer].periodMs = periodMs;
 
     prvalue = sysclock_periphFreq(SYSCLOCK_CLOCK_TIMER) / 1000 * periodMs;
-    if(prvalue > 65535)
+    if (prvalue > 65535)
     {
         div = 0b11;
         prvalue >>= 8;
@@ -483,58 +450,58 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 
     switch (timer)
     {
-    case 0:
-        T1CONbits.TCKPS = div;   // set divide number
-        PR1 = prvalue;           // pr value, comparator value
-        break;
-#if TIMER_COUNT>=2
-    case 1:
-        T2CONbits.TCKPS = div;   // set divide number
-        PR2 = prvalue;           // pr value, comparator value
-        break;
-#endif
-#if TIMER_COUNT>=3
-    case 2:
-        T3CONbits.TCKPS = div;   // set divide number
-        PR3 = prvalue;           // pr value, comparator value
-        break;
-#endif
-#if TIMER_COUNT>=4
-    case 3:
-        T4CONbits.TCKPS = div;   // set divide number
-        PR4 = prvalue;           // pr value, comparator value
-        break;
-#endif
-#if TIMER_COUNT>=5
-    case 4:
-        T5CONbits.TCKPS = div;   // set divide number
-        PR5 = prvalue;           // pr value, comparator value
-        break;
-#endif
-#if TIMER_COUNT>=6
-    case 5:
-        T6CONbits.TCKPS = div;   // set divide number
-        PR6 = prvalue;           // pr value, comparator value
-        break;
-#endif
-#if TIMER_COUNT>=7
-    case 6:
-        T7CONbits.TCKPS = div;   // set divide number
-        PR7 = prvalue;           // pr value, comparator value
-        break;
-#endif
-#if TIMER_COUNT>=8
-    case 7:
-        T8CONbits.TCKPS = div;   // set divide number
-        PR8 = prvalue;           // pr value, comparator value
-        break;
-#endif
-#if TIMER_COUNT>=9
-    case 8:
-        T9CONbits.TCKPS = div;   // set divide number
-        PR9 = prvalue;           // pr value, comparator value
-        break;
-#endif
+        case 0:
+            T1CONbits.TCKPS = div;  // set divide number
+            PR1 = prvalue;          // pr value, comparator value
+            break;
+#    if TIMER_COUNT >= 2
+        case 1:
+            T2CONbits.TCKPS = div;  // set divide number
+            PR2 = prvalue;          // pr value, comparator value
+            break;
+#    endif
+#    if TIMER_COUNT >= 3
+        case 2:
+            T3CONbits.TCKPS = div;  // set divide number
+            PR3 = prvalue;          // pr value, comparator value
+            break;
+#    endif
+#    if TIMER_COUNT >= 4
+        case 3:
+            T4CONbits.TCKPS = div;  // set divide number
+            PR4 = prvalue;          // pr value, comparator value
+            break;
+#    endif
+#    if TIMER_COUNT >= 5
+        case 4:
+            T5CONbits.TCKPS = div;  // set divide number
+            PR5 = prvalue;          // pr value, comparator value
+            break;
+#    endif
+#    if TIMER_COUNT >= 6
+        case 5:
+            T6CONbits.TCKPS = div;  // set divide number
+            PR6 = prvalue;          // pr value, comparator value
+            break;
+#    endif
+#    if TIMER_COUNT >= 7
+        case 6:
+            T7CONbits.TCKPS = div;  // set divide number
+            PR7 = prvalue;          // pr value, comparator value
+            break;
+#    endif
+#    if TIMER_COUNT >= 8
+        case 7:
+            T8CONbits.TCKPS = div;  // set divide number
+            PR8 = prvalue;          // pr value, comparator value
+            break;
+#    endif
+#    if TIMER_COUNT >= 9
+        case 8:
+            T9CONbits.TCKPS = div;  // set divide number
+            PR9 = prvalue;          // pr value, comparator value
+            break;
+#    endif
     }
 
     return 0;
@@ -550,7 +517,7 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
  */
 uint32_t timer_periodMs(rt_dev_t device)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -570,7 +537,7 @@ uint32_t timer_periodMs(rt_dev_t device)
  */
 uint16_t timer_getValue(rt_dev_t device)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint16_t value;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
@@ -580,49 +547,49 @@ uint16_t timer_getValue(rt_dev_t device)
 
     switch (timer)
     {
-    case 0:
-        value = TMR1;
-        break;
-#if TIMER_COUNT>=2
-    case 1:
-        value = TMR2;
-        break;
-#endif
-#if TIMER_COUNT>=3
-    case 2:
-        value = TMR3;
-        break;
-#endif
-#if TIMER_COUNT>=4
-    case 3:
-        value = TMR4;
-        break;
-#endif
-#if TIMER_COUNT>=5
-    case 4:
-        value = TMR5;
-        break;
-#endif
-#if TIMER_COUNT>=6
-    case 5:
-        value = TMR6;
-        break;
-#endif
-#if TIMER_COUNT>=7
-    case 6:
-        value = TMR7;
-        break;
-#endif
-#if TIMER_COUNT>=8
-    case 7:
-        value = TMR8;
-        break;
-#endif
-#if TIMER_COUNT>=9
-    case 8:
-        value = TMR9;
-        break;
-#endif
+        case 0:
+            value = TMR1;
+            break;
+#    if TIMER_COUNT >= 2
+        case 1:
+            value = TMR2;
+            break;
+#    endif
+#    if TIMER_COUNT >= 3
+        case 2:
+            value = TMR3;
+            break;
+#    endif
+#    if TIMER_COUNT >= 4
+        case 3:
+            value = TMR4;
+            break;
+#    endif
+#    if TIMER_COUNT >= 5
+        case 4:
+            value = TMR5;
+            break;
+#    endif
+#    if TIMER_COUNT >= 6
+        case 5:
+            value = TMR6;
+            break;
+#    endif
+#    if TIMER_COUNT >= 7
+        case 6:
+            value = TMR7;
+            break;
+#    endif
+#    if TIMER_COUNT >= 8
+        case 7:
+            value = TMR8;
+            break;
+#    endif
+#    if TIMER_COUNT >= 9
+        case 8:
+            value = TMR9;
+            break;
+#    endif
     }
 
     return value;
@@ -638,7 +605,7 @@ uint16_t timer_getValue(rt_dev_t device)
  */
 int timer_setValue(rt_dev_t device, uint16_t value)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -647,49 +614,49 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 
     switch (timer)
     {
-    case 0:
-        TMR1 = value;
-        break;
-#if TIMER_COUNT>=2
-    case 1:
-        TMR2 = value;
-        break;
-#endif
-#if TIMER_COUNT>=3
-    case 2:
-        TMR3 = value;
-        break;
-#endif
-#if TIMER_COUNT>=4
-    case 3:
-        TMR4 = value;
-        break;
-#endif
-#if TIMER_COUNT>=5
-    case 4:
-        TMR5 = value;
-        break;
-#endif
-#if TIMER_COUNT>=6
-    case 5:
-        TMR6 = value;
-        break;
-#endif
-#if TIMER_COUNT>=7
-    case 6:
-        TMR7 = value;
-        break;
-#endif
-#if TIMER_COUNT>=8
-    case 7:
-        TMR8 = value;
-        break;
-#endif
-#if TIMER_COUNT>=9
-    case 8:
-        TMR9 = value;
-        break;
-#endif
+        case 0:
+            TMR1 = value;
+            break;
+#    if TIMER_COUNT >= 2
+        case 1:
+            TMR2 = value;
+            break;
+#    endif
+#    if TIMER_COUNT >= 3
+        case 2:
+            TMR3 = value;
+            break;
+#    endif
+#    if TIMER_COUNT >= 4
+        case 3:
+            TMR4 = value;
+            break;
+#    endif
+#    if TIMER_COUNT >= 5
+        case 4:
+            TMR5 = value;
+            break;
+#    endif
+#    if TIMER_COUNT >= 6
+        case 5:
+            TMR6 = value;
+            break;
+#    endif
+#    if TIMER_COUNT >= 7
+        case 6:
+            TMR7 = value;
+            break;
+#    endif
+#    if TIMER_COUNT >= 8
+        case 7:
+            TMR8 = value;
+            break;
+#    endif
+#    if TIMER_COUNT >= 9
+        case 8:
+            TMR9 = value;
+            break;
+#    endif
     }
 
     return 0;
@@ -698,8 +665,8 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 #endif
 }
 
-#if TIMER_COUNT>=1
-void __attribute__ ((interrupt,no_auto_psv)) _T1Interrupt(void)
+#if TIMER_COUNT >= 1
+void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void)
 {
     if (timers[0].handler)
     {
@@ -710,8 +677,8 @@ void __attribute__ ((interrupt,no_auto_psv)) _T1Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT>=2
-void __attribute__ ((interrupt,no_auto_psv)) _T2Interrupt(void)
+#if TIMER_COUNT >= 2
+void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void)
 {
     if (timers[1].handler)
     {
@@ -722,8 +689,8 @@ void __attribute__ ((interrupt,no_auto_psv)) _T2Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT>=3
-void __attribute__ ((interrupt,no_auto_psv)) _T3Interrupt(void)
+#if TIMER_COUNT >= 3
+void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void)
 {
     if (timers[2].handler)
     {
@@ -734,8 +701,8 @@ void __attribute__ ((interrupt,no_auto_psv)) _T3Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT>=4
-void __attribute__ ((interrupt,no_auto_psv)) _T4Interrupt(void)
+#if TIMER_COUNT >= 4
+void __attribute__((interrupt, no_auto_psv)) _T4Interrupt(void)
 {
     if (timers[3].handler)
     {
@@ -746,8 +713,8 @@ void __attribute__ ((interrupt,no_auto_psv)) _T4Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT>=5
-void __attribute__ ((interrupt,no_auto_psv)) _T5Interrupt(void)
+#if TIMER_COUNT >= 5
+void __attribute__((interrupt, no_auto_psv)) _T5Interrupt(void)
 {
     if (timers[4].handler)
     {
@@ -758,8 +725,8 @@ void __attribute__ ((interrupt,no_auto_psv)) _T5Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT>=6
-void __attribute__ ((interrupt,no_auto_psv)) _T6Interrupt(void)
+#if TIMER_COUNT >= 6
+void __attribute__((interrupt, no_auto_psv)) _T6Interrupt(void)
 {
     if (timers[5].handler)
     {
@@ -770,8 +737,8 @@ void __attribute__ ((interrupt,no_auto_psv)) _T6Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT>=7
-void __attribute__ ((interrupt,no_auto_psv)) _T7Interrupt(void)
+#if TIMER_COUNT >= 7
+void __attribute__((interrupt, no_auto_psv)) _T7Interrupt(void)
 {
     if (timers[6].handler)
     {
@@ -782,8 +749,8 @@ void __attribute__ ((interrupt,no_auto_psv)) _T7Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT>=8
-void __attribute__ ((interrupt,no_auto_psv)) _T8Interrupt(void)
+#if TIMER_COUNT >= 8
+void __attribute__((interrupt, no_auto_psv)) _T8Interrupt(void)
 {
     if (timers[7].handler)
     {
@@ -794,8 +761,8 @@ void __attribute__ ((interrupt,no_auto_psv)) _T8Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT>=9
-void __attribute__ ((interrupt,no_auto_psv)) _T9Interrupt(void)
+#if TIMER_COUNT >= 9
+void __attribute__((interrupt, no_auto_psv)) _T9Interrupt(void)
 {
     if (timers[8].handler)
     {

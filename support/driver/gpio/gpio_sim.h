@@ -4,8 +4,8 @@
  * @copyright Robotips 2017
  * @copyright UniSwarm 2018-2021
  *
- * @date June 13, 2017, 15:10 PM 
- * 
+ * @date June 13, 2017, 15:10 PM
+ *
  * @brief GPIO support driver for simulation purpose
  */
 
@@ -14,4 +14,4 @@
 
 #include "gpio.h"
 
-#endif // GPIO_SIM_H
+#endif  // GPIO_SIM_H

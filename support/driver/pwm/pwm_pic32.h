@@ -18,4 +18,4 @@
 
 #define PWM_COUNT OC_COUNT
 
-#endif // PWM_PIC32_H
+#endif  // PWM_PIC32_H

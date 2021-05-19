@@ -14,7 +14,6 @@
 
 // !!! This implementation only support oc periph at the time
 
-
 rt_dev_t pwm_getFreeDevice(void)
 {
     rt_dev_t dev = oc_getFreeDevice();
@@ -22,7 +21,7 @@ rt_dev_t pwm_getFreeDevice(void)
     {
         dev = MKDEV(DEV_CLASS_PWM, MINOR(dev));
     }
-    return dev;;
+    return dev;
 }
 
 int pwm_open(rt_dev_t device)

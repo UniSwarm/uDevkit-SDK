@@ -17,10 +17,10 @@
 
 #include <archi.h>
 
-#if !defined (QEI_COUNT) || QEI_COUNT==0
-  #warning No device QEI periph on the current device
+#if !defined(QEI_COUNT) || QEI_COUNT == 0
+#    warning No device QEI periph on the current device
 #else
-  uint8_t qeis[QEI_COUNT] = {0};
+uint8_t qeis[QEI_COUNT] = {0};
 #endif
 
 /**
@@ -29,7 +29,7 @@
  */
 rt_dev_t qei_getFreeDevice(void)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t i;
     rt_dev_t device;
 
@@ -62,7 +62,7 @@ rt_dev_t qei_getFreeDevice(void)
  */
 int qei_open(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei >= QEI_COUNT)
     {
@@ -88,7 +88,7 @@ int qei_open(rt_dev_t device)
  */
 int qei_close(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei >= QEI_COUNT)
     {
@@ -111,7 +111,7 @@ int qei_close(rt_dev_t device)
  */
 int qei_enable(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei > QEI_COUNT)
     {
@@ -121,20 +121,20 @@ int qei_enable(rt_dev_t device)
     return -1;
 #endif
 
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     if (qei == 0)
     {
         QEI1CONbits.QEIEN = 1;
     }
 #endif
-#if QEI_COUNT>=2
+#if QEI_COUNT >= 2
     if (qei == 1)
     {
         QEI2CONbits.QEIEN = 1;
     }
 #endif
 
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     return 0;
 #endif
 }
@@ -146,7 +146,7 @@ int qei_enable(rt_dev_t device)
  */
 int qei_disable(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei > QEI_COUNT)
     {
@@ -156,20 +156,20 @@ int qei_disable(rt_dev_t device)
     return -1;
 #endif
 
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     if (qei == 0)
     {
         QEI1CONbits.QEIEN = 0;
     }
 #endif
-#if QEI_COUNT>=2
+#if QEI_COUNT >= 2
     if (qei == 1)
     {
         QEI2CONbits.QEIEN = 0;
     }
 #endif
 
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     return 0;
 #endif
 }
@@ -182,7 +182,7 @@ int qei_disable(rt_dev_t device)
  */
 int qei_setConfig(rt_dev_t device, uint16_t config)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei == 0)
     {
@@ -202,7 +202,7 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
         return 0;
     }
 #endif
-#if QEI_COUNT>=2
+#if QEI_COUNT >= 2
     if (qei == 1)
     {
         INDX2CNTH = 0xFFFF;
@@ -228,7 +228,7 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
  */
 int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
 
     uint8_t fltren;
@@ -244,12 +244,12 @@ int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider)
         // find the position number of the first bit, rounded up
         // ex : input 64 -> output 6
         // ex : input 65 -> output 7
-        while ((shift < 16) && !((divider-1) & 0x8000))
+        while ((shift < 16) && !((divider - 1) & 0x8000))
         {
             divider <<= 1;
             shift++;
         }
-        divider = 16-shift;
+        divider = 16 - shift;
     }
 
     if (qei == 0)
@@ -260,7 +260,7 @@ int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider)
         return 0;
     }
 #endif
-#if QEI_COUNT>=2
+#if QEI_COUNT >= 2
     if (qei == 1)
     {
         QEI2IOCbits.FLTREN = fltren;
@@ -318,21 +318,21 @@ int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum)
 qei_type qei_getValue(rt_dev_t device)
 {
     qei_type tmp32 = 0;
-  #if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei == 0)
     {
-        tmp32 = (uint32_t) POS1CNTL;
-        tmp32 += (uint32_t) POS1HLD << 16;
+        tmp32 = (uint32_t)POS1CNTL;
+        tmp32 += (uint32_t)POS1HLD << 16;
     }
-  #endif
-  #if QEI_COUNT>=2
+#endif
+#if QEI_COUNT >= 2
     if (qei == 1)
     {
-        tmp32 = (uint32_t) POS2CNTL;
-        tmp32 += (uint32_t) POS2HLD << 16;
+        tmp32 = (uint32_t)POS2CNTL;
+        tmp32 += (uint32_t)POS2HLD << 16;
     }
-  #endif
+#endif
     return tmp32;
 }
 

@@ -24,7 +24,7 @@ uint8_t usb_serial_buffer[64];
 
 void usb_serial_init(void)
 {
-	SYSTEM_Initialize(SYSTEM_STATE_USB_START);
+    SYSTEM_Initialize(SYSTEM_STATE_USB_START);
     USBDeviceInit();
     USBDeviceAttach();
     STATIC_FIFO_INIT(usb_serial_buffrx, UARTSERIAL_BUFFRX_SIZE);
@@ -41,19 +41,23 @@ void usb_serial_task(void)
 {
     uint16_t size_rec;
 
-	if( USBGetDeviceState() < CONFIGURED_STATE )
-		return;
-	if( USBIsDeviceSuspended() == true )
-		return;
+    if (USBGetDeviceState() < CONFIGURED_STATE)
+    {
+        return;
+    }
+    if (USBIsDeviceSuspended() == true)
+    {
+        return;
+    }
 
     // send service
-	CDCTxService();
+    CDCTxService();
 
     // receive service
     size_rec = getsUSBUSART(usb_serial_buffer, sizeof(usb_serial_buffer));
-    if(size_rec > 0)
+    if (size_rec > 0)
     {
-        fifo_push(&usb_serial_buffrx, (char*)usb_serial_buffer, size_rec);
+        fifo_push(&usb_serial_buffrx, (char *)usb_serial_buffer, size_rec);
     }
 }
 
@@ -61,20 +65,26 @@ ssize_t usb_serial_write(rt_dev_t device, const char *data, size_t size)
 {
     uint8_t *ptrData;
     size_t sizeToWrite;
-    if( USBGetDeviceState() < CONFIGURED_STATE )
-		return 0;
-	if( USBIsDeviceSuspended() == true )
-		return 0;
+    if (USBGetDeviceState() < CONFIGURED_STATE)
+    {
+        return 0;
+    }
+    if (USBIsDeviceSuspended() == true)
+    {
+        return 0;
+    }
 
     sizeToWrite = size;
     ptrData = (uint8_t *)data;
-    while(sizeToWrite > 0)
+    while (sizeToWrite > 0)
     {
-        if( USBUSARTIsTxTrfReady() == true)
+        if (USBUSARTIsTxTrfReady() == true)
         {
             size_t size_packet = sizeToWrite;
-            if(size_packet > 255)
+            if (size_packet > 255)
+            {
                 size_packet = 255;
+            }
             putUSBUSART(ptrData, size);
             sizeToWrite -= size_packet;
             ptrData += size_packet;
@@ -91,7 +101,7 @@ ssize_t usb_serial_read(rt_dev_t device, char *data, size_t max_size)
 
 bool USER_USB_CALLBACK_EVENT_HANDLER(USB_EVENT event, void *pdata, uint16_t size)
 {
-    switch( (int) event )
+    switch ((int)event)
     {
         case EVENT_TRANSFER:
             break;
@@ -104,22 +114,22 @@ bool USER_USB_CALLBACK_EVENT_HANDLER(USB_EVENT event, void *pdata, uint16_t size
         case EVENT_SUSPEND:
             /* Update the LED status for the suspend event. */
 
-            //Call the hardware platform specific handler for suspend events for
-            //possible further action (like optionally going reconfiguring the application
-            //for lower power states and going to sleep during the suspend event).  This
-            //would normally be done in USB compliant bus powered applications, although
-            //no further processing is needed for purely self powered applications that
-            //don't consume power from the host.
+            // Call the hardware platform specific handler for suspend events for
+            // possible further action (like optionally going reconfiguring the application
+            // for lower power states and going to sleep during the suspend event).  This
+            // would normally be done in USB compliant bus powered applications, although
+            // no further processing is needed for purely self powered applications that
+            // don't consume power from the host.
             SYSTEM_Initialize(SYSTEM_STATE_USB_SUSPEND);
             break;
 
         case EVENT_RESUME:
             /* Update the LED status for the resume event. */
 
-            //Call the hardware platform specific resume from suspend handler (ex: to
-            //restore I/O pins to higher power states if they were changed during the
-            //preceding SYSTEM_Initialize(SYSTEM_STATE_USB_SUSPEND) call at the start
-            //of the suspend condition.
+            // Call the hardware platform specific resume from suspend handler (ex: to
+            // restore I/O pins to higher power states if they were changed during the
+            // preceding SYSTEM_Initialize(SYSTEM_STATE_USB_SUSPEND) call at the start
+            // of the suspend condition.
             SYSTEM_Initialize(SYSTEM_STATE_USB_RESUME);
             break;
 

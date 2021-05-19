@@ -15,19 +15,17 @@
 #ifndef CAN_dsPIC30F_H
 #define CAN_dsPIC30F_H
 
-#if defined(DEVICE_30F4011) || defined(DEVICE_30F4011E) || defined(DEVICE_30F4012) \
- || defined(DEVICE_30F4012E) || defined(DEVICE_30F4013) || defined(DEVICE_30F4013E) \
- || defined(DEVICE_30F5015) || defined(DEVICE_30F5015E) || defined(DEVICE_30F5016) \
- || defined(DEVICE_30F6015)
- #define CAN_COUNT 1
-#elif defined(DEVICE_30F5011) || defined(DEVICE_30F5011E) || defined(DEVICE_30F5013) \
- || defined(DEVICE_30F5013E) || defined(DEVICE_30F6010) || defined(DEVICE_30F6010A) \
- || defined(DEVICE_30F6011) || defined(DEVICE_30F6011A) || defined(DEVICE_30F6012) \
- || defined(DEVICE_30F6012A) || defined(DEVICE_30F6013) || defined(DEVICE_30F6013A) \
- || defined(DEVICE_30F6014) || defined(DEVICE_30F6014A)
- #define CAN_COUNT 2
+#if defined(DEVICE_30F4011) || defined(DEVICE_30F4011E) || defined(DEVICE_30F4012) || defined(DEVICE_30F4012E)         \
+    || defined(DEVICE_30F4013) || defined(DEVICE_30F4013E) || defined(DEVICE_30F5015) || defined(DEVICE_30F5015E)      \
+    || defined(DEVICE_30F5016) || defined(DEVICE_30F6015)
+#    define CAN_COUNT 1
+#elif defined(DEVICE_30F5011) || defined(DEVICE_30F5011E) || defined(DEVICE_30F5013) || defined(DEVICE_30F5013E)       \
+    || defined(DEVICE_30F6010) || defined(DEVICE_30F6010A) || defined(DEVICE_30F6011) || defined(DEVICE_30F6011A)      \
+    || defined(DEVICE_30F6012) || defined(DEVICE_30F6012A) || defined(DEVICE_30F6013) || defined(DEVICE_30F6013A)      \
+    || defined(DEVICE_30F6014) || defined(DEVICE_30F6014A)
+#    define CAN_COUNT 2
 #else
- #define CAN_COUNT 0
+#    define CAN_COUNT 0
 #endif
 
-#endif // CAN_dsPIC30F_H
+#endif  // CAN_dsPIC30F_H

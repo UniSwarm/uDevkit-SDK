@@ -17,8 +17,8 @@
 
 #include <archi.h>
 
-#if !defined (QEI_COUNT) || QEI_COUNT==0
-  #warning No device QEI periph on the current device
+#if !defined(QEI_COUNT) || QEI_COUNT == 0
+#    warning No device QEI periph on the current device
 #endif
 
 uint8_t qei_state = 0;
@@ -29,7 +29,7 @@ uint8_t qei_state = 0;
  */
 rt_dev_t qei_getFreeDevice(void)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t i;
     rt_dev_t device;
 
@@ -55,7 +55,7 @@ rt_dev_t qei_getFreeDevice(void)
  */
 int qei_open(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei != 0)
     {
@@ -81,7 +81,7 @@ int qei_open(rt_dev_t device)
  */
 int qei_close(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei != 0)
     {
@@ -104,13 +104,13 @@ int qei_close(rt_dev_t device)
  */
 int qei_enable(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei != 0)
     {
         return -1;
     }
-    QEICONbits.QEIM = 0b111; // TODO, review this taking care of setConfig
+    QEICONbits.QEIM = 0b111;  // TODO, review this taking care of setConfig
     return 0;
 #else
     return -1;
@@ -124,7 +124,7 @@ int qei_enable(rt_dev_t device)
  */
 int qei_disable(rt_dev_t device)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei != 0)
     {
@@ -145,7 +145,7 @@ int qei_disable(rt_dev_t device)
  */
 int qei_setConfig(rt_dev_t device, uint16_t config)
 {
-#if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei != 0)
     {
@@ -190,7 +190,7 @@ int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum)
  */
 uint16_t qei_getValue(rt_dev_t device)
 {
-  #if QEI_COUNT>=1
+#if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei != 0)
     {

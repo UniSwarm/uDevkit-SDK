@@ -327,46 +327,46 @@ int ccp_enable(rt_dev_t device)
         case 0:
             pthread_create(&ccps[ccp].thread_ccp, NULL, ccp1_handler, NULL);
             break;
-#if CCP_COUNT >= 2
+#    if CCP_COUNT >= 2
         case 1:
             pthread_create(&ccps[ccp].thread_ccp, NULL, ccp2_handler, NULL);
             break;
-#endif
-#if CCP_COUNT >= 3
+#    endif
+#    if CCP_COUNT >= 3
         case 2:
             pthread_create(&ccps[ccp].thread_ccp, NULL, ccp3_handler, NULL);
             break;
-#endif
-#if CCP_COUNT >= 4
+#    endif
+#    if CCP_COUNT >= 4
         case 3:
             pthread_create(&ccps[ccp].thread_ccp, NULL, ccp4_handler, NULL);
             break;
-#endif
-#if CCP_COUNT >= 5
+#    endif
+#    if CCP_COUNT >= 5
         case 4:
             pthread_create(&ccps[ccp].thread_ccp, NULL, ccp5_handler, NULL);
             break;
-#endif
-#if CCP_COUNT >= 6
+#    endif
+#    if CCP_COUNT >= 6
         case 5:
             pthread_create(&ccps[ccp].thread_ccp, NULL, ccp6_handler, NULL);
             break;
-#endif
-#if CCP_COUNT >= 7
+#    endif
+#    if CCP_COUNT >= 7
         case 6:
             pthread_create(&ccps[ccp].thread_ccp, NULL, ccp7_handler, NULL);
             break;
-#endif
-#if CCP_COUNT >= 8
+#    endif
+#    if CCP_COUNT >= 8
         case 7:
             pthread_create(&ccps[ccp].thread_ccp, NULL, ccp8_handler, NULL);
             break;
-#endif
-#if CCP_COUNT >= 9
+#    endif
+#    if CCP_COUNT >= 9
         case 8:
             pthread_create(&ccps[ccp].thread_ccp, NULL, ccp9_handler, NULL);
             break;
-#endif
+#    endif
     }
 
     return 0;

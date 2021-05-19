@@ -21,4 +21,4 @@ void usb_serial_task(void);
 ssize_t usb_serial_write(rt_dev_t device, const char *data, size_t size);
 ssize_t usb_serial_read(rt_dev_t device, char *data, size_t max_size);
 
-#endif // USB_SERIAL_H
+#endif  // USB_SERIAL_H

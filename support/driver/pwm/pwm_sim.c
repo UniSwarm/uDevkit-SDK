@@ -98,7 +98,7 @@ uint32_t pwm_freqVal(rt_dev_t device)
     return pwms[pwm].period;
 }
 
-int pwm_setDuty(rt_dev_t device, uint16_t duty) // 1000 => 100%
+int pwm_setDuty(rt_dev_t device, uint16_t duty)  // 1000 => 100%
 {
     uint8_t pwm = MINOR(device);
     uint16_t dutyR;
@@ -106,7 +106,7 @@ int pwm_setDuty(rt_dev_t device, uint16_t duty) // 1000 => 100%
     {
         return -1;
     }
-    
+
     pwms[pwm].duty = duty;
 
     dutyR = pwms[pwm].period * duty / 1000;

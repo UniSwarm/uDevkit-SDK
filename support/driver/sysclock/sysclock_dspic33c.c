@@ -39,54 +39,54 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 
     switch (busClock)
     {
-    case SYSCLOCK_CLOCK_FOSC:
-        return sysclock_sysfreq;
+        case SYSCLOCK_CLOCK_FOSC:
+            return sysclock_sysfreq;
 
-    case SYSCLOCK_CLOCK_PBCLK:
-        return sysclock_sysfreq >> 1;
+        case SYSCLOCK_CLOCK_PBCLK:
+            return sysclock_sysfreq >> 1;
 
-    case SYSCLOCK_CLOCK_REFCLK:
-    {
-        uint16_t div = REFOCONHbits.RODIV << 1;
-        return (sysclock_sysfreq >> 1) / div;
-    }
-
-    case SYSCLOCK_CLOCK_SYSCLK:
-    {
-        uint16_t div = 1;
-        if (CLKDIVbits.DOZEN == 1)
+        case SYSCLOCK_CLOCK_REFCLK:
         {
-            div = 1 << (CLKDIVbits.DOZE);
+            uint16_t div = REFOCONHbits.RODIV << 1;
+            return (sysclock_sysfreq >> 1) / div;
         }
-        return (sysclock_sysfreq >> 1) / div;
-    }
 
-    case SYSCLOCK_CLOCK_FRC:
-        return sysclock_sourceFreq(SYSCLOCK_SRC_FRC);
+        case SYSCLOCK_CLOCK_SYSCLK:
+        {
+            uint16_t div = 1;
+            if (CLKDIVbits.DOZEN == 1)
+            {
+                div = 1 << (CLKDIVbits.DOZE);
+            }
+            return (sysclock_sysfreq >> 1) / div;
+        }
 
-    case SYSCLOCK_CLOCK_VCO:
-        return sysclock_vco;
+        case SYSCLOCK_CLOCK_FRC:
+            return sysclock_sourceFreq(SYSCLOCK_SRC_FRC);
 
-    case SYSCLOCK_CLOCK_VCO2:
-        return sysclock_vco >> 1;
+        case SYSCLOCK_CLOCK_VCO:
+            return sysclock_vco;
 
-    case SYSCLOCK_CLOCK_VCO3:
-        return sysclock_vco / 3;
+        case SYSCLOCK_CLOCK_VCO2:
+            return sysclock_vco >> 1;
 
-    case SYSCLOCK_CLOCK_VCO4:
-        return sysclock_vco >> 2;
+        case SYSCLOCK_CLOCK_VCO3:
+            return sysclock_vco / 3;
 
-    case SYSCLOCK_CLOCK_AVCO:
-        return sysclock_avco;
+        case SYSCLOCK_CLOCK_VCO4:
+            return sysclock_vco >> 2;
 
-    case SYSCLOCK_CLOCK_AVCO2:
-        return sysclock_avco >> 1;
+        case SYSCLOCK_CLOCK_AVCO:
+            return sysclock_avco;
 
-    case SYSCLOCK_CLOCK_AVCO3:
-        return sysclock_avco / 3;
+        case SYSCLOCK_CLOCK_AVCO2:
+            return sysclock_avco >> 1;
 
-    case SYSCLOCK_CLOCK_AVCO4:
-        return sysclock_avco >> 2;
+        case SYSCLOCK_CLOCK_AVCO3:
+            return sysclock_avco / 3;
+
+        case SYSCLOCK_CLOCK_AVCO4:
+            return sysclock_avco >> 2;
     }
 
     return 1;
@@ -114,7 +114,7 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
         }
         else
         {
-            for (udiv=0; div!=0; udiv++)
+            for (udiv = 0; div != 0; udiv++)
             {
                 div >>= 1;
             }
@@ -141,7 +141,7 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
             {
                 return -1;
             }
-            for (udiv=0; div!=0; udiv++)
+            for (udiv = 0; div != 0; udiv++)
             {
                 div >>= 1;
             }
@@ -152,7 +152,7 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
         return 0;
     }
 
-    return -1;   // bad index
+    return -1;  // bad index
 }
 
 /**
@@ -166,27 +166,27 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
     uint16_t div;
     switch (source)
     {
-    case SYSCLOCK_SRC_LPRC:
-        freq = LPRC_BASE_FREQ; // 32kHz LPRC
-        break;
+        case SYSCLOCK_SRC_LPRC:
+            freq = LPRC_BASE_FREQ;  // 32kHz LPRC
+            break;
 
-    case SYSCLOCK_SRC_POSC:
-        freq = sysclock_posc;   // external primary oscillator
-        break;
+        case SYSCLOCK_SRC_POSC:
+            freq = sysclock_posc;  // external primary oscillator
+            break;
 
-    case SYSCLOCK_SRC_PPLL:
-        freq = sysclock_pll;    // primary oscillator with PLL
-        break;
+        case SYSCLOCK_SRC_PPLL:
+            freq = sysclock_pll;  // primary oscillator with PLL
+            break;
 
-    case SYSCLOCK_SRC_BFRC:
-        freq = BFRC_BASE_FREQ;  // Backup FRC
-        break;
+        case SYSCLOCK_SRC_BFRC:
+            freq = BFRC_BASE_FREQ;  // Backup FRC
+            break;
 
-    case SYSCLOCK_SRC_FRC:
-    case SYSCLOCK_SRC_FRCDIV:
-    #ifdef SYSCLOCK_NO_OSCTUNE
-        freq = FRC_BASE_FREQ;
-    #else
+        case SYSCLOCK_SRC_FRC:
+        case SYSCLOCK_SRC_FRCDIV:
+#ifdef SYSCLOCK_NO_OSCTUNE
+            freq = FRC_BASE_FREQ;
+#else
         {
             int32_t osctune = OSCTUN;
             if (osctune >= 32)
@@ -195,25 +195,27 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
             }
             freq = FRC_BASE_FREQ + osctune * OSCTUN_D;  // FRC
         }
-    #endif
+#endif
 
-        if (source == SYSCLOCK_SRC_FRCDIV)
-        {
-            div = CLKDIVbits.FRCDIV;
-            if (div != 0b111)
+            if (source == SYSCLOCK_SRC_FRCDIV)
             {
-                div = 1 << div;
+                div = CLKDIVbits.FRCDIV;
+                if (div != 0b111)
+                {
+                    div = 1 << div;
+                }
+                else
+                {
+                    div = 256;
+                }
+
+                freq = freq / div;  // FRC / div
             }
-            else
-                div = 256;
+            break;
 
-            freq = freq / div; // FRC / div
-        }
-        break;
-
-    case SYSCLOCK_SRC_FRCPLL:
-        freq = sysclock_pll;  // FRC with PLL
-        break;
+        case SYSCLOCK_SRC_FRCPLL:
+            freq = sysclock_pll;  // FRC with PLL
+            break;
     }
     return freq;
 }
@@ -252,17 +254,17 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 {
     if (OSCCONbits.CLKLOCK == 1)
     {
-        return -1; // Clocks and PLL are locked, source cannot be changed
+        return -1;  // Clocks and PLL are locked, source cannot be changed
     }
 
     // disable interrupts
     disable_interrupt();
 
     // unlock clock config (OSCCON is write protected)
-    //unlockClockConfig();
+    // unlockClockConfig();
 
     // select the new source
-    __builtin_write_OSCCONH(source); // primariry osc input
+    __builtin_write_OSCCONH(source);  // primariry osc input
 
     // trigger change
     __builtin_write_OSCCONL(OSCCON | 0x01);
@@ -270,7 +272,7 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
     nop();
 
     // relock clock config
-    //lockClockConfig();
+    // lockClockConfig();
 
     while (OSCCONbits.OSWEN == 1)
     {
@@ -282,7 +284,7 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 
     if (sysclock_source() != source)
     {
-        return -3; // Error when switch clock source
+        return -3;  // Error when switch clock source
     }
 
     sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
@@ -300,9 +302,9 @@ int sysclock_setClock(uint32_t fosc)
 {
     if (sysclock_posc == 0)
     {
-    #ifndef SYSCLOCK_NO_OSCTUNE
-        OSCTUN = 0; // ==> Fin = 8 MHz Internal clock
-    #endif
+#ifndef SYSCLOCK_NO_OSCTUNE
+        OSCTUN = 0;  // ==> Fin = 8 MHz Internal clock
+#endif
         return sysclock_setPLLClock(fosc, SYSCLOCK_SRC_FRC);
     }
     else
@@ -325,7 +327,7 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     /*uint32_t fin, fplli, fsys;
     uint16_t multiplier;
     uint8_t prediv, postdiv1, postdiv2;
-    
+
     if (src != SYSCLOCK_SRC_FRC && src != SYSCLOCK_SRC_POSC)
     {
         return -4;
@@ -354,7 +356,7 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     //                         PLLFBDIV
     // Fosc = Fin * --------------------------------
     //               PLLPRE * (POST1DIV * POST2DIV)
-    
+
     CLKDIVbits.PLLPRE = 1; // N1=1
     PLLFBDbits.PLLFBDIV = 100; // M = 100
     PLLDIVbits.POST1DIV = 5; // N2=5
@@ -370,7 +372,7 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         __builtin_write_OSCCONH(SYSCLOCK_SRC_PPLL); // primary osc input
         __builtin_write_OSCCONL(OSCCON | 0x01);
     }
-    
+
     // Wait for Clock switch to occur
     while (OSCCONbits.OSWEN != 0);
 
@@ -383,24 +385,26 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 #ifdef SYSCLOCK_POSC
     if (SYSCLOCK_POSC == 8000000)
     {
-        CLKDIVbits.PLLPRE = 1; // N1=1
+        CLKDIVbits.PLLPRE = 1;  // N1=1
     }
     else
-        CLKDIVbits.PLLPRE = 3; // N1=3
+        CLKDIVbits.PLLPRE = 3;  // N1=3
 #else
-    CLKDIVbits.PLLPRE = 1; // N1=1
+    CLKDIVbits.PLLPRE = 1;  // N1=1
 #endif
 
-    PLLFBDbits.PLLFBDIV = 80; // M = 80 ==> 640MHz FVco
-    PLLDIVbits.POST1DIV = 2; // N2 = 2  ==> 320MHz
-    PLLDIVbits.POST2DIV = 2; // N3 = 2
-    __builtin_write_OSCCONH(0x03); // primary osc input
+    PLLFBDbits.PLLFBDIV = 80;       // M = 80 ==> 640MHz FVco
+    PLLDIVbits.POST1DIV = 2;        // N2 = 2  ==> 320MHz
+    PLLDIVbits.POST2DIV = 2;        // N3 = 2
+    __builtin_write_OSCCONH(0x03);  // primary osc input
     __builtin_write_OSCCONL(OSCCON | 0x01);
 
     // Wait for Clock switch to occur
-    while (OSCCONbits.OSWEN != 0);
+    while (OSCCONbits.OSWEN != 0)
+        ;
     // Wait for PLL to lock
-    while (OSCCONbits.LOCK != 1);
+    while (OSCCONbits.LOCK != 1)
+        ;
 
     sysclock_pll = sysclock_getPLLClock();
     sysclock_sysfreq = sysclock_pll >> 1;
@@ -418,16 +422,18 @@ uint32_t sysclock_getPLLClock(void)
     uint32_t fin, fpllo;
     uint16_t prediv, multiplier, postdiv;
 
-    if (OSCCONbits.COSC == SYSCLOCK_SRC_FRCPLL) // FRC as input
+    if (OSCCONbits.COSC == SYSCLOCK_SRC_FRCPLL)  // FRC as input
     {
         fin = sysclock_sourceFreq(SYSCLOCK_SRC_FRC);
     }
-    else if (OSCCONbits.COSC == SYSCLOCK_SRC_PPLL) // POSC as input
+    else if (OSCCONbits.COSC == SYSCLOCK_SRC_PPLL)  // POSC as input
     {
         fin = sysclock_sourceFreq(SYSCLOCK_SRC_POSC);
     }
     else
+    {
         return 0;
+    }
 
     prediv = CLKDIVbits.PLLPRE;
     multiplier = PLLFBDbits.PLLFBDIV;

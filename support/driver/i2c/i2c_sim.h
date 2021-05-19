@@ -4,8 +4,8 @@
  * @copyright Robotips 2016-2017
  * @copyright UniSwarm 2018-2021
  *
- * @date November 28, 2016, 20:35 PM 
- * 
+ * @date November 28, 2016, 20:35 PM
+ *
  * @brief I2C communication support driver for simulation purpose
  */
 
@@ -14,4 +14,4 @@
 
 #include "i2c.h"
 
-#endif // I2C_SIM_H
+#endif  // I2C_SIM_H

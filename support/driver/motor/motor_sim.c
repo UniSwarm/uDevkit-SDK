@@ -24,10 +24,14 @@ int motor_setPower(rt_dev_t device, int16_t power)
     if (motor >= MOTOR_COUNT)
         return -1;
 
-    if(pwm>1500)
+    if (pwm > 1500)
+    {
         pwm = 1500;
-    if(pwm<-1500)
+    }
+    if (pwm < -1500)
+    {
         pwm = -1500;
+    }
 
     // TODO SIM
 
@@ -39,7 +43,9 @@ int16_t motor_getCurrent(rt_dev_t device)
     int16_t value = 0;
     uint8_t motor = MINOR(device);
     if (motor >= MOTOR_COUNT)
+    {
         return -1;
+    }
 
     // TODO SIM
 

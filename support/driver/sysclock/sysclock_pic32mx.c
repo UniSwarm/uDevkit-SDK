@@ -14,8 +14,8 @@
 
 #include "sysclock.h"
 
-#include <archi.h>
 #include "board.h"
+#include <archi.h>
 
 uint32_t sysclock_sysfreq = 0;
 uint32_t sysclock_sosc = 0;
@@ -43,7 +43,7 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
     {
         uint8_t div = OSCCONbits.PBDIV;
         div = 1 << div;
-        return sysclock_sysfreq / div; // TODO
+        return sysclock_sysfreq / div;  // TODO
     }
     return 1;
 }
@@ -81,58 +81,58 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
     int32_t osctune;
     switch (source)
     {
-    case SYSCLOCK_SRC_LPRC:
-        freq = 32000;         // 32kHz LPRC
-        break;
+        case SYSCLOCK_SRC_LPRC:
+            freq = 32000;  // 32kHz LPRC
+            break;
 
-    case SYSCLOCK_SRC_SOSC:
-        freq = sysclock_sosc; // external secondary oscillator
-        break;
+        case SYSCLOCK_SRC_SOSC:
+            freq = sysclock_sosc;  // external secondary oscillator
+            break;
 
-    case SYSCLOCK_SRC_POSC:
-        freq = sysclock_posc; // external primary oscillator
-        break;
+        case SYSCLOCK_SRC_POSC:
+            freq = sysclock_posc;  // external primary oscillator
+            break;
 
-    case SYSCLOCK_SRC_PPLL:
-        freq = sysclock_pll;  // primary oscillator with PLL
-        break;
+        case SYSCLOCK_SRC_PPLL:
+            freq = sysclock_pll;  // primary oscillator with PLL
+            break;
 
-    case SYSCLOCK_SRC_FRC:
-    case SYSCLOCK_SRC_FRC16:
-    case SYSCLOCK_SRC_FRCDIV:
-        if (source == SYSCLOCK_SRC_FRC)
-        {
-            div = 1;
-        }
-        else if (source == SYSCLOCK_SRC_FRC16)
-        {
-            div = 16;
-        }
-        else
-        {
-            div = OSCCONbits.FRCDIV;
-            if (div != 0b111)
+        case SYSCLOCK_SRC_FRC:
+        case SYSCLOCK_SRC_FRC16:
+        case SYSCLOCK_SRC_FRCDIV:
+            if (source == SYSCLOCK_SRC_FRC)
             {
-                div = 1 << div;
+                div = 1;
+            }
+            else if (source == SYSCLOCK_SRC_FRC16)
+            {
+                div = 16;
             }
             else
             {
-                div = 256;
+                div = OSCCONbits.FRCDIV;
+                if (div != 0b111)
+                {
+                    div = 1 << div;
+                }
+                else
+                {
+                    div = 256;
+                }
             }
-        }
 
-        osctune = OSCTUN;
-        if (osctune >= 32)
-        {
-            osctune = (osctune | 0xFFFFFFE0);
-        }
+            osctune = OSCTUN;
+            if (osctune >= 32)
+            {
+                osctune = (osctune | 0xFFFFFFE0);
+            }
 
-        freq = (8000000 + osctune * 31250) / div; // 8MHz typical FRC, tuned by OSCTUN (+/- 12.5%), divided by FRCDIV
-        break;
+            freq = (8000000 + osctune * 31250) / div;  // 8MHz typ. FRC, tuned by OSCTUN (+/- 12.5%), divided by FRCDIV
+            break;
 
-    case SYSCLOCK_SRC_FRCPLL:
-        freq = sysclock_pll;  // FRC with PLL  // TODO integrate OSCTUNE
-        break;
+        case SYSCLOCK_SRC_FRCPLL:
+            freq = sysclock_pll;  // FRC with PLL  // TODO integrate OSCTUNE
+            break;
     }
     return freq;
 }
@@ -176,13 +176,13 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 {
     if (OSCCONbits.CLKLOCK == 1)
     {
-        return -1; // Clocks and PLL are locked, source cannot be changed
+        return -1;  // Clocks and PLL are locked, source cannot be changed
     }
 
 #ifdef SYSCLOCK_SRC_BFRC
     if (source == SYSCLOCK_SRC_BFRC)
     {
-        return -2; // cannot switch to backup FRC
+        return -2;  // cannot switch to backup FRC
     }
 #endif
 
@@ -204,14 +204,16 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
     lockClockConfig();
 
     while (OSCCONbits.OSWEN == 1)
+    {
         nop();
+    }
 
     // enable interrupts
     enable_interrupt();
 
     if (sysclock_source() != source)
     {
-        return -3; // Error when switch clock source
+        return -3;  // Error when switch clock source
     }
 
     sysclock_sysfreq = sysclock_sourceFreq(source);
@@ -227,7 +229,7 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
  */
 int sysclock_setClock(uint32_t fosc)
 {
-    //return sysclock_setClockWPLL(fosc);
+    // return sysclock_setClockWPLL(fosc);
     sysclock_sysfreq = fosc;
     return 0;
 }

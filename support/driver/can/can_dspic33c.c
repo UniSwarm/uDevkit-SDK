@@ -13,17 +13,20 @@
 
 #include "can.h"
 
-#include <driver/sysclock.h>
 #include <archi.h>
+#include <driver/sysclock.h>
 
-#if !defined (CAN_COUNT) || CAN_COUNT==0
-  #warning "No can on the current device or unknow device"
+#if !defined(CAN_COUNT) || CAN_COUNT == 0
+#    warning "No can on the current device or unknow device"
 #endif
 
-#define CAN_FLAG_UNUSED  0x00
-typedef struct {
-    union {
-        struct {
+#define CAN_FLAG_UNUSED 0x00
+typedef struct
+{
+    union
+    {
+        struct
+        {
             unsigned used : 1;
             unsigned enabled : 1;
             unsigned : 6;
@@ -42,26 +45,19 @@ struct can_dev
     can_status flags;
 };
 
-
-#if CAN_COUNT>=1
-uint32_t __attribute__((aligned(4))) CAN1FIFO[40*19];
+#if CAN_COUNT >= 1
+uint32_t __attribute__((aligned(4))) CAN1FIFO[40 * 19];
 #endif
-#if CAN_COUNT>=2
-uint32_t __attribute__((aligned(4))) CAN2FIFO[40*19];
+#if CAN_COUNT >= 2
+uint32_t __attribute__((aligned(4))) CAN2FIFO[40 * 19];
 #endif
 
 struct can_dev cans[] = {
-#if CAN_COUNT>=1
-    {
-        .bitRate = 0,
-        .flags = {{.val = CAN_FLAG_UNUSED}}
-    },
+#if CAN_COUNT >= 1
+    {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}},
 #endif
-#if CAN_COUNT>=2
-    {
-        .bitRate = 0,
-        .flags = {{.val = CAN_FLAG_UNUSED}}
-    },
+#if CAN_COUNT >= 2
+    {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}},
 #endif
 };
 
@@ -71,7 +67,7 @@ struct can_dev cans[] = {
  */
 rt_dev_t can_getFreeDevice(void)
 {
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
     uint8_t i;
     rt_dev_t device;
 
@@ -104,7 +100,7 @@ rt_dev_t can_getFreeDevice(void)
  */
 int can_open(rt_dev_t device)
 {
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {
@@ -129,7 +125,7 @@ int can_open(rt_dev_t device)
  */
 int can_close(rt_dev_t device)
 {
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {
@@ -151,7 +147,7 @@ int can_close(rt_dev_t device)
  */
 int can_enable(rt_dev_t device)
 {
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {
@@ -161,66 +157,66 @@ int can_enable(rt_dev_t device)
 
     switch (can)
     {
-    case 0:
-        C1FIFOBAH = 0x0000;
-        C1FIFOBAL = (uint16_t)(&CAN1FIFO);
+        case 0:
+            C1FIFOBAH = 0x0000;
+            C1FIFOBAL = (uint16_t)(&CAN1FIFO);
 
-        // Configure TEF to save 5 messages
-        C1CONLbits.BRSDIS = 0x0;
-        C1CONHbits.STEF = 0x0;          //Don't save transmitted messages in TEF
-        C1CONHbits.TXQEN = 0x0;         // No TXQ
+            // Configure TEF to save 5 messages
+            C1CONLbits.BRSDIS = 0x0;
+            C1CONHbits.STEF = 0x0;   // Don't save transmitted messages in TEF
+            C1CONHbits.TXQEN = 0x0;  // No TXQ
 
-        // FIFO1 as transmiter (20 messages)
-        C1FIFOCON1Hbits.FSIZE = 20-1;  //20 messages deep
-        C1FIFOCON1Hbits.PLSIZE = 0x0;  //8 bytes of data
-        C1FIFOCON1Lbits.TXEN = 1;      // Set TXEN bit, transmit fifo
+            // FIFO1 as transmiter (20 messages)
+            C1FIFOCON1Hbits.FSIZE = 20 - 1;  // 20 messages deep
+            C1FIFOCON1Hbits.PLSIZE = 0x0;    // 8 bytes of data
+            C1FIFOCON1Lbits.TXEN = 1;        // Set TXEN bit, transmit fifo
 
-        // FIFO2 as receiver (20 messages)
-        C1FIFOCON2Hbits.FSIZE = 20-1;   //20 messages deep
-        C1FIFOCON2Hbits.PLSIZE = 0x0;   //8 bytes of data
-        C1FIFOCON2Lbits.TXEN = 0;       // Clear TXEN bit, receive fifo
-        // filter 0
-        C1FLTCON0Lbits.F0BP = 2;        // Store messages in FIFO2
-        C1FLTOBJ0H = 0x0000;            // Filter 0 ID
-        C1FLTOBJ0L = 0x0000;            // Filter 0 ID
-        C1FLTOBJ0Hbits.EXIDE = 1;       // Filter only EID messages
-        C1FLTCON0Lbits.FLTEN0 = 1;      // Enable the filter
-        // mask 0
-        C1MASK0H = 0x0000;         // Ignore all bits in comparison
-        C1MASK0L = 0x0000;         // Ignore all bits in comparison
-        C1MASK0Hbits.MIDE = 0;     // Match all message types
-        break;
-#if CAN_COUNT>=2
-    case 1:
-        C2FIFOBAH = 0x0000;
-        C2FIFOBAL = (uint16_t)(&CAN2FIFO);
+            // FIFO2 as receiver (20 messages)
+            C1FIFOCON2Hbits.FSIZE = 20 - 1;  // 20 messages deep
+            C1FIFOCON2Hbits.PLSIZE = 0x0;    // 8 bytes of data
+            C1FIFOCON2Lbits.TXEN = 0;        // Clear TXEN bit, receive fifo
+            // filter 0
+            C1FLTCON0Lbits.F0BP = 2;    // Store messages in FIFO2
+            C1FLTOBJ0H = 0x0000;        // Filter 0 ID
+            C1FLTOBJ0L = 0x0000;        // Filter 0 ID
+            C1FLTOBJ0Hbits.EXIDE = 1;   // Filter only EID messages
+            C1FLTCON0Lbits.FLTEN0 = 1;  // Enable the filter
+            // mask 0
+            C1MASK0H = 0x0000;      // Ignore all bits in comparison
+            C1MASK0L = 0x0000;      // Ignore all bits in comparison
+            C1MASK0Hbits.MIDE = 0;  // Match all message types
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            C2FIFOBAH = 0x0000;
+            C2FIFOBAL = (uint16_t)(&CAN2FIFO);
 
-        // Configure TEF to save 5 messages
-        C2CONLbits.BRSDIS = 0x0;
-        C2CONHbits.STEF = 0x0;          //Don't save transmitted messages in TEF
-        C2CONHbits.TXQEN = 0x0;         // No TXQ
+            // Configure TEF to save 5 messages
+            C2CONLbits.BRSDIS = 0x0;
+            C2CONHbits.STEF = 0x0;   // Don't save transmitted messages in TEF
+            C2CONHbits.TXQEN = 0x0;  // No TXQ
 
-        // FIFO1 as transmiter (20 messages)
-        C2FIFOCON1Hbits.FSIZE = 20-1;   //20 messages deep
-        C2FIFOCON1Hbits.PLSIZE = 0x0;   //8 bytes of data
-        C2FIFOCON1Lbits.TXEN = 1;       // Set TXEN bit, transmit fifo
+            // FIFO1 as transmiter (20 messages)
+            C2FIFOCON1Hbits.FSIZE = 20 - 1;  // 20 messages deep
+            C2FIFOCON1Hbits.PLSIZE = 0x0;    // 8 bytes of data
+            C2FIFOCON1Lbits.TXEN = 1;        // Set TXEN bit, transmit fifo
 
-        // FIFO2 as receiver (20 messages)
-        C2FIFOCON2Hbits.FSIZE = 20-1;   //20 messages deep
-        C2FIFOCON2Hbits.PLSIZE = 0x0;   //8 bytes of data
-        C2FIFOCON2Lbits.TXEN = 0;       // Clear TXEN bit, receive fifo
-        // filter 0
-        C2FLTCON0Lbits.F0BP = 2;        // Store messages in FIFO2
-        C2FLTOBJ0H = 0x0000;     // Filter 0 ID
-        C2FLTOBJ0L = 0x0000;     // Filter 0 ID
-        C2FLTOBJ0Hbits.EXIDE = 1;       // Filter only EID messages
-        C2FLTCON0Lbits.FLTEN0 = 1;      // Enable the filter
-        // mask 0
-        C2MASK0H = 0x0000;       // Ignore all bits in comparison
-        C2MASK0L = 0x0000;       // Ignore all bits in comparison
-        C2MASK0Hbits.MIDE = 0;   // Match all message types
-        break;
-#endif
+            // FIFO2 as receiver (20 messages)
+            C2FIFOCON2Hbits.FSIZE = 20 - 1;  // 20 messages deep
+            C2FIFOCON2Hbits.PLSIZE = 0x0;    // 8 bytes of data
+            C2FIFOCON2Lbits.TXEN = 0;        // Clear TXEN bit, receive fifo
+            // filter 0
+            C2FLTCON0Lbits.F0BP = 2;    // Store messages in FIFO2
+            C2FLTOBJ0H = 0x0000;        // Filter 0 ID
+            C2FLTOBJ0L = 0x0000;        // Filter 0 ID
+            C2FLTOBJ0Hbits.EXIDE = 1;   // Filter only EID messages
+            C2FLTCON0Lbits.FLTEN0 = 1;  // Enable the filter
+            // mask 0
+            C2MASK0H = 0x0000;      // Ignore all bits in comparison
+            C2MASK0L = 0x0000;      // Ignore all bits in comparison
+            C2MASK0Hbits.MIDE = 0;  // Match all message types
+            break;
+#    endif
     }
 
     return 0;
@@ -236,7 +232,7 @@ int can_enable(rt_dev_t device)
  */
 int can_disable(rt_dev_t device)
 {
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {
@@ -246,22 +242,26 @@ int can_disable(rt_dev_t device)
 
     switch (can)
     {
-    case 0:
-        _C1IE = 0;       // disable can global interrupt
-        C1CONHbits.REQOP = 4;
-        while (C1CONHbits.OPMOD != 4);
-        C1CONLbits.CON = 0;  // disable can
-        while (C1CONLbits.BUSY == 1);
-        break;
-#if CAN_COUNT>=2
-    case 1:
-        _C2IE = 0;       // disable can global interrupt
-        C2CONHbits.REQOP = 4;
-        while (C2CONHbits.OPMOD != 4);
-        C2CONLbits.CON = 0;  // disable can
-        while (C2CONLbits.BUSY == 1);
-        break;
-#endif
+        case 0:
+            _C1IE = 0;  // disable can global interrupt
+            C1CONHbits.REQOP = 4;
+            while (C1CONHbits.OPMOD != 4)
+                ;
+            C1CONLbits.CON = 0;  // disable can
+            while (C1CONLbits.BUSY == 1)
+                ;
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            _C2IE = 0;  // disable can global interrupt
+            C2CONHbits.REQOP = 4;
+            while (C2CONHbits.OPMOD != 4)
+                ;
+            C2CONLbits.CON = 0;  // disable can
+            while (C2CONLbits.BUSY == 1)
+                ;
+            break;
+#    endif
     }
 
     return 0;
@@ -278,7 +278,7 @@ int can_disable(rt_dev_t device)
  */
 int can_setMode(rt_dev_t device, CAN_MODE mode)
 {
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
     uint8_t modeBits;
     if (can >= CAN_COUNT)
@@ -288,46 +288,55 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
     // check parameters
     switch (mode)
     {
-    case CAN_MODE_NORMAL:
-        modeBits = 0b110;
-        break;
-    case CAN_MODE_NORMAL_FD:
-        modeBits = 0b000;
-        break;
-    case CAN_MODE_LISTENONLY:
-        modeBits = 0b011;
-        break;
-    case CAN_MODE_LISTENALL:
-        modeBits = 0b111;
-        break;
-    case CAN_MODE_LOOPBACK:
-        modeBits = 0b010;
-        break;
-    case CAN_MODE_DISABLED:
-        modeBits = 0b001;
-        break;
-    case CAN_MODE_CONFIGURATION:
-        modeBits = 0b100;
-        break;
-    default:
-        return -1;
+        case CAN_MODE_NORMAL:
+            modeBits = 0b110;
+            break;
+
+        case CAN_MODE_NORMAL_FD:
+            modeBits = 0b000;
+            break;
+
+        case CAN_MODE_LISTENONLY:
+            modeBits = 0b011;
+            break;
+
+        case CAN_MODE_LISTENALL:
+            modeBits = 0b111;
+            break;
+
+        case CAN_MODE_LOOPBACK:
+            modeBits = 0b010;
+            break;
+
+        case CAN_MODE_DISABLED:
+            modeBits = 0b001;
+            break;
+
+        case CAN_MODE_CONFIGURATION:
+            modeBits = 0b100;
+            break;
+
+        default:
+            return -1;
     }
     cans[can].mode = mode;
 
     switch (can)
     {
-    case 0:
-        C1CONLbits.CON = 1;
-        C1CONHbits.REQOP = modeBits;
-        while (C1CONHbits.OPMOD != modeBits);
-        break;
-#if CAN_COUNT>=2
-    case 1:
-        C2CONLbits.CON = 1;
-        C2CONHbits.REQOP = modeBits;
-        while (C2CONHbits.OPMOD != modeBits);
-        break;
-#endif
+        case 0:
+            C1CONLbits.CON = 1;
+            C1CONHbits.REQOP = modeBits;
+            while (C1CONHbits.OPMOD != modeBits)
+                ;
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            C2CONLbits.CON = 1;
+            C2CONHbits.REQOP = modeBits;
+            while (C2CONHbits.OPMOD != modeBits)
+                ;
+            break;
+#    endif
     }
 
     return 0;
@@ -343,7 +352,7 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
  */
 CAN_MODE can_mode(rt_dev_t device)
 {
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {
@@ -378,7 +387,7 @@ CAN_MODE can_mode(rt_dev_t device)
  */
 int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8_t s1Seg, uint8_t s2Seg)
 {
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
     uint16_t bitRateDiv;
     uint8_t quantum;
@@ -412,47 +421,48 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     }
     switch (can)
     {
-    case 0:
-        C1CONLbits.CON = 1;
-        C1CONHbits.REQOP = 4;
-        while (C1CONHbits.OPMOD != 4);
+        case 0:
+            C1CONLbits.CON = 1;
+            C1CONHbits.REQOP = 4;
+            while (C1CONHbits.OPMOD != 4)
+                ;
 
-        CANCLKCONbits.CANCLKSEL = 3;   // CAN Clock Source = VCO/2 = 640/2 = 320MHz
-        CANCLKCONbits.CANCLKDIV = 4-1; // divide by 4 i.e. 320/4 = 80MHz
-        CANCLKCONbits.CANCLKEN = 1;    // enabled
+            CANCLKCONbits.CANCLKSEL = 3;      // CAN Clock Source = VCO/2 = 640/2 = 320MHz
+            CANCLKCONbits.CANCLKDIV = 4 - 1;  // divide by 4 i.e. 320/4 = 80MHz
+            CANCLKCONbits.CANCLKEN = 1;       // enabled
 
-        /*C1NBTCFGHbits.BRP = bitRateDiv - 1; // Baud Rate Prescaler bits (1-256)
-        C1NBTCFGHbits.TSEG1 = s1Seg - 1; // Phase Buffer Segment 1 (1-256)
-        C1NBTCFGLbits.TSEG2 = s2Seg - 1; // Phase Buffer Segment 2 (1-128)
-        C1NBTCFGLbits.SJW = 0; // Synchronization Jump Width (1-128)
+            /*C1NBTCFGHbits.BRP = bitRateDiv - 1; // Baud Rate Prescaler bits (1-256)
+            C1NBTCFGHbits.TSEG1 = s1Seg - 1; // Phase Buffer Segment 1 (1-256)
+            C1NBTCFGLbits.TSEG2 = s2Seg - 1; // Phase Buffer Segment 2 (1-128)
+            C1NBTCFGLbits.SJW = 0; // Synchronization Jump Width (1-128)
 
-        C1DBTCFGHbits.BRP = bitRateDiv - 1; // Baud Rate Prescaler bits (1-256)
-        C1DBTCFGHbits.TSEG1 = s1Seg - 1; // Phase Buffer Segment 1 (1-32)
-        C1DBTCFGLbits.TSEG2 = s2Seg - 1; // Phase Buffer Segment 2 (1-16)
-        C1DBTCFGLbits.SJW = 0; // Synchronization Jump Width (1-16)*/
+            C1DBTCFGHbits.BRP = bitRateDiv - 1; // Baud Rate Prescaler bits (1-256)
+            C1DBTCFGHbits.TSEG1 = s1Seg - 1; // Phase Buffer Segment 1 (1-32)
+            C1DBTCFGLbits.TSEG2 = s2Seg - 1; // Phase Buffer Segment 2 (1-16)
+            C1DBTCFGLbits.SJW = 0; // Synchronization Jump Width (1-16)*/
 
-        /* Set up the CANFD module for 1Mbps of Nominal bit rate speed and 2Mbps of Data bit rate. */
-        //C1NBTCFGH = 0x003E;
-        C1NBTCFGHbits.BRP = 0;      // Baud Rate Prescaler bits (1-256) div = 1
-        C1NBTCFGHbits.TSEG1 = 63-1;   // Phase Buffer Segment 1 (1-256) Tseg = 63
+            /* Set up the CANFD module for 1Mbps of Nominal bit rate speed and 2Mbps of Data bit rate. */
+            // C1NBTCFGH = 0x003E;
+            C1NBTCFGHbits.BRP = 0;         // Baud Rate Prescaler bits (1-256) div = 1
+            C1NBTCFGHbits.TSEG1 = 63 - 1;  // Phase Buffer Segment 1 (1-256) Tseg = 63
 
-        //C1NBTCFGL = 0x0F0F;
-        C1NBTCFGLbits.TSEG2 = 16-1; // Phase Buffer Segment 2 (1-128) Tseg2 = 16
-        C1NBTCFGLbits.SJW = 16-1;   // SWJ = 16
+            // C1NBTCFGL = 0x0F0F;
+            C1NBTCFGLbits.TSEG2 = 16 - 1;  // Phase Buffer Segment 2 (1-128) Tseg2 = 16
+            C1NBTCFGLbits.SJW = 16 - 1;    // SWJ = 16
 
-        // CAN FD
-        C1DBTCFGH = 0x001E;
-        C1DBTCFGL = 0x0707;
+            // CAN FD
+            C1DBTCFGH = 0x001E;
+            C1DBTCFGL = 0x0707;
 
-        C1TDCH = 0x0002; //TDCMOD is Auto
-        C1TDCL = 0x1F00;
+            C1TDCH = 0x0002;  // TDCMOD is Auto
+            C1TDCL = 0x1F00;
 
-        break;
-#if CAN_COUNT>=2
-    case 1:
-        // TODO
-        break;
-#endif
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            // TODO
+            break;
+#    endif
     }
 
     return 0;
@@ -468,7 +478,7 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
  */
 uint32_t can_bitRate(rt_dev_t device)
 {
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {
@@ -487,7 +497,7 @@ uint32_t can_bitRate(rt_dev_t device)
  */
 uint32_t can_effectiveBitRate(rt_dev_t device)
 {
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
 
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
@@ -499,14 +509,14 @@ uint32_t can_effectiveBitRate(rt_dev_t device)
 
     switch (can)
     {
-    case 0:
-        //bitRateDiv = (C1CFGbits.BRP + 1) << 1;      // bit rate divisor (1-64) * 2
-        break;
-#if CAN_COUNT>=2
-    case 1:
-        // TODO
-        break;
-#endif
+        case 0:
+            // bitRateDiv = (C1CFGbits.BRP + 1) << 1;      // bit rate divisor (1-64) * 2
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            // TODO
+            break;
+#    endif
     }
 
     return sysclock_periphFreq(SYSCLOCK_CLOCK_CAN) / (bitRateDiv * quantums);
@@ -522,7 +532,7 @@ uint32_t can_effectiveBitRate(rt_dev_t device)
  */
 uint8_t can_propagSeg(rt_dev_t device)
 {
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {
@@ -541,7 +551,7 @@ uint8_t can_propagSeg(rt_dev_t device)
  */
 uint8_t can_s1Seg(rt_dev_t device)
 {
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {
@@ -560,7 +570,7 @@ uint8_t can_s1Seg(rt_dev_t device)
  */
 uint8_t can_s2Seg(rt_dev_t device)
 {
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {
@@ -583,7 +593,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
     UDK_UNUSED(fifo);
 
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
     unsigned int i;
     uint8_t size;
     uint8_t dlc;
@@ -597,29 +607,29 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 
     switch (can)
     {
-    case 0:
-        // while (C1FIFOCON1Lbits.TXREQ == 1);
-        if (C1FIFOSTA1bits.TFNRFNIF == 0) // fifo full
-        {
-            return -1;
-        }
-        else
-        {
-            buffer = (CAN_TxMsgBuffer *)C1FIFOUA1L;
-        }
-        break;
-#if CAN_COUNT>=2
-    case 1:
-        if (C2FIFOSTA1bits.TFNRFNIF == 0) // fifo full
-        {
-            return -1;
-        }
-        else
-        {
-            buffer = (CAN_TxMsgBuffer *)C2FIFOUA1L;
-        }
-        break;
-#endif
+        case 0:
+            // while (C1FIFOCON1Lbits.TXREQ == 1);
+            if (C1FIFOSTA1bits.TFNRFNIF == 0)  // fifo full
+            {
+                return -1;
+            }
+            else
+            {
+                buffer = (CAN_TxMsgBuffer *)C1FIFOUA1L;
+            }
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            if (C2FIFOSTA1bits.TFNRFNIF == 0)  // fifo full
+            {
+                return -1;
+            }
+            else
+            {
+                buffer = (CAN_TxMsgBuffer *)C2FIFOUA1L;
+            }
+            break;
+#    endif
     }
 
     // clear the message header
@@ -631,13 +641,13 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     // set can id
     if ((header->flags & CAN_VERS2BA) == CAN_VERS2BA)
     {
-        CAN_DSPIC33C_TX_SETIDE(buffer);    // extended id
-        buffer->eid = (header->id >> 5) & 0x1FFF;   // Message EID
-        buffer->sid = (header->id >> 18) + ((header->id & 0x001F) << 11); //Message SID
+        CAN_DSPIC33C_TX_SETIDE(buffer);                                    // extended id
+        buffer->eid = (header->id >> 5) & 0x1FFF;                          // Message EID
+        buffer->sid = (header->id >> 18) + ((header->id & 0x001F) << 11);  // Message SID
     }
     else
     {
-        buffer->sid = header->id & 0x07FF; // Message SID
+        buffer->sid = header->id & 0x07FF;  // Message SID
     }
 
     if (header->flags & CAN_RTR)
@@ -695,26 +705,26 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
         }
         dlc = size;
     }
-    CAN_DSPIC33C_TX_SETDLC(buffer, dlc); // Data Length
+    CAN_DSPIC33C_TX_SETDLC(buffer, dlc);  // Data Length
 
     // data
-    char *bufferData = (char*)buffer + 8;
-    for (i=0; i<header->size; i++)
+    char *bufferData = (char *)buffer + 8;
+    for (i = 0; i < header->size; i++)
     {
         bufferData[i] = data[i];
     }
     switch (can)
     {
-    case 0:
-        C1FIFOCON1Lbits.UINC = 1;
-        C1FIFOCON1Lbits.TXREQ = 1;
-        break;
-#if CAN_COUNT>=2
-    case 1:
-        C2FIFOCON1Lbits.UINC = 1;
-        C2FIFOCON1Lbits.TXREQ = 1;
-        break;
-#endif
+        case 0:
+            C1FIFOCON1Lbits.UINC = 1;
+            C1FIFOCON1Lbits.TXREQ = 1;
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            C2FIFOCON1Lbits.UINC = 1;
+            C2FIFOCON1Lbits.TXREQ = 1;
+            break;
+#    endif
     }
 
     return 0;
@@ -734,7 +744,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
     UDK_UNUSED(fifo);
 
-#if CAN_COUNT>=1
+#if CAN_COUNT >= 1
     int i;
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
@@ -746,30 +756,31 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 
     switch (can)
     {
-    case 0:
-        if (C1FIFOSTA2bits.TFNRFNIF == 0) // fifo empty
-        {
-            return 0;
-        }
-        buffer = (CAN_RxMsgBuffer*)C1FIFOUA2L;
-        break;
-#if CAN_COUNT>=2
-    case 1:
-        if (C2FIFOSTA2bits.TFNRFNIF == 0) // fifo empty
-        {
-            return 0;
-        }
-        buffer = (CAN_RxMsgBuffer*)C2FIFOUA2L;
-        break;
-#endif
+        case 0:
+            if (C1FIFOSTA2bits.TFNRFNIF == 0)  // fifo empty
+            {
+                return 0;
+            }
+            buffer = (CAN_RxMsgBuffer *)C1FIFOUA2L;
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            if (C2FIFOSTA2bits.TFNRFNIF == 0)  // fifo empty
+            {
+                return 0;
+            }
+            buffer = (CAN_RxMsgBuffer *)C2FIFOUA2L;
+            break;
+#    endif
     }
 
     // ID
     uint32_t canId;
     if (CAN_DSPIC33C_RX_IDE(buffer))
     {
-        flagValue += CAN_VERS2BA; // extended ID
-        canId = (((uint32_t)CAN_DSPIC33C_RX_SID(buffer)) << 18) + CAN_DSPIC33C_RX_EIDH(buffer) + CAN_DSPIC33C_RX_EIDL(buffer);
+        flagValue += CAN_VERS2BA;  // extended ID
+        canId = (((uint32_t)CAN_DSPIC33C_RX_SID(buffer)) << 18) + CAN_DSPIC33C_RX_EIDH(buffer)
+                + CAN_DSPIC33C_RX_EIDL(buffer);
     }
     else
     {
@@ -781,30 +792,36 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     uint8_t size = CAN_DSPIC33C_RX_DLC(buffer);
     if (CAN_DSPIC33C_RX_FDF(buffer))
     {
-        flagValue += CAN_FDF; // CAN Fd
+        flagValue += CAN_FDF;  // CAN Fd
         switch (size)
         {
-        case 9:
-            size = 12;
-            break;
-        case 10:
-            size = 16;
-            break;
-        case 11:
-            size = 20;
-            break;
-        case 12:
-            size = 24;
-            break;
-        case 13:
-            size = 32;
-            break;
-        case 14:
-            size = 48;
-            break;
-        case 15:
-            size = 64;
-            break;
+            case 9:
+                size = 12;
+                break;
+
+            case 10:
+                size = 16;
+                break;
+
+            case 11:
+                size = 20;
+                break;
+
+            case 12:
+                size = 24;
+                break;
+
+            case 13:
+                size = 32;
+                break;
+
+            case 14:
+                size = 48;
+                break;
+
+            case 15:
+                size = 64;
+                break;
         }
     }
     else
@@ -814,8 +831,8 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
             size = 8;
         }
     }
-    char *bufferData = (char*)buffer + 8;
-    for (i=0; i<size; i++)
+    char *bufferData = (char *)buffer + 8;
+    for (i = 0; i < size; i++)
     {
         data[i] = bufferData[i];
     }
@@ -823,14 +840,14 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 
     switch (can)
     {
-    case 0:
-        C1FIFOCON2Lbits.UINC = 1; // mark as read
-        break;
-#if CAN_COUNT>=2
-    case 1:
-        C2FIFOCON2Lbits.UINC = 1; // mark as read
-        break;
-#endif
+        case 0:
+            C1FIFOCON2Lbits.UINC = 1;  // mark as read
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            C2FIFOCON2Lbits.UINC = 1;  // mark as read
+            break;
+#    endif
     }
 
     // flags
@@ -857,8 +874,12 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
  * @param frame frames format filtering
  * @return 0 if ok, -1 in case of error
  */
-int can_filterConfiguration(rt_dev_t device, uint8_t nFilter, uint8_t fifo,
-                            uint32_t idFilter, uint32_t mask, CAN_FRAME_FORMAT_FLAGS frame)
+int can_filterConfiguration(rt_dev_t device,
+                            uint8_t nFilter,
+                            uint8_t fifo,
+                            uint32_t idFilter,
+                            uint32_t mask,
+                            CAN_FRAME_FORMAT_FLAGS frame)
 {
 #if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
@@ -893,16 +914,16 @@ int can_filterConfiguration(rt_dev_t device, uint8_t nFilter, uint8_t fifo,
 
     switch (can)
     {
-    case 0:
-        con = (uint8_t *)&C1FLTCON0L;
-        reg = (uint16_t *)&C1FLTOBJ0L;
-        break;
-#if CAN_COUNT >= 2
-    case 1:
-        con = (uint8_t *)&C2FLTCON0L;
-        reg = (uint16_t *)&C2FLTOBJ0L;
-        break;
-#endif
+        case 0:
+            con = (uint8_t *)&C1FLTCON0L;
+            reg = (uint16_t *)&C1FLTOBJ0L;
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            con = (uint8_t *)&C2FLTCON0L;
+            reg = (uint16_t *)&C2FLTOBJ0L;
+            break;
+#    endif
     }
     // filter disabled
     con[nFilter] = con[nFilter] & 0x7F;
@@ -942,15 +963,15 @@ int can_filterEnable(rt_dev_t device, uint8_t nFilter)
 
     switch (can)
     {
-    case 0:
-        con = (uint8_t *)&C1FLTCON0L;
-        break;
-#if CAN_COUNT >= 2
-    case 1:
-        con = (uint8_t *)&C2FLTCON0L;
-        break;
-#endif
-    con[nFilter] = con[nFilter] | (1 << 7);  // Enable the filter
+        case 0:
+            con = (uint8_t *)&C1FLTCON0L;
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            con = (uint8_t *)&C2FLTCON0L;
+            break;
+#    endif
+            con[nFilter] = con[nFilter] | (1 << 7);  // Enable the filter
     }
     return 0;
 #else
@@ -976,15 +997,15 @@ int can_filterDisable(rt_dev_t device, uint8_t nFilter)
 
     switch (can)
     {
-    case 0:
-        con = (uint8_t *)&C1FLTCON0L;
-        break;
-#if CAN_COUNT >= 2
-    case 1:
-        con = (uint8_t *)&C2FLTCON0L;
-        break;
-#endif
-    con[nFilter] = con[nFilter] & 0x7F;  // Disable the filter
+        case 0:
+            con = (uint8_t *)&C1FLTCON0L;
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            con = (uint8_t *)&C2FLTCON0L;
+            break;
+#    endif
+            con[nFilter] = con[nFilter] & 0x7F;  // Disable the filter
     }
 #else
     return -1;

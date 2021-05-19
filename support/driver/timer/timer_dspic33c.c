@@ -13,17 +13,20 @@
 
 #include "timer.h"
 
-#include <driver/sysclock.h>
 #include <archi.h>
+#include <driver/sysclock.h>
 
-#if !defined (TIMER_COUNT) || TIMER_COUNT==0
-  #warning "No timer on the current device or unknow device"
+#if !defined(TIMER_COUNT) || TIMER_COUNT == 0
+#    warning "No timer on the current device or unknow device"
 #endif
 
-#define TIMER_FLAG_UNUSED  0x00
-typedef struct {
-    union {
-        struct {
+#define TIMER_FLAG_UNUSED 0x00
+typedef struct
+{
+    union
+    {
+        struct
+        {
             unsigned used : 1;
             unsigned enabled : 1;
             unsigned bit32 : 1;
@@ -40,17 +43,13 @@ struct timer_dev
     void (*handler)(void);
 };
 
-#if TIMER_COUNT>=1
-void __attribute__ ((interrupt, no_auto_psv)) _T1Interrupt(void);
+#if TIMER_COUNT >= 1
+void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void);
 #endif
 
 struct timer_dev timers[] = {
-#if TIMER_COUNT>=1
-    {
-        .periodUs = 0,
-        .flags = {{.val = TIMER_FLAG_UNUSED}},
-        .handler = NULL
-    },
+#if TIMER_COUNT >= 1
+    {.periodUs = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
 };
 
@@ -60,7 +59,7 @@ struct timer_dev timers[] = {
  */
 rt_dev_t timer_getFreeDevice(void)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t i;
     rt_dev_t device;
 
@@ -92,7 +91,7 @@ rt_dev_t timer_getFreeDevice(void)
  */
 int timer_open(rt_dev_t device)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -118,7 +117,7 @@ int timer_open(rt_dev_t device)
  */
 int timer_close(rt_dev_t device)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -142,7 +141,7 @@ int timer_close(rt_dev_t device)
  */
 int timer_enable(rt_dev_t device)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -153,19 +152,19 @@ int timer_enable(rt_dev_t device)
 
     switch (timer)
     {
-    case 0:
-        T1CONbits.TON = 1;  // enable timer module
-        _T1IF = 0;
-        if (timers[0].handler)
-        {
-            _T1IE = 1;
-        }
-        else
-        {
-            _T1IE = 0;
-        }
-        _T1IP = 1;
-        break;
+        case 0:
+            T1CONbits.TON = 1;  // enable timer module
+            _T1IF = 0;
+            if (timers[0].handler)
+            {
+                _T1IE = 1;
+            }
+            else
+            {
+                _T1IE = 0;
+            }
+            _T1IP = 1;
+            break;
     }
 
     return 0;
@@ -181,7 +180,7 @@ int timer_enable(rt_dev_t device)
  */
 int timer_disable(rt_dev_t device)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -192,10 +191,10 @@ int timer_disable(rt_dev_t device)
 
     switch (timer)
     {
-    case 0:
-        T1CONbits.TON = 0;  // disable timer module
-        _T1IE = 0;
-        break;
+        case 0:
+            T1CONbits.TON = 0;  // disable timer module
+            _T1IE = 0;
+            break;
     }
 
     return 0;
@@ -212,7 +211,7 @@ int timer_disable(rt_dev_t device)
  */
 int timer_setHandler(rt_dev_t device, void (*handler)(void))
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -236,7 +235,7 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
  */
 int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t div = 0;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
@@ -246,11 +245,11 @@ int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
 
     if (prvalue > 65535)
     {
-        div = 0b01; // 8 divider
+        div = 0b01;  // 8 divider
         prvalue >>= 3;
         if (prvalue > 65535)
         {
-            div = 0b11; // 256 divider
+            div = 0b11;  // 256 divider
             prvalue >>= 5;
             if (prvalue > 65535)
             {
@@ -261,10 +260,10 @@ int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
 
     switch (timer)
     {
-    case 0:
-        T1CONbits.TCKPS = div;   // set divide number
-        PR1 = prvalue;           // pr value, comparator value
-        break;
+        case 0:
+            T1CONbits.TCKPS = div;  // set divide number
+            PR1 = prvalue;          // pr value, comparator value
+            break;
     }
 
     return 0;
@@ -280,7 +279,7 @@ int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
  */
 uint32_t timer_period(rt_dev_t device)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -289,8 +288,8 @@ uint32_t timer_period(rt_dev_t device)
 
     switch (timer)
     {
-    case 0:
-        return PR1;
+        case 0:
+            return PR1;
     }
     return -1;
 #else
@@ -305,7 +304,7 @@ uint32_t timer_period(rt_dev_t device)
  */
 int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint32_t prvalue;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
@@ -331,7 +330,7 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
  */
 int timer_setPeriodUs(rt_dev_t device, uint32_t periodUs)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     float prvalue;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
@@ -356,7 +355,7 @@ int timer_setPeriodUs(rt_dev_t device, uint32_t periodUs)
  */
 uint32_t timer_periodUs(rt_dev_t device)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -376,7 +375,7 @@ uint32_t timer_periodUs(rt_dev_t device)
  */
 uint32_t timer_periodMs(rt_dev_t device)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -396,7 +395,7 @@ uint32_t timer_periodMs(rt_dev_t device)
  */
 uint16_t timer_getValue(rt_dev_t device)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint16_t value;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
@@ -406,9 +405,9 @@ uint16_t timer_getValue(rt_dev_t device)
 
     switch (timer)
     {
-    case 0:
-        value = TMR1;
-        break;
+        case 0:
+            value = TMR1;
+            break;
     }
 
     return value;
@@ -424,7 +423,7 @@ uint16_t timer_getValue(rt_dev_t device)
  */
 int timer_setValue(rt_dev_t device, uint16_t value)
 {
-#if TIMER_COUNT>=1
+#if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -433,9 +432,9 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 
     switch (timer)
     {
-    case 0:
-        TMR1 = value;
-        break;
+        case 0:
+            TMR1 = value;
+            break;
     }
 
     return 0;
@@ -444,8 +443,8 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 #endif
 }
 
-#if TIMER_COUNT>=1
-void __attribute__ ((interrupt, no_auto_psv)) _T1Interrupt(void)
+#if TIMER_COUNT >= 1
+void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void)
 {
     if (timers[0].handler)
     {

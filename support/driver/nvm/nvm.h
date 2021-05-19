@@ -27,13 +27,12 @@ ssize_t nvm_readPage(uint32_t addr, char *data);
 uint16_t nvm_pageNumber(uint32_t addr);
 uint32_t nvm_pageAddress(uint16_t pageNum);
 
-#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) \
- || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33ep) \
- || defined(ARCHI_dspic33ev) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ch) \
- || defined(ARCHI_dspic33ck)
- #include "nvm_pic24_dspic30f_dspic33.h"
+#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj)                \
+    || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) || defined(ARCHI_dspic33fj)     \
+    || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
+#    include "nvm_pic24_dspic30f_dspic33.h"
 #else
- #error Unsuported ARCHI
+#    error Unsuported ARCHI
 #endif
 
-#endif // NVM_H
+#endif  // NVM_H

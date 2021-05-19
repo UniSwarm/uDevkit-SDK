@@ -20,14 +20,17 @@
 #include <archi.h>
 #include <driver/timer.h>
 
-#if !defined (OC_COUNT) || OC_COUNT==0
-  #warning "No output compare (OC) on the current device or unknow device"
+#if !defined(OC_COUNT) || OC_COUNT == 0
+#    warning "No output compare (OC) on the current device or unknow device"
 #endif
 
-#define OC_FLAG_UNUSED  0x00
-typedef struct {
-    union {
-        struct {
+#define OC_FLAG_UNUSED 0x00
+typedef struct
+{
+    union
+    {
+        struct
+        {
             unsigned used : 1;
             unsigned enabled : 1;
             unsigned imode : 3;
@@ -46,50 +49,32 @@ struct oc_dev
 };
 
 struct oc_dev ocs[] = {
-#if OC_COUNT>=1
-    {
-        .flags = {{.val = OC_FLAG_UNUSED}}
-    },
+#if OC_COUNT >= 1
+    {.flags = {{.val = OC_FLAG_UNUSED}}},
 #endif
-#if OC_COUNT>=2
-    {
-        .flags = {{.val = OC_FLAG_UNUSED}}
-    },
+#if OC_COUNT >= 2
+    {.flags = {{.val = OC_FLAG_UNUSED}}},
 #endif
-#if OC_COUNT>=3
-    {
-        .flags = {{.val = OC_FLAG_UNUSED}}
-    },
+#if OC_COUNT >= 3
+    {.flags = {{.val = OC_FLAG_UNUSED}}},
 #endif
-#if OC_COUNT>=4
-    {
-        .flags = {{.val = OC_FLAG_UNUSED}}
-    },
+#if OC_COUNT >= 4
+    {.flags = {{.val = OC_FLAG_UNUSED}}},
 #endif
-#if OC_COUNT>=5
-    {
-        .flags = {{.val = OC_FLAG_UNUSED}}
-    },
+#if OC_COUNT >= 5
+    {.flags = {{.val = OC_FLAG_UNUSED}}},
 #endif
-#if OC_COUNT>=6
-    {
-        .flags = {{.val = OC_FLAG_UNUSED}}
-    },
+#if OC_COUNT >= 6
+    {.flags = {{.val = OC_FLAG_UNUSED}}},
 #endif
-#if OC_COUNT>=7
-    {
-        .flags = {{.val = OC_FLAG_UNUSED}}
-    },
+#if OC_COUNT >= 7
+    {.flags = {{.val = OC_FLAG_UNUSED}}},
 #endif
-#if OC_COUNT>=8
-    {
-        .flags = {{.val = OC_FLAG_UNUSED}}
-    },
+#if OC_COUNT >= 8
+    {.flags = {{.val = OC_FLAG_UNUSED}}},
 #endif
-#if OC_COUNT>=9
-    {
-        .flags = {{.val = OC_FLAG_UNUSED}}
-    }
+#if OC_COUNT >= 9
+    {.flags = {{.val = OC_FLAG_UNUSED}}}
 #endif
 };
 
@@ -107,7 +92,7 @@ struct oc_dev ocs[] = {
  */
 rt_dev_t oc_getFreeDevice(void)
 {
-#if OC_COUNT>=1
+#if OC_COUNT >= 1
     uint8_t i;
     rt_dev_t device;
 
@@ -140,7 +125,7 @@ rt_dev_t oc_getFreeDevice(void)
  */
 int oc_open(rt_dev_t device)
 {
-#if OC_COUNT>=1
+#if OC_COUNT >= 1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
     {
@@ -166,7 +151,7 @@ int oc_open(rt_dev_t device)
  */
 int oc_close(rt_dev_t device)
 {
-#if OC_COUNT>=1
+#if OC_COUNT >= 1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
     {
@@ -184,7 +169,7 @@ int oc_close(rt_dev_t device)
 
 int oc_setInternalMode(rt_dev_t device, uint8_t mode)
 {
-#if OC_COUNT>=1
+#if OC_COUNT >= 1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
     {
@@ -193,49 +178,49 @@ int oc_setInternalMode(rt_dev_t device, uint8_t mode)
 
     switch (oc)
     {
-    case 0:
-        OC1CONbits.OCM = mode;
-        break;
-#if OC_COUNT>=2
-    case 1:
-        OC2CONbits.OCM = mode;
-        break;
-#endif
-#if OC_COUNT>=3
-    case 2:
-        OC3CONbits.OCM = mode;
-        break;
-#endif
-#if OC_COUNT>=4
-    case 3:
-        OC4CONbits.OCM = mode;
-        break;
-#endif
-#if OC_COUNT>=5
-    case 4:
-        OC5CONbits.OCM = mode;
-        break;
-#endif
-#if OC_COUNT>=6
-    case 5:
-        OC6CONbits.OCM = mode;
-        break;
-#endif
-#if OC_COUNT>=7
-    case 6:
-        OC7CONbits.OCM = mode;
-        break;
-#endif
-#if OC_COUNT>=8
-    case 7:
-        OC8CONbits.OCM = mode;
-        break;
-#endif
-#if OC_COUNT>=9
-    case 8:
-        OC9CONbits.OCM = mode;
-        break;
-#endif
+        case 0:
+            OC1CONbits.OCM = mode;
+            break;
+#    if OC_COUNT >= 2
+        case 1:
+            OC2CONbits.OCM = mode;
+            break;
+#    endif
+#    if OC_COUNT >= 3
+        case 2:
+            OC3CONbits.OCM = mode;
+            break;
+#    endif
+#    if OC_COUNT >= 4
+        case 3:
+            OC4CONbits.OCM = mode;
+            break;
+#    endif
+#    if OC_COUNT >= 5
+        case 4:
+            OC5CONbits.OCM = mode;
+            break;
+#    endif
+#    if OC_COUNT >= 6
+        case 5:
+            OC6CONbits.OCM = mode;
+            break;
+#    endif
+#    if OC_COUNT >= 7
+        case 6:
+            OC7CONbits.OCM = mode;
+            break;
+#    endif
+#    if OC_COUNT >= 8
+        case 7:
+            OC8CONbits.OCM = mode;
+            break;
+#    endif
+#    if OC_COUNT >= 9
+        case 8:
+            OC9CONbits.OCM = mode;
+            break;
+#    endif
     }
 
     return 0;
@@ -251,7 +236,7 @@ int oc_setInternalMode(rt_dev_t device, uint8_t mode)
  */
 int oc_enable(rt_dev_t device)
 {
-#if OC_COUNT>=1
+#if OC_COUNT >= 1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
     {
@@ -273,7 +258,7 @@ int oc_enable(rt_dev_t device)
  */
 int oc_disable(rt_dev_t device)
 {
-#if OC_COUNT>=1
+#if OC_COUNT >= 1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
     {
@@ -296,7 +281,7 @@ int oc_disable(rt_dev_t device)
  */
 int oc_setMode(rt_dev_t device, uint8_t mode)
 {
-#if OC_COUNT>=1
+#if OC_COUNT >= 1
     uint8_t imode = OC_PIC24F_dsPIC33F_dsPIC30F_DISABLE;
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
@@ -308,27 +293,33 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
 
     switch (mode)
     {
-    case OC_MODE_PWM:
-        imode = OC_PIC24F_dsPIC33F_dsPIC30F_PWM;
-        break;
-    case OC_MODE_PWM_CENTER:
-        imode = OC_PIC24F_dsPIC33F_dsPIC30F_PWM; // no PWM center support
-        break;
-    case OC_MODE_SINGLE_LOW:
-        imode = OC_PIC24F_dsPIC33F_dsPIC30F_SINGLE_LOW;
-        break;
-    case OC_MODE_SINGLE_HIGH:
-        imode = OC_PIC24F_dsPIC33F_dsPIC30F_SINGLE_HIGH;
-        break;
-    case OC_MODE_CONTINOUS_TOGGLE:
-        imode = OC_PIC24F_dsPIC33F_dsPIC30F_CONTINOUS_TOGGLE;
-        break;
-    case OC_MODE_SINGLE_LOWHIGH:
-        imode = OC_PIC24F_dsPIC33F_dsPIC30F_SINGLE_LOWHIGH;
-        break;
-    case OC_MODE_CONTINOUS_LOWHIGH:
-        imode = OC_PIC24F_dsPIC33F_dsPIC30F_CONTINOUS_LOWHIGH;
-        break;
+        case OC_MODE_PWM:
+            imode = OC_PIC24F_dsPIC33F_dsPIC30F_PWM;
+            break;
+
+        case OC_MODE_PWM_CENTER:
+            imode = OC_PIC24F_dsPIC33F_dsPIC30F_PWM;  // no PWM center support
+            break;
+
+        case OC_MODE_SINGLE_LOW:
+            imode = OC_PIC24F_dsPIC33F_dsPIC30F_SINGLE_LOW;
+            break;
+
+        case OC_MODE_SINGLE_HIGH:
+            imode = OC_PIC24F_dsPIC33F_dsPIC30F_SINGLE_HIGH;
+            break;
+
+        case OC_MODE_CONTINOUS_TOGGLE:
+            imode = OC_PIC24F_dsPIC33F_dsPIC30F_CONTINOUS_TOGGLE;
+            break;
+
+        case OC_MODE_SINGLE_LOWHIGH:
+            imode = OC_PIC24F_dsPIC33F_dsPIC30F_SINGLE_LOWHIGH;
+            break;
+
+        case OC_MODE_CONTINOUS_LOWHIGH:
+            imode = OC_PIC24F_dsPIC33F_dsPIC30F_CONTINOUS_LOWHIGH;
+            break;
     }
     ocs[oc].flags.imode = imode;
 
@@ -349,7 +340,7 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
  */
 uint8_t oc_mode(rt_dev_t device)
 {
-#if OC_COUNT>=1
+#if OC_COUNT >= 1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
     {
@@ -371,7 +362,7 @@ uint8_t oc_mode(rt_dev_t device)
  */
 int oc_setRVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
 {
-#if OC_COUNT>=1
+#if OC_COUNT >= 1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
     {
@@ -383,58 +374,58 @@ int oc_setRVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
 
     switch (oc)
     {
-    case 0:
-        OC1R = rVal;
-        OC1RS = rsVal;
-        break;
-#if OC_COUNT>=2
-    case 1:
-        OC2R = rVal;
-        OC2RS = rsVal;
-        break;
-#endif
-#if OC_COUNT>=3
-    case 2:
-        OC3R = rVal;
-        OC3RS = rsVal;
-        break;
-#endif
-#if OC_COUNT>=4
-    case 3:
-        OC4R = rVal;
-        OC4RS = rsVal;
-        break;
-#endif
-#if OC_COUNT>=5
-    case 4:
-        OC5R = rVal;
-        OC5RS = rsVal;
-        break;
-#endif
-#if OC_COUNT>=6
-    case 5:
-        OC6R = rVal;
-        OC6RS = rsVal;
-        break;
-#endif
-#if OC_COUNT>=7
-    case 6:
-        OC7R = rVal;
-        OC7RS = rsVal;
-        break;
-#endif
-#if OC_COUNT>=8
-    case 7:
-        OC8R = rVal;
-        OC8RS = rsVal;
-        break;
-#endif
-#if OC_COUNT>=9
-    case 8:
-        OC9R = rVal;
-        OC9RS = rsVal;
-        break;
-#endif
+        case 0:
+            OC1R = rVal;
+            OC1RS = rsVal;
+            break;
+#    if OC_COUNT >= 2
+        case 1:
+            OC2R = rVal;
+            OC2RS = rsVal;
+            break;
+#    endif
+#    if OC_COUNT >= 3
+        case 2:
+            OC3R = rVal;
+            OC3RS = rsVal;
+            break;
+#    endif
+#    if OC_COUNT >= 4
+        case 3:
+            OC4R = rVal;
+            OC4RS = rsVal;
+            break;
+#    endif
+#    if OC_COUNT >= 5
+        case 4:
+            OC5R = rVal;
+            OC5RS = rsVal;
+            break;
+#    endif
+#    if OC_COUNT >= 6
+        case 5:
+            OC6R = rVal;
+            OC6RS = rsVal;
+            break;
+#    endif
+#    if OC_COUNT >= 7
+        case 6:
+            OC7R = rVal;
+            OC7RS = rsVal;
+            break;
+#    endif
+#    if OC_COUNT >= 8
+        case 7:
+            OC8R = rVal;
+            OC8RS = rsVal;
+            break;
+#    endif
+#    if OC_COUNT >= 9
+        case 8:
+            OC9R = rVal;
+            OC9RS = rsVal;
+            break;
+#    endif
     }
 
     return 0;
@@ -450,7 +441,7 @@ int oc_setRVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
  */
 uint32_t oc_rVal(rt_dev_t device)
 {
-#if OC_COUNT>=1
+#if OC_COUNT >= 1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
     {
@@ -470,7 +461,7 @@ uint32_t oc_rVal(rt_dev_t device)
  */
 uint32_t oc_rsVal(rt_dev_t device)
 {
-#if OC_COUNT>=1
+#if OC_COUNT >= 1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
     {
@@ -485,7 +476,7 @@ uint32_t oc_rsVal(rt_dev_t device)
 
 int oc_setTimer(rt_dev_t device, uint8_t timer)
 {
-#if OC_COUNT>=1
+#if OC_COUNT >= 1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
     {
@@ -494,91 +485,91 @@ int oc_setTimer(rt_dev_t device, uint8_t timer)
 
     if (timer > 1)
     {
-        return -1; // invalid timer id
+        return -1;  // invalid timer id
     }
 
     ocs[oc].timer = timer;
 
     switch (oc)
     {
-    case 0:
-        OC1CONbits.OCTSEL = timer;
-        break;
-#if OC_COUNT>=2
-    case 1:
-        OC2CONbits.OCTSEL = timer;
-        break;
-#endif
-#if OC_COUNT>=3
-    case 2:
-        OC3CONbits.OCTSEL = timer;
-        break;
-#endif
-#if OC_COUNT>=4
-    case 3:
-        OC4CONbits.OCTSEL = timer;
-        break;
-#endif
-#if OC_COUNT>=5
-    case 4:
-        OC5CONbits.OCTSEL = timer;
-        break;
-#endif
-#if OC_COUNT>=6
-    case 5:
-        OC6CONbits.OCTSEL = timer;
-        break;
-#endif
-#if OC_COUNT>=7
-    case 6:
-        OC7CONbits.OCTSEL = timer;
-        break;
-#endif
-#if OC_COUNT>=8
-    case 7:
-        OC8CONbits.OCTSEL = timer;
-        break;
-#endif
-#if OC_COUNT>=9
-    case 8:
-        OC9CONbits.OCTSEL = timer;
-        break;
-#endif
-#if OC_COUNT>=10
-    case 9:
-        OC10CONbits.OCTSEL = timer;
-        break;
-#endif
-#if OC_COUNT>=11
-    case 10:
-        OC11CONbits.OCTSEL = timer;
-        break;
-#endif
-#if OC_COUNT>=12
-    case 11:
-        OC12CONbits.OCTSEL = timer;
-        break;
-#endif
-#if OC_COUNT>=13
-    case 12:
-        OC13CONbits.OCTSEL = timer;
-        break;
-#endif
-#if OC_COUNT>=14
-    case 13:
-        OC14CONbits.OCTSEL = timer;
-        break;
-#endif
-#if OC_COUNT>=15
-    case 14:
-        OC15CONbits.OCTSEL = timer;
-        break;
-#endif
-#if OC_COUNT>=16
-    case 15:
-        OC16CONbits.OCTSEL = timer;
-        break;
-#endif
+        case 0:
+            OC1CONbits.OCTSEL = timer;
+            break;
+#    if OC_COUNT >= 2
+        case 1:
+            OC2CONbits.OCTSEL = timer;
+            break;
+#    endif
+#    if OC_COUNT >= 3
+        case 2:
+            OC3CONbits.OCTSEL = timer;
+            break;
+#    endif
+#    if OC_COUNT >= 4
+        case 3:
+            OC4CONbits.OCTSEL = timer;
+            break;
+#    endif
+#    if OC_COUNT >= 5
+        case 4:
+            OC5CONbits.OCTSEL = timer;
+            break;
+#    endif
+#    if OC_COUNT >= 6
+        case 5:
+            OC6CONbits.OCTSEL = timer;
+            break;
+#    endif
+#    if OC_COUNT >= 7
+        case 6:
+            OC7CONbits.OCTSEL = timer;
+            break;
+#    endif
+#    if OC_COUNT >= 8
+        case 7:
+            OC8CONbits.OCTSEL = timer;
+            break;
+#    endif
+#    if OC_COUNT >= 9
+        case 8:
+            OC9CONbits.OCTSEL = timer;
+            break;
+#    endif
+#    if OC_COUNT >= 10
+        case 9:
+            OC10CONbits.OCTSEL = timer;
+            break;
+#    endif
+#    if OC_COUNT >= 11
+        case 10:
+            OC11CONbits.OCTSEL = timer;
+            break;
+#    endif
+#    if OC_COUNT >= 12
+        case 11:
+            OC12CONbits.OCTSEL = timer;
+            break;
+#    endif
+#    if OC_COUNT >= 13
+        case 12:
+            OC13CONbits.OCTSEL = timer;
+            break;
+#    endif
+#    if OC_COUNT >= 14
+        case 13:
+            OC14CONbits.OCTSEL = timer;
+            break;
+#    endif
+#    if OC_COUNT >= 15
+        case 14:
+            OC15CONbits.OCTSEL = timer;
+            break;
+#    endif
+#    if OC_COUNT >= 16
+        case 15:
+            OC16CONbits.OCTSEL = timer;
+            break;
+#    endif
     }
 
     return 0;
@@ -589,7 +580,7 @@ int oc_setTimer(rt_dev_t device, uint8_t timer)
 
 rt_dev_t oc_getTimer(rt_dev_t device)
 {
-#if OC_COUNT>=1
+#if OC_COUNT >= 1
     uint8_t oc = MINOR(device);
     if (oc >= OC_COUNT)
     {
@@ -598,13 +589,13 @@ rt_dev_t oc_getTimer(rt_dev_t device)
 
     if (ocs[oc].timer == 0)
     {
-        return timer(2); // timer 2
+        return timer(2);  // timer 2
     }
     else
     {
-        return timer(3); // timer 3
+        return timer(3);  // timer 3
     }
 #endif
-    
+
     return NULLDEV;
 }

@@ -29,4 +29,4 @@ typedef struct
 #define UART_SIM_WRITE  0x0002
 #define UART_SIM_READ   0x0003
 
-#endif // UART_SIM_H
+#endif  // UART_SIM_H

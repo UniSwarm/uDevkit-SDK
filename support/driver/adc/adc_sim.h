@@ -4,8 +4,8 @@
  * @copyright Robotips 2016
  * @copyright UniSwarm 2018-2021
  *
- * @date November 28, 2016, 20:35 PM 
- * 
+ * @date November 28, 2016, 20:35 PM
+ *
  * @brief ADC simulator driver support
  */
 
@@ -30,4 +30,4 @@ typedef struct
 #define ADC_SIM_CONFIG 0x0000
 #define ADC_SIM_READ   0x0001
 
-#endif // ADC_SIM_H
+#endif  // ADC_SIM_H
