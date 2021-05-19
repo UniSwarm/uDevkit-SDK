@@ -67,4 +67,4 @@ uint16_t esp8266_getRecSize(void);
 char *esp8266_getIp(void);
 char *esp8266_getMac(void);
 
-#endif   // ESP8266_H
+#endif  // ESP8266_H

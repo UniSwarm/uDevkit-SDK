@@ -32,7 +32,9 @@ void web_server_init(void)
 void web_server_task(void)
 {
     if (esp8266_getRec() != 1)
+    {
         return;
+    }
 
     unsigned char sock = esp8266_getRecSocket();
     char *querry = esp8266_getRecData();
@@ -48,8 +50,7 @@ void web_server_task(void)
     {
         if (web_server_restApi && strncmp(url, "/api/", 5) == 0)
         {
-            (*web_server_restApi)(url+5,
-                                  type, web_server_buffer);
+            (*web_server_restApi)(url + 5, type, web_server_buffer);
             esp8266_write_socket_string(sock, web_server_buffer);
         }
         else
@@ -57,9 +58,13 @@ void web_server_task(void)
             const Fs_File *file;
 
             if (strcmp(url, "/") == 0)
+            {
                 file = getFile(web_server_file_list, "index.html");
+            }
             else
+            {
                 file = getFile(web_server_file_list, url + 1);
+            }
 
             if (file == NULL)  // search in fs
             {
@@ -81,16 +86,13 @@ void web_server_task(void)
 
                 while (idData + 2048 < file->size)
                 {
-                    memcpy(web_server_buffer + start, file->data + idData,
-                           2048 - start);
+                    memcpy(web_server_buffer + start, file->data + idData, 2048 - start);
                     esp8266_write_socket(sock, web_server_buffer, 2048);
                     idData += 2048 - start;
                     start = 0;
                 }
-                memcpy(web_server_buffer + start, file->data + idData,
-                       file->size - idData);
-                esp8266_write_socket(sock, web_server_buffer,
-                                     file->size - idData + start);
+                memcpy(web_server_buffer + start, file->data + idData, file->size - idData);
+                esp8266_write_socket(sock, web_server_buffer, file->size - idData + start);
             }
         }
     }
@@ -103,7 +105,7 @@ void web_server_task(void)
     esp8266_close_socket(sock);
 }
 
-void web_server_setRestApi( void (*restApi)(char *url, HTTP_QUERRY_TYPE code, char *buffer) )
+void web_server_setRestApi(void (*restApi)(char *url, HTTP_QUERRY_TYPE code, char *buffer))
 {
     web_server_restApi = restApi;
 }

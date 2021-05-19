@@ -15,10 +15,10 @@
 
 #include "sensor_driver.h"
 #ifdef USE_sharp
-  #include "driver/sharp/sharp.h"
+#    include "driver/sharp/sharp.h"
 #endif
 #ifdef USE_VL6180X
-  #include "driver/VL6180X/VL6180X.h"
+#    include "driver/VL6180X/VL6180X.h"
 #endif
 
 #define SENSOR_TYPE_DISTANCE
@@ -39,4 +39,4 @@ uint8_t sensor_count(void);
 Sensor *sensor_get(uint8_t s);
 uint8_t sensor_add(Sensor *sensor);
 
-#endif // SENSOR_H
+#endif  // SENSOR_H

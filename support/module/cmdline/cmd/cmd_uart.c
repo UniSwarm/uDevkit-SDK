@@ -9,19 +9,19 @@ int cmd_uart(int argc, char **argv)
     rt_dev_t uart_dev;
     char c;
 
-#if !defined (UART_COUNT) || UART_COUNT==0
+#if !defined(UART_COUNT) || UART_COUNT == 0
     puts("No UART module");
     return 1;
 #else
     // no args -> print number of uarts
-    if(argc == 1)
+    if (argc == 1)
     {
         printf("count: %d\r\n", (int)UART_COUNT);
         return 0;
     }
 
     // help
-    if(strcmp(argv[1], "help")==0)
+    if (strcmp(argv[1], "help") == 0)
     {
         puts("uart");
         puts("uart <uart-id>");
@@ -33,12 +33,14 @@ int cmd_uart(int argc, char **argv)
 
     // first arg numeric : convert to uart id
     c = argv[1][0];
-    if(isdigit(c))
+    if (isdigit(c))
     {
         uart = c - '0';
         c = argv[1][1];
-        if(isdigit(c))
+        if (isdigit(c))
+        {
             uart = uart * 10 + (c - '0');
+        }
     }
     if (uart >= UART_COUNT)
     {
@@ -49,40 +51,42 @@ int cmd_uart(int argc, char **argv)
 
     // if no more arg, print properties of uart
     // > uart <uart-id>
-    if(argc == 2)
+    if (argc == 2)
     {
         char parity;
         switch (uart_bitParity(uart_dev))
         {
-        case UART_BIT_PARITY_NONE:
-            parity = 'N';
-            break;
-        case UART_BIT_PARITY_EVEN:
-            parity = 'E';
-            break;
-        case UART_BIT_PARITY_ODD:
-            parity = 'O';
-            break;
-        default:
-            parity = 'U';
-            break;
+            case UART_BIT_PARITY_NONE:
+                parity = 'N';
+                break;
+            case UART_BIT_PARITY_EVEN:
+                parity = 'E';
+                break;
+            case UART_BIT_PARITY_ODD:
+                parity = 'O';
+                break;
+            default:
+                parity = 'U';
+                break;
         }
         printf("Config: %lubds %d%c%d (%lubds)\r\n",
-            uart_effectiveBaudSpeed(uart_dev),
-            (int)uart_bitLength(uart_dev),
-            parity,
-            (int)uart_bitStop(uart_dev),
-            uart_baudSpeed(uart_dev));
+               uart_effectiveBaudSpeed(uart_dev),
+               (int)uart_bitLength(uart_dev),
+               parity,
+               (int)uart_bitStop(uart_dev),
+               uart_baudSpeed(uart_dev));
 
         return 0;
     }
 
     // parse argv 2
 
-    if(argc < 3)
+    if (argc < 3)
+    {
         return 1;
+    }
     // == read > uart <uart-id> read
-    if(strcmp(argv[2], "read")==0)
+    if (strcmp(argv[2], "read") == 0)
     {
         char buff[100];
         size_t data_read;
@@ -91,17 +95,19 @@ int cmd_uart(int argc, char **argv)
         puts(buff);
         return 0;
     }
-    if(argc < 4)
+    if (argc < 4)
+    {
         return 1;
+    }
     // == write > uart <uart-id> write <data-to-write>
-    if(strcmp(argv[2], "write")==0)
+    if (strcmp(argv[2], "write") == 0)
     {
         size_t written = uart_write(uart_dev, argv[3], strlen(argv[3]));
         printf("ok %d data written\r\n", written);
         return 0;
     }
     // == setbs > uart <uart-id> setbs <baud-speed>
-    if(strcmp(argv[2], "setbs")==0)
+    if (strcmp(argv[2], "setbs") == 0)
     {
         uint32_t baudSpeed;
         baudSpeed = atol(argv[3]);

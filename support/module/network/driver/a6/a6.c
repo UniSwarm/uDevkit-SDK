@@ -13,9 +13,9 @@
 
 #include "a6.h"
 
+#include "board.h"
 #include "driver/gpio.h"
 #include "driver/uart.h"
-#include "board.h"
 
 rt_dev_t a6_uart;
 rt_dev_t a6_txen;
@@ -62,12 +62,12 @@ ssize_t a6_read(char *data, size_t size_max)
 void a6_writeShort(uint16_t channel, uint16_t value)
 {
     char data[6];
-    data[0]=0xA6;
-    data[1]=(char)(channel>>8);
-    data[2]=(char)(channel&0x00FF);
-    data[3]=(char)(value>>8);
-    data[4]=(char)(value&0x00FF);
-    data[5]=0x6A;
+    data[0] = 0xA6;
+    data[1] = (char)(channel >> 8);
+    data[2] = (char)(channel & 0x00FF);
+    data[3] = (char)(value >> 8);
+    data[4] = (char)(value & 0x00FF);
+    data[5] = 0x6A;
 }
 
 void a6_task(void)

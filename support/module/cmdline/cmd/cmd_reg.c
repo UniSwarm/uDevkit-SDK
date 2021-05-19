@@ -1,8 +1,8 @@
 
 #include "cmd_stdio.h"
 
-#include <stdint.h>
 #include <archi.h>
+#include <stdint.h>
 
 void cmd_reg_help(void)
 {
@@ -24,14 +24,18 @@ int cmd_reg(int argc, char **argv)
     {
         cmd_reg_help();
         return 0;
-    } 
+    }
 
     if (argc < 3)
+    {
         return 1;
+    }
 
-    volatile rt_reg_ptr_t* addr = (volatile rt_reg_ptr_t*)strtoul(argv[2], NULL, 16);
+    volatile rt_reg_ptr_t *addr = (volatile rt_reg_ptr_t *)strtoul(argv[2], NULL, 16);
     if (addr == 0)
+    {
         return 1;
+    }
 
     if (strcmp(argv[1], "read") == 0)
     {
@@ -41,34 +45,38 @@ int cmd_reg(int argc, char **argv)
 
         // print in binary format
         rt_reg_t mask;
-        #if (REGSIZE == 4)
-            mask = 0x80000000;
-        #else
-            mask = 0x8000;
-        #endif
+#if (REGSIZE == 4)
+        mask = 0x80000000;
+#else
+        mask = 0x8000;
+#endif
         while (mask != 0)
         {
             res[id++] = ((value & mask) == 0) ? '0' : '1';
             mask >>= 1;
             if ((mask & 0x00808080) != 0)
+            {
                 res[id++] = ' ';
+            }
         }
         res[id] = 0;
 
-        #if (REGSIZE == 4)
-            printf("dec : %d\n", value);
-            printf("hex : 0x%.8X\n", value);
-            printf("bin : 0b%s\n", res);
-        #else
-            printf("dec : %d\n", value);
-            printf("hex : 0x%.4X\n", value);
-            printf("bin : 0b%s\n", res);
-        #endif
+#if (REGSIZE == 4)
+        printf("dec : %d\n", value);
+        printf("hex : 0x%.8X\n", value);
+        printf("bin : 0b%s\n", res);
+#else
+        printf("dec : %d\n", value);
+        printf("hex : 0x%.4X\n", value);
+        printf("bin : 0b%s\n", res);
+#endif
         return 0;
     }
 
     if (argc < 4)
+    {
         return 1;
+    }
     volatile unsigned int value = (unsigned int)strtoul(argv[3], NULL, 16);
     if (strcmp(argv[1], "write") == 0)
     {

@@ -38,7 +38,8 @@ HTTP_QUERRY_TYPE http_parse_querry(HTTP_PARSER *parser, char *url);
 int http_parse_field(HTTP_PARSER *parser, char *name, char *value);
 
 // http formater
-enum {
+enum
+{
     HTTP_CONTINUE = 100,
     HTTP_SWITCHING_PROTOCOLS = 101,
     HTTP_OK = 200,
@@ -51,16 +52,16 @@ enum {
     HTTP_MOVED_PERMANENTLY = 301,
     HTTP_MOVED_TEMPORARILY = 302,
     HTTP_NOT_MODIFIED = 304,
-    HTTP_BAD_REQUEST = 400,  // malformed syntax
-    HTTP_UNAUTHORIZED = 401, // authentication needed, respond with auth hdr
+    HTTP_BAD_REQUEST = 400,   // malformed syntax
+    HTTP_UNAUTHORIZED = 401,  // authentication needed, respond with auth hdr
     HTTP_PAYMENT_REQUIRED = 402,
     HTTP_NOT_FOUND = 404,
     HTTP_FORBIDDEN = 403,
     HTTP_REQUEST_TIMEOUT = 408,
     HTTP_INTERNAL_SERVER_ERROR = 500,
-    HTTP_NOT_IMPLEMENTED = 501,   // used for unrecognized requests
+    HTTP_NOT_IMPLEMENTED = 501,  // used for unrecognized requests
     HTTP_BAD_GATEWAY = 502,
-    HTTP_SERVICE_UNAVAILABLE = 503 // overload, maintenance
+    HTTP_SERVICE_UNAVAILABLE = 503  // overload, maintenance
 };
 
 void http_write_header_code(char *buffer, int result_code);
@@ -68,4 +69,4 @@ void http_write_content_type(char *buffer, const char *content_type);
 void http_write_content_length(char *buffer, unsigned int content_length);
 void http_write_header_end(char *buffer);
 
-#endif // HTTP_H
+#endif  // HTTP_H

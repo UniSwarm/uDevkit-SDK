@@ -23,4 +23,4 @@ int cmd_led(int argc, char **argv);
 int cmd_sysclock(int argc, char **argv);
 int cmd_reg(int argc, char **argv);
 
-#endif // CMDS_H
+#endif  // CMDS_H

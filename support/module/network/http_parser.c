@@ -11,9 +11,9 @@
 
 #include "http.h"
 
-#include <string.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 void http_parse_init(HTTP_PARSER *parser, char *querry_str)
 {
@@ -79,18 +79,24 @@ HTTP_QUERRY_TYPE http_parse_querry(HTTP_PARSER *parser, char *url)
 
     // check the space after
     if (*pt_querry_str != ' ')
+    {
         return HTTP_QUERRY_TYPE_ERROR;
+    }
 
     // find the second space, to bracket the path and the end of line
     pt_querry_str++;
     pt_end_path = strchr(pt_querry_str, ' ');
     pt_end_line = strstr(pt_querry_str, "\r\n");
     if ((pt_end_path == NULL && pt_end_line <= pt_end_path) || pt_end_line == NULL)
+    {
         return HTTP_QUERRY_TYPE_ERROR;
+    }
 
     // check protocol
-    if (strncmp(pt_end_path+1, "HTTP/", 5) != 0)
+    if (strncmp(pt_end_path + 1, "HTTP/", 5) != 0)
+    {
         return HTTP_QUERRY_TYPE_ERROR;
+    }
 
     // extract, decode and copy url
     pt_url = url;
@@ -121,13 +127,17 @@ int http_parse_field(HTTP_PARSER *parser, char *name, char *value)
     size_t size_field;
 
     if (parser->ptr == parser->querry_str)
+    {
         return -1;
+    }
 
     pt_end_name = strstr(parser->ptr, ": ");
     pt_end_line = strstr(parser->ptr, "\r\n");
 
     if (pt_end_line == 0)
+    {
         return -1;
+    }
     if (pt_end_name > pt_end_line || pt_end_name == 0)
     {
         parser->ptr = pt_end_line + 2;
@@ -149,11 +159,11 @@ int http_parse_field(HTTP_PARSER *parser, char *name, char *value)
 }
 
 #ifdef TEST
-#include <stdio.h>
-#include <assert.h>
+#    include <assert.h>
+#    include <stdio.h>
 int main(void)
 {
-    char querry[]="GET /index%20r.html HTTP/1.1\r\n\
+    char querry[] = "GET /index%20r.html HTTP/1.1\r\n\
 Host: 192.168.4.1\r\n\
 User-Agent: Mozilla/5.0 (Android 7.0; Mobile; rv:53.0) Gecko/53.0 Firefox/53.0\r\n\
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n\
@@ -174,12 +184,14 @@ Cache-Control: max-age=0\r\n\
     http_parse_init(&parser, querry);
     HTTP_QUERRY_TYPE type = http_parse_querry(&parser, url);
 
-    assert( type == HTTP_QUERRY_TYPE_GET );
-    assert( strcmp(url, "/index r.html") == 0 );
-    while( http_parse_field(&parser, name, value) == 0 )
+    assert(type == HTTP_QUERRY_TYPE_GET);
+    assert(strcmp(url, "/index r.html") == 0);
+    while (http_parse_field(&parser, name, value) == 0)
+    {
         num++;
+    }
 
-    assert ( num == 9 );
+    assert(num == 9);
     return 0;
 };
 

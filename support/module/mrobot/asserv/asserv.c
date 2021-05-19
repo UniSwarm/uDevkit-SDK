@@ -11,11 +11,11 @@
 
 #include <archi.h>
 
-#include "board.h"
 #include "asserv.h"
+#include "board.h"
 
-#include "driver/qei.h"
 #include "driver/motor.h"
+#include "driver/qei.h"
 #include "driver/timer.h"
 
 #include <stdio.h>
@@ -24,24 +24,25 @@
 rt_dev_t asserv_timer;
 
 #include <math.h>
-#define M_PI        3.14159265358979323846
+#define M_PI 3.14159265358979323846
 
-#define ANGLE_MAX	M_PI/10
-#define ERR_MINI 100
-#define PWM_MINI 100
-#define PWM_MAX  800
+#define ANGLE_MAX M_PI / 10
+#define ERR_MINI  100
+#define PWM_MINI  100
+#define PWM_MAX   800
 
 unsigned char asserv_stop = 0;
 
 Asserv_State masserv_state = Asserv_State_Stopped;
 
 Asserv_Mode masserv_mode = Asserv_Mode_Stop;
-float dt,ds,tand;
+float dt, ds, tand;
 float asserv_x = 1500, asserv_y = 1000, asserv_t = 0;
 int32_t asserv_xf = 1500, asserv_yf = 1000;
 int16_t asserv_mspeed = 10;
 
-typedef enum {
+typedef enum
+{
     Asserv_Way_Forward,
     Asserv_Way_Back
 } Asserv_Way;
@@ -117,17 +118,21 @@ void asserv_locTask(void)
 
     // loc
     v1 = c1 - ancc1;
-    v2 = - c2 + ancc2;
+    v2 = -c2 + ancc2;
 
     dt = atan((v2 - v1) * asserv_loc_coderstep / asserv_loc_coderentrax);
     ds = (v1 + v2) * (asserv_loc_coderstep / 2);
-    asserv_x += ds * cos(asserv_t+dt*.5);
-    asserv_y -= ds * sin(asserv_t+dt*.5);
+    asserv_x += ds * cos(asserv_t + dt * .5);
+    asserv_y -= ds * sin(asserv_t + dt * .5);
     asserv_t -= dt;
-    if(asserv_t > M_PI)
-        asserv_t -= 2*M_PI;
-    if(asserv_t < -M_PI)
-        asserv_t += 2*M_PI;
+    if (asserv_t > M_PI)
+    {
+        asserv_t -= 2 * M_PI;
+    }
+    if (asserv_t < -M_PI)
+    {
+        asserv_t += 2 * M_PI;
+    }
 
     ancc1 = c1;
     ancc2 = c2;
@@ -153,7 +158,7 @@ int32_t asserv_yDest(void)
 
 void asserv_setSpeed(int16_t speed)
 {
-    if(speed >= 0)
+    if (speed >= 0)
     {
         asserv_way = Asserv_Way_Forward;
         asserv_mspeed = speed;
@@ -167,10 +172,14 @@ void asserv_setSpeed(int16_t speed)
 
 int16_t asserv_speed(void)
 {
-    if(asserv_way == Asserv_Way_Back)
+    if (asserv_way == Asserv_Way_Back)
+    {
         return -asserv_mspeed;
+    }
     else
+    {
         return asserv_mspeed;
+    }
 }
 
 int16_t asserv_currentSpeed(void)
@@ -207,7 +216,7 @@ Asserv_State asserv_state(void)
 
 void asserv_setMode(Asserv_Mode mode)
 {
-	masserv_mode = mode;
+    masserv_mode = mode;
 }
 
 int i = 0;
@@ -220,220 +229,318 @@ void asserv_controlTask(void)
     short err1, err2;
     long int ev1, ev2;
 
-    distance = sqrt((asserv_x - asserv_xf)*(asserv_x - asserv_xf) + (asserv_y-asserv_yf) * (asserv_y - asserv_yf));
+    distance = sqrt((asserv_x - asserv_xf) * (asserv_x - asserv_xf) + (asserv_y - asserv_yf) * (asserv_y - asserv_yf));
 
-// FSM
-    switch(masserv_mode)
+    // FSM
+    switch (masserv_mode)
     {
-    case Asserv_Mode_Stop:                                                  // =================== Stop
-        consds = 0.0;
-        consdt = 0.0;
-        break;
+        case Asserv_Mode_Stop:  // =================== Stop
+            consds = 0.0;
+            consdt = 0.0;
+            break;
 
-    case Asserv_Mode_Fixe:                                                  // =================== Fixe
-        // distance reference
-        consds = distance / 10;
-        if(consds > asserv_mspeed)
-            consds = asserv_mspeed;
+        case Asserv_Mode_Fixe:  // =================== Fixe
+            // distance reference
+            consds = distance / 10;
+            if (consds > asserv_mspeed)
+            {
+                consds = asserv_mspeed;
+            }
 
-        // angle reference
-        if(asserv_y - asserv_yf <= 0)
-        {
-            if(asserv_x - asserv_xf <= 0)
-                consdt = asin((asserv_yf - asserv_y) / distance);
+            // angle reference
+            if (asserv_y - asserv_yf <= 0)
+            {
+                if (asserv_x - asserv_xf <= 0)
+                {
+                    consdt = asin((asserv_yf - asserv_y) / distance);
+                }
+                else
+                {
+                    consdt = -M_PI - asin((asserv_yf - asserv_y) / distance);
+                }
+            }
             else
-                consdt = -M_PI - asin((asserv_yf - asserv_y) / distance);
-        }
-        else
-        {
-            if(asserv_x - asserv_xf <= 0)
-                consdt = asin((asserv_yf - asserv_y) / distance);
+            {
+                if (asserv_x - asserv_xf <= 0)
+                {
+                    consdt = asin((asserv_yf - asserv_y) / distance);
+                }
+                else
+                {
+                    consdt = M_PI - asin((asserv_yf - asserv_y) / distance);
+                }
+            }
+            consdt = -consdt - asserv_t;
+            if (consdt >= M_PI / 2 || consdt <= -M_PI / 2)
+            {
+                // consdt = M_PI-consdt;
+                consds = -consds;
+                if ((consdt <= 3 * M_PI / 8) & (consdt >= -3 * M_PI / 8))
+                {
+                    consds = 0;
+                }
+            }
             else
-                consdt = M_PI - asin((asserv_yf - asserv_y) / distance);
-        }
-        consdt = -consdt-asserv_t;
-        if(consdt >= M_PI / 2 || consdt <= -M_PI / 2)
-        {
-            //consdt = M_PI-consdt;
-            consds = -consds;
-            if((consdt <= 3 * M_PI / 8) & (consdt >= -3 * M_PI / 8))
-                consds = 0;
-        }
-        else
-        {
-            if(consdt >= M_PI/8 || consdt <= -M_PI / 8)
-                consds = 0;
-        }
-        consdt = last_t - asserv_t;
-        if(consdt > M_PI)
-            consdt -= 2 * M_PI;
-        if(consdt < -M_PI)
-            consdt += 2 * M_PI;
-
-        consdt /= 2.0;
-        if(distance > 40.0)
-            masserv_mode = Asserv_Mode_Linear;
-
-        break;
-    case Asserv_Mode_Linear:                                                // =================== Linear
-        // distance reference
-        consds = distance / 40;
-        if(consds > asserv_mspeed)
-            consds = asserv_mspeed;
-
-        // angle reference
-        if(asserv_y - asserv_yf <= 0)
-        {
-            if(asserv_x - asserv_xf <= 0)
-                angle = asin((asserv_yf - asserv_y) / distance);
-            else
-                angle = -M_PI - asin((asserv_yf - asserv_y) / distance);
-        }
-        else
-        {
-            if(asserv_x - asserv_xf <= 0)
-                angle = asin((asserv_yf - asserv_y) / distance);
-            else
-                angle = M_PI - asin((asserv_yf - asserv_y) / distance);
-        }
-
-        consdt = -angle - asserv_t;
-        if(consdt > M_PI)
-            consdt -= 2 * M_PI;
-        if(consdt < -M_PI)
-            consdt += 2 * M_PI;
-
-        if(asserv_way == Asserv_Way_Back)
-        {
-            consds = -consds;
-            consdt = consdt + M_PI;
-            if(consdt > M_PI)
+            {
+                if (consdt >= M_PI / 8 || consdt <= -M_PI / 8)
+                {
+                    consds = 0;
+                }
+            }
+            consdt = last_t - asserv_t;
+            if (consdt > M_PI)
+            {
                 consdt -= 2 * M_PI;
-            if(consdt < -M_PI)
+            }
+            if (consdt < -M_PI)
+            {
                 consdt += 2 * M_PI;
-        }
+            }
 
-        if(distance<20.0)
-        {
-            masserv_mode = Asserv_Mode_Fixe;
-            last_t = asserv_t;
-        }
-        else if(consdt > ANGLE_MAX || consdt < -ANGLE_MAX)
-        {
-            masserv_mode = Asserv_Mode_Rotate;
-            xr = asserv_x;
-            yr = asserv_y;
-            if(asserv_way == Asserv_Way_Back)
-                td = angle + M_PI;
+            consdt /= 2.0;
+            if (distance > 40.0)
+                masserv_mode = Asserv_Mode_Linear;
+
+            break;
+        case Asserv_Mode_Linear:  // =================== Linear
+            // distance reference
+            consds = distance / 40;
+            if (consds > asserv_mspeed)
+            {
+                consds = asserv_mspeed;
+            }
+
+            // angle reference
+            if (asserv_y - asserv_yf <= 0)
+            {
+                if (asserv_x - asserv_xf <= 0)
+                {
+                    angle = asin((asserv_yf - asserv_y) / distance);
+                }
+                else
+                {
+                    angle = -M_PI - asin((asserv_yf - asserv_y) / distance);
+                }
+            }
             else
-                td = angle;
-        }
-        consdt /= 5.0;
+            {
+                if (asserv_x - asserv_xf <= 0)
+                {
+                    angle = asin((asserv_yf - asserv_y) / distance);
+                }
+                else
+                {
+                    angle = M_PI - asin((asserv_yf - asserv_y) / distance);
+                }
+            }
 
-        break;
-    case Asserv_Mode_Rotate:                                                // =================== Rotate
-        // distance reference
-        consds = 0;
+            consdt = -angle - asserv_t;
+            if (consdt > M_PI)
+            {
+                consdt -= 2 * M_PI;
+            }
+            if (consdt < -M_PI)
+            {
+                consdt += 2 * M_PI;
+            }
 
-        // angle reference
-        consdt = -td - asserv_t;
-        if(consdt >  M_PI)
-            consdt -= 2 * M_PI;
-        if(consdt < -M_PI)
-            consdt += 2 * M_PI;
+            if (asserv_way == Asserv_Way_Back)
+            {
+                consds = -consds;
+                consdt = consdt + M_PI;
+                if (consdt > M_PI)
+                {
+                    consdt -= 2 * M_PI;
+                }
+                if (consdt < -M_PI)
+                {
+                    consdt += 2 * M_PI;
+                }
+            }
 
-        if((consdt < ANGLE_MAX) && (consdt > -ANGLE_MAX))
-            masserv_mode = Asserv_Mode_Linear;
-        break;
+            if (distance < 20.0)
+            {
+                masserv_mode = Asserv_Mode_Fixe;
+                last_t = asserv_t;
+            }
+            else if (consdt > ANGLE_MAX || consdt < -ANGLE_MAX)
+            {
+                masserv_mode = Asserv_Mode_Rotate;
+                xr = asserv_x;
+                yr = asserv_y;
+                if (asserv_way == Asserv_Way_Back)
+                {
+                    td = angle + M_PI;
+                }
+                else
+                {
+                    td = angle;
+                }
+            }
+            consdt /= 5.0;
+
+            break;
+        case Asserv_Mode_Rotate:  // =================== Rotate
+            // distance reference
+            consds = 0;
+
+            // angle reference
+            consdt = -td - asserv_t;
+            if (consdt > M_PI)
+            {
+                consdt -= 2 * M_PI;
+            }
+            if (consdt < -M_PI)
+            {
+                consdt += 2 * M_PI;
+            }
+
+            if ((consdt < ANGLE_MAX) && (consdt > -ANGLE_MAX))
+            {
+                masserv_mode = Asserv_Mode_Linear;
+            }
+            break;
     }
 
-    if(consdt > M_PI)
+    if (consdt > M_PI)
+    {
         consdt -= 2 * M_PI;
-    if(consdt < -M_PI)
+    }
+    if (consdt < -M_PI)
+    {
         consdt += 2 * M_PI;
+    }
 
     // compute motor command
     tand = (asserv_loc_coderentrax * tan(consdt)) / (asserv_loc_coderstep * 20);
-    if(consdt >= M_PI / 2)
+    if (consdt >= M_PI / 2)
+    {
         tand = asserv_mspeed;
-    if(consdt <= -M_PI / 2)
+    }
+    if (consdt <= -M_PI / 2)
+    {
         tand = -asserv_mspeed;
-    if(tand > asserv_mspeed / 2)
+    }
+    if (tand > asserv_mspeed / 2)
+    {
         tand = asserv_mspeed / 2;
-    if(tand < -asserv_mspeed / 2)
+    }
+    if (tand < -asserv_mspeed / 2)
+    {
         tand = -asserv_mspeed / 2;
+    }
     consV1 = consds - tand;
     consV2 = consds + tand;
 
     // pid motor 1
     ev1 = v1;
-    if(consV1 > 0 && v1 > consV1)
+    if (consV1 > 0 && v1 > consV1)
+    {
         ev1 = consV1;
-    if(consV1 < 0 && v1 < consV1)
+    }
+    if (consV1 < 0 && v1 < consV1)
+    {
         ev1 = consV1;
+    }
     errp1 = asserv_kp * consV1;
     errd1 = asserv_kd * (ev1 - consV1);
     err1 = (short)errp1 + (short)errd1;
-    if(err1 > PWM_MAX)
+    if (err1 > PWM_MAX)
+    {
         err1 = PWM_MAX;
-    if(err1 < -PWM_MAX)
+    }
+    if (err1 < -PWM_MAX)
+    {
         err1 = -PWM_MAX;
-    if(err1 > -ERR_MINI && err1 < ERR_MINI)
+    }
+    if (err1 > -ERR_MINI && err1 < ERR_MINI)
+    {
         err1 = 0;
+    }
 
     // pid motor 2
     ev2 = v2;
-    if(consV2 > 0 && v2 > consV2)
+    if (consV2 > 0 && v2 > consV2)
+    {
         ev2 = consV2;
-    if(consV2 < 0 && v2 < consV2)
+    }
+    if (consV2 < 0 && v2 < consV2)
+    {
         ev2 = consV2;
+    }
     errp2 = asserv_kp * consV2;
     errd2 = asserv_kd * (ev2 - consV2);
     err2 = (short)errp2 + (short)errd2;
-    if(err2 > PWM_MAX)
+    if (err2 > PWM_MAX)
+    {
         err2 = PWM_MAX;
-    if(err2 < -PWM_MAX)
+    }
+    if (err2 < -PWM_MAX)
+    {
         err2 = -PWM_MAX;
-    if(err2 > -ERR_MINI && err2 < ERR_MINI)
+    }
+    if (err2 > -ERR_MINI && err2 < ERR_MINI)
+    {
         err2 = 0;
+    }
 
     // prevent reverse
-    if(consds > 5.0)
+    if (consds > 5.0)
     {
-        if(err1 < 0)
+        if (err1 < 0)
+        {
             err1 = 0;
-        if(err2 < 0)
+        }
+        if (err2 < 0)
+        {
             err2 = 0;
+        }
     }
-    if(consds < -5)
+    if (consds < -5)
     {
-        if(err1 > 0)
+        if (err1 > 0)
+        {
             err1 = 0;
-        if(err2 > 0)
+        }
+        if (err2 > 0)
+        {
             err2 = 0;
+        }
     }
 
     // motors commands
-    if(asserv_stop != 0)
+    if (asserv_stop != 0)
     {
         motor_setPower(1, 0);
         motor_setPower(2, 0);
     }
     else
     {
-        if(err1 > 0)
+        if (err1 > 0)
+        {
             motor_setPower(1, err1 + PWM_MINI);
-        if(err1 < 0)
+        }
+        if (err1 < 0)
+        {
             motor_setPower(1, err1 - PWM_MINI);
-        if(err1 == 0)
+        }
+        if (err1 == 0)
+        {
             motor_setPower(1, 0);
+        }
 
-        if(err2 > 0)
+        if (err2 > 0)
+        {
             motor_setPower(2, -err2 - PWM_MINI);
-        if(err2 < 0)
+        }
+        if (err2 < 0)
+        {
             motor_setPower(2, -err2 + PWM_MINI);
-        if(err2 == 0)
+        }
+        if (err2 == 0)
+        {
             motor_setPower(2, 0);
+        }
     }
 }
 

@@ -16,22 +16,23 @@
 
 rt_dev_t lsm6ds3_init(rt_dev_t i2c_bus, uint8_t i2c_addr)
 {
-    i2c_writereg(i2c_bus, i2c_addr, LSM6DS3_CTRL1_XL, 0b00100000, 0); // accel enable in low power mode 26Hz, 2G, 400Hz filter
-    i2c_writereg(i2c_bus, i2c_addr, LSM6DS3_CTRL2_G,  0b00100000, 0); // gyro  enable in low power mode 26Hz, 245 dps
+    i2c_writereg(
+        i2c_bus, i2c_addr, LSM6DS3_CTRL1_XL, 0b00100000, 0);  // accel enable in low power mode 26Hz, 2G, 400Hz filter
+    i2c_writereg(i2c_bus, i2c_addr, LSM6DS3_CTRL2_G, 0b00100000, 0);  // gyro  enable in low power mode 26Hz, 245 dps
 
-    return 0; // TODO
+    return 0;  // TODO
 }
 
 int lsm6ds3_getAccel(rt_dev_t i2c_bus, uint8_t i2c_addr, uint16_t acc[])
 {
-    i2c_readregs(i2c_bus, i2c_addr, LSM6DS3_OUTX_L_XL, (uint8_t*)acc, 6, 0);
+    i2c_readregs(i2c_bus, i2c_addr, LSM6DS3_OUTX_L_XL, (uint8_t *)acc, 6, 0);
 
     return 0;
 }
 
 int lsm6ds3_getGyro(rt_dev_t i2c_bus, uint8_t i2c_addr, uint16_t gyro[])
 {
-    i2c_readregs(i2c_bus, i2c_addr, LSM6DS3_OUTX_L_G, (uint8_t*)gyro, 6, 0);
+    i2c_readregs(i2c_bus, i2c_addr, LSM6DS3_OUTX_L_G, (uint8_t *)gyro, 6, 0);
 
     return 0;
 }

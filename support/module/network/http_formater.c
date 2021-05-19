@@ -11,25 +11,28 @@
 
 #include "http.h"
 
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 void http_write_header_code(char *buffer, int result_code)
 {
     strcpy(buffer, "HTTP/1.1 ");
     switch (result_code)
     {
-    case HTTP_OK:
-        strcat(buffer, "200 OK\r\n");
-        break;
-    case HTTP_BAD_REQUEST:
-        strcat(buffer, "400 Bad Request\r\n");
-        break;
-    case HTTP_NOT_FOUND:
-        strcat(buffer, "404 Not Found\r\n");
-        break;
-    default:
-        break;
+        case HTTP_OK:
+            strcat(buffer, "200 OK\r\n");
+            break;
+
+        case HTTP_BAD_REQUEST:
+            strcat(buffer, "400 Bad Request\r\n");
+            break;
+
+        case HTTP_NOT_FOUND:
+            strcat(buffer, "404 Not Found\r\n");
+            break;
+
+        default:
+            break;
     }
 }
 

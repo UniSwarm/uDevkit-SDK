@@ -51,8 +51,8 @@ int16_t mrobot_motorGetD(void);
 void mrobot_pause(void);
 void mrobot_restart(void);
 void mrobot_stop(void);
-void mrobot_goto(MrobotPoint pos, int16_t speed);        // global reference frame
-void mrobot_move(MrobotPoint movement, int16_t speed);   // local (robot) reference frame
+void mrobot_goto(MrobotPoint pos, int16_t speed);       // global reference frame
+void mrobot_move(MrobotPoint movement, int16_t speed);  // local (robot) reference frame
 MrobotPoint mapToGlobal(MrobotPoint pos);
 MrobotPoint mapToLocal(MrobotPoint pos);
 
@@ -63,5 +63,4 @@ float mrobot_nextKeypointDistance(void);
 float mrobot_speed(void);
 float mrobot_targetSpeed(void);
 
-
-#endif // MROBOT_H
+#endif  // MROBOT_H

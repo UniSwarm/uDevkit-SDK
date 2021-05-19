@@ -12,8 +12,8 @@
 #ifndef JSON_H
 #define JSON_H
 
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "sys/buffer.h"
 
@@ -37,7 +37,7 @@ typedef struct
 
 void json_init(JsonBuffer *json, char *data, size_t size, JSON_SYNTAX s);
 
-//FORMATING
+// FORMATING
 void json_add_field_str(JsonBuffer *json, const char *name, const char *value);
 void json_add_field_int(JsonBuffer *json, const char *name, const int value);
 // void json_add_field_float(JsonBuffer *json, const char *name, const float value);
@@ -50,7 +50,7 @@ void json_open_list(JsonBuffer *json);
 void json_close_list(JsonBuffer *json);
 void json_add_list(JsonBuffer *json, const char *name);
 
-//PARSING
+// PARSING
 void json_get_next_field(const JsonBuffer *json, char *name, char *value);
 
-#endif // JSON_H
+#endif  // JSON_H

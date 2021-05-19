@@ -16,10 +16,10 @@
 
 void network_init(void)
 {
-    #ifdef USE_esp8266
-        esp8266_init();
-        web_server_init();
-    #endif
+#ifdef USE_esp8266
+    esp8266_init();
+    web_server_init();
+#endif
 }
 
 void network_task(void)

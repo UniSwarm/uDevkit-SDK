@@ -8,5 +8,3 @@
  *
  * @brief Support for mobile robot simulation
  */
-
-

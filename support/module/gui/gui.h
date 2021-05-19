@@ -14,8 +14,8 @@
 
 #include <driver/device.h>
 
-#include "gui/font.h"
 #include "gui/color.h"
+#include "gui/font.h"
 #include "gui/picture.h"
 
 void gui_init(rt_dev_t dev);
@@ -29,7 +29,8 @@ Color gui_penColor(void);
 void gui_setBrushColor(Color color);
 Color gui_brushColor(void);
 
-typedef enum {
+typedef enum
+{
     ColorModeMono,
     ColorMode565,
     ColorMode666
@@ -42,13 +43,14 @@ void gui_drawRect(uint16_t x1, uint16_t y1, uint16_t w, uint16_t h);
 void gui_drawFillRect(uint16_t x1, uint16_t y1, uint16_t w, uint16_t h);
 
 // font support
-#define GUI_FONT_ALIGN_VLEFT     0x01   // |TXT        |
-#define GUI_FONT_ALIGN_VRIGHT    0x02   // |        TXT|
-#define GUI_FONT_ALIGN_VMIDDLE   0x03   // |    TXT    |
-                                        // _____________
-#define GUI_FONT_ALIGN_HTOP      0x04   //      TOP
-#define GUI_FONT_ALIGN_HMIDDLE   0x0C   //    MIDDLE
-#define GUI_FONT_ALIGN_HBOTTOM   0x08   //    BOTTOM
+#define GUI_FONT_ALIGN_VLEFT  0x01  // |TXT        |
+#define GUI_FONT_ALIGN_VRIGHT 0x02  // |        TXT|
+#define GUI_FONT_ALIGN_VMIDDLE                                                                                         \
+    0x03                             // |    TXT    |
+                                     // _____________
+#define GUI_FONT_ALIGN_HTOP    0x04  //      TOP
+#define GUI_FONT_ALIGN_HMIDDLE 0x0C  //    MIDDLE
+#define GUI_FONT_ALIGN_HBOTTOM 0x08  //    BOTTOM
 
 void gui_drawText(uint16_t x1, uint16_t y1, const char *txt);
 void gui_drawTextRect(uint16_t x1, uint16_t y1, uint16_t w, uint16_t h, const char *txt, uint8_t flags);
@@ -64,4 +66,4 @@ uint16_t gui_getFontTextWidth(const char *txt);
 uint16_t gui_screenWidth(void);
 uint16_t gui_screenHeight(void);
 
-#endif // GUI_H
+#endif  // GUI_H

@@ -25,14 +25,15 @@ void asserv_setPid(uint16_t kp, uint16_t ki, uint16_t kd);
 uint16_t asserv_getP(void);
 uint16_t asserv_getI(void);
 uint16_t asserv_getD(void);
-//void asserv_setMotors(void);
+// void asserv_setMotors(void);
 
 // ============ tasks ==============
 void asserv_locTask(void);
 void asserv_controlTask(void);
 
 // ===== asserv control/status =====
-typedef enum {
+typedef enum
+{
     Asserv_State_Stopped,
     Asserv_State_Blocked,
     Asserv_State_Moving,
@@ -63,4 +64,4 @@ float asserv_getXPos(void);
 float asserv_getYPos(void);
 float asserv_getTPos(void);
 
-#endif // ASSERV_H
+#endif  // ASSERV_H

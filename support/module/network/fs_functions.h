@@ -16,4 +16,4 @@
 
 const Fs_File *getFile(const Fs_FilesList *web_server_file_list, const char *fileName);
 
-#endif // FS_FUNCTIONS_H
+#endif  // FS_FUNCTIONS_H

@@ -19,7 +19,7 @@ int lsm6ds3_getAccel(rt_dev_t i2c_bus, uint8_t i2c_addr, uint16_t acc[]);
 int lsm6ds3_getGyro(rt_dev_t i2c_bus, uint8_t i2c_addr, uint16_t gyro[]);
 
 // sensor registers
-#define LSM6DS3_DEFAULT_ADDRESS     0xD6
+#define LSM6DS3_DEFAULT_ADDRESS 0xD6
 //#define LSM6DS3_DEVICE_ID           0x69
 
-#endif // LSM6DS3_H
+#endif  // LSM6DS3_H

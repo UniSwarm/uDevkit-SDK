@@ -15,12 +15,14 @@
 
 const Fs_File *getFile(const Fs_FilesList *file_list, const char *fileName)
 {
-	int i;
+    int i;
 
-	for (i=0; i<file_list->count; i++)
-	{
-		if (strcmp(file_list->files[i]->name, fileName)==0)
+    for (i = 0; i < file_list->count; i++)
+    {
+        if (strcmp(file_list->files[i]->name, fileName) == 0)
+        {
             return file_list->files[i];
-	}
-	return NULL;
+        }
+    }
+    return NULL;
 }

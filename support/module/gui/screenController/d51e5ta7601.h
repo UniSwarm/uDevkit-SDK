@@ -12,8 +12,8 @@
 #ifndef D51E5TA7601_H
 #define D51E5TA7601_H
 
-#define GUI_WIDTH 480
-#define GUI_HEIGHT 320
+#define GUI_WIDTH      480
+#define GUI_HEIGHT     320
 #define GUI_COLOR_MODE ColorMode565
 
-#endif //D51E5TA7601_H
+#endif  // D51E5TA7601_H

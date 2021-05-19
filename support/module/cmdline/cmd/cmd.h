@@ -15,7 +15,7 @@
 typedef struct
 {
     char name[20];
-    int (*cmdFnPtr)(int, char**);
+    int (*cmdFnPtr)(int, char **);
 } Cmd;
 
 int cmd_exec(char *line);
@@ -23,4 +23,4 @@ int cmd_exec(char *line);
 void cmd_puts(const char *str);
 int cmd_printf(const char *format, ...);
 
-#endif // CMD_H
+#endif  // CMD_H

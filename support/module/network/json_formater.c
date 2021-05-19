@@ -16,15 +16,19 @@ void json_set_indentation(JsonBuffer *json)
     int i;
     if (json->syntax == JSON_STANDARD)
     {
-        for (i = 0 ; i < json->indent_level; ++i)
+        for (i = 0; i < json->indent_level; ++i)
+        {
             buffer_astring(&json->buffer, "\t");
+        }
     }
 }
 
 void json_carriage_return(JsonBuffer *json)
 {
     if (json->syntax == JSON_STANDARD)
+    {
         buffer_astring(&json->buffer, "\n");
+    }
 
     json_set_indentation(json);
 }
@@ -36,7 +40,7 @@ void json_init(JsonBuffer *json, char *data, size_t size, JSON_SYNTAX s)
     json->syntax = s;
 }
 
-void json_add_field_str(JsonBuffer *json, const char *name, const char* value)
+void json_add_field_str(JsonBuffer *json, const char *name, const char *value)
 {
     buffer_astring(&json->buffer, "\"");
     buffer_astring(&json->buffer, name);
@@ -78,20 +82,25 @@ void json_close_object(JsonBuffer *json)
 {
     json->indent_level--;
 
-    //delete last comma
+    // delete last comma
     if (*(json->buffer.tail - 1) == ',')
+    {
         *(json->buffer.tail - 1) = ' ';
+    }
 
     if (json->syntax == JSON_STANDARD)
+    {
         buffer_astring(&json->buffer, "\n");
+    }
 
     json_set_indentation(json);
     buffer_astring(&json->buffer, "}");
 
-    //add a comma exept at last object
+    // add a comma exept at last object
     if (json->indent_level != 0)
+    {
         buffer_astring(&json->buffer, ",");
-
+    }
 }
 
 void json_add_object(JsonBuffer *json, const char *name)
@@ -110,15 +119,19 @@ void json_open_list(JsonBuffer *json)
 
 void json_close_list(JsonBuffer *json)
 {
-    //delete last comma
+    // delete last comma
     if (*(json->buffer.tail - 1) == ',')
+    {
         *(json->buffer.tail - 1) = ' ';
+    }
 
     buffer_astring(&json->buffer, "]");
 
-    //add a comma exept at last object
+    // add a comma exept at last object
     if (json->indent_level != 0)
+    {
         buffer_astring(&json->buffer, ",");
+    }
 }
 
 void json_add_list(JsonBuffer *json, const char *name)
@@ -131,14 +144,14 @@ void json_add_list(JsonBuffer *json, const char *name)
 }
 
 #ifdef TEST_JSON_FORMAT
-#include <stdio.h>
-#include <string.h>
-#include "../../sys/buffer.c"
+#    include "../../sys/buffer.c"
+#    include <stdio.h>
+#    include <string.h>
 
 int main(void)
 {
     JsonBuffer json;
-    char data [500];
+    char data[500];
 
     // json_init(&json, data, 500, JSON_MONOBLOC);
     json_init(&json, data, 500, JSON_STANDARD);
@@ -149,37 +162,37 @@ int main(void)
 
     json_open_object(&json);
 
-        json_add_field_str(&json, "name1", "value1");
-        json_carriage_return(&json);
-        json_add_field_int(&json, "name2", 42);
-        json_carriage_return(&json);
-        json_add_list(&json, "list1");
-            json_add_field_str(&json, "name10", "value10");
-            json_add_field_str(&json, "name11", "value11");
-            json_add_field_str(&json, "name12", "value12");
-        json_close_list(&json);
-        json_carriage_return(&json);
+    json_add_field_str(&json, "name1", "value1");
+    json_carriage_return(&json);
+    json_add_field_int(&json, "name2", 42);
+    json_carriage_return(&json);
+    json_add_list(&json, "list1");
+    json_add_field_str(&json, "name10", "value10");
+    json_add_field_str(&json, "name11", "value11");
+    json_add_field_str(&json, "name12", "value12");
+    json_close_list(&json);
+    json_carriage_return(&json);
 
-            json_add_object(&json, "obj1");
-            json_add_field_int(&json, "name3", 42);
-            json_carriage_return(&json);
-            json_add_field_int(&json, "name4", 42);
-            json_close_object(&json);
+    json_add_object(&json, "obj1");
+    json_add_field_int(&json, "name3", 42);
+    json_carriage_return(&json);
+    json_add_field_int(&json, "name4", 42);
+    json_close_object(&json);
 
-        json_carriage_return(&json);
+    json_carriage_return(&json);
 
-            json_add_object(&json, "obj2");
-            json_add_field_int(&json, "name5", 42);
-            json_carriage_return(&json);
-            json_add_field_int(&json, "name6", 42);
-            json_close_object(&json);
+    json_add_object(&json, "obj2");
+    json_add_field_int(&json, "name5", 42);
+    json_carriage_return(&json);
+    json_add_field_int(&json, "name6", 42);
+    json_close_object(&json);
 
-        json_carriage_return(&json);
-        json_add_list(&json, "list2");
-            json_add_field_str(&json, "name20", "value20");
-            json_add_field_str(&json, "name21", "value21");
-            json_add_field_str(&json, "name22", "value22");
-        json_close_list(&json);
+    json_carriage_return(&json);
+    json_add_list(&json, "list2");
+    json_add_field_str(&json, "name20", "value20");
+    json_add_field_str(&json, "name21", "value21");
+    json_add_field_str(&json, "name22", "value22");
+    json_close_list(&json);
 
     json_close_object(&json);
 
@@ -188,4 +201,4 @@ int main(void)
     return 0;
 }
 
-#endif // TEST_JSON_FORMAT
+#endif  // TEST_JSON_FORMAT

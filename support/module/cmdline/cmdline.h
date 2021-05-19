@@ -12,11 +12,11 @@
 #ifndef CMDLINE_H
 #define CMDLINE_H
 
-#include <stdint.h>
 #include "driver/device.h"
+#include <stdint.h>
 
 void cmdline_init(void);
 void cmdline_setDevice(rt_dev_t deviceIn, rt_dev_t deviceOut);
 void cmdline_task(void);
 
-#endif // CMDLINE_H
+#endif  // CMDLINE_H

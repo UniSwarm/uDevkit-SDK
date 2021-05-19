@@ -16,10 +16,10 @@
 #include <stdio.h>
 
 #define cmdline_curses_buildcmdnum(cmd, c, num) sprintf(cmd, "\033[%d%c", num, c)
-#define cmdline_curses_up(cmd, num) cmdline_curses_buildcmdnum((cmd), 'A', (num))
-#define cmdline_curses_down(cmd, num) cmdline_curses_buildcmdnum((cmd), 'B', (num))
-#define cmdline_curses_right(cmd, num) cmdline_curses_buildcmdnum((cmd), 'C', (num))
-#define cmdline_curses_left(cmd, num) cmdline_curses_buildcmdnum((cmd), 'D', (num))
-#define cmdline_curses_clear(cmd) cmdline_curses_buildcmdnum((cmd), 'J', 2)
+#define cmdline_curses_up(cmd, num)             cmdline_curses_buildcmdnum((cmd), 'A', (num))
+#define cmdline_curses_down(cmd, num)           cmdline_curses_buildcmdnum((cmd), 'B', (num))
+#define cmdline_curses_right(cmd, num)          cmdline_curses_buildcmdnum((cmd), 'C', (num))
+#define cmdline_curses_left(cmd, num)           cmdline_curses_buildcmdnum((cmd), 'D', (num))
+#define cmdline_curses_clear(cmd)               cmdline_curses_buildcmdnum((cmd), 'J', 2)
 
-#endif // CMDLINE_CURSES_H
+#endif  // CMDLINE_CURSES_H

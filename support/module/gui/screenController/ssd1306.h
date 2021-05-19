@@ -12,8 +12,8 @@
 #ifndef SSD1306_H
 #define SSD1306_H
 
-#define GUI_WIDTH 128
-#define GUI_HEIGHT 64
+#define GUI_WIDTH      128
+#define GUI_HEIGHT     64
 #define GUI_COLOR_MODE ColorModeMono
 
-#endif //SSD1306_H
+#endif  // SSD1306_H

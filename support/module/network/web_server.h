@@ -12,14 +12,14 @@
 #ifndef WEB_SERVER_H
 #define WEB_SERVER_H
 
+#include "fs_data.h"
 #include "http.h"
 #include "json.h"
-#include "fs_data.h"
 
 void web_server_init(void);
 void web_server_task(void);
 
-void web_server_setRestApi( void (*restApi)(char *url, HTTP_QUERRY_TYPE code, char *buffer) );
+void web_server_setRestApi(void (*restApi)(char *url, HTTP_QUERRY_TYPE code, char *buffer));
 void web_server_setRootFS(const Fs_FilesList *file_list);
 
-#endif // WEB_SERVER_H
+#endif  // WEB_SERVER_H

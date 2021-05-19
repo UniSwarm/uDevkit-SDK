@@ -15,10 +15,10 @@
 
 #include "network_driver.h"
 #ifdef USE_esp8266
-  #include "driver/esp8266/esp8266.h"
+#    include "driver/esp8266/esp8266.h"
 #endif
 #ifdef USE_a6
-  #include "driver/a6/a6.h"
+#    include "driver/a6/a6.h"
 #endif
 
 #include "web_server.h"
@@ -26,4 +26,4 @@
 void network_init(void);
 void network_task(void);
 
-#endif // NETWORK_H
+#endif  // NETWORK_H

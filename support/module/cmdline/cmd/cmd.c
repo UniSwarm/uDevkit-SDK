@@ -10,12 +10,13 @@
  */
 
 #include "cmd.h"
-#include "cmds.h"
-#include "../cmdline_curses.h"
 
-#include <string.h>
+#include "../cmdline_curses.h"
+#include "cmds.h"
+
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "driver/device.h"
 
@@ -24,32 +25,31 @@
 int cmd_help(int argc, char **argv);
 
 Cmd cmds[] = {
-  #ifdef USE_gpio
+#ifdef USE_gpio
     {"gpio", cmd_uart},
-  #endif
-  #ifdef USE_uart
+#endif
+#ifdef USE_uart
     {"uart", cmd_uart},
-  #endif
-  #ifdef USE_sysclock
+#endif
+#ifdef USE_sysclock
     {"sysclock", cmd_sysclock},
-  #endif
-  #ifdef USE_i2c
+#endif
+#ifdef USE_i2c
     {"i2c", cmd_i2c},
-  #endif
-  #ifdef USE_adc
+#endif
+#ifdef USE_adc
     {"adc", cmd_adc},
-  #endif
-  #ifdef USE_ax12
+#endif
+#ifdef USE_ax12
     {"ax", cmd_ax},
-  #endif
-  #ifdef USE_MODULE_mrobot
+#endif
+#ifdef USE_MODULE_mrobot
     {"mrobot", cmd_mrobot},
-  #endif
+#endif
     {"reg", cmd_reg},
     {"led", cmd_led},
     {"help", cmd_help},
-    {"", NULL}
-};
+    {"", NULL}};
 
 extern rt_dev_t cmdline_device_in;
 extern rt_dev_t cmdline_device_out;
@@ -67,28 +67,34 @@ int cmd_exec(char *line)
     sep = line;
     i = 1;
     argv[0] = sep;
-    while(sep != NULL && i<CMDLINE_ARGC_MAX)
+    while (sep != NULL && i < CMDLINE_ARGC_MAX)
     {
         sep = strchr(sep, ' ');
-        if(sep != 0)
+        if (sep != 0)
         {
             *sep = '\0';
-            if(*(sep+1) != ' ' && *(sep+1) != '\0')
-                argv[i++] = sep+1;
+            if (*(sep + 1) != ' ' && *(sep + 1) != '\0')
+            {
+                argv[i++] = sep + 1;
+            }
             sep++;
         }
         else
+        {
             break;
+        }
     }
     argc = i;
 
     // looking for command name
     cmd = NULL;
-    for(i=0; i<sizeof(cmds); i++)
+    for (i = 0; i < sizeof(cmds); i++)
     {
-        if(cmds[i].cmdFnPtr==0)
+        if (cmds[i].cmdFnPtr == 0)
+        {
             break;
-        if(strcmp(cmds[i].name, line)==0)
+        }
+        if (strcmp(cmds[i].name, line) == 0)
         {
             cmd = &cmds[i];
             break;
@@ -96,19 +102,25 @@ int cmd_exec(char *line)
     }
 
     // execute command if found
-    if(cmd!=0)
+    if (cmd != 0)
+    {
         return (*cmd->cmdFnPtr)(argc, argv);
+    }
     else
+    {
         return -1;
+    }
 }
 
 int cmd_help(int argc, char **argv)
 {
     uint16_t i;
-    for(i=0; i<sizeof(cmds); i++)
+    for (i = 0; i < sizeof(cmds); i++)
     {
-        if(cmds[i].cmdFnPtr==0)
+        if (cmds[i].cmdFnPtr == 0)
+        {
             break;
+        }
         cmd_puts(cmds[i].name);
     }
     return 0;
@@ -131,9 +143,9 @@ int cmd_printf(const char *format, ...)
     int done;
     char buff[100];
 
-    va_start (arg, format);
+    va_start(arg, format);
     done = vsprintf(buff, format, arg);
-    va_end (arg);
+    va_end(arg);
 
     device_write(cmdline_device_out, buff, strlen(buff));
     device_write(cmdline_device_out, "\r\n", 1);

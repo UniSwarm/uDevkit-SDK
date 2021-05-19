@@ -12,8 +12,8 @@
 #include "esp8266.h"
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <board.h>
 
@@ -198,27 +198,27 @@ void esp8266_task(void)
         {
             switch (esp8266_config >> 1)
             {
-            case 0:
-                esp8266_send_cmd("ATE1\r\n");
-                break;
-            case 1:
-                esp8266_send_cmd("AT+CIPMUX=1\r\n");
-                break;
-            case 2:
-                esp8266_setMode(ESP8266_MODE_STA_AP);
-                break;
-            case 3:
-                esp8266_connect_ap("iotRT", "iotwifiA");
-                break;
-            case 4:
-                esp8266_ap_setConfig("rtnet", "pwd2017A", ESP8266_ECN_WPA2, 5);
-                break;
-            case 5:
-                esp8266_server_create(80);
-                break;
-            case 6:
-                esp8266_send_cmd("AT+CIFSR\r\n");
-                break;
+                case 0:
+                    esp8266_send_cmd("ATE1\r\n");
+                    break;
+                case 1:
+                    esp8266_send_cmd("AT+CIPMUX=1\r\n");
+                    break;
+                case 2:
+                    esp8266_setMode(ESP8266_MODE_STA_AP);
+                    break;
+                case 3:
+                    esp8266_connect_ap("iotRT", "iotwifiA");
+                    break;
+                case 4:
+                    esp8266_ap_setConfig("rtnet", "pwd2017A", ESP8266_ECN_WPA2, 5);
+                    break;
+                case 5:
+                    esp8266_server_create(80);
+                    break;
+                case 6:
+                    esp8266_send_cmd("AT+CIFSR\r\n");
+                    break;
             }
             esp8266_config++;
         }
@@ -233,381 +233,381 @@ void esp8266_parse(char rec)
 {
     switch (esp8266_fsmState)
     {
-    case FSM_UNKNOW:
-        if (rec == '\n')
-            esp8266_fsmState = FSM_START;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_WAITING_VALIDATE:
-        if (rec == '\n')
-        {
-            // validate
-            if (esp8266_pendingState != ESP8266_STATE_NONE)
-                esp8266_state = esp8266_pendingState;
-            esp8266_pendingState = ESP8266_STATE_NONE;
-
-            esp8266_fsmState = FSM_START;
-        }
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_START:
-        if (rec == '\r')
-            esp8266_fsmState = FSM_WAITING_VALIDATE;
-        else if (rec == '+')
-            esp8266_fsmState = FSM_PLUS;
-        else if (rec == 'S')
-            esp8266_fsmState = FSM_SENDOK_S;
-        else if (rec == 'E')
-            esp8266_fsmState = FSM_ERROR_E;
-        else if (rec == 'r')
-            esp8266_fsmState = FSM_ready_r;
-        else if (rec == 'F')
-            esp8266_fsmState = FSM_FAIL_F;
-        else if (rec == '>')
-        {
-            esp8266_state = ESP8266_STATE_SEND_DATA;
-            esp8266_fsmState = FSM_UNKNOW;
-        }
-        else if (rec == 'O')
-            esp8266_fsmState = FSM_OK_O;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-
-    case FSM_SENDOK_S:
-        if (rec == 'E')
-            esp8266_fsmState = FSM_SENDOK_E;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_SENDOK_E:
-        if (rec == 'N')
-            esp8266_fsmState = FSM_SENDOK_N;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_SENDOK_N:
-        if (rec == 'D')
-            esp8266_fsmState = FSM_SENDOK_D;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_SENDOK_D:
-        if (rec == ' ')
-            esp8266_fsmState = FSM_SENDOK_Sp;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_SENDOK_Sp:
-        if (rec == 'O')
-            esp8266_fsmState = FSM_SENDOK_O;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_SENDOK_O:
-        if (rec == 'K')
-            esp8266_fsmState = FSM_SENDOK_K;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_SENDOK_K:
-        if (rec == '\r')
-        {
-            esp8266_pendingState = ESP8266_STATE_SEND_OK;
-            esp8266_fsmState = FSM_WAITING_VALIDATE;
-        }
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-
-    case FSM_ERROR_E:
-        if (rec == 'R')
-            esp8266_fsmState = FSM_ERROR_R1;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_ERROR_R1:
-        if (rec == 'R')
-            esp8266_fsmState = FSM_ERROR_R2;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_ERROR_R2:
-        if (rec == 'O')
-            esp8266_fsmState = FSM_ERROR_O;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_ERROR_O:
-        if (rec == 'R')
-            esp8266_fsmState = FSM_ERROR_R3;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_ERROR_R3:
-        if (rec == '\r')
-        {
-            esp8266_pendingState = ESP8266_STATE_ERROR;
-            esp8266_fsmState = FSM_WAITING_VALIDATE;
-        }
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-
-    case FSM_FAIL_F:
-        if (rec == 'A')
-            esp8266_fsmState = FSM_FAIL_A;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_FAIL_A:
-        if (rec == 'I')
-            esp8266_fsmState = FSM_FAIL_I;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_FAIL_I:
-        if (rec == 'L')
-            esp8266_fsmState = FSM_FAIL_L;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_FAIL_L:
-        if (rec == '\r')
-        {
-            esp8266_pendingState = ESP8266_STATE_FAIL;
-            esp8266_fsmState = FSM_WAITING_VALIDATE;
-        }
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-
-    case FSM_ready_r:
-        if (rec == 'e')
-            esp8266_fsmState = FSM_ready_e;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_ready_e:
-        if (rec == 'a')
-            esp8266_fsmState = FSM_ready_a;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_ready_a:
-        if (rec == 'd')
-            esp8266_fsmState = FSM_ready_d;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_ready_d:
-        if (rec == 'y')
-            esp8266_fsmState = FSM_ready_y;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_ready_y:
-        if (rec == '\r')
-        {
-            esp8266_pendingState = ESP8266_STATE_READY;
-            esp8266_fsmState = FSM_WAITING_VALIDATE;
-        }
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-
-    case FSM_OK_O:
-        if (rec == 'K')
-            esp8266_fsmState = FSM_OK_K;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_OK_K:
-        if (rec == '\r')
-        {
-            esp8266_pendingState = ESP8266_STATE_OK;
-            esp8266_fsmState = FSM_WAITING_VALIDATE;
-        }
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-
-    case FSM_PLUS:
-        if (rec == 'I')
-            esp8266_fsmState = FSM_IPD_I;
-        else if (rec == 'C')
-            esp8266_fsmState = FSM_IP_C;  // wait IP
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IP_C:
-        if (rec == 'I')
-            esp8266_fsmState = FSM_IP_I;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IP_I:
-        if (rec == 'F')
-            esp8266_fsmState = FSM_IP_F;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IP_F:
-        if (rec == 'S')
-            esp8266_fsmState = FSM_IP_S;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IP_S:
-        if (rec == 'R')
-            esp8266_fsmState = FSM_IP_R;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IP_R:
-        if (rec == ':')
-            esp8266_fsmState = FSM_IP_dP;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IP_dP:
-        if (rec == 'S')
-            esp8266_fsmState = FSM_IP_S2;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IP_S2:
-        if (rec == 'T')
-            esp8266_fsmState = FSM_IP_T;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IP_T:
-        if (rec == 'A')
-            esp8266_fsmState = FSM_IP_A;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IP_A:
-        if (rec == 'I')
-            esp8266_fsmState = FSM_IP_WIP;
-        else if (rec == 'M')
-            esp8266_fsmState = FSM_IP_WMAC;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IP_WIP:
-        if (rec == '"')
-        {
-            esp8266_fsmState = FSM_IP_IP;
-            esp8266_ipid = 0;
-        }
-        else if (rec == '\r')
-            esp8266_fsmState = FSM_UNKNOW;
-        else
-            esp8266_fsmState = FSM_IP_WIP;  // wait IP
-        break;
-    case FSM_IP_IP:
-        if ((rec >= '0' && rec <= '9') || rec == '.')
-            esp8266_ip[esp8266_ipid++] = rec;
-        else
-        {
-            esp8266_ip[esp8266_ipid] = 0;
-            esp8266_fsmState = FSM_UNKNOW;
-        }
-        break;
-    case FSM_IP_WMAC:
-        if (rec == '"')
-        {
-            esp8266_fsmState = FSM_IP_MAC;
-            esp8266_macid = 0;
-        }
-        else if (rec == '\r')
-            esp8266_fsmState = FSM_UNKNOW;
-        else
-            esp8266_fsmState = FSM_IP_WMAC;  // wait IP
-        break;
-    case FSM_IP_MAC:
-        if ((rec >= '0' && rec <= '9') || rec == ':' || (rec >= 'a' && rec <= 'f'))
-            esp8266_mac[esp8266_macid++] = rec;
-        else
-        {
-            esp8266_mac[esp8266_macid] = 0;
-            esp8266_fsmState = FSM_UNKNOW;
-        }
-        break;
-    case FSM_IPD_I:
-        if (rec == 'P')
-            esp8266_fsmState = FSM_IPD_P;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IPD_P:
-        if (rec == 'D')
-            esp8266_fsmState = FSM_IPD_D;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IPD_D:
-        if (rec == ',')
-            esp8266_fsmState = FSM_IPD_COMMA_1;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IPD_COMMA_1:
-        if (rec >= '0' && rec <= '9')
-        {
-            esp8266_fsmState = FSM_IPD_SOCKET_DIGIT;
-            esp8266_socket = rec - '0';
-        }
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IPD_SOCKET_DIGIT:
-        if (rec == ',')
-            esp8266_fsmState = FSM_IPD_COMMA_2;
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IPD_COMMA_2:
-        if (rec >= '0' && rec <= '9')
-        {
-            esp8266_fsmState = FSM_IPD_SIZE_DIGITS;
-            esp8266_sizePacket = (rec - '0');
-        }
-        else
-            esp8266_fsmState = FSM_UNKNOW;
-        break;
-    case FSM_IPD_SIZE_DIGITS:
-        if (rec == ':')
-        {
-            esp8266_idPacket = 0;
-            esp8266_fsmState = FSM_PACKET_RX;
-        }
-        else
-        {
-            if (rec >= '0' && rec <= '9')
+        case FSM_UNKNOW:
+            if (rec == '\n')
+                esp8266_fsmState = FSM_START;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_WAITING_VALIDATE:
+            if (rec == '\n')
             {
-                esp8266_fsmState = FSM_IPD_SIZE_DIGITS;
-                esp8266_sizePacket = esp8266_sizePacket * 10 + (rec - '0');
+                // validate
+                if (esp8266_pendingState != ESP8266_STATE_NONE)
+                    esp8266_state = esp8266_pendingState;
+                esp8266_pendingState = ESP8266_STATE_NONE;
+
+                esp8266_fsmState = FSM_START;
             }
             else
                 esp8266_fsmState = FSM_UNKNOW;
-        }
-        break;
-    case FSM_PACKET_RX:
-        esp8266_dataPacket[esp8266_idPacket++] = rec;
-        if (esp8266_idPacket >= esp8266_sizePacket)
-        {
-            esp8266_flagPacket = 1;
-            esp8266_state = ESP8266_STATE_RECEIVE_DATA;
+            break;
+        case FSM_START:
+            if (rec == '\r')
+                esp8266_fsmState = FSM_WAITING_VALIDATE;
+            else if (rec == '+')
+                esp8266_fsmState = FSM_PLUS;
+            else if (rec == 'S')
+                esp8266_fsmState = FSM_SENDOK_S;
+            else if (rec == 'E')
+                esp8266_fsmState = FSM_ERROR_E;
+            else if (rec == 'r')
+                esp8266_fsmState = FSM_ready_r;
+            else if (rec == 'F')
+                esp8266_fsmState = FSM_FAIL_F;
+            else if (rec == '>')
+            {
+                esp8266_state = ESP8266_STATE_SEND_DATA;
+                esp8266_fsmState = FSM_UNKNOW;
+            }
+            else if (rec == 'O')
+                esp8266_fsmState = FSM_OK_O;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+
+        case FSM_SENDOK_S:
+            if (rec == 'E')
+                esp8266_fsmState = FSM_SENDOK_E;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_SENDOK_E:
+            if (rec == 'N')
+                esp8266_fsmState = FSM_SENDOK_N;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_SENDOK_N:
+            if (rec == 'D')
+                esp8266_fsmState = FSM_SENDOK_D;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_SENDOK_D:
+            if (rec == ' ')
+                esp8266_fsmState = FSM_SENDOK_Sp;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_SENDOK_Sp:
+            if (rec == 'O')
+                esp8266_fsmState = FSM_SENDOK_O;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_SENDOK_O:
+            if (rec == 'K')
+                esp8266_fsmState = FSM_SENDOK_K;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_SENDOK_K:
+            if (rec == '\r')
+            {
+                esp8266_pendingState = ESP8266_STATE_SEND_OK;
+                esp8266_fsmState = FSM_WAITING_VALIDATE;
+            }
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+
+        case FSM_ERROR_E:
+            if (rec == 'R')
+                esp8266_fsmState = FSM_ERROR_R1;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_ERROR_R1:
+            if (rec == 'R')
+                esp8266_fsmState = FSM_ERROR_R2;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_ERROR_R2:
+            if (rec == 'O')
+                esp8266_fsmState = FSM_ERROR_O;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_ERROR_O:
+            if (rec == 'R')
+                esp8266_fsmState = FSM_ERROR_R3;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_ERROR_R3:
+            if (rec == '\r')
+            {
+                esp8266_pendingState = ESP8266_STATE_ERROR;
+                esp8266_fsmState = FSM_WAITING_VALIDATE;
+            }
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+
+        case FSM_FAIL_F:
+            if (rec == 'A')
+                esp8266_fsmState = FSM_FAIL_A;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_FAIL_A:
+            if (rec == 'I')
+                esp8266_fsmState = FSM_FAIL_I;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_FAIL_I:
+            if (rec == 'L')
+                esp8266_fsmState = FSM_FAIL_L;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_FAIL_L:
+            if (rec == '\r')
+            {
+                esp8266_pendingState = ESP8266_STATE_FAIL;
+                esp8266_fsmState = FSM_WAITING_VALIDATE;
+            }
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+
+        case FSM_ready_r:
+            if (rec == 'e')
+                esp8266_fsmState = FSM_ready_e;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_ready_e:
+            if (rec == 'a')
+                esp8266_fsmState = FSM_ready_a;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_ready_a:
+            if (rec == 'd')
+                esp8266_fsmState = FSM_ready_d;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_ready_d:
+            if (rec == 'y')
+                esp8266_fsmState = FSM_ready_y;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_ready_y:
+            if (rec == '\r')
+            {
+                esp8266_pendingState = ESP8266_STATE_READY;
+                esp8266_fsmState = FSM_WAITING_VALIDATE;
+            }
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+
+        case FSM_OK_O:
+            if (rec == 'K')
+                esp8266_fsmState = FSM_OK_K;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_OK_K:
+            if (rec == '\r')
+            {
+                esp8266_pendingState = ESP8266_STATE_OK;
+                esp8266_fsmState = FSM_WAITING_VALIDATE;
+            }
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+
+        case FSM_PLUS:
+            if (rec == 'I')
+                esp8266_fsmState = FSM_IPD_I;
+            else if (rec == 'C')
+                esp8266_fsmState = FSM_IP_C;  // wait IP
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IP_C:
+            if (rec == 'I')
+                esp8266_fsmState = FSM_IP_I;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IP_I:
+            if (rec == 'F')
+                esp8266_fsmState = FSM_IP_F;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IP_F:
+            if (rec == 'S')
+                esp8266_fsmState = FSM_IP_S;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IP_S:
+            if (rec == 'R')
+                esp8266_fsmState = FSM_IP_R;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IP_R:
+            if (rec == ':')
+                esp8266_fsmState = FSM_IP_dP;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IP_dP:
+            if (rec == 'S')
+                esp8266_fsmState = FSM_IP_S2;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IP_S2:
+            if (rec == 'T')
+                esp8266_fsmState = FSM_IP_T;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IP_T:
+            if (rec == 'A')
+                esp8266_fsmState = FSM_IP_A;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IP_A:
+            if (rec == 'I')
+                esp8266_fsmState = FSM_IP_WIP;
+            else if (rec == 'M')
+                esp8266_fsmState = FSM_IP_WMAC;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IP_WIP:
+            if (rec == '"')
+            {
+                esp8266_fsmState = FSM_IP_IP;
+                esp8266_ipid = 0;
+            }
+            else if (rec == '\r')
+                esp8266_fsmState = FSM_UNKNOW;
+            else
+                esp8266_fsmState = FSM_IP_WIP;  // wait IP
+            break;
+        case FSM_IP_IP:
+            if ((rec >= '0' && rec <= '9') || rec == '.')
+                esp8266_ip[esp8266_ipid++] = rec;
+            else
+            {
+                esp8266_ip[esp8266_ipid] = 0;
+                esp8266_fsmState = FSM_UNKNOW;
+            }
+            break;
+        case FSM_IP_WMAC:
+            if (rec == '"')
+            {
+                esp8266_fsmState = FSM_IP_MAC;
+                esp8266_macid = 0;
+            }
+            else if (rec == '\r')
+                esp8266_fsmState = FSM_UNKNOW;
+            else
+                esp8266_fsmState = FSM_IP_WMAC;  // wait IP
+            break;
+        case FSM_IP_MAC:
+            if ((rec >= '0' && rec <= '9') || rec == ':' || (rec >= 'a' && rec <= 'f'))
+                esp8266_mac[esp8266_macid++] = rec;
+            else
+            {
+                esp8266_mac[esp8266_macid] = 0;
+                esp8266_fsmState = FSM_UNKNOW;
+            }
+            break;
+        case FSM_IPD_I:
+            if (rec == 'P')
+                esp8266_fsmState = FSM_IPD_P;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IPD_P:
+            if (rec == 'D')
+                esp8266_fsmState = FSM_IPD_D;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IPD_D:
+            if (rec == ',')
+                esp8266_fsmState = FSM_IPD_COMMA_1;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IPD_COMMA_1:
+            if (rec >= '0' && rec <= '9')
+            {
+                esp8266_fsmState = FSM_IPD_SOCKET_DIGIT;
+                esp8266_socket = rec - '0';
+            }
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IPD_SOCKET_DIGIT:
+            if (rec == ',')
+                esp8266_fsmState = FSM_IPD_COMMA_2;
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IPD_COMMA_2:
+            if (rec >= '0' && rec <= '9')
+            {
+                esp8266_fsmState = FSM_IPD_SIZE_DIGITS;
+                esp8266_sizePacket = (rec - '0');
+            }
+            else
+                esp8266_fsmState = FSM_UNKNOW;
+            break;
+        case FSM_IPD_SIZE_DIGITS:
+            if (rec == ':')
+            {
+                esp8266_idPacket = 0;
+                esp8266_fsmState = FSM_PACKET_RX;
+            }
+            else
+            {
+                if (rec >= '0' && rec <= '9')
+                {
+                    esp8266_fsmState = FSM_IPD_SIZE_DIGITS;
+                    esp8266_sizePacket = esp8266_sizePacket * 10 + (rec - '0');
+                }
+                else
+                    esp8266_fsmState = FSM_UNKNOW;
+            }
+            break;
+        case FSM_PACKET_RX:
+            esp8266_dataPacket[esp8266_idPacket++] = rec;
+            if (esp8266_idPacket >= esp8266_sizePacket)
+            {
+                esp8266_flagPacket = 1;
+                esp8266_state = ESP8266_STATE_RECEIVE_DATA;
+                esp8266_fsmState = FSM_UNKNOW;
+            }
+            break;
+        default:
             esp8266_fsmState = FSM_UNKNOW;
-        }
-        break;
-    default:
-        esp8266_fsmState = FSM_UNKNOW;
     }
 }
 
@@ -715,7 +715,7 @@ uint8_t esp8266_open_tcp_socket(char *ip_domain, uint16_t port)
 
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
     esp8266_currentCmd = ESP8266_CMD_OPENTCP;
-    return 0; // TODO return sock id
+    return 0;  // TODO return sock id
 }
 
 /**
@@ -725,8 +725,7 @@ uint8_t esp8266_open_tcp_socket(char *ip_domain, uint16_t port)
  * @param localPort local port
  * @return 0 if OK
  */
-uint8_t esp8266_open_udp_socket(char *ip_domain, uint16_t port,
-                                uint16_t localPort)
+uint8_t esp8266_open_udp_socket(char *ip_domain, uint16_t port, uint16_t localPort)
 {
     char protected[64];
 
@@ -742,7 +741,7 @@ uint8_t esp8266_open_udp_socket(char *ip_domain, uint16_t port,
 
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
     esp8266_currentCmd = ESP8266_CMD_OPENUDP;
-    return 0; // TODO return sock id
+    return 0;  // TODO return sock id
 }
 
 /**
@@ -777,8 +776,7 @@ void esp8266_setMode(ESP8266_MODE mode)
  * @param channel wifi channel
  * @return 0 if OK
  */
-int esp8266_ap_setConfig(char *ssid, char *pw, ESP8266_ECN pw_ecn,
-                         uint8_t channel)
+int esp8266_ap_setConfig(char *ssid, char *pw, ESP8266_ECN pw_ecn, uint8_t channel)
 {
     char protected[64];
 
@@ -881,12 +879,14 @@ void esp8266_write_socket(uint8_t sock, char *data, uint16_t size)
     esp8266_send_cmddat(esp8266_txBuff.data, esp8266_txBuff.size);
     esp8266_currentCmd = ESP8266_CMD_WRITESOCK_REQ;
 
-    while (esp8266_state != ESP8266_STATE_SEND_DATA) esp8266_task(); // TODO FIXME
+    while (esp8266_state != ESP8266_STATE_SEND_DATA)
+        esp8266_task();  // TODO FIXME
     esp8266_state = ESP8266_STATE_NONE;
 
     esp8266_send_cmddat(data, size);
     esp8266_currentCmd = ESP8266_CMD_WRITESOCK_DATA;
-    while (esp8266_state != ESP8266_STATE_SEND_OK) esp8266_task(); // TODO FIXME
+    while (esp8266_state != ESP8266_STATE_SEND_OK)
+        esp8266_task();  // TODO FIXME
 }
 
 /**

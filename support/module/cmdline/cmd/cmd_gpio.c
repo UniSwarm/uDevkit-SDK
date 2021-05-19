@@ -28,7 +28,7 @@ int cmd_gpio(int argc, char **argv)
     }
 
     // help
-    if (strcmp(argv[1], "help")==0)
+    if (strcmp(argv[1], "help") == 0)
     {
         cmd_gpio_help();
         return 0;
@@ -48,7 +48,9 @@ int cmd_gpio(int argc, char **argv)
         pin = c - '0';
         c = argv[1][2];
         if (isdigit(c))
+        {
             pin = pin * 10 + (c - '0');
+        }
         gpio_dev = gpio_pin(port, pin);
         if (argc == 3 && strcmp(argv[2], "set") == 0)
         {
@@ -86,7 +88,6 @@ int cmd_gpio(int argc, char **argv)
             return 0;
         }
     }
-
 
     return 1;
 }

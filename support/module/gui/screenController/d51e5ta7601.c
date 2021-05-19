@@ -16,25 +16,37 @@
 
 #include <stdint.h>
 
-#define WINDOW_XADDR_START  0x0045 // Horizontal Start Address Set
-#define WINDOW_XADDR_END    0x0044 // Horizontal End Address Set
-#define WINDOW_YADDR_START  0x0047 // Vertical Start Address Set
-#define WINDOW_YADDR_END    0x0046 // Vertical End Address Set
-#define GRAM_ADR_ROW_S      0x0020 // init to 0 , UPDATE FIRST
-#define GRAM_ADR_COL_S      0x0021 // init to 319 , UPDATE LAST
-#define GRAMWR              0x0022 // memory write
+#define WINDOW_XADDR_START 0x0045  // Horizontal Start Address Set
+#define WINDOW_XADDR_END   0x0044  // Horizontal End Address Set
+#define WINDOW_YADDR_START 0x0047  // Vertical Start Address Set
+#define WINDOW_YADDR_END   0x0046  // Vertical End Address Set
+#define GRAM_ADR_ROW_S     0x0020  // init to 0 , UPDATE FIRST
+#define GRAM_ADR_COL_S     0x0021  // init to 319 , UPDATE LAST
+#define GRAMWR             0x0022  // memory write
 
 // <TODO write this functions correctly
 void delay_ms(uint16_t ms)
 {
     int i, j;
-    for(j=0; j<ms; j++) for(i=0; i<6210; i++) asm("NOP");
+    for (j = 0; j < ms; j++)
+    {
+        for (i = 0; i < 6210; i++)
+        {
+            asm("NOP");
+        }
+    }
 }
 
 void delay_us(uint16_t us)
 {
     int i, j;
-    for(j=0; j<us; j++) for(i=0; i<6; i++) asm("NOP");
+    for (j = 0; j < us; j++)
+    {
+        for (i = 0; i < 6; i++)
+        {
+            asm("NOP");
+        }
+    }
 }
 // TODO/>
 
@@ -81,7 +93,7 @@ void gui_ctrl_write_command_data(uint8_t cmd, uint16_t data)
 
 void gui_ctrl_init(rt_dev_t dev)
 {
-	SCREEN_LEDBL = 1;
+    SCREEN_LEDBL = 1;
 
     SCREEN_CS = 1;
     SCREEN_RS = 1;
@@ -151,9 +163,9 @@ void gui_ctrl_init(rt_dev_t dev)
 void gui_ctrl_setRectScreen(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 {
     gui_ctrl_write_command_data(WINDOW_XADDR_START, y);
-    gui_ctrl_write_command_data(WINDOW_XADDR_END, y+h-1);
+    gui_ctrl_write_command_data(WINDOW_XADDR_END, y + h - 1);
     gui_ctrl_write_command_data(WINDOW_YADDR_START, x);
-    gui_ctrl_write_command_data(WINDOW_YADDR_END, x+w-1);
+    gui_ctrl_write_command_data(WINDOW_YADDR_END, x + w - 1);
     gui_ctrl_write_command_data(GRAM_ADR_ROW_S, x);
     gui_ctrl_write_command_data(GRAM_ADR_COL_S, y);
 
@@ -170,7 +182,7 @@ void gui_ctrl_setPos(uint16_t x, uint16_t y)
 
 void gui_ctrl_drawPoint(uint16_t x, uint16_t y, uint16_t color)
 {
-    //uint16_t data;
+    // uint16_t data;
     gui_ctrl_setPos(x, y);
 
     gui_ctrl_write_data(color);
