@@ -499,6 +499,45 @@ int adc_setCoreResolution(uint8_t core, uint16_t resolution)
     return 0;
 }
 
+int adc_startSampling(uint8_t channel)
+{
+    if (channel >= ADC_CHANNEL_MAX)
+    {
+        return -1;
+    }
+
+    while (ADCON3Lbits.CNVRTCH != 0)
+        ;
+
+    ADCON3Lbits.CNVCHSEL = channel;  // select channel to convert
+    ADCON3Lbits.CNVRTCH = 1;         // Start sampling
+
+    return 0;
+}
+
+int adc_dataReady(uint8_t channel)
+{
+    int ready;
+    uint16_t bitMask;
+
+    if (channel >= ADC_CHANNEL_MAX)
+    {
+        return -1;
+    }
+
+    if (channel < 16)
+    {
+        bitMask = (0x0001 << channel);
+        ready = (ADSTATL & bitMask) != 0;
+    }
+    else
+    {
+        bitMask = (0x0001 << (channel - 16));
+        ready = (ADSTATH & bitMask) != 0;
+    }
+    return ready;
+}
+
 int16_t adc_value(uint8_t channel)
 {
     if (channel >= ADC_CHANNEL_MAX)
@@ -515,6 +554,10 @@ int16_t adc_getValue(uint8_t channel)
     {
         return -1;
     }
+
+    while (ADCON3Lbits.CNVRTCH == 1)
+        ;
+
     ADCON3Lbits.CNVCHSEL = channel;  // select channel to convert
     ADCON3Lbits.CNVRTCH = 1;         // Start sampling
 

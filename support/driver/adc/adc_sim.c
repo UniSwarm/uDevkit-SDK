@@ -51,6 +51,23 @@ int adc_setCoreResolution(uint8_t core, uint16_t resolution)
     return 0;
 }
 
+int adc_startSampling(uint8_t channel)
+{
+    if (channel >= ADC_CHANNEL_COUNT)
+    {
+        return -1;
+    }
+
+    ssize_t size_read;
+
+    simulator_rec_task();
+    size_read = simulator_recv(ADC_SIM_MODULE, 0, ADC_SIM_READ, (char *)adc_channels, ADC_CHANNEL_COUNT * 2);
+
+    UDK_UNUSED(size_read);
+
+    return 0;
+}
+
 int16_t adc_getValue(uint8_t channel)
 {
     ssize_t size_read;

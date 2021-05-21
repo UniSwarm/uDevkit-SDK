@@ -73,6 +73,14 @@ int adc_setCoreResolution(uint8_t core, uint16_t resolution)
     return 0;
 }
 
+int adc_startSampling(uint8_t channel)
+{
+    AD1CHS0 = channel;     // select channel to convert
+    AD1CON1bits.SAMP = 1;  // Start sampling
+    
+    return 0;
+}
+
 int16_t adc_getValue(uint8_t channel)
 {
     AD1CHS0 = channel;     // select channel to convert
