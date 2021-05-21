@@ -22,6 +22,7 @@
 rt_dev_t _board_leds[LED_COUNT];
 rt_dev_t _board_outs_H[OUT_COUNT];
 rt_dev_t _board_outs_L[OUT_COUNT];
+rt_dev_t _board_out3h_en;
 DO_MODE _board_outs_mode[OUT_COUNT];
 uint8_t _board_analogin[ANALOGIN_COUNT];
 
@@ -159,6 +160,10 @@ int board_init_io(void)
     gpio_setBitConfig(_board_outs_H[6], GPIO_OUTPUT);
     _board_outs_H[7] = GPIO_PC14;
     gpio_setBitConfig(_board_outs_H[7], GPIO_OUTPUT);
+
+    _board_out3h_en = GPIO_PD03;
+    gpio_setBitConfig(_board_out3h_en, GPIO_OUTPUT);  // out3h active on low output
+    gpio_clearBit(_board_out3h_en);
 
     return 0;
 }
