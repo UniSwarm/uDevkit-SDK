@@ -44,7 +44,7 @@ INCLUDEPATH += -I. -I$(UDEVKIT)/include -I$(OUT_PWD)
 # cleaning rule project
 .PHONY: clean
 clean:
-	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c $(OUT_PWD)/*.h $(OUT_PWD)/*.s
+	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c $(OUT_PWD)/*.h $(OUT_PWD)/*.s $(OUT_PWD)/*.lst $(OUT_PWD)/*.map
 	rm -f $(OUT_PWD)/$(PROJECT).elf $(OUT_PWD)/$(PROJECT).hex
 	rm -f $(CONFIG_HEADERS)
 
