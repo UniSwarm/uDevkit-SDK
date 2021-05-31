@@ -26,7 +26,9 @@
     || defined(DEVICE_33CK256MP506) || defined(DEVICE_33CK256MP508)
 #    define CAN_COUNT 1
 #elif defined(DEVICE_33CH256MP505) || defined(DEVICE_33CH256MP506) || defined(DEVICE_33CH256MP508)                     \
-    || defined(DEVICE_33CH512MP505) || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP508)
+    || defined(DEVICE_33CH512MP505) || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP508)                    \
+    || defined(DEVICE_33CK256MP605) || defined(DEVICE_33CK256MP606) || defined(DEVICE_33CK256MP608)                    \
+    || defined(DEVICE_33CK512MP605) || defined(DEVICE_33CK512MP606) || defined(DEVICE_33CK512MP608)
 #    define CAN_COUNT 2
 #else
 #    define CAN_COUNT 0
@@ -43,7 +45,9 @@
     || defined(DEVICE_33CK64MP508) || defined(DEVICE_33CK128MP502) || defined(DEVICE_33CK128MP503)                     \
     || defined(DEVICE_33CK128MP505) || defined(DEVICE_33CK128MP506) || defined(DEVICE_33CK128MP508)                    \
     || defined(DEVICE_33CK256MP502) || defined(DEVICE_33CK256MP503) || defined(DEVICE_33CK256MP505)                    \
-    || defined(DEVICE_33CK256MP506) || defined(DEVICE_33CK256MP508)
+    || defined(DEVICE_33CK256MP506) || defined(DEVICE_33CK256MP508) || defined(DEVICE_33CK256MP605)                    \
+    || defined(DEVICE_33CK256MP606) || defined(DEVICE_33CK256MP608) || defined(DEVICE_33CK512MP605)                    \
+    || defined(DEVICE_33CK512MP606) || defined(DEVICE_33CK512MP608)
 #    define CAN_FILTER_COUNT 16
 #    define CAN_FIFO_COUNT   7
 #else
