@@ -36,8 +36,12 @@
     || defined(DEVICE_33CK64MC103) || defined(DEVICE_33CK64MC105)
 #    define CCP_COUNT 4
 #elif defined(DEVICE_24F08KM202) || defined(DEVICE_24F08KM204) || defined(DEVICE_24F16KM202)                           \
-    || defined(DEVICE_24F16KM204) || defined(DEVICE_24FJ64GL302) || defined(DEVICE_24FJ64GL303)                        \
-    || defined(DEVICE_24FJ64GL305) || defined(DEVICE_24FJ64GL306) || defined(DEVICE_24FJ128GL302)                      \
+    || defined(DEVICE_24F16KM204) || defined(DEVICE_24FJ32GP202) || defined(DEVICE_24FJ32GP203)                        \
+    || defined(DEVICE_24FJ32GP205) || defined(DEVICE_24FJ32GU202) || defined(DEVICE_24FJ32GU203)                       \
+    || defined(DEVICE_24FJ32GU205) || defined(DEVICE_24FJ64GL302) || defined(DEVICE_24FJ64GL303)                       \
+    || defined(DEVICE_24FJ64GL305) || defined(DEVICE_24FJ64GL306) || defined(DEVICE_24FJ64GP202)                       \
+    || defined(DEVICE_24FJ64GP203) || defined(DEVICE_24FJ64GP205) || defined(DEVICE_24FJ64GU202)                       \
+    || defined(DEVICE_24FJ64GU203) || defined(DEVICE_24FJ64GU205) || defined(DEVICE_24FJ128GL302)                      \
     || defined(DEVICE_24FJ128GL303) || defined(DEVICE_24FJ128GL305) || defined(DEVICE_24FJ128GL306)                    \
     || defined(DEVICE_24FV08KM202) || defined(DEVICE_24FV08KM204) || defined(DEVICE_24FV16KM202)                       \
     || defined(DEVICE_24FV16KM204) || defined(DEVICE_33CK32MP102) || defined(DEVICE_33CK32MP103)                       \
@@ -88,8 +92,12 @@
     || defined(DEVICE_33CK128MP503) || defined(DEVICE_33CK128MP505) || defined(DEVICE_33CK128MP506)                    \
     || defined(DEVICE_33CK128MP508) || defined(DEVICE_33CK256MP202) || defined(DEVICE_33CK256MP203)                    \
     || defined(DEVICE_33CK256MP205) || defined(DEVICE_33CK256MP206) || defined(DEVICE_33CK256MP208)                    \
+    || defined(DEVICE_33CK256MP305) || defined(DEVICE_33CK256MP306) || defined(DEVICE_33CK256MP308)                    \
     || defined(DEVICE_33CK256MP502) || defined(DEVICE_33CK256MP503) || defined(DEVICE_33CK256MP505)                    \
-    || defined(DEVICE_33CK256MP506) || defined(DEVICE_33CK256MP508)
+    || defined(DEVICE_33CK256MP506) || defined(DEVICE_33CK256MP508) || defined(DEVICE_33CK256MP605)                    \
+    || defined(DEVICE_33CK256MP606) || defined(DEVICE_33CK256MP608) || defined(DEVICE_33CK512MP305)                    \
+    || defined(DEVICE_33CK512MP306) || defined(DEVICE_33CK512MP308) || defined(DEVICE_33CK512MP605)                    \
+    || defined(DEVICE_33CK512MP606) || defined(DEVICE_33CK512MP608)
 #    define CCP_COUNT 9
 #else
 #    define CCP_COUNT 0
