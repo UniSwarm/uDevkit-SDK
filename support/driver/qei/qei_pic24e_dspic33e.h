@@ -82,6 +82,11 @@
     || defined(DEVICE_33EP512GM706) || defined(DEVICE_33EP512GM710) || defined(DEVICE_33EP512MC806)                    \
     || defined(DEVICE_33EP512MU810) || defined(DEVICE_33EP512MU814)
 #    define QEI_COUNT 2
+#elif defined(DEVICE_33CK256MP305) || defined(DEVICE_33CK256MP306) || defined(DEVICE_33CK256MP308)                     \
+    || defined(DEVICE_33CK256MP605) || defined(DEVICE_33CK256MP606) || defined(DEVICE_33CK256MP608)                    \
+    || defined(DEVICE_33CK512MP305) || defined(DEVICE_33CK512MP306) || defined(DEVICE_33CK512MP308)                    \
+    || defined(DEVICE_33CK512MP605) || defined(DEVICE_33CK512MP606) || defined(DEVICE_33CK512MP608)
+#    define QEI_COUNT 3
 #else
 #    define QEI_COUNT 0
 #endif
