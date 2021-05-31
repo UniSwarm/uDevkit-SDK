@@ -41,19 +41,13 @@
     || defined(DEVICE_33CK128MP208) || defined(DEVICE_33CK128MP502) || defined(DEVICE_33CK128MP503)                    \
     || defined(DEVICE_33CK128MP505) || defined(DEVICE_33CK128MP506) || defined(DEVICE_33CK128MP508)                    \
     || defined(DEVICE_33CK256MP202) || defined(DEVICE_33CK256MP203) || defined(DEVICE_33CK256MP205)                    \
-    || defined(DEVICE_33CK256MP206) || defined(DEVICE_33CK256MP208) || defined(DEVICE_33CK256MP502)                    \
+    || defined(DEVICE_33CK256MP206) || defined(DEVICE_33CK256MP208) || defined(DEVICE_33CK256MP305)                    \
+    || defined(DEVICE_33CK256MP306) || defined(DEVICE_33CK256MP308) || defined(DEVICE_33CK256MP502)                    \
     || defined(DEVICE_33CK256MP503) || defined(DEVICE_33CK256MP505) || defined(DEVICE_33CK256MP506)                    \
-    || defined(DEVICE_33CK256MP508) || defined(DEVICE_33EV32GM002) || defined(DEVICE_33EV32GM003)                      \
-    || defined(DEVICE_33EV32GM004) || defined(DEVICE_33EV32GM006) || defined(DEVICE_33EV32GM102)                       \
-    || defined(DEVICE_33EV32GM103) || defined(DEVICE_33EV32GM104) || defined(DEVICE_33EV32GM106)                       \
-    || defined(DEVICE_33EV64GM002) || defined(DEVICE_33EV64GM003) || defined(DEVICE_33EV64GM004)                       \
-    || defined(DEVICE_33EV64GM006) || defined(DEVICE_33EV64GM102) || defined(DEVICE_33EV64GM103)                       \
-    || defined(DEVICE_33EV64GM104) || defined(DEVICE_33EV64GM106) || defined(DEVICE_33EV128GM002)                      \
-    || defined(DEVICE_33EV128GM003) || defined(DEVICE_33EV128GM004) || defined(DEVICE_33EV128GM006)                    \
-    || defined(DEVICE_33EV128GM102) || defined(DEVICE_33EV128GM103) || defined(DEVICE_33EV128GM104)                    \
-    || defined(DEVICE_33EV128GM106) || defined(DEVICE_33EV256GM002) || defined(DEVICE_33EV256GM003)                    \
-    || defined(DEVICE_33EV256GM004) || defined(DEVICE_33EV256GM006) || defined(DEVICE_33EV256GM102)                    \
-    || defined(DEVICE_33EV256GM103) || defined(DEVICE_33EV256GM104) || defined(DEVICE_33EV256GM106)
+    || defined(DEVICE_33CK256MP508) || defined(DEVICE_33CK256MP605) || defined(DEVICE_33CK256MP606)                    \
+    || defined(DEVICE_33CK256MP608) || defined(DEVICE_33CK512MP305) || defined(DEVICE_33CK512MP306)                    \
+    || defined(DEVICE_33CK512MP308) || defined(DEVICE_33CK512MP605) || defined(DEVICE_33CK512MP606)                    \
+    || defined(DEVICE_33CK512MP608)
 #    define SENT_COUNT 2
 #else
 #    define SENT_COUNT 0
