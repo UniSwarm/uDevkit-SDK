@@ -51,9 +51,9 @@ void nvm_init(void)
  */
 ssize_t nvm_read(uint32_t addr, char *data, size_t size)
 {
-    char d[0x800] = {0};
-    uint8_t i = 0;
-    uint8_t j = 0;
+    char d[0x1000] = {0};
+    uint16_t i = 0;
+    uint16_t j = 0;
 
     if (nvm_file == NULL)
     {
@@ -62,10 +62,8 @@ ssize_t nvm_read(uint32_t addr, char *data, size_t size)
 
     fseek(nvm_file, addr, SEEK_SET);
 
-    uint8_t sizeEff = (uint8_t)((double)((double)size / 3) * 4);
-    fread(d, sizeEff, 1, nvm_file);
-
-    for (i = 0; i < sizeEff; i++)
+    fread(d, size, 1, nvm_file);
+    for (i = 0; i < size; i++)
     {
         if ((i % 4) == 3)
         {
