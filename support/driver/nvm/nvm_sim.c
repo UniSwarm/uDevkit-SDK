@@ -10,6 +10,7 @@
 
 #include "board.h"
 #include "simulator.h"
+#include "nvm.h"
 
 #include <archi.h>
 #include <string.h>
@@ -51,7 +52,7 @@ void nvm_init(void)
  */
 ssize_t nvm_read(uint32_t addr, char *data, size_t size)
 {
-    char d[0x1000] = {0};
+    char d[NVM_FLASH_PAGE_BYTE] = {0};
     uint16_t i = 0;
     uint16_t j = 0;
 
