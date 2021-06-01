@@ -126,17 +126,17 @@ int8_t board_getButton(uint8_t button);
 
 // Page adress
 #if BOARD_VERSION < 110
-#    define ADRESS_PAGE_1_COM 0x26000
-#    define ADRESS_PAGE_2_MS  0x27000
-#    define ADRESS_PAGE_3_APP 0x28000
-#    define ADRESS_PAGE_4_APP 0x29000
-#    define ADRESS_PAGE_5_CAL 0x2A000
+#    define ADRESS_BYTE_PAGE_1_COM 0x26000
+#    define ADRESS_BYTE_PAGE_2_MAN 0x27000
+#    define ADRESS_BYTE_PAGE_3_STD 0x28000
+#    define ADRESS_BYTE_PAGE_4_STD 0x29000
+#    define ADRESS_BYTE_PAGE_5_CAL 0x2A000
 #else
-#    define ADRESS_PAGE_1_COM 0xAA000
-#    define ADRESS_PAGE_2_MS  0xAB000
-#    define ADRESS_PAGE_3_APP 0xAC000
-#    define ADRESS_PAGE_4_APP 0xAD000
-#    define ADRESS_PAGE_5_CAL 0xAE000
+#    define ADRESS_BYTE_PAGE_1_COM 0xAA000 // PAGE 170
+#    define ADRESS_BYTE_PAGE_2_MAN 0xAB000 // PAGE 171
+#    define ADRESS_BYTE_PAGE_3_STD 0xAC000 // PAGE 172
+#    define ADRESS_BYTE_PAGE_4_STD 0xAD000 // PAGE 173
+#    define ADRESS_BYTE_PAGE_5_CAL 0xAE000 // PAGE 174
 #endif
 
 #endif  // UMC1BDS32FR_H
