@@ -1,5 +1,5 @@
 /**
- * @file umc1bds32fr_slave.c
+ * @file umc1bds32_slave.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright UniSwarm 2019-2021
  *
@@ -8,7 +8,7 @@
  * @brief Code for UMC1BDS32FR / UMC1BDS32FR-I board, slave core
  *
  * product page:
- *  https://uniswarm.eu/uboards/umc/umc1bds32fr
+ *  https://uniswarm.eu/uboards/umc/umc1bds32
  */
 
 #include "umc1bds32.h"
@@ -17,6 +17,8 @@
 #include "driver/sysclock.h"
 
 rt_dev_t board_leds[LED_COUNT];
+
+int board_init_io(void);
 
 int board_init_io(void)
 {
@@ -47,6 +49,10 @@ int board_init_io(void)
     _QEIB1R = 62;
     _QEINDX1R = 63;
 #    endif
+
+    // SSI channel 1
+    _SDI1R = 62;             // coder_data = QEI1B_RX_DATA, RC14
+    _RP41R = _RPOUT_S1SCK1;  // coder_clk = QEI1A_TX_DATA, RB9
 
     // Lock configuration pin
     lockIoConfig();

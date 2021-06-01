@@ -1,5 +1,5 @@
 /**
- * @file umc1bds32fr.c
+ * @file umc1bds32.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright UniSwarm 2019-2021
  *
@@ -127,7 +127,7 @@ int board_init_io(void)
     // ==== sensor 1
     LATEbits.LATE11 = 0;    // QEI1A_Rxen disable
     TRISEbits.TRISE11 = 0;  // QEI1A_Rxen
-    LATEbits.LATE10 = 0;    // QEI1A_Txen disable
+    LATEbits.LATE10 = 0;    // QEI1A_Txen disable // TODO SSI
     TRISEbits.TRISE10 = 0;  // QEI1A_Txen
 
     LATDbits.LATD8 = 0;    // QEI1B_Rxen disable
@@ -137,6 +137,10 @@ int board_init_io(void)
 
     LATEbits.LATE9 = 0;    // QEI1I_Rxen disable
     TRISEbits.TRISE9 = 0;  // QEI1I_Rxen
+
+    // SSI, channel 2
+    _SDI1R = 63;  // coder_data = QEI1I_RX_DATA
+    _SCK1R = 41;  // coder_clk = QEI1A_TX_DATA
 #    endif
 #endif
 

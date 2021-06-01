@@ -1,5 +1,5 @@
 /**
- * @file umc1bds32fr.h
+ * @file umc1bds32.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright UniSwarm 2019-2021
  *
@@ -71,9 +71,15 @@ int8_t board_getButton(uint8_t button);
 
 // hall sensors
 #define BLDC_1_HALL_HIGH_STATE 1
-#define BLDC_1_HALL_A PORTCbits.RC1
-#define BLDC_1_HALL_B PORTCbits.RC2
-#define BLDC_1_HALL_C PORTCbits.RC0
+#define BLDC_1_HALL_A          PORTCbits.RC1
+#define BLDC_1_HALL_B          PORTCbits.RC2
+#define BLDC_1_HALL_C          PORTCbits.RC0
+
+// Power enable pins
+#define BRIDGE_POWER_DISABLED    1
+#define BRIDGE_POWER_ENABLED     0
+#define BRIDGE_POWER_ENABLED_OUT LATDbits.LATD14
+#define BRIDGE_POWER_ENABLED_IN  PORTDbits.RD14
 
 // analog iputs
 #define TEMP_AB_ADC_CHAN  0
