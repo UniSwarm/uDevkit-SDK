@@ -74,4 +74,6 @@ uint8_t board_analogin(uint8_t io);
 #define ADRESS_PAGE_4_APP 0x55000
 #define ADRESS_PAGE_5_CAL 0x56000
 
+#define board_setIOPWMFrequency(a, b)
+
 #endif  // UIO44FR_H

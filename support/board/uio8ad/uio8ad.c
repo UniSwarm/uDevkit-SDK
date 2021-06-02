@@ -175,9 +175,6 @@ int board_init(void)
 
     board_init_io();
 
-    // Set PWM generators
-    pwm_init();
-
     return 0;
 }
 
