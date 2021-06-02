@@ -84,10 +84,10 @@ int board_setIOPWMFrequency(uint8_t io, uint8_t frequency);
 uint8_t board_analogin(uint8_t io);
 
 // Page adress
-#define ADRESS_PAGE_1_COM 0x52000
-#define ADRESS_PAGE_2_MS  0x53000
-#define ADRESS_PAGE_3_APP 0x54000
-#define ADRESS_PAGE_4_APP 0x55000
-#define ADRESS_PAGE_5_CAL 0x56000
+#define ADRESS_BYTE_PAGE_1_COM 0x52000
+#define ADRESS_BYTE_PAGE_2_MAN 0x53000
+#define ADRESS_BYTE_PAGE_3_STD 0x54000
+#define ADRESS_BYTE_PAGE_4_STD 0x55000
+#define ADRESS_BYTE_PAGE_5_CAL 0x56000
 
 #endif  // UIO8AD_H
