@@ -117,25 +117,27 @@ int qei_enable(rt_dev_t device)
     {
         return -1;
     }
+
+    switch (qei)
+    {
+        case 0:
+            QEI1CONbits.QEIEN = 1;
+            break;
+#    if QEI_COUNT >= 2
+        case 1:
+            QEI2CONbits.QEIEN = 1;
+            break;
+#    endif
+#    if QEI_COUNT >= 3
+        case 2:
+            QEI3CONbits.QEIEN = 1;
+            break;
+#    endif
+    }
+
+    return 0;
 #else
     return -1;
-#endif
-
-#if QEI_COUNT >= 1
-    if (qei == 0)
-    {
-        QEI1CONbits.QEIEN = 1;
-    }
-#endif
-#if QEI_COUNT >= 2
-    if (qei == 1)
-    {
-        QEI2CONbits.QEIEN = 1;
-    }
-#endif
-
-#if QEI_COUNT >= 1
-    return 0;
 #endif
 }
 
@@ -152,25 +154,27 @@ int qei_disable(rt_dev_t device)
     {
         return -1;
     }
+
+    switch (qei)
+    {
+        case 0:
+            QEI1CONbits.QEIEN = 0;
+            break;
+#    if QEI_COUNT >= 2
+        case 1:
+            QEI2CONbits.QEIEN = 0;
+            break;
+#    endif
+#    if QEI_COUNT >= 3
+        case 2:
+            QEI3CONbits.QEIEN = 0;
+            break;
+#    endif
+    }
+
+    return 0;
 #else
     return -1;
-#endif
-
-#if QEI_COUNT >= 1
-    if (qei == 0)
-    {
-        QEI1CONbits.QEIEN = 0;
-    }
-#endif
-#if QEI_COUNT >= 2
-    if (qei == 1)
-    {
-        QEI2CONbits.QEIEN = 0;
-    }
-#endif
-
-#if QEI_COUNT >= 1
-    return 0;
 #endif
 }
 
@@ -184,40 +188,65 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
 {
 #if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
-    if (qei == 0)
+    if (qei > QEI_COUNT)
     {
-        INDX1CNTH = 0xFFFF;
-        INDX1CNTL = 0xFFFF;
-
-        QEI1GECH = 0xFFFF;
-        QEI1GECL = 0xFFFF;
-
-        POS1CNTL = 0;
-        POS1CNTH = 0;
-
-        QEI1IOCbits.QEAPOL = config & QEI_AB_INV;
-        QEI1IOCbits.QEBPOL = config & QEI_AB_INV;
-        QEI1IOCbits.IDXPOL = config & QEI_I_INV;
-
-        return 0;
+        return -1;
     }
-#endif
-#if QEI_COUNT >= 2
-    if (qei == 1)
+
+    switch (qei)
     {
-        INDX2CNTH = 0xFFFF;
-        INDX2CNTL = 0xFFFF;
+        case 0:
+            INDX1CNTH = 0xFFFF;
+            INDX1CNTL = 0xFFFF;
 
-        QEI2GECH = 0xFFFF;
-        QEI2GECL = 0xFFFF;
+            QEI1GECH = 0xFFFF;
+            QEI1GECL = 0xFFFF;
 
-        POS2CNTL = 0;
-        POS2CNTH = 0;
+            POS1CNTL = 0;
+            POS1CNTH = 0;
 
-        return 0;
+            QEI1IOCbits.QEAPOL = config & QEI_AB_INV;
+            QEI1IOCbits.QEBPOL = config & QEI_AB_INV;
+            QEI1IOCbits.IDXPOL = config & QEI_I_INV;
+            break;
+#    if QEI_COUNT >= 2
+        case 1:
+            INDX2CNTH = 0xFFFF;
+            INDX2CNTL = 0xFFFF;
+
+            QEI2GECH = 0xFFFF;
+            QEI2GECL = 0xFFFF;
+
+            POS2CNTL = 0;
+            POS2CNTH = 0;
+
+            QEI2IOCbits.QEAPOL = config & QEI_AB_INV;
+            QEI2IOCbits.QEBPOL = config & QEI_AB_INV;
+            QEI2IOCbits.IDXPOL = config & QEI_I_INV;
+            break;
+#    endif
+#    if QEI_COUNT >= 3
+        case 2:
+            INDX3CNTH = 0xFFFF;
+            INDX3CNTL = 0xFFFF;
+
+            QEI3GECH = 0xFFFF;
+            QEI3GECL = 0xFFFF;
+
+            POS3CNTL = 0;
+            POS3CNTH = 0;
+
+            QEI3IOCbits.QEAPOL = config & QEI_AB_INV;
+            QEI3IOCbits.QEBPOL = config & QEI_AB_INV;
+            QEI3IOCbits.IDXPOL = config & QEI_I_INV;
+            break;
+#    endif
     }
-#endif
+
+    return 0;
+#else
     return -1;
+#endif
 }
 
 /**
@@ -230,6 +259,10 @@ int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider)
 {
 #if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
+    if (qei > QEI_COUNT)
+    {
+        return -1;
+    }
 
     uint8_t fltren;
     if (divider == 0)
@@ -252,24 +285,30 @@ int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider)
         divider = 16 - shift;
     }
 
-    if (qei == 0)
+    switch (qei)
     {
-        QEI1IOCbits.FLTREN = fltren;
-        QEI1IOCbits.QFDIV = divider;
-
-        return 0;
+        case 0:
+            QEI1IOCbits.FLTREN = fltren;
+            QEI1IOCbits.QFDIV = divider;
+            break;
+#    if QEI_COUNT >= 2
+        case 1:
+            QEI2IOCbits.FLTREN = fltren;
+            QEI2IOCbits.QFDIV = divider;
+            break;
+#    endif
+#    if QEI_COUNT >= 3
+        case 2:
+            QEI3IOCbits.FLTREN = fltren;
+            QEI3IOCbits.QFDIV = divider;
+            break;
+#    endif
     }
-#endif
-#if QEI_COUNT >= 2
-    if (qei == 1)
-    {
-        QEI2IOCbits.FLTREN = fltren;
-        QEI2IOCbits.QFDIV = divider;
 
-        return 0;
-    }
-#endif
+    return 0;
+#else
     return -1;
+#endif
 }
 
 /**
@@ -283,31 +322,44 @@ int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum)
 {
 #if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
-
-    if (qei == 0)
+    if (qei > QEI_COUNT)
     {
-        QEI1CONbits.PIMOD = 6;  // modulo count mode for position counter
-        QEI1LECL = minimum & 0xFFFF;
-        QEI1LECH = (minimum >> 16) & 0xFFFF;
-        QEI1GECL = maximum & 0xFFFF;
-        QEI1GECH = (maximum >> 16) & 0xFFFF;
-
-        return 0;
+        return -1;
     }
-#endif
-#if QEI_COUNT >= 2
-    if (qei == 1)
+
+    switch (qei)
     {
-        QEI2CONbits.PIMOD = 6;  // modulo count mode for position counter
-        QEI2LECL = minimum & 0xFFFF;
-        QEI2LECH = (minimum >> 16) & 0xFFFF;
-        QEI2GECL = maximum & 0xFFFF;
-        QEI2GECH = (maximum >> 16) & 0xFFFF;
-
-        return 0;
+        case 0:
+            QEI1CONbits.PIMOD = 6;  // modulo count mode for position counter
+            QEI1LECL = minimum & 0xFFFF;
+            QEI1LECH = (minimum >> 16) & 0xFFFF;
+            QEI1GECL = maximum & 0xFFFF;
+            QEI1GECH = (maximum >> 16) & 0xFFFF;
+            break;
+#    if QEI_COUNT >= 2
+        case 1:
+            QEI2CONbits.PIMOD = 6;  // modulo count mode for position counter
+            QEI2LECL = minimum & 0xFFFF;
+            QEI2LECH = (minimum >> 16) & 0xFFFF;
+            QEI2GECL = maximum & 0xFFFF;
+            QEI2GECH = (maximum >> 16) & 0xFFFF;
+            break;
+#    endif
+#    if QEI_COUNT >= 3
+        case 2:
+            QEI3CONbits.PIMOD = 6;  // modulo count mode for position counter
+            QEI3LECL = minimum & 0xFFFF;
+            QEI3LECH = (minimum >> 16) & 0xFFFF;
+            QEI3GECL = maximum & 0xFFFF;
+            QEI3GECH = (maximum >> 16) & 0xFFFF;
+            break;
+#    endif
     }
-#endif
+
+    return 0;
+#else
     return -1;
+#endif
 }
 
 /**
@@ -320,19 +372,31 @@ qei_type qei_getValue(rt_dev_t device)
     qei_type tmp32 = 0;
 #if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
-    if (qei == 0)
+    if (qei > QEI_COUNT)
     {
-        tmp32 = (uint32_t)POS1CNTL;
-        tmp32 += (uint32_t)POS1HLD << 16;
+        return 0;
+    }
+
+    switch (qei)
+    {
+        case 0:
+            tmp32 = (uint32_t)POS1CNTL;
+            tmp32 += (uint32_t)POS1HLD << 16;
+            break;
+#    if QEI_COUNT >= 2
+        case 1:
+            tmp32 = (uint32_t)POS2CNTL;
+            tmp32 += (uint32_t)POS2HLD << 16;
+            break;
+#    endif
+#    if QEI_COUNT >= 3
+        case 2:
+            tmp32 = (uint32_t)POS3CNTL;
+            tmp32 += (uint32_t)POS3HLD << 16;
+#    endif
     }
 #endif
-#if QEI_COUNT >= 2
-    if (qei == 1)
-    {
-        tmp32 = (uint32_t)POS2CNTL;
-        tmp32 += (uint32_t)POS2HLD << 16;
-    }
-#endif
+
     return tmp32;
 }
 
