@@ -35,11 +35,11 @@ This family is splitted into two subfamilies :
 [9]: ../../driver/clc
 [10]: ../../driver/qei
 [11]: ../../driver/pwm
-[12]: ../../driver/mccp
+[12]: ../../driver/ccp
 
 ## Devices list
 
-21 devices on december 2017.
+21 devices on june 2021.
 
 ### GPD devices
 

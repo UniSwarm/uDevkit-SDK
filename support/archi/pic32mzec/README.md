@@ -40,11 +40,11 @@ same functionalities and a floating-point unit.
 [9]: ../../driver/clc
 [10]: ../../driver/qei
 [11]: ../../driver/pwm
-[12]: ../../driver/mccp
+[12]: ../../driver/ccp
 
 ## Devices list
 
-24 devices on december 2017.
+24 devices on june 2021.
 
 ### ECG devices
 

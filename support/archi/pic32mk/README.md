@@ -51,7 +51,7 @@ Devices with asterixis are future devices and not yet released.
 [9]: ../../driver/clc
 [10]: ../../driver/qei
 [11]: ../../driver/pwm
-[12]: ../../driver/mccp
+[12]: ../../driver/ccp
 
 ## Devices list
 

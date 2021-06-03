@@ -41,67 +41,59 @@ This family is splitted into multiple subfamilies :
 [9]: ../../driver/clc
 [10]: ../../driver/qei
 [11]: ../../driver/pwm
-[12]: ../../driver/mccp
+[12]: ../../driver/ccp
 
 ## Devices list
 
-128 devices on July 2018.
+120 devices on june 2021.
 
 ### MX1 / MX2 devices
 
 |MX1 / MX2 Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[PIC32MX210F016B](http://microchip.com/wwwproducts/en/PIC32MX210F016B) |  16 kb|   4 kb| 28|
 |[PIC32MX110F016B](http://microchip.com/wwwproducts/en/PIC32MX110F016B) |  16 kb|   4 kb| 28|
-|[PIC32MX120F032B](http://microchip.com/wwwproducts/en/PIC32MX120F032B) |  33 kb|   8 kb| 28|
+|[PIC32MX210F016B](http://microchip.com/wwwproducts/en/PIC32MX210F016B) |  16 kb|   4 kb| 28|
 |[PIC32MX220F032B](http://microchip.com/wwwproducts/en/PIC32MX220F032B) |  33 kb|   8 kb| 28|
-|[PIC32MX230F064B](http://microchip.com/wwwproducts/en/PIC32MX230F064B) |  66 kb|  16 kb| 28|
+|[PIC32MX120F032B](http://microchip.com/wwwproducts/en/PIC32MX120F032B) |  33 kb|   8 kb| 28|
 |[PIC32MX130F064B](http://microchip.com/wwwproducts/en/PIC32MX130F064B) |  66 kb|  16 kb| 28|
+|[PIC32MX230F064B](http://microchip.com/wwwproducts/en/PIC32MX230F064B) |  66 kb|  16 kb| 28|
 |[PIC32MX150F128B](http://microchip.com/wwwproducts/en/PIC32MX150F128B) | 131 kb|  33 kb| 28|
 |[PIC32MX250F128B](http://microchip.com/wwwproducts/en/PIC32MX250F128B) | 131 kb|  33 kb| 28|
 |[PIC32MX130F256B](http://microchip.com/wwwproducts/en/PIC32MX130F256B) | 262 kb|  16 kb| 28|
 |[PIC32MX230F256B](http://microchip.com/wwwproducts/en/PIC32MX230F256B) | 262 kb|  16 kb| 28|
-|[PIC32MX170F256B](http://microchip.com/wwwproducts/en/PIC32MX170F256B) | 262 kb|  66 kb| 28|
 |[PIC32MX270F256B](http://microchip.com/wwwproducts/en/PIC32MX270F256B) | 262 kb|  66 kb| 28|
-|[PIC32MX155F128B](http://microchip.com/wwwproducts/en/PIC32MX155F128B) | 131 kb|  33 kb| 28|
-|[PIC32MX154F128B](http://microchip.com/wwwproducts/en/PIC32MX154F128B) | 131 kb|  33 kb| 28|
+|[PIC32MX170F256B](http://microchip.com/wwwproducts/en/PIC32MX170F256B) | 262 kb|  66 kb| 28|
 |[PIC32MX254F128B](http://microchip.com/wwwproducts/en/PIC32MX254F128B) | 131 kb|  33 kb| 28|
-|[PIC32MX255F128B](http://microchip.com/wwwproducts/en/PIC32MX255F128B) | 131 kb|  33 kb| 28|
-|[PIC32MX275F256B](http://microchip.com/wwwproducts/en/PIC32MX275F256B) | 262 kb|  66 kb| 28|
-|[PIC32MX175F256B](http://microchip.com/wwwproducts/en/PIC32MX175F256B) | 262 kb|  66 kb| 28|
+|[PIC32MX154F128B](http://microchip.com/wwwproducts/en/PIC32MX154F128B) | 131 kb|  33 kb| 28|
 |[PIC32MX274F256B](http://microchip.com/wwwproducts/en/PIC32MX274F256B) | 262 kb|  66 kb| 28|
 |[PIC32MX174F256B](http://microchip.com/wwwproducts/en/PIC32MX174F256B) | 262 kb|  66 kb| 28|
 |[PIC32MX210F016C](http://microchip.com/wwwproducts/en/PIC32MX210F016C) |  16 kb|   4 kb| 40|
 |[PIC32MX110F016C](http://microchip.com/wwwproducts/en/PIC32MX110F016C) |  16 kb|   4 kb| 40|
-|[PIC32MX120F032C](http://microchip.com/wwwproducts/en/PIC32MX120F032C) |  33 kb|   8 kb| 40|
 |[PIC32MX220F032C](http://microchip.com/wwwproducts/en/PIC32MX220F032C) |  33 kb|   8 kb| 40|
-|[PIC32MX230F064C](http://microchip.com/wwwproducts/en/PIC32MX230F064C) |  66 kb|  16 kb| 40|
+|[PIC32MX120F032C](http://microchip.com/wwwproducts/en/PIC32MX120F032C) |  33 kb|   8 kb| 40|
 |[PIC32MX130F064C](http://microchip.com/wwwproducts/en/PIC32MX130F064C) |  66 kb|  16 kb| 40|
+|[PIC32MX230F064C](http://microchip.com/wwwproducts/en/PIC32MX230F064C) |  66 kb|  16 kb| 40|
 |[PIC32MX250F128C](http://microchip.com/wwwproducts/en/PIC32MX250F128C) | 131 kb|  33 kb| 40|
 |[PIC32MX150F128C](http://microchip.com/wwwproducts/en/PIC32MX150F128C) | 131 kb|  33 kb| 40|
 |[PIC32MX210F016D](http://microchip.com/wwwproducts/en/PIC32MX210F016D) |  16 kb|   4 kb| 44|
 |[PIC32MX110F016D](http://microchip.com/wwwproducts/en/PIC32MX110F016D) |  16 kb|   4 kb| 44|
-|[PIC32MX220F032D](http://microchip.com/wwwproducts/en/PIC32MX220F032D) |  33 kb|   8 kb| 44|
 |[PIC32MX120F032D](http://microchip.com/wwwproducts/en/PIC32MX120F032D) |  33 kb|   8 kb| 44|
-|[PIC32MX130F064D](http://microchip.com/wwwproducts/en/PIC32MX130F064D) |  66 kb|  16 kb| 44|
+|[PIC32MX220F032D](http://microchip.com/wwwproducts/en/PIC32MX220F032D) |  33 kb|   8 kb| 44|
 |[PIC32MX230F064D](http://microchip.com/wwwproducts/en/PIC32MX230F064D) |  66 kb|  16 kb| 44|
-|[PIC32MX155F128D](http://microchip.com/wwwproducts/en/PIC32MX155F128D) | 131 kb|  33 kb| 44|
-|[PIC32MX250F128D](http://microchip.com/wwwproducts/en/PIC32MX250F128D) | 131 kb|  33 kb| 44|
-|[PIC32MX150F128D](http://microchip.com/wwwproducts/en/PIC32MX150F128D) | 131 kb|  33 kb| 44|
-|[PIC32MX255F128D](http://microchip.com/wwwproducts/en/PIC32MX255F128D) | 131 kb|  33 kb| 44|
+|[PIC32MX130F064D](http://microchip.com/wwwproducts/en/PIC32MX130F064D) |  66 kb|  16 kb| 44|
 |[PIC32MX154F128D](http://microchip.com/wwwproducts/en/PIC32MX154F128D) | 131 kb|  33 kb| 44|
 |[PIC32MX254F128D](http://microchip.com/wwwproducts/en/PIC32MX254F128D) | 131 kb|  33 kb| 44|
+|[PIC32MX250F128D](http://microchip.com/wwwproducts/en/PIC32MX250F128D) | 131 kb|  33 kb| 44|
+|[PIC32MX150F128D](http://microchip.com/wwwproducts/en/PIC32MX150F128D) | 131 kb|  33 kb| 44|
 |[PIC32MX130F256D](http://microchip.com/wwwproducts/en/PIC32MX130F256D) | 262 kb|  16 kb| 44|
 |[PIC32MX230F256D](http://microchip.com/wwwproducts/en/PIC32MX230F256D) | 262 kb|  16 kb| 44|
-|[PIC32MX175F256D](http://microchip.com/wwwproducts/en/PIC32MX175F256D) | 262 kb|  66 kb| 44|
 |[PIC32MX274F256D](http://microchip.com/wwwproducts/en/PIC32MX274F256D) | 262 kb|  66 kb| 44|
 |[PIC32MX174F256D](http://microchip.com/wwwproducts/en/PIC32MX174F256D) | 262 kb|  66 kb| 44|
-|[PIC32MX170F256D](http://microchip.com/wwwproducts/en/PIC32MX170F256D) | 262 kb|  66 kb| 44|
-|[PIC32MX275F256D](http://microchip.com/wwwproducts/en/PIC32MX275F256D) | 262 kb|  66 kb| 44|
 |[PIC32MX270F256D](http://microchip.com/wwwproducts/en/PIC32MX270F256D) | 262 kb|  66 kb| 44|
+|[PIC32MX170F256D](http://microchip.com/wwwproducts/en/PIC32MX170F256D) | 262 kb|  66 kb| 44|
 |[PIC32MX120F064H](http://microchip.com/wwwproducts/en/PIC32MX120F064H) |  66 kb|   8 kb| 64|
-|[PIC32MX130F128H](http://microchip.com/wwwproducts/en/PIC32MX130F128H) | 131 kb|  16 kb| 64|
 |[PIC32MX230F128H](http://microchip.com/wwwproducts/en/PIC32MX230F128H) | 131 kb|  16 kb| 64|
+|[PIC32MX130F128H](http://microchip.com/wwwproducts/en/PIC32MX130F128H) | 131 kb|  16 kb| 64|
 |[PIC32MX250F256H](http://microchip.com/wwwproducts/en/PIC32MX250F256H) | 262 kb|  33 kb| 64|
 |[PIC32MX150F256H](http://microchip.com/wwwproducts/en/PIC32MX150F256H) | 262 kb|  33 kb| 64|
 |[PIC32MX270F512H](http://microchip.com/wwwproducts/en/PIC32MX270F512H) | 524 kb|  66 kb| 64|
@@ -185,7 +177,6 @@ This family is splitted into multiple subfamilies :
 |[PIC32MX675F256L](http://microchip.com/wwwproducts/en/PIC32MX675F256L)| 262 kb|  66 kb|100|
 |[PIC32MX675F512L](http://microchip.com/wwwproducts/en/PIC32MX675F512L)| 524 kb|  66 kb|100|
 |[PIC32MX695F512L](http://microchip.com/wwwproducts/en/PIC32MX695F512L)| 524 kb| 131 kb|100|
-
 
 ### MX7 devices
 

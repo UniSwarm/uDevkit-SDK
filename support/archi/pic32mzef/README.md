@@ -37,11 +37,11 @@ This family is splitted into three variations :
 [9]: ../../driver/clc
 [10]: ../../driver/qei
 [11]: ../../driver/pwm
-[12]: ../../driver/mccp
+[12]: ../../driver/ccp
 
 ## Devices list
 
-48 devices on december 2017.
+48 devices on june 2021.
 
 ### EFE / EFG devices
 

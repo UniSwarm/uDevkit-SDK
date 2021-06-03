@@ -32,11 +32,11 @@ An hardware crypto module is optionally available.
 [9]: ../../driver/clc
 [10]: ../../driver/qei
 [11]: ../../driver/pwm
-[12]: ../../driver/mccp
+[12]: ../../driver/ccp
 
 ## Devices list
 
-40 devices on december 2017.
+72 devices on june 2021.
 
 ### Devices without DDR
 
@@ -58,6 +58,22 @@ An hardware crypto module is optionally available.
 |[PIC32MZ2025DAB176](http://microchip.com/wwwproducts/en/PIC32MZ2025DAB176)|2097 kb| 262 kb|176|Y|
 |[PIC32MZ2064DAA176](http://microchip.com/wwwproducts/en/PIC32MZ2064DAA176)|2097 kb| 655 kb|176| |
 |[PIC32MZ2064DAB176](http://microchip.com/wwwproducts/en/PIC32MZ2064DAB176)|2097 kb| 655 kb|176|Y|
+|[PIC32MZ1025DAK169](http://microchip.com/wwwproducts/en/PIC32MZ1025DAK169)|1049 kb| 262 kb|169| |
+|[PIC32MZ1025DAL169](http://microchip.com/wwwproducts/en/PIC32MZ1025DAL169)|1049 kb| 262 kb|169|Y|
+|[PIC32MZ1064DAK169](http://microchip.com/wwwproducts/en/PIC32MZ1064DAK169)|1049 kb| 655 kb|169| |
+|[PIC32MZ1064DAL169](http://microchip.com/wwwproducts/en/PIC32MZ1064DAL169)|1049 kb| 655 kb|169|Y|
+|[PIC32MZ2025DAK169](http://microchip.com/wwwproducts/en/PIC32MZ2025DAK169)|2097 kb| 262 kb|169| |
+|[PIC32MZ2025DAL169](http://microchip.com/wwwproducts/en/PIC32MZ2025DAL169)|2097 kb| 262 kb|169|Y|
+|[PIC32MZ2064DAK169](http://microchip.com/wwwproducts/en/PIC32MZ2064DAK169)|2097 kb| 655 kb|169| |
+|[PIC32MZ2064DAL169](http://microchip.com/wwwproducts/en/PIC32MZ2064DAL169)|2097 kb| 655 kb|169|Y|
+|[PIC32MZ1025DAK176](http://microchip.com/wwwproducts/en/PIC32MZ1025DAK176)|1049 kb| 262 kb|176| |
+|[PIC32MZ1025DAL176](http://microchip.com/wwwproducts/en/PIC32MZ1025DAL176)|1049 kb| 262 kb|176|Y|
+|[PIC32MZ1064DAK176](http://microchip.com/wwwproducts/en/PIC32MZ1064DAK176)|1049 kb| 655 kb|176| |
+|[PIC32MZ1064DAL176](http://microchip.com/wwwproducts/en/PIC32MZ1064DAL176)|1049 kb| 655 kb|176|Y|
+|[PIC32MZ2025DAK176](http://microchip.com/wwwproducts/en/PIC32MZ2025DAK176)|2097 kb| 262 kb|176| |
+|[PIC32MZ2025DAL176](http://microchip.com/wwwproducts/en/PIC32MZ2025DAL176)|2097 kb| 262 kb|176|Y|
+|[PIC32MZ2064DAK176](http://microchip.com/wwwproducts/en/PIC32MZ2064DAK176)|2097 kb| 655 kb|176| |
+|[PIC32MZ2064DAL176](http://microchip.com/wwwproducts/en/PIC32MZ2064DAL176)|2097 kb| 655 kb|176|Y|
 
 ### Devices with external DDR interface
 
@@ -96,3 +112,19 @@ Internal stacked 32MB DDR2.
 |[PIC32MZ2025DAH176](http://microchip.com/wwwproducts/en/PIC32MZ2025DAH176)|2097 kb| 262 kb|176|Y|
 |[PIC32MZ2064DAG176](http://microchip.com/wwwproducts/en/PIC32MZ2064DAG176)|2097 kb| 655 kb|176| |
 |[PIC32MZ2064DAH176](http://microchip.com/wwwproducts/en/PIC32MZ2064DAH176)|2097 kb| 655 kb|176|Y|
+|[PIC32MZ1025DAR169](http://microchip.com/wwwproducts/en/PIC32MZ1025DAR169)|1049 kb| 262 kb|169| |
+|[PIC32MZ1025DAS169](http://microchip.com/wwwproducts/en/PIC32MZ1025DAS169)|1049 kb| 262 kb|169|Y|
+|[PIC32MZ1064DAR169](http://microchip.com/wwwproducts/en/PIC32MZ1064DAR169)|1049 kb| 655 kb|169| |
+|[PIC32MZ1064DAS169](http://microchip.com/wwwproducts/en/PIC32MZ1064DAS169)|1049 kb| 655 kb|169|Y|
+|[PIC32MZ2025DAR169](http://microchip.com/wwwproducts/en/PIC32MZ2025DAR169)|2097 kb| 262 kb|169| |
+|[PIC32MZ2025DAS169](http://microchip.com/wwwproducts/en/PIC32MZ2025DAS169)|2097 kb| 262 kb|169|Y|
+|[PIC32MZ2064DAR169](http://microchip.com/wwwproducts/en/PIC32MZ2064DAR169)|2097 kb| 655 kb|169| |
+|[PIC32MZ2064DAS169](http://microchip.com/wwwproducts/en/PIC32MZ2064DAS169)|2097 kb| 655 kb|169|Y|
+|[PIC32MZ1025DAR176](http://microchip.com/wwwproducts/en/PIC32MZ1025DAR176)|1049 kb| 262 kb|176| |
+|[PIC32MZ1025DAS176](http://microchip.com/wwwproducts/en/PIC32MZ1025DAS176)|1049 kb| 262 kb|176|Y|
+|[PIC32MZ1064DAR176](http://microchip.com/wwwproducts/en/PIC32MZ1064DAR176)|1049 kb| 655 kb|176| |
+|[PIC32MZ1064DAS176](http://microchip.com/wwwproducts/en/PIC32MZ1064DAS176)|1049 kb| 655 kb|176|Y|
+|[PIC32MZ2025DAR176](http://microchip.com/wwwproducts/en/PIC32MZ2025DAR176)|2097 kb| 262 kb|176| |
+|[PIC32MZ2025DAS176](http://microchip.com/wwwproducts/en/PIC32MZ2025DAS176)|2097 kb| 262 kb|176|Y|
+|[PIC32MZ2064DAR176](http://microchip.com/wwwproducts/en/PIC32MZ2064DAR176)|2097 kb| 655 kb|176| |
+|[PIC32MZ2064DAS176](http://microchip.com/wwwproducts/en/PIC32MZ2064DAS176)|2097 kb| 655 kb|176|Y|
