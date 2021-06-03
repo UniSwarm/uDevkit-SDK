@@ -13,6 +13,6 @@ This architecture support file handle all 16 bits families of Microchip.
 |[dsPIC33EV](../dspic33ev/README.md)| 32|
 |[dsPIC33FJ](../dspic33fj/README.md)|114|
 |[PIC24EP](../pic24ep/README.md)    | 37|
-|[PIC24F](../pic24f/README.md)      | 44|
-|[PIC24FJ](../pic24fj/README.md)    |127|
+|[PIC24F](../pic24f/README.md)      | 50|
+|[PIC24FJ](../pic24fj/README.md)    |197|
 |[PIC24HJ](../pic24hj/README.md)    | 41|
