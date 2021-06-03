@@ -6,10 +6,11 @@ All devices also contains 4 kb of EEPROM, operational amplifiers and Parallel Ma
 
 This family is splitted into six subfamilies :
 
-* GPD : Global Purpose
+* GPG : Global Purpose
+* GPD : Global Purpose with more peripherals
 * GPK : GPD with ECC flash
 * GPE : GPD with 4 CAN peripherals
-* GPL : GPD with 4 CAN Fd peripherals and ECC flash
+* MCJ : GPD with 1 CAN Fd peripheral and Motor Control special features (QEI and enhanced PWM)
 * MCF : GPD with 4 CAN peripherals and Motor Control special features (QEI and enhanced PWM)
 * MCM : GPD with 4 CAN Fd peripheral, Motor Control special features (QEI and enhanced PWM) and ECC flash
 
@@ -19,24 +20,25 @@ Devices with asterixis are future devices and not yet released.
 
 ## Main features
 
-|Feature|GPD - GPE - MCF|GPK - GPL - MCM|
+|Feature|GPD - GPE - MCF|GPG - MCJ|GPK - MCM|
 |-------|:------:|:------:|
-|Core|32 bits|32 bits|
-|Performance|198 DMIPS|198 DMIPS|
-|Program memory|512kb - 1024kb|512kb - 1024kb **ECC Flash**|
-|Data memory|128kb - 256kb|128kb - 256kb|
-|Pins|64-100|64-100|
+|Core|32 bits|32 bits|32 bits|
+|Performance|198 DMIPS|198 DMIPS|198 DMIPS|
+|Program memory|512kb - 1024kb|256kb - 512kb **ECC Flash**|512kb - 1024kb **ECC Flash**|
+|Data memory|128kb - 256kb|66kb|128kb - 256kb|
+|Pins|64-100|48-64|64-100|
 
 ## Common devices
 
 |Peripheral      |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
 |:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
+|PIC32MK GPG     |        2|        9|        9|        9|        2|        2|        0|        0|        4|         0|         0|         0|         0|
 |PIC32MK GPD     |        6|        9|       16|       16|        4|        6|        0|        0|        0|         0|         0|         0|         0|
 |PIC32MK GPK     |        6|        9|       16|       16|        4|        6|        0|        0|        0|         0|         0|         0|         0|
 |PIC32MK GPE     |        6|        9|       16|       16|        4|        6|        4|        0|        0|         0|         0|         0|         0|
-|PIC32MK GPL     |        6|        9|       16|       16|        4|        6|     4 Fd|        0|        0|         0|         0|         0|         0|
+|PIC32MK MCJ     |        2|        9|        9|        9|        2|        2|      1Fd|        0|        4|         3|         9|         0|         0|
 |PIC32MK MCF     |        6|        9|       16|       16|        4|        6|        4|        0|        0|         6|        12|         0|         0|
-|PIC32MK MCM     |        6|        9|       16|       16|        4|        6|     4 Fd|        0|        0|         6|        12|         0|         0|
+|PIC32MK MCM     |        6|        9|       16|       16|        4|        6|      4Fd|        0|        0|         6|        12|         0|         0|
 
 [1]: ../../driver/uart
 [2]: ../../driver/timer
@@ -53,11 +55,22 @@ Devices with asterixis are future devices and not yet released.
 
 ## Devices list
 
-24 devices on June 2018.
+28 devices on june 2021.
+
+### GPG devices
+
+Global Purpose device
+
+|GPD compatible devices|Program|Data|Pins|
+|---------|--:|--:|--:|
+|[PIC32MK0256GPG048](http://microchip.com/wwwproducts/en/PIC32MK0256GPG048) | 262 kb|  66 kb| 48|
+|[PIC32MK0512GPG048](http://microchip.com/wwwproducts/en/PIC32MK0512GPG048) | 524 kb|  66 kb| 48|
+|[PIC32MK0256GPG064](http://microchip.com/wwwproducts/en/PIC32MK0256GPG064) | 262 kb|  66 kb| 64|
+|[PIC32MK0512GPG064](http://microchip.com/wwwproducts/en/PIC32MK0512GPG064) | 524 kb|  66 kb| 64|
 
 ### GPD devices
 
-Global Purpose device
+Same as GPG with additional UART, OC/IC, SPI but no CLC.
 
 |GPD compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -88,17 +101,16 @@ Same as GPD with 4 CAN peripherals.
 |[PIC32MK0512GPE100](http://microchip.com/wwwproducts/en/PIC32MK0512GPE100)| 524 kb|131 kb|100|
 |[PIC32MK1024GPE100](http://microchip.com/wwwproducts/en/PIC32MK1024GPE100)|1024 kb|262 kb|100|
 
-### GPL devices
+### MCJ devices
 
-Same as GPD with 4 CAN Fd peripheral and ECC flash.
+Same as GPG with 1 CAN Fd peripheral, 3 QEI modules and 6-9 enhanced PWM.
 
-|GPL compatible devices|Program|Data|Pins|
+|MCJ compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[*PIC32MK0512GPL064](http://microchip.com/wwwproducts/en/PIC32MK0512GPL064)| 524 kb| 131 kb| 64|
-|[*PIC32MK1024GPL064](http://microchip.com/wwwproducts/en/PIC32MK1024GPL064)|1049 kb| 262 kb| 64|
-|[*PIC32MK0512GPL100](http://microchip.com/wwwproducts/en/PIC32MK0512GPL100)| 524 kb| 131 kb|100|
-|[*PIC32MK1024GPL100](http://microchip.com/wwwproducts/en/PIC32MK1024GPL100)|1049 kb| 262 kb|100|
-
+|[PIC32MK0256MCJ048](http://microchip.com/wwwproducts/en/PIC32MK0256MCJ048) | 262 kb|  66 kb| 48|
+|[PIC32MK0512MCJ048](http://microchip.com/wwwproducts/en/PIC32MK0512MCJ048) | 524 kb|  66 kb| 48|
+|[PIC32MK0256MCJ064](http://microchip.com/wwwproducts/en/PIC32MK0256MCJ064) | 262 kb|  66 kb| 64|
+|[PIC32MK0512MCJ064](http://microchip.com/wwwproducts/en/PIC32MK0512MCJ064) | 524 kb|  66 kb| 64|
 
 ### MCF devices
 
