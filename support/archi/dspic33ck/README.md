@@ -13,17 +13,20 @@ This family have variations of flash memory, pin count and CAN FD for 5XX subfam
 |-------|:------:|
 |Core|16 bits|
 |Performance|100 DMIPS|
-|Program memory|32kb - 256kb|
-|Data memory|8 - 32kb|
+|Program memory|32kb - 512kb|
+|Data memory|8 - 60kb|
 |Pins|28-80|
 
 ## Common devices
 
 |Peripheral      |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
 |:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
-|dsPIC33CK MP10X |        3|        1|        0|        0|        2|        3|        0|        2|        4|         2|         8|         1|         4|
-|dsPIC33CK MP20X |        3|        1|        0|        0|        3|        3|        0|        2|        4|         2|         8|         1|         8|
-|dsPIC33CK MP50X |        3|        1|        0|        0|        3|        3|     1 Fd|        2|        4|         2|         8|         1|         8|
+|dsPIC33CK MC10X |        3|        1|        0|        0|        1|        2|        0|        1|        4|         1|         0|         0|         4|
+|dsPIC33CK MP10X |        3|        1|        0|        0|    __2__|    __3__|        0|    __2__|        4|     __2__|     __8__|         0|         4|
+|dsPIC33CK MP20X |        3|        1|        0|        0|    __3__|        3|        0|        2|        4|         2|         8|         0|     __8__|
+|dsPIC33CK MP30X |        3|        1|        0|        0|        3|        3|        0|        2|        4|     __3__|         8|         0|         8|
+|dsPIC33CK MP50X |        3|        1|        0|        0|        3|        3| __1 Fd__|        2|        4|         2|         8|         0|         8|
+|dsPIC33CK MP60X |        3|        1|        0|        0|        3|        3| __2 Fd__|        2|        4|     __3__|         8|         0|         8|
 
 [1]: ../../driver/uart
 [2]: ../../driver/timer
@@ -36,15 +39,32 @@ This family have variations of flash memory, pin count and CAN FD for 5XX subfam
 [9]: ../../driver/clc
 [10]: ../../driver/qei
 [11]: ../../driver/pwm
-[12]: ../../driver/mccp
+[12]: ../../driver/ccp
 
 ## Devices list
 
-44 devices on July 2018.
+62 devices on June 2021.
+
+### MC10X subfamily
+
+Base device.
+
+6 devices
+
+|Compatible devices|Program|Data|Pins|
+|---------|--:|--:|--:|
+|[dsPIC33CK32MC102](http://microchip.com/wwwproducts/en/dsPIC33CK32MC102) |  36 kb|   8 kb| 28|
+|[dsPIC33CK64MC102](http://microchip.com/wwwproducts/en/dsPIC33CK64MC102) |  66 kb|   8 kb| 28|
+|[dsPIC33CK32MC103](http://microchip.com/wwwproducts/en/dsPIC33CK32MC103) |  36 kb|   8 kb| 40|
+|[dsPIC33CK64MC103](http://microchip.com/wwwproducts/en/dsPIC33CK64MC103) |  66 kb|   8 kb| 40|
+|[dsPIC33CK32MC105](http://microchip.com/wwwproducts/en/dsPIC33CK32MC105) |  36 kb|   8 kb| 48|
+|[dsPIC33CK64MC105](http://microchip.com/wwwproducts/en/dsPIC33CK64MC105) |  66 kb|   8 kb| 48|
 
 ### MP10X subfamily
 
-Base device.
+Same functionalities of MP10X with more peripherals (SPI, I2C, SENT) and real PWMs.
+
+6 devices
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -57,7 +77,9 @@ Base device.
 
 ### MP20X subfamily
 
-Same functionalities of 10X with more peripherals (MCCP, I2C) and more analog inputs and functionalities.
+Same functionalities of MP10X with more peripherals (MCCP, I2C) and more analog inputs and functionalities.
+
+19 devices
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -81,9 +103,26 @@ Same functionalities of 10X with more peripherals (MCCP, I2C) and more analog in
 |[dsPIC33CK128MP208](http://microchip.com/wwwproducts/en/dsPIC33CK128MP208)| 134 kb|  16 kb| 80|
 |[dsPIC33CK256MP208](http://microchip.com/wwwproducts/en/dsPIC33CK256MP208)| 269 kb|  25 kb| 80|
 
+### MP30X subfamily
+
+Same functionalities of MP20X with an additional QEI.
+
+6 devices
+
+|Compatible devices|Program|Data|Pins|
+|---------|--:|--:|--:|
+|[dsPIC33CK256MP305](http://microchip.com/wwwproducts/en/dsPIC33CK256MP305) | 269 kb|  61 kb| 48|
+|[dsPIC33CK512MP305](http://microchip.com/wwwproducts/en/dsPIC33CK512MP305) | 540 kb|  61 kb| 48|
+|[dsPIC33CK256MP306](http://microchip.com/wwwproducts/en/dsPIC33CK256MP306) | 269 kb|  61 kb| 64|
+|[dsPIC33CK512MP306](http://microchip.com/wwwproducts/en/dsPIC33CK512MP306) | 540 kb|  61 kb| 64|
+|[dsPIC33CK256MP308](http://microchip.com/wwwproducts/en/dsPIC33CK256MP308) | 269 kb|  61 kb| 80|
+|[dsPIC33CK512MP308](http://microchip.com/wwwproducts/en/dsPIC33CK512MP308) | 540 kb|  61 kb| 80|
+
 ### MP50X subfamily
 
-Same functionalities of 20X plus CAN FD device.
+Same functionalities of MP20X plus one CAN FD device.
+
+19 devices
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -106,6 +145,21 @@ Same functionalities of 20X plus CAN FD device.
 |[dsPIC33CK64MP508](http://microchip.com/wwwproducts/en/dsPIC33CK64MP508)  |  66 kb|   8 kb| 80|
 |[dsPIC33CK128MP508](http://microchip.com/wwwproducts/en/dsPIC33CK128MP508)| 134 kb|  16 kb| 80|
 |[dsPIC33CK256MP508](http://microchip.com/wwwproducts/en/dsPIC33CK256MP508)| 269 kb|  25 kb| 80|
+
+### MP60X subfamily
+
+Same functionalities of 30X plus two CAN FD devices.
+
+6 devices
+
+|Compatible devices|Program|Data|Pins|
+|---------|--:|--:|--:|
+|[dsPIC33CK256MP605](http://microchip.com/wwwproducts/en/dsPIC33CK256MP605) | 269 kb|  61 kb| 48|
+|[dsPIC33CK512MP605](http://microchip.com/wwwproducts/en/dsPIC33CK512MP605) | 540 kb|  61 kb| 48|
+|[dsPIC33CK256MP606](http://microchip.com/wwwproducts/en/dsPIC33CK256MP606) | 269 kb|  61 kb| 64|
+|[dsPIC33CK512MP606](http://microchip.com/wwwproducts/en/dsPIC33CK512MP606) | 540 kb|  61 kb| 64|
+|[dsPIC33CK256MP608](http://microchip.com/wwwproducts/en/dsPIC33CK256MP608) | 269 kb|  61 kb| 80|
+|[dsPIC33CK512MP608](http://microchip.com/wwwproducts/en/dsPIC33CK512MP608) | 540 kb|  61 kb| 80|
 
 ## New set of peripherals
 
