@@ -21,7 +21,7 @@ Devices with asterixis are future devices and not yet released.
 ## Main features
 
 |Feature|GPD - GPE - MCF|GPG - MCJ|GPK - MCM|
-|-------|:------:|:------:|
+|-------|:------:|:------:|:------:|
 |Core|32 bits|32 bits|32 bits|
 |Performance|198 DMIPS|198 DMIPS|198 DMIPS|
 |Program memory|512kb - 1024kb|256kb - 512kb **ECC Flash**|512kb - 1024kb **ECC Flash**|
