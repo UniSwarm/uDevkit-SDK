@@ -38,13 +38,21 @@
     || defined(DEVICE_32MZ1025DAA176) || defined(DEVICE_32MZ1025DAA288) || defined(DEVICE_32MZ1025DAB169)              \
     || defined(DEVICE_32MZ1025DAB176) || defined(DEVICE_32MZ1025DAB288) || defined(DEVICE_32MZ1025DAG169)              \
     || defined(DEVICE_32MZ1025DAG176) || defined(DEVICE_32MZ1025DAH169) || defined(DEVICE_32MZ1025DAH176)              \
-    || defined(DEVICE_32MZ1064DAA169) || defined(DEVICE_32MZ1064DAA176) || defined(DEVICE_32MZ1064DAA288)              \
-    || defined(DEVICE_32MZ1064DAB169) || defined(DEVICE_32MZ1064DAB176) || defined(DEVICE_32MZ1064DAB288)              \
-    || defined(DEVICE_32MZ1064DAG169) || defined(DEVICE_32MZ1064DAG176) || defined(DEVICE_32MZ1064DAH169)              \
-    || defined(DEVICE_32MZ1064DAH176) || defined(DEVICE_32MZ2025DAA169) || defined(DEVICE_32MZ2025DAA176)              \
-    || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169) || defined(DEVICE_32MZ2025DAB176)              \
-    || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176)              \
-    || defined(DEVICE_32MZ2025DAH169) || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2048ECH064)              \
+    || defined(DEVICE_32MZ1025DAK169) || defined(DEVICE_32MZ1025DAK176) || defined(DEVICE_32MZ1025DAL169)              \
+    || defined(DEVICE_32MZ1025DAL176) || defined(DEVICE_32MZ1025DAR169) || defined(DEVICE_32MZ1025DAR176)              \
+    || defined(DEVICE_32MZ1025DAS169) || defined(DEVICE_32MZ1025DAS176) || defined(DEVICE_32MZ1064DAA169)              \
+    || defined(DEVICE_32MZ1064DAA176) || defined(DEVICE_32MZ1064DAA288) || defined(DEVICE_32MZ1064DAB169)              \
+    || defined(DEVICE_32MZ1064DAB176) || defined(DEVICE_32MZ1064DAB288) || defined(DEVICE_32MZ1064DAG169)              \
+    || defined(DEVICE_32MZ1064DAG176) || defined(DEVICE_32MZ1064DAH169) || defined(DEVICE_32MZ1064DAH176)              \
+    || defined(DEVICE_32MZ1064DAK169) || defined(DEVICE_32MZ1064DAK176) || defined(DEVICE_32MZ1064DAL169)              \
+    || defined(DEVICE_32MZ1064DAL176) || defined(DEVICE_32MZ1064DAR169) || defined(DEVICE_32MZ1064DAR176)              \
+    || defined(DEVICE_32MZ1064DAS169) || defined(DEVICE_32MZ1064DAS176) || defined(DEVICE_32MZ2025DAA169)              \
+    || defined(DEVICE_32MZ2025DAA176) || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169)              \
+    || defined(DEVICE_32MZ2025DAB176) || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169)              \
+    || defined(DEVICE_32MZ2025DAG176) || defined(DEVICE_32MZ2025DAH169) || defined(DEVICE_32MZ2025DAH176)              \
+    || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176) || defined(DEVICE_32MZ2025DAL169)              \
+    || defined(DEVICE_32MZ2025DAL176) || defined(DEVICE_32MZ2025DAR169) || defined(DEVICE_32MZ2025DAR176)              \
+    || defined(DEVICE_32MZ2025DAS169) || defined(DEVICE_32MZ2025DAS176) || defined(DEVICE_32MZ2048ECH064)              \
     || defined(DEVICE_32MZ2048ECH100) || defined(DEVICE_32MZ2048ECH124) || defined(DEVICE_32MZ2048ECH144)              \
     || defined(DEVICE_32MZ2048ECM064) || defined(DEVICE_32MZ2048ECM100) || defined(DEVICE_32MZ2048ECM124)              \
     || defined(DEVICE_32MZ2048ECM144) || defined(DEVICE_32MZ2048EFH064) || defined(DEVICE_32MZ2048EFH100)              \
@@ -53,7 +61,9 @@
     || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176) || defined(DEVICE_32MZ2064DAA288)              \
     || defined(DEVICE_32MZ2064DAB169) || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288)              \
     || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169)              \
-    || defined(DEVICE_32MZ2064DAH176)
+    || defined(DEVICE_32MZ2064DAH176) || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176)              \
+    || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176) || defined(DEVICE_32MZ2064DAR169)              \
+    || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
 #    define CAN_COUNT 2
 #elif defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512MCF064)               \
     || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK1024GPE064) || defined(DEVICE_32MK1024GPE100)              \
