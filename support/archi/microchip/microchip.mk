@@ -31,7 +31,7 @@ hex : $(OUT_PWD)/$(PROJECT).hex
 
 # construction of list of OBJECTS to build and include dependencies files if exist
 OBJECTS := $(SRC:.S=.o)
-OBJECTS := $(SRC:.s=.o)
+OBJECTS := $(OBJECTS:.s=.o)
 OBJECTS := $(notdir $(OBJECTS:.c=.o))
 OBJECTS := $(OBJECTS) $(notdir $(ARCHI_SRC:.c=.o))
 OBJECTS := $(addprefix $(OUT_PWD)/, $(OBJECTS))
