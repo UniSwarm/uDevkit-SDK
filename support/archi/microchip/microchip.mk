@@ -30,10 +30,9 @@ elf : $(OUT_PWD)/$(PROJECT).elf
 hex : $(OUT_PWD)/$(PROJECT).hex
 
 # construction of list of OBJECTS to build and include dependencies files if exist
-OBJECTS := $(SRC:.S=.o)
+OBJECTS := $(notdir $(SRC:.S=.o)) $(notdir $(ARCHI_SRC:.S=.o))
 OBJECTS := $(OBJECTS:.s=.o)
-OBJECTS := $(notdir $(OBJECTS:.c=.o))
-OBJECTS := $(OBJECTS) $(notdir $(ARCHI_SRC:.c=.o))
+OBJECTS := $(OBJECTS:.c=.o)
 OBJECTS := $(addprefix $(OUT_PWD)/, $(OBJECTS))
 -include $(wildcard $(OUT_PWD)/*.d)
 $(OBJECTS) : $(CONFIG_HEADERS)
