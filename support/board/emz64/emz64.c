@@ -36,6 +36,9 @@ int board_init_io(void)
     lockIoConfig();
 
     TRISFbits.TRISF1 = 0;  // OLED_RST
+
+    TRISBbits.TRISB11 = 0;
+    LATBbits.LATB11 = 1;  // eth nreset in active state
 #endif
 
     board_leds[0] = gpio_pin(GPIO_PORTB, 8);
