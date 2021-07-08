@@ -527,7 +527,6 @@ int can_filterConfiguration(rt_dev_t device,
 
 int can_filterEnable(rt_dev_t device, uint8_t nFilter)
 {
-
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {

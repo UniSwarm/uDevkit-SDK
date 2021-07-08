@@ -73,6 +73,9 @@
 #    define CAN_COUNT 0
 #endif
 
+#define CAN_FILTER_COUNT 32
+#define CAN_FIFO_COUNT   32
+
 #if defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
 // interrupt bits helpers for PIC32MZ
 #    ifndef _CAN1IE
