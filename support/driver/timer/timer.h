@@ -15,7 +15,7 @@
 #include <driver/device.h>
 
 // ====== device assignation ======
-#define timer(d) MKDEV(DEV_CLASS_TIMER, (d - 1))
+#define timer(d) MKDEV(DEV_CLASS_TIMER, ((d) - 1))
 rt_dev_t timer_getFreeDevice(void);
 int timer_open(rt_dev_t device);
 int timer_close(rt_dev_t device);

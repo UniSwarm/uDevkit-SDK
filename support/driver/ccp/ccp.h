@@ -14,7 +14,7 @@
 #include <driver/device.h>
 
 // ====== device assignation ======
-#define ccp(d) MKDEV(DEV_CLASS_CCP, (d - 1))
+#define ccp(d) MKDEV(DEV_CLASS_CCP, ((d) - 1))
 rt_dev_t ccp_getFreeDevice(void);
 int ccp_open(rt_dev_t device);
 int ccp_close(rt_dev_t device);

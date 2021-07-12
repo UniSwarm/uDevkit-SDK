@@ -19,7 +19,7 @@
 #define UART_BIT_PARITY_ODD  2
 
 // ====== device assignation ======
-#define uart(d) MKDEV(DEV_CLASS_UART, (d)-1)
+#define uart(d) MKDEV(DEV_CLASS_UART, (d) - 1)
 rt_dev_t uart_getFreeDevice(void);
 int uart_open(rt_dev_t device);
 int uart_close(rt_dev_t device);

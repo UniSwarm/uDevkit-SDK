@@ -15,7 +15,7 @@
 #include "driver/device.h"
 
 // ====== device assignation ======
-#define pwm(d) MKDEV(DEV_CLASS_PWM, (d)-1)
+#define pwm(d) MKDEV(DEV_CLASS_PWM, (d) - 1)
 rt_dev_t pwm_getFreeDevice(void);
 int pwm_open(rt_dev_t device);
 int pwm_close(rt_dev_t device);
