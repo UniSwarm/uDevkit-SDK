@@ -28,8 +28,8 @@ extern "C"
 #include <driver/device.h>
 #include <stdint.h>
 
-#include "simulator_pthread.h"
 #include "simulator_socket.h"
+#include "simulator_pthread.h"
 
     void simulator_init(void);
     void simulator_end(void);

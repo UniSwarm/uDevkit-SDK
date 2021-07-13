@@ -12,10 +12,11 @@
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/70621c.pdf
  */
 
-#include "adc_pic24e_dspic33e.h"
+#include "adc.h"
 
 #include <archi.h>
-#include <stdint.h>
+
+#include <stdlib.h>
 
 int adc_init(void)
 {

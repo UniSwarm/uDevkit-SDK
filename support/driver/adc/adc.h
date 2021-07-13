@@ -12,7 +12,7 @@
 #ifndef ADC_H
 #define ADC_H
 
-#include <stdint.h>
+#include <driver/device.h>
 
 int adc_init(void);
 int adc_setMasterClock(uint8_t source, uint16_t divider);
