@@ -43,4 +43,6 @@ int8_t board_getButton(uint8_t button);
 #define OLED_I2C_BUS  5
 #define OLED_I2C_ADDR 0b01111000
 
+#define CAN_ID_CAN_BUS 1
+
 #endif  // EMZ64_H
