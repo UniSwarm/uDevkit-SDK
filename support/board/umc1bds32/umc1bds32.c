@@ -26,7 +26,7 @@ int board_init_io(void);
 
 /****************************************************************************************/
 /*          Local variable                                                              */
-rt_dev_t board_leds[LED_COUNT];
+rt_dev_t _board_leds[LED_COUNT];
 
 int board_init_io(void)
 {
@@ -83,14 +83,14 @@ int board_init_io(void)
 
     // init leds
 #if BOARD_VERSION < 110
-    board_leds[0] = gpio_pin(GPIO_PORTC, 14);
-    gpio_setBitConfig(board_leds[0], GPIO_OUTPUT);
-    board_leds[1] = gpio_pin(GPIO_PORTC, 13);
-    gpio_setBitConfig(board_leds[1], GPIO_OUTPUT);
-    board_leds[2] = gpio_pin(GPIO_PORTD, 8);
-    gpio_setBitConfig(board_leds[2], GPIO_OUTPUT);
-    board_leds[3] = gpio_pin(GPIO_PORTD, 9);
-    gpio_setBitConfig(board_leds[3], GPIO_OUTPUT);
+    _board_leds[0] = gpio_pin(GPIO_PORTC, 14);
+    gpio_setBitConfig(_board_leds[0], GPIO_OUTPUT);
+    _board_leds[1] = gpio_pin(GPIO_PORTC, 13);
+    gpio_setBitConfig(_board_leds[1], GPIO_OUTPUT);
+    _board_leds[2] = gpio_pin(GPIO_PORTD, 8);
+    gpio_setBitConfig(_board_leds[2], GPIO_OUTPUT);
+    _board_leds[3] = gpio_pin(GPIO_PORTD, 9);
+    gpio_setBitConfig(_board_leds[3], GPIO_OUTPUT);
 #else
 #    ifndef SIMULATOR
     _RP43R = _RPOUT_OCM3;  // led1R = RP43
@@ -100,15 +100,14 @@ int board_init_io(void)
     _RP45R = _RPOUT_OCM7;  // led2G = RP45
     _RP46R = _RPOUT_OCM8;  // led2B = RP46
 #    endif
-    uint8_t led;
-    for (led = 0; led < LED_COUNT; led++)
+    for (uint8_t led = 0; led < LED_COUNT; led++)
     {
-        board_leds[led] = ccp(led + 3);
-        ccp_open(board_leds[led]);
-        ccp_setMode(board_leds[led], CCP_MODE_PWM);
-        ccp_setPeriod(board_leds[led], 0x7F8);
-        ccp_setCompare(board_leds[led], 0, 0x7FF);
-        ccp_enable(board_leds[led]);
+        _board_leds[led] = ccp(led + 3);
+        ccp_open(_board_leds[led]);
+        ccp_setMode(_board_leds[led], CCP_MODE_PWM);
+        ccp_setPeriod(_board_leds[led], 0x7F8);
+        ccp_setCompare(_board_leds[led], 0, 0x7FF);
+        ccp_enable(_board_leds[led]);
     }
 #endif
 
@@ -170,15 +169,15 @@ int board_setLed(uint8_t led, uint8_t state)
 #if BOARD_VERSION < 110
     if (state & 1)
     {
-        return gpio_setBit(board_leds[led]);
+        return gpio_setBit(_board_leds[led]);
     }
     else
     {
-        return gpio_clearBit(board_leds[led]);
+        return gpio_clearBit(_board_leds[led]);
     }
 
 #else
-    return ccp_setCompare(board_leds[led], 0, 0x7FF - (state << 3));
+    return ccp_setCompare(_board_leds[led], 0, 0x7FF - ((uint16_t)state << 3));
 #endif
 }
 
@@ -190,7 +189,7 @@ int board_toggleLed(uint8_t led)
     }
 
 #if BOARD_VERSION < 110
-    gpio_toggleBit(board_leds[led]);
+    gpio_toggleBit(_board_leds[led]);
 #endif
     return 0;
 }
@@ -203,7 +202,7 @@ int8_t board_getLed(uint8_t led)
     }
 
 #if BOARD_VERSION < 110
-    return gpio_readBit(board_leds[led]);
+    return gpio_readBit(_board_leds[led]);
 #else
     return 0;
 #endif
