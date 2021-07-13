@@ -24,18 +24,18 @@ int board_init(void);
 // ==== pins define ====
 // leds
 #define LED_COUNT 3
-#define LED1      LATBbits.LATB8
-#define LED2      LATBbits.LATB9
-#define LED3      LATBbits.LATB10
+#define LED1      0
+#define LED2      1
+#define LED3      2
 int board_setLed(uint8_t led, uint8_t state);
 int board_toggleLed(uint8_t led);
 int8_t board_getLed(uint8_t led);
 
 // buttons
 #define BUTTON_COUNT 3
-#define BUTTON_1     PORTBbits.RB12
-#define BUTTON_2     PORTBbits.RB13
-#define BUTTON_3     PORTBbits.RB14
+#define BUTTON_1     0
+#define BUTTON_2     1
+#define BUTTON_3     2
 int8_t board_getButton(uint8_t button);
 
 // oled
