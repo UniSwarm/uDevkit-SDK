@@ -14,12 +14,12 @@ endif
 IPEFLAGS ?= -M
 prog : $(OUT_PWD)/$(PROJECT).hex
 	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -F$(PROJECT).hex -OL $(IPEFLAGS) || true
-	@rm $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.*
+	@rm $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.* || true
 
 .PHONY: read
 read :
 	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -GF$(PROJECT)_read.hex || true
-	@rm $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.*
+	@rm $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.* || true
 
 # special cmd for hex creation
 $(OUT_PWD)/$(PROJECT).hex : $(OUT_PWD)/$(PROJECT).elf
