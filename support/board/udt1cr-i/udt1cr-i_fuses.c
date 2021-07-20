@@ -1,6 +1,3 @@
-/*** DEVCP0 ***/
-#pragma config CP = ON
-
 /*** DEVCFG0 ***/
 #pragma config DEBUG = OFF
 #pragma config JTAGEN = OFF
@@ -16,7 +13,7 @@
 #pragma config POSCGAIN = GAIN_1X
 #pragma config POSCBOOST = ON
 #pragma config EJTAGBEN = NORMAL
-#pragma config CP = OFF
+#pragma config CP = ON
 
 /*** DEVCFG1 ***/
 #pragma config FNOSC = SPLL
