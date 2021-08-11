@@ -41,7 +41,7 @@ int8_t board_getButton(uint8_t button);
 #define LED_CLK_LAT LATBbits.LATB12
 #define LED_CLK_RP 44
 #define LED_DAT_LAT LATBbits.LATB13
-#define LED_CLK_RP 45
+#define LED_DAT_RP 45
 
 // Analog input
 #define VOLTAGEIN_ADC_CHAN 3
