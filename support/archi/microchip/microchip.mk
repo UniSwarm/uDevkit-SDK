@@ -67,7 +67,7 @@ $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 .PHONY : showmem dbg.% dbg
 # prints memory report
 showmem : $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) -lc $(LDFLAGS_XC) -Wl,--report-mem
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) -lc $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map",--report-mem
 
 # lists symbol present in final elf
 dbg : $(OUT_PWD)/$(PROJECT).elf
