@@ -27,6 +27,9 @@ ssize_t nvm_readPage(uint32_t addr, char *data);
 uint16_t nvm_pageNumber(uint32_t addr);
 uint32_t nvm_pageAddress(uint16_t pageNum);
 
+// TODO temporary
+void nvm_writeDoubleWord(uint32_t addrWord, char *data);
+
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj)                \
     || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) || defined(ARCHI_dspic33fj)     \
     || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
