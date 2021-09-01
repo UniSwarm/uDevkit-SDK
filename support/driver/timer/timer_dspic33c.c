@@ -219,7 +219,10 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
     }
 
     timers[timer].handler = handler;
-    timer_enable(device);
+    if (timers[timer].flags.enabled == 1)
+    {
+        timer_enable(device);
+    }
 
     return 0;
 #else
