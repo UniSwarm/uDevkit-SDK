@@ -734,6 +734,7 @@ uint8_t can_s2Seg(rt_dev_t device)
  */
 int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
+    UDK_UNUSED(fifo);
 #if CAN_COUNT >= 1
     unsigned int i;
 
@@ -908,13 +909,10 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
  */
 int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
+    UDK_UNUSED(fifo);
 #if CAN_COUNT >= 1
     int i;
     uint8_t can = MINOR(device);
-    if (can >= CAN_COUNT)
-    {
-        return 0;
-    }
 
     CAN_FLAGS flagValue = 0;
     CAN_RxMsgBuffer *buffer = NULL;
@@ -937,7 +935,6 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
             }
             buffer = PA_TO_KVA1(C2FIFOUA1);
             break;
-
 #    endif
 #    if CAN_COUNT >= 3
         case 2:
@@ -947,7 +944,6 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
             }
             buffer = PA_TO_KVA1(C3FIFOUA1);
             break;
-
 #    endif
 #    if CAN_COUNT >= 4
         case 3:
@@ -957,8 +953,9 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
             }
             buffer = PA_TO_KVA1(C4FIFOUA1);
             break;
-
 #    endif
+        default:
+            return 0;
     }
 
     // ID
@@ -969,13 +966,19 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     }
     else
     {
-        header->id = buffer->msgSID.SID;
+        header->id = buffer->msgSID.SID & 0x7FF;
     }
 
     // data read and copy
     header->size = buffer->msgEID.DLC;
+    if (header->size > 8)
+    {
+        header->size = 0;
+    }
     for (i = 0; i < header->size; i++)
+    {
         data[i] = buffer->data[i];
+    }
 
     // flags
     if (buffer->msgEID.SRR == 1)
