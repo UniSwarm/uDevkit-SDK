@@ -381,22 +381,26 @@ int adc_init(void)
 #ifdef ADC_HAVE_DEDICATED_CORE0
     ADCORE0Hbits.ADCS = 2 - 1;  // clock divider (1:2)
     ADCORE0Hbits.RES = 0b11;    // 12 bits
-    ADCORE0Lbits.SAMC = 0;      // 12 Tad delay before sampling
+    ADCORE0Lbits.SAMC = 20 - 2; // 0 Tad delay before sampling
+    ADCON4Lbits.SAMC0EN = 1;    // Conversion delay enabled
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE1
     ADCORE1Hbits.ADCS = 2 - 1;  // clock divider (1:2)
     ADCORE1Hbits.RES = 0b11;    // 12 bits
-    ADCORE1Lbits.SAMC = 0;      // 12 Tad
+    ADCORE1Lbits.SAMC = 20 - 2;      // 0 Tad delay before sampling
+    ADCON4Lbits.SAMC1EN = 1;    // Conversion delay enabled
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE2
     ADCORE2Hbits.ADCS = 2 - 1;  // clock divider (1:2)
     ADCORE2Hbits.RES = 0b11;    // 12 bits
-    ADCORE2Lbits.SAMC = 0;      // 12 Tad
+    ADCORE2Lbits.SAMC = 20 - 2;      // 0 Tad delay before sampling
+    ADCON4Lbits.SAMC2EN = 1;    // Conversion delay enabled
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE3
     ADCORE3Hbits.ADCS = 2 - 1;  // clock divider (1:2)
     ADCORE3Hbits.RES = 0b11;    // 12 bits
-    ADCORE3Lbits.SAMC = 0;      // 12 Tad
+    ADCORE3Lbits.SAMC = 20 - 2;      // 0 Tad delay before sampling
+    ADCON4Lbits.SAMC3EN = 1;    // Conversion delay enabled
 #endif
 
     // Configure the ADC reference sources.
@@ -406,7 +410,7 @@ int adc_init(void)
 
     ADCON2Lbits.SHRADCS = 2 - 1;   // clock divider (1:2)
     ADCON1Hbits.SHRRES = 0b11;     // 12 bits
-    ADCON2Hbits.SHRSAMC = 16 - 1;  // 16 Tad
+    ADCON2Hbits.SHRSAMC = 20 - 2;  // 20 Tad
     // ADCON1Lbits.NRE = 1; // Noise Reduction Enable bit, Holds conversion process for 1 T ADCORE when another core
     // completes conversion to reduce noise between cores
 
