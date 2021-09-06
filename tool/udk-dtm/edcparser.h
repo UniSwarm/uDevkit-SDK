@@ -11,6 +11,13 @@ struct EDCSFRDef
     uint adrr;
 };
 
+struct EDCProgramSpace
+{
+    QString name;
+    uint beginaddr;
+    uint endaddr;
+};
+
 class EDCParser
 {
 public:
@@ -20,16 +27,21 @@ public:
 
     QString name() const;
 
-protected:
+    const QList<EDCProgramSpace> &programSpace() const;
+
+  protected:
     bool parseDocument();
     bool parsePic();
     bool parseSFRDef();
+    bool parseProgramSpace();
 
     QFile *_xmlFile;
     QXmlStreamReader *_xml;
 
     QString _name;
     QList<EDCSFRDef> _sfrs;
+
+    QList<EDCProgramSpace> _programSpace;
 };
 
 #endif // EDCPARSER_H

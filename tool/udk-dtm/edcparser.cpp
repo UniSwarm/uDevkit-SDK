@@ -53,6 +53,14 @@ bool EDCParser::parsePic()
                 parseSFRDef();
             }
         }
+        if (_xml->tokenType() == QXmlStreamReader::StartElement)
+        {
+            level++;
+            if (_xml->name() == "ProgramSubspace")
+            {
+                parseProgramSpace();
+            }
+        }
         if (_xml->tokenType() == QXmlStreamReader::EndElement)
         {
             level--;
@@ -82,6 +90,58 @@ bool EDCParser::parseSFRDef()
     _xml->skipCurrentElement();
     _sfrs.append(sfrDef);
     return true;
+}
+
+bool EDCParser::parseProgramSpace()
+{
+    EDCProgramSpace programSpace;
+    programSpace.name = _xml->attributes().value("edc:partitionmode").toString();
+
+    if (programSpace.name.isEmpty() )
+    {
+        _xml->skipCurrentElement();
+        return false;
+    }
+
+    if (programSpace.name != "single")
+    {
+        _xml->skipCurrentElement();
+        return false;
+    }
+    bool ok;
+    QString name("ACTIVE_PARTION");
+    programSpace.name = name;
+    programSpace.beginaddr = _xml->attributes().value("edc:beginaddr").mid(2).toUInt(&ok, 16);
+    programSpace.endaddr = _xml->attributes().value("edc:endaddr").mid(2).toUInt(&ok, 16);
+    _programSpace.append(programSpace);
+
+    while(!_xml->atEnd())
+    {
+        _xml->readNext();
+
+        if (_xml->isStartElement())
+        {
+            programSpace.name = _xml->attributes().value("edc:regionid").toString().toUpper();
+            if (programSpace.name.isEmpty())
+            {
+                _xml->skipCurrentElement();
+                return false;
+            }
+            programSpace.name.prepend(name + "_");
+            programSpace.beginaddr = _xml->attributes().value("edc:beginaddr").mid(2).toUInt(&ok, 16);
+            programSpace.endaddr = _xml->attributes().value("edc:endaddr").mid(2).toUInt(&ok, 16);
+            _programSpace.append(programSpace);
+        }
+    }
+
+    _xml->skipCurrentElement();
+    _programSpace.append(programSpace);
+    return true;
+}
+
+const QList<EDCProgramSpace> &EDCParser::programSpace() const
+{
+    return _programSpace;
 }
 
 QString EDCParser::name() const
