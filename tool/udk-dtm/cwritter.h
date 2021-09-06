@@ -12,6 +12,7 @@ public:
     ~CWritter();
 
     void writeIfDefList(const QStringList &listDef);
+    void writeIfDefElse();
     void writeIfDefListEnd();
 
     void writeDefList(const QStringList &listDef, const QStringList &values = QStringList());
@@ -26,7 +27,8 @@ protected:
     {
         StateIfDefNotStarted,
         StateIfDefFirst,
-        StateIfDefMany
+        StateIfDefMany,
+        StateIfDefElse
     };
     StateIfDef _ifDefState;
 };
