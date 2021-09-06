@@ -4,67 +4,89 @@
 #include <QDebug>
 
 EDCParser::EDCParser(const QString &path)
+    : _filePath(path)
 {
-    _xmlFile = new QFile(path);
-    _xmlFile->open(QIODevice::ReadOnly);
-
-    _xml = new QXmlStreamReader(_xmlFile);
-    parseDocument();
-
-    _xmlFile->close();
+    _level = 1;
 }
 
-bool EDCParser::parseDocument()
+bool EDCParser::parse(void)
+{
+    _xmlFile = new QFile(_filePath);
+    if (!_xmlFile->open(QIODevice::ReadOnly))
+    {
+        return false;
+    }
+
+    _xml = new QXmlStreamReader(_xmlFile);
+    bool ok = parseDocument();
+
+    _xmlFile->close();
+
+    return ok;
+}
+
+bool EDCParser::parseDocument(void)
 {
     while (!_xml->atEnd())
     {
         _xml->readNext();
 
-        if (_xml->tokenType() == QXmlStreamReader::StartElement)
+        if (_xml->isStartElement())
         {
             if (_xml->name() == "PIC")
             {
-                parsePic();
+                if (!parsePic())
+                {
+                    return false;
+                }
             }
         }
     }
 
     QCollator coll;
     coll.setNumericMode(true);
-    std::sort(_sfrs.begin(), _sfrs.end(), [&](const EDCSFRDef& s1, const EDCSFRDef& s2){ return coll.compare(s1.name, s2.name) < 0; });
+    std::sort(_sfrs.begin(), _sfrs.end(), [&](const EDCSFRDef &s1, const EDCSFRDef &s2)
+              {
+                  return coll.compare(s1.name, s2.name) < 0;
+              });
 
-    return false;
+    return true;
 }
 
-bool EDCParser::parsePic()
+bool EDCParser::parsePic(void)
 {
-    _name = _xml->attributes().value("edc:name").toString();
+    _cpuName = _xml->attributes().value("edc:name").toString();
 
-    int level = 1;
+    _deviceName = _cpuName;
+    _deviceName.replace("DSPIC", "DEVICE_");
+    _deviceName.replace("PIC", "DEVICE_");
+
     while (!_xml->atEnd())
     {
         _xml->readNext();
 
-        if (_xml->tokenType() == QXmlStreamReader::StartElement)
+        if (_xml->isStartElement())
         {
-            level++;
+            _level++;
             if (_xml->name() == "SFRDef")
             {
-                parseSFRDef();
+                if (!parseSFRDef())
+                {
+                    return false;
+                }
             }
-        }
-        if (_xml->tokenType() == QXmlStreamReader::StartElement)
-        {
-            level++;
             if (_xml->name() == "ProgramSubspace")
             {
-                parseProgramSpace();
+                if (!parseProgramSpace())
+                {
+                    return false;
+                }
             }
         }
         if (_xml->tokenType() == QXmlStreamReader::EndElement)
         {
-            level--;
-            if (_xml->name() == "PIC" && level == 0)
+            _level--;
+            if (_xml->name() == "PIC" && _level == 0)
             {
                 return true;
             }
@@ -73,7 +95,7 @@ bool EDCParser::parsePic()
     return false;
 }
 
-bool EDCParser::parseSFRDef()
+bool EDCParser::parseSFRDef(void)
 {
     EDCSFRDef sfrDef;
     sfrDef.name = _xml->attributes().value("edc:cname").toString();
@@ -87,12 +109,34 @@ bool EDCParser::parseSFRDef()
     bool ok;
     sfrDef.adrr = _xml->attributes().value("edc:_addr").mid(2).toUInt(&ok, 16);
 
+    _xml->readNext();
+
+    if (_xml->isStartElement())
+    {
+        _level++;
+        if (_xml->name() == "SFRMode")
+        {
+            if (!parseSFRMode())
+            {
+                return false;
+            }
+        }
+    }
+    if (_xml->tokenType() == QXmlStreamReader::EndElement)
+    {
+        _level--;
+        if (_xml->name() == "SFRModeList")
+        {
+            return true;
+        }
+    }
+
     _xml->skipCurrentElement();
     _sfrs.append(sfrDef);
     return true;
 }
 
-bool EDCParser::parseProgramSpace()
+bool EDCParser::parseProgramSpace(void)
 {
     EDCProgramSpace programSpace;
     programSpace.name = _xml->attributes().value("edc:partitionmode").toString();
@@ -139,17 +183,27 @@ bool EDCParser::parseProgramSpace()
     return true;
 }
 
-const QList<EDCProgramSpace> &EDCParser::programSpace() const
+const QList<EDCProgramSpace> &EDCParser::programSpace(void) const
 {
     return _programSpace;
 }
 
-QString EDCParser::name() const
+bool EDCParser::parseSFRMode(void)
 {
-    return _name;
+    return true;
 }
 
-QList<EDCSFRDef> EDCParser::sfrs() const
+const QString &EDCParser::cpuName(void) const
+{
+    return _cpuName;
+}
+
+const QString &EDCParser::deviceName(void) const
+{
+    return _deviceName;
+}
+
+const QList<EDCSFRDef> &EDCParser::sfrs(void) const
 {
     return _sfrs;
 }
