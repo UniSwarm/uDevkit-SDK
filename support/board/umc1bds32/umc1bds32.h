@@ -60,13 +60,13 @@ int8_t board_getButton(uint8_t button);
 #    define BRIDGE_A_PWM 4
 #    define BRIDGE_B_PWM 1
 #    define BRIDGE_C_PWM 2
-#    define BRIDGE_D_PWM 3
+//#    define BRIDGE_D_PWM 3
 #else
-#    define BRIDGE_POWEREN_PWM 4
+//#    define BRIDGE_POWEREN_PWM 4
 #    define BRIDGE_A_PWM       2
 #    define BRIDGE_B_PWM       1
 #    define BRIDGE_C_PWM       3
-#    define BRIDGE_D_PWM       4
+//#    define BRIDGE_D_PWM       4
 #endif
 
 // hall sensors
@@ -74,12 +74,6 @@ int8_t board_getButton(uint8_t button);
 #define BLDC_1_HALL_A          PORTCbits.RC1
 #define BLDC_1_HALL_B          PORTCbits.RC2
 #define BLDC_1_HALL_C          PORTCbits.RC0
-
-// Power enable pins
-#define BRIDGE_POWER_DISABLED    1
-#define BRIDGE_POWER_ENABLED     0
-#define BRIDGE_POWER_ENABLED_OUT LATDbits.LATD14
-#define BRIDGE_POWER_ENABLED_IN  PORTDbits.RD14
 
 // analog iputs
 #define TEMP_AB_ADC_CHAN  0
@@ -123,6 +117,13 @@ int8_t board_getButton(uint8_t button);
 #        define ANI2_SADC_CHAN   13
 #    endif
 #endif
+
+//
+#define STO_STATUS_OK PORTEbits.RE0
+#define P12V_ENABLE LATEbits.LATE2
+#define BRIDGE_DISABLED_OUT LATDbits.LATD14
+#define BRIDGE_DISABLED_IN  PORTDbits.RD14
+#define BRIDGE_POWER_ENABLED LATCbits.LATC12
 
 // Page adress
 #if BOARD_VERSION < 110
