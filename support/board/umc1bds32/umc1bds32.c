@@ -28,6 +28,10 @@ int board_init_io(void);
 /*          Local variable                                                              */
 rt_dev_t _board_leds[LED_COUNT];
 
+#ifdef SIMULATOR
+int _board_sim_bridgesEnable = 0;
+#endif
+
 int board_init_io(void)
 {
 #ifndef SIMULATOR
