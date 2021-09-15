@@ -52,10 +52,16 @@ int8_t board_getLed(uint8_t led);
 #define UART_ID_DBG       2
 
 // buttons
-#define BUTTON_COUNT 0
+#define BUTTON_COUNT 1
+#define BUTTON_RESET PORTDbits.RD13
 int8_t board_getButton(uint8_t button);
 
 // bridges
+void board_setBridgesEnabled(int enable);
+int board_bridgesEnabled(void);
+#define BRIDGE_DISABLED_OUT  LATDbits.LATD14
+#define BRIDGE_DISABLED_IN   PORTDbits.RD14
+#define BRIDGE_POWER_ENABLED LATCbits.LATC12
 #if BOARD_VERSION < 110
 #    define BRIDGE_A_PWM 4
 #    define BRIDGE_B_PWM 1
@@ -63,9 +69,9 @@ int8_t board_getButton(uint8_t button);
 //#    define BRIDGE_D_PWM 3
 #else
 //#    define BRIDGE_POWEREN_PWM 4
-#    define BRIDGE_A_PWM       2
-#    define BRIDGE_B_PWM       1
-#    define BRIDGE_C_PWM       3
+#    define BRIDGE_A_PWM 2
+#    define BRIDGE_B_PWM 1
+#    define BRIDGE_C_PWM 3
 //#    define BRIDGE_D_PWM       4
 #endif
 
@@ -119,11 +125,9 @@ int8_t board_getButton(uint8_t button);
 #endif
 
 //
-#define STO_STATUS_OK PORTEbits.RE0
-#define P12V_ENABLE LATEbits.LATE2
-#define BRIDGE_DISABLED_OUT LATDbits.LATD14
-#define BRIDGE_DISABLED_IN  PORTDbits.RD14
-#define BRIDGE_POWER_ENABLED LATCbits.LATC12
+#define STO_STATUS_OK_IN PORTEbits.RE0
+#define STO_OUTPUT       PORTEbits.RE1
+#define P12V_ENABLE      LATEbits.LATE2
 
 // Page adress
 #if BOARD_VERSION < 110
@@ -133,11 +137,11 @@ int8_t board_getButton(uint8_t button);
 #    define ADRESS_BYTE_PAGE_4_STD 0x29000
 #    define ADRESS_BYTE_PAGE_5_CAL 0x2A000
 #else
-#    define ADRESS_BYTE_PAGE_1_COM 0xAA000 // PAGE 170
-#    define ADRESS_BYTE_PAGE_2_MAN 0xAB000 // PAGE 171
-#    define ADRESS_BYTE_PAGE_3_STD 0xAC000 // PAGE 172
-#    define ADRESS_BYTE_PAGE_4_STD 0xAD000 // PAGE 173
-#    define ADRESS_BYTE_PAGE_5_CAL 0xAE000 // PAGE 174
+#    define ADRESS_BYTE_PAGE_1_COM 0xAA000  // PAGE 170
+#    define ADRESS_BYTE_PAGE_2_MAN 0xAB000  // PAGE 171
+#    define ADRESS_BYTE_PAGE_3_STD 0xAC000  // PAGE 172
+#    define ADRESS_BYTE_PAGE_4_STD 0xAD000  // PAGE 173
+#    define ADRESS_BYTE_PAGE_5_CAL 0xAE000  // PAGE 174
 #endif
 
 #endif  // UMC1BDS32FR_H

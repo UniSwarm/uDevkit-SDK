@@ -210,6 +210,40 @@ int8_t board_getLed(uint8_t led)
 
 int8_t board_getButton(uint8_t button)
 {
-    UDK_UNUSED(button);
+#ifndef SIMULATOR
+    if (button == 0)
+    {
+        return BUTTON_RESET;
+    }
+#endif
     return -1;
+}
+
+void board_setBridgesEnabled(int enable)
+{
+    if (enable == 1)
+    {
+#ifndef SIMULATOR
+        BRIDGE_DISABLED_OUT = 0;
+#endif
+    }
+    else
+    {
+#ifndef SIMULATOR
+        BRIDGE_DISABLED_OUT = 1;
+#endif
+    }
+
+#ifdef SIMULATOR
+    _board_sim_bridgesEnable = enable;
+#endif
+}
+
+int board_bridgesEnabled(void)
+{
+#ifndef SIMULATOR
+    return (BRIDGE_DISABLED_IN == 0 && STO_STATUS_OK_IN == 1) ? 1 : 0;
+#else
+    return (_board_sim_bridgesEnable == 1) ? 1 : 0;
+#endif
 }

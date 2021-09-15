@@ -132,3 +132,12 @@ int8_t board_getButton(uint8_t button)
     UDK_UNUSED(button);
     return -1;
 }
+
+int board_bridgesEnabled(void)
+{
+#ifndef SIMULATOR
+    return (BRIDGE_DISABLED_IN == 0 && STO_STATUS_OK_IN == 1) ? 1 : 0;
+#else
+    return (_board_sim_bridgesEnable == 1) ? 1 : 0;
+#endif
+}
