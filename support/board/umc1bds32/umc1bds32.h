@@ -124,6 +124,22 @@ int board_bridgesEnabled(void);
 #    endif
 #endif
 
+// IOs
+#if BOARD_VERSION < 111
+#    define IO_COUNT 0
+#else
+#    define IO_COUNT 8
+#    define IO_1_IN  PORTEbits.RE4
+#    define IO_2_IN  PORTEbits.RE5
+#    define IO_3_IN  PORTDbits.RD15
+#    define IO_4_IN  PORTEbits.RE3
+#    define IO_5_IN  PORTCbits.RC12
+#    define IO_6_IN  PORTDbits.RD0
+#    define IO_7_IN  PORTDbits.RD2
+#    define IO_8_IN  PORTEbits.RE14
+#endif
+int8_t board_getIo(uint8_t io);
+
 //
 #define STO_STATUS_OK_IN PORTEbits.RE0
 #define STO_OUTPUT       PORTEbits.RE1

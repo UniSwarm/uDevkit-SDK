@@ -223,6 +223,59 @@ int8_t board_getButton(uint8_t button)
     return -1;
 }
 
+int8_t board_getIo(uint8_t io)
+{
+#ifndef SIMULATOR
+    switch (io)
+    {
+#    ifdef IO_1_IN
+        case 1:
+            return IO_1_IN;
+            break;
+#    endif
+#    ifdef IO_2_IN
+        case 2:
+            return IO_2_IN;
+            break;
+#    endif
+#    ifdef IO_3_IN
+        case 3:
+            return IO_3_IN;
+            break;
+#    endif
+#    ifdef IO_4_IN
+        case 4:
+            return IO_4_IN;
+            break;
+#    endif
+#    ifdef IO_5_IN
+        case 5:
+            return IO_5_IN;
+            break;
+#    endif
+#    ifdef IO_6_IN
+        case 6:
+            return IO_6_IN;
+            break;
+#    endif
+#    ifdef IO_7_IN
+        case 7:
+            return IO_7_IN;
+            break;
+#    endif
+#    ifdef IO_8_IN
+        case 8:
+            return IO_8_IN;
+            break;
+#    endif
+        default:
+            return -1;
+            break;
+    }
+#endif
+    return -1;
+}
+
 void board_setBridgesEnabled(int enable)
 {
     if (enable == 1)
