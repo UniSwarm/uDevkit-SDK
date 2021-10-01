@@ -75,6 +75,9 @@ int board_bridgesEnabled(void);
 //#    define BRIDGE_D_PWM       4
 #endif
 
+#define BRIDGES_OVER_TEMP_TRIG_HIGH_MAX 800
+#define BRIDGES_OVER_TEMP_TRIG_LOW_MAX  750
+
 // hall sensors
 #define BLDC_1_HALL_HIGH_STATE 1
 #define BLDC_1_HALL_A          PORTCbits.RC1
