@@ -140,6 +140,10 @@ int board_bridgesEnabled(void);
 #    define IO_6_IN  PORTDbits.RD0
 #    define IO_7_IN  PORTDbits.RD2
 #    define IO_8_IN  PORTEbits.RE14
+
+#    define IO_AXIS1_LIMIT_HIGH IO_1_IN
+#    define IO_AXIS1_LIMIT_LOW  IO_3_IN
+#    define IO_AXIS1_HOME       IO_2_IN
 #endif
 int8_t board_getIo(uint8_t io);
 
