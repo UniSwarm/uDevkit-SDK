@@ -1,3 +1,16 @@
+/**
+ * @file udt1cr-i.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright UniSwarm 2018-2021
+ *
+ * @date November 26, 2018, 18:00 PM
+ *
+ * @brief Fuses configuration for UDT1FR from UniSwarm
+ *
+ * product page:
+ *  https://uniswarm.fr/uboards/udt/udt1fr
+ */
+
 /*** DEVCFG0 ***/
 #pragma config DEBUG = OFF
 #pragma config JTAGEN = OFF
@@ -42,7 +55,11 @@
 /*** DEVCFG3 ***/
 #pragma config USERID = 0xffff
 #pragma config FMIIEN = OFF
-#pragma config FETHIO = OFF
+#if BOARD_VERSION < 110
+#    pragma config FETHIO = OFF
+#else
+#    pragma config FETHIO = ON
+#endif
 #pragma config PGL1WAY = OFF
 #pragma config PMDL1WAY = OFF
 #pragma config IOL1WAY = OFF

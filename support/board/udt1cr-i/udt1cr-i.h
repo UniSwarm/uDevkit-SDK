@@ -5,7 +5,10 @@
  *
  * @date November 26, 2018, 18:00 PM
  *
- * @brief Code for UDT1CR-I from UniSwarm
+ * @brief Code for UDT1FR from UniSwarm
+ *
+ * product page:
+ *  https://uniswarm.fr/uboards/udt/udt1fr
  */
 
 #ifndef UDT1CRI_H
@@ -18,7 +21,7 @@
 
 int board_init(void);
 
-#define BOARD_NAME    "UDT1CRI_H"
+#define BOARD_NAME    "UDT1FR-I"
 #define SYSCLOCK_XTAL 24000000
 
 // ==== pins define ====

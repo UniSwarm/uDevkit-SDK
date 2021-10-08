@@ -5,7 +5,10 @@
  *
  * @date November 26, 2018, 18:00 PM
  *
- * @brief Code for UDT1CR-I from UniSwarm
+ * @brief Code for UDT1FR from UniSwarm
+ *
+ * product page:
+ *  https://uniswarm.fr/uboards/udt/udt1fr
  */
 
 #include "udt1cr-i.h"
@@ -40,7 +43,11 @@ int board_init_io(void)
     lockIoConfig();
 #endif
 
+#if BOARD_VERSION < 110
     iso_en_gpio = gpio_pin(GPIO_PORTE, 4);
+#else
+    iso_en_gpio = gpio_pin(GPIO_PORTC, 13);
+#endif
     gpio_clearBit(iso_en_gpio);
     gpio_setBitConfig(iso_en_gpio, GPIO_OUTPUT);
 
@@ -117,6 +124,7 @@ int8_t board_getLed(uint8_t led)
 
 int8_t board_getButton(uint8_t button)
 {
+    UDK_UNUSED(button);
     return 0;
 }
 
