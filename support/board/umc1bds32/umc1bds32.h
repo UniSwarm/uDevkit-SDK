@@ -140,12 +140,41 @@ int board_bridgesEnabled(void);
 #    define IO_6_IN  PORTDbits.RD0
 #    define IO_7_IN  PORTDbits.RD2
 #    define IO_8_IN  PORTEbits.RE14
-
-#    define IO_AXIS1_LIMIT_HIGH IO_1_IN
-#    define IO_AXIS1_LIMIT_LOW  IO_3_IN
-#    define IO_AXIS1_HOME       IO_2_IN
 #endif
 int8_t board_getIo(uint8_t io);
+
+// limit switches inputs
+#define LIMIT_SWITCH_NO_PORT   0
+#define LIMIT_SWITCH_NO_OFFSET 0
+#define LIMIT_SWITCH_1_PORT    PORTC
+#define LIMIT_SWITCH_1_OFFSET  1
+#define LIMIT_SWITCH_2_PORT    PORTC
+#define LIMIT_SWITCH_2_OFFSET  2
+#define LIMIT_SWITCH_3_PORT    PORTC
+#define LIMIT_SWITCH_3_OFFSET  0
+#define LIMIT_SWITCH_4_PORT    PORTD
+#define LIMIT_SWITCH_4_OFFSET  10
+#if BOARD_VERSION < 111
+#    define LIMIT_SWITCH_COUNT 4
+#else
+#    define LIMIT_SWITCH_COUNT     12
+#    define LIMIT_SWITCH_5_PORT    PORTE
+#    define LIMIT_SWITCH_5_OFFSET  4
+#    define LIMIT_SWITCH_6_PORT    PORTE
+#    define LIMIT_SWITCH_6_OFFSET  5
+#    define LIMIT_SWITCH_7_PORT    PORTD
+#    define LIMIT_SWITCH_7_OFFSET  15
+#    define LIMIT_SWITCH_8_PORT    PORTE
+#    define LIMIT_SWITCH_8_OFFSET  3
+#    define LIMIT_SWITCH_9_PORT    PORTC
+#    define LIMIT_SWITCH_9_OFFSET  12
+#    define LIMIT_SWITCH_10_PORT    PORTD
+#    define LIMIT_SWITCH_10_OFFSET  0
+#    define LIMIT_SWITCH_11_PORT   PORTD
+#    define LIMIT_SWITCH_11_OFFSET 2
+#    define LIMIT_SWITCH_12_PORT   PORTE
+#    define LIMIT_SWITCH_12_OFFSET 14
+#endif
 
 //
 #define STO_STATUS_OK_IN PORTEbits.RE0
