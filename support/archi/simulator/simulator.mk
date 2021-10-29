@@ -72,5 +72,5 @@ sim: sim-exe
 
 clean: sim-clean
 sim-clean :
-	rm -f $(OUT_SIM_PWD)*/*.o $(OUT_SIM_PWD)*/*.d $(OUT_SIM_PWD)*/*.c
-	rm -f $(OUT_SIM_PWD)*/$(SIM_EXE)*
+	$(VERB)rm -f $(OUT_SIM_PWD)*/*.o $(OUT_SIM_PWD)*/*.d $(OUT_SIM_PWD)*/*.c
+	$(VERB)rm -f $(OUT_SIM_PWD)*/$(SIM_EXE)*

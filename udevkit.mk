@@ -12,14 +12,15 @@ ifndef OUT_PWD
 endif
 OUT_PWD := $(strip $(OUT_PWD))
 
+BLUE := $(shell command -v tput > /dev/null && tput setaf 4)
 YELLOW := $(shell command -v tput > /dev/null && tput setaf 3)
 GREEN := $(shell command -v tput > /dev/null && tput setaf 2)
 NORM := $(shell command -v tput > /dev/null && tput sgr0)
 
 ifndef SLAVE
-  COMPCOLOR := $(GREEN)
+  COMPCOLOR ?= $(GREEN)
 else
-  COMPCOLOR := $(YELLOW)
+  COMPCOLOR ?= $(YELLOW)
 endif
 
 # VERBOSE variable to set the verbosity if VERBOSE=1
@@ -44,9 +45,9 @@ INCLUDEPATH += -I. -I$(UDEVKIT)/include -I$(OUT_PWD)
 # cleaning rule project
 .PHONY: clean
 clean:
-	rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c $(OUT_PWD)/*.h $(OUT_PWD)/*.s $(OUT_PWD)/*.lst $(OUT_PWD)/*.map
-	rm -f $(OUT_PWD)/$(PROJECT).elf $(OUT_PWD)/$(PROJECT).hex
-	rm -f $(CONFIG_HEADERS)
+	$(VERB)rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c $(OUT_PWD)/*.h $(OUT_PWD)/*.s $(OUT_PWD)/*.lst $(OUT_PWD)/*.map
+	$(VERB)rm -f $(OUT_PWD)/$(PROJECT).elf $(OUT_PWD)/$(PROJECT).hex
+	$(VERB)rm -f $(CONFIG_HEADERS)
 
 .PHONY: distrib
 DISTRIB_PWD = distrib
