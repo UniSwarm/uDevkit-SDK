@@ -50,7 +50,7 @@ An IDE named uDevkit-IDE is available : https://github.com/UniSwarm/uDevkit-IDE
 
 ## Prepare repository
 
-To get all submodule used (USB and FatFS), please do not forget to init and update submodule :
+To get all submodule used (USB), please do not forget to init and update submodule :
 
 ```bash
 git submodule init
