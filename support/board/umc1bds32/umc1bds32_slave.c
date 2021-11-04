@@ -24,17 +24,15 @@ int board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
-    ANSELA = 0x001F;  // all analog inputs of port A as analog
+    ANSELA = 0x001F;
 #    if BOARD_VERSION < 110
-    ANSELB = 0x0006;  // all analog inputs of port B as digital buffer
+    ANSELB = 0x0007;
+    ANSELC = 0x00CF;
+    ANSELD = 0xF000;
 #    else
-    ANSELB = 0x008E;  // all analog inputs of port B as digital buffer
-#    endif
-    ANSELC = 0x00CF;  // all analog inputs of port C as digital buffer
-#    if BOARD_VERSION < 110
-    ANSELD = 0xF000;  // all analog inputs of port D as digital buffer
-#    else
-    ANSELD = 0x1000;  // all analog inputs of port D as digital buffer
+    ANSELB = 0x008F;
+    ANSELC = 0x00C8;  // or 0x00CF when sensor is used as analog
+    ANSELD = 0x1C00;
 #    endif
 
     // remappable pins

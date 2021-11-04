@@ -66,13 +66,13 @@ int board_bridgesEnabled(void);
 #    define BRIDGE_A_PWM 4
 #    define BRIDGE_B_PWM 1
 #    define BRIDGE_C_PWM 2
-//#    define BRIDGE_D_PWM 3
+#    define BRIDGE_D_PWM 3
 #else
 //#    define BRIDGE_POWEREN_PWM 4
 #    define BRIDGE_A_PWM 2
 #    define BRIDGE_B_PWM 1
 #    define BRIDGE_C_PWM 3
-//#    define BRIDGE_D_PWM       4
+#    define BRIDGE_D_PWM 4
 #endif
 
 #define BRIDGES_OVER_TEMP_TRIG_HIGH_MAX 800
