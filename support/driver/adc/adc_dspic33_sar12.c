@@ -374,7 +374,7 @@ int adc_init(void)
 
     // Configure the common ADC clock.
     // ADCON3Hbits.CLKSEL = 0b01;     // clock from Fp oscillator
-    ADCON3Hbits.CLKSEL = 0b11;   // clock AUX VCO DIVMUX
+    ADCON3Hbits.CLKSEL = 0b00;   // clock from FP (FOSC /2)
     ADCON3Hbits.CLKDIV = 1 - 1;  // 1/1 divider (1:1)
 
     // Configure the cores’ ADC clock.
