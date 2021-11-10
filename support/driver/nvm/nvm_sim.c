@@ -17,6 +17,9 @@
 
 #define __PROGRAM_LENGTH 512000
 
+#define SIZE_WORD 4u // 3 + phantom
+#define SIZE_DOUBLE_WORD 6u // without phantom bit
+
 static FILE *nvm_file;
 
 void nvm_init(void);
@@ -73,7 +76,26 @@ ssize_t nvm_read(uint32_t addr, char *data, size_t size)
         data[j] = d[i];
         j++;
     }
-    return 0;
+    return size;
+}
+
+/**
+ * @brief Read a whole page in flash memory
+ * @param addr address of the page to read
+ * @param data array of the data to read
+ */
+ssize_t nvm_readPage(uint32_t addr, char *data)
+{
+    uint32_t pageAddr;
+    size_t pageSize;
+    ssize_t size_read;
+    pageAddr = addr & NVM_FLASH_PAGE_MASK;      // align the address with top of page
+    pageSize = (NVM_FLASH_PAGE_BYTE >> 2) * 3;  // calculate the exact number of byte
+    /* only 3 out of 4 bytes are useful because of phantom byte */
+
+    size_read = nvm_read(pageAddr, data, pageSize);
+
+    return size_read;
 }
 
 /**
@@ -83,6 +105,13 @@ ssize_t nvm_read(uint32_t addr, char *data, size_t size)
 ssize_t nvm_erasePage(uint32_t addr)
 {
     UDK_UNUSED(addr);
+
+    char temp[NVM_FLASH_PAGE_BYTE] = {0};
+    memset(temp, 255, NVM_FLASH_PAGE_BYTE);
+
+    fseek(nvm_file, addr, SEEK_SET);
+    fwrite(temp, sizeof(temp), 1, nvm_file);
+
     return 0;
 }
 
@@ -93,8 +122,24 @@ ssize_t nvm_erasePage(uint32_t addr)
  */
 void nvm_writeDoubleWord(uint32_t addrWord, char *data)
 {
-    UDK_UNUSED(addrWord);
-    UDK_UNUSED(data);
+    char tab[8] = {0};
+    tab[0] = data[0];
+    tab[1] = data[1];
+    tab[2] = data[2];
+    tab[3] = 0;
+    tab[4] = data[3];
+    tab[5] = data[4];
+    tab[6] = data[5];
+    tab[7] = 0;
+
+//    for (int i = 0; i< 8; i++)
+//    {
+//        printf(" %2.2X", tab[i]);
+//    }
+//    printf("\n");
+
+    fseek(nvm_file, (addrWord) * 2, SEEK_SET);
+    fwrite(tab, sizeof(char) * 8, 1, nvm_file);
 }
 
 /**
@@ -105,22 +150,16 @@ void nvm_writeDoubleWord(uint32_t addrWord, char *data)
  */
 ssize_t nvm_write(uint32_t addr, char *data, size_t size)
 {
-    UDK_UNUSED(size);
-    if (nvm_file == NULL)
-    {
-        nvm_init();
-    }
-    fseek(nvm_file, addr, SEEK_SET);
+    uint16_t end = 0;
+    uint16_t index = 0;
 
-    char tab[8] = {0};
-    tab[0] = data[0];
-    tab[1] = data[1];
-    tab[2] = data[2];
-    tab[3] = 0;
-    tab[4] = data[3];
-    tab[5] = data[4];
-    tab[6] = data[5];
-    tab[7] = 0;
-    fwrite(tab, sizeof(tab), 1, nvm_file);
-    return 0;
+    end = (((uint16_t)size) / SIZE_DOUBLE_WORD) * SIZE_DOUBLE_WORD;
+
+    while (index <= end)
+    {
+        nvm_writeDoubleWord(addr / 2, &data[index]);
+        addr += SIZE_WORD;
+        index += SIZE_DOUBLE_WORD;
+    }
+    return index;
 }
