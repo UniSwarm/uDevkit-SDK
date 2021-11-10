@@ -98,6 +98,17 @@ void __attribute__((__interrupt__, no_auto_psv)) _ADCAN24Interrupt(void);
 void __attribute__((__interrupt__, no_auto_psv)) _ADCAN25Interrupt(void);
 #endif
 
+struct adc_params
+{
+    uint8_t masterClock_src;
+    uint8_t masterClock_div;
+};
+
+struct adc_params _adc_params = {
+    .masterClock_src = 0b00,      // default : clock from FP (FOSC /2)
+    .masterClock_div = 1 - 1,  // default : 1:1 clock divider
+};
+
 struct adc_dev
 {
     void (*handler)(int16_t);
@@ -373,34 +384,33 @@ int adc_init(void)
 #endif
 
     // Configure the common ADC clock.
-    // ADCON3Hbits.CLKSEL = 0b01;     // clock from Fp oscillator
-    ADCON3Hbits.CLKSEL = 0b00;   // clock from FP (FOSC /2)
-    ADCON3Hbits.CLKDIV = 1 - 1;  // 1/1 divider (1:1)
+    ADCON3Hbits.CLKSEL = _adc_params.masterClock_src;
+    ADCON3Hbits.CLKDIV = _adc_params.masterClock_div;
 
     // Configure the cores’ ADC clock.
 #ifdef ADC_HAVE_DEDICATED_CORE0
-    ADCORE0Hbits.ADCS = 2 - 1;  // clock divider (1:2)
-    ADCORE0Hbits.RES = 0b11;    // 12 bits
-    ADCORE0Lbits.SAMC = 20 - 2; // 0 Tad delay before sampling
-    ADCON4Lbits.SAMC0EN = 1;    // Conversion delay enabled
+    ADCORE0Hbits.ADCS = 2 - 1;   // clock divider (1:2)
+    ADCORE0Hbits.RES = 0b11;     // 12 bits
+    ADCORE0Lbits.SAMC = 20 - 2;  // 0 Tad delay before sampling
+    ADCON4Lbits.SAMC0EN = 1;     // Conversion delay enabled
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE1
-    ADCORE1Hbits.ADCS = 2 - 1;  // clock divider (1:2)
-    ADCORE1Hbits.RES = 0b11;    // 12 bits
-    ADCORE1Lbits.SAMC = 20 - 2;      // 0 Tad delay before sampling
-    ADCON4Lbits.SAMC1EN = 1;    // Conversion delay enabled
+    ADCORE1Hbits.ADCS = 2 - 1;   // clock divider (1:2)
+    ADCORE1Hbits.RES = 0b11;     // 12 bits
+    ADCORE1Lbits.SAMC = 20 - 2;  // 0 Tad delay before sampling
+    ADCON4Lbits.SAMC1EN = 1;     // Conversion delay enabled
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE2
-    ADCORE2Hbits.ADCS = 2 - 1;  // clock divider (1:2)
-    ADCORE2Hbits.RES = 0b11;    // 12 bits
-    ADCORE2Lbits.SAMC = 20 - 2;      // 0 Tad delay before sampling
-    ADCON4Lbits.SAMC2EN = 1;    // Conversion delay enabled
+    ADCORE2Hbits.ADCS = 2 - 1;   // clock divider (1:2)
+    ADCORE2Hbits.RES = 0b11;     // 12 bits
+    ADCORE2Lbits.SAMC = 20 - 2;  // 0 Tad delay before sampling
+    ADCON4Lbits.SAMC2EN = 1;     // Conversion delay enabled
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE3
-    ADCORE3Hbits.ADCS = 2 - 1;  // clock divider (1:2)
-    ADCORE3Hbits.RES = 0b11;    // 12 bits
-    ADCORE3Lbits.SAMC = 20 - 2;      // 0 Tad delay before sampling
-    ADCON4Lbits.SAMC3EN = 1;    // Conversion delay enabled
+    ADCORE3Hbits.ADCS = 2 - 1;   // clock divider (1:2)
+    ADCORE3Hbits.RES = 0b11;     // 12 bits
+    ADCORE3Lbits.SAMC = 20 - 2;  // 0 Tad delay before sampling
+    ADCON4Lbits.SAMC3EN = 1;     // Conversion delay enabled
 #endif
 
     // Configure the ADC reference sources.
@@ -422,6 +432,7 @@ int adc_init(void)
 int adc_setMasterClock(uint8_t source, uint16_t divider)
 {
     // Configure the common ADC clock.
+    _adc_params.masterClock_src = source;
     ADCON3Hbits.CLKSEL = source;
 
     if (divider < 1)
@@ -429,6 +440,7 @@ int adc_setMasterClock(uint8_t source, uint16_t divider)
         divider = 1;
     }
 
+    _adc_params.masterClock_div = divider - 1;
     ADCON3Hbits.CLKDIV = divider - 1;
 
     return 0;
