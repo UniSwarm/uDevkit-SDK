@@ -75,9 +75,6 @@ int board_bridgesEnabled(void);
 #    define BRIDGE_D_PWM 4
 #endif
 
-#define BRIDGES_OVER_TEMP_TRIG_HIGH_MAX 800
-#define BRIDGES_OVER_TEMP_TRIG_LOW_MAX  750
-
 // hall sensors
 #define BLDC_1_HALL_HIGH_STATE 1
 #define BLDC_1_HALL_A          PORTCbits.RC1
@@ -168,8 +165,8 @@ int8_t board_getIo(uint8_t io);
 #    define LIMIT_SWITCH_8_OFFSET  3
 #    define LIMIT_SWITCH_9_PORT    PORTC
 #    define LIMIT_SWITCH_9_OFFSET  12
-#    define LIMIT_SWITCH_10_PORT    PORTD
-#    define LIMIT_SWITCH_10_OFFSET  0
+#    define LIMIT_SWITCH_10_PORT   PORTD
+#    define LIMIT_SWITCH_10_OFFSET 0
 #    define LIMIT_SWITCH_11_PORT   PORTD
 #    define LIMIT_SWITCH_11_OFFSET 2
 #    define LIMIT_SWITCH_12_PORT   PORTE
@@ -195,5 +192,27 @@ int8_t board_getIo(uint8_t io);
 #    define ADRESS_BYTE_PAGE_4_STD 0xAD000  // PAGE 173
 #    define ADRESS_BYTE_PAGE_5_CAL 0xAE000  // PAGE 174
 #endif
+
+// Currents scales
+#if BOARD_VERSION < 111
+#    define CURRENT_SCALE_M2S_MUL 1
+#    define CURRENT_SCALE_M2S_DIV 1
+#else
+// CURRENT_SCALE_M2S = od base unit in amp * shunt res * comparator gain * adc res / adc input range
+// CURRENT_SCALE_M2S = 0.01A * 0.0005ohm * 50 * 4096 / 3.3 // integer, amp to ADC unit
+#    define CURRENT_SCALE_M2S_MUL 4
+#    define CURRENT_SCALE_M2S_DIV 10
+#endif
+
+// Currents limits
+#define CURRENT_PEAK_LIMIT      (3500 * CURRENT_SCALE_M2S_MUL / CURRENT_SCALE_M2S_DIV)
+#define CURRENT_PEAK_PERIOD     40
+#define CURRENT_BURST_LIMIT     (3200 * CURRENT_SCALE_M2S_MUL / CURRENT_SCALE_M2S_DIV)
+#define CURRENT_BURST_TIME      1000  // in ms
+#define CURRENT_SUSTAINED_LIMIT (2000 * CURRENT_SCALE_M2S_MUL / CURRENT_SCALE_M2S_DIV)
+
+// Temperatures limits
+#define BRIDGES_OVER_TEMP_TRIG_HIGH_MAX 800
+#define BRIDGES_OVER_TEMP_TRIG_LOW_MAX  750
 
 #endif  // UMC1BDS32FR_H
