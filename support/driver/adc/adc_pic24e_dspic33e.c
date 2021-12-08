@@ -74,6 +74,16 @@ int adc_setCoreResolution(uint8_t core, uint16_t resolution)
     return 0;
 }
 
+int adc_setSamplingCycles(uint8_t core, uint16_t cycles)
+{
+    UDK_UNUSED(core);
+    UDK_UNUSED(cycles);
+
+    // TODO implement
+
+    return 0;
+}
+
 int adc_startSampling(uint8_t channel)
 {
     AD1CHS0 = channel;     // select channel to convert

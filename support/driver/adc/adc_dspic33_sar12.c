@@ -105,7 +105,7 @@ struct adc_params
 };
 
 struct adc_params _adc_params = {
-    .masterClock_src = 0b00,      // default : clock from FP (FOSC /2)
+    .masterClock_src = 0b00,   // default : clock from FP (FOSC /2)
     .masterClock_div = 1 - 1,  // default : 1:1 clock divider
 };
 
@@ -420,7 +420,7 @@ int adc_init(void)
 
     ADCON2Lbits.SHRADCS = 2 - 1;   // clock divider (1:2)
     ADCON1Hbits.SHRRES = 0b11;     // 12 bits
-    ADCON2Hbits.SHRSAMC = 20 - 2;  // 20 Tad
+    ADCON2Hbits.SHRSAMC = 40 - 2;  // 20 Tad
     // ADCON1Lbits.NRE = 1; // Noise Reduction Enable bit, Holds conversion process for 1 T ADCORE when another core
     // completes conversion to reduce noise between cores
 
@@ -509,6 +509,56 @@ int adc_setCoreResolution(uint8_t core, uint16_t resolution)
 #endif
         default:  // shared core
             ADCON1Hbits.SHRRES = resolution;
+            break;
+    }
+
+    return 0;
+}
+
+int adc_setSamplingCycles(uint8_t core, uint16_t cycles)
+{
+#ifdef ADC_HAVE_DEDICATED_CORE0
+    uint8_t enable = (cycles > 0);
+#endif
+
+    if (cycles < 2)
+    {
+        cycles = 2;
+    }
+
+    if (cycles > 1024 + 2)
+    {
+        cycles = 1024 + 2;
+    }
+
+    switch (core)
+    {
+#ifdef ADC_HAVE_DEDICATED_CORE0
+        case 0:
+            ADCORE0Lbits.SAMC = cycles - 2;
+            ADCON4Lbits.SAMC0EN = enable;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE1
+        case 1:
+            ADCORE1Lbits.SAMC = cycles - 2;
+            ADCON4Lbits.SAMC1EN = enable;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE2
+        case 2:
+            ADCORE2Lbits.SAMC = cycles - 2;
+            ADCON4Lbits.SAMC2EN = enable;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE3
+        case 3:
+            ADCORE3Lbits.SAMC = cycles - 2;
+            ADCON4Lbits.SAMC3EN = enable;
+            break;
+#endif
+        default:  // shared core
+            ADCON2Hbits.SHRSAMC = cycles - 2;
             break;
     }
 

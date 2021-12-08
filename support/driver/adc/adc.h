@@ -18,6 +18,7 @@ int adc_init(void);
 int adc_setMasterClock(uint8_t source, uint16_t divider);
 int adc_setCoreClockDivider(uint8_t core, uint16_t divider);
 int adc_setCoreResolution(uint8_t core, uint16_t resolution);
+int adc_setSamplingCycles(uint8_t core, uint16_t cycles);
 // int adc_initchannel(uint8_t channel);
 // int adc_closechannel(uint8_t channel);
 

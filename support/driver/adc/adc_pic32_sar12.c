@@ -173,6 +173,16 @@ int adc_setCoreResolution(uint8_t core, uint16_t resolution)
     return 0;
 }
 
+int adc_setSamplingCycles(uint8_t core, uint16_t cycles)
+{
+    UDK_UNUSED(core);
+    UDK_UNUSED(cycles);
+
+    // TODO implement
+
+    return 0;
+}
+
 uint8_t adc_sarFromChannel(uint8_t channel)
 {
     if (channel <= 4)
