@@ -111,10 +111,18 @@ int board_bridgesEnabled(void);
 #    define I_B_SADC_CHAN    1
 #    define I_B_CMP          2
 #    define I_B_PGA          2
-#    define I_CD_SADC_CHAN   0
-#    define I_CD_CMP         1
-#    define I_CD_PGA         1
-#    define ANI1_SADC_CHAN   6
+#    if BOARD_VERSION < 120
+#        define I_CD_SADC_CHAN 0
+#        define I_CD_CMP       1
+#        define I_CD_PGA       1
+#    else
+#        define I_C_SADC_CHAN 0
+#        define I_C_CMP       1
+#        define I_C_PGA       1
+#        define I_D_SADC_CHAN 3
+#        define I_D_CMP       1  // master
+#    endif
+#    define ANI1_SADC_CHAN 6
 #    if BOARD_VERSION < 111
 #        define BEMF_B_SADC_CHAN 4
 #        define ANI2_SADC_CHAN   8
@@ -194,14 +202,19 @@ int8_t board_getIo(uint8_t io);
 #endif
 
 // Currents scales
+// CURRENT_SCALE_M2S = od base unit in amp * shunt res * comparator gain * adc res / adc input range
+// CURRENT_SCALE_M2S = 0.01A * 0.0005ohm * 50 * 4096 / 3.3 // integer, amp to ADC unit
 #if BOARD_VERSION < 111
 #    define CURRENT_SCALE_M2S_MUL 1
 #    define CURRENT_SCALE_M2S_DIV 1
 #else
-// CURRENT_SCALE_M2S = od base unit in amp * shunt res * comparator gain * adc res / adc input range
-// CURRENT_SCALE_M2S = 0.01A * 0.0005ohm * 50 * 4096 / 3.3 // integer, amp to ADC unit
-#    define CURRENT_SCALE_M2S_MUL 4
-#    define CURRENT_SCALE_M2S_DIV 10
+#    if BOARD_VERSION < 120
+#        define CURRENT_SCALE_M2S_MUL 4
+#        define CURRENT_SCALE_M2S_DIV 10
+#    else
+#        define CURRENT_SCALE_M2S_MUL 2
+#        define CURRENT_SCALE_M2S_DIV 10
+#    endif
 #endif
 
 // Currents limits
