@@ -23,8 +23,9 @@ int board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
-    ANSELA = 0xFFFF;  // all analog inputs of port A as analog inputs
+    ANSELA = 0xFF0F;  // all analog inputs of port A as analog inputs
     ANSELB = 0x0000;  // all analog inputs of port B as digital buffer unless RB2
+    TRISAbits.TRISA4 = 0;
 
     // remappable pins
     // Unlock configuration pin
@@ -33,6 +34,9 @@ int board_init_io(void)
     // CAN fd 1
     _CAN1RXR = 37;           // CAN1RX ==> RP57
     _RP34R = _RPOUT_CAN1TX;  // CAN1TX ==> RP73
+
+    _RP45R = _RPOUT_PWM4H;  // PWM4H ==> RP45
+    //ODCBbits.ODCB13 = 1;    // RB13/RP45 in open drain mode
 
     // Lock configuration pin
     lockIoConfig();
