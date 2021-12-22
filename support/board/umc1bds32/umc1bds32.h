@@ -209,11 +209,11 @@ int8_t board_getIo(uint8_t io);
 #    define CURRENT_SCALE_M2S_DIV 1
 #else
 #    if BOARD_VERSION < 120
-#        define CURRENT_SCALE_M2S_MUL 4
-#        define CURRENT_SCALE_M2S_DIV 10
-#    else
 #        define CURRENT_SCALE_M2S_MUL 2
-#        define CURRENT_SCALE_M2S_DIV 10
+#        define CURRENT_SCALE_M2S_DIV 5
+#    else
+#        define CURRENT_SCALE_M2S_MUL 3
+#        define CURRENT_SCALE_M2S_DIV 5
 #    endif
 #endif
 
