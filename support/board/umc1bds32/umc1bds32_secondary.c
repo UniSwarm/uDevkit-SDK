@@ -1,11 +1,11 @@
 /**
- * @file umc1bds32_slave.c
+ * @file umc1bds32_secondary.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright UniSwarm 2019-2021
  *
  * @date March 1, 2019, 09:35 AM
  *
- * @brief Code for UMC1BDS32FR / UMC1BDS32FR-I board, slave core
+ * @brief Code for UMC1BDS32FR / UMC1BDS32FR-I board, secondary core
  *
  * product page:
  *  https://uniswarm.eu/uboards/umc/umc1bds32

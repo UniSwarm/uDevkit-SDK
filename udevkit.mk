@@ -17,7 +17,7 @@ YELLOW := $(shell command -v tput > /dev/null && tput setaf 3)
 GREEN := $(shell command -v tput > /dev/null && tput setaf 2)
 NORM := $(shell command -v tput > /dev/null && tput sgr0)
 
-ifndef SLAVE
+ifndef SECONDARY
   COMPCOLOR ?= $(GREEN)
 else
   COMPCOLOR ?= $(YELLOW)

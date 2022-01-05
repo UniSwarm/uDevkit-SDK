@@ -126,17 +126,17 @@ int board_init_io(void)
     TRISDbits.TRISD14 = 0;  // bridgeen in out mode
 
     // ==== sensor 1
-    LATEbits.LATE11 = 0;    // QEI1A_Rxen disable
+    LATEbits.LATE11 = 0;    // QEI1A_Rxen disable // TODO disable when not used in receive
     TRISEbits.TRISE11 = 0;  // QEI1A_Rxen
     LATEbits.LATE10 = 0;    // QEI1A_Txen disable // TODO SSI
     TRISEbits.TRISE10 = 0;  // QEI1A_Txen
 
-    LATDbits.LATD8 = 0;    // QEI1B_Rxen disable
+    LATDbits.LATD8 = 0;    // QEI1B_Rxen disable // TODO disable when not used in receive
     TRISDbits.TRISD8 = 0;  // QEI1B_Rxen
     LATDbits.LATD9 = 0;    // QEI1B_Txen disable
     TRISDbits.TRISD9 = 0;  // QEI1B_Txen
 
-    LATEbits.LATE9 = 0;    // QEI1I_Rxen disable
+    LATEbits.LATE9 = 0;    // QEI1I_Rxen disable // TODO disable when not used in receive
     TRISEbits.TRISE9 = 0;  // QEI1I_Rxen
 
     // SSI, channel 2
