@@ -21,10 +21,11 @@
 #include <stdio.h>
 #include <string.h>
 
+SOCKET can_soc = -1;
+
 #if defined(WIN32) || defined(_WIN32)
 #    include <winsock2.h>
 #    define SOCKET_MODE 0
-SOCKET sim_can;
 
 #elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__)    \
     || defined(__APPLE__)
@@ -50,7 +51,6 @@ void can_sendconfig(uint8_t can);
 
 /****************************************************************************************/
 /*          Local variable                                                              */
-int soc;
 can_dev cans[] = {
     {.bitRate = 0, .bus = "can0"},
 #if CAN_COUNT >= 2
@@ -103,6 +103,38 @@ int can_sim_setBus(rt_dev_t device, char *bus)
     return 0;
 }
 
+int can_sim_isConnected(rt_dev_t device)
+{
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    if (cans[can].used == 0)
+    {
+        return 0;
+    }
+
+#ifdef SIM_UNIX
+    if (can_soc == -1)
+    {
+        return 0;
+    }
+
+    int error = 0;
+    socklen_t len = sizeof(error);
+    int retval = getsockopt(can_soc, SOL_SOCKET, SO_ERROR, &error, &len);
+    if (retval != 0 || error != 0)
+    {
+        can_close(device);
+        return 0;
+    }
+#endif
+
+    return 1;
+}
+
 int can_open(rt_dev_t device)
 {
     uint8_t can = MINOR(device);
@@ -117,9 +149,9 @@ int can_open(rt_dev_t device)
     struct ifreq ifr;
     struct sockaddr_can addr;
 
-    /* open socket */
-    soc = socket(PF_CAN, SOCK_RAW, CAN_RAW);
-    if (soc < 0)
+    // open socket
+    can_soc = socket(PF_CAN, SOCK_RAW, CAN_RAW);
+    if (can_soc < 0)
     {
         return -1;
     }
@@ -127,17 +159,21 @@ int can_open(rt_dev_t device)
     addr.can_family = AF_CAN;
     strcpy(ifr.ifr_name, cans[can].bus);
 
-    if (ioctl(soc, SIOCGIFINDEX, &ifr) < 0)
+    if (ioctl(can_soc, SIOCGIFINDEX, &ifr) < 0)
     {
+        can_soc = -1;
+        close(can_soc);
         return -1;
     }
 
     addr.can_ifindex = ifr.ifr_ifindex;
 
-    fcntl(soc, F_SETFL, O_NONBLOCK);
+    fcntl(can_soc, F_SETFL, O_NONBLOCK);
 
-    if (bind(soc, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+    if (bind(can_soc, (struct sockaddr *)&addr, sizeof(addr)) < 0)
     {
+        can_soc = -1;
+        close(can_soc);
         return -1;
     }
 #endif
@@ -151,8 +187,8 @@ int can_open(rt_dev_t device)
 #    endif
 
     // socket creation
-    sim_can = socket(AF_INET, SOCK_STREAM, 0);
-    if (sim_can == INVALID_SOCKET)
+    can_soc = socket(AF_INET, SOCK_STREAM, 0);
+    if (can_soc == INVALID_SOCKET)
     {
         perror("socket()");
         exit(errno);
@@ -164,19 +200,19 @@ int can_open(rt_dev_t device)
     ssin.sin_port = htons(35468);
 
     // socket connection to host
-    if (connect(sim_can, (SOCKADDR *)&ssin, sizeof(ssin)) != SOCKET_ERROR)
+    if (connect(can_soc, (SOCKADDR *)&ssin, sizeof(ssin)) != SOCKET_ERROR)
     {
         printf("Connected successfully to port %s %d\n", inet_ntoa(ssin.sin_addr), htons(ssin.sin_port));
     }
     else
     {
         printf("Cannot connect to port %d\n", SIM_SOCKET_PORT);
-        closesocket(sim_can);
-        sim_can = 0;
+        closesocket(can_soc);
+        can_soc = 0;
     }
     u_long ret;
     u_long ul = 1;
-    ioctlsocket(sim_can, FIONBIO, (unsigned long *)&ul);
+    ioctlsocket(can_soc, FIONBIO, (unsigned long *)&ul);
     if (ret == 0)
     {
         return 0;
@@ -202,7 +238,7 @@ int can_close(rt_dev_t device)
     WSACleanup();
 #    endif
 
-    closesocket(sim_can);
+    closesocket(can_soc);
 #endif
 
     return 0;
@@ -220,7 +256,7 @@ int can_enable(rt_dev_t device)
     can_sendconfig(can);
 
 #ifdef SIM_WIN
-    send(sim_can, "connect:can0\n", 13, 0);
+    send(can_soc, "connect:can0\n", 13, 0);
     usleep(100);
 #endif
 
@@ -368,7 +404,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     {
         frame.data[i] = data[i];
     }
-    retval = write(soc, &frame, sizeof(struct can_frame));
+    retval = write(can_soc, &frame, sizeof(struct can_frame));
     if (retval != sizeof(struct can_frame))
     {
         return -1;
@@ -385,7 +421,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
         id += 2;
     }
     sockdata[id] = '\n';
-    send(sim_can, sockdata, id + 1, 0);
+    send(can_soc, sockdata, id + 1, 0);
 #endif
 
     return 1;
@@ -398,9 +434,10 @@ static const char FlexibleDataRateFlag = 'F';
 static const char BitRateSwitchFlag = 'B';
 static const char ErrorStateFlag = 'E';
 static const char LocalEchoFlag = 'L';
-#endif
 
-unsigned char hexToChar(unsigned char h)
+unsigned char can_hexToChar(unsigned char h);
+
+unsigned char can_hexToChar(unsigned char h)
 {
     if (h >= '0' && h <= '9')
     {
@@ -417,6 +454,8 @@ unsigned char hexToChar(unsigned char h)
     return 0;
 }
 
+#endif
+
 int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
     UDK_UNUSED(fifo);
@@ -431,7 +470,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 #ifdef SIM_UNIX
     struct can_frame frame;
 
-    int recvbytes = read(soc, &frame, sizeof(struct can_frame));
+    int recvbytes = read(can_soc, &frame, sizeof(struct can_frame));
     if (recvbytes >= 0)
     {
         header->id = frame.can_id & 0x1FFFFFFF;
@@ -457,7 +496,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 #ifdef SIM_WIN
     char sockdata[50];
     u_long ret;
-    int size = recv(sim_can, sockdata, 50, SOCKET_MODE);
+    int size = recv(can_soc, sockdata, 50, SOCKET_MODE);
     if (size <= 0)
     {
         return 0;
@@ -488,7 +527,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     }
     for (i = 0; i < header->size; i++)
     {
-        data[i] = hexToChar(sockdata[pos]) * 16 + hexToChar(sockdata[pos + 1]);
+        data[i] = can_hexToChar(sockdata[pos]) * 16 + can_hexToChar(sockdata[pos + 1]);
         pos += 2;
     }
     return 1;

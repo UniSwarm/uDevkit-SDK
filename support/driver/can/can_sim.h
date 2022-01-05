@@ -45,6 +45,7 @@ typedef struct
 #    define can_sim_setBus(device, bus) 0
 #else
 int can_sim_setBus(rt_dev_t device, char *bus);
+int can_sim_isConnected(rt_dev_t device);
 #endif
 
 #endif  // CAN_SIM_H
