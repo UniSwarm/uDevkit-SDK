@@ -5,7 +5,7 @@
  *
  * @date March 2, 10:00 AM
  *
- * @brief Master Slave Interface driver for dsPIC33CH
+ * @brief Primary / secondary cores interface driver for dsPIC33CH
  *
  * Implementation based on Microchip document DS70005278B :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/dsPIC33-PIC24-FRM-Master-Slave-Interface-MSI-Module-70005278b.pdf
@@ -17,62 +17,62 @@
 #include <libpic30.h>
 
 /**
- * @brief Starts the slave with id `slave_id`
- * @param slave_id slave id, first one is 1
+ * @brief Starts the secondary with id `secondary_id`
+ * @param secondary_id secondary id, first one is 1
  * @return 0 if ok, -1 in case of error
  */
-int msi_slave_start(const uint8_t slave_id)
+int msi_secondary_start(const uint8_t secondary_id)
 {
-    if (slave_id != 1)
+    if (secondary_id != 1)
     {
         return -1;
     }
 
-    start_slave();
+    start_secondary();
     return 0;
 }
 
 /**
- * @brief Stops the slave with id `slave_id`
- * @param slave_id slave id, first one is 1
+ * @brief Stops the secondary with id `secondary_id`
+ * @param secondary_id secondary id, first one is 1
  * @return 0 if ok, -1 in case of error
  */
-int msi_slave_stop(const uint8_t slave_id)
+int msi_secondary_stop(const uint8_t secondary_id)
 {
-    if (slave_id != 1)
+    if (secondary_id != 1)
     {
         return -1;
     }
 
-    stop_slave();
+    stop_secondary();
     return 0;
 }
 
 /**
- * @brief Resets the slave with id `slave_id`
- * @param slave_id slave id, first one is 1
+ * @brief Resets the secondary with id `secondary_id`
+ * @param secondary_id secondary id, first one is 1
  * @return 0 if ok, -1 in case of error
  */
-int msi_slave_reset(const uint8_t slave_id)
+int msi_secondary_reset(const uint8_t secondary_id)
 {
-    if (slave_id != 1)
+    if (secondary_id != 1)
     {
         return -1;
     }
 
-    stop_slave();
-    start_slave();
+    stop_secondary();
+    start_secondary();
     return 0;
 }
 
 /**
- * @brief Gives the status of the slave with id `slave_id`
- * @param slave_id slave id, first one is 1
+ * @brief Gives the status of the secondary with id `secondary_id`
+ * @param secondary_id secondary id, first one is 1
  * @return MSI_CORE_STATUS status enum
  */
-MSI_CORE_STATUS msi_slave_status(const uint8_t slave_id)
+MSI_CORE_STATUS msi_secondary_status(const uint8_t secondary_id)
 {
-    if (slave_id != 1)
+    if (secondary_id != 1)
     {
         return -1;
     }
@@ -99,33 +99,33 @@ MSI_CORE_STATUS msi_slave_status(const uint8_t slave_id)
 }
 
 /**
- * @brief Program the PRAM of slave with the program data
- * @param slave_id slave id, first one is 1
+ * @brief Program the PRAM of secondary with the program data
+ * @param secondary_id secondary id, first one is 1
  * @return 0 if ok, -1 in case of error
  */
-int msi_slave_program(const uint8_t slave_id, __eds__ unsigned char *program)
+int msi_secondary_program(const uint8_t secondary_id, __eds__ unsigned char *program)
 {
-    if (slave_id != 1)
+    if (secondary_id != 1)
     {
         return -1;
     }
 
-    return program_slave(slave_id, 0, program);
+    return program_secondary(secondary_id, 0, program);
 }
 
 /**
- * @brief Check the PRAM content of slave with the program data
- * @param slave_id slave id, first one is 1
+ * @brief Check the PRAM content of secondary with the program data
+ * @param secondary_id secondary id, first one is 1
  * @return 0 if ok, -1 in case of error
  */
-int msi_slave_verify_program(const uint8_t slave_id, __eds__ unsigned char *program)
+int msi_secondary_verify_program(const uint8_t secondary_id, __eds__ unsigned char *program)
 {
-    if (slave_id != 1)
+    if (secondary_id != 1)
     {
         return -1;
     }
 
-    return program_slave(slave_id, 1, program);
+    return program_secondary(secondary_id, 1, program);
 }
 
 int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_t size)

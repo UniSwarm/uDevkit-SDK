@@ -5,7 +5,7 @@
  *
  * @date March 2, 10:00 AM
  *
- * @brief Master Slave Interface driver for dsPIC33CH
+ * @brief Primary / secondary cores interface driver for dsPIC33CH
  *
  * Implementation based on Microchip document DS70005278B :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/dsPIC33-PIC24-FRM-Master-Slave-Interface-MSI-Module-70005278b.pdf
@@ -25,7 +25,7 @@
     || defined(DEVICE_33CH64MP205) || defined(DEVICE_33CH64MP206) || defined(DEVICE_33CH64MP208)                       \
     || defined(DEVICE_33CH64MP502) || defined(DEVICE_33CH64MP503) || defined(DEVICE_33CH64MP505)                       \
     || defined(DEVICE_33CH64MP506) || defined(DEVICE_33CH64MP508)
-#    define MSI_HAVE_MASTER_INTERFACE
+#    define MSI_HAVE_PRIMARY_INTERFACE
 #endif
 
 #if defined(DEVICE_33CH128MP202S1) || defined(DEVICE_33CH128MP203S1) || defined(DEVICE_33CH128MP205S1)                 \
@@ -39,7 +39,7 @@
     || defined(DEVICE_33CH64MP205S1) || defined(DEVICE_33CH64MP206S1) || defined(DEVICE_33CH64MP208S1)                 \
     || defined(DEVICE_33CH64MP502S1) || defined(DEVICE_33CH64MP503S1) || defined(DEVICE_33CH64MP505S1)                 \
     || defined(DEVICE_33CH64MP506S1) || defined(DEVICE_33CH64MP508S1)
-#    define MSI_HAVE_SLAVE_INTERFACE
+#    define MSI_HAVE_SECONDARY_INTERFACE
 #endif
 
 #if defined(DEVICE_33CH128MP202) || defined(DEVICE_33CH128MP202S1) || defined(DEVICE_33CH128MP203)                     \
@@ -69,13 +69,13 @@
 #endif
 
 #if __XC16_VERSION__ >= 1070
-#    define start_slave()          _start_secondary()
-#    define stop_slave()           _stop_secondary()
-#    define program_slave(s, v, i) _program_secondary((s), (v), (i))
+#    define start_secondary()          _start_secondary()
+#    define stop_secondary()           _stop_secondary()
+#    define program_secondary(s, v, i) _program_secondary((s), (v), (i))
 #else
-#    define start_slave()          _start_slave()
-#    define stop_slave()           _stop_slave()
-#    define program_slave(s, v, i) _program_slave((s), (v), (i))
+#    define start_secondary()          _start_slave()
+#    define stop_secondary()           _stop_slave()
+#    define program_secondary(s, v, i) _program_slave((s), (v), (i))
 #endif
 
 #define MSI_PROTOCOL_M2S 0

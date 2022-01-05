@@ -5,7 +5,7 @@
  *
  * @date March 2, 10:00 AM
  *
- * @brief Master Slave Interface driver for dsPIC33CH, slave part
+ * @brief Master Slave Interface driver for dsPIC33CH, secondary part
  *
  * Implementation based on Microchip document DS70005278B :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/dsPIC33-PIC24-FRM-Master-Slave-Interface-MSI-Module-70005278b.pdf
@@ -19,7 +19,7 @@
  * @brief Gives the status of the master core
  * @return MSI_CORE_STATUS status enum
  */
-MSI_CORE_STATUS msi_master_status(void)
+MSI_CORE_STATUS msi_primary_status(void)
 {
     if (SI1STATbits.MSTRST)
     {
