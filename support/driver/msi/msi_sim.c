@@ -12,55 +12,55 @@
 
 // TODO : dummy implementation, please implement me
 
-#ifdef MSI_HAVE_MASTER_INTERFACE
-int msi_slave_start(const uint8_t slave_id)
+#ifdef MSI_HAVE_PRIMARY_INTERFACE
+int msi_secondary_start(const uint8_t secondary_id)
 {
-    UDK_UNUSED(slave_id);
+    UDK_UNUSED(secondary_id);
     return 0;
 }
 
-int msi_slave_stop(const uint8_t slave_id)
+int msi_secondary_stop(const uint8_t secondary_id)
 {
-    UDK_UNUSED(slave_id);
+    UDK_UNUSED(secondary_id);
     return 0;
 }
 
-int msi_slave_reset(const uint8_t slave_id)
+int msi_secondary_reset(const uint8_t secondary_id)
 {
-    UDK_UNUSED(slave_id);
+    UDK_UNUSED(secondary_id);
     return 0;
 }
 
-MSI_CORE_STATUS msi_slave_status(const uint8_t slave_id)
+MSI_CORE_STATUS msi_secondary_status(const uint8_t secondary_id)
 {
-    UDK_UNUSED(slave_id);
+    UDK_UNUSED(secondary_id);
     return 0;
 }
 
-int msi_slave_program(const uint8_t slave_id, __eds__ unsigned char *program)
+int msi_secondary_program(const uint8_t secondary_id, __eds__ unsigned char *program)
 {
-    UDK_UNUSED(slave_id);
+    UDK_UNUSED(secondary_id);
     UDK_UNUSED(program);
     return 0;
 }
 
-int msi_slave_verify_program(const uint8_t slave_id, __eds__ unsigned char *program)
+int msi_secondary_verify_program(const uint8_t secondary_id, __eds__ unsigned char *program)
 {
-    UDK_UNUSED(slave_id);
+    UDK_UNUSED(secondary_id);
     UDK_UNUSED(program);
     return 0;
 }
 
 #endif
 
-#ifndef MSI_HAVE_MASTER_INTERFACE
+#ifndef MSI_HAVE_PRIMARY_INTERFACE
 MSI_CORE_STATUS msi_master_status(void)
 {
     return 0;
 }
 #endif
 
-#ifdef MSI_HAVE_MASTER_INTERFACE
+#ifdef MSI_HAVE_PRIMARY_INTERFACE
 int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_t size)
 {
     UDK_UNUSED(protocol);
@@ -90,7 +90,7 @@ int msi_protocol_canRead(const uint8_t protocol)
 }
 #endif
 
-#ifndef MSI_HAVE_MASTER_INTERFACE
+#ifndef MSI_HAVE_PRIMARY_INTERFACE
 int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_t size)
 {
     UDK_UNUSED(protocol);

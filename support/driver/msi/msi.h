@@ -27,6 +27,10 @@ typedef enum
     MSI_CORE_STATUS_LOWPOWERRUN
 } MSI_CORE_STATUS;
 
+#ifdef SIMULATOR
+#    define __eds__
+#endif
+
 #ifdef MSI_HAVE_PRIMARY_INTERFACE
 int msi_secondary_start(const uint8_t secondary_id);
 int msi_secondary_stop(const uint8_t secondary_id);
