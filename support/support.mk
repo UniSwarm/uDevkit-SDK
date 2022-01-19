@@ -35,7 +35,7 @@ include $(UDEVKIT)/support/archi/simulator/simulator.mk
 empty:=
 space:= \n $(empty)
 $(OUT_PWD)/modules.h : $(firstword $(MAKEFILE_LIST))
-	@echo "$(YELLOW)generate module.h...$(NORM)"
+	@printf "$(COMPCOLOR)MK %-36s => %s\n$(NORM)" Makefile $(OUT_PWD)/module.h
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "\n// defines use of modules and drivers\n\
 $(subst $(space),\n,$(foreach DRIVER,$(sort $(DRIVERS)),#define USE_$(DRIVER)\n))\n\
