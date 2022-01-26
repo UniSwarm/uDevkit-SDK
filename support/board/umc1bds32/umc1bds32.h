@@ -225,6 +225,10 @@ int8_t board_getIo(uint8_t io);
 #define CURRENT_SUSTAINED_LIMIT (2000 * CURRENT_SCALE_M2S_MUL / CURRENT_SCALE_M2S_DIV)
 #define CURRENT_I2T_SCALE_SHIFT 3
 
+// Under/Over voltage protection
+#define UNDER_VOLTAGE_MIN 1100
+#define OVER_VOLTAGE_MAX  5500
+
 // Temperatures limits
 #define BRIDGES_OVER_TEMP_TRIG_HIGH_MAX 800
 #define BRIDGES_OVER_TEMP_TRIG_LOW_MAX  750
