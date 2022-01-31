@@ -44,7 +44,7 @@ struct timer_dev
 };
 
 #if TIMER_COUNT >= 1
-void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _T1Interrupt(void);
 #endif
 
 struct timer_dev timers[] = {
@@ -447,7 +447,7 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 }
 
 #if TIMER_COUNT >= 1
-void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _T1Interrupt(void)
 {
     if (timers[0].handler)
     {

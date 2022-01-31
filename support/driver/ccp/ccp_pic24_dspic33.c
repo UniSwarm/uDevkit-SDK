@@ -44,31 +44,31 @@ struct ccp_dev
 };
 
 #if CCP_COUNT >= 1
-void __attribute__((interrupt, no_auto_psv)) _CCT1Interrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _CCT1Interrupt(void);
 #endif
 #if CCP_COUNT >= 2
-void __attribute__((interrupt, no_auto_psv)) _CCT2Interrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _CCT2Interrupt(void);
 #endif
 #if CCP_COUNT >= 3
-void __attribute__((interrupt, no_auto_psv)) _CCT3Interrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _CCT3Interrupt(void);
 #endif
 #if CCP_COUNT >= 4
-void __attribute__((interrupt, no_auto_psv)) _CCT4Interrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _CCT4Interrupt(void);
 #endif
 #if CCP_COUNT >= 5
-void __attribute__((interrupt, no_auto_psv)) _CCT5Interrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _CCT5Interrupt(void);
 #endif
 #if CCP_COUNT >= 6
-void __attribute__((interrupt, no_auto_psv)) _CCT6Interrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _CCT6Interrupt(void);
 #endif
 #if CCP_COUNT >= 7
-void __attribute__((interrupt, no_auto_psv)) _CCT7Interrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _CCT7Interrupt(void);
 #endif
 #if CCP_COUNT >= 8
-void __attribute__((interrupt, no_auto_psv)) _CCT8Interrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _CCT8Interrupt(void);
 #endif
 #if CCP_COUNT >= 9
-void __attribute__((interrupt, no_auto_psv)) _CCT9Interrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _CCT9Interrupt(void);
 #endif
 
 struct ccp_dev ccps[] = {
@@ -977,7 +977,7 @@ int ccp_setValue(rt_dev_t device, uint32_t value)
 }
 
 #if CCP_COUNT >= 1
-void __attribute__((interrupt, no_auto_psv)) _CCT1Interrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _CCT1Interrupt(void)
 {
     (*ccps[0].handler)();
     _CCT1IF = 0;
@@ -985,7 +985,7 @@ void __attribute__((interrupt, no_auto_psv)) _CCT1Interrupt(void)
 #endif
 
 #if CCP_COUNT >= 2
-void __attribute__((interrupt, no_auto_psv)) _CCT2Interrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _CCT2Interrupt(void)
 {
     (*ccps[1].handler)();
     _CCT2IF = 0;
@@ -993,7 +993,7 @@ void __attribute__((interrupt, no_auto_psv)) _CCT2Interrupt(void)
 #endif
 
 #if CCP_COUNT >= 3
-void __attribute__((interrupt, no_auto_psv)) _CCT3Interrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _CCT3Interrupt(void)
 {
     (*ccps[2].handler)();
     _CCT3IF = 0;
@@ -1001,7 +1001,7 @@ void __attribute__((interrupt, no_auto_psv)) _CCT3Interrupt(void)
 #endif
 
 #if CCP_COUNT >= 4
-void __attribute__((interrupt, no_auto_psv)) _CCT4Interrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _CCT4Interrupt(void)
 {
     (*ccps[3].handler)();
     _CCT4IF = 0;
@@ -1009,7 +1009,7 @@ void __attribute__((interrupt, no_auto_psv)) _CCT4Interrupt(void)
 #endif
 
 #if CCP_COUNT >= 5
-void __attribute__((interrupt, no_auto_psv)) _CCT5Interrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _CCT5Interrupt(void)
 {
     (*ccps[4].handler)();
     _CCT5IF = 0;
@@ -1017,7 +1017,7 @@ void __attribute__((interrupt, no_auto_psv)) _CCT5Interrupt(void)
 #endif
 
 #if CCP_COUNT >= 6
-void __attribute__((interrupt, no_auto_psv)) _CCT6Interrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _CCT6Interrupt(void)
 {
     (*ccps[5].handler)();
     _CCT6IF = 0;
@@ -1025,7 +1025,7 @@ void __attribute__((interrupt, no_auto_psv)) _CCT6Interrupt(void)
 #endif
 
 #if CCP_COUNT >= 7
-void __attribute__((interrupt, no_auto_psv)) _CCT7Interrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _CCT7Interrupt(void)
 {
     (*ccps[6].handler)();
     _CCT7IF = 0;
@@ -1033,7 +1033,7 @@ void __attribute__((interrupt, no_auto_psv)) _CCT7Interrupt(void)
 #endif
 
 #if CCP_COUNT >= 8
-void __attribute__((interrupt, no_auto_psv)) _CCT8Interrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _CCT8Interrupt(void)
 {
     (*ccps[7].handler)();
     _CCT8IF = 0;
@@ -1041,7 +1041,7 @@ void __attribute__((interrupt, no_auto_psv)) _CCT8Interrupt(void)
 #endif
 
 #if CCP_COUNT >= 9
-void __attribute__((interrupt, no_auto_psv)) _CCT9Interrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _CCT9Interrupt(void)
 {
     (*ccps[8].handler)();
     _CCT9IF = 0;

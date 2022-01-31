@@ -52,16 +52,16 @@ struct uart_dev
 };
 
 #if UART_COUNT >= 1
-void __attribute__((interrupt, no_auto_psv)) _U1TXInterrupt(void);
-void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _U1TXInterrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _U1RXInterrupt(void);
 #endif
 #if UART_COUNT >= 2
-void __attribute__((interrupt, no_auto_psv)) _U2TXInterrupt(void);
-void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _U2TXInterrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _U2RXInterrupt(void);
 #endif
 #if UART_COUNT >= 3
-void __attribute__((interrupt, no_auto_psv)) _U3TXInterrupt(void);
-void __attribute__((interrupt, no_auto_psv)) _U3RXInterrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _U3TXInterrupt(void);
+void __attribute__((interrupt, auto_psv, weak)) _U3RXInterrupt(void);
 #endif
 
 struct uart_dev uarts[] = {
@@ -549,7 +549,7 @@ uint8_t uart_bitStop(rt_dev_t device)
 }
 
 #if UART_COUNT >= 1
-void __attribute__((interrupt, no_auto_psv)) _U1TXInterrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _U1TXInterrupt(void)
 {
     char uart_tmpchar[1];
     while (!U1STAHbits.UTXBF && fifo_pop(&uarts[0].buffTx, uart_tmpchar, 1) == 1)
@@ -559,7 +559,7 @@ void __attribute__((interrupt, no_auto_psv)) _U1TXInterrupt(void)
     _U1TXIF = 0;
 }
 
-void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _U1RXInterrupt(void)
 {
     char rec[4];
     rec[0] = U1RXREG;
@@ -571,7 +571,7 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
 #endif
 
 #if UART_COUNT >= 2
-void __attribute__((interrupt, no_auto_psv)) _U2TXInterrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _U2TXInterrupt(void)
 {
     char uart_tmpchar[1];
     while (!U2STAHbits.UTXBF && fifo_pop(&uarts[1].buffTx, uart_tmpchar, 1) == 1)
@@ -581,7 +581,7 @@ void __attribute__((interrupt, no_auto_psv)) _U2TXInterrupt(void)
     _U2TXIF = 0;
 }
 
-void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _U2RXInterrupt(void)
 {
     char rec[4];
     rec[0] = U2RXREG;
@@ -593,7 +593,7 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
 #endif
 
 #if UART_COUNT >= 3
-void __attribute__((interrupt, no_auto_psv)) _U3TXInterrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _U3TXInterrupt(void)
 {
     char uart_tmpchar[1];
     while (!U3STAHbits.UTXBF && fifo_pop(&uarts[2].buffTx, uart_tmpchar, 1) == 1)
@@ -603,7 +603,7 @@ void __attribute__((interrupt, no_auto_psv)) _U3TXInterrupt(void)
     _U3TXIF = 0;
 }
 
-void __attribute__((interrupt, no_auto_psv)) _U3RXInterrupt(void)
+void __attribute__((interrupt, auto_psv, weak)) _U3RXInterrupt(void)
 {
     char rec[4];
     rec[0] = U3RXREG;
