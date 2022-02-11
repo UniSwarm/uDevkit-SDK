@@ -39,18 +39,22 @@ int8_t board_getButton(uint8_t button);
 
 // outs
 #define LED_CLK_LAT LATBbits.LATB12
-#define LED_CLK_RP 44
+#define LED_CLK_RP  44
 #define LED_DAT_LAT LATBbits.LATB13
-#define LED_DAT_RP 45
+#define LED_DAT_RP  45
 
 // Analog input
 #define VOLTAGEIN_ADC_CHAN 3
 
-// Page adress
+// Memory page adress
 #define ADRESS_BYTE_PAGE_1_COM 0x52000
 #define ADRESS_BYTE_PAGE_2_MAN 0x53000
 #define ADRESS_BYTE_PAGE_3_STD 0x54000
 #define ADRESS_BYTE_PAGE_4_STD 0x55000
 #define ADRESS_BYTE_PAGE_5_CAL 0x56000
+
+#define OTP_SECTOR_BEGINADDR      (0x801700 * 2)
+#define OTP_SECTOR_SECTOR_ENDADDR (0x801800 * 2)
+#define OTP_SECTOR_BYTE_SIZE      (OTP_SECTOR_SECTOR_ENDADDR - OTP_SECTOR_BEGINADDR)
 
 #endif  // UIO1LED_H

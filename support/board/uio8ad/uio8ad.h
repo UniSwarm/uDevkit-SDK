@@ -83,11 +83,15 @@ int board_setIOPWMFrequency(uint8_t io, uint8_t frequency);
 #define BOARD_IN7_ADC_CHAN 14
 uint8_t board_analogin(uint8_t io);
 
-// Page adress
+// Memory page adress
 #define ADRESS_BYTE_PAGE_1_COM 0x52000
 #define ADRESS_BYTE_PAGE_2_MAN 0x53000
 #define ADRESS_BYTE_PAGE_3_STD 0x54000
 #define ADRESS_BYTE_PAGE_4_STD 0x55000
 #define ADRESS_BYTE_PAGE_5_CAL 0x56000
+
+#define OTP_SECTOR_BEGINADDR      (0x801700 * 2)
+#define OTP_SECTOR_SECTOR_ENDADDR (0x801800 * 2)
+#define OTP_SECTOR_BYTE_SIZE      (OTP_SECTOR_SECTOR_ENDADDR - OTP_SECTOR_BEGINADDR)
 
 #endif  // UIO8AD_H

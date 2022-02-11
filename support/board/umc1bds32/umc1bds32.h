@@ -105,14 +105,14 @@ int board_bridgesEnabled(void);
 #define IO_COUNT 0
 // UMC 90
 //#define IO_COUNT 8
-#define IO_1_IN  PORTEbits.RE4
-#define IO_2_IN  PORTEbits.RE5
-#define IO_3_IN  PORTDbits.RD15
-#define IO_4_IN  PORTEbits.RE3
-#define IO_5_IN  PORTCbits.RC12
-#define IO_6_IN  PORTDbits.RD0
-#define IO_7_IN  PORTDbits.RD2
-#define IO_8_IN  PORTEbits.RE14
+#define IO_1_IN PORTEbits.RE4
+#define IO_2_IN PORTEbits.RE5
+#define IO_3_IN PORTDbits.RD15
+#define IO_4_IN PORTEbits.RE3
+#define IO_5_IN PORTCbits.RC12
+#define IO_6_IN PORTDbits.RD0
+#define IO_7_IN PORTDbits.RD2
+#define IO_8_IN PORTEbits.RE14
 int8_t board_getIo(uint8_t io);
 
 // limit switches inputs
@@ -152,13 +152,6 @@ int8_t board_getIo(uint8_t io);
 #define STO_OUTPUT       PORTEbits.RE1
 #define P12V_ENABLE      LATEbits.LATE2
 
-// Page adress
-#define ADRESS_BYTE_PAGE_1_COM 0xAA000  // PAGE 170
-#define ADRESS_BYTE_PAGE_2_MAN 0xAB000  // PAGE 171
-#define ADRESS_BYTE_PAGE_3_STD 0xAC000  // PAGE 172
-#define ADRESS_BYTE_PAGE_4_STD 0xAD000  // PAGE 173
-#define ADRESS_BYTE_PAGE_5_CAL 0xAE000  // PAGE 174
-
 // Currents scales
 // CURRENT_SCALE_M2S = od base unit in amp * shunt res * comparator gain * adc res / adc input range
 // CURRENT_SCALE_M2S = 0.01A * 0.0005ohm * 50 * 4096 / 3.3 // integer, amp to ADC unit
@@ -185,5 +178,16 @@ int8_t board_getIo(uint8_t io);
 // Temperatures limits
 #define BRIDGES_OVER_TEMP_TRIG_HIGH_MAX 800  // 0.1 °C
 #define BRIDGES_OVER_TEMP_TRIG_LOW_MAX  750  // 0.1 °C
+
+// Memory page adress
+#define ADRESS_BYTE_PAGE_1_COM 0xAA000  // PAGE 170
+#define ADRESS_BYTE_PAGE_2_MAN 0xAB000  // PAGE 171
+#define ADRESS_BYTE_PAGE_3_STD 0xAC000  // PAGE 172
+#define ADRESS_BYTE_PAGE_4_STD 0xAD000  // PAGE 173
+#define ADRESS_BYTE_PAGE_5_CAL 0xAE000  // PAGE 174
+
+#define OTP_SECTOR_BEGINADDR      (0x801700 * 2)
+#define OTP_SECTOR_SECTOR_ENDADDR (0x801800 * 2)
+#define OTP_SECTOR_BYTE_SIZE      (OTP_SECTOR_SECTOR_ENDADDR - OTP_SECTOR_BEGINADDR)
 
 #endif  // UMC1BDS32FR_H

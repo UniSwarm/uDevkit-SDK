@@ -58,6 +58,7 @@ typedef enum
 } DO_MODE;
 int board_setIO(uint8_t io, uint16_t state);
 int board_setIOMode(uint8_t io, DO_MODE mode);
+#define board_setIOPWMFrequency(a, b)
 
 // Analog input
 #define ANALOGIN_COUNT     4
@@ -67,13 +68,15 @@ int board_setIOMode(uint8_t io, DO_MODE mode);
 #define BOARD_IN3_ADC_CHAN 3
 uint8_t board_analogin(uint8_t io);
 
-// Page adress
+// Memory page adress
 #define ADRESS_PAGE_1_COM 0x52000
 #define ADRESS_PAGE_2_MS  0x53000
 #define ADRESS_PAGE_3_APP 0x54000
 #define ADRESS_PAGE_4_APP 0x55000
 #define ADRESS_PAGE_5_CAL 0x56000
 
-#define board_setIOPWMFrequency(a, b)
+#define OTP_SECTOR_BEGINADDR      (0x801700 * 2)
+#define OTP_SECTOR_SECTOR_ENDADDR (0x801800 * 2)
+#define OTPSECTOR_BYTE_SIZE       (OTP_SECTOR_SECTOR_ENDADDR - OTP_SECTOR_BEGINADDR)
 
 #endif  // UIO44FR_H
