@@ -239,7 +239,7 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
 int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
 {
 #if TIMER_COUNT >= 1
-    uint8_t div = 0;
+    uint8_t divisor = 0;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -248,11 +248,11 @@ int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
 
     if (prvalue > 65535)
     {
-        div = 0b01;  // 8 divider
+        divisor = 0b01;  // 8 divider
         prvalue >>= 3;
         if (prvalue > 65535)
         {
-            div = 0b11;  // 256 divider
+            divisor = 0b11;  // 256 divider
             prvalue >>= 5;
             if (prvalue > 65535)
             {
@@ -264,8 +264,8 @@ int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
     switch (timer)
     {
         case 0:
-            T1CONbits.TCKPS = div;  // set divide number
-            PR1 = prvalue;          // pr value, comparator value
+            T1CONbits.TCKPS = divisor;  // set divide number
+            PR1 = prvalue;              // pr value, comparator value
             break;
     }
 
@@ -343,7 +343,8 @@ int timer_setPeriodUs(rt_dev_t device, uint32_t periodUs)
 
     timers[timer].periodUs = periodUs;
 
-    prvalue = (float)sysclock_periphFreq(SYSCLOCK_CLOCK_TIMER) / 1000000.0 * (float)periodUs;
+    uint32_t freqCCp = sysclock_periphFreq(SYSCLOCK_CLOCK_TIMER);
+    prvalue = (float)freqCCp / 1000000.0 * (float)periodUs;
 
     return timer_setPeriod(device, (uint32_t)prvalue);
 #else

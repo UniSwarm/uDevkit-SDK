@@ -47,18 +47,18 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 
         case SYSCLOCK_CLOCK_REFCLK:
         {
-            uint16_t div = REFOCONHbits.RODIV << 1;
-            return (sysclock_sysfreq >> 1) / div;
+            uint16_t divisor = REFOCONHbits.RODIV << 1;
+            return (sysclock_sysfreq >> 1) / divisor;
         }
 
         case SYSCLOCK_CLOCK_SYSCLK:
         {
-            uint16_t div = 1;
+            uint16_t divisor = 1;
             if (CLKDIVbits.DOZEN == 1)
             {
-                div = 1 << (CLKDIVbits.DOZE);
+                divisor = 1 << (CLKDIVbits.DOZE);
             }
-            return (sysclock_sysfreq >> 1) / div;
+            return (sysclock_sysfreq >> 1) / divisor;
         }
 
         case SYSCLOCK_CLOCK_FRC:
@@ -99,54 +99,54 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
  * @param div divisor to set
  * @return 0 if ok, -1 in case of error
  */
-int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
+int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t divisor)
 {
-    uint16_t udiv = 0;
+    uint16_t udivisor = 0;
     if (busClock == SYSCLOCK_CLOCK_FRC)
     {
-        if (div > 256)
+        if (divisor > 256)
         {
             return -1;
         }
-        if (div == 256)
+        if (divisor == 256)
         {
-            udiv = 8;
+            udivisor = 8;
         }
         else
         {
-            for (udiv = 0; div != 0; udiv++)
+            for (udivisor = 0; divisor != 0; udivisor++)
             {
-                div >>= 1;
+                divisor >>= 1;
             }
         }
-        udiv -= 1;
-        CLKDIVbits.FRCDIV = udiv;
+        udivisor -= 1;
+        CLKDIVbits.FRCDIV = udivisor;
         return 0;
     }
     if (busClock == SYSCLOCK_CLOCK_REFCLK)
     {
-        udiv >>= 1;
-        REFOCONHbits.RODIV = udiv;
+        udivisor >>= 1;
+        REFOCONHbits.RODIV = udivisor;
         return 0;
     }
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
     {
-        if (div == 1)
+        if (divisor == 1)
         {
             CLKDIVbits.DOZEN = 0;
         }
         else
         {
-            if (div > 128)
+            if (divisor > 128)
             {
                 return -1;
             }
-            for (udiv = 0; div != 0; udiv++)
+            for (udivisor = 0; divisor != 0; udivisor++)
             {
-                div >>= 1;
+                divisor >>= 1;
             }
-            udiv -= 1;
-            CLKDIVbits.DOZE = udiv;
+            udivisor -= 1;
+            CLKDIVbits.DOZE = udivisor;
             CLKDIVbits.DOZEN = 1;
         }
         return 0;
@@ -163,7 +163,7 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
 int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 {
     int32_t freq = -1;
-    uint16_t div;
+    uint16_t divisor;
     switch (source)
     {
         case SYSCLOCK_SRC_LPRC:
@@ -199,17 +199,17 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 
             if (source == SYSCLOCK_SRC_FRCDIV)
             {
-                div = CLKDIVbits.FRCDIV;
-                if (div != 0b111)
+                divisor = CLKDIVbits.FRCDIV;
+                if (divisor != 0b111)
                 {
-                    div = 1 << div;
+                    divisor = 1 << divisor;
                 }
                 else
                 {
-                    div = 256;
+                    divisor = 256;
                 }
 
-                freq = freq / div;  // FRC / div
+                freq = freq / divisor;  // FRC / divisor
             }
             break;
 
@@ -388,14 +388,16 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         CLKDIVbits.PLLPRE = 1;  // N1=1
     }
     else
+    {
         CLKDIVbits.PLLPRE = 3;  // N1=3
+    }
 #else
     CLKDIVbits.PLLPRE = 1;  // N1=1
 #endif
 
     PLLFBDbits.PLLFBDIV = 80;       // M = 80 ==> 640MHz FVco
     PLLDIVbits.POST1DIV = 2;        // N2 = 2  ==> 320MHz
-    PLLDIVbits.POST2DIV = 2;        // N3 = 2
+    PLLDIVbits.POST2DIV = 2;        // N3 = 2  ==> 160MHz
     __builtin_write_OSCCONH(0x03);  // primary osc input
     __builtin_write_OSCCONL(OSCCON | 0x01);
 

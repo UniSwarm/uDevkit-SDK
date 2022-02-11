@@ -915,13 +915,13 @@ int can_filterConfiguration(rt_dev_t device,
     switch (can)
     {
         case 0:
-            con = (uint8_t *)&C1FLTCON0L;
-            reg = (uint16_t *)&C1FLTOBJ0L;
+            con = (volatile uint8_t *)&C1FLTCON0L;
+            reg = (volatile uint16_t *)&C1FLTOBJ0L;
             break;
 #    if CAN_COUNT >= 2
         case 1:
-            con = (uint8_t *)&C2FLTCON0L;
-            reg = (uint16_t *)&C2FLTOBJ0L;
+            con = (volatile uint8_t *)&C2FLTCON0L;
+            reg = (volatile uint16_t *)&C2FLTOBJ0L;
             break;
 #    endif
     }
@@ -964,11 +964,11 @@ int can_filterEnable(rt_dev_t device, uint8_t nFilter)
     switch (can)
     {
         case 0:
-            con = (uint8_t *)&C1FLTCON0L;
+            con = (volatile uint8_t *)&C1FLTCON0L;
             break;
 #    if CAN_COUNT >= 2
         case 1:
-            con = (uint8_t *)&C2FLTCON0L;
+            con = (volatile uint8_t *)&C2FLTCON0L;
             break;
 #    endif
             con[nFilter] = con[nFilter] | (1 << 7);  // Enable the filter
@@ -998,11 +998,11 @@ int can_filterDisable(rt_dev_t device, uint8_t nFilter)
     switch (can)
     {
         case 0:
-            con = (uint8_t *)&C1FLTCON0L;
+            con = (volatile uint8_t *)&C1FLTCON0L;
             break;
 #    if CAN_COUNT >= 2
         case 1:
-            con = (uint8_t *)&C2FLTCON0L;
+            con = (volatile uint8_t *)&C2FLTCON0L;
             break;
 #    endif
             con[nFilter] = con[nFilter] & 0x7F;  // Disable the filter

@@ -757,7 +757,8 @@ int ccp_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 
     ccps[ccp].periodUs = periodMs * 1000;
 
-    prvalue = (float)sysclock_periphFreq(SYSCLOCK_CLOCK_CCP) / 1000.0 * (float)periodMs;
+    uint32_t freqCCp = sysclock_periphFreq(SYSCLOCK_CLOCK_CCP);
+    prvalue = (float)freqCCp / 1000.0 * (float)periodMs;
 
     return ccp_setPeriod(device, (uint32_t)prvalue);
 #else
@@ -802,9 +803,8 @@ int ccp_setPeriodUs(rt_dev_t device, uint32_t periodUs)
 
     ccps[ccp].periodUs = periodUs;
 
-    prvalue = (float)sysclock_periphFreq(SYSCLOCK_CLOCK_CCP);
-    prvalue = prvalue / 1000000.0;
-    prvalue = prvalue * (float)periodUs;
+    uint32_t freqCCp = sysclock_periphFreq(SYSCLOCK_CLOCK_CCP);
+    prvalue = (float)freqCCp / 1000000.0 * (float)periodUs;
 
     return ccp_setPeriod(device, (uint32_t)prvalue);
 #else

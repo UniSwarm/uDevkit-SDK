@@ -39,7 +39,7 @@ int sysclock_setClock(uint32_t freq);
 
 // new API
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock);
-int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div);
+int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t divisor);
 
 // source clock
 int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source);
