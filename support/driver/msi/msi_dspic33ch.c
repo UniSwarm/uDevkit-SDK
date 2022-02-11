@@ -14,7 +14,9 @@
 #include "msi.h"
 
 #include <archi.h>
+
 #include <libpic30.h>
+#include <string.h>
 
 /**
  * @brief Starts the secondary with id `secondary_id`
@@ -138,12 +140,7 @@ int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_
         {
             return -1;
         }
-        uint16_t *ptr = (uint16_t *)data;
-        MSI1MBX0D = *(ptr++);
-        MSI1MBX1D = *(ptr++);
-        MSI1MBX2D = *(ptr++);
-        MSI1MBX3D = *(ptr++);
-        MSI1MBX4D = *(ptr++);
+        memcpy((void *)&MSI1MBX0D, (const void *)data, 10);
         return 0;
     }
     if (protocol == MSI_PROTOCOL_M2S2)
@@ -152,10 +149,7 @@ int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_
         {
             return -1;
         }
-        uint16_t *ptr = (uint16_t *)data;
-        MSI1MBX10D = *(ptr++);
-        MSI1MBX11D = *(ptr++);
-        MSI1MBX12D = *(ptr++);
+        memcpy((void *)&MSI1MBX10D, (const void *)data, 6);
         return 0;
     }
     return -1;
@@ -197,16 +191,7 @@ int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_s
         {
             return -1;
         }
-        uint16_t *ptr = (uint16_t *)data;
-        *ptr = MSI1MBX5D;
-        ptr++;
-        *ptr = MSI1MBX6D;
-        ptr++;
-        *ptr = MSI1MBX7D;
-        ptr++;
-        *ptr = MSI1MBX8D;
-        ptr++;
-        *ptr = MSI1MBX9D;
+        memcpy((void *)data, (void *)&MSI1MBX5D, 10);
         return 0;
     }
 
@@ -216,12 +201,7 @@ int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_s
         {
             return -1;
         }
-        uint16_t *ptr = (uint16_t *)data;
-        *ptr = MSI1MBX13D;
-        ptr++;
-        *ptr = MSI1MBX14D;
-        ptr++;
-        *ptr = MSI1MBX15D;
+        memcpy((void *)data, (void *)&MSI1MBX13D, 6);
         return 0;
     }
     return -1;

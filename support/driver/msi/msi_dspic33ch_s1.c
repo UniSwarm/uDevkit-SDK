@@ -15,6 +15,8 @@
 
 #include <archi.h>
 
+#include <string.h>
+
 /**
  * @brief Gives the status of the master core
  * @return MSI_CORE_STATUS status enum
@@ -51,12 +53,7 @@ int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_
         {
             return -1;
         }
-        uint16_t *ptr = (uint16_t *)data;
-        SI1MBX5D = *(ptr++);
-        SI1MBX6D = *(ptr++);
-        SI1MBX7D = *(ptr++);
-        SI1MBX8D = *(ptr++);
-        SI1MBX9D = *(ptr++);
+        memcpy((void *)&SI1MBX5D, (const void *)data, 10);
         return 0;
     }
     if (protocol == MSI_PROTOCOL_S2M2)
@@ -65,10 +62,7 @@ int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_
         {
             return -1;
         }
-        uint16_t *ptr = (uint16_t *)data;
-        SI1MBX13D = *(ptr++);
-        SI1MBX14D = *(ptr++);
-        SI1MBX15D = *(ptr++);
+        memcpy((void *)&SI1MBX13D, (const void *)data, 6);
         return 0;
     }
     return -1;
@@ -110,16 +104,7 @@ int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_s
         {
             return -1;
         }
-        uint16_t *ptr = (uint16_t *)data;
-        *ptr = SI1MBX0D;
-        ptr++;
-        *ptr = SI1MBX1D;
-        ptr++;
-        *ptr = SI1MBX2D;
-        ptr++;
-        *ptr = SI1MBX3D;
-        ptr++;
-        *ptr = SI1MBX4D;
+        memcpy((void *)data, (void *)&SI1MBX0D, 10);
         return 0;
     }
 
@@ -129,12 +114,7 @@ int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_s
         {
             return -1;
         }
-        uint16_t *ptr = (uint16_t *)data;
-        *ptr = SI1MBX10D;
-        ptr++;
-        *ptr = SI1MBX11D;
-        ptr++;
-        *ptr = SI1MBX12D;
+        memcpy((void *)data, (void *)&SI1MBX10D, 6);
         return 0;
     }
     return -1;
