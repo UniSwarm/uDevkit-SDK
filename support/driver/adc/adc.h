@@ -28,6 +28,8 @@ int16_t adc_value(uint8_t channel);
 int16_t adc_getValue(uint8_t channel);
 // int adc_setSamplingPeriod(uint16_t priodMs);
 
+int adc_setTriggerSource(uint8_t channel, uint8_t triggerSource);
+
 int adc_setHandler(uint8_t channel, void (*handler)(int16_t));
 
 #if defined(DEVICE_33EP128GS702) || defined(DEVICE_33EP128GS704) || defined(DEVICE_33EP128GS705)                       \

@@ -643,6 +643,19 @@ int16_t adc_getValue(uint8_t channel)
     return *(&ADCBUF0 + channel);  // Read the ADC conversion result
 }
 
+int adc_setTriggerSource(uint8_t channel, uint8_t triggerSource)
+{
+    if (channel >= ADC_CHANNEL_MAX)
+    {
+        return -1;
+    }
+
+    volatile char *adc_triggerReg = ((volatile char *)&ADTRIG0L) + channel;
+    *adc_triggerReg = triggerSource;
+
+    return 0;
+}
+
 int adc_setHandler(uint8_t channel, void (*handler)(int16_t))
 {
     if (channel >= ADC_CHANNEL_MAX)

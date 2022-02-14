@@ -105,6 +105,17 @@ int16_t adc_value(uint8_t channel)
     return adc_channels[channel];
 }
 
+int adc_setTriggerSource(uint8_t channel, uint8_t triggerSource);
+{
+    UDK_UNUSED(triggerSource);
+    if (channel >= ADC_CHANNEL_COUNT)
+    {
+        return -1;
+    }
+
+    return 0;
+}
+
 int adc_setHandler(uint8_t channel, void (*handler)(int16_t))
 {
     UDK_UNUSED(handler);
