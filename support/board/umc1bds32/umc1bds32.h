@@ -52,6 +52,7 @@ int board_bridgesEnabled(void);
 #define BRIDGE_DISABLED_OUT  LATDbits.LATD14
 #define BRIDGE_DISABLED_IN   PORTDbits.RD14
 #define BRIDGE_POWER_ENABLED LATCbits.LATC12
+#define BRIDGE_COUNT         4
 #define BRIDGE_A_PWM         2
 #define BRIDGE_B_PWM         1
 #define BRIDGE_C_PWM         3
