@@ -11,7 +11,7 @@
 #ifndef ARCHI_H
 #define ARCHI_H
 
-void archi_init();
+void archi_init(void);
 
 // ======== Microchip 16 bits family =======
 #if defined(ARCHI_dspic30f)
