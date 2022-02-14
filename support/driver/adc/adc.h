@@ -14,6 +14,8 @@
 
 #include <driver/device.h>
 
+#include "adc_device.h"
+
 int adc_init(void);
 int adc_setMasterClock(uint8_t source, uint16_t divider);
 int adc_setCoreClockDivider(uint8_t core, uint16_t divider);
@@ -31,22 +33,5 @@ int16_t adc_getValue(uint8_t channel);
 int adc_setTriggerSource(uint8_t channel, uint8_t triggerSource);
 
 int adc_setHandler(uint8_t channel, void (*handler)(int16_t));
-
-#if defined(DEVICE_33EP128GS702) || defined(DEVICE_33EP128GS704) || defined(DEVICE_33EP128GS705)                       \
-    || defined(DEVICE_33EP128GS706) || defined(DEVICE_33EP128GS708) || defined(DEVICE_33EP128GS804)                    \
-    || defined(DEVICE_33EP128GS805) || defined(DEVICE_33EP128GS806) || defined(DEVICE_33EP128GS808)                    \
-    || defined(DEVICE_33EP16GS202) || defined(DEVICE_33EP16GS502) || defined(DEVICE_33EP16GS504)                       \
-    || defined(DEVICE_33EP16GS505) || defined(DEVICE_33EP16GS506) || defined(DEVICE_33EP32GS202)                       \
-    || defined(DEVICE_33EP32GS502) || defined(DEVICE_33EP32GS504) || defined(DEVICE_33EP32GS505)                       \
-    || defined(DEVICE_33EP32GS506) || defined(DEVICE_33EP64GS502) || defined(DEVICE_33EP64GS504)                       \
-    || defined(DEVICE_33EP64GS505) || defined(DEVICE_33EP64GS506) || defined(DEVICE_33EP64GS708)                       \
-    || defined(DEVICE_33EP64GS804) || defined(DEVICE_33EP64GS805) || defined(DEVICE_33EP64GS806)                       \
-    || defined(DEVICE_33EP64GS808) || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
-#    include "adc_dspic33_sar12.h"
-#elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
-#    include "adc_pic24e_dspic33e.h"
-#elif defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mk)
-#    include "adc_pic32_sar12.h"
-#endif
 
 #endif  // ADC_H
