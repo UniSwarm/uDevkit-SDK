@@ -25,7 +25,7 @@ typedef struct
     uint8_t used;
     uint8_t mode;
     char bus[20];
-} can_dev;
+} CAN_DEV;
 
 typedef struct
 {
@@ -33,7 +33,7 @@ typedef struct
     uint8_t can_dlc;
     uint8_t flag;
     char data[8];
-} can_sim_frame;
+} CAN_SIM_FRAME;
 
 #define CAN_SIM_MODULE 0x0014
 

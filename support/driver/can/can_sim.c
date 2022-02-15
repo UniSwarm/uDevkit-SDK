@@ -51,7 +51,7 @@ void can_sendconfig(uint8_t can);
 
 /****************************************************************************************/
 /*          Local variable                                                              */
-can_dev cans[] = {
+CAN_DEV cans[] = {
     {.bitRate = 0, .bus = "can0"},
 #if CAN_COUNT >= 2
     {.bitRate = 0, .bus = "can1"},
@@ -66,7 +66,7 @@ can_dev cans[] = {
 
 void can_sendconfig(uint8_t can)
 {
-    simulator_send(CAN_SIM_MODULE, can, CAN_SIM_CONFIG, (char *)&cans[can], sizeof(can_dev));
+    simulator_send(CAN_SIM_MODULE, can, CAN_SIM_CONFIG, (char *)&cans[can], sizeof(CAN_DEV));
 }
 
 rt_dev_t can_getFreeDevice(void)
