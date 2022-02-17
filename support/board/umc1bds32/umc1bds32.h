@@ -150,23 +150,12 @@ int8_t board_getIo(uint8_t io);
 #define STO_OUTPUT       PORTEbits.RE1
 #define P12V_ENABLE      LATEbits.LATE2
 
-// Currents scales
-// CURRENT_SCALE_M2S = od base unit in amp * shunt res * comparator gain * adc res / adc input range
-// CURRENT_SCALE_M2S = 0.01A * 0.0005ohm * 50 * 4096 / 3.3 // integer, amp to ADC unit
-#if BOARD_VERSION < 120
-#    define CURRENT_SCALE_M2S_MUL 2  // TODO verify
-#    define CURRENT_SCALE_M2S_DIV 5
-#else
-#    define CURRENT_SCALE_M2S_MUL 3
-#    define CURRENT_SCALE_M2S_DIV 5
-#endif
-
 // Currents limits
-#define CURRENT_PEAK_LIMIT      (3500 * CURRENT_SCALE_M2S_MUL / CURRENT_SCALE_M2S_DIV)
+#define CURRENT_PEAK_LIMIT      3500
 #define CURRENT_PEAK_PERIOD     40
-#define CURRENT_BURST_LIMIT     (3200 * CURRENT_SCALE_M2S_MUL / CURRENT_SCALE_M2S_DIV)
+#define CURRENT_BURST_LIMIT     3200
 #define CURRENT_BURST_TIME      1000  // in ms
-#define CURRENT_SUSTAINED_LIMIT (2000 * CURRENT_SCALE_M2S_MUL / CURRENT_SCALE_M2S_DIV)
+#define CURRENT_SUSTAINED_LIMIT 2000
 #define CURRENT_I2T_SCALE_SHIFT 3
 
 // Under/Over voltage protection
