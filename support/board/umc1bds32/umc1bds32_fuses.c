@@ -102,18 +102,18 @@
 
 // FS1ICD
 #pragma config S1ICS = PGD1    // ICD Communication Channel Select bits (Communicate on PGEC3 and PGED3)
-#pragma config S1ISOLAT = OFF  // Isolate the Secondary core subsystem from the primary subsystem during Debug (The secondary
-                               // can operate (in debug mode) even if the SLVEN bit in the MSI is zero.)
+#pragma config S1ISOLAT = OFF  // Isolate the Secondary core subsystem from the primary subsystem during Debug (The
+                               // secondary can operate (in debug mode) even if the SLVEN bit in the MSI is zero.)
 #pragma config S1NOBTSWP = OFF  // BOOTSWP Instruction Enable/Disable bit (BOOTSWP instruction is disabled)
 
 // FS1DEVOPT
 #pragma config S1ALTI2C1 = OFF  // Alternate I2C1 Pin bit (I2C1 mapped to SDA1/SCL1 pins)
 #pragma config S1SPI1PIN = PPS  // S1 SPI1 Pin Select bit (Secondary SPI1 uses I/O remap (PPS) pins)
-#pragma config S1SSRE =                                                                                                \
-    ON  // Secondary Secondary Reset Enable (Secondary generated resets will reset the Secondary Enable Bit in the MSI module)
+#pragma config S1SSRE = ON      // Secondary Secondary Reset Enable (Secondary generated resets will reset the Secondary
+                                // Enable Bit in the MSI module)
 #pragma config S1MSRE =                                                                                                \
-    ON  // primary Secondary Reset Enable (The primary software oriented RESET events (RESET Op-Code, Watchdog timeout, TRAP
-        // reset, illegalInstruction) will also cause the secondary subsystem to reset.)
+    ON  // primary Secondary Reset Enable (The primary software oriented RESET events (RESET Op-Code, Watchdog timeout,
+        // TRAP reset, illegalInstruction) will also cause the secondary subsystem to reset.)
 
 // FS1ALTREG
 #pragma config S1CTXT1 =                                                                                               \
@@ -187,60 +187,58 @@
 #pragma config CPRD14 = MSTR  // Pin RD14 Ownership Bits->primary core owns pin
 #pragma config CPRD15 = MSTR  // Pin RD15 Ownership Bits->primary core owns pin
 
-#if BOARD_VERSION >= 110
 // FCFGPRE0
-#    pragma config CPRE0 = MSTR   // Pin RE0 Ownership Bits->primary core owns pin
-#    pragma config CPRE1 = MSTR   // Pin RE1 Ownership Bits->primary core owns pin
-#    pragma config CPRE2 = MSTR   // Pin RE2 Ownership Bits->primary core owns pin
-#    pragma config CPRE3 = MSTR   // Pin RE3 Ownership Bits->primary core owns pin
-#    pragma config CPRE4 = MSTR   // Pin RE4 Ownership Bits->primary core owns pin
-#    pragma config CPRE5 = MSTR   // Pin RE5 Ownership Bits->primary core owns pin
-#    pragma config CPRE6 = MSTR   // Pin RE6 Ownership Bits->primary core owns pin
-#    pragma config CPRE7 = MSTR   // Pin RE7 Ownership Bits->primary core owns pin
-#    pragma config CPRE8 = MSTR   // Pin RE8 Ownership Bits->primary core owns pin
-#    pragma config CPRE9 = MSTR   // Pin RE9 Ownership Bits->primary core owns pin
-#    pragma config CPRE10 = MSTR  // Pin RE10 Ownership Bits->primary core owns pin
-#    pragma config CPRE11 = MSTR  // Pin RE11 Ownership Bits->primary core owns pin
-#    pragma config CPRE12 = SLV1  // Pin RE12 Ownership Bits->primary core owns pin
-#    pragma config CPRE13 = SLV1  // Pin RE13 Ownership Bits->primary core owns pin
-#    pragma config CPRE14 = MSTR  // Pin RE14 Ownership Bits->primary core owns pin
-#    pragma config CPRE15 = MSTR  // Pin RE15 Ownership Bits->primary core owns pin
-#endif
+#pragma config CPRE0 = MSTR   // Pin RE0 Ownership Bits->primary core owns pin
+#pragma config CPRE1 = MSTR   // Pin RE1 Ownership Bits->primary core owns pin
+#pragma config CPRE2 = MSTR   // Pin RE2 Ownership Bits->primary core owns pin
+#pragma config CPRE3 = MSTR   // Pin RE3 Ownership Bits->primary core owns pin
+#pragma config CPRE4 = MSTR   // Pin RE4 Ownership Bits->primary core owns pin
+#pragma config CPRE5 = MSTR   // Pin RE5 Ownership Bits->primary core owns pin
+#pragma config CPRE6 = MSTR   // Pin RE6 Ownership Bits->primary core owns pin
+#pragma config CPRE7 = MSTR   // Pin RE7 Ownership Bits->primary core owns pin
+#pragma config CPRE8 = MSTR   // Pin RE8 Ownership Bits->primary core owns pin
+#pragma config CPRE9 = MSTR   // Pin RE9 Ownership Bits->primary core owns pin
+#pragma config CPRE10 = MSTR  // Pin RE10 Ownership Bits->primary core owns pin
+#pragma config CPRE11 = MSTR  // Pin RE11 Ownership Bits->primary core owns pin
+#pragma config CPRE12 = SLV1  // Pin RE12 Ownership Bits->primary core owns pin
+#pragma config CPRE13 = SLV1  // Pin RE13 Ownership Bits->primary core owns pin
+#pragma config CPRE14 = MSTR  // Pin RE14 Ownership Bits->primary core owns pin
+#pragma config CPRE15 = MSTR  // Pin RE15 Ownership Bits->primary core owns pin
 
 // ################################# MSI configuration #################################
 // FMBXM
-#pragma config MBXM0 =                                                                                                 \
-    M2S  // Mailbox 0 data direction (Mailbox register configured for primary data read (primary to Secondary data transfer)
-#pragma config MBXM1 =                                                                                                 \
-    M2S  // Mailbox 1 data direction (Mailbox register configured for primary data read (primary to Secondary data transfer)
-#pragma config MBXM2 =                                                                                                 \
-    M2S  // Mailbox 2 data direction (Mailbox register configured for primary data read (primary to Secondary data transfer)
-#pragma config MBXM3 =                                                                                                 \
-    M2S  // Mailbox 3 data direction (Mailbox register configured for primary data read (primary to Secondary data transfer)
-#pragma config MBXM4 =                                                                                                 \
-    M2S  // Mailbox 4 data direction (Mailbox register configured for primary data read (primary to Secondary data transfer)
-#pragma config MBXM5 =                                                                                                 \
-    S2M  // Mailbox 5 data direction (Mailbox register configured for primary data read (Secondary to primary data transfer)
-#pragma config MBXM6 =                                                                                                 \
-    S2M  // Mailbox 6 data direction (Mailbox register configured for primary data read (Secondary to primary data transfer)
-#pragma config MBXM7 =                                                                                                 \
-    S2M  // Mailbox 7 data direction (Mailbox register configured for primary data read (Secondary to primary data transfer)
-#pragma config MBXM8 =                                                                                                 \
-    S2M  // Mailbox 8 data direction (Mailbox register configured for primary data read (Secondary to primary data transfer)
-#pragma config MBXM9 =                                                                                                 \
-    S2M  // Mailbox 9 data direction (Mailbox register configured for primary data read (Secondary to primary data transfer)
-#pragma config MBXM10 = M2S  // Mailbox 10 data direction (Mailbox register configured for primary data read (Secondary to
-                             // primary data transfer)
-#pragma config MBXM11 = M2S  // Mailbox 11 data direction (Mailbox register configured for primary data read (Secondary to
-                             // primary data transfer)
-#pragma config MBXM12 = M2S  // Mailbox 12 data direction (Mailbox register configured for primary data read (Secondary to
-                             // primary data transfer)
-#pragma config MBXM13 = S2M  // Mailbox 13 data direction (Mailbox register configured for primary data read (Secondary to
-                             // primary data transfer)
-#pragma config MBXM14 = S2M  // Mailbox 14 data direction (Mailbox register configured for primary data read (Secondary to
-                             // primary data transfer)
-#pragma config MBXM15 = S2M  // Mailbox 15 data direction (Mailbox register configured for primary data read (Secondary to
-                             // primary data transfer)
+#pragma config MBXM0 = M2S  // Mailbox 0 data direction (Mailbox register configured for primary data read (primary to
+                            // Secondary data transfer)
+#pragma config MBXM1 = M2S  // Mailbox 1 data direction (Mailbox register configured for primary data read (primary to
+                            // Secondary data transfer)
+#pragma config MBXM2 = M2S  // Mailbox 2 data direction (Mailbox register configured for primary data read (primary to
+                            // Secondary data transfer)
+#pragma config MBXM3 = M2S  // Mailbox 3 data direction (Mailbox register configured for primary data read (primary to
+                            // Secondary data transfer)
+#pragma config MBXM4 = M2S  // Mailbox 4 data direction (Mailbox register configured for primary data read (primary to
+                            // Secondary data transfer)
+#pragma config MBXM5 = S2M  // Mailbox 5 data direction (Mailbox register configured for primary data read (Secondary to
+                            // primary data transfer)
+#pragma config MBXM6 = S2M  // Mailbox 6 data direction (Mailbox register configured for primary data read (Secondary to
+                            // primary data transfer)
+#pragma config MBXM7 = S2M  // Mailbox 7 data direction (Mailbox register configured for primary data read (Secondary to
+                            // primary data transfer)
+#pragma config MBXM8 = S2M  // Mailbox 8 data direction (Mailbox register configured for primary data read (Secondary to
+                            // primary data transfer)
+#pragma config MBXM9 = S2M  // Mailbox 9 data direction (Mailbox register configured for primary data read (Secondary to
+                            // primary data transfer)
+#pragma config MBXM10 = M2S  // Mailbox 10 data direction (Mailbox register configured for primary data read (Secondary
+                             // to primary data transfer)
+#pragma config MBXM11 = M2S  // Mailbox 11 data direction (Mailbox register configured for primary data read (Secondary
+                             // to primary data transfer)
+#pragma config MBXM12 = M2S  // Mailbox 12 data direction (Mailbox register configured for primary data read (Secondary
+                             // to primary data transfer)
+#pragma config MBXM13 = S2M  // Mailbox 13 data direction (Mailbox register configured for primary data read (Secondary
+                             // to primary data transfer)
+#pragma config MBXM14 = S2M  // Mailbox 14 data direction (Mailbox register configured for primary data read (Secondary
+                             // to primary data transfer)
+#pragma config MBXM15 = S2M  // Mailbox 15 data direction (Mailbox register configured for primary data read (Secondary
+                             // to primary data transfer)
 
 // FMBXHS1
 #pragma config MBXHSA = MBX4   // Mailbox handshake protocol block A register assignment (MSIxMBXD4 assigned to mailbox

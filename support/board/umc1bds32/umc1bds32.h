@@ -18,6 +18,8 @@
 
 #include <stdint.h>
 
+#include <driver/adc.h>
+
 int board_init(void);
 
 #define BOARD_NAME    "UMC1BDS32"
@@ -65,39 +67,16 @@ int board_bridgesEnabled(void);
 #define BLDC_1_HALL_C          PORTCbits.RC0
 
 // analog iputs
-#define TEMP_AB_ADC_CHAN  0
-#define TEMP_CD_ADC_CHAN  1
-#define V_BRIDGE_ADC_CHAN 2
+#define TEMP_AB_ADC_CHAN  ADC_CHANNEL_CH0
+#define TEMP_CD_ADC_CHAN  ADC_CHANNEL_CH1
+#define V_BRIDGE_ADC_CHAN ADC_CHANNEL_CH2
 
-#define V_BRIDGE_SADC_CHAN 16
+#define V_BRIDGE_SADC_CHAN ADC_CHANNEL_CH16
 
-#define BEMF_A_SADC_CHAN 12
-#define BEMF_C_SADC_CHAN 11
-#define BEMF_D_SADC_CHAN 14
-#define I_A_SADC_CHAN    18
-#define I_A_CMP          3
-#define I_B_SADC_CHAN    1
-#define I_B_CMP          2
-
-#if BOARD_VERSION < 120
-#    define I_CD_SADC_CHAN 0
-#    define I_CD_CMP       1
-#else
-#    define I_C_SADC_CHAN 0
-#    define I_C_CMP       1
-#    define I_D_SADC_CHAN 3
-#    define I_D_CMP       1  // master
-#endif
-
-#define ANI1_SADC_CHAN 6
-
-#if BOARD_VERSION < 111
-#    define BEMF_B_SADC_CHAN 4
-#    define ANI2_SADC_CHAN   8
-#else
-#    define BEMF_B_SADC_CHAN 17
-#    define ANI2_SADC_CHAN   13
-#endif
+#define I_A_CMP 3
+#define I_B_CMP 2
+#define I_C_CMP 1
+#define I_D_CMP 1  // master
 
 // IOs
 #define IO_COUNT 0
