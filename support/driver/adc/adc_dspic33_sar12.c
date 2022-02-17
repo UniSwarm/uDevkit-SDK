@@ -613,6 +613,15 @@ int16_t adc_value(uint8_t channel)
     return *(&ADCBUF0 + channel);  // Read the ADC conversion result
 }
 
+volatile int16_t *adc_buffAddr(uint8_t channel)
+{
+    if (channel >= ADC_CHANNEL_MAX)
+    {
+        return NULL;
+    }
+    return (int16_t *)&ADCBUF0 + channel;
+}
+
 int16_t adc_getValue(uint8_t channel)
 {
     uint16_t bitMask;
