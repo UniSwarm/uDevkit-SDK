@@ -43,7 +43,7 @@ $(OUT_PWD)/%.o : %.c
 	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
-	$(VERB)$(OBJDUMP) -S $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.lst
+	$(VERB)$(OBJDUMP) -S -r $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.lst
 
 $(OUT_PWD)/%.o : %.S
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
@@ -62,12 +62,16 @@ HEAP?=100
 # rule to link OBJECTS to an elf in OUT_PWD
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	@printf "$(COMPCOLOR)µLD %-35s => %s\n$(NORM)" "*.o" $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) -lc $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map"
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map"
+
+$(OUT_PWD)/$(PROJECT).s : $(OUT_PWD)/$(PROJECT).elf
+	@printf "$(COMPCOLOR)objdump %-31s => %s\n$(NORM)" "$(OUT_PWD)/$(PROJECT).elf" $(OUT_PWD)/$(PROJECT).s
+	$(VERB)$(OBJDUMP) -S -r $(OUT_PWD)/$(PROJECT).elf > $(OUT_PWD)/$(PROJECT).s
 
 .PHONY : showmem dbg.% dbg
 # prints memory report
 showmem : $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) -lc $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map",--report-mem
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map",--report-mem
 
 # lists symbol present in final elf
 dbg : $(OUT_PWD)/$(PROJECT).elf
