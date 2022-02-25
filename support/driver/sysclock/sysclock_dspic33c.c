@@ -395,9 +395,18 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     CLKDIVbits.PLLPRE = 1;  // N1=1
 #endif
 
-    PLLFBDbits.PLLFBDIV = 80;       // M = 80 ==> 640MHz FVco
-    PLLDIVbits.POST1DIV = 2;        // N2 = 2  ==> 320MHz
-    PLLDIVbits.POST2DIV = 2;        // N3 = 2  ==> 160MHz
+    PLLFBDbits.PLLFBDIV = 80;  // M = 80 ==> 640MHz FVco
+    PLLDIVbits.POST1DIV = 2;   // N2 = 2  ==> 320MHz
+
+    if (fosc == 160000000)
+    {
+        PLLDIVbits.POST2DIV = 1;  // N3 = 1  ==> 320MHz
+    }
+    else
+    {
+        PLLDIVbits.POST2DIV = 2;  // N3 = 2  ==> 160MHz
+    }
+
     __builtin_write_OSCCONH(0x03);  // primary osc input
     __builtin_write_OSCCONL(OSCCON | 0x01);
 
