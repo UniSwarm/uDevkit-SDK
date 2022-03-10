@@ -180,12 +180,3 @@ void board_setBridgesEnabled(int enable)
     _board_sim_bridgesEnable = enable;
 #endif
 }
-
-int board_bridgesEnabled(void)
-{
-#ifndef SIMULATOR
-    return (BRIDGE_DISABLED_IN == 0 && STO_STATUS_OK_IN == 1) ? 1 : 0;
-#else
-    return (_board_sim_bridgesEnable == 1) ? 1 : 0;
-#endif
-}

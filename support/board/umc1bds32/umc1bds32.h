@@ -50,7 +50,7 @@ int8_t board_getButton(uint8_t button);
 
 // bridges
 void board_setBridgesEnabled(int enable);
-int board_bridgesEnabled(void);
+
 #define BRIDGE_DISABLED_OUT  LATDbits.LATD14
 #define BRIDGE_DISABLED_IN   PORTDbits.RD14
 #define BRIDGE_POWER_ENABLED LATCbits.LATC12
@@ -155,5 +155,15 @@ int8_t board_getIo(uint8_t io);
 #define OTP_SECTOR_BEGINADDR      (0x801700 * 2)
 #define OTP_SECTOR_SECTOR_ENDADDR (0x801800 * 2)
 #define OTP_SECTOR_BYTE_SIZE      (OTP_SECTOR_SECTOR_ENDADDR - OTP_SECTOR_BEGINADDR)
+
+inline int board_bridgesEnabled(void);
+inline int board_bridgesEnabled(void)
+{
+#ifndef SIMULATOR
+    return (BRIDGE_DISABLED_IN == 0 && STO_STATUS_OK_IN == 1) ? 1 : 0;
+#else
+    return 1;
+#endif
+}
 
 #endif  // UMC1BDS32FR_H
