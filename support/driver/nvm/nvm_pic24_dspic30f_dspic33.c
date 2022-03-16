@@ -17,7 +17,7 @@
 #    warning "No flash on the current device or unknown device"
 #endif
 
-void nvm_writeDoubleWord(uint32_t addrWord, char *data);
+void nvm_writeDoubleWord(uint32_t addrWord, const char *data);
 
 /**
  * @brief Reads a defined number of bytes flash memory
@@ -74,7 +74,7 @@ ssize_t nvm_read(uint32_t addr, char *data, size_t size)
  * @param addraddr of the page to write
  * @param data array of the data to write (2 * three bytes)
  */
-void nvm_writeDoubleWord(uint32_t addrWord, char *data)
+void nvm_writeDoubleWord(uint32_t addrWord, const char *data)
 {
     unsigned char *udata = (unsigned char *)data;
 
@@ -87,8 +87,8 @@ void nvm_writeDoubleWord(uint32_t addrWord, char *data)
     __builtin_tblwtl(2, (((uint16_t)udata[4]) << 8) + udata[3]);
     __builtin_tblwth(2, (uint8_t)udata[5]);  // load write latches
 
-    NVMADR = addrWord;
-    NVMADRU = addrWord >> 16;  // set target write address
+    NVMADRL = addrWord;
+    NVMADRH = addrWord >> 16;  // set target write address
 
     __builtin_disi(6);      // Disable interrupts for NVM unlock
     __builtin_write_NVM();  // unlock and wait until WR = 0
@@ -102,7 +102,7 @@ void nvm_writeDoubleWord(uint32_t addrWord, char *data)
  * @param data array of the data to write
  * @param size size of the data to write in number of bytes
  */
-ssize_t nvm_write(uint32_t addr, char *data, size_t size)
+ssize_t nvm_write(uint32_t addr, const char *data, size_t size)
 {
     uint32_t currentAddr;
     size_t sizeRemaining, i;
@@ -169,7 +169,7 @@ ssize_t nvm_write(uint32_t addr, char *data, size_t size)
  * @param addr address of the page to read
  * @param data array of the data to read
  */
-ssize_t nvm_readPage(uint32_t addr, char *data)
+ssize_t nvm_readPage(uint32_t addr, const char *data)
 {
     uint32_t pageAddr;
     size_t pageSize;
@@ -211,7 +211,7 @@ ssize_t nvm_erasePage(uint32_t addr)
  * @param addr address of the page to write
  * @param data array of the data to write
  */
-ssize_t nvm_writePage(uint32_t addr, char *data)
+ssize_t nvm_writePage(uint32_t addr, const char *data)
 {
     uint32_t pageAddr;
     size_t pageSize;
