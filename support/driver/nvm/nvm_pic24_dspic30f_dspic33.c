@@ -169,11 +169,12 @@ ssize_t nvm_write(uint32_t addr, const char *data, size_t size)
  * @param addr address of the page to read
  * @param data array of the data to read
  */
-ssize_t nvm_readPage(uint32_t addr, const char *data)
+ssize_t nvm_readPage(uint32_t addr, char *data)
 {
     uint32_t pageAddr;
     size_t pageSize;
     ssize_t size_read;
+
     pageAddr = addr & NVM_FLASH_PAGE_MASK;      // align the address with top of page
     pageSize = (NVM_FLASH_PAGE_BYTE >> 2) * 3;  // calculate the exact number of byte
     /* only 3 out of 4 bytes are useful because of phantom byte */
@@ -234,10 +235,7 @@ ssize_t nvm_writePage(uint32_t addr, const char *data)
  */
 uint16_t nvm_pageNumber(uint32_t addr)
 {
-    uint16_t pageNum;
-
-    pageNum = addr >> NVM_FLASH_PAGE_SHIFT;
-
+    uint16_t pageNum = addr >> NVM_FLASH_PAGE_SHIFT;
     return pageNum;
 }
 
@@ -247,9 +245,6 @@ uint16_t nvm_pageNumber(uint32_t addr)
  */
 uint32_t nvm_pageAddress(uint16_t pageNum)
 {
-    uint32_t pageAddr;
-
-    pageAddr = (uint32_t)pageNum << NVM_FLASH_PAGE_SHIFT;
-
+    uint32_t pageAddr = (uint32_t)pageNum << NVM_FLASH_PAGE_SHIFT;
     return pageAddr;
 }
