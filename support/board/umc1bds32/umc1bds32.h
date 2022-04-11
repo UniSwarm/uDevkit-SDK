@@ -136,6 +136,8 @@ int8_t board_getIo(uint8_t io);
 #define CURRENT_BURST_TIME      1000  // in ms
 #define CURRENT_SUSTAINED_LIMIT 2000
 #define CURRENT_I2T_SCALE_SHIFT 3
+// = current protection call frequency * burst time time unit. ex: 32kHz * 1ms = 32
+#define CURRENT_LOOP_TIME_MULTIPLER 32
 
 // Under/Over voltage protection
 #define UNDER_VOLTAGE_MIN 1100  // 0.01 V
