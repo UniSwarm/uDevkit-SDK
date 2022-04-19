@@ -125,12 +125,6 @@
 #    define I2C_COUNT 0
 #endif
 
-// I2C are disabled in MK family until it will fixed ...
-#if defined(ARCHI_pic32mk)
-#    undef I2C_COUNT
-#    define I2C_COUNT 0
-#endif
-
 // ======================= I2C module existance =======================
 #if defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ2048EFM064)                 \
     || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ1024ECG064) || defined(DEVICE_32MZ1024ECH064)              \
@@ -179,7 +173,7 @@ rt_dev_t i2c(uint8_t d);
 #        define I2C_NUM5 4
 #    endif
 
-#    define i2c(d) MKDEV(DEV_CLASS_I2C, (d) - 1);
+#    define i2c(d) MKDEV(DEV_CLASS_I2C, (d)-1);
 #endif
 
 #define I2C_FPGD 9615384  // 104ns
