@@ -1,3 +1,13 @@
+/**
+ * @file cmd_mrobot.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016
+ * @copyright UniSwarm 2018-2022
+ *
+ * @date October 28, 2016, 11:44 PM
+ *
+ * @brief MRobot module commands
+ */
 
 #include "module/mrobot.h"
 

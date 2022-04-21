@@ -24,15 +24,15 @@ typedef struct
     char *data;
 } Fifo;
 
-#define STATIC_FIFO(x, y)                                                                                              \
-    char x##_data[y];                                                                                                  \
+#define STATIC_FIFO(x, y)                                                                                                                                      \
+    char x##_data[y];                                                                                                                                          \
     Fifo x
 
-#define STATIC_FIFO_INIT(x, y)                                                                                         \
-    x.size = (y);                                                                                                      \
-    x.head = 0;                                                                                                        \
-    x.tail = 0;                                                                                                        \
-    x.data = x##_data;                                                                                                 \
+#define STATIC_FIFO_INIT(x, y)                                                                                                                                 \
+    x.size = (y);                                                                                                                                              \
+    x.head = 0;                                                                                                                                                \
+    x.tail = 0;                                                                                                                                                \
+    x.data = x##_data;                                                                                                                                         \
     x.mask = (y - 1)
 
 void fifo_init(Fifo *fifo, char *data, size_t size);

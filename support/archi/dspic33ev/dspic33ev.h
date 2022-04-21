@@ -2,7 +2,7 @@
  * @file dspic33ev.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
- * @copyright UniSwarm 2018-2021
+ * @copyright UniSwarm 2018-2022
  *
  * @date March 12, 2017, 11:35 AM
  *

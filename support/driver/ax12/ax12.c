@@ -2,7 +2,7 @@
  * @file ax12.h
  * @author Sebastien CAUX (sebcaux) / Charles-Antoine NOURY (charlybigoud)
  * @copyright Robotips 2016
- * @copyright UniSwarm 2018-2021
+ * @copyright UniSwarm 2018-2022
  *
  * @date April 16, 2016, 14:41 PM
  *

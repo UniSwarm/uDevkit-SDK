@@ -2,7 +2,7 @@
  * @file network.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
- * @copyright UniSwarm 2018-2021
+ * @copyright UniSwarm 2018-2022
  *
  * @date February 22, 2017, 15:28 PM
  *

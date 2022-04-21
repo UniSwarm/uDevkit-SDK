@@ -2,7 +2,7 @@
  * @file adc_pic32_sar12.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
- * @copyright UniSwarm 2018-2021
+ * @copyright UniSwarm 2018-2022
  *
  * @date May 07, 2017, 10:07 AM
  *

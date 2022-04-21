@@ -2,7 +2,7 @@
  * @file curiosity_32MX470.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
- * @copyright UniSwarm 2018-2021
+ * @copyright UniSwarm 2018-2022
  *
  * @date July 25, 2017, 11:20 AM
  *

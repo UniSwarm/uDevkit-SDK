@@ -1,7 +1,7 @@
 /**
  * @file dma.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2021
+ * @copyright UniSwarm 2021-2022
  *
  * @date September 11, 2021, 03:50 PM
  *

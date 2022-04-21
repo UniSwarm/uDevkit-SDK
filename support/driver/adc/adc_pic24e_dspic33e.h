@@ -2,7 +2,7 @@
  * @file adc_pic24e_dspic33e.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018-2021
+ * @copyright UniSwarm 2018-2022
  *
  * @date April 19, 2016, 10:56 AM
  *

@@ -1,7 +1,7 @@
 /**
  * @file dma_dspic33c.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2021
+ * @copyright UniSwarm 2021-2022
  *
  * @date September 16, 2021, 09:55 PM
  *

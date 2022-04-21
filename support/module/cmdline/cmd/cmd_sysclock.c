@@ -1,3 +1,13 @@
+/**
+ * @file cmd_sysclock.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016
+ * @copyright UniSwarm 2018-2022
+ *
+ * @date October 28, 2016, 11:44 PM
+ *
+ * @brief Sysclock commands
+ */
 
 #define SYSCLOCK_DEBUG
 #include "driver/sysclock.h"

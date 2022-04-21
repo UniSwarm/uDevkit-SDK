@@ -1,7 +1,7 @@
 /**
  * @file can_pic32.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2017-2021
+ * @copyright UniSwarm 2017-2022
  *
  * @date December 8 2017, 09:10 AM
  *

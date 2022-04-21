@@ -2,7 +2,7 @@
  * @file fifo.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018-2021
+ * @copyright UniSwarm 2018-2022
  *
  * @date June 13, 2016, 18:30 PM
  *

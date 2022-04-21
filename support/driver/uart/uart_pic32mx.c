@@ -2,7 +2,7 @@
  * @file uart_pic32mx.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018-2021
+ * @copyright UniSwarm 2018-2022
  *
  * @date June 07, 2017, 08:15 AM
  *

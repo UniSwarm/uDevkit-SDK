@@ -2,7 +2,7 @@
  * @file deltatips.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
- * @copyright UniSwarm 2018-2021
+ * @copyright UniSwarm 2018-2022
  *
  * @date September 23, 2016, 04:06 PM
  *

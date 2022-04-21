@@ -2,7 +2,7 @@
  * @file qei_dspic30f.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018-2021
+ * @copyright UniSwarm 2018-2022
  *
  * @date April 18, 2016, 22:33 PM
  *

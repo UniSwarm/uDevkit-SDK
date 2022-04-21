@@ -19,8 +19,7 @@
 
 #if !defined(__MINGW32__) && !defined(_MSC_VER) && !defined(__XC32)
 
-#    if !defined(_SIZE_T_DEFINED) && !defined(__SIZE_TYPE__) && !defined(_SIZE_T) && !defined(_SIZET)                  \
-        && !defined(_BSD_SIZE_T_DEFINED_)
+#    if !defined(_SIZE_T_DEFINED) && !defined(__SIZE_TYPE__) && !defined(_SIZE_T) && !defined(_SIZET) && !defined(_BSD_SIZE_T_DEFINED_)
 #        define _SIZE_T_DEFINED
 #        define _SIZE_T
 #        define _SIZET
@@ -29,9 +28,8 @@
 typedef uint16_t size_t;
 #    endif
 
-#    if !defined(_SSIZE_T_DEFINED) && !defined(_SSIZE_T) && !defined(_SSIZE_T_) && !defined(__have_typedef_ssize_t)    \
-        && !defined(_SSIZET) && !defined(_BSD_SSIZE_T_DEFINED_) && !defined(__ssize_t_defined)                         \
-        && !defined(_SSIZE_T_DECLARED)
+#    if !defined(_SSIZE_T_DEFINED) && !defined(_SSIZE_T) && !defined(_SSIZE_T_) && !defined(__have_typedef_ssize_t) && !defined(_SSIZET)                       \
+        && !defined(_BSD_SSIZE_T_DEFINED_) && !defined(__ssize_t_defined) && !defined(_SSIZE_T_DECLARED)
 #        define _SSIZE_T_DEFINED
 #        define __ssize_t_defined
 #        define _SSIZE_T

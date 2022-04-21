@@ -2,7 +2,7 @@
  * @file swarmtips2.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018-2021
+ * @copyright UniSwarm 2018-2022
  *
  * @date April 15, 2017, 01:16 AM
  *

@@ -2,7 +2,7 @@
  * @file curiosity_32MM_USB.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
- * @copyright UniSwarm 2018-2021
+ * @copyright UniSwarm 2018-2022
  *
  * @date July 28, 2017, 15:34 PM
  *

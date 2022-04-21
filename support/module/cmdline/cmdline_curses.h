@@ -1,8 +1,8 @@
 /**
  * @file cmdline_curses.h
- * @author Sebastien CAUX (sebcaux) \
+ * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
- * @copyright UniSwarm 2018-2021
+ * @copyright UniSwarm 2018-2022
  *
  * @date October 28, 2016, 10:44 PM
  *

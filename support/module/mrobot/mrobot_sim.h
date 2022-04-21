@@ -2,7 +2,7 @@
  * @file mrobot_sim.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016
- * @copyright UniSwarm 2018-2021
+ * @copyright UniSwarm 2018-2022
  *
  * @date December 07, 2016, 23:12
  *

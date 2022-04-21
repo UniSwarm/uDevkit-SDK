@@ -1,7 +1,7 @@
 /**
  * @file umc1bds32.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2019-2021
+ * @copyright UniSwarm 2019-2022
  *
  * @date March 1, 2019, 09:35 AM
  *
