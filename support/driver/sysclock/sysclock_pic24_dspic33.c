@@ -26,10 +26,10 @@
 #include "board.h"
 #include <archi.h>
 
-uint32_t sysclock_sysfreq = 0;
-uint32_t sysclock_sosc = 0;
-uint32_t sysclock_posc = 0;
-uint32_t sysclock_pll = 0;
+static uint32_t _sysclock_sysfreq = 0;
+static uint32_t _sysclock_sosc = 0;
+static uint32_t _sysclock_posc = 0;
+static uint32_t _sysclock_pll = 0;
 
 /**
  * @brief Gets the actual frequency on a particular peripheral bus clock
@@ -38,14 +38,14 @@ uint32_t sysclock_pll = 0;
  */
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
-    if (sysclock_sysfreq == 0)
+    if (_sysclock_sysfreq == 0)
     {
-        sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
+        _sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
     }
 
     if (busClock == SYSCLOCK_CLOCK_SYSCLK)
     {
-        return sysclock_sysfreq >> 1;
+        return _sysclock_sysfreq >> 1;
     }
 
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
@@ -55,7 +55,7 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
         {
             div = 1 << (CLKDIVbits.DOZE);
         }
-        return (sysclock_sysfreq >> 1) / div;
+        return (_sysclock_sysfreq >> 1) / div;
     }
     return 1;
 }
@@ -155,15 +155,15 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
             break;
 
         case SYSCLOCK_SRC_SOSC:
-            freq = sysclock_sosc;  // external secondary oscillator
+            freq = _sysclock_sosc;  // external secondary oscillator
             break;
 
         case SYSCLOCK_SRC_POSC:
-            freq = sysclock_posc;  // external primary oscillator
+            freq = _sysclock_posc;  // external primary oscillator
             break;
 
         case SYSCLOCK_SRC_PPLL:
-            freq = sysclock_pll;  // primary oscillator with PLL
+            freq = _sysclock_pll;  // primary oscillator with PLL
             break;
 
         case SYSCLOCK_SRC_FRC:
@@ -202,7 +202,7 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
             break;
 
         case SYSCLOCK_SRC_FRCPLL:
-            freq = sysclock_pll;  // FRC with PLL
+            freq = _sysclock_pll;  // FRC with PLL
             break;
     }
     return freq;
@@ -217,12 +217,12 @@ int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq)
 {
     if (source == SYSCLOCK_SRC_SOSC)
     {
-        sysclock_sosc = freq;
+        _sysclock_sosc = freq;
         return 0;
     }
     if (source == SYSCLOCK_SRC_POSC)
     {
-        sysclock_posc = freq;
+        _sysclock_posc = freq;
         return 0;
     }
     return -1;
@@ -280,7 +280,7 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
         return -3;  // Error when switch clock source
     }
 
-    sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
+    _sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
 
     return 0;
 }
@@ -429,8 +429,8 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     while (OSCCONbits.LOCK != 1)
         ;
 
-    sysclock_pll = fplli * multiplier / postdiv;
-    sysclock_sysfreq = sysclock_pll;  // Complete this
+    _sysclock_pll = fplli * multiplier / postdiv;
+    _sysclock_sysfreq = _sysclock_pll;  // Complete this
 
     return 0;
 }

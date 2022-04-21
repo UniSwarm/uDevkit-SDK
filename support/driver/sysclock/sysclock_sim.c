@@ -8,45 +8,38 @@
  *
  * @brief System clock support for udevkit sim
  */
+ 
+#include "sysclock.h"
 
 #include <stdint.h>
 
-#include "sysclock.h"
-
-/****************************************************************************************/
-/*          Privates functions                                                          */
 uint32_t sysclock_getClock(void);
 uint32_t sysclock_getCPUSystemClock(void);
 
-/****************************************************************************************/
-/*          External variable                                                           */
-
-/****************************************************************************************/
-/*          Local variable                                                              */
-static uint32_t sysfreq;
-static uint32_t pllfreq;
+static uint32_t _sysclock_sysfreq;
+static uint32_t _sysclock_pllfreq;
 
 int sysclock_setClock(uint32_t fosc)
 {
-    sysfreq = fosc;
+    _sysclock_sysfreq = fosc;
     return 0;
 }
 
 uint32_t sysclock_getClock(void)
 {
-    return sysfreq;
+    return _sysclock_sysfreq;
 }
 
 uint32_t sysclock_getCPUSystemClock(void)
 {
-    return sysfreq >> 1;
+    return _sysclock_sysfreq >> 1;
 }
 
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
     UDK_UNUSED(busClock);
     // TODO
-    return sysfreq / 2;
+    return _sysclock_sysfreq / 2;
 }
 
 int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
@@ -88,11 +81,11 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 int sysclock_setPLLClock(uint32_t freq, uint8_t src)
 {
     UDK_UNUSED(src);
-    pllfreq = freq;
+    _sysclock_pllfreq = freq;
     return 0;
 }
 
 uint32_t sysclock_getPLLClock(void)
 {
-    return pllfreq;
+    return _sysclock_pllfreq;
 }

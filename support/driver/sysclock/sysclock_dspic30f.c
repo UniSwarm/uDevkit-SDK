@@ -18,12 +18,12 @@
 
 #include "board.h"
 
-uint32_t sysclock_sysfreq = 0;
-uint32_t sysclock_sosc = 0;
-uint32_t sysclock_posc = 0;
+static uint32_t _sysclock_sysfreq = 0;
+static uint32_t _sysclock_sosc = 0;
+static uint32_t _sysclock_posc = 0;
 
 #ifdef SYSCLOCK_SRC_PLL
-uint32_t sysclock_pll = 0;
+static uint32_t _sysclock_pll = 0;
 #endif
 
 /**
@@ -33,23 +33,23 @@ uint32_t sysclock_pll = 0;
  */
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
-    if (sysclock_sysfreq == 0)
+    if (_sysclock_sysfreq == 0)
     {
-        sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
+        _sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
     }
 
     if (busClock == SYSCLOCK_CLOCK_SYSCLK)
     {
-        return sysclock_sysfreq;
+        return _sysclock_sysfreq;
     }
 
     if (busClock == SYSCLOCK_CLOCK_PBCLK)
     {
 #ifndef SYSCLOCK_NOPOST
         uint16_t div = OSCCONbits.POST << 1;  // (0, 4, 16, 64)
-        return sysclock_sysfreq >> div;
+        return _sysclock_sysfreq >> div;
 #else
-        return sysclock_sysfreq;
+        return _sysclock_sysfreq;
 #endif
     }
     return 1;
@@ -109,17 +109,17 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
             return 512000;  // 512kHz LPRC
 
         case SYSCLOCK_SRC_SOSC:
-            return sysclock_sosc;  // external secondary oscillator
+            return _sysclock_sosc;  // external secondary oscillator
 
         case SYSCLOCK_SRC_POSC:
-            return sysclock_posc;  // external primary oscillator
+            return _sysclock_posc;  // external primary oscillator
 
         case SYSCLOCK_SRC_FRC:
             return 8000000;  // FRC  // TODO integrate OSCTUNE
 
 #ifdef SYSCLOCK_SRC_PLL
         case SYSCLOCK_SRC_PLL:
-            return sysclock_pll;  // FRC  // TODO integrate OSCTUNE
+            return _sysclock_pll;  // FRC  // TODO integrate OSCTUNE
 #endif
     }
     return -1;
@@ -134,12 +134,12 @@ int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq)
 {
     if (source == SYSCLOCK_SRC_SOSC)
     {
-        sysclock_sosc = freq;
+        _sysclock_sosc = freq;
         return 0;
     }
     if (source == SYSCLOCK_SRC_POSC)
     {
-        sysclock_posc = freq;
+        _sysclock_posc = freq;
         return 0;
     }
     return -1;

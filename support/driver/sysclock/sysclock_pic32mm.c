@@ -17,10 +17,10 @@
 #include "board.h"
 #include <archi.h>
 
-uint32_t sysclock_sysfreq = 0;
-uint32_t sysclock_sosc = 0;
-uint32_t sysclock_posc = 0;
-uint32_t sysclock_pll = 0;
+static uint32_t _sysclock_sysfreq = 0;
+static uint32_t _sysclock_sosc = 0;
+static uint32_t _sysclock_posc = 0;
+static uint32_t _sysclock_pll = 0;
 
 /**
  * @brief Gets the actual frequency on a particular peripheral bus clock
@@ -29,14 +29,14 @@ uint32_t sysclock_pll = 0;
  */
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
-    if (sysclock_sysfreq == 0)
+    if (_sysclock_sysfreq == 0)
     {
-        sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
+        _sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
     }
 
     if (busClock == SYSCLOCK_CLOCK_SYSCLK || busClock == SYSCLOCK_CLOCK_PBCLK)
     {
-        return sysclock_sysfreq;
+        return _sysclock_sysfreq;
     }
 
     if (busClock == SYSCLOCK_CLOCK_REFCLK)
@@ -82,15 +82,15 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
             break;
 
         case SYSCLOCK_SRC_SOSC:
-            freq = sysclock_sosc;  // external secondary oscillator
+            freq = _sysclock_sosc;  // external secondary oscillator
             break;
 
         case SYSCLOCK_SRC_POSC:
-            freq = sysclock_posc;  // external primary oscillator
+            freq = _sysclock_posc;  // external primary oscillator
             break;
 
         case SYSCLOCK_SRC_SPLL:
-            freq = sysclock_pll;  // PLL out freq
+            freq = _sysclock_pll;  // PLL out freq
             break;
 
         case SYSCLOCK_SRC_FRC:
@@ -125,12 +125,12 @@ int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq)
 {
     if (source == SYSCLOCK_SRC_SOSC)
     {
-        sysclock_sosc = freq;
+        _sysclock_sosc = freq;
         return 0;
     }
     if (source == SYSCLOCK_SRC_POSC)
     {
-        sysclock_posc = freq;
+        _sysclock_posc = freq;
         return 0;
     }
     return -1;
@@ -200,7 +200,7 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 int sysclock_setClock(uint32_t fosc)
 {
     // return sysclock_setClockWPLL(fosc);
-    sysclock_sysfreq = fosc;
+    _sysclock_sysfreq = fosc;
     return 0;
 }
 
