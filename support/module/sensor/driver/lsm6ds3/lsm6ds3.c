@@ -16,9 +16,8 @@
 
 rt_dev_t lsm6ds3_init(rt_dev_t i2c_bus, uint8_t i2c_addr)
 {
-    i2c_writereg(
-        i2c_bus, i2c_addr, LSM6DS3_CTRL1_XL, 0b00100000, 0);  // accel enable in low power mode 26Hz, 2G, 400Hz filter
-    i2c_writereg(i2c_bus, i2c_addr, LSM6DS3_CTRL2_G, 0b00100000, 0);  // gyro  enable in low power mode 26Hz, 245 dps
+    i2c_writereg(i2c_bus, i2c_addr, LSM6DS3_CTRL1_XL, 0b00100000, 0);  // accel enable in low power mode 26Hz, 2G, 400Hz filter
+    i2c_writereg(i2c_bus, i2c_addr, LSM6DS3_CTRL2_G, 0b00100000, 0);   // gyro  enable in low power mode 26Hz, 245 dps
 
     return 0;  // TODO
 }

@@ -17,9 +17,8 @@
 #define QEI_DSPIC30F_H
 
 // calculate QEI count and version on the device
-#if defined(DEVICE_30F2010) || defined(DEVICE_30F3010) || defined(DEVICE_30F3011) || defined(DEVICE_30F4011)           \
-    || defined(DEVICE_30F4012) || defined(DEVICE_30F5015) || defined(DEVICE_30F5016) || defined(DEVICE_30F6010A)       \
-    || defined(DEVICE_30F6015)
+#if defined(DEVICE_30F2010) || defined(DEVICE_30F3010) || defined(DEVICE_30F3011) || defined(DEVICE_30F4011) || defined(DEVICE_30F4012)                        \
+    || defined(DEVICE_30F5015) || defined(DEVICE_30F5016) || defined(DEVICE_30F6010A) || defined(DEVICE_30F6015)
 #    define QEI_COUNT 1
 #else
 #    define QEI_COUNT 0

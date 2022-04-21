@@ -49,7 +49,7 @@
 #define USBCFG_H
 
 /** DEFINITIONS ****************************************************/
-#define USB_EP0_BUFF_SIZE                                                                                              \
+#define USB_EP0_BUFF_SIZE                                                                                                                                      \
     8  // Valid Options: 8, 16, 32, or 64 bytes.
        // Using larger options take more SRAM, but
        // does not provide much advantage in most types
@@ -57,10 +57,8 @@
        // that use EP0 IN or OUT for sending large amounts of
        // application related data.
 
-#define USB_MAX_NUM_INT                                                                                                \
-    2  // Set this number to match the maximum interface number used in the descriptors for this firmware project
-#define USB_MAX_EP_NUMBER                                                                                              \
-    2  // Set this number to match the maximum endpoint number used in the descriptors for this firmware project
+#define USB_MAX_NUM_INT   2  // Set this number to match the maximum interface number used in the descriptors for this firmware project
+#define USB_MAX_EP_NUMBER 2  // Set this number to match the maximum endpoint number used in the descriptors for this firmware project
 
 // Device descriptor - if these two definitions are not defined then
 //  a const USB_DEVICE_DESCRIPTOR variable by the exact name of device_dsc
@@ -162,7 +160,7 @@
 
 #define USB_SUPPORT_DEVICE
 
-#define USB_NUM_STRING_DESCRIPTORS                                                                                     \
+#define USB_NUM_STRING_DESCRIPTORS                                                                                                                             \
     3  // Set this number to match the total number of string descriptors that are implemented in the usb_descriptors.c
        // file
 

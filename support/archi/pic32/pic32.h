@@ -16,14 +16,14 @@
 
 #    ifndef __XC32
 #        define __prog__
-#        define nop()                                                                                                  \
-            {                                                                                                          \
+#        define nop()                                                                                                                                          \
+            {                                                                                                                                                  \
             }
-#        define enable_interrupt()                                                                                     \
-            {                                                                                                          \
+#        define enable_interrupt()                                                                                                                             \
+            {                                                                                                                                                  \
             }
-#        define disable_interrupt()                                                                                    \
-            {                                                                                                          \
+#        define disable_interrupt()                                                                                                                            \
+            {                                                                                                                                                  \
             }
 #    else
 #        define nop()               _nop()
@@ -34,51 +34,51 @@
 #    include <sys/kmem.h>
 #    include <xc.h>
 
-#    define unlockConfig()                                                                                             \
-        do                                                                                                             \
-        {                                                                                                              \
-            SYSKEY = 0;                                                                                                \
-            SYSKEY = 0xAA996655;                                                                                       \
-            SYSKEY = 0x556699AA;                                                                                       \
+#    define unlockConfig()                                                                                                                                     \
+        do                                                                                                                                                     \
+        {                                                                                                                                                      \
+            SYSKEY = 0;                                                                                                                                        \
+            SYSKEY = 0xAA996655;                                                                                                                               \
+            SYSKEY = 0x556699AA;                                                                                                                               \
         } while (0);
 #    define lockConfig() SYSKEY = 0x33333333
 
-#    define unlockIoConfig()                                                                                           \
-        do                                                                                                             \
-        {                                                                                                              \
-            unlockConfig();                                                                                            \
-            CFGCONbits.IOLOCK = 0;                                                                                     \
+#    define unlockIoConfig()                                                                                                                                   \
+        do                                                                                                                                                     \
+        {                                                                                                                                                      \
+            unlockConfig();                                                                                                                                    \
+            CFGCONbits.IOLOCK = 0;                                                                                                                             \
         } while (0);
-#    define lockIoConfig()                                                                                             \
-        do                                                                                                             \
-        {                                                                                                              \
-            CFGCONbits.IOLOCK = 1;                                                                                     \
-            lockConfig();                                                                                              \
+#    define lockIoConfig()                                                                                                                                     \
+        do                                                                                                                                                     \
+        {                                                                                                                                                      \
+            CFGCONbits.IOLOCK = 1;                                                                                                                             \
+            lockConfig();                                                                                                                                      \
         } while (0);
 
 #else
-#    define nop()                                                                                                      \
-        {                                                                                                              \
+#    define nop()                                                                                                                                              \
+        {                                                                                                                                                      \
         }
-#    define enable_interrupt()                                                                                         \
-        {                                                                                                              \
+#    define enable_interrupt()                                                                                                                                 \
+        {                                                                                                                                                      \
         }
-#    define disable_interrupt()                                                                                        \
-        {                                                                                                              \
-        }
-
-#    define unlockConfig()                                                                                             \
-        {                                                                                                              \
-        }
-#    define lockConfig()                                                                                               \
-        {                                                                                                              \
+#    define disable_interrupt()                                                                                                                                \
+        {                                                                                                                                                      \
         }
 
-#    define unlockIoConfig()                                                                                           \
-        {                                                                                                              \
+#    define unlockConfig()                                                                                                                                     \
+        {                                                                                                                                                      \
         }
-#    define lockIoConfig()                                                                                             \
-        {                                                                                                              \
+#    define lockConfig()                                                                                                                                       \
+        {                                                                                                                                                      \
+        }
+
+#    define unlockIoConfig()                                                                                                                                   \
+        {                                                                                                                                                      \
+        }
+#    define lockIoConfig()                                                                                                                                     \
+        {                                                                                                                                                      \
         }
 #endif
 

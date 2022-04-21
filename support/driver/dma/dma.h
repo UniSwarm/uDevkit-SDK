@@ -15,9 +15,8 @@
 
 void dma_init(uint16_t addrLow, uint16_t addrHigh);
 
-
 // ====== device assignation ======
-#define dma(d) MKDEV(DEV_CLASS_TIMER, ((d) - 1))
+#define dma(d) MKDEV(DEV_CLASS_TIMER, ((d)-1))
 rt_dev_t dma_getFreeDevice(void);
 int dma_open(rt_dev_t device);
 int dma_close(rt_dev_t device);

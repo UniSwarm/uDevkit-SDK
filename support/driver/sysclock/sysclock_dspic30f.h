@@ -25,11 +25,9 @@ typedef enum
 } SYSCLOCK_CLOCK;
 
 // check VERSION 1 - 3 of osc module
-#    if defined(DEVICE_30F6010) || defined(DEVICE_30F6011) || defined(DEVICE_30F6012) || defined(DEVICE_30F6013)       \
-        || defined(DEVICE_30F6014)
+#    if defined(DEVICE_30F6010) || defined(DEVICE_30F6011) || defined(DEVICE_30F6012) || defined(DEVICE_30F6013) || defined(DEVICE_30F6014)
 #        define SYSCLOCK_VERSION 1
-#    elif defined(DEVICE_30F2010) || defined(DEVICE_30F4011) || defined(DEVICE_30F4012) || defined(DEVICE_30F5011)     \
-        || defined(DEVICE_30F5013)
+#    elif defined(DEVICE_30F2010) || defined(DEVICE_30F4011) || defined(DEVICE_30F4012) || defined(DEVICE_30F5011) || defined(DEVICE_30F5013)
 #        define SYSCLOCK_VERSION 2
 #    else
 #        define SYSCLOCK_VERSION 3

@@ -18,8 +18,7 @@
 #    include <winsock2.h>
 #    define SOCKET_MODE 0
 
-#elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__)    \
-    || defined(__APPLE__)
+#elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__) || defined(__APPLE__)
 
 #    include <arpa/inet.h>
 #    include <fcntl.h>

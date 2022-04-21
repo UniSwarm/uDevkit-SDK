@@ -553,21 +553,18 @@ int i2c_idle(rt_dev_t device)
     switch (i2c)
     {
         case 0:
-            while (I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN || I2C1CONbits.RSEN || I2C1CONbits.ACKEN
-                   || I2C1STATbits.TRSTAT)
+            while (I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN || I2C1CONbits.RSEN || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT)
                 ;
             break;
 #    if I2C_COUNT >= 2
         case 1:
-            while (I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN || I2C2CONbits.RSEN || I2C2CONbits.ACKEN
-                   || I2C2STATbits.TRSTAT)
+            while (I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN || I2C2CONbits.RSEN || I2C2CONbits.ACKEN || I2C2STATbits.TRSTAT)
                 ;
             break;
 #    endif
 #    if I2C_COUNT >= 3
         case 2:
-            while (I2C3CONbits.SEN || I2C3CONbits.PEN || I2C3CONbits.RCEN || I2C3CONbits.RSEN || I2C3CONbits.ACKEN
-                   || I2C3STATbits.TRSTAT)
+            while (I2C3CONbits.SEN || I2C3CONbits.PEN || I2C3CONbits.RCEN || I2C3CONbits.RSEN || I2C3CONbits.ACKEN || I2C3STATbits.TRSTAT)
                 ;
             break;
 #    endif
@@ -691,8 +688,7 @@ int i2c_putc(rt_dev_t device, const char data)
                 return -1;
             }
 
-            while (I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN || I2C1CONbits.RSEN || I2C1CONbits.ACKEN
-                   || I2C1STATbits.TRSTAT)
+            while (I2C1CONbits.SEN || I2C1CONbits.PEN || I2C1CONbits.RCEN || I2C1CONbits.RSEN || I2C1CONbits.ACKEN || I2C1STATbits.TRSTAT)
                 ;  // wait iddle
 
             if (I2C1STATbits.ACKSTAT)  // test for ACK received
@@ -708,8 +704,7 @@ int i2c_putc(rt_dev_t device, const char data)
                 return -1;
             }
 
-            while (I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN || I2C2CONbits.RSEN || I2C2CONbits.ACKEN
-                   || I2C2STATbits.TRSTAT)
+            while (I2C2CONbits.SEN || I2C2CONbits.PEN || I2C2CONbits.RCEN || I2C2CONbits.RSEN || I2C2CONbits.ACKEN || I2C2STATbits.TRSTAT)
                 ;  // wait iddle
 
             if (I2C2STATbits.ACKSTAT)  // test for ACK received
@@ -726,8 +721,7 @@ int i2c_putc(rt_dev_t device, const char data)
                 return -1;
             }
 
-            while (I2C3CONbits.SEN || I2C3CONbits.PEN || I2C3CONbits.RCEN || I2C3CONbits.RSEN || I2C3CONbits.ACKEN
-                   || I2C3STATbits.TRSTAT)
+            while (I2C3CONbits.SEN || I2C3CONbits.PEN || I2C3CONbits.RCEN || I2C3CONbits.RSEN || I2C3CONbits.ACKEN || I2C3STATbits.TRSTAT)
                 ;  // wait iddle
 
             if (I2C3STATbits.ACKSTAT)  // test for ACK received

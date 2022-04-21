@@ -88,7 +88,7 @@ int adc_startSampling(uint8_t channel)
 {
     AD1CHS0 = channel;     // select channel to convert
     AD1CON1bits.SAMP = 1;  // Start sampling
-    
+
     return 0;
 }
 

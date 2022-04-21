@@ -779,8 +779,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     if (CAN_DSPIC33C_RX_IDE(buffer))
     {
         flagValue += CAN_VERS2BA;  // extended ID
-        canId = (((uint32_t)CAN_DSPIC33C_RX_SID(buffer)) << 18) + CAN_DSPIC33C_RX_EIDH(buffer)
-                + CAN_DSPIC33C_RX_EIDL(buffer);
+        canId = (((uint32_t)CAN_DSPIC33C_RX_SID(buffer)) << 18) + CAN_DSPIC33C_RX_EIDH(buffer) + CAN_DSPIC33C_RX_EIDL(buffer);
     }
     else
     {
@@ -874,12 +873,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
  * @param frame frames format filtering
  * @return 0 if ok, -1 in case of error
  */
-int can_filterConfiguration(rt_dev_t device,
-                            uint8_t nFilter,
-                            uint8_t fifo,
-                            uint32_t idFilter,
-                            uint32_t mask,
-                            CAN_FRAME_FORMAT_FLAGS frame)
+int can_filterConfiguration(rt_dev_t device, uint8_t nFilter, uint8_t fifo, uint32_t idFilter, uint32_t mask, CAN_FRAME_FORMAT_FLAGS frame)
 {
 #if CAN_COUNT >= 1
     uint8_t can = MINOR(device);

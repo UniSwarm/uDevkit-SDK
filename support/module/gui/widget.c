@@ -57,12 +57,7 @@ void widget_draw(Widget *widget)
     {
         gui_setPenColor(Gui_Black);
         gui_setBrushColor(Gui_Gray2);
-        gui_drawTextRect(widget->x + 2,
-                         widget->y + 2,
-                         widget->w - 2,
-                         widget->h - 2,
-                         "OK",
-                         GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
+        gui_drawTextRect(widget->x + 2, widget->y + 2, widget->w - 2, widget->h - 2, "OK", GUI_FONT_ALIGN_VMIDDLE | GUI_FONT_ALIGN_HMIDDLE);
 
         gui_setPenColor(Gui_Gray3);
         gui_drawLine(widget->x, widget->y, widget->x + widget->w, widget->y);

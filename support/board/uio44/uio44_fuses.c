@@ -20,11 +20,10 @@
                             // user-selected oscillator source
 
 // FOSC
-#pragma config POSCMD = EC    // Primary Oscillator Mode Select bits->EC
-#pragma config OSCIOFNC = ON  // OSC2 Pin Function bit->OSC2 is GPIO
-#pragma config FCKSM =                                                                                                 \
-    CSECME                 // Clock Switching Mode bits->Both Clock switching and Fail-safe Clock Monitor are enabled
-#pragma config XTCFG = G3  // XT Config->24-32 MHz crystals
+#pragma config POSCMD = EC     // Primary Oscillator Mode Select bits->EC
+#pragma config OSCIOFNC = ON   // OSC2 Pin Function bit->OSC2 is GPIO
+#pragma config FCKSM = CSECME  // Clock Switching Mode bits->Both Clock switching and Fail-safe Clock Monitor are enabled
+#pragma config XTCFG = G3      // XT Config->24-32 MHz crystals
 #pragma config XTBST = ENABLE  // XT Boost->Boost the kick-start
 
 // FWDT
@@ -37,7 +36,7 @@
 
 // FPOR
 //#pragma config BSSO = BOOT      // Boot Space Start Option->Optional startup after reset, execute instruction at start
-//of boot space.
+// of boot space.
 
 // FICD
 #pragma config ICS = PGD3    // ICD Communication Channel Select bits->Communicate on PGEC3 and PGED3
@@ -65,11 +64,7 @@
 #pragma config SPI2PIN = PPS  // SPI2 Pin Select bit->SPI2 uses I/O remap (PPS) pins
 
 // FALTRE  G
-#pragma config CTXT1 =                                                                                                 \
-    OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 1 bits->Not Assigned
-#pragma config CTXT2 =                                                                                                 \
-    OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 2 bits->Not Assigned
-#pragma config CTXT3 =                                                                                                 \
-    OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 3 bits->Not Assigned
-#pragma config CTXT4 =                                                                                                 \
-    OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 4 bits->Not Assigned
+#pragma config CTXT1 = OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 1 bits->Not Assigned
+#pragma config CTXT2 = OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 2 bits->Not Assigned
+#pragma config CTXT3 = OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 3 bits->Not Assigned
+#pragma config CTXT4 = OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 4 bits->Not Assigned

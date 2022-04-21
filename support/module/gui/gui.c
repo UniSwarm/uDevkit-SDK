@@ -196,8 +196,7 @@ void gui_drawFillRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h)
 
 void gui_drawText(uint16_t x, uint16_t y, const char *txt)
 {
-    gui_drawTextRect(
-        x, y, gui_getFontTextWidth(txt), gui_getFontHeight(), txt, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
+    gui_drawTextRect(x, y, gui_getFontTextWidth(txt), gui_getFontHeight(), txt, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
 }
 
 void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char *txt, uint8_t flags)

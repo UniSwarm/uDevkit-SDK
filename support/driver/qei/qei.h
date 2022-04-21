@@ -17,8 +17,7 @@
 // ======= specific include =======
 #if defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic33fj)
 #    include "qei_pic24f_dspic33f.h"
-#elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) || defined(ARCHI_dspic33ch)       \
-    || defined(ARCHI_dspic33ck)
+#elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
 #    include "qei_pic24e_dspic33e.h"
 #elif defined(ARCHI_dspic30f)
 #    include "qei_dspic30f.h"

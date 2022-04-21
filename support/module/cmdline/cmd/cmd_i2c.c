@@ -53,10 +53,7 @@ int cmd_i2c(int argc, char **argv)
     // > i2c <bus-id>
     if (argc == 2)
     {
-        printf("Config: %d bits address %luHz (%luHz)\r\n",
-               (int)i2c_addressWidth(i2c_dev),
-               i2c_effectiveBaudSpeed(i2c_dev),
-               i2c_baudSpeed(i2c_dev));
+        printf("Config: %d bits address %luHz (%luHz)\r\n", (int)i2c_addressWidth(i2c_dev), i2c_effectiveBaudSpeed(i2c_dev), i2c_baudSpeed(i2c_dev));
 
         return 0;
     }

@@ -8,7 +8,7 @@
  *
  * @brief System clock support for udevkit sim
  */
- 
+
 #include "sysclock.h"
 
 #include <stdint.h>

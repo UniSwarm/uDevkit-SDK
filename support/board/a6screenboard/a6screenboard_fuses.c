@@ -2,27 +2,24 @@
 // FGS
 #pragma config GWRP = OFF  // General Segment Write-Protect bit (General Segment may be written)
 #pragma config GSS = OFF   // General Segment Code-Protect bit (General Segment Code protect is disabled)
-#pragma config GSSK =                                                                                                  \
-    OFF  // General Segment Key bits (General Segment Write Protection and Code Protection is Disabled)
+#pragma config GSSK = OFF  // General Segment Key bits (General Segment Write Protection and Code Protection is Disabled)
 
 // FOSCSEL
 #pragma config FNOSC = FRCPLL  // Initial Oscillator Source Selection Bits (Internal Fast RC (FRC))
-#pragma config IESO = ON  // Two-speed Oscillator Start-up Enable bit (Start up with user-selected oscillator source)
+#pragma config IESO = ON       // Two-speed Oscillator Start-up Enable bit (Start up with user-selected oscillator source)
 
 // FOSC
 #pragma config POSCMD = NONE   // Primary Oscillator Mode Select bits (HS Crystal Oscillator Mode)
 #pragma config OSCIOFNC = OFF  // OSC2 Pin Function bit (OSC2 is general purpose digital I/O pin)
 #pragma config IOL1WAY = ON    // Peripheral pin select configuration (Allow multiple reconfigurations)
-#pragma config FCKSM =                                                                                                 \
-    CSDCMD  // Clock Switching Mode bits (Clock switching is enabled,Fail-safe Clock Monitor is disabled)
+#pragma config FCKSM = CSDCMD  // Clock Switching Mode bits (Clock switching is enabled,Fail-safe Clock Monitor is disabled)
 
 // FWDT
 #pragma config WDTPOST = PS32768  // Watchdog Timer Postscaler Bits (1:32,768)
 #pragma config WDTPRE = PR128     // Watchdog Timer Prescaler bit (1:128)
-#pragma config PLLKEN =                                                                                                \
-    ON  // PLL Lock Wait Enable bit (Clock switch to PLL source will wait until the PLL lock signal is valid.)
-#pragma config WINDIS = OFF  // Watchdog Timer Window Enable bit (Watchdog Timer in Non-Window mode)
-#pragma config FWDTEN = OFF  // Watchdog Timer Enable bit (Watchdog timer enabled/disabled by user software)
+#pragma config PLLKEN = ON        // PLL Lock Wait Enable bit (Clock switch to PLL source will wait until the PLL lock signal is valid.)
+#pragma config WINDIS = OFF       // Watchdog Timer Window Enable bit (Watchdog Timer in Non-Window mode)
+#pragma config FWDTEN = OFF       // Watchdog Timer Enable bit (Watchdog timer enabled/disabled by user software)
 
 // FPOR
 #pragma config FPWRT = PWR128  // Power-on Reset Timer Value Select bits (128ms)

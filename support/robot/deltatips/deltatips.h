@@ -18,5 +18,4 @@ int robot_init(void);
 
 #define ROBOT_NAME "deltaTips"
 
-
-#endif // DELTATIPS_H
+#endif  // DELTATIPS_H

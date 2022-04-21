@@ -30,8 +30,7 @@
 #    define NVM_FLASH_ROW_BYTE   256
 #    define NVM_HAS_FLASH
 
-#elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) || defined(ARCHI_dspic33ch)       \
-    || defined(ARCHI_dspic33ck)
+#elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
 #    define NVM_FLASH_PAGE_BYTE  4096
 #    define NVM_FLASH_PAGE_MASK  0xFFFFF000
 #    define NVM_FLASH_PAGE_SHIFT 12

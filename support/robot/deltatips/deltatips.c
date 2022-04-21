@@ -11,9 +11,9 @@
 
 #include "deltatips.h"
 
-#include "module/mrobot.h"
-#include "driver/qei.h"
 #include "driver/motor.h"
+#include "driver/qei.h"
+#include "module/mrobot.h"
 
 int robot_init(void)
 {
@@ -26,7 +26,7 @@ int robot_init(void)
     mrobot_setCoderDev(leftCoder_dev, rightCoder_dev);
     mrobot_init();
     mrobot_setCoderGeometry(195.0,
-                            0.00849123461395001864975755315181); // 72.5mm wheel / 28000 steps per rotate
+                            0.00849123461395001864975755315181);  // 72.5mm wheel / 28000 steps per rotate
 
     return 0;
 }

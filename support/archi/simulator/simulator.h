@@ -20,16 +20,15 @@ extern "C"
 #if defined(WIN32) || defined(_WIN32)
 #    define SIM_WIN
 
-#elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__)    \
-    || defined(__APPLE__)
+#elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__) || defined(__APPLE__)
 #    define SIM_UNIX
 #endif
 
 #include <driver/device.h>
 #include <stdint.h>
 
-#include "simulator_socket.h"
 #include "simulator_pthread.h"
+#include "simulator_socket.h"
 
     void simulator_init(void);
     void simulator_end(void);

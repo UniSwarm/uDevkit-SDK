@@ -118,8 +118,7 @@ void ax12_send_1_short(uint8_t ax_id, uint8_t param, uint16_t val)
     ax12_trame[5] = param;
     ax12_trame[6] = (char)val;
     ax12_trame[7] = (char)((short)val >> 8);
-    ax12_trame[8] =
-        ~(uint8_t)(ax12_trame[2] + ax12_trame[3] + ax12_trame[4] + ax12_trame[5] + ax12_trame[6] + ax12_trame[7]);
+    ax12_trame[8] = ~(uint8_t)(ax12_trame[2] + ax12_trame[3] + ax12_trame[4] + ax12_trame[5] + ax12_trame[6] + ax12_trame[7]);
 
     uart_write(ax12_uart, ax12_trame, 9);
 }
@@ -145,8 +144,7 @@ void ax12_send_2_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2
     ax12_trame[7] = (char)((short)val >> 8);
     ax12_trame[8] = (char)val2;
     ax12_trame[9] = (char)((short)val2 >> 8);
-    ax12_trame[10] = ~(uint8_t)(ax12_trame[2] + ax12_trame[3] + ax12_trame[4] + ax12_trame[5] + ax12_trame[6]
-                                + ax12_trame[7] + ax12_trame[8] + ax12_trame[9]);
+    ax12_trame[10] = ~(uint8_t)(ax12_trame[2] + ax12_trame[3] + ax12_trame[4] + ax12_trame[5] + ax12_trame[6] + ax12_trame[7] + ax12_trame[8] + ax12_trame[9]);
 
     uart_write(ax12_uart, ax12_trame, 11);
 }
@@ -175,8 +173,8 @@ void ax12_send_3_short(uint8_t ax_id, uint8_t param, uint16_t val, uint16_t val2
     ax12_trame[9] = (char)((short)val2 >> 8);
     ax12_trame[10] = (char)val3;
     ax12_trame[11] = (char)((short)val3 >> 8);
-    ax12_trame[12] = ~(uint8_t)(ax12_trame[2] + ax12_trame[3] + ax12_trame[4] + ax12_trame[5] + ax12_trame[6]
-                                + ax12_trame[7] + ax12_trame[8] + ax12_trame[9] + ax12_trame[10] + ax12_trame[11]);
+    ax12_trame[12] = ~(uint8_t)(ax12_trame[2] + ax12_trame[3] + ax12_trame[4] + ax12_trame[5] + ax12_trame[6] + ax12_trame[7] + ax12_trame[8] + ax12_trame[9]
+                                + ax12_trame[10] + ax12_trame[11]);
 
     uart_write(ax12_uart, ax12_trame, 13);
 }

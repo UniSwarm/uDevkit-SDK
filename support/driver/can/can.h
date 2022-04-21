@@ -74,12 +74,7 @@ typedef enum
     CAN_FRAME_BOTH = 0x03,  ///< CAN standard and extended frames
 } CAN_FRAME_FORMAT_FLAGS;
 
-int can_filterConfiguration(rt_dev_t device,
-                            uint8_t nFilter,
-                            uint8_t fifo,
-                            uint32_t idFilter,
-                            uint32_t mask,
-                            CAN_FRAME_FORMAT_FLAGS frame);
+int can_filterConfiguration(rt_dev_t device, uint8_t nFilter, uint8_t fifo, uint32_t idFilter, uint32_t mask, CAN_FRAME_FORMAT_FLAGS frame);
 int can_filterEnable(rt_dev_t device, uint8_t nFilter);
 int can_filterDisable(rt_dev_t device, uint8_t nFilter);
 
@@ -87,11 +82,10 @@ int can_filterDisable(rt_dev_t device, uint8_t nFilter);
 #    include "can_dspic30f.h"
 #elif defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
 #    include "can_dspic33c.h"
-#elif defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj)              \
-    || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
+#elif defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic33fj)                          \
+    || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
 #    include "can_pic24_dspic33.h"
-#elif defined(ARCHI_pic32mx) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)         \
-    || defined(ARCHI_pic32mzda)
+#elif defined(ARCHI_pic32mx) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
 #    include "can_pic32.h"
 #endif
 

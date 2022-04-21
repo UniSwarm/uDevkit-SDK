@@ -31,10 +31,9 @@
                             // user-selected oscillator source
 
 // FOSC
-#pragma config POSCMD = EC    // Primary Oscillator Mode Select bits->EC
-#pragma config OSCIOFNC = ON  // OSC2 Pin Function bit->OSC2 is GPIO
-#pragma config FCKSM =                                                                                                 \
-    CSECME  // Clock Switching Mode bits->Both Clock switching and Fail-safe Clock Monitor are enabled
+#pragma config POSCMD = EC         // Primary Oscillator Mode Select bits->EC
+#pragma config OSCIOFNC = ON       // OSC2 Pin Function bit->OSC2 is GPIO
+#pragma config FCKSM = CSECME      // Clock Switching Mode bits->Both Clock switching and Fail-safe Clock Monitor are enabled
 #pragma config PLLKEN = PLLKEN_ON  // PLLKEN->PLLKEN_ON
 #pragma config XTCFG = G3          // XT Config->24-32 MHz crystals
 #pragma config XTBST = ENABLE      // XT Boost->Boost the kick-start
@@ -73,24 +72,19 @@
 #pragma config SPI2PIN = PPS  // SPI2 Pin Select bit->SPI2 uses I/O remap (PPS) pins
 
 // FALTRE  G
-#pragma config CTXT1 =                                                                                                 \
-    OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 1 bits->Not Assigned
-#pragma config CTXT2 =                                                                                                 \
-    OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 2 bits->Not Assigned
-#pragma config CTXT3 =                                                                                                 \
-    OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 3 bits->Not Assigned
-#pragma config CTXT4 =                                                                                                 \
-    OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 4 bits->Not Assigned
+#pragma config CTXT1 = OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 1 bits->Not Assigned
+#pragma config CTXT2 = OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 2 bits->Not Assigned
+#pragma config CTXT3 = OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 3 bits->Not Assigned
+#pragma config CTXT4 = OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 4 bits->Not Assigned
 
 // ################################# Secondary configuration #################################
 // FS1OSCSEL
 #pragma config S1FNOSC = PRI  // Oscillator Source Selection (primary (PRI))
-#pragma config S1IESO = OFF  // Two-speed Oscillator Start-up Enable bit (Start up with user-selected oscillator source)
+#pragma config S1IESO = OFF   // Two-speed Oscillator Start-up Enable bit (Start up with user-selected oscillator source)
 
 // FS1OSC
-#pragma config S1OSCIOFNC = ON  // Secondary OSC2 Pin Function bit (OSC2 is general purpose digital I/O pin)
-#pragma config S1FCKSM =                                                                                               \
-    CSECMD  // Clock Switching Mode bits (Clock switching is enabled,Fail-safe Clock Monitor is disabled)
+#pragma config S1OSCIOFNC = ON   // Secondary OSC2 Pin Function bit (OSC2 is general purpose digital I/O pin)
+#pragma config S1FCKSM = CSECMD  // Clock Switching Mode bits (Clock switching is enabled,Fail-safe Clock Monitor is disabled)
 
 // FS1WDT
 #pragma config S1RWDTPS = PS1048576  // Run Mode Watchdog Timer Post Scaler select bits (1:1048576)
@@ -101,9 +95,9 @@
 #pragma config S1FWDTEN = ON_SW      // Watchdog Timer Enable bit (WDT controlled via WDTCON.ON bit)
 
 // FS1ICD
-#pragma config S1ICS = PGD1    // ICD Communication Channel Select bits (Communicate on PGEC3 and PGED3)
-#pragma config S1ISOLAT = OFF  // Isolate the Secondary core subsystem from the primary subsystem during Debug (The
-                               // secondary can operate (in debug mode) even if the SLVEN bit in the MSI is zero.)
+#pragma config S1ICS = PGD1     // ICD Communication Channel Select bits (Communicate on PGEC3 and PGED3)
+#pragma config S1ISOLAT = OFF   // Isolate the Secondary core subsystem from the primary subsystem during Debug (The
+                                // secondary can operate (in debug mode) even if the SLVEN bit in the MSI is zero.)
 #pragma config S1NOBTSWP = OFF  // BOOTSWP Instruction Enable/Disable bit (BOOTSWP instruction is disabled)
 
 // FS1DEVOPT
@@ -111,19 +105,14 @@
 #pragma config S1SPI1PIN = PPS  // S1 SPI1 Pin Select bit (Secondary SPI1 uses I/O remap (PPS) pins)
 #pragma config S1SSRE = ON      // Secondary Secondary Reset Enable (Secondary generated resets will reset the Secondary
                                 // Enable Bit in the MSI module)
-#pragma config S1MSRE =                                                                                                \
-    ON  // primary Secondary Reset Enable (The primary software oriented RESET events (RESET Op-Code, Watchdog timeout,
-        // TRAP reset, illegalInstruction) will also cause the secondary subsystem to reset.)
+#pragma config S1MSRE = ON      // primary Secondary Reset Enable (The primary software oriented RESET events (RESET Op-Code, Watchdog timeout,
+                                // TRAP reset, illegalInstruction) will also cause the secondary subsystem to reset.)
 
 // FS1ALTREG
-#pragma config S1CTXT1 =                                                                                               \
-    OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 1 bits (Not Assigned)
-#pragma config S1CTXT2 =                                                                                               \
-    OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 2 bits (Not Assigned)
-#pragma config S1CTXT3 =                                                                                               \
-    OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 3 bits (Not Assigned)
-#pragma config S1CTXT4 =                                                                                               \
-    OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 4 bits (Not Assigned)
+#pragma config S1CTXT1 = OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 1 bits (Not Assigned)
+#pragma config S1CTXT2 = OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 2 bits (Not Assigned)
+#pragma config S1CTXT3 = OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 3 bits (Not Assigned)
+#pragma config S1CTXT4 = OFF  // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 4 bits (Not Assigned)
 
 // ################################# PINS Ownership #################################
 // FCFGPRA0
@@ -207,26 +196,26 @@
 
 // ################################# MSI configuration #################################
 // FMBXM
-#pragma config MBXM0 = M2S  // Mailbox 0 data direction (Mailbox register configured for primary data read (primary to
-                            // Secondary data transfer)
-#pragma config MBXM1 = M2S  // Mailbox 1 data direction (Mailbox register configured for primary data read (primary to
-                            // Secondary data transfer)
-#pragma config MBXM2 = M2S  // Mailbox 2 data direction (Mailbox register configured for primary data read (primary to
-                            // Secondary data transfer)
-#pragma config MBXM3 = M2S  // Mailbox 3 data direction (Mailbox register configured for primary data read (primary to
-                            // Secondary data transfer)
-#pragma config MBXM4 = M2S  // Mailbox 4 data direction (Mailbox register configured for primary data read (primary to
-                            // Secondary data transfer)
-#pragma config MBXM5 = S2M  // Mailbox 5 data direction (Mailbox register configured for primary data read (Secondary to
-                            // primary data transfer)
-#pragma config MBXM6 = S2M  // Mailbox 6 data direction (Mailbox register configured for primary data read (Secondary to
-                            // primary data transfer)
-#pragma config MBXM7 = S2M  // Mailbox 7 data direction (Mailbox register configured for primary data read (Secondary to
-                            // primary data transfer)
-#pragma config MBXM8 = S2M  // Mailbox 8 data direction (Mailbox register configured for primary data read (Secondary to
-                            // primary data transfer)
-#pragma config MBXM9 = S2M  // Mailbox 9 data direction (Mailbox register configured for primary data read (Secondary to
-                            // primary data transfer)
+#pragma config MBXM0 = M2S   // Mailbox 0 data direction (Mailbox register configured for primary data read (primary to
+                             // Secondary data transfer)
+#pragma config MBXM1 = M2S   // Mailbox 1 data direction (Mailbox register configured for primary data read (primary to
+                             // Secondary data transfer)
+#pragma config MBXM2 = M2S   // Mailbox 2 data direction (Mailbox register configured for primary data read (primary to
+                             // Secondary data transfer)
+#pragma config MBXM3 = M2S   // Mailbox 3 data direction (Mailbox register configured for primary data read (primary to
+                             // Secondary data transfer)
+#pragma config MBXM4 = M2S   // Mailbox 4 data direction (Mailbox register configured for primary data read (primary to
+                             // Secondary data transfer)
+#pragma config MBXM5 = S2M   // Mailbox 5 data direction (Mailbox register configured for primary data read (Secondary to
+                             // primary data transfer)
+#pragma config MBXM6 = S2M   // Mailbox 6 data direction (Mailbox register configured for primary data read (Secondary to
+                             // primary data transfer)
+#pragma config MBXM7 = S2M   // Mailbox 7 data direction (Mailbox register configured for primary data read (Secondary to
+                             // primary data transfer)
+#pragma config MBXM8 = S2M   // Mailbox 8 data direction (Mailbox register configured for primary data read (Secondary to
+                             // primary data transfer)
+#pragma config MBXM9 = S2M   // Mailbox 9 data direction (Mailbox register configured for primary data read (Secondary to
+                             // primary data transfer)
 #pragma config MBXM10 = M2S  // Mailbox 10 data direction (Mailbox register configured for primary data read (Secondary
                              // to primary data transfer)
 #pragma config MBXM11 = M2S  // Mailbox 11 data direction (Mailbox register configured for primary data read (Secondary

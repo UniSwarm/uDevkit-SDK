@@ -24,8 +24,7 @@
 
 void usleep(__int64 usec);
 
-#elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__)    \
-    || defined(__APPLE__)
+#elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__) || defined(__APPLE__)
 #    include <time.h>
 #    include <unistd.h>
 #    define psleep(m_sec) nanosleep((const struct timespec[]){{0, (m_sec)*1000000L}}, NULL)

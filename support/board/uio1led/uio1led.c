@@ -36,7 +36,7 @@ int board_init_io(void)
     _RP34R = _RPOUT_CAN1TX;  // CAN1TX ==> RP73
 
     _RP45R = _RPOUT_PWM4H;  // PWM4H ==> RP45
-    //ODCBbits.ODCB13 = 1;    // RB13/RP45 in open drain mode
+    // ODCBbits.ODCB13 = 1;    // RB13/RP45 in open drain mode
 
     // Lock configuration pin
     lockIoConfig();

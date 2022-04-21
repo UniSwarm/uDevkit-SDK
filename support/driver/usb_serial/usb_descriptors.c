@@ -303,12 +303,12 @@ const struct
 //{'0','1','2','3','4','5','6','7','8','9'}};
 
 // Array of configuration descriptors
-const uint8_t *const USB_CD_Ptr[] = {(const uint8_t *const) & configDescriptor1};
+const uint8_t *const USB_CD_Ptr[] = {(const uint8_t *const)&configDescriptor1};
 // Array of string descriptors
 const uint8_t *const USB_SD_Ptr[USB_NUM_STRING_DESCRIPTORS] = {
-    (const uint8_t *const) & sd000,
-    (const uint8_t *const) & sd001,
-    (const uint8_t *const) & sd002
+    (const uint8_t *const)&sd000,
+    (const uint8_t *const)&sd001,
+    (const uint8_t *const)&sd002
     //(const uint8_t *const)&sd003  //uncomment if implementing a serial number string descriptor named sd003
 };
 

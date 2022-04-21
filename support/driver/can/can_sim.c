@@ -27,8 +27,7 @@ SOCKET can_soc = -1;
 #    include <winsock2.h>
 #    define SOCKET_MODE 0
 
-#elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__)    \
-    || defined(__APPLE__)
+#elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__) || defined(__APPLE__)
 #    include <fcntl.h>
 #    include <linux/can.h>
 #    include <linux/can/raw.h>
@@ -536,12 +535,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     return 0;
 }
 
-int can_filterConfiguration(rt_dev_t device,
-                            uint8_t nFilter,
-                            uint8_t fifo,
-                            uint32_t idFilter,
-                            uint32_t mask,
-                            CAN_FRAME_FORMAT_FLAGS frame)
+int can_filterConfiguration(rt_dev_t device, uint8_t nFilter, uint8_t fifo, uint32_t idFilter, uint32_t mask, CAN_FRAME_FORMAT_FLAGS frame)
 {
     UDK_UNUSED(idFilter);
     UDK_UNUSED(mask);
