@@ -85,7 +85,13 @@ int can_filterDisable(rt_dev_t device, uint8_t nFilter);
 #elif defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic33fj)                          \
     || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
 #    include "can_pic24_dspic33.h"
-#elif defined(ARCHI_pic32mx) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
+#elif defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512MCJ048)               \
+    || defined(DEVICE_32MK0512MCJ064) || defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK0512MCM100)              \
+    || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100)
+// PIC32MK with CANFD
+#    include "can_pic32_fd.h"
+#elif defined(ARCHI_pic32mx) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)         \
+    || defined(ARCHI_pic32mzda)
 #    include "can_pic32.h"
 #endif
 

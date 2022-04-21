@@ -21,8 +21,13 @@ ifeq ($(ARCHI),$(filter $(ARCHI),dspic30f))
  HEADER += can_dspic30f.h
 endif
 ifeq ($(ARCHI),$(filter $(ARCHI),pic32mx pic32mk pic32mzda pic32mzec pic32mzef))
- ARCHI_SRC += can_pic32.c
- HEADER += can_pic32.h
+ ifeq ($(DEVICE),$(filter $(DEVICE), 32MK0256MCJ048 32MK0256MCJ064 32MK0512MCJ048 32MK0512MCJ064 32MK0512MCM064 32MK0512MCM100 32MK1024MCM064 32MK1024MCM100))
+  ARCHI_SRC += can_pic32_fd.c
+  HEADER += can_pic32_fd.h
+ else
+  ARCHI_SRC += can_pic32.c
+  HEADER += can_pic32.h
+ endif
 endif
 
 SIM_SRC += can_sim.c

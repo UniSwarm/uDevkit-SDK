@@ -115,13 +115,6 @@
 #    define CANIPR IPL4SOFT
 #endif
 
-// ==== Transmit buffer memory (dedicated to PIC32) ====
-typedef struct
-{
-    unsigned SID : 11;  ///< CAN TX Message Standard ID. This value should be between 0x0 - 0x7FF.
-    unsigned : 21;
-} CAN_TXMSG_SID;
-
 typedef struct
 {
     unsigned DLC : 4;  ///< Data Length Control. Specifies the size of the data payload section of the CAN packet
@@ -134,6 +127,13 @@ typedef struct
     unsigned SRR : 1;   ///< Susbtitute Remote request bit. This bit should always be clear for an EID message
     unsigned : 2;
 } CAN_MSGEID;
+
+// ==== Transmit buffer memory (dedicated to PIC32) ====
+typedef struct
+{
+    unsigned SID : 11;  ///< CAN TX Message Standard ID. This value should be between 0x0 - 0x7FF.
+    unsigned : 21;
+} CAN_TXMSG_SID;
 
 typedef union
 {
