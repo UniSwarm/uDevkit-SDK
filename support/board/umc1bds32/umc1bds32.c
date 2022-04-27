@@ -13,26 +13,19 @@
 
 #include "umc1bds32.h"
 
-#include "driver/ccp.h"
-#include "driver/gpio.h"
-#include "driver/sysclock.h"
+#include <driver/ccp.h>
+#include <driver/gpio.h>
+#include <driver/sysclock.h>
 
-/****************************************************************************************/
-/*          Privates functions                                                          */
-int board_init_io(void);
+int _board_init_io(void);
 
-/****************************************************************************************/
-/*          External variable                                                           */
-
-/****************************************************************************************/
-/*          Local variable                                                              */
 rt_dev_t _board_leds[LED_COUNT];
 
 #ifdef SIMULATOR
 int _board_sim_bridgesEnable = 0;
 #endif
 
-int board_init_io(void)
+int _board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
@@ -55,7 +48,7 @@ int board_init_io(void)
     _CAN1RXR = 69;           // CAN1RX ==> RP69
     _RP71R = _RPOUT_CAN1TX;  // CAN1TX ==> RP71
 
-    _QEIA1R = 49;  // same pins as slaves for the moment
+    _QEIA1R = 49;
     _QEIB1R = 50;
     _QEINDX1R = 48;
 
@@ -123,7 +116,7 @@ int board_init(void)
     sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, SYSCLOCK_POSC);
     archi_init();
 
-    board_init_io();
+    _board_init_io();
 
     return 0;
 }

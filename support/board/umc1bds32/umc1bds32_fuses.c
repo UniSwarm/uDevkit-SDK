@@ -95,7 +95,7 @@
 #pragma config S1FWDTEN = ON_SW      // Watchdog Timer Enable bit (WDT controlled via WDTCON.ON bit)
 
 // FS1ICD
-#pragma config S1ICS = PGD1     // ICD Communication Channel Select bits (Communicate on PGEC3 and PGED3)
+#pragma config S1ICS = PGD1     // ICD Communication Channel Select bits (Communicate on PGEC1 and PGED1)
 #pragma config S1ISOLAT = OFF   // Isolate the Secondary core subsystem from the primary subsystem during Debug (The
                                 // secondary can operate (in debug mode) even if the SLVEN bit in the MSI is zero.)
 #pragma config S1NOBTSWP = OFF  // BOOTSWP Instruction Enable/Disable bit (BOOTSWP instruction is disabled)

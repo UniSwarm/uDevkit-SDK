@@ -105,26 +105,7 @@ int8_t board_getIo(uint8_t io);
 // #define LIMIT_SWITCH_4_OFFSET  10
 // #define LIMIT_SWITCH_COUNT     4
 
-// UMC 90
-// #define LIMIT_SWITCH_COUNT     12
-// #define LIMIT_SWITCH_5_PORT    PORTE
-// #define LIMIT_SWITCH_5_OFFSET  4
-// #define LIMIT_SWITCH_6_PORT    PORTE
-// #define LIMIT_SWITCH_6_OFFSET  5
-// #define LIMIT_SWITCH_7_PORT    PORTD
-// #define LIMIT_SWITCH_7_OFFSET  15
-// #define LIMIT_SWITCH_8_PORT    PORTE
-// #define LIMIT_SWITCH_8_OFFSET  3
-// #define LIMIT_SWITCH_9_PORT    PORTC
-// #define LIMIT_SWITCH_9_OFFSET  12
-// #define LIMIT_SWITCH_10_PORT   PORTD
-// #define LIMIT_SWITCH_10_OFFSET 0
-// #define LIMIT_SWITCH_11_PORT   PORTD
-// #define LIMIT_SWITCH_11_OFFSET 2
-// #define LIMIT_SWITCH_12_PORT   PORTE
-// #define LIMIT_SWITCH_12_OFFSET 14
-
-//
+// STO
 #define STO_STATUS_OK_IN PORTEbits.RE0
 #define STO_OUTPUT       PORTEbits.RE1
 #define P12V_ENABLE      LATEbits.LATE2
