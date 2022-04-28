@@ -335,7 +335,6 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
 {
 #if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
-    uint16_t bitRateDiv;
     uint8_t quantum;
     if (can >= CAN_COUNT)
     {
@@ -361,7 +360,8 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     cans[can].s1Seg = s1Seg;
     cans[can].s2Seg = s2Seg;
 
-    bitRateDiv = sysclock_periphFreq(SYSCLOCK_CLOCK_CAN) / (bitRate * quantum * 2);
+    uint32_t can_freq = sysclock_periphFreq(SYSCLOCK_CLOCK_CAN);
+    uint16_t bitRateDiv = can_freq / (bitRate * quantum);
     if (bitRateDiv > 256)
     {
         bitRateDiv = 256;
@@ -371,6 +371,7 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     {
         case 0:
             CFD1CONbits.ON = 1;
+            CFD1CONbits.CLKSEL0 = 0b1;  // REFCLK4 clock selected
             CFD1CONbits.REQOP = 4;
             while (CFD1CONbits.OPMOD != 4)
                 ;
@@ -440,7 +441,8 @@ uint32_t can_effectiveBitRate(rt_dev_t device)
             break;
     }
 
-    return sysclock_periphFreq(SYSCLOCK_CLOCK_CAN) / (bitRateDiv * quantums);
+    uint32_t can_freq = sysclock_periphFreq(SYSCLOCK_CLOCK_CAN);
+    return can_freq / (bitRateDiv * quantums);
 #else
     return 0;
 #endif
@@ -530,13 +532,13 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     switch (can)
     {
         case 0:
-            if (CFD1FIFOSTA1bits.TFNRFNIF == 0)
+            if (CFD1TXQSTAbits.TXQNIF == 0)
             {
                 buffer = NULL;
             }
             else
             {
-                buffer = (CAN_TxMsgBuffer *)(PA_TO_KVA1(CFD1FIFOUA1));
+                buffer = (CAN_TxMsgBuffer *)(PA_TO_KVA1(CFD1TXQUA));
             }
             break;
     }
@@ -586,11 +588,11 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
         case 0:
             if (buffer != NULL)
             {
-                CFD1FIFOCON1SET = _CFD1TXQCON_TXREQ_MASK | _CFD1TEFCON_UINC_MASK;  // Set the UINC and TXREQ bit
+                CFD1TXQCONSET = _CFD1TXQCON_TXREQ_MASK | _CFD1TEFCON_UINC_MASK;  // Set the UINC and TXREQ bit
             }
             else
             {
-                CFD1FIFOCON1SET = _CFD1TXQCON_TXREQ_MASK;  // Set the TXREQ bit
+                CFD1TXQCONSET = _CFD1TXQCON_TXREQ_MASK;  // Set the TXREQ bit
             }
             break;
     }
