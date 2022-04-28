@@ -29,7 +29,11 @@ typedef enum
     SYSCLOCK_CLOCK_PBCLK5,        ///< peripheral bus 5
     SYSCLOCK_CLOCK_PBCLK6,        ///< peripheral bus 6
     SYSCLOCK_CLOCK_PBCLK7,        ///< peripheral bus 7
-    SYSCLOCK_CLOCK_PBCLK8         ///< peripheral bus 8
+    SYSCLOCK_CLOCK_PBCLK8,        ///< peripheral bus 8
+    SYSCLOCK_CLOCK_REFCLOCK1,     ///< Refrence clock 1
+    SYSCLOCK_CLOCK_REFCLOCK2,     ///< Refrence clock 2
+    SYSCLOCK_CLOCK_REFCLOCK3,     ///< Refrence clock 3
+    SYSCLOCK_CLOCK_REFCLOCK4,     ///< Refrence clock 4
 } SYSCLOCK_CLOCK;
 
 // periph clock assoc
@@ -46,9 +50,14 @@ typedef enum
 #    define SYSCLOCK_CLOCK_IC    SYSCLOCK_CLOCK_PBCLK3  ///< IC clock bus mapped to peripheral bus 3
 
 #elif defined(ARCHI_pic32mk)
-#    define SYSCLOCK_CLOCK_CPU     SYSCLOCK_CLOCK_PBCLK7  ///< CPU clock bus
-#    define SYSCLOCK_CLOCK_USB     SYSCLOCK_CLOCK_USBCLK  ///< USB clock bus
-#    define SYSCLOCK_CLOCK_CAN     SYSCLOCK_CLOCK_PBCLK5  ///< CAN clock bus mapped to peripheral bus 5
+#    define SYSCLOCK_CLOCK_CPU SYSCLOCK_CLOCK_PBCLK7  ///< CPU clock bus
+#    define SYSCLOCK_CLOCK_USB SYSCLOCK_CLOCK_USBCLK  ///< USB clock bus
+#    if defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                   \
+        || defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100)
+#        define SYSCLOCK_CLOCK_CAN SYSCLOCK_CLOCK_REFCLOCK4  ///< CAN clock bus mapped to refclock4
+#    else
+#        define SYSCLOCK_CLOCK_CAN SYSCLOCK_CLOCK_PBCLK5  ///< CAN clock bus mapped to peripheral bus 5
+#    endif
 #    define SYSCLOCK_CLOCK_PMP     SYSCLOCK_CLOCK_PBCLK2  ///< PMP clock bus mapped to peripheral bus 2
 #    define SYSCLOCK_CLOCK_I2C     SYSCLOCK_CLOCK_PBCLK2  ///< I2C clock bus mapped to peripheral bus 2
 #    define SYSCLOCK_CLOCK_UART1_2 SYSCLOCK_CLOCK_PBCLK2  ///< UART 1 to 2 clock bus mapped to peripheral bus 2
@@ -79,6 +88,19 @@ typedef enum
     SYSCLOCK_SRC_SPLL = 0b001,  ///< System PLL (SPLL)
     SYSCLOCK_SRC_FRC = 0b000    ///< same as SYSCLOCK_SRC_FRC
 } SYSCLOCK_SOURCE;
+
+typedef enum
+{
+    SYSCLOCK_REFCLK_SRC_REFCLKI = 0b1000,
+    SYSCLOCK_REFCLK_SRC_SPLL = 0b0111,
+    SYSCLOCK_REFCLK_SRC_UPLL = 0b0110,
+    SYSCLOCK_REFCLK_SRC_SOSC = 0b0101,
+    SYSCLOCK_REFCLK_SRC_LPRC = 0b0100,
+    SYSCLOCK_REFCLK_SRC_FRC = 0b0011,
+    SYSCLOCK_REFCLK_SRC_POSC = 0b0010,
+    SYSCLOCK_REFCLK_SRC_PBCLK1 = 0b0001,
+    SYSCLOCK_REFCLK_SRC_SYSCLOCK = 0b0000
+} SYSCLOCK_REFCLK_SRC;
 
 #if defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
 #    define SYSCLOCK_SRC_FRC2 SYSCLOCK_SRC_FRC2
