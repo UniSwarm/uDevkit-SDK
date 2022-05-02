@@ -349,7 +349,7 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     {
         return -1;
     }
-    quantum = propagSeg + s1Seg + s2Seg + 1;
+    quantum = propagSeg + s1Seg + s2Seg;
     if (quantum < 8 || quantum > 25)
     {
         return -1;
