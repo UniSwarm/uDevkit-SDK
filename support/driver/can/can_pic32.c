@@ -981,7 +981,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     }
 
     // flags
-    if (buffer->msgEID.SRR == 1)
+    if (buffer->msgEID.RTR == 1)
     {
         flagValue += CAN_RTR;
     }
@@ -1012,13 +1012,6 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 
 #    endif
     }
-
-    // flags
-    if (buffer->msgEID.RTR == 1)
-    {
-        flagValue += CAN_RTR;
-    }
-    header->flags = flagValue;
 
     return 1;
 #else
