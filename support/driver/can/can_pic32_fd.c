@@ -588,7 +588,8 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
         case 0:
             if (buffer != NULL)
             {
-                CFD1TXQCONSET = _CFD1TXQCON_TXREQ_MASK | _CFD1TEFCON_UINC_MASK;  // Set the UINC and TXREQ bit
+                CFD1TXQCONSET = _CFD1TEFCON_UINC_MASK;   // Set the UINC
+                CFD1TXQCONSET = _CFD1TXQCON_TXREQ_MASK;  // Set the TXREQ bit
             }
             else
             {
