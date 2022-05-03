@@ -432,7 +432,7 @@ uint32_t can_effectiveBitRate(rt_dev_t device)
     }
 
     uint16_t bitRateDiv = 1;
-    uint8_t quantums = cans[can].propagSeg + cans[can].s1Seg + cans[can].s2Seg + 1;
+    uint8_t quantums = cans[can].propagSeg + cans[can].s1Seg + cans[can].s2Seg;
 
     switch (can)
     {
