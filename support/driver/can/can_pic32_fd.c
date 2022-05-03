@@ -171,14 +171,14 @@ int can_enable(rt_dev_t device)
             CFD1FIFOCON1bits.PLSIZE = CAN_FIFO_DATA8;  // 8 bytes of data
             CFD1FIFOCON1bits.TXEN = 0;
 
-            // filter 1
+            // filter 0 for fifo 1
             CFD1FLTCON0bits.F0BP = 1;       // Store messages in FIFO1
             CFD1FLTOBJ0bits.SID = 0x000;    // Filter 1 EID
             CFD1FLTOBJ0bits.EID = 0x00000;  // Filter 1 SID
             CFD1FLTOBJ0bits.EXIDE = 1;      // Filter EID messages
-            CFD1FLTCON0bits.FLTEN1 = 1;     // Enable the filter
+            CFD1FLTCON0bits.FLTEN0 = 1;     // Enable the filter
 
-            // mask 1
+            // mask 0 for filter 0
             CFD1MASK0bits.MSID = 0x000;    // Ignore all bits in comparison
             CFD1MASK0bits.MEID = 0x00000;  // Ignore all bits in comparison
             CFD1MASK0bits.MIDE = 0;        // Match all message types.
@@ -623,11 +623,11 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     switch (can)
     {
         case 0:
-            if (CFD1FIFOSTA2bits.TFNRFNIF == 0)
+            if (CFD1FIFOSTA1bits.TFNRFNIF == 0)
             {
                 return 0;
             }
-            buffer = PA_TO_KVA1(CFD1FIFOUA2);
+            buffer = PA_TO_KVA1(CFD1FIFOUA1);
             break;
 
         default:
