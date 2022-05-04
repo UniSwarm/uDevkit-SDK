@@ -515,32 +515,34 @@ uint8_t can_s2Seg(rt_dev_t device)
  * @param header CAN message header struct (id, flags, data size)
  * @return 0 if message is successfully putted inside fifo, -1 in case of error
  */
+#define FIFOCON(fifo)    ((volatile uint32_t *)(&CFD1TXQCON + (((uint8_t)fifo) * 12)))
+#define FIFOCONSET(fifo) (FIFOCON(fifo) + 2)
+#define FIFOSTA(fifo)    ((volatile uint32_t *)(&CFD1TXQSTA + (((uint8_t)fifo) * 12)))
+#define FIFOUA(fifo)     ((volatile uint32_t *)(&CFD1TXQUA + (((uint8_t)fifo) * 12)))
 int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
-    UDK_UNUSED(fifo);
 #if CAN_COUNT >= 1
-    unsigned int i;
-
     uint8_t can = MINOR(device);
-    if (can >= CAN_COUNT)
-    {
-        return 0;
-    }
 
     CAN_TxMsgBuffer *buffer = NULL;
+
+    if (fifo >= CAN_FIFO_COUNT)
+    {
+        return -1;
+    }
 
     switch (can)
     {
         case 0:
-            if (CFD1TXQSTAbits.TXQNIF == 0)
+            if ((*FIFOSTA(fifo) & _CFD1FIFOSTA1_TFNRFNIF_MASK) == 0)
             {
-                buffer = NULL;
+                return 0;
             }
-            else
-            {
-                buffer = (CAN_TxMsgBuffer *)(PA_TO_KVA1(CFD1TXQUA));
-            }
+            buffer = PA_TO_KVA1(*FIFOUA(fifo));
             break;
+
+        default:
+            return -1;
     }
 
     if (buffer != NULL)
@@ -576,7 +578,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
                 header->size = 8;
             }
             buffer->ctrl.DLC = header->size;  // Data Length
-            for (i = 0; i < header->size; i++)
+            for (unsigned int i = 0; i < header->size; i++)
             {
                 buffer->data[i] = data[i];
             }
@@ -586,15 +588,8 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     switch (can)
     {
         case 0:
-            if (buffer != NULL)
-            {
-                CFD1TXQCONSET = _CFD1TEFCON_UINC_MASK;   // Set the UINC
-                CFD1TXQCONSET = _CFD1TXQCON_TXREQ_MASK;  // Set the TXREQ bit
-            }
-            else
-            {
-                CFD1TXQCONSET = _CFD1TXQCON_TXREQ_MASK;  // Set the TXREQ bit
-            }
+            *FIFOCONSET(fifo) = _CFD1FIFOCON1_UINC_MASK;   // Set the UINC
+            *FIFOCONSET(fifo) = _CFD1FIFOCON1_TXREQ_MASK;  // Set the TXREQ bit
             break;
     }
 
@@ -609,30 +604,34 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
  * @param device CAN device number
  * @param fifo fifo number to read the message
  * @param header CAN message header struct (id, flags, data size)
- * @return 0 if message no readen, -1 in case of error, 1 if a message is readen
+ * @return 0 if no message is read, -1 in case of error, 1 if a message is read
  */
 int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
-    UDK_UNUSED(fifo);
 #if CAN_COUNT >= 1
-    int i;
     uint8_t can = MINOR(device);
 
     CAN_FLAGS flagValue = 0;
     CAN_RxMsgBuffer *buffer = NULL;
 
+    if (fifo == 0 || fifo >= CAN_FIFO_COUNT)
+    {
+        return -1;
+    }
+
     switch (can)
     {
         case 0:
-            if (CFD1FIFOSTA1bits.TFNRFNIF == 0)
+            if ((*FIFOSTA(fifo) & _CFD1FIFOSTA1_TFNRFNIF_MASK) == 0)
             {
+                // FIFO empty
                 return 0;
             }
-            buffer = PA_TO_KVA1(CFD1FIFOUA1);
+            buffer = PA_TO_KVA1(*FIFOUA(fifo));
             break;
 
         default:
-            return 0;
+            return -1;
     }
 
     // ID
@@ -652,7 +651,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     {
         header->size = 0;
     }
-    for (i = 0; i < header->size; i++)
+    for (unsigned int i = 0; i < header->size; i++)
     {
         data[i] = buffer->data[i];
     }
@@ -660,7 +659,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     switch (can)
     {
         case 0:
-            CFD1FIFOCON1SET = _CFD1TEFCON_UINC_MASK;  // mark as read
+            *FIFOCONSET(fifo) = _CFD1TEFCON_UINC_MASK;  // mark as read
             break;
     }
 
