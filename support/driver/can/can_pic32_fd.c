@@ -48,9 +48,27 @@ struct can_dev
 #if CAN_COUNT >= 1
 uint32_t __attribute__((coherent, aligned(16))) _can1_fifo_buffer[32 * 4];
 #endif
+#if CAN_COUNT >= 2
+uint32_t __attribute__((coherent, aligned(16))) _can2_fifo_buffer[32 * 4];
+#endif
+#if CAN_COUNT >= 3
+uint32_t __attribute__((coherent, aligned(16))) _can3_fifo_buffer[32 * 4];
+#endif
+#if CAN_COUNT >= 4
+uint32_t __attribute__((coherent, aligned(16))) _can4_fifo_buffer[32 * 4];
+#endif
 
 struct can_dev cans[] = {
 #if CAN_COUNT >= 1
+    {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}},
+#endif
+#if CAN_COUNT >= 2
+    {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}},
+#endif
+#if CAN_COUNT >= 3
+    {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}},
+#endif
+#if CAN_COUNT >= 4
     {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}},
 #endif
 };
@@ -183,6 +201,100 @@ int can_enable(rt_dev_t device)
             CFD1MASK0bits.MEID = 0x00000;  // Ignore all bits in comparison
             CFD1MASK0bits.MIDE = 0;        // Match all message types.
             break;
+            
+#    if CAN_COUNT >= 2
+        case 1:
+            // assign memory
+            CFD2FIFOBA = KVA_TO_PA(_can2_fifo_buffer);
+
+            CFD2CONbits.BRSDIS = 0x0;
+            CFD2CONbits.STEF = 0x0;  // Don't save transmitted messages in TEF
+            CFD2CONbits.TXQEN = 0x1;
+
+            // fifo 0 (transmit)
+            CFD2TXQCONbits.FSIZE = 15;               // 16 messages
+            CFD2TXQCONbits.PLSIZE = CAN_FIFO_DATA8;  // 8 bytes of data
+
+            // fifo 1 (receive)
+            CFD2FIFOCON1bits.FSIZE = 15;               // 16 messages
+            CFD2FIFOCON1bits.PLSIZE = CAN_FIFO_DATA8;  // 8 bytes of data
+            CFD2FIFOCON1bits.TXEN = 0;
+
+            // filter 0 for fifo 1
+            CFD2FLTCON0bits.F0BP = 1;       // Store messages in FIFO1
+            CFD2FLTOBJ0bits.SID = 0x000;    // Filter 1 EID
+            CFD2FLTOBJ0bits.EID = 0x00000;  // Filter 1 SID
+            CFD2FLTOBJ0bits.EXIDE = 1;      // Filter EID messages
+            CFD2FLTCON0bits.FLTEN0 = 1;     // Enable the filter
+
+            // mask 0 for filter 0
+            CFD2MASK0bits.MSID = 0x000;    // Ignore all bits in comparison
+            CFD2MASK0bits.MEID = 0x00000;  // Ignore all bits in comparison
+            CFD2MASK0bits.MIDE = 0;        // Match all message types.
+            break;
+#    endif
+#    if CAN_COUNT >= 3
+        case 2:
+            // assign memory
+            CFD3FIFOBA = KVA_TO_PA(_can3_fifo_buffer);
+
+            CFD3CONbits.BRSDIS = 0x0;
+            CFD3CONbits.STEF = 0x0;  // Don't save transmitted messages in TEF
+            CFD3CONbits.TXQEN = 0x1;
+
+            // fifo 0 (transmit)
+            CFD3TXQCONbits.FSIZE = 15;               // 16 messages
+            CFD3TXQCONbits.PLSIZE = CAN_FIFO_DATA8;  // 8 bytes of data
+
+            // fifo 1 (receive)
+            CFD3FIFOCON1bits.FSIZE = 15;               // 16 messages
+            CFD3FIFOCON1bits.PLSIZE = CAN_FIFO_DATA8;  // 8 bytes of data
+            CFD3FIFOCON1bits.TXEN = 0;
+
+            // filter 0 for fifo 1
+            CFD3FLTCON0bits.F0BP = 1;       // Store messages in FIFO1
+            CFD3FLTOBJ0bits.SID = 0x000;    // Filter 1 EID
+            CFD3FLTOBJ0bits.EID = 0x00000;  // Filter 1 SID
+            CFD3FLTOBJ0bits.EXIDE = 1;      // Filter EID messages
+            CFD3FLTCON0bits.FLTEN0 = 1;     // Enable the filter
+
+            // mask 0 for filter 0
+            CFD3MASK0bits.MSID = 0x000;    // Ignore all bits in comparison
+            CFD3MASK0bits.MEID = 0x00000;  // Ignore all bits in comparison
+            CFD3MASK0bits.MIDE = 0;        // Match all message types.
+            break;
+#    endif
+#    if CAN_COUNT >= 4
+        case 3:
+            // assign memory
+            CFD4FIFOBA = KVA_TO_PA(_can4_fifo_buffer);
+
+            CFD4CONbits.BRSDIS = 0x0;
+            CFD4CONbits.STEF = 0x0;  // Don't save transmitted messages in TEF
+            CFD4CONbits.TXQEN = 0x1;
+
+            // fifo 0 (transmit)
+            CFD4TXQCONbits.FSIZE = 15;               // 16 messages
+            CFD4TXQCONbits.PLSIZE = CAN_FIFO_DATA8;  // 8 bytes of data
+
+            // fifo 1 (receive)
+            CFD4FIFOCON1bits.FSIZE = 15;               // 16 messages
+            CFD4FIFOCON1bits.PLSIZE = CAN_FIFO_DATA8;  // 8 bytes of data
+            CFD4FIFOCON1bits.TXEN = 0;
+
+            // filter 0 for fifo 1
+            CFD4FLTCON0bits.F0BP = 1;       // Store messages in FIFO1
+            CFD4FLTOBJ0bits.SID = 0x000;    // Filter 1 EID
+            CFD4FLTOBJ0bits.EID = 0x00000;  // Filter 1 SID
+            CFD4FLTOBJ0bits.EXIDE = 1;      // Filter EID messages
+            CFD4FLTCON0bits.FLTEN0 = 1;     // Enable the filter
+
+            // mask 0 for filter 0
+            CFD4MASK0bits.MSID = 0x000;    // Ignore all bits in comparison
+            CFD4MASK0bits.MEID = 0x00000;  // Ignore all bits in comparison
+            CFD4MASK0bits.MIDE = 0;        // Match all message types.
+            break;
+#    endif
     }
 
     return 0;
@@ -218,6 +330,39 @@ int can_disable(rt_dev_t device)
             while (CFD1CONbits.BUSY == 1)
                 ;
             break;
+#    if CAN_COUNT >= 2
+        case 1:
+            _CAN1IE = 0;  // disable can global interrupt
+            CFD2CONbits.REQOP = 4;
+            while (CFD2CONbits.OPMOD != 4)
+                ;
+            CFD2CONbits.ON = 0;  // disable can
+            while (CFD2CONbits.BUSY == 1)
+                ;
+            break;
+#    endif
+#    if CAN_COUNT >= 3
+        case 2:
+            _CAN1IE = 0;  // disable can global interrupt
+            CFD3CONbits.REQOP = 4;
+            while (CFD3CONbits.OPMOD != 4)
+                ;
+            CFD3CONbits.ON = 0;  // disable can
+            while (CFD3CONbits.BUSY == 1)
+                ;
+            break;
+#    endif
+#    if CAN_COUNT >= 4
+        case 3:
+            _CAN1IE = 0;  // disable can global interrupt
+            CFD4CONbits.REQOP = 4;
+            while (CFD4CONbits.OPMOD != 4)
+                ;
+            CFD4CONbits.ON = 0;  // disable can
+            while (CFD4CONbits.BUSY == 1)
+                ;
+            break;
+#    endif
     }
 
     return 0;
@@ -282,6 +427,30 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
             while (CFD1CONbits.OPMOD != modeBits)
                 ;
             break;
+#    if CAN_COUNT >= 2
+        case 1:
+            CFD2CONbits.ON = 1;
+            CFD2CONbits.REQOP = modeBits;
+            while (CFD2CONbits.OPMOD != modeBits)
+                ;
+            break;
+#    endif
+#    if CAN_COUNT >= 3
+        case 2:
+            CFD3CONbits.ON = 1;
+            CFD3CONbits.REQOP = modeBits;
+            while (CFD3CONbits.OPMOD != modeBits)
+                ;
+            break;
+#    endif
+#    if CAN_COUNT >= 4
+        case 3:
+            CFD4CONbits.ON = 1;
+            CFD4CONbits.REQOP = modeBits;
+            while (CFD4CONbits.OPMOD != modeBits)
+                ;
+            break;
+#    endif
     }
 
     return 0;
@@ -388,6 +557,72 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             CFD1DBTCFGbits.TSEG2 = s2Seg - 1;     // Phase Buffer Segment 2 (1-16) SEG2PH >= SEG1PH
             CFD1DBTCFGbits.SJW = 0;               // Synchronization Jump Width (1-16)
             break;
+
+#    if CAN_COUNT >= 2
+        case 1:
+            CFD2CONbits.ON = 1;
+            CFD2CONbits.CLKSEL0 = 0b1;  // REFCLK4 clock selected
+            CFD2CONbits.REQOP = 4;
+            while (CFD2CONbits.OPMOD != 4)
+                ;
+
+            // NOMINAL BIT TIME CONFIGURATION
+            CFD2NBTCFGbits.BRP = bitRateDiv - 1;  // bit rate divisor (1-256)
+            CFD2NBTCFGbits.TSEG1 = s1Seg - 1;     // Phase Buffer Segment 1 (1-256)
+            CFD2NBTCFGbits.TSEG2 = s2Seg - 1;     // Phase Buffer Segment 2 (1-128) SEG2PH >= SEG1PH
+            CFD2NBTCFGbits.SJW = 0;               // Synchronization Jump Width (1-128)
+
+            // DATA BIT TIME CONFIGURATION
+            CFD2DBTCFGbits.BRP = bitRateDiv - 1;  // bit rate divisor (1-256)
+            CFD2DBTCFGbits.TSEG1 = s1Seg - 1;     // Phase Buffer Segment 1 (1-32)
+            CFD2DBTCFGbits.TSEG2 = s2Seg - 1;     // Phase Buffer Segment 2 (1-16) SEG2PH >= SEG1PH
+            CFD2DBTCFGbits.SJW = 0;               // Synchronization Jump Width (1-16)
+            break;
+#    endif
+
+#    if CAN_COUNT >= 3
+        case 2:
+            CFD3CONbits.ON = 1;
+            CFD3CONbits.CLKSEL0 = 0b1;  // REFCLK4 clock selected
+            CFD3CONbits.REQOP = 4;
+            while (CFD3CONbits.OPMOD != 4)
+                ;
+
+            // NOMINAL BIT TIME CONFIGURATION
+            CFD3NBTCFGbits.BRP = bitRateDiv - 1;  // bit rate divisor (1-256)
+            CFD3NBTCFGbits.TSEG1 = s1Seg - 1;     // Phase Buffer Segment 1 (1-256)
+            CFD3NBTCFGbits.TSEG2 = s2Seg - 1;     // Phase Buffer Segment 2 (1-128) SEG2PH >= SEG1PH
+            CFD3NBTCFGbits.SJW = 0;               // Synchronization Jump Width (1-128)
+
+            // DATA BIT TIME CONFIGURATION
+            CFD3DBTCFGbits.BRP = bitRateDiv - 1;  // bit rate divisor (1-256)
+            CFD3DBTCFGbits.TSEG1 = s1Seg - 1;     // Phase Buffer Segment 1 (1-32)
+            CFD3DBTCFGbits.TSEG2 = s2Seg - 1;     // Phase Buffer Segment 2 (1-16) SEG2PH >= SEG1PH
+            CFD3DBTCFGbits.SJW = 0;               // Synchronization Jump Width (1-16)
+            break;
+#    endif
+
+#    if CAN_COUNT >= 4
+        case 3:
+            CFD4CONbits.ON = 1;
+            CFD4CONbits.CLKSEL0 = 0b1;  // REFCLK4 clock selected
+            CFD4CONbits.REQOP = 4;
+            while (CFD4CONbits.OPMOD != 4)
+                ;
+
+            // NOMINAL BIT TIME CONFIGURATION
+            CFD4NBTCFGbits.BRP = bitRateDiv - 1;  // bit rate divisor (1-256)
+            CFD4NBTCFGbits.TSEG1 = s1Seg - 1;     // Phase Buffer Segment 1 (1-256)
+            CFD4NBTCFGbits.TSEG2 = s2Seg - 1;     // Phase Buffer Segment 2 (1-128) SEG2PH >= SEG1PH
+            CFD4NBTCFGbits.SJW = 0;               // Synchronization Jump Width (1-128)
+
+            // DATA BIT TIME CONFIGURATION
+            CFD4DBTCFGbits.BRP = bitRateDiv - 1;  // bit rate divisor (1-256)
+            CFD4DBTCFGbits.TSEG1 = s1Seg - 1;     // Phase Buffer Segment 1 (1-32)
+            CFD4DBTCFGbits.TSEG2 = s2Seg - 1;     // Phase Buffer Segment 2 (1-16) SEG2PH >= SEG1PH
+            CFD4DBTCFGbits.SJW = 0;               // Synchronization Jump Width (1-16)
+            break;
+#    endif
     }
 
     return 0;
@@ -439,6 +674,21 @@ uint32_t can_effectiveBitRate(rt_dev_t device)
         case 0:
             bitRateDiv = (CFD1NBTCFGbits.BRP + 1);  // bit rate divisor (1-256)
             break;
+#    if CAN_COUNT >= 2
+        case 1:
+            bitRateDiv = (CFD2NBTCFGbits.BRP + 1);  // bit rate divisor (1-256)
+            break;
+#    endif
+#    if CAN_COUNT >= 3
+        case 2:
+            bitRateDiv = (CFD3NBTCFGbits.BRP + 1);  // bit rate divisor (1-256)
+            break;
+#    endif
+#    if CAN_COUNT >= 4
+        case 3:
+            bitRateDiv = (CFD4NBTCFGbits.BRP + 1);  // bit rate divisor (1-256)
+            break;
+#    endif
     }
 
     uint32_t can_freq = sysclock_periphFreq(SYSCLOCK_CLOCK_CAN);
@@ -515,10 +765,26 @@ uint8_t can_s2Seg(rt_dev_t device)
  * @param header CAN message header struct (id, flags, data size)
  * @return 0 if message is successfully putted inside fifo, -1 in case of error
  */
-#define FIFOCON(fifo)    ((volatile uint32_t *)(&CFD1TXQCON + (((uint8_t)fifo) * 12)))
-#define FIFOCONSET(fifo) (FIFOCON(fifo) + 2)
-#define FIFOSTA(fifo)    ((volatile uint32_t *)(&CFD1TXQSTA + (((uint8_t)fifo) * 12)))
-#define FIFOUA(fifo)     ((volatile uint32_t *)(&CFD1TXQUA + (((uint8_t)fifo) * 12)))
+#define CFD1FIFOCON(fifo)    ((volatile uint32_t *)(&CFD1TXQCON + (((uint8_t)fifo) * 12)))
+#define CFD1FIFOCONSET(fifo) (CFD1FIFOCON(fifo) + 2)
+#define CFD1FIFOSTA(fifo)    ((volatile uint32_t *)(&CFD1TXQSTA + (((uint8_t)fifo) * 12)))
+#define CFD1FIFOUA(fifo)     ((volatile uint32_t *)(&CFD1TXQUA + (((uint8_t)fifo) * 12)))
+
+#define CFD2FIFOCON(fifo)    ((volatile uint32_t *)(&CFD2TXQCON + (((uint8_t)fifo) * 12)))
+#define CFD2FIFOCONSET(fifo) (CFD2FIFOCON(fifo) + 2)
+#define CFD2FIFOSTA(fifo)    ((volatile uint32_t *)(&CFD2TXQSTA + (((uint8_t)fifo) * 12)))
+#define CFD2FIFOUA(fifo)     ((volatile uint32_t *)(&CFD2TXQUA + (((uint8_t)fifo) * 12)))
+
+#define CFD3FIFOCON(fifo)    ((volatile uint32_t *)(&CFD3TXQCON + (((uint8_t)fifo) * 12)))
+#define CFD3FIFOCONSET(fifo) (CFD3FIFOCON(fifo) + 2)
+#define CFD3FIFOSTA(fifo)    ((volatile uint32_t *)(&CFD3TXQSTA + (((uint8_t)fifo) * 12)))
+#define CFD3FIFOUA(fifo)     ((volatile uint32_t *)(&CFD3TXQUA + (((uint8_t)fifo) * 12)))
+
+#define CFD4FIFOCON(fifo)    ((volatile uint32_t *)(&CFD4TXQCON + (((uint8_t)fifo) * 12)))
+#define CFD4FIFOCONSET(fifo) (CFD4FIFOCON(fifo) + 2)
+#define CFD4FIFOSTA(fifo)    ((volatile uint32_t *)(&CFD4TXQSTA + (((uint8_t)fifo) * 12)))
+#define CFD4FIFOUA(fifo)     ((volatile uint32_t *)(&CFD4TXQUA + (((uint8_t)fifo) * 12)))
+
 int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
 #if CAN_COUNT >= 1
@@ -534,12 +800,43 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     switch (can)
     {
         case 0:
-            if ((*FIFOSTA(fifo) & _CFD1FIFOSTA1_TFNRFNIF_MASK) == 0)
+            if ((*CFD1FIFOSTA(fifo) & _CFD1FIFOSTA1_TFNRFNIF_MASK) == 0)
             {
+                // FIFO full
                 return 0;
             }
-            buffer = PA_TO_KVA1(*FIFOUA(fifo));
+            buffer = PA_TO_KVA1(*CFD1FIFOUA(fifo));
             break;
+#    if CAN_COUNT >= 2
+        case 1:
+            if ((*CFD2FIFOSTA(fifo) & _CFD2FIFOSTA1_TFNRFNIF_MASK) == 0)
+            {
+                // FIFO full
+                return 0;
+            }
+            buffer = PA_TO_KVA1(*CFD2FIFOUA(fifo));
+            break;
+#    endif
+#    if CAN_COUNT >= 3
+        case 2:
+            if ((*CFD3FIFOSTA(fifo) & _CFD3FIFOSTA1_TFNRFNIF_MASK) == 0)
+            {
+                // FIFO full
+                return 0;
+            }
+            buffer = PA_TO_KVA1(*CFD3FIFOUA(fifo));
+            break;
+#    endif
+#    if CAN_COUNT >= 4
+        case 3:
+            if ((*CFD4FIFOSTA(fifo) & _CFD4FIFOSTA1_TFNRFNIF_MASK) == 0)
+            {
+                // FIFO full
+                return 0;
+            }
+            buffer = PA_TO_KVA1(*CFD4FIFOUA(fifo));
+            break;
+#    endif
 
         default:
             return -1;
@@ -560,7 +857,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
         }
         else
         {
-            buffer->id.SID = header->id;  // Message EID
+            buffer->id.SID = header->id;  // Message SID
         }
 
         // RTR
@@ -588,9 +885,27 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     switch (can)
     {
         case 0:
-            *FIFOCONSET(fifo) = _CFD1FIFOCON1_UINC_MASK;   // Set the UINC
-            *FIFOCONSET(fifo) = _CFD1FIFOCON1_TXREQ_MASK;  // Set the TXREQ bit
+            *CFD1FIFOCONSET(fifo) = _CFD1FIFOCON1_UINC_MASK;   // Set the UINC
+            *CFD1FIFOCONSET(fifo) = _CFD1FIFOCON1_TXREQ_MASK;  // Set the TXREQ bit
             break;
+#    if CAN_COUNT >= 2
+        case 1:
+            *CFD2FIFOCONSET(fifo) = _CFD2FIFOCON1_UINC_MASK;   // Set the UINC
+            *CFD2FIFOCONSET(fifo) = _CFD2FIFOCON1_TXREQ_MASK;  // Set the TXREQ bit
+            break;
+#    endif
+#    if CAN_COUNT >= 3
+        case 2:
+            *CFD3FIFOCONSET(fifo) = _CFD3FIFOCON1_UINC_MASK;   // Set the UINC
+            *CFD3FIFOCONSET(fifo) = _CFD3FIFOCON1_TXREQ_MASK;  // Set the TXREQ bit
+            break;
+#    endif
+#    if CAN_COUNT >= 4
+        case 3:
+            *CFD4FIFOCONSET(fifo) = _CFD4FIFOCON1_UINC_MASK;   // Set the UINC
+            *CFD4FIFOCONSET(fifo) = _CFD4FIFOCON1_TXREQ_MASK;  // Set the TXREQ bit
+            break;
+#    endif
     }
 
     return 0;
@@ -622,13 +937,43 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     switch (can)
     {
         case 0:
-            if ((*FIFOSTA(fifo) & _CFD1FIFOSTA1_TFNRFNIF_MASK) == 0)
+            if ((*CFD1FIFOSTA(fifo) & _CFD1FIFOSTA1_TFNRFNIF_MASK) == 0)
             {
                 // FIFO empty
                 return 0;
             }
-            buffer = PA_TO_KVA1(*FIFOUA(fifo));
+            buffer = PA_TO_KVA1(*CFD1FIFOUA(fifo));
             break;
+#    if CAN_COUNT >= 2
+        case 1:
+            if ((*CFD2FIFOSTA(fifo) & _CFD2FIFOSTA1_TFNRFNIF_MASK) == 0)
+            {
+                // FIFO empty
+                return 0;
+            }
+            buffer = PA_TO_KVA1(*CFD2FIFOUA(fifo));
+            break;
+#    endif
+#    if CAN_COUNT >= 3
+        case 2:
+            if ((*CFD3FIFOSTA(fifo) & _CFD3FIFOSTA1_TFNRFNIF_MASK) == 0)
+            {
+                // FIFO empty
+                return 0;
+            }
+            buffer = PA_TO_KVA1(*CFD3FIFOUA(fifo));
+            break;
+#    endif
+#    if CAN_COUNT >= 4
+        case 3:
+            if ((*CFD4FIFOSTA(fifo) & _CFD4FIFOSTA1_TFNRFNIF_MASK) == 0)
+            {
+                // FIFO empty
+                return 0;
+            }
+            buffer = PA_TO_KVA1(*CFD4FIFOUA(fifo));
+            break;
+#    endif
 
         default:
             return -1;
@@ -659,8 +1004,23 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     switch (can)
     {
         case 0:
-            *FIFOCONSET(fifo) = _CFD1TEFCON_UINC_MASK;  // mark as read
+            *CFD1FIFOCONSET(fifo) = _CFD1TEFCON_UINC_MASK;  // mark as read
             break;
+#    if CAN_COUNT >= 2
+        case 1:
+            *CFD2FIFOCONSET(fifo) = _CFD2TEFCON_UINC_MASK;  // mark as read
+            break;
+#    endif
+#    if CAN_COUNT >= 2
+        case 2:
+            *CFD3FIFOCONSET(fifo) = _CFD3TEFCON_UINC_MASK;  // mark as read
+            break;
+#    endif
+#    if CAN_COUNT >= 2
+        case 3:
+            *CFD4FIFOCONSET(fifo) = _CFD4TEFCON_UINC_MASK;  // mark as read
+            break;
+#    endif
     }
 
     // flags
