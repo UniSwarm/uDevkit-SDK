@@ -97,16 +97,18 @@ int uart_open(rt_dev_t device)
     return 0;
 }
 
-void uart_close(rt_dev_t device)
+int uart_close(rt_dev_t device)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
     {
-        return;
+        return -1;
     }
 
     uarts[uart].baudSpeed = 0;
     uart_sendconfig(uart);
+
+    return 0;
 }
 
 int uart_enable(rt_dev_t device)
