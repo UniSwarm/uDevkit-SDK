@@ -157,7 +157,7 @@ int uart_open(rt_dev_t device)
  * @param device uart device number
  * @return 0 if ok, -1 in case of error
  */
-int uart_closeDevice(rt_dev_t device)
+int uart_close(rt_dev_t device)
 {
 #if UART_COUNT >= 1
     uint8_t uart = MINOR(device);

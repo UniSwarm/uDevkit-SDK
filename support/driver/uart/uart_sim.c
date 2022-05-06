@@ -25,7 +25,6 @@
 /****************************************************************************************/
 /*          Privates functions                                                          */
 void uart_sendconfig(uint8_t uart);
-void uart_closeDevice(rt_dev_t device);
 
 /****************************************************************************************/
 /*          External variable                                                           */
@@ -98,7 +97,7 @@ int uart_open(rt_dev_t device)
     return 0;
 }
 
-void uart_closeDevice(rt_dev_t device)
+void uart_close(rt_dev_t device)
 {
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
