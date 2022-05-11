@@ -8,15 +8,22 @@ Each driver must have a particular directory with the same name of the driver wh
 
 |Driver name|Description|Status|
 |-----------|-----------|------|
+|[adc](adc/README.md)|ADC analog converters driver|__Stable__|
 |[ax12](ax12/README.md)|ax12 servo motor driver|Experimental|
-|[motor](motor/README.md)|motor abstraction drivers|Experimental|
-|[adc](adc/README.md)|ADC analog converters driver|Experimental|
-|[can](can/README.md)|CAN bus driver|Experimental|
+|[can](can/README.md)|CAN bus driver|__Stable__|
+|[ccp](ccp/README.md)|CCP capture compare driver|__Stable__|
+|[dma](dma/README.md)|DMA Direct Memory Access drivers|Experimental|
+|[gpio](gpio/README.md)|GPIO port driver|__Stable__|
 |[i2c](i2c/README.md)|I2C communication driver|__Stable__|
 |[ic](ic/README.md)|Input compare driver|Implementation needed|
+|[motor](motor/README.md)|motor abstraction drivers|Experimental|
+|[msi](msi/README.md)|MSI dual core communication driver|__Stable__|
+|[nvm](nvm/README.md)|NVM Non Volatile Memory Flash driver|__Stable__|
 |[oc](oc/README.md)|Output compare driver|Experimental|
 |[pwm](pwm/README.md)|PWM driver|Experimental|
 |[qei](qei/README.md)|Quadrature encoder driver|__Stable__|
+|[rtc](rtc/README.md)|RTC Real Time Clock drivers|Implementation needed|
+|[sent](sent/README.md)|SENT communication drivers|Implementation needed|
 |[spi](spi/README.md)|SPI communication driver|Implementation needed|
 |[sysclock](sysclock/README.md)|System clock|__Stable__|
 |[timer](timer/README.md)|Timer driver|__Stable__|
