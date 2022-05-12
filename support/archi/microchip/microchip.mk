@@ -33,6 +33,7 @@ hex : $(OUT_PWD)/$(PROJECT).hex
 OBJECTS := $(notdir $(SRC:.S=.o)) $(notdir $(ARCHI_SRC:.S=.o))
 OBJECTS := $(OBJECTS:.s=.o)
 OBJECTS := $(OBJECTS:.c=.o)
+OBJECTS := $(OBJECTS:.cpp=.o)
 OBJECTS := $(addprefix $(OUT_PWD)/, $(OBJECTS))
 -include $(wildcard $(OUT_PWD)/*.d)
 $(OBJECTS) : $(CONFIG_HEADERS)
@@ -56,6 +57,12 @@ $(OUT_PWD)/%.o : %.s
 	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
+
+$(OUT_PWD)/%.o : %.cpp
+	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
+	@printf "$(COMPCOLOR)µCPP %-34s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	$(VERB)$(CXX) $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
+	@$(CXX) $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
 HEAP?=100
 

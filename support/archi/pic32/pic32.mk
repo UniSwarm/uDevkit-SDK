@@ -1,6 +1,7 @@
 
 AS = xc32-as
 CC = xc32-gcc
+CXX = xc32-g++
 LD = xc32-ld
 AR = xc32-ar
 HX = xc32-bin2hex
@@ -22,22 +23,6 @@ $(warning $(DEFPROC))
  CCFLAGS += -D_HOSTED -D__$(DEFPROC)__ -D__XC32__ -D__prog__ -D__LANGUAGE_C__
  CCFLAGS += -Wno-attributes -Wno-unknown-pragmas
  CCFLAGS += -I$(XC32_PATH)include/ -I$(XC32_PATH)pic32mx/include/
-
- ifeq ($(ARCHI),$(filter $(ARCHI),dspic30f))
-  CCFLAGS += -D__dsPIC30F__
- endif
- ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24hj))
-  CCFLAGS += -D__PIC24F__
- endif
- ifeq ($(ARCHI),$(filter $(ARCHI),pic24ep))
-  CCFLAGS += -D__PIC24E__
- endif
- ifeq ($(ARCHI),$(filter $(ARCHI),dspic33fj))
-  CCFLAGS += -D__dsPIC33F__
- endif
- ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ep dspic33ev))
-  CCFLAGS += -D__dsPIC33E__
- endif
  CCFLAGS += -Wno-all
 endif
 
