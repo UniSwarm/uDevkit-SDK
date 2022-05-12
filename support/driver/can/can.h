@@ -74,7 +74,7 @@ typedef enum
     CAN_FRAME_BOTH = 0x03,  ///< CAN standard and extended frames
 } CAN_FRAME_FORMAT_FLAGS;
 
-int can_filterConfiguration(rt_dev_t device, uint8_t nFilter, uint8_t fifo, uint32_t idFilter, uint32_t mask, CAN_FRAME_FORMAT_FLAGS frame);
+int can_filterSet(rt_dev_t device, uint8_t nFilter, uint8_t fifo, uint32_t idFilter, uint32_t mask, CAN_FRAME_FORMAT_FLAGS frame);
 int can_filterEnable(rt_dev_t device, uint8_t nFilter);
 int can_filterDisable(rt_dev_t device, uint8_t nFilter);
 
