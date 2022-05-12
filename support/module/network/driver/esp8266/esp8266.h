@@ -12,6 +12,10 @@
 #ifndef ESP8266_H
 #define ESP8266_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 void esp8266_init(void);
@@ -66,5 +70,9 @@ uint16_t esp8266_getRecSize(void);
 
 char *esp8266_getIp(void);
 char *esp8266_getMac(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // ESP8266_H

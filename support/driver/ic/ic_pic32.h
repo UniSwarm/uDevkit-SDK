@@ -16,6 +16,10 @@
 #ifndef IC_PIC32_H
 #define IC_PIC32_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_32MX110F016B) || defined(DEVICE_32MX110F016C) || defined(DEVICE_32MX110F016D) || defined(DEVICE_32MX120F032B)                               \
     || defined(DEVICE_32MX120F032C) || defined(DEVICE_32MX120F032D) || defined(DEVICE_32MX120F064H) || defined(DEVICE_32MX130F064B)                            \
     || defined(DEVICE_32MX130F064C) || defined(DEVICE_32MX130F064D) || defined(DEVICE_32MX130F128H) || defined(DEVICE_32MX130F128L)                            \
@@ -94,6 +98,10 @@
 #    define IC_COUNT 16
 #else
 #    define IC_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // IC_PIC32_H

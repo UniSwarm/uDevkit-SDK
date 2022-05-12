@@ -12,6 +12,10 @@
 #ifndef GPIO_DEVICE_H
 #define GPIO_DEVICE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) \
     || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
 #    include "gpio_pic24_dspic30f_dspic33.h"
@@ -236,6 +240,10 @@ typedef uint32_t port_type;
 typedef uint16_t port_type;
 #else
 typedef uint8_t port_type;
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // GPIO_DEVICE_H

@@ -19,6 +19,10 @@
 #ifndef SYSCLOCK_PIC24_DSPIC33_H
 #define SYSCLOCK_PIC24_DSPIC33_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "sysclock.h"
 
 // bus clock
@@ -325,5 +329,9 @@ static const char *sysclock_sources_str[] = {"FRC", "FRCPLL", "POSC", "PPLL", "S
 #endif
 
 int sysclock_setPLLClock(uint32_t freq, uint8_t src);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // SYSCLOCK_PIC24_DSPIC30F_DSPIC33_H

@@ -16,6 +16,10 @@
 #ifndef GPIO_PIC32_H
 #define GPIO_PIC32_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // compute PORT count and existance on device
 #if defined(DEVICE_32MX120F064H) || defined(DEVICE_32MX130F128H) || defined(DEVICE_32MX150F256H) || defined(DEVICE_32MX170F512H)                               \
     || defined(DEVICE_32MX230F128H) || defined(DEVICE_32MX250F256H) || defined(DEVICE_32MX270F512H) || defined(DEVICE_32MX320F032H)                            \
@@ -153,5 +157,9 @@
 
 #define GPIO_HAVE_CHANGENOTIFICATION  // have change notification on pins
 #define GPIO_HAVE_OPENDRAIN           // have open drain output config
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // GPIO_PIC32_H

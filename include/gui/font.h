@@ -8,8 +8,12 @@
  * @brief Font structure for gui module
  */
 
-#ifndef _FONT_
-#define _FONT_
+#ifndef FONT_H
+#define FONT_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <stdint.h>
 
@@ -27,4 +31,8 @@ typedef struct
     const Letter **letters;
 } Font;
 
-#endif  // _FONT_
+#ifdef __cplusplus
+}
+#endif
+
+#endif  // FONT_H

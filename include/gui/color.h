@@ -11,6 +11,10 @@
 #ifndef COLOR_H
 #define COLOR_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 // color 565 format
@@ -35,5 +39,9 @@ typedef uint16_t Color;
 // RGB to gray => 0.2989R + 0.5870G + 0.1140B = ~0.25R + 0.5G + 0.125B = 1/4 R + 1/2 G + 1/8 B = 1>>2 * R + 1>>1 * G +
 // 1>>3 B
 #define gui_gray(color) (uint8_t)((((color)&0xF800) >> 10) + (((color)&0x07E0) >> 4) + ((color)&0x001F))
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // COLOR_H

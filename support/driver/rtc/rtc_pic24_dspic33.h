@@ -17,6 +17,10 @@
 #ifndef RTC_PIC24_DSPIC33_H
 #define RTC_PIC24_DSPIC33_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_33EP128GM304) || defined(DEVICE_33EP128GM306) || defined(DEVICE_33EP128GM310) || defined(DEVICE_33EP128GM604)                               \
     || defined(DEVICE_33EP128GM706) || defined(DEVICE_33EP128GM710) || defined(DEVICE_33EP256GM304) || defined(DEVICE_33EP256GM306)                            \
     || defined(DEVICE_33EP256GM310) || defined(DEVICE_33EP256GM604) || defined(DEVICE_33EP256GM706) || defined(DEVICE_33EP256GM710)                            \
@@ -61,6 +65,10 @@
 #    define RTC_COUNT 1
 #else
 #    define RTC_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // RTC_PIC24_DSPIC33_H

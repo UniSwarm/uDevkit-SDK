@@ -16,6 +16,10 @@
 #ifndef RTC_PIC32MZ_H
 #define RTC_PIC32MZ_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_PIC32MK0512GPD064) || defined(DEVICE_PIC32MK0512GPD100) || defined(DEVICE_PIC32MK0512GPE064) || defined(DEVICE_PIC32MK0512GPE100)           \
     || defined(DEVICE_PIC32MK0512MCF064) || defined(DEVICE_PIC32MK0512MCF100) || defined(DEVICE_PIC32MK1024GPD064) || defined(DEVICE_PIC32MK1024GPD100)        \
     || defined(DEVICE_PIC32MK1024GPE064) || defined(DEVICE_PIC32MK1024GPE100) || defined(DEVICE_PIC32MK1024MCF064) || defined(DEVICE_PIC32MK1024MCF100)        \
@@ -79,6 +83,10 @@
 #    define RTC_COUNT 1
 #else
 #    define RTC_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // RTC_PIC32MZ_H

@@ -12,6 +12,10 @@
 #ifndef MOTORS_H
 #define MOTORS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 void motors_init(void);
@@ -37,5 +41,9 @@ void motors_rotate(int16_t angle);          // deg
 
 void motors_setSpeed(int16_t speed);
 Motors_State motors_state(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // MOTORS_H

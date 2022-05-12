@@ -15,6 +15,10 @@
 #ifndef SYSCLOCK_DSPIC30F_H
 #define SYSCLOCK_DSPIC30F_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "sysclock.h"
 
 // bus clock
@@ -103,5 +107,9 @@ static const char *sysclock_sources_str[] = {"SOSC", "FRC", "POSC", "LPRC", "", 
 #define SYSCLOCK_FOSC_MAX 40000000  // 40   MHz
 
 int sysclock_setClockWPLL(uint32_t freq);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // SYSCLOCK_DSPIC30F_H

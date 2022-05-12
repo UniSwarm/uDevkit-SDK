@@ -11,6 +11,10 @@
 #ifndef PICTURE_H
 #define PICTURE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 #ifdef XC16
@@ -34,5 +38,9 @@ typedef struct
     __prog__ const uint16_t *data;
 
 } Picture;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // PICTURE_H

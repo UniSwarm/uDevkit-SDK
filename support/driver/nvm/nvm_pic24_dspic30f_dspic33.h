@@ -12,6 +12,10 @@
 #ifndef NVM_PIC24_DSPIC30F_DSPIC33_H
 #define NVM_PIC24_DSPIC30F_DSPIC33_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(ARCHI_dspic30f)
 #    define NVM_FLASH_PAGE_BYTE  128
 #    define NVM_FLASH_PAGE_MASK  0xFFFFFF00
@@ -37,6 +41,10 @@
 #    define NVM_FLASH_ROW_BYTE   512
 #    define NVM_HAS_FLASH
 
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // NVM_PIC24_DSPIC30F_DSPIC33_H

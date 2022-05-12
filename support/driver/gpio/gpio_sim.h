@@ -12,6 +12,14 @@
 #ifndef GPIO_SIM_H
 #define GPIO_SIM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "gpio.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // GPIO_SIM_H

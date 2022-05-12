@@ -12,6 +12,10 @@
 #ifndef SWARMTIPS_H
 #define SWARMTIPS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 
 #include <driver/device.h>
@@ -52,5 +56,9 @@ int8_t board_getButton(uint8_t button);
 
 rt_dev_t board_i2c_tof(void);
 #define TOF_ADDR 0x52
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // SWARMTIPS_H

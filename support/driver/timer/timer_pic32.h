@@ -16,6 +16,10 @@
 #ifndef TIMER_PIC32_H
 #define TIMER_PIC32_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_32MM0016GPL020) || defined(DEVICE_32MM0016GPL028) || defined(DEVICE_32MM0016GPL036) || defined(DEVICE_32MM0032GPL020)                       \
     || defined(DEVICE_32MM0032GPL028) || defined(DEVICE_32MM0032GPL036) || defined(DEVICE_32MM0064GPL020) || defined(DEVICE_32MM0064GPL028)                    \
     || defined(DEVICE_32MM0064GPL036)
@@ -242,6 +246,10 @@
 #        define _T5IS IPC5bits.T5IS
 #    endif
 #    define TIPR IPL4SOFT
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // TIMER_PIC32_H

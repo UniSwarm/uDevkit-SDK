@@ -16,6 +16,10 @@
 #ifndef SPI_PIC32_H
 #define SPI_PIC32_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_32MX420F032H) || defined(DEVICE_32MX440F128H) || defined(DEVICE_32MX440F256H) || defined(DEVICE_32MX440F512H)
 #    define SPI_COUNT 1
 #elif defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                     \
@@ -103,6 +107,10 @@
 #    define SPI_COUNT 6
 #else
 #    define SPI_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // SPI_PIC32_H

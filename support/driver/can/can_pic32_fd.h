@@ -14,11 +14,13 @@
 #ifndef CAN_PIC32_FD_H
 #define CAN_PIC32_FD_H
 
-#if defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512MCJ048)                 \
-    || defined(DEVICE_32MK0512MCJ064)
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#if defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)
 #    define CAN_COUNT 1
-#elif defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024MCM064)               \
-    || defined(DEVICE_32MK1024MCM100)
+#elif defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100)
 #    define CAN_COUNT 4
 #else
 #    define CAN_COUNT 0
@@ -122,5 +124,9 @@ typedef union
     };
     uint32_t messageWord[4];
 } CAN_TxMsgBuffer;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // CAN_PIC32_FD_H

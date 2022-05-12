@@ -12,6 +12,10 @@
 #ifndef GPIO_H
 #define GPIO_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 #include "gpio_device.h"
@@ -45,5 +49,9 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config);
 void gpio_writePort(rt_dev_t device, port_type value);
 port_type gpio_readPort(rt_dev_t device);
 int gpio_setPortConfig(rt_dev_t device, uint16_t config);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // GPIO_H

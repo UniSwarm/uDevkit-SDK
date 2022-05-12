@@ -12,6 +12,10 @@
 #ifndef RTBOARD_H
 #define RTBOARD_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 
 #include <stdint.h>
@@ -81,5 +85,9 @@ int8_t board_getButton(uint8_t button);
 #define ANS6 30
 #define ANS7 31
 #define ANS8 4
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // RTBOARD_H

@@ -12,6 +12,10 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -41,5 +45,9 @@ void buffer_clear(Buffer *buffer);
 void buffer_aint(Buffer *buffer, const int i);
 void buffer_achar(Buffer *buffer, const char c);
 void buffer_astring(Buffer *buffer, const char *str);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // BUFFER_H

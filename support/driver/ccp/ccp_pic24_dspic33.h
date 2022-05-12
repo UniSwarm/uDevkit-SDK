@@ -14,6 +14,10 @@
 #ifndef CCP_PIC24_DSPIC33_H
 #define CCP_PIC24_DSPIC33_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_24F08KM101) || defined(DEVICE_24F08KM102) || defined(DEVICE_24F16KM102) || defined(DEVICE_24F16KM104) || defined(DEVICE_24FV08KM101)        \
     || defined(DEVICE_24FV08KM102) || defined(DEVICE_24FV16KM102) || defined(DEVICE_24FV16KM104)
 #    define CCP_COUNT 2
@@ -90,6 +94,10 @@
 #    define CCP_COUNT 9
 #else
 #    define CCP_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // CCP_PIC24_DSPIC33_H

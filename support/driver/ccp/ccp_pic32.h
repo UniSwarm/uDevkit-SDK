@@ -14,6 +14,10 @@
 #ifndef CCP_PIC32_H
 #define CCP_PIC32_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_32MM0016GPL020) || defined(DEVICE_32MM0016GPL028) || defined(DEVICE_32MM0016GPL036) || defined(DEVICE_32MM0032GPL020)                       \
     || defined(DEVICE_32MM0032GPL028) || defined(DEVICE_32MM0032GPL036) || defined(DEVICE_32MM0064GPL020) || defined(DEVICE_32MM0064GPL028)                    \
     || defined(DEVICE_32MM0064GPL036)
@@ -24,6 +28,10 @@
 #    define CCP_COUNT 9
 #else
 #    define CCP_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // CCP_PIC32_H

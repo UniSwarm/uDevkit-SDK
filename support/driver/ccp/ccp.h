@@ -11,6 +11,10 @@
 #ifndef CCP_H
 #define CCP_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 // ====== device assignation ======
@@ -57,6 +61,10 @@ uint32_t ccp_getValue(rt_dev_t device);
 #    include "ccp_pic32.h"
 #else
 #    warning "Unsupported ARCHI"
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // CCP_H

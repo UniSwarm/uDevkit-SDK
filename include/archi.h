@@ -12,6 +12,10 @@
 #ifndef ARCHI_H
 #define ARCHI_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void archi_init(void);
 
 // ======== Microchip 16 bits family =======
@@ -55,6 +59,10 @@ void archi_init(void);
 
 #if defined(SIMULATOR)
 #    include "../support/archi/simulator/simulator.h"
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // ARCHI_H

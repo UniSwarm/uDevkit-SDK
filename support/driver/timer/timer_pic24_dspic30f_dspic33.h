@@ -18,6 +18,10 @@
 #ifndef TIMER_PIC24_DSPIC30F_DSPIC33_H
 #define TIMER_PIC24_DSPIC30F_DSPIC33_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_24F08KM101) || defined(DEVICE_24F08KM102) || defined(DEVICE_24F08KM202) || defined(DEVICE_24F08KM204) || defined(DEVICE_24F16KM102)         \
     || defined(DEVICE_24F16KM104) || defined(DEVICE_24F16KM202) || defined(DEVICE_24F16KM204) || defined(DEVICE_24FV08KM101) || defined(DEVICE_24FV08KM102)    \
     || defined(DEVICE_24FV08KM202) || defined(DEVICE_24FV08KM204) || defined(DEVICE_24FV16KM102) || defined(DEVICE_24FV16KM104) || defined(DEVICE_24FV16KM202) \
@@ -159,6 +163,10 @@
 #    define TIMER_COUNT 9
 #else
 #    define TIMER_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // TIMER_PIC24_DSPIC30F_DSPIC33_H

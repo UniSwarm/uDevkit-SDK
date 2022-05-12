@@ -12,6 +12,14 @@
 #ifndef PIC24F_H
 #define PIC24F_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../pic16b/pic16b.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // PIC24F_H

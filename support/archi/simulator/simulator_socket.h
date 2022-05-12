@@ -14,6 +14,10 @@
 #ifndef SIMULATOR_SOCKET_H
 #define SIMULATOR_SOCKET_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(WIN32) || defined(_WIN32)
 #    include <winsock2.h>
 #    define SOCKET_MODE 0
@@ -49,5 +53,9 @@ void simulator_socket_init(void);
 void simulator_socket_end(void);
 void simulator_socket_send(char *data, size_t size);
 int simulator_socket_read(char *data, size_t size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // SIMULATOR_SOCKET_H

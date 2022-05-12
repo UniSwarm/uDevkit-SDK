@@ -14,6 +14,10 @@
 #ifndef UIO44FR_H
 #define UIO44FR_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 
 #include <stdint.h>
@@ -78,5 +82,9 @@ uint8_t board_analogin(uint8_t io);
 #define OTP_SECTOR_BEGINADDR      (0x801700 * 2)
 #define OTP_SECTOR_SECTOR_ENDADDR (0x801800 * 2)
 #define OTPSECTOR_BYTE_SIZE       (OTP_SECTOR_SECTOR_ENDADDR - OTP_SECTOR_BEGINADDR)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // UIO44FR_H

@@ -1,6 +1,10 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 #include <stdbool.h>
 
@@ -13,5 +17,9 @@ typedef enum
 } SYSTEM_STATE;
 
 void SYSTEM_Initialize(SYSTEM_STATE state);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // SYSTEM_H

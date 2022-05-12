@@ -12,6 +12,14 @@
 #ifndef USB_SERIAL_SIM_H
 #define USB_SERIAL_SIM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "usb_serial.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // USB_SERIAL_SIM_H

@@ -12,6 +12,10 @@
 #ifndef PIC32_H
 #define PIC32_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef SIMULATOR
 
 #    ifndef __XC32
@@ -88,5 +92,9 @@
 #define REGSIZE 4
 typedef unsigned int rt_reg_t;
 typedef unsigned int rt_reg_ptr_t;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // PIC32_H

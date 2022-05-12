@@ -11,6 +11,10 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // widget type enum
 #define WIDGET_TYPE_BUTTON 0x01
 #define WIDGET_TYPE_LABEL  0x02
@@ -30,5 +34,9 @@ typedef struct widget_t
 
 void widget_init();
 void widget_addButton(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // WIDGET_H

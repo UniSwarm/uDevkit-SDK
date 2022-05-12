@@ -13,6 +13,10 @@
 #ifndef NETWORK_H
 #define NETWORK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "network_driver.h"
 #ifdef USE_esp8266
 #    include "driver/esp8266/esp8266.h"
@@ -25,5 +29,9 @@
 
 void network_init(void);
 void network_task(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // NETWORK_H

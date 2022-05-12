@@ -14,6 +14,10 @@
 #ifndef UMC1BD90FR_H
 #define UMC1BD90FR_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 #include <driver/adc.h>
 
@@ -76,14 +80,14 @@ void board_setBridgesEnabled(int enable);
 
 // IOs
 #define IO_COUNT 8
-#define IO_1_IN PORTEbits.RE4
-#define IO_2_IN PORTEbits.RE5
-#define IO_3_IN PORTDbits.RD15
-#define IO_4_IN PORTEbits.RE3
-#define IO_5_IN PORTCbits.RC12
-#define IO_6_IN PORTDbits.RD0
-#define IO_7_IN PORTDbits.RD2
-#define IO_8_IN PORTEbits.RE14
+#define IO_1_IN  PORTEbits.RE4
+#define IO_2_IN  PORTEbits.RE5
+#define IO_3_IN  PORTDbits.RD15
+#define IO_4_IN  PORTEbits.RE3
+#define IO_5_IN  PORTCbits.RC12
+#define IO_6_IN  PORTDbits.RD0
+#define IO_7_IN  PORTDbits.RD2
+#define IO_8_IN  PORTEbits.RE14
 int8_t board_getIo(uint8_t io);
 
 // limit switches inputs
@@ -150,5 +154,9 @@ inline int board_bridgesEnabled(void)
     return 1;
 #endif
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // UMC1BD90FR_H

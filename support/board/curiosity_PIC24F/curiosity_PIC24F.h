@@ -17,6 +17,10 @@
 #ifndef CURIOSITY_PIC24F_H
 #define CURIOSITY_PIC24F_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 
 #include <stdint.h>
@@ -42,5 +46,9 @@ int8_t board_getLed(uint8_t led);
 int8_t board_getButton(uint8_t button);
 
 #define ANPOT0 10
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // CURIOSITY_PIC24F_H

@@ -15,6 +15,10 @@
 #ifndef QEI_PIC32MK_H
 #define QEI_PIC32MK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // calculate QEI count and version on the device
 #if defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)
 #    define QEI_COUNT 3
@@ -26,5 +30,9 @@
 #endif
 
 #define QEI_32B
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // QEI_PIC32MK_H

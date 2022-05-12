@@ -19,6 +19,10 @@
 #ifndef GPIO_PIC24_DSPIC30_DSPIC33_H
 #define GPIO_PIC24_DSPIC30_DSPIC33_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // compute PORT count and existance on device
 #if defined(DEVICE_24FJ128GL302) || defined(DEVICE_24FJ64GL302)
 #    define GPIO_HAVE_PORTB
@@ -333,6 +337,10 @@
 
 #elif defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic30f)
 #    define GPIO_HAVE_OPENDRAIN  // have open drain output config
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // GPIO_PIC24_DSPIC30_DSPIC33_H

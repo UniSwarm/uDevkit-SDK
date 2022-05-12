@@ -16,6 +16,10 @@
 #ifndef OC_PIC24E_dsPIC33E_H
 #define OC_PIC24E_dsPIC33E_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define OC_HAVE_INDEPENDENT_TIMER
 
 #if defined(DEVICE_33EP16GS202) || defined(DEVICE_33EP32GS202)
@@ -65,6 +69,10 @@
 #    define OC_COUNT 16
 #else
 #    define OC_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // OC_PIC24E_dsPIC33E_H

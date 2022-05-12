@@ -12,6 +12,14 @@
 #ifndef I2C_SIM_H
 #define I2C_SIM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "i2c.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // I2C_SIM_H

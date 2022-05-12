@@ -12,6 +12,10 @@
 #ifndef JSON_H
 #define JSON_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdlib.h>
 #include <string.h>
 
@@ -52,5 +56,9 @@ void json_add_list(JsonBuffer *json, const char *name);
 
 // PARSING
 void json_get_next_field(const JsonBuffer *json, char *name, char *value);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // JSON_H

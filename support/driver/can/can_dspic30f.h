@@ -15,6 +15,10 @@
 #ifndef CAN_dsPIC30F_H
 #define CAN_dsPIC30F_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_30F4011) || defined(DEVICE_30F4011E) || defined(DEVICE_30F4012) || defined(DEVICE_30F4012E) || defined(DEVICE_30F4013)                      \
     || defined(DEVICE_30F4013E) || defined(DEVICE_30F5015) || defined(DEVICE_30F5015E) || defined(DEVICE_30F5016) || defined(DEVICE_30F6015)
 #    define CAN_COUNT 1
@@ -24,6 +28,10 @@
 #    define CAN_COUNT 2
 #else
 #    define CAN_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // CAN_dsPIC30F_H

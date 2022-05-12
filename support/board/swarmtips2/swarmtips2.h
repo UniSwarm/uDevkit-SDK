@@ -12,6 +12,10 @@
 #ifndef SWARMTIPS2_H
 #define SWARMTIPS2_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 
 #include <stdint.h>
@@ -126,5 +130,9 @@ float board_getPowerVoltage(void);
 #define ALS1_ADDR     0x90
 #define ALS2_ADDR     0x10
 #define ALSCOLOR_ADDR 0x52
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // SWARMTIPS2_H

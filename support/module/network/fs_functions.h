@@ -12,8 +12,16 @@
 #ifndef FS_FUNCTIONS_H
 #define FS_FUNCTIONS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "fs_data.h"
 
 const Fs_File *getFile(const Fs_FilesList *web_server_file_list, const char *fileName);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // FS_FUNCTIONS_H

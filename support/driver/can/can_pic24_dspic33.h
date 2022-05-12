@@ -17,6 +17,10 @@
 #ifndef CAN_PIC24_DSPIC33_H
 #define CAN_PIC24_DSPIC33_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_33EP128GP502) || defined(DEVICE_33EP128GP504) || defined(DEVICE_33EP128GP506) || defined(DEVICE_33EP128MC502)                               \
     || defined(DEVICE_33EP128MC504) || defined(DEVICE_33EP128MC506) || defined(DEVICE_33EP256GP502) || defined(DEVICE_33EP256GP504)                            \
     || defined(DEVICE_33EP256GP506) || defined(DEVICE_33EP256MC502) || defined(DEVICE_33EP256MC504) || defined(DEVICE_33EP256MC506)                            \
@@ -63,6 +67,10 @@
 #    define CAN_FIFO_COUNT 32
 #else
 #    define CAN_FIFO_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // CAN_PIC24_DSPIC33_H

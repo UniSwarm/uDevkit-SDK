@@ -12,6 +12,10 @@
 #ifndef CMDLINE_CURSES_H
 #define CMDLINE_CURSES_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 #include <stdio.h>
 
@@ -21,5 +25,9 @@
 #define cmdline_curses_right(cmd, num)          cmdline_curses_buildcmdnum((cmd), 'C', (num))
 #define cmdline_curses_left(cmd, num)           cmdline_curses_buildcmdnum((cmd), 'D', (num))
 #define cmdline_curses_clear(cmd)               cmdline_curses_buildcmdnum((cmd), 'J', 2)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // CMDLINE_CURSES_H

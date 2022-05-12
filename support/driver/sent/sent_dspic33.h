@@ -15,6 +15,10 @@
 #ifndef SENT_DSPIC33_H
 #define SENT_DSPIC33_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_33CDV64MC106) || defined(DEVICE_33CDVL64MC106) || defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK32MC103) || defined(DEVICE_33CK32MC105) \
     || defined(DEVICE_33CK64MC102) || defined(DEVICE_33CK64MC103) || defined(DEVICE_33CK64MC105) || defined(DEVICE_33CK128MC102)                               \
     || defined(DEVICE_33CK128MC103) || defined(DEVICE_33CK128MC105) || defined(DEVICE_33CK128MC106) || defined(DEVICE_33CK128MC502)                            \
@@ -53,6 +57,10 @@
 #    define SENT_COUNT 2
 #else
 #    define SENT_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // SENT_DSPIC33_H

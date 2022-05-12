@@ -12,6 +12,10 @@
 #ifndef ASSERV_H
 #define ASSERV_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "driver/device.h"
 
 // ======= init and settings =======
@@ -63,5 +67,9 @@ void asserv_setPos(float x, float y, float t);
 float asserv_getXPos(void);
 float asserv_getYPos(void);
 float asserv_getTPos(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // ASSERV_H

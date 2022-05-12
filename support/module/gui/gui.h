@@ -12,6 +12,10 @@
 #ifndef GUI_H
 #define GUI_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 #include "gui/color.h"
@@ -65,5 +69,9 @@ uint16_t gui_getFontTextWidth(const char *txt);
 // screen driver properties
 uint16_t gui_screenWidth(void);
 uint16_t gui_screenHeight(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // GUI_H

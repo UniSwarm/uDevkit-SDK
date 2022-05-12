@@ -14,6 +14,10 @@
 #ifndef UART_DSPIC33C_H
 #define UART_DSPIC33C_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // calculate UART count on the device
 #if defined(DEVICE_33CH64MP202S1) || defined(DEVICE_33CH64MP203S1) || defined(DEVICE_33CH64MP205S1) || defined(DEVICE_33CH64MP206S1)                           \
     || defined(DEVICE_33CH64MP208S1) || defined(DEVICE_33CH64MP502S1) || defined(DEVICE_33CH64MP503S1) || defined(DEVICE_33CH64MP505S1)                        \
@@ -66,5 +70,9 @@
 #endif
 
 #define UART_MAXBRG 0x000FFFFF  // 20 bits divisor
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // UART_DSPIC33C_H

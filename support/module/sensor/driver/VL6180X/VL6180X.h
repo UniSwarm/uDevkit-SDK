@@ -12,6 +12,10 @@
 #ifndef VL6180X_H
 #define VL6180X_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "driver/device.h"
 
 rt_dev_t VL6180X_init(rt_dev_t i2c_bus, uint8_t i2c_addr);
@@ -82,5 +86,9 @@ void VL6180X_setAddr(rt_dev_t i2c_bus, uint8_t i2c_addr, uint8_t i2c_newaddr);
 #define VL6180X_FIRMWARE_RESULT_SCALER          0x0120
 #define VL6180X_I2C_SLAVE_DEVICE_ADDRESS        0x0212
 #define VL6180X_INTERLEAVED_MODE_ENABLE         0x02A3
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // VL6180X_H

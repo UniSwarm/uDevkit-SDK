@@ -17,6 +17,10 @@
 #ifndef CURIOSITY_32MM_USB_H
 #define CURIOSITY_32MM_USB_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 
 #include <stdint.h>
@@ -42,5 +46,9 @@ int8_t board_getLed(uint8_t led);
 #define BUTTON_2     PORTCbits.RC10
 #define BUTTON_3     PORTCbits.RC4
 int8_t board_getButton(uint8_t button);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // CURIOSITY_32MM_USB_H

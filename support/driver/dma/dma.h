@@ -11,6 +11,10 @@
 #ifndef DMA_H
 #define DMA_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 void dma_init(uint16_t addrLow, uint16_t addrHigh);
@@ -34,6 +38,10 @@ int dma_disable(rt_dev_t device);
 
 #ifdef SIMULATOR
 #    define _dma_space_
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // DMA_H

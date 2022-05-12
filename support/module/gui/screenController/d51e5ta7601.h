@@ -12,8 +12,16 @@
 #ifndef D51E5TA7601_H
 #define D51E5TA7601_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define GUI_WIDTH      480
 #define GUI_HEIGHT     320
 #define GUI_COLOR_MODE ColorMode565
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // D51E5TA7601_H

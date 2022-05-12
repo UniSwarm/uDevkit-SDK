@@ -12,6 +12,10 @@
 #ifndef SPI_DSPIC30F_H
 #define SPI_DSPIC30F_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_30F1010) || defined(DEVICE_30F2010) || defined(DEVICE_30F2010E) || defined(DEVICE_30F2011) || defined(DEVICE_30F2011E)                      \
     || defined(DEVICE_30F2012) || defined(DEVICE_30F2012E) || defined(DEVICE_30F2020) || defined(DEVICE_30F2023) || defined(DEVICE_30F3010)                    \
     || defined(DEVICE_30F3010E) || defined(DEVICE_30F3011) || defined(DEVICE_30F3011E) || defined(DEVICE_30F3012) || defined(DEVICE_30F3012E)                  \
@@ -25,6 +29,10 @@
 #    define SPI_COUNT 2
 #else
 #    define SPI_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // SPI_DSPIC30F_H

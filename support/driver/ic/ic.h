@@ -12,6 +12,10 @@
 #ifndef IC_H
 #define IC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 // ====== device assignation ======
@@ -43,6 +47,10 @@ uint8_t ic_mode(rt_dev_t device);
 #    include "ic_pic32.h"
 #else
 #    warning Unsuported ARCHI
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // IC_H

@@ -11,8 +11,16 @@
 #ifndef DSPIC33CH_H
 #define DSPIC33CH_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../pic16b/pic16b.h"
 
 #define ARCHI_HAVE_DUAL_CORE
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // DSPIC33CH_H

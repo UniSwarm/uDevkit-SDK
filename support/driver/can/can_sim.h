@@ -11,6 +11,10 @@
 #ifndef CAN_SIM_H
 #define CAN_SIM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 #include <stdint.h>
@@ -46,6 +50,10 @@ typedef struct
 #else
 int can_sim_setBus(rt_dev_t device, char *bus);
 int can_sim_isConnected(rt_dev_t device);
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // CAN_SIM_H

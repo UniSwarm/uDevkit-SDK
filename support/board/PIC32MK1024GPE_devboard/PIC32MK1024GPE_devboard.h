@@ -18,6 +18,10 @@
 #ifndef PIC32MK1024GPE_DEVBOARD_H
 #define PIC32MK1024GPE_DEVBOARD_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 
 #include <stdint.h>
@@ -44,5 +48,9 @@ int8_t board_getLed(uint8_t led);
 #define BUTTON_2     PORTFbits.RF13
 #define BUTTON_3     PORTFbits.RF12
 int8_t board_getButton(uint8_t button);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // PIC32MK1024GPE_DEVBOARD_H

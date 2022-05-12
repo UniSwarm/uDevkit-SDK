@@ -16,6 +16,10 @@
 #ifndef SYSCLOCK_PIC32MZ_MK_H
 #define SYSCLOCK_PIC32MZ_MK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "sysclock.h"
 
 // bus clock
@@ -171,5 +175,9 @@ static const char *sysclock_sources_str[] = {"FRC", "SPLL", "POSC", "UPLL", "SOS
 
 int sysclock_setPLLClock(uint32_t freq, uint8_t src);
 uint32_t sysclock_getPLLClock(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // SYSCLOCK_PIC32MZ_MK_H

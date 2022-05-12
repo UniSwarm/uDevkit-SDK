@@ -12,6 +12,10 @@
 #ifndef CMD_STDIO_H
 #define CMD_STDIO_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,5 +24,9 @@
 #define puts(str)           cmd_puts((str))
 #define printf(format, ...) cmd_printf((format), ##__VA_ARGS__)
 #include "cmd.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // CMD_STDIO_H

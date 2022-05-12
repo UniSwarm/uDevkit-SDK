@@ -14,6 +14,10 @@
 #ifndef CAN_DSPIC33C_H
 #define CAN_DSPIC33C_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_33CDV128MP506) || defined(DEVICE_33CDV256MP506) || defined(DEVICE_33CDVC128MP506) || defined(DEVICE_33CDVC256MP506)                         \
     || defined(DEVICE_33CH64MP502) || defined(DEVICE_33CH64MP503) || defined(DEVICE_33CH64MP505) || defined(DEVICE_33CH64MP506) || defined(DEVICE_33CH64MP508) \
     || defined(DEVICE_33CH128MP502) || defined(DEVICE_33CH128MP503) || defined(DEVICE_33CH128MP505) || defined(DEVICE_33CH128MP506)                            \
@@ -100,5 +104,9 @@ typedef struct
 #define CAN_filter_SID(idFilter)  ((uint16_t)(idFilter >> 18) & 0x07FF)
 #define CAN_filter_EIDL(idFilter) ((uint16_t)(idFilter << 11) & 0xF800)
 #define CAN_filter_EIDH(idFilter) ((uint16_t)(idFilter >> 5) & 0x1FFF)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // CAN_DSPIC33C_H

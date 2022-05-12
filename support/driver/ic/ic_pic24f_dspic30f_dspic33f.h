@@ -18,6 +18,10 @@
 #ifndef IC_PIC24F_dsPIC30F_dsPIC33F_H
 #define IC_PIC24F_dsPIC30F_dsPIC33F_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_30F2020) || defined(DEVICE_30F2023) || defined(DEVICE_33FJ06GS202) || defined(DEVICE_33FJ06GS202A) || defined(DEVICE_33FJ09GS302)
 #    define IC_COUNT 1
 #elif defined(DEVICE_30F2011) || defined(DEVICE_30F2012) || defined(DEVICE_30F3012) || defined(DEVICE_30F3013) || defined(DEVICE_30F3014)                      \
@@ -56,6 +60,10 @@
 #    define IC_COUNT 8
 #else
 #    define IC_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // IC_PIC24F_dsPIC30F_dsPIC33F_H

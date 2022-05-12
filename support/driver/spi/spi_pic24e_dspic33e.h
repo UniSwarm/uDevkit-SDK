@@ -16,6 +16,10 @@
 #ifndef SPI_PIC24E_DSPIC33E_H
 #define SPI_PIC24E_DSPIC33E_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_33CH64MP202S1) || defined(DEVICE_33CH64MP203S1) || defined(DEVICE_33CH64MP205S1) || defined(DEVICE_33CH64MP206S1)                           \
     || defined(DEVICE_33CH64MP208S1) || defined(DEVICE_33CH64MP502S1) || defined(DEVICE_33CH64MP503S1) || defined(DEVICE_33CH64MP505S1)                        \
     || defined(DEVICE_33CH64MP506S1) || defined(DEVICE_33CH64MP508S1) || defined(DEVICE_33CH128MP202S1) || defined(DEVICE_33CH128MP203S1)                      \
@@ -104,6 +108,10 @@
 #    define SPI_COUNT 4
 #else
 #    define SPI_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // SPI_PIC24E_DSPIC33E_H

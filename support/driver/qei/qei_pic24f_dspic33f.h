@@ -16,6 +16,10 @@
 #ifndef QEI_PIC24F_DSPIC33F_H
 #define QEI_PIC24F_DSPIC33F_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // calculate QEI count and version on the device
 #if defined(DEVICE_33FJ12MC201) || defined(DEVICE_33FJ12MC202) || defined(DEVICE_33FJ16MC304) || defined(DEVICE_33FJ32GS406) || defined(DEVICE_33FJ32MC202)    \
     || defined(DEVICE_33FJ32MC204) || defined(DEVICE_33FJ64GS406) || defined(DEVICE_33FJ64MC506) || defined(DEVICE_33FJ64MC506A)                               \
@@ -36,5 +40,9 @@
 #endif
 
 #define QEI_16B
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // QEI_PIC24F_DSPIC33F_H

@@ -12,6 +12,10 @@
 #ifndef PIC16B_H
 #define PIC16B_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef __XC16
 #    define __prog__
 #    define __eds__
@@ -92,5 +96,9 @@
 #define REGSIZE 2
 typedef unsigned short rt_reg_t;
 typedef unsigned long rt_reg_ptr_t;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // PIC16B_H

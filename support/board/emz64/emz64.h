@@ -12,6 +12,10 @@
 #ifndef EMZ64_H
 #define EMZ64_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 
 #include <stdint.h>
@@ -44,5 +48,9 @@ int8_t board_getButton(uint8_t button);
 #define OLED_I2C_ADDR 0b01111000
 
 #define CAN_ID_CAN_BUS 1
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // EMZ64_H

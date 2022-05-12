@@ -11,6 +11,10 @@
 #ifndef ADC_DEVICE_H
 #define ADC_DEVICE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_33EP128GS702) || defined(DEVICE_33EP128GS704) || defined(DEVICE_33EP128GS705) || defined(DEVICE_33EP128GS706)                               \
     || defined(DEVICE_33EP128GS708) || defined(DEVICE_33EP128GS804) || defined(DEVICE_33EP128GS805) || defined(DEVICE_33EP128GS806)                            \
     || defined(DEVICE_33EP128GS808) || defined(DEVICE_33EP16GS202) || defined(DEVICE_33EP16GS502) || defined(DEVICE_33EP16GS504)                               \
@@ -207,6 +211,10 @@
 #endif
 #ifdef ADC_CHANNEL_HAVE_CH60
 #    define ADC_CHANNEL_CH60 60
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // ADC_DEVICE_H

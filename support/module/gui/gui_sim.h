@@ -12,6 +12,10 @@
 #ifndef GUI_SIM_H
 #define GUI_SIM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 #define GUI_SIM_MODULE 0x0100
@@ -41,5 +45,9 @@ typedef struct
 } GuiRect;
 
 #define GUI_SIM_WRITEDATA 0x0004
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // GUI_SIM_H

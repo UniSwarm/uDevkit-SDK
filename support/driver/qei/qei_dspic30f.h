@@ -16,6 +16,10 @@
 #ifndef QEI_DSPIC30F_H
 #define QEI_DSPIC30F_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // calculate QEI count and version on the device
 #if defined(DEVICE_30F2010) || defined(DEVICE_30F3010) || defined(DEVICE_30F3011) || defined(DEVICE_30F4011) || defined(DEVICE_30F4012)                        \
     || defined(DEVICE_30F5015) || defined(DEVICE_30F5016) || defined(DEVICE_30F6010A) || defined(DEVICE_30F6015)
@@ -25,5 +29,9 @@
 #endif
 
 #define QEI_16B
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // QEI_DSPIC30F_H

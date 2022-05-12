@@ -12,6 +12,10 @@
 #ifndef UART_H
 #define UART_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 #define UART_BIT_PARITY_NONE 0
@@ -58,6 +62,10 @@ ssize_t uart_datardy(rt_dev_t device);
 #    include "uart_pic32mx.h"
 #elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
 #    include "uart_pic32mz_mm_mk.h"
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // UART_H

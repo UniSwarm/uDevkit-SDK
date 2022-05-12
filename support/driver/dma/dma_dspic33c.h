@@ -11,6 +11,10 @@
 #ifndef DMA_DSPIC33C_H
 #define DMA_DSPIC33C_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef SIMULATOR
 #    define _dma_space_ __attribute__((space(xmemory), aligned(2)))
 #endif
@@ -396,6 +400,10 @@
 #    define DMA_TRIGGER_ADC_FIFO_Ready_Interrupt        0x5F
 #    define DMA_TRIGGER_CLC3_Positive_Edge_Interrupt    0x60
 #    define DMA_TRIGGER_CLC4_Positive_Edge_Interrupt    0x61
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // DMA_DSPIC33C_H

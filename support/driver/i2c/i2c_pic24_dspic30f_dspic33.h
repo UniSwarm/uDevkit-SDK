@@ -13,6 +13,10 @@
 #ifndef I2C_PIC24_DSPIC30F_DSPIC33_H
 #define I2C_PIC24_DSPIC30F_DSPIC33_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_24F04KA200) || defined(DEVICE_24F04KA201) || defined(DEVICE_24F08KA101) || defined(DEVICE_24F08KA102) || defined(DEVICE_24F16KA101)         \
     || defined(DEVICE_24F16KA102) || defined(DEVICE_24FJ16MC101) || defined(DEVICE_24FJ16MC102) || defined(DEVICE_24FJ32MC101) || defined(DEVICE_24FJ32MC102)  \
     || defined(DEVICE_24FJ32MC104) || defined(DEVICE_24HJ12GP201) || defined(DEVICE_24HJ12GP202) || defined(DEVICE_24HJ16GP304) || defined(DEVICE_24HJ32GP202) \
@@ -288,6 +292,10 @@
 #    define I2C1STATbits I2CSTATbits
 #    define I2C1TRN      I2CTRN
 #    define I2C1RCV      I2CRCV
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // I2C_PIC24_DSPIC30F_DSPIC33_H

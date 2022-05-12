@@ -15,6 +15,10 @@
 #ifndef UART_DSPIC30F_H
 #define UART_DSPIC30F_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // calculate UART count on the device
 
 #if defined(DEVICE_30F1010) || defined(DEVICE_30F2010) || defined(DEVICE_30F2011) || defined(DEVICE_30F2012) || defined(DEVICE_30F2020)                        \
@@ -31,5 +35,9 @@
 #endif
 
 #define UART_MAXBRG 0x0000FFFF  // 16 bits divisor
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // UART_DSPIC30F_H

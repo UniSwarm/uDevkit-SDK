@@ -12,6 +12,10 @@
 #ifndef WEB_SERVER_H
 #define WEB_SERVER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "fs_data.h"
 #include "http.h"
 #include "json.h"
@@ -21,5 +25,9 @@ void web_server_task(void);
 
 void web_server_setRestApi(void (*restApi)(char *url, HTTP_QUERRY_TYPE code, char *buffer));
 void web_server_setRootFS(const Fs_FilesList *file_list);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // WEB_SERVER_H

@@ -15,6 +15,10 @@
 #ifndef UART_PIC32MX_H
 #define UART_PIC32MX_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_32MX110F016B) || defined(DEVICE_32MX110F016C) || defined(DEVICE_32MX110F016D) || defined(DEVICE_32MX120F032B)                               \
     || defined(DEVICE_32MX120F032C) || defined(DEVICE_32MX120F032D) || defined(DEVICE_32MX130F064B) || defined(DEVICE_32MX130F064C)                            \
     || defined(DEVICE_32MX130F064D) || defined(DEVICE_32MX130F256B) || defined(DEVICE_32MX130F256D) || defined(DEVICE_32MX150F128B)                            \
@@ -130,5 +134,9 @@
 #endif
 
 #define UART_MAXBRG 0x0000FFFF  // 16 bits divisor
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // UART_PIC32MX_H

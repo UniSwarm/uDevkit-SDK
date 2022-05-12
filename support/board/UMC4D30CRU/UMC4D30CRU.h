@@ -16,6 +16,10 @@
 #ifndef UMC4D30CRU_H
 #define UMC4D30CRU_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 
 #include <stdint.h>
@@ -86,5 +90,9 @@ int8_t board_getLed(uint8_t led);
 // buttons
 #define BUTTON_COUNT 0
 int8_t board_getButton(uint8_t button);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // UMC4D30CRU_H

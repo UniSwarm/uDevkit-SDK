@@ -12,6 +12,10 @@
 #ifndef LSM6DS3_REGISTERS_H
 #define LSM6DS3_REGISTERS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // sensor registers
 #define LSM6DS3_TEST_PAGE        0x00
 #define LSM6DS3_RAM_ACCESS       0x01
@@ -96,5 +100,9 @@
 #define LSM6DS3_DATA_RD_FROM_RAM 0x65
 
 #define LSM6DS3_RAM_SIZE 4096
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // LSM6DS3_REGISTERS_H

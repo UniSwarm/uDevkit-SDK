@@ -12,6 +12,10 @@
 #ifndef ADC_SIM_H
 #define ADC_SIM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "adc.h"
 
 #include <stdint.h>
@@ -29,5 +33,9 @@ typedef struct
 
 #define ADC_SIM_CONFIG 0x0000
 #define ADC_SIM_READ   0x0001
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // ADC_SIM_H

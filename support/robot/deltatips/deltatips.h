@@ -12,10 +12,18 @@
 #ifndef DELTATIPS_H
 #define DELTATIPS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "board.h"
 
 int robot_init(void);
 
 #define ROBOT_NAME "deltaTips"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // DELTATIPS_H

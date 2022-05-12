@@ -15,6 +15,10 @@
 #ifndef ADC_PIC32MZ_H
 #define ADC_PIC32MZ_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // ====================================== Channel availability ======================================
 #if defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ1024EFE064)                       \
     || defined(DEVICE_32MZ1024EFF064) || defined(DEVICE_32MZ1024EFG064) || defined(DEVICE_32MZ1024EFH064) || defined(DEVICE_32MZ1024EFK064)                    \
@@ -468,6 +472,10 @@
 #    define ADC_HAVE_DEDICATED_CORE3
 #    define ADC_HAVE_DEDICATED_CORE4
 #    define ADC_HAVE_DEDICATED_CORE7
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // ADC_PIC32MZ_H

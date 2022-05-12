@@ -12,6 +12,10 @@
 #ifndef SPI_PIC24F_DSPIC33F_H
 #define SPI_PIC24F_DSPIC33F_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_33FJ06GS101) || defined(DEVICE_33FJ06GS101A) || defined(DEVICE_33FJ06GS102) || defined(DEVICE_33FJ06GS102A) || defined(DEVICE_33FJ06GS202)  \
     || defined(DEVICE_33FJ06GS202A) || defined(DEVICE_33FJ09GS302) || defined(DEVICE_33FJ12GP201) || defined(DEVICE_33FJ12GP202)                               \
     || defined(DEVICE_33FJ12MC201) || defined(DEVICE_33FJ12MC202) || defined(DEVICE_33FJ16GP101) || defined(DEVICE_33FJ16GP102) || defined(DEVICE_33FJ16GP304) \
@@ -89,6 +93,10 @@
 #    define SPI_COUNT 4
 #else
 #    define SPI_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // SPI_PIC24F_DSPIC33F_H

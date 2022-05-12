@@ -14,6 +14,10 @@
 #ifndef MSI_DSPIC33CH_H
 #define MSI_DSPIC33CH_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_33CH128MP202) || defined(DEVICE_33CH128MP203) || defined(DEVICE_33CH128MP205) || defined(DEVICE_33CH128MP206)                               \
     || defined(DEVICE_33CH128MP208) || defined(DEVICE_33CH128MP502) || defined(DEVICE_33CH128MP503) || defined(DEVICE_33CH128MP505)                            \
     || defined(DEVICE_33CH128MP506) || defined(DEVICE_33CH128MP508) || defined(DEVICE_33CH256MP205) || defined(DEVICE_33CH256MP206)                            \
@@ -71,5 +75,9 @@
 
 #define MSI_PROTOCOL_M2S2 2
 #define MSI_PROTOCOL_S2M2 3
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // MSI_DSPIC33CH_H

@@ -14,6 +14,10 @@
 #ifndef UMC1BDS32FR_H
 #define UMC1BDS32FR_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 
 #include <stdint.h>
@@ -148,5 +152,9 @@ inline int board_bridgesEnabled(void)
     return 1;
 #endif
 }
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // UMC1BDS32FR_H

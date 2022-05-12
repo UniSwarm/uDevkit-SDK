@@ -12,6 +12,10 @@
 #ifndef MOTOR_H
 #define MOTOR_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "board.h"
 #include "driver/device.h"
 
@@ -30,6 +34,10 @@ int16_t motor_getCurrent(rt_dev_t device);
 #    define MOTOR_COUNT 1
 #else
 #    define MOTOR_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // MOTOR_H

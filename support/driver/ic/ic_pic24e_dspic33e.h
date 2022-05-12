@@ -16,6 +16,10 @@
 #ifndef IC_PIC24E_dsPIC33E_H
 #define IC_PIC24E_dsPIC33E_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_33EP16GS202) || defined(DEVICE_33EP32GS202)
 #    define IC_COUNT 1
 #elif defined(DEVICE_24EP32GP202) || defined(DEVICE_24EP32GP203) || defined(DEVICE_24EP32GP204) || defined(DEVICE_24EP32MC202) || defined(DEVICE_24EP32MC203)  \
@@ -63,6 +67,10 @@
 #    define IC_COUNT 16
 #else
 #    define IC_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // IC_PIC24E_dsPIC33E_H

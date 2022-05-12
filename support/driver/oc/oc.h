@@ -12,6 +12,10 @@
 #ifndef OC_H
 #define OC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 // ======== device assignation ========
@@ -58,6 +62,10 @@ uint32_t oc_rsVal(rt_dev_t device);
 #    include "oc_pic32.h"
 #else
 #    warning Unsuported ARCHI
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // OC_H

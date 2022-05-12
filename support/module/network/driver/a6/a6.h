@@ -12,6 +12,10 @@
 #ifndef A6_H
 #define A6_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "driver/device.h"
 
 int a6_init(rt_dev_t uart, rt_dev_t txen, uint8_t inverted);
@@ -22,5 +26,9 @@ ssize_t a6_read(char *data, size_t size_max);
 void a6_writeShort(uint16_t channel, uint16_t value);
 
 void a6_task(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // A6_H

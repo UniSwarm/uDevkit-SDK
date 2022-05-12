@@ -12,6 +12,10 @@
 #ifndef SYSCLOCK_H
 #define SYSCLOCK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 #include <stdint.h>
 
@@ -46,5 +50,9 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source);
 int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq);
 SYSCLOCK_SOURCE sysclock_source(void);
 int sysclock_switchSourceTo(SYSCLOCK_SOURCE source);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // SYSCLOCK_H

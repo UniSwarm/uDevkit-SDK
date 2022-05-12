@@ -12,6 +12,10 @@
 #ifndef MROBOT_H
 #define MROBOT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "driver/device.h"
 
 //#include "asserv/asserv.h"
@@ -62,5 +66,9 @@ MrobotPoint mrobot_nextKeypoint(void);
 float mrobot_nextKeypointDistance(void);
 float mrobot_speed(void);
 float mrobot_targetSpeed(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // MROBOT_H

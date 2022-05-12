@@ -13,9 +13,17 @@
 #ifndef PWM_PIC24_DSPIC30F_DSPIC33_H
 #define PWM_PIC24_DSPIC30F_DSPIC33_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // !!! This implementation only support oc periph at the time
 #include "driver/oc.h"
 
 #define PWM_COUNT OC_COUNT
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // PWM_PIC24_DSPIC30F_DSPIC33_H

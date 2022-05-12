@@ -15,4 +15,12 @@
 #ifndef ADC_PIC24E_DSPIC33E_H
 #define ADC_PIC24E_DSPIC33E_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif  // ADC_PIC24E_DSPIC33E_H

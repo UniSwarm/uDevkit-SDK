@@ -12,6 +12,10 @@
 #ifndef NVM_H
 #define NVM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 // ========= byte manipulation ========
@@ -35,6 +39,10 @@ void nvm_writeDoubleWord(uint32_t addrWord, const char *data);
 #    include "nvm_pic24_dspic30f_dspic33.h"
 #else
 #    error Unsuported ARCHI
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // NVM_H

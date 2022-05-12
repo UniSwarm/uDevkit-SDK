@@ -15,6 +15,10 @@
 #ifndef SYSCLOCK_PIC32MX_H
 #define SYSCLOCK_PIC32MX_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "sysclock.h"
 
 #if defined(DEVICE_32MX110F016B) || defined(DEVICE_32MX110F016C) || defined(DEVICE_32MX110F016D) || defined(DEVICE_32MX120F032B)                               \
@@ -146,5 +150,9 @@ static const char *sysclock_sources_str[] = {"FRC", "FRCPLL", "POSC", "PPLL", "S
 #endif
 
 int sysclock_setClockWPLL(uint32_t freq);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // SYSCLOCK_PIC32MX_H

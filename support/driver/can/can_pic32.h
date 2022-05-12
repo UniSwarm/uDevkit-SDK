@@ -15,6 +15,10 @@
 #ifndef CAN_PIC32_H
 #define CAN_PIC32_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_32MX530F128H) || defined(DEVICE_32MX530F128L) || defined(DEVICE_32MX534F064H) || defined(DEVICE_32MX534F064L)                               \
     || defined(DEVICE_32MX550F256H) || defined(DEVICE_32MX550F256L) || defined(DEVICE_32MX564F064H) || defined(DEVICE_32MX564F064L)                            \
     || defined(DEVICE_32MX564F128H) || defined(DEVICE_32MX564F128L) || defined(DEVICE_32MX570F512H) || defined(DEVICE_32MX570F512L)                            \
@@ -164,5 +168,9 @@ typedef union
     };
     uint32_t messageWord[4];  ///< CAN TX message organized as a set of 32 bit words
 } CAN_RxMsgBuffer;
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // CAN_PIC32_H

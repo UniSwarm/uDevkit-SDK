@@ -13,6 +13,10 @@
 #ifndef I2C_PIC32_H
 #define I2C_PIC32_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // ========================= I2C module count ==========================
 #if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
     || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
@@ -320,6 +324,10 @@ rt_dev_t i2c(uint8_t d);
 #            define _I2C2SIF IFS1bits.I2C2SIF
 #        endif
 #    endif
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // I2C_PIC32_H

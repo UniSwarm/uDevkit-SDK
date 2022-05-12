@@ -16,6 +16,10 @@
 #ifndef UART_PIC32MZ_MM_MK_H
 #define UART_PIC32MZ_MM_MK_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
     || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
     || defined(DEVICE_32MM0016GPL020) || defined(DEVICE_32MM0016GPL028) || defined(DEVICE_32MM0016GPL036) || defined(DEVICE_32MM0032GPL020)                    \
@@ -297,6 +301,10 @@ uint32_t uart_getClock(rt_dev_t device);
 #        define _U6TXIP IPC41bits.U6TXIP
 #    endif
 #    define UIPR IPL3AUTO
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // UART_PIC32MZ_MM_MK_H

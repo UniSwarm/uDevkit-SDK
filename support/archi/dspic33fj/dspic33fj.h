@@ -12,6 +12,14 @@
 #ifndef DSPIC33FJ_H
 #define DSPIC33FJ_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../pic16b/pic16b.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // DSPIC33FJ_H

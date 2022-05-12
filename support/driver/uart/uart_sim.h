@@ -12,6 +12,10 @@
 #ifndef UART_SIM_H
 #define UART_SIM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 typedef struct
@@ -28,5 +32,9 @@ typedef struct
 #define UART_SIM_CONFIG 0x0001
 #define UART_SIM_WRITE  0x0002
 #define UART_SIM_READ   0x0003
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // UART_SIM_H

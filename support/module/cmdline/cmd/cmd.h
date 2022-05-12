@@ -12,6 +12,10 @@
 #ifndef CMD_H
 #define CMD_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct
 {
     char name[20];
@@ -22,5 +26,9 @@ int cmd_exec(char *line);
 
 void cmd_puts(const char *str);
 int cmd_printf(const char *format, ...);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // CMD_H

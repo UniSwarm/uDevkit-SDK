@@ -12,6 +12,10 @@
 #ifndef ADC_H
 #define ADC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 #include "adc_device.h"
@@ -34,5 +38,9 @@ int16_t adc_getValue(uint8_t channel);
 int adc_setTriggerSource(uint8_t channel, uint8_t triggerSource);
 
 int adc_setHandler(uint8_t channel, void (*handler)(int16_t));
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // ADC_H

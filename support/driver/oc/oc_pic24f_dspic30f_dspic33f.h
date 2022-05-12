@@ -18,6 +18,10 @@
 #ifndef OC_PIC24F_dsPIC30F_dsPIC33F_H
 #define OC_PIC24F_dsPIC30F_dsPIC33F_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int oc_setTimer(rt_dev_t device, uint8_t timer);
 rt_dev_t oc_getTimer(rt_dev_t device);
 
@@ -59,6 +63,10 @@ rt_dev_t oc_getTimer(rt_dev_t device);
 #    define OC_COUNT 8
 #else
 #    define OC_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // OC_PIC24F_dsPIC30F_dsPIC33F_H

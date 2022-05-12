@@ -12,6 +12,10 @@
 #ifndef SCREENCONTROLLER_H
 #define SCREENCONTROLLER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 #include "gui_driver.h"
@@ -30,5 +34,9 @@ void gui_ctrl_setRectScreen(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
 void gui_ctrl_setPos(uint16_t x, uint16_t y);
 void gui_ctrl_drawPoint(uint16_t x, uint16_t y, uint16_t color);
 void gui_ctrl_update(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // SCREENCONTROLLER_H

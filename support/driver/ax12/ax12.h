@@ -12,6 +12,10 @@
 #ifndef AX12_H
 #define AX12_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "driver/gpio.h"
 #include "driver/uart.h"
 
@@ -100,5 +104,9 @@ void ax12_setId(uint8_t ax_id, uint8_t newId);
 #define INST_SYSTEM_WRITE   0x0D
 #define INST_SYNC_WRITE     0x83
 #define INST_SYNC_REG_WRITE 0x84
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // AX12_H

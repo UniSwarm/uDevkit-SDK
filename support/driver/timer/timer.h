@@ -12,6 +12,10 @@
 #ifndef TIMER_H
 #define TIMER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 // ====== device assignation ======
@@ -52,6 +56,10 @@ uint16_t timer_getValue(rt_dev_t device);
 #    include "timer_pic32.h"
 #else
 #    warning "Unsupported ARCHI"
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // TIMER_H

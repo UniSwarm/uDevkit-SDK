@@ -12,6 +12,10 @@
 #ifndef PWM_H
 #define PWM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "driver/device.h"
 
 // ====== device assignation ======
@@ -38,6 +42,10 @@ uint32_t pwm_duty(rt_dev_t device);
 #    include "pwm_pic32.h"
 #else
 #    error Unsuported ARCHI
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // PWM_H

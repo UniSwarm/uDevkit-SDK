@@ -14,6 +14,10 @@
 #ifndef SIMULATOR_PTHREAD_H
 #define SIMULATOR_PTHREAD_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,5 +41,9 @@ int nanosleep(const struct timespec *req, struct timespec *rem);
 #endif
 
 void simulator_pthread_init(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // SIMULATOR_PTHREAD_H

@@ -17,6 +17,10 @@
 #ifndef CURIOSITY_32MZ_EF_H
 #define CURIOSITY_32MZ_EF_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 
 #include <stdint.h>
@@ -41,5 +45,9 @@ int8_t board_getLed(uint8_t led);
 #define BUTTON_COUNT 1
 #define BUTTON_1     PORTGbits.RG12
 int8_t board_getButton(uint8_t button);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // CURIOSITY_32MZ_EF_H

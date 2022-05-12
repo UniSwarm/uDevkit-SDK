@@ -12,6 +12,10 @@
 #ifndef FIFO_H
 #define FIFO_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -42,5 +46,9 @@ size_t fifo_avail(Fifo *fifo);
 
 size_t fifo_push(Fifo *fifo, const char *data, size_t sizeToWrite);
 size_t fifo_pop(Fifo *fifo, char *data, size_t max_size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // FIFO_H

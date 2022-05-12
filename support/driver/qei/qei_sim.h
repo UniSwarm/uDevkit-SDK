@@ -12,6 +12,14 @@
 #ifndef QEI_SIM_H
 #define QEI_SIM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "qei.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // QEI_SIM_H

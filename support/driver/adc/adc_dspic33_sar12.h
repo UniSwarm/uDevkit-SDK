@@ -14,6 +14,10 @@
 #ifndef ADC_DSPIC33_SAR12_H
 #define ADC_DSPIC33_SAR12_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // ====================================== Channel availability ======================================
 #if defined(DEVICE_33EP128GS702)
 #    define ADC_CHANNEL_COUNT 11
@@ -935,6 +939,10 @@
 #    define ADC_TRGSRC_SOFTTRG       0b00010
 #    define ADC_TRGSRC_COMMONSOFTTRG 0b00001
 #    define ADC_TRGSRC_NOTRIG        0b00000
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // ADC_DSPIC33_SAR12_H

@@ -11,6 +11,10 @@
 #ifndef MSI_H
 #define MSI_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 #if defined(ARCHI_dspic33ch)
@@ -60,5 +64,9 @@ int msi_protocol_canWrite(const uint8_t protocol);
 
 int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_size);
 int msi_protocol_canRead(const uint8_t protocol);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // MSI_H

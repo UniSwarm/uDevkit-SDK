@@ -14,6 +14,10 @@
 #ifndef TIMER_DSPIC33C_H
 #define TIMER_DSPIC33C_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #if defined(DEVICE_33CDV64MC106) || defined(DEVICE_33CDV128MP506) || defined(DEVICE_33CDV256MP506) || defined(DEVICE_33CDVC128MP506)                           \
     || defined(DEVICE_33CDVC256MP506) || defined(DEVICE_33CDVL64MC106) || defined(DEVICE_33CH64MP202) || defined(DEVICE_33CH64MP202S1)                         \
     || defined(DEVICE_33CH64MP203) || defined(DEVICE_33CH64MP203S1) || defined(DEVICE_33CH64MP205) || defined(DEVICE_33CH64MP205S1)                            \
@@ -59,6 +63,10 @@
 #    define TIMER_COUNT 1
 #else
 #    define TIMER_COUNT 0
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // TIMER_DSPIC33C_H

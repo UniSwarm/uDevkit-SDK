@@ -14,6 +14,10 @@
 #ifndef UDT1CRI_H
 #define UDT1CRI_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 #include <driver/device.h>
 
@@ -49,5 +53,9 @@ int8_t board_getButton(uint8_t button);
 rt_dev_t board_iso_en_gpio(void);
 rt_dev_t board_iso_rs485_re_gpio(void);
 rt_dev_t board_iso_rs485_de_gpio(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // UDT1CRI_H

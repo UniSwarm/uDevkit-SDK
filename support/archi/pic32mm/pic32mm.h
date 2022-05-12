@@ -12,6 +12,14 @@
 #ifndef PIC32MM_H
 #define PIC32MM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../pic32/pic32.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // PIC32MM_H

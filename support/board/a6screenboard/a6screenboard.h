@@ -12,6 +12,10 @@
 #ifndef A6SCREENBOARD_H
 #define A6SCREENBOARD_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 #include <stdint.h>
 
@@ -52,5 +56,9 @@ int8_t board_getButton(uint8_t button);
 #define A6_RW_PORT GPIO_PORTF
 #define A6_RW_PIN  1
 #define A6_UART    1
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // A6SCREENBOARD_H

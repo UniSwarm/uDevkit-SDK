@@ -12,7 +12,15 @@
 #ifndef USB_H
 #define USB_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "system.h"
 #include <stdint.h>
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // USB_H

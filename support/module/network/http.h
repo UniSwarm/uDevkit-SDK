@@ -12,6 +12,10 @@
 #ifndef HTTP_H
 #define HTTP_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // http querry parser
 typedef enum
 {
@@ -68,5 +72,9 @@ void http_write_header_code(char *buffer, int result_code);
 void http_write_content_type(char *buffer, const char *content_type);
 void http_write_content_length(char *buffer, unsigned int content_length);
 void http_write_header_end(char *buffer);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // HTTP_H

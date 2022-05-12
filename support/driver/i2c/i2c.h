@@ -12,6 +12,10 @@
 #ifndef I2C_H
 #define I2C_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 // ====== device assignation ======
@@ -68,6 +72,10 @@ int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[
 #    include "i2c_pic32.h"
 #else
 #    warning Unsuported ARCHI
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // I2C_H

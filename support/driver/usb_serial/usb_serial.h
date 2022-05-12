@@ -12,6 +12,10 @@
 #ifndef USB_SERIAL_H
 #define USB_SERIAL_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "driver/device.h"
 
 // API
@@ -20,5 +24,9 @@ void usb_serial_task(void);
 
 ssize_t usb_serial_write(rt_dev_t device, const char *data, size_t size);
 ssize_t usb_serial_read(rt_dev_t device, char *data, size_t max_size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // USB_SERIAL_H

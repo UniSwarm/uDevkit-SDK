@@ -12,6 +12,10 @@
 #ifndef CMDS_H
 #define CMDS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 int cmd_gpio(int argc, char **argv);
 int cmd_ls(int argc, char **argv);
 int cmd_uart(int argc, char **argv);
@@ -22,5 +26,9 @@ int cmd_ax(int argc, char **argv);
 int cmd_led(int argc, char **argv);
 int cmd_sysclock(int argc, char **argv);
 int cmd_reg(int argc, char **argv);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // CMDS_H

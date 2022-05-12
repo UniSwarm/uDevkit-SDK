@@ -12,6 +12,14 @@
 #ifndef PIC32MZEC_H
 #define PIC32MZEC_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../pic32/pic32.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // PIC32MZEC_H

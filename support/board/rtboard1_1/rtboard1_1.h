@@ -12,6 +12,10 @@
 #ifndef RTBOARD1_1_H
 #define RTBOARD1_1_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <archi.h>
 
 #include <stdint.h>
@@ -79,5 +83,9 @@ int8_t board_getButton(uint8_t button);
 #define ANS8 1
 
 #define OLED_I2C_ADDR 0b01111000
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // RTBOARD1_1_H

@@ -16,6 +16,10 @@
 #ifndef OC_PIC32_H
 #define OC_PIC32_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 int oc_setTimer(rt_dev_t device, uint8_t timer);
@@ -103,6 +107,10 @@ rt_dev_t oc_getTimer(rt_dev_t device);
 
 #if defined(ARCHI_pic32mk) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
 #    define OC_HAVE_ALTERNATIVE_TIMER_SELECTION
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // OC_PIC32_H

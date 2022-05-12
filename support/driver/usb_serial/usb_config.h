@@ -48,6 +48,10 @@
 #ifndef USBCFG_H
 #define USBCFG_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** DEFINITIONS ****************************************************/
 #define USB_EP0_BUFF_SIZE                                                                                                                                      \
     8  // Valid Options: 8, 16, 32, or 64 bytes.
@@ -199,5 +203,9 @@
 #define USB_CDC_SUPPORT_ABSTRACT_CONTROL_MANAGEMENT_CAPABILITIES_D1  // Set_Line_Coding, Set_Control_Line_State,
                                                                      // Get_Line_Coding, and Serial_State commands
 /** DEFINITIONS ****************************************************/
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // USBCFG_H

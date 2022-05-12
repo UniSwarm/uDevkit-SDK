@@ -12,6 +12,10 @@
 #ifndef SPI_H
 #define SPI_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <driver/device.h>
 
 // ====== device assignation ======
@@ -50,6 +54,10 @@ ssize_t spi_read(rt_dev_t device, char *data, size_t size_max);
 #    include "spi_pic32.h"
 #else
 #    error Unsuported ARCHI
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // SPI_H

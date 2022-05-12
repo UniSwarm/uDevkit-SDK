@@ -12,6 +12,14 @@
 #ifndef DSPIC33EV_H
 #define DSPIC33EV_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "../dspic33ep/dspic33ep.h"
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // DSPIC33EV_H

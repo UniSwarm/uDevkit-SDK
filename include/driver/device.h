@@ -12,6 +12,10 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -79,5 +83,9 @@ typedef uint8_t rt_dev_t_class;
 // ===== device functions =====
 ssize_t device_write(rt_dev_t device, const char *data, size_t size);
 ssize_t device_read(rt_dev_t device, char *data, size_t size_max);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // DEVICE_H
