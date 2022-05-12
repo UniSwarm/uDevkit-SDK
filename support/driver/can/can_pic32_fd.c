@@ -201,7 +201,7 @@ int can_enable(rt_dev_t device)
             CFD1MASK0bits.MEID = 0x00000;  // Ignore all bits in comparison
             CFD1MASK0bits.MIDE = 0;        // Match all message types.
             break;
-            
+
 #    if CAN_COUNT >= 2
         case 1:
             // assign memory
@@ -758,13 +758,6 @@ uint8_t can_s2Seg(rt_dev_t device)
 #endif
 }
 
-/**
- * @brief Write a can message to fifo
- * @param device CAN device number
- * @param fifo fifo number to put the message
- * @param header CAN message header struct (id, flags, data size)
- * @return 0 if message is successfully putted inside fifo, -1 in case of error
- */
 #define CFD1FIFOCON(fifo)    ((volatile uint32_t *)(&CFD1TXQCON + (((uint8_t)fifo) * 12)))
 #define CFD1FIFOCONSET(fifo) (CFD1FIFOCON(fifo) + 2)
 #define CFD1FIFOSTA(fifo)    ((volatile uint32_t *)(&CFD1TXQSTA + (((uint8_t)fifo) * 12)))
@@ -785,6 +778,13 @@ uint8_t can_s2Seg(rt_dev_t device)
 #define CFD4FIFOSTA(fifo)    ((volatile uint32_t *)(&CFD4TXQSTA + (((uint8_t)fifo) * 12)))
 #define CFD4FIFOUA(fifo)     ((volatile uint32_t *)(&CFD4TXQUA + (((uint8_t)fifo) * 12)))
 
+/**
+ * @brief Write a can message to fifo
+ * @param device CAN device number
+ * @param fifo fifo number to put the message
+ * @param header CAN message header struct (id, flags, data size)
+ * @return 0 if message is successfully putted inside fifo, -1 in case of error
+ */
 int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
 #if CAN_COUNT >= 1
@@ -1031,6 +1031,202 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     header->flags = flagValue;
 
     return 1;
+#else
+    return -1;
+#endif
+}
+
+#define CFD1FLTOBJ(filter) ((volatile uint32_t *)(&CFD1FLTOBJ0 + (((uint8_t)filter) * 8)))
+#define CFD1MASK(filter)   ((volatile uint32_t *)(&CFD1MASK0 + (((uint8_t)filter) * 8)))
+#define CFD1FLTCON(filter) ((volatile uint8_t *)(&CFD1FLTCON0 + (((uint8_t)filter & 0xFC) * 16 + ((uint8_t)filter & 0x03))))
+
+#define CFD2FLTOBJ(filter) ((volatile uint32_t *)(&CFD2FLTOBJ0 + (((uint8_t)filter) * 8)))
+#define CFD2MASK(filter)   ((volatile uint32_t *)(&CFD2MASK0 + (((uint8_t)filter) * 8)))
+#define CFD2FLTCON(filter) ((volatile uint8_t *)(&CFD2FLTCON0 + (((uint8_t)filter & 0xFC) * 16 + ((uint8_t)filter & 0x03))))
+
+#define CFD3FLTOBJ(filter) ((volatile uint32_t *)(&CFD3FLTOBJ0 + (((uint8_t)filter) * 8)))
+#define CFD3MASK(filter)   ((volatile uint32_t *)(&CFD3MASK0 + (((uint8_t)filter) * 8)))
+#define CFD3FLTCON(filter) ((volatile uint8_t *)(&CFD3FLTCON0 + (((uint8_t)filter & 0xFC) * 16 + ((uint8_t)filter & 0x03))))
+
+#define CFD4FLTOBJ(filter) ((volatile uint32_t *)(&CFD4FLTOBJ0 + (((uint8_t)filter) * 8)))
+#define CFD4MASK(filter)   ((volatile uint32_t *)(&CFD4MASK0 + (((uint8_t)filter) * 8)))
+#define CFD4FLTCON(filter) ((volatile uint8_t *)(&CFD4FLTCON0 + (((uint8_t)filter & 0xFC) * 16 + ((uint8_t)filter & 0x03))))
+
+/**
+ * @brief Configure the specified CAN filter
+ * @param device CAN bus number,
+ * @param nFilter number of the filter to configure
+ * @param fifo fifo number where the message is stored
+ * @param idFilter Id bits use for the filter
+ * @param mask masked bits use for the filter
+ * @param frame frames format filtering
+ * @return 0 if ok, -1 in case of error
+ */
+int can_filterSet(rt_dev_t device, uint8_t nFilter, uint8_t fifo, uint32_t idFilter, uint32_t mask, CAN_FRAME_FORMAT_FLAGS frame)
+{
+#if CAN_COUNT >= 1
+    uint8_t can = MINOR(device);
+
+    if (fifo >= CAN_FIFO_COUNT)
+    {
+        return -1;
+    }
+
+    if (nFilter >= CAN_FILTER_COUNT)
+    {
+        return -1;
+    }
+
+    uint32_t filterObj, filterMask;
+    if (frame == CAN_FRAME_STD)
+    {
+        filterMask = _CFD1MASK0_MIDE_MASK;
+        filterObj = 0;
+        filterObj |= idFilter & 0x000007FF;
+        filterMask |= mask & 0x000007FF;
+    }
+    else if (frame == CAN_FRAME_EXT)
+    {
+        filterMask = _CFD1MASK0_MIDE_MASK;
+        filterObj = _CFD1FLTOBJ0_EXIDE_MASK;
+    }
+    else if (frame == CAN_FRAME_BOTH)
+    {
+        filterMask = 0;
+        filterObj = _CFD1FLTOBJ0_EXIDE_MASK;
+    }
+    else
+    {
+        return -1;
+    }
+
+    switch (can)
+    {
+        case 0:
+            *CFD1MASK(idFilter) = filterMask;
+            *CFD1FLTOBJ(idFilter) = filterObj;
+            *CFD1FLTCON(idFilter) = (fifo & 0x1F);
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            *CFD2MASK(idFilter) = filterMask;
+            *CFD2FLTOBJ(idFilter) = filterObj;
+            *CFD2FLTCON(idFilter) = (fifo & 0x1F);
+            break;
+#    endif
+#    if CAN_COUNT >= 3
+        case 2:
+            *CFD3MASK(idFilter) = filterMask;
+            *CFD3FLTOBJ(idFilter) = filterObj;
+            *CFD3FLTCON(idFilter) = (fifo & 0x1F);
+            break;
+#    endif
+#    if CAN_COUNT >= 4
+        case 3:
+            *CFD4MASK(idFilter) = filterMask;
+            *CFD4FLTOBJ(idFilter) = filterObj;
+            *CFD4FLTCON(idFilter) = (fifo & 0x1F);
+            break;
+#    endif
+
+        default:
+            return -1;
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * @brief Enable the specified CAN filter
+ * @param device CAN bus number
+ * @param nFilter number of the filter to enable
+ * @return 0 if ok, -1 in case of error
+ */
+int can_filterEnable(rt_dev_t device, uint8_t nFilter)
+{
+#if CAN_COUNT >= 1
+    uint8_t can = MINOR(device);
+
+    if (nFilter >= CAN_FILTER_COUNT)
+    {
+        return -1;
+    }
+
+    switch (can)
+    {
+        case 0:
+            *CFD1FLTCON(nFilter) |= _CFD1FLTCON0_FLTEN0_MASK;
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            *CFD2FLTCON(nFilter) |= _CFD1FLTCON0_FLTEN0_MASK;
+            break;
+#    endif
+#    if CAN_COUNT >= 3
+        case 2:
+            *CFD3FLTCON(nFilter) |= _CFD1FLTCON0_FLTEN0_MASK;
+            break;
+#    endif
+#    if CAN_COUNT >= 4
+        case 3:
+            *CFD4FLTCON(nFilter) |= _CFD1FLTCON0_FLTEN0_MASK;
+            break;
+#    endif
+
+        default:
+            return -1;
+    }
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+/**
+ * @brief Disable the specified CAN filter
+ * @param device CAN bus number
+ * @param nFilter number of the filter to disable
+ * @return 0 if ok, -1 in case of error
+ */
+int can_filterDisable(rt_dev_t device, uint8_t nFilter)
+{
+#if CAN_COUNT >= 1
+    uint8_t can = MINOR(device);
+
+    if (nFilter >= CAN_FILTER_COUNT)
+    {
+        return -1;
+    }
+
+    switch (can)
+    {
+        case 0:
+            *CFD1FLTCON(nFilter) &= ~_CFD1FLTCON0_FLTEN0_MASK;
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            *CFD2FLTCON(nFilter) &= ~_CFD1FLTCON0_FLTEN0_MASK;
+            break;
+#    endif
+#    if CAN_COUNT >= 3
+        case 2:
+            *CFD3FLTCON(nFilter) &= ~_CFD1FLTCON0_FLTEN0_MASK;
+            break;
+#    endif
+#    if CAN_COUNT >= 4
+        case 3:
+            *CFD4FLTCON(nFilter) &= ~_CFD1FLTCON0_FLTEN0_MASK;
+            break;
+#    endif
+
+        default:
+            return -1;
+    }
+
+    return 0;
 #else
     return -1;
 #endif
