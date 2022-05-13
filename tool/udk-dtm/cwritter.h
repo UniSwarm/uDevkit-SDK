@@ -8,7 +8,7 @@
 class CWritter
 {
 public:
-    CWritter(const QString &path);
+    CWritter(const QString &fileName);
     ~CWritter();
 
     void writeIfDefList(const QStringList &listDef);
@@ -33,4 +33,4 @@ protected:
     StateIfDef _ifDefState;
 };
 
-#endif // CWRITTER_H
+#endif  // CWRITTER_H

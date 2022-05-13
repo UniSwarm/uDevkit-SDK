@@ -2,9 +2,9 @@
 
 #include <QCollator>
 
-CWritter::CWritter(const QString &path)
+CWritter::CWritter(const QString &fileName)
 {
-    _file = new QFile(path);
+    _file = new QFile(fileName);
     _file->open(QIODevice::WriteOnly);
     _stream = new QTextStream(_file);
 
@@ -23,7 +23,9 @@ void CWritter::writeIfDefList(const QStringList &listDef)
     QStringList listDefSorted = listDef;
     QCollator coll;
     coll.setNumericMode(true);
-    std::sort(listDefSorted.begin(), listDefSorted.end(), [&](const QString &s1, const QString &s2)
+    std::sort(listDefSorted.begin(),
+              listDefSorted.end(),
+              [&](const QString &s1, const QString &s2)
               {
                   return coll.compare(s1, s2) < 0;
               });
@@ -67,16 +69,11 @@ void CWritter::writeIfDefListEnd()
 
 void CWritter::writeDefList(const QStringList &listDef, const QStringList &values)
 {
-    QStringList listDefSorted = listDef;
     QCollator coll;
     coll.setNumericMode(true);
-    std::sort(listDefSorted.begin(), listDefSorted.end(), [&](const QString &s1, const QString &s2)
-              {
-                  return coll.compare(s1, s2) < 0;
-              });
 
     int i = 0;
-    for (const QString &def : listDefSorted)
+    for (const QString &def : listDef)
     {
         *_stream << " #define " << def;
         if (i < values.count())

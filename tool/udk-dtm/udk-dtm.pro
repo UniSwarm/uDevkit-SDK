@@ -1,10 +1,9 @@
-QT -= gui
-QT += xml concurrent
+QT += core gui widgets xml concurrent
 
-CONFIG += c++11 console
-CONFIG -= app_bundle
+CONFIG += c++11
 QMAKE_CXXFLAGS_RELEASE -= -O1 -O2
 QMAKE_CXXFLAGS_RELEASE *= -Os
+QMAKE_CXXFLAGS_RELEASE += -O3
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
@@ -14,7 +13,11 @@ SOURCES += \
         cwritter.cpp \
         edcdb.cpp \
         edcparser.cpp \
-        main.cpp
+        headercreator.cpp \
+        main.cpp \
+        nvmheadercreator.cpp \
+        periphericalheadercreator.cpp \
+        tableimporter.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -24,4 +27,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     cwritter.h \
     edcdb.h \
-    edcparser.h
+    edcparser.h \
+    headercreator.h \
+    nvmheadercreator.h \
+    periphericalheadercreator.h \
+    tableimporter.h

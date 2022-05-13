@@ -7,25 +7,27 @@ EDCParser::EDCParser(const QString &path)
     : _filePath(path)
 {
     _level = 1;
+    _xml = nullptr;
 }
 
-bool EDCParser::parse(void)
+bool EDCParser::parse()
 {
-    _xmlFile = new QFile(_filePath);
-    if (!_xmlFile->open(QIODevice::ReadOnly))
+    QFile xmlFile(_filePath);
+    if (!xmlFile.open(QIODevice::ReadOnly))
     {
         return false;
     }
 
-    _xml = new QXmlStreamReader(_xmlFile);
+    _level = 1;
+    _xml = new QXmlStreamReader(&xmlFile);
     bool ok = parseDocument();
 
-    _xmlFile->close();
+    xmlFile.close();
 
     return ok;
 }
 
-bool EDCParser::parseDocument(void)
+bool EDCParser::parseDocument()
 {
     while (!_xml->atEnd())
     {
@@ -45,15 +47,17 @@ bool EDCParser::parseDocument(void)
 
     QCollator coll;
     coll.setNumericMode(true);
-    std::sort(_sfrs.begin(), _sfrs.end(), [&](const EDCSFRDef &s1, const EDCSFRDef &s2)
+    std::sort(_sfrs.begin(),
+              _sfrs.end(),
+              [&](const EDCSFRDef &sfr1, const EDCSFRDef &sfr2)
               {
-                  return coll.compare(s1.name, s2.name) < 0;
+                  return coll.compare(sfr1.name, sfr2.name) < 0;
               });
 
     return true;
 }
 
-bool EDCParser::parsePic(void)
+bool EDCParser::parsePic()
 {
     _cpuName = _xml->attributes().value("edc:name").toString();
 
@@ -77,13 +81,20 @@ bool EDCParser::parsePic(void)
             }
             if (_xml->name() == "ProgramSubspace")
             {
-                if (!parseProgramSpace())
+                if (!parseProgramSubSpace())
+                {
+                    return false;
+                }
+            }
+            if (_xml->name().endsWith("Sector"))
+            {
+                if (!parseProgramSector())
                 {
                     return false;
                 }
             }
         }
-        if (_xml->tokenType() == QXmlStreamReader::EndElement)
+        if (_xml->isEndElement())
         {
             _level--;
             if (_xml->name() == "PIC" && _level == 0)
@@ -95,7 +106,7 @@ bool EDCParser::parsePic(void)
     return false;
 }
 
-bool EDCParser::parseSFRDef(void)
+bool EDCParser::parseSFRDef()
 {
     EDCSFRDef sfrDef;
     sfrDef.name = _xml->attributes().value("edc:cname").toString();
@@ -107,7 +118,7 @@ bool EDCParser::parseSFRDef(void)
     }
 
     bool ok;
-    sfrDef.adrr = _xml->attributes().value("edc:_addr").mid(2).toUInt(&ok, 16);
+    sfrDef.adrr = _xml->attributes().value("edc:_addr").toUInt(&ok, 0);
 
     _xml->readNext();
 
@@ -122,7 +133,7 @@ bool EDCParser::parseSFRDef(void)
             }
         }
     }
-    if (_xml->tokenType() == QXmlStreamReader::EndElement)
+    if (_xml->isEndElement())
     {
         _level--;
         if (_xml->name() == "SFRModeList")
@@ -130,80 +141,81 @@ bool EDCParser::parseSFRDef(void)
             return true;
         }
     }
+    _sfrs.append(sfrDef);
 
     _xml->skipCurrentElement();
-    _sfrs.append(sfrDef);
     return true;
 }
 
-bool EDCParser::parseProgramSpace(void)
+bool EDCParser::parseProgramSubSpace()
 {
-    EDCProgramSpace programSpace;
-    programSpace.name = _xml->attributes().value("edc:partitionmode").toString();
-
-    if (programSpace.name.isEmpty() )
+    QString partitionmode = _xml->attributes().value("edc:partitionmode").toString();
+    if (partitionmode.isEmpty() || partitionmode != "single")
     {
         _xml->skipCurrentElement();
-        return false;
+        return true;
     }
 
-    if (programSpace.name != "single")
-    {
-        _xml->skipCurrentElement();
-        return false;
-    }
-    bool ok;
-    QString name("ACTIVE_PARTION");
-    programSpace.name = name;
-    programSpace.beginaddr = _xml->attributes().value("edc:beginaddr").mid(2).toUInt(&ok, 16);
-    programSpace.endaddr = _xml->attributes().value("edc:endaddr").mid(2).toUInt(&ok, 16);
-    _programSpace.append(programSpace);
-
-    while(!_xml->atEnd())
+    while (!_xml->atEnd())
     {
         _xml->readNext();
 
         if (_xml->isStartElement())
         {
-            programSpace.name = _xml->attributes().value("edc:regionid").toString().toUpper();
-            if (programSpace.name.isEmpty())
+            _level++;
+            if (_xml->name().endsWith("Sector"))
             {
-                _xml->skipCurrentElement();
-                return false;
+                if (!parseProgramSector())
+                {
+                    return false;
+                }
             }
-            programSpace.name.prepend(name + "_");
-            programSpace.beginaddr = _xml->attributes().value("edc:beginaddr").mid(2).toUInt(&ok, 16);
-            programSpace.endaddr = _xml->attributes().value("edc:endaddr").mid(2).toUInt(&ok, 16);
-            _programSpace.append(programSpace);
+        }
+        if (_xml->isEndElement())
+        {
+            _level--;
+            if (_xml->name() == "ProgramSubspace")
+            {
+                return true;
+            }
         }
     }
 
-    _xml->skipCurrentElement();
-    _programSpace.append(programSpace);
+    return false;
+}
+
+bool EDCParser::parseProgramSector()
+{
+    bool ok;
+    EDCProgramSpace programSpace;
+    programSpace.name = _xml->attributes().value("edc:regionid").toString().toUpper();
+    programSpace.beginaddr = _xml->attributes().value("edc:beginaddr").toUInt(&ok, 0);
+    programSpace.endaddr = _xml->attributes().value("edc:endaddr").toUInt(&ok, 0);
+    _programSpaces.insert(programSpace.name, programSpace);
     return true;
 }
 
-const QList<EDCProgramSpace> &EDCParser::programSpace(void) const
+const QMap<QString, EDCProgramSpace> &EDCParser::programSpaces() const
 {
-    return _programSpace;
+    return _programSpaces;
 }
 
-bool EDCParser::parseSFRMode(void)
+bool EDCParser::parseSFRMode()
 {
     return true;
 }
 
-const QString &EDCParser::cpuName(void) const
+const QString &EDCParser::cpuName() const
 {
     return _cpuName;
 }
 
-const QString &EDCParser::deviceName(void) const
+const QString &EDCParser::deviceName() const
 {
     return _deviceName;
 }
 
-const QList<EDCSFRDef> &EDCParser::sfrs(void) const
+const QList<EDCSFRDef> &EDCParser::sfrs() const
 {
     return _sfrs;
 }

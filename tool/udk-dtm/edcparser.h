@@ -2,6 +2,8 @@
 #define EDCPARSER_H
 
 #include <QFile>
+#include <QList>
+#include <QMap>
 #include <QString>
 #include <QXmlStreamReader>
 
@@ -23,33 +25,31 @@ class EDCParser
 public:
     EDCParser(const QString &path);
 
-    bool parse(void);
+    bool parse();
 
-    const QList<EDCSFRDef> &sfrs(void) const;
+    const QString &cpuName() const;
+    const QString &deviceName() const;
 
-    const QString &cpuName(void) const;
-    const QString &deviceName(void) const;
-
-    const QList<EDCProgramSpace> &programSpace(void) const;
+    const QList<EDCSFRDef> &sfrs() const;
+    const QMap<QString, EDCProgramSpace> &programSpaces() const;
 
 protected:
-    bool parseDocument(void);
-    bool parsePic(void);
-    bool parseSFRDef(void);
-    bool parseProgramSpace(void);
-    bool parseSFRMode(void);
+    bool parseDocument();
+    bool parsePic();
+    bool parseSFRDef();
+    bool parseProgramSubSpace();
+    bool parseProgramSector();
+    bool parseSFRMode();
 
     QString _filePath;
-    QFile *_xmlFile;
     QXmlStreamReader *_xml;
 
     QString _cpuName;
     QString _deviceName;
     QList<EDCSFRDef> _sfrs;
-
-    QList<EDCProgramSpace> _programSpace;
+    QMap<QString, EDCProgramSpace> _programSpaces;
 
     int _level;
 };
 
-#endif // EDCPARSER_H
+#endif  // EDCPARSER_H
