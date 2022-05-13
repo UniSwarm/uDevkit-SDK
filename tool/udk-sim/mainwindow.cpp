@@ -19,9 +19,9 @@
 #include "mainwindow.h"
 
 #include <QApplication>
+#include <QDebug>
 #include <QFileDialog>
 #include <QMenuBar>
-#include <QDebug>
 #include <QSettings>
 
 #include "simserver.h"
@@ -41,8 +41,10 @@ MainWindow::MainWindow(QStringList args)
     connect(SimServer::instance(), SIGNAL(clientAdded(SimClient *)), this, SLOT(setClient(SimClient *)));
     connect(_simProject, SIGNAL(logAppended(QString)), this, SLOT(appendLog(QString)));
 
-    if (args.size()>1)
+    if (args.size() > 1)
+    {
         openProject(args[1]);
+    }
 
     showMaximized();
 }
@@ -62,21 +64,27 @@ bool MainWindow::openProject(const QString &path)
 #if defined(Q_OS_WIN)
         dialog.setNameFilter(tr("Exe (*.exe)"));
 #else
-        //dialog.setFilter(QDir::Executable | QDir::Files | QDir::AllDirs);
+        // dialog.setFilter(QDir::Executable | QDir::Files | QDir::AllDirs);
 #endif
-        if (!dialog.exec())
+        if (dialog.exec() == 0)
+        {
             return false;
+        }
         mpath = dialog.selectedFiles().first();
     }
     if (!_simProject->setExePath(mpath))
+    {
         return false;
+    }
     _simProject->start();
 
     QString fullPath = QFileInfo(mpath).absoluteFilePath();
     _oldProjects.removeOne(fullPath);
     _oldProjects.prepend(fullPath);
     if (_oldProjects.size() > 8)
+    {
         _oldProjects.removeLast();
+    }
     updateOldProjects();
 
     return true;
@@ -100,7 +108,7 @@ void MainWindow::createMenus()
     fileMenu->addAction(openPrjAction);
     connect(openPrjAction, SIGNAL(triggered()), this, SLOT(openProject()));
     fileMenu->addSeparator();
-    for (int i=0; i < 8; i++)
+    for (int i = 0; i < 8; i++)
     {
         QAction *recentAction = new QAction(this);
         fileMenu->addAction(recentAction);
@@ -143,7 +151,9 @@ void MainWindow::readSettings()
         settings.setArrayIndex(i);
         QString path = settings.value("path", "").toString();
         if (!_oldProjects.contains(path) && !path.isEmpty())
+        {
             _oldProjects.append(path);
+        }
     }
     settings.endArray();
 }
@@ -151,19 +161,21 @@ void MainWindow::readSettings()
 void MainWindow::openRecentFile()
 {
     QAction *action = qobject_cast<QAction *>(sender());
-    if (action)
+    if (action != nullptr)
+    {
         openProject(action->data().toString());
+    }
 }
 
 void MainWindow::updateOldProjects()
 {
-    for (int i=0; i<_oldProjects.size() && i < 8; i++)
+    for (int i = 0; i < _oldProjects.size() && i < 8; i++)
     {
         QString path = _oldProjects[i];
         _oldProjectsActions[i]->setVisible(true);
         _oldProjectsActions[i]->setData(path);
-        _oldProjectsActions[i]->setText(QString("&%1. %2").arg(i+1).arg(path));
-        _oldProjectsActions[i]->setStatusTip(tr("Open recent project '")+path+"'");
+        _oldProjectsActions[i]->setText(QString("&%1. %2").arg(i + 1).arg(path));
+        _oldProjectsActions[i]->setStatusTip(tr("Open recent project '") + path + "'");
     }
 }
 
@@ -176,7 +188,7 @@ void MainWindow::appendLog(const QString &log)
 
 bool MainWindow::event(QEvent *event)
 {
-    if (event->type()==QEvent::Close)
+    if (event->type() == QEvent::Close)
     {
         writeSettings();
         QApplication::quit();

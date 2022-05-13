@@ -11,18 +11,18 @@ class SimModule : public QObject
 public:
     explicit SimModule(SimClient *client, uint16_t idModule, uint16_t idPeriph);
 
-    SimClient *client() const;
-    uint16_t idModule() const;
-    uint16_t idPeriph() const;
+    [[nodiscard]] SimClient *client() const;
+    [[nodiscard]] uint16_t idModule() const;
+    [[nodiscard]] uint16_t idPeriph() const;
 
     void writeData(uint16_t functionId, const QByteArray &data);
 
-    virtual QWidget *widget() const =0;
+    [[nodiscard]] virtual QWidget *widget() const = 0;
 
 signals:
 
 public slots:
-    virtual void pushData(uint16_t functionId, const QByteArray &data) =0;
+    virtual void pushData(uint16_t functionId, const QByteArray &data) = 0;
 
 protected:
     SimClient *_client;
@@ -30,4 +30,4 @@ protected:
     uint16_t _idPeriph;
 };
 
-#endif // SIMMODULE_H
+#endif  // SIMMODULE_H

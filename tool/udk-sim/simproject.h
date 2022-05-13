@@ -30,20 +30,21 @@ class SimProject : public QObject
     Q_OBJECT
 public:
     explicit SimProject(QObject *parent = nullptr);
-    ~SimProject();
+    ~SimProject() override;
 
-    QString exePath() const;
+    [[nodiscard]] QString exePath() const;
     bool setExePath(const QString &exePath);
 
-    bool isValid() const;
-    enum Status {
+    [[nodiscard]] bool isValid() const;
+    enum Status
+    {
         Invalid,
         Stopped,
         Running
     };
-    Status status() const;
+    [[nodiscard]] Status status() const;
 
-    SimClient *client() const;
+    [[nodiscard]] SimClient *client() const;
     void setClient(SimClient *client);
 
 signals:
@@ -65,4 +66,4 @@ protected:
     SimClient *_client;
 };
 
-#endif // SIMPROJECT_H
+#endif  // SIMPROJECT_H

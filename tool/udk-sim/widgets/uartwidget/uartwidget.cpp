@@ -49,13 +49,15 @@ UartWidget::UartWidget(uint16_t idPeriph, QWidget *parent)
     {
         int indexPortCom = _serialPortComboBox->findData(port);
         if (indexPortCom != -1)
+        {
             _serialPortComboBox->setCurrentIndex(indexPortCom);
+        }
     }
 }
 
 UartWidget::~UartWidget()
 {
-    if (_port)
+    if (_port != nullptr)
     {
         _port->close();
         delete _port;
@@ -71,7 +73,7 @@ void UartWidget::recFromUart(const QString &data)
     // dataReceived = dataReceived.replace("\0","<b>\\0</b>");
     _logRec->appendHtml(dataReceived);
 
-    if (_port)
+    if (_port != nullptr)
     {
         QByteArray badat;
         badat.append(data.toLocal8Bit());
@@ -83,9 +85,13 @@ void UartWidget::setConfig(uart_dev config)
 {
     _config = config;
     if (config.enabled == 0)
+    {
         _statusEnabled->setText("disabled");
+    }
     else
+    {
         _statusEnabled->setText("enabled");
+    }
 
     char parity;
     switch (config.bitParity)

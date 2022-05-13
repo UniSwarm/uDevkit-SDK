@@ -18,8 +18,8 @@
 
 #include "simproject.h"
 
-#include <QFileInfo>
 #include <QDebug>
+#include <QFileInfo>
 
 SimProject::SimProject(QObject *parent)
     : QObject(parent)
@@ -35,7 +35,9 @@ SimProject::SimProject(QObject *parent)
 SimProject::~SimProject()
 {
     if (_process->state() == QProcess::Running)
+    {
         _process->kill();
+    }
 }
 
 QString SimProject::exePath() const
@@ -47,7 +49,9 @@ bool SimProject::setExePath(const QString &exePath)
 {
     QFileInfo file(exePath);
     if (!file.exists())
+    {
         return false;
+    }
 
     _exePath = exePath;
     _path = file.absoluteDir();
@@ -66,23 +70,28 @@ bool SimProject::isValid() const
 SimProject::Status SimProject::status() const
 {
     if (!_valid)
+    {
         return Invalid;
+    }
     if (_process->state() == QProcess::Running)
+    {
         return Running;
-    else
-        return Stopped;
+    }
+    return Stopped;
 }
 
 void SimProject::start()
 {
     if (!_valid)
+    {
         return;
+    }
 
     _process->start(QProcess::Unbuffered | QProcess::ReadWrite);
     _process->waitForStarted(200);
     if (_process->state() != QProcess::Running)
     {
-        qDebug()<<_process->errorString()<<_process->program();
+        qDebug() << _process->errorString() << _process->program();
         return;
     }
 }
@@ -93,11 +102,15 @@ void SimProject::readProcess()
 
     QString error = _process->readAllStandardError();
     if (!error.isEmpty())
+    {
         log.append("<span color='red'>" + error + "</span>");
+    }
 
     QString out = _process->readAllStandardOutput();
     if (!out.isEmpty())
+    {
         log.append(out);
+    }
 
     log.replace('\n', "<br></br>");
     log.replace('\r', "");
@@ -109,9 +122,13 @@ void SimProject::finish(int exitCode, QProcess::ExitStatus exitStatus)
     readProcess();
     QString log;
     if (exitStatus == QProcess::CrashExit)
+    {
         log.append(QString("<span color='red'>Process crashed with error code %1</span>").arg(exitCode));
+    }
     else
+    {
         log.append(QString("<span color='0xFF0000'>Process finished with exitCode code %1</span>").arg(exitCode));
+    }
     emit logAppended(log);
 }
 

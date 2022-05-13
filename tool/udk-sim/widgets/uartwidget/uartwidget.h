@@ -19,12 +19,12 @@
 #ifndef UARTWIDGET_H
 #define UARTWIDGET_H
 
-#include <QWidget>
+#include <QComboBox>
+#include <QLabel>
 #include <QLineEdit>
 #include <QPlainTextEdit>
-#include <QLabel>
-#include <QComboBox>
 #include <QPushButton>
+#include <QWidget>
 
 #include "driver/uart/uart.h"
 #include "driver/uart/uart_sim.h"
@@ -37,7 +37,7 @@ class UartWidget : public QWidget
 public:
     explicit UartWidget(QWidget *parent = Q_NULLPTR);
     UartWidget(uint16_t idPeriph, QWidget *parent = Q_NULLPTR);
-    ~UartWidget();
+    ~UartWidget() override;
 
     void recFromUart(const QString &data);
     void setConfig(uart_dev config);
@@ -66,4 +66,4 @@ protected:
     uart_dev _config;
 };
 
-#endif // UARTWIDGET_H
+#endif  // UARTWIDGET_H

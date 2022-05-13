@@ -18,9 +18,9 @@
 
 #include "adcwidget.h"
 
+#include <QDebug>
 #include <QLayout>
 #include <QPushButton>
-#include <QDebug>
 
 AdcWidget::AdcWidget(QWidget *parent)
     : QWidget(parent)
@@ -52,7 +52,7 @@ void AdcWidget::setChannelCount(int channelCount)
 void AdcWidget::send()
 {
     QByteArray dataToSend;
-    for (int i=0; i<_channelCount; i++)
+    for (int i = 0; i < _channelCount; i++)
     {
         uint16_t data = static_cast<uint16_t>(_slidders[i]->value());
         dataToSend.append(static_cast<char>(data & 0xFF));
@@ -69,7 +69,7 @@ void AdcWidget::createWidget()
     QLayout *layout = new QVBoxLayout();
 
     QGridLayout *sliddersLayout = new QGridLayout();
-    for (int i=0; i<_channelCount; i++)
+    for (int i = 0; i < _channelCount; i++)
     {
         QLabel *numLabel = new QLabel(QString::number(i));
         numLabel->setAlignment(Qt::AlignCenter);

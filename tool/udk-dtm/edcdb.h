@@ -15,7 +15,7 @@ public:
     void loadDb(const QStringList &fileList);
 
     EDCParser *parser(const QString &cpuName);
-    const QList<EDCParser *> &parsers() const;
+    [[nodiscard]] const QList<EDCParser *> &parsers() const;
 
 private:
     QList<EDCParser *> _parsers;

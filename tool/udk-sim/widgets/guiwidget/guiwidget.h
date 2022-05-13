@@ -19,8 +19,8 @@
 #ifndef GUIWIDGET_H
 #define GUIWIDGET_H
 
-#include <QWidget>
 #include <QLabel>
+#include <QWidget>
 
 class ScreenWidget;
 
@@ -49,4 +49,4 @@ protected:
     int _colorMode;
 };
 
-#endif // GUIWIDGET_H
+#endif  // GUIWIDGET_H

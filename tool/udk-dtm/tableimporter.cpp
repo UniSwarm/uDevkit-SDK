@@ -22,7 +22,8 @@ void TableImporter::fromClipBoard()
         int start = 0;
         QString line = stream.readLine();
         QString adress;
-        QString def, defBase;
+        QString def;
+        QString defBase;
         QRegularExpressionMatch match;
 
         match = regexp.match(line, start);
@@ -30,7 +31,7 @@ void TableImporter::fromClipBoard()
         {
             adress = "0x" + match.captured(1);
             defBase = match.captured(2);
-            defBase.remove(QRegularExpression(" \\.\\.\\..*"));
+            defBase.remove(QRegularExpression(R"( \.\.\..*)"));
             def = defBase;
             def.remove(QRegularExpression(" [01]{7} $"));
             def.replace(QRegularExpression("\\(.*\\)"), "");

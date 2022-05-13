@@ -21,7 +21,9 @@
 #include "simclient.h"
 
 SimModule::SimModule(SimClient *client, uint16_t idModule, uint16_t idPeriph)
-    : _client(client), _idModule(idModule), _idPeriph(idPeriph)
+    : _client(client)
+    , _idModule(idModule)
+    , _idPeriph(idPeriph)
 {
 }
 

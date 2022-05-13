@@ -23,7 +23,7 @@
 SimModuleGui::SimModuleGui(SimClient *client, uint16_t idPeriph)
     : SimModule(client, GUI_SIM_MODULE, idPeriph)
 {
-    _guiWidget = NULL;
+    _guiWidget = nullptr;
 }
 
 QWidget *SimModuleGui::widget() const
@@ -33,30 +33,30 @@ QWidget *SimModuleGui::widget() const
 
 void SimModuleGui::pushData(uint16_t functionId, const QByteArray &data)
 {
-    //qDebug()<<"I am Gui sim!"<<functionId<<data.toHex()<<data.size();
+    // qDebug()<<"I am Gui sim!"<<functionId<<data.toHex()<<data.size();
 
-    if(functionId == GUI_SIM_CONFIG)
+    if (functionId == GUI_SIM_CONFIG)
     {
         GuiConfig *config = (GuiConfig *)data.data();
-        if(_guiWidget == NULL)
+        if (_guiWidget == nullptr)
         {
             QSize size = QSize((int)config->width, (int)config->height);
             _guiWidget = new GuiWidget(_idPeriph, size, config->colorMode);
             _guiWidget->show();
         }
     }
-    if(functionId == GUI_SIM_SETPOS)
+    if (functionId == GUI_SIM_SETPOS)
     {
         GuiPoint *point = (GuiPoint *)data.data();
         _guiWidget->setPos(point->x, point->y);
     }
-    if(functionId == GUI_SIM_SETRECT)
+    if (functionId == GUI_SIM_SETRECT)
     {
         GuiRect *rect = (GuiRect *)data.data();
         _guiWidget->setRect(rect->x, rect->y, rect->width, rect->height);
     }
-    if(functionId == GUI_SIM_WRITEDATA)
+    if (functionId == GUI_SIM_WRITEDATA)
     {
-        _guiWidget->writeData((uint16_t *)data.data(), data.size()/2);
+        _guiWidget->writeData((uint16_t *)data.data(), data.size() / 2);
     }
 }

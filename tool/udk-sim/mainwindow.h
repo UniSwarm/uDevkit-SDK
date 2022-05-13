@@ -31,10 +31,10 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QStringList args);
-    ~MainWindow();
+    ~MainWindow() override;
 
 public slots:
-    bool openProject(const QString &path=QString());
+    bool openProject(const QString &path = QString());
     void setClient(SimClient *client);
 
 protected:
@@ -46,7 +46,7 @@ protected:
     void writeSettings();
     void readSettings();
     QList<QString> _oldProjects;
-    QList<QAction*> _oldProjectsActions;
+    QList<QAction *> _oldProjectsActions;
 
 protected slots:
     void openRecentFile();
@@ -55,7 +55,7 @@ protected slots:
 
     // QObject interface
 public:
-    virtual bool event(QEvent *event);
+    bool event(QEvent *event) override;
 };
 
-#endif // MAINWINDOW_H
+#endif  // MAINWINDOW_H

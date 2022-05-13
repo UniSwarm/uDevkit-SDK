@@ -23,15 +23,15 @@ struct EDCProgramSpace
 class EDCParser
 {
 public:
-    EDCParser(const QString &path);
+    EDCParser(QString path);
 
     bool parse();
 
-    const QString &cpuName() const;
-    const QString &deviceName() const;
+    [[nodiscard]] const QString &cpuName() const;
+    [[nodiscard]] const QString &deviceName() const;
 
-    const QList<EDCSFRDef> &sfrs() const;
-    const QMap<QString, EDCProgramSpace> &programSpaces() const;
+    [[nodiscard]] const QList<EDCSFRDef> &sfrs() const;
+    [[nodiscard]] const QMap<QString, EDCProgramSpace> &programSpaces() const;
 
 protected:
     bool parseDocument();

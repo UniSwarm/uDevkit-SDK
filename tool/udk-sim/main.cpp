@@ -24,9 +24,9 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    app.setOrganizationName("UniSwarm");
-    app.setOrganizationDomain("UniSwarm");
-    app.setApplicationName("udk-sim");
+    QApplication::setOrganizationName("UniSwarm");
+    QApplication::setOrganizationDomain("UniSwarm");
+    QApplication::setApplicationName("udk-sim");
 
     // create server and check if connected
     if (!SimServer::instance()->isConnected())
@@ -35,9 +35,9 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    MainWindow w(app.arguments());
+    MainWindow w(QApplication::arguments());
 
     w.show();
 
-    return app.exec();
+    return QApplication::exec();
 }

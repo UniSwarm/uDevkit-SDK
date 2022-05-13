@@ -46,12 +46,9 @@ QStringList picFileList(const QString &picFilter, const QStringList &excludeDevi
     // Remove redondant CPU
     QCollator coll;
     coll.setNumericMode(true);
-    std::sort(fileList.begin(),
-              fileList.end(),
-              [&](const QString &s1, const QString &s2)
-              {
-                  return coll.compare(s1, s2) > 0;
-              });
+    std::sort(fileList.begin(), fileList.end(), [&](const QString &s1, const QString &s2) {
+        return coll.compare(s1, s2) > 0;
+    });
     QSet<QString> set;
     QMutableListIterator<QString> i(fileList);
     while (i.hasNext())
@@ -87,7 +84,7 @@ int main(int argc, char *argv[])
     qDebug() << "Load DB in" << QDateTime::currentMSecsSinceEpoch() - startMs << "ms";
 
     startMs = QDateTime::currentMSecsSinceEpoch();
-    //NvmHeaderCreator(db, "^(DS)?PIC(30|33|24)", "nvm_pic24_dspic30f_dspic33.h");
+    // NvmHeaderCreator(db, "^(DS)?PIC(30|33|24)", "nvm_pic24_dspic30f_dspic33.h");
 
     // QString picFilter = "^(DSPIC33[EC]|PIC24E)";
     // QString sfrFilter = "ADCBUF([0-9]+)";

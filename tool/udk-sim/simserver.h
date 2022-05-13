@@ -19,9 +19,9 @@
 #ifndef SIMSERVER_H
 #define SIMSERVER_H
 
+#include <QList>
 #include <QObject>
 #include <QTcpServer>
-#include <QList>
 
 class SimClient;
 
@@ -32,7 +32,7 @@ protected:
     SimServer(QObject *parent = Q_NULLPTR);
 
 public:
-    bool isConnected() const;
+    [[nodiscard]] bool isConnected() const;
     static SimServer *instance();
 
 signals:
@@ -49,4 +49,4 @@ protected:
     static SimServer *server;
 };
 
-#endif // SIMSERVER_H
+#endif  // SIMSERVER_H

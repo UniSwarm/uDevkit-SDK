@@ -6,7 +6,12 @@
 #include <QPair>
 #include <QRegularExpression>
 
-PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db, const QString &picFilter, const QString &deviceName, const QString &sfrFilter, PeriphCap caps, const QString &fileName)
+PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db,
+                                                     const QString &picFilter,
+                                                     const QString &deviceName,
+                                                     const QString &sfrFilter,
+                                                     PeriphCap caps,
+                                                     const QString &fileName)
     : HeaderCreator(db, picFilter, fileName)
 {
     QMultiMap<QString, QString> adbuffCpu;
@@ -59,12 +64,9 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db, const QStr
         QStringList adBuff = cpuAadbuff.values(cpu);
         QCollator coll;
         coll.setNumericMode(true);
-        std::sort(adBuff.begin(),
-                  adBuff.end(),
-                  [&](const QString &s1, const QString &s2)
-                  {
-                      return coll.compare(s1, s2) < 0;
-                  });
+        std::sort(adBuff.begin(), adBuff.end(), [&](const QString &s1, const QString &s2) {
+            return coll.compare(s1, s2) < 0;
+        });
 
         QRegularExpressionMatch match = sfrRegExp.match(adBuff.last());
         int max = match.captured(1).toInt() + 1;
@@ -73,13 +75,14 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db, const QStr
         regMax.insert(max, cpu);
     }
 
-    if (caps & P_COUNT)
+    if ((caps & P_COUNT) != 0)
     {
         for (uint count : regCount.uniqueKeys())
         {
             _cWritter->writeIfDefList(regCount.values(count));
 
-            QStringList defines, values;
+            QStringList defines;
+            QStringList values;
             defines << deviceName + "_COUNT";
             values << QString::number(count);
             _cWritter->writeDefList(defines, values);
@@ -87,7 +90,8 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db, const QStr
         if (!regCount.uniqueKeys().isEmpty())
         {
             _cWritter->writeIfDefElse();
-            QStringList defines, values;
+            QStringList defines;
+            QStringList values;
             defines << deviceName + "_COUNT";
             values << "0";
             _cWritter->writeDefList(defines, values);
@@ -97,13 +101,14 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db, const QStr
     }
 
     // Max
-    if (caps & P_MAX)
+    if ((caps & P_MAX) != 0)
     {
         for (uint max : regMax.uniqueKeys())
         {
             _cWritter->writeIfDefList(regMax.values(max));
 
-            QStringList defines, values;
+            QStringList defines;
+            QStringList values;
             defines << deviceName + "_MAX";
             values << QString::number(max);
             _cWritter->writeDefList(defines, values);
@@ -116,7 +121,7 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db, const QStr
     }
 
     // have channel
-    if (caps & P_HAVE)
+    if ((caps & P_HAVE) != 0)
     {
         QMultiMap<QStringList, QString> adbuffCpuList;
         for (const QString &adBuff : adbuffCpu.uniqueKeys())

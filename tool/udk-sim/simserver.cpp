@@ -41,15 +41,17 @@ bool SimServer::isConnected() const
 
 SimServer *SimServer::instance()
 {
-    if (!server)
+    if (server == nullptr)
+    {
         server = new SimServer();
+    }
 
     return server;
 }
 
 void SimServer::newClient()
 {
-    //qDebug()<<"new connection";
+    // qDebug()<<"new connection";
     QTcpSocket *socket = _server->nextPendingConnection();
     connect(socket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(deleteClient(QAbstractSocket::SocketError)));
 

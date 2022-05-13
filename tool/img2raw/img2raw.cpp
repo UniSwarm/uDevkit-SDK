@@ -9,13 +9,13 @@
  * its metadata
  */
 
-#include <QCommandLineParser>
 #include <QApplication>
+#include <QCommandLineParser>
 
-#include <QFile>
-#include <QDir>
-#include <QTextStream>
 #include <QDebug>
+#include <QDir>
+#include <QFile>
+#include <QTextStream>
 
 #include <QImage>
 
@@ -23,7 +23,13 @@
 #include <QFontDatabase>
 #include <QFontMetrics>
 #include <QPainter>
-#include <QRegExp>
+#include <QRegularExpression>
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+#    define cendl endl
+#else
+#    define cendl Qt::endl
+#endif
 
 /**
  * @brief exportImage convert an image to a structure containing metadata and
@@ -39,19 +45,18 @@ void exportImage(const QImage &image, const QString &filename)
     QTextStream stream(&file);
 
     // starting preprocessor instructions
-    stream << "#include <gui/picture.h>" << endl;
-    stream << endl;
+    stream << "#include <gui/picture.h>" << cendl;
+    stream << cendl;
 
     // creating an array containnig the image data
-    stream << "// an array containnig the image data" << endl;
-    stream << "__prog__ const uint16_t " << finfo.baseName()
-           << "_data[] __space_prog__ = {";
+    stream << "// an array containnig the image data" << cendl;
+    stream << "__prog__ const uint16_t " << finfo.baseName() << "_data[] __space_prog__ = {";
 
     QImage mirrored = image.mirrored(false, false);
 
     for (int x = 0; x < mirrored.width(); ++x)
     {
-        stream << endl;
+        stream << cendl;
         for (int y = 0; y < mirrored.height(); ++y)
         {
             QRgb color = mirrored.pixel(x, y);
@@ -62,15 +67,16 @@ void exportImage(const QImage &image, const QString &filename)
             syscolor |= (qBlue(color) & 0xF8) >> 3;
             stream << "0x" << QString::number(syscolor, 16);
             if (x != mirrored.width() - 1 || y != mirrored.height() - 1)
+            {
                 stream << ", ";
+            }
         }
     }
-    stream << endl << "};\n" << endl;
+    stream << cendl << "};\n" << cendl;
 
     // creating the Picture structure
-    stream << "// the image structure {width, height, data}" << endl;
-    stream << "const Picture " << finfo.baseName() << " = {" << image.width()
-           << ", " << image.height() << ", " << finfo.baseName() << "_data};";
+    stream << "// the image structure {width, height, data}" << cendl;
+    stream << "const Picture " << finfo.baseName() << " = {" << image.width() << ", " << image.height() << ", " << finfo.baseName() << "_data};";
 
     file.close();
 }
@@ -78,12 +84,18 @@ void exportImage(const QImage &image, const QString &filename)
 /**
  * @brief exportFont
  */
-void exportFont(QFont font, QString outFileName)
+void exportFont(QFont font, const QString &outFileName)
 {
     char c;
     unsigned value;
-    int x, y, height, nb, width, wl;
-    char first = ' ', last = 'z';
+    int x;
+    int y;
+    int height;
+    int nb;
+    int width;
+    int wl;
+    char first = ' ';
+    char last = 'z';
     bool prem;
 
     QFile file(outFileName);
@@ -98,20 +110,29 @@ void exportFont(QFont font, QString outFileName)
     fontName = font.family().replace(" ", "_");
     // if (fontName.size()>10) fontName = fontName.mid(0,10);
     if (font.pixelSize() != -1)
+    {
         fontName.append(QString::number(font.pixelSize()));
+    }
     else
+    {
         fontName.append(QString::number(font.pointSize()));
+    }
     if (font.bold())
+    {
         fontName.append("b");
+    }
     if (font.underline())
+    {
         fontName.append("u");
+    }
     if (font.italic())
+    {
         fontName.append("i");
+    }
 
-    stream << QString("#ifndef _") + fontName + QString("_font_") << endl;
-    stream << QString("#define _") + fontName + QString("_font_") << endl
-           << endl;
-    stream << QString("#include \"gui/font.h\"") << endl << endl;
+    stream << QString("#ifndef _") + fontName + QString("_font_") << cendl;
+    stream << QString("#define _") + fontName + QString("_font_") << cendl << cendl;
+    stream << QString("#include \"gui/font.h\"") << cendl << cendl;
 
     QImage letter(50, 50, QImage::Format_ARGB32);
     QImage letters(2000, 50, QImage::Format_ARGB32);
@@ -125,9 +146,13 @@ void exportFont(QFont font, QString outFileName)
     for (c = first; c <= last; ++c)
     {
         if (c != '\\')
-            stream << "// " << c << endl;
+        {
+            stream << "// " << c << cendl;
+        }
         else
-            stream << "// (antislash)" << endl;
+        {
+            stream << "// (antislash)" << cendl;
+        }
 
         stream << "const char ";
         stream << fontName << "_data_" << QString::number(c) << "[] = {";
@@ -136,13 +161,11 @@ void exportFont(QFont font, QString outFileName)
         paint.setBrush(Qt::white);
         paint.setFont(font);
         paint.drawRect(QRect(-1, -1, 52, 52));
-        paint.drawText(QRect(0, 0, 50, 50), Qt::AlignLeft | Qt::AlignTop,
-                       QString(c));
+        paint.drawText(QRect(0, 0, 50, 50), Qt::AlignLeft | Qt::AlignTop, QString(c));
         paint.end();
 
-        width = metric.width(c);
-        paint2.drawText(QRect(wl, 0, 50, 50), Qt::AlignLeft | Qt::AlignTop,
-                        QString(c));
+        width = metric.horizontalAdvance(c);
+        paint2.drawText(QRect(wl, 0, 50, 50), Qt::AlignLeft | Qt::AlignTop, QString(c));
         wl += width;
         prem = true;
         for (x = 0; x < width; ++x)
@@ -154,11 +177,15 @@ void exportFont(QFont font, QString outFileName)
                 if ((y % 8) == 0 && y != 0)
                 {
                     if (!prem)
+                    {
                         stream << ", ";
+                    }
                     prem = false;
                     stream << "0x";
                     if (QString::number(value, 16).size() < 2)
+                    {
                         stream << '0';
+                    }
                     stream << QString::number(value, 16).toUpper();
                     value = 0;
                 }
@@ -171,36 +198,37 @@ void exportFont(QFont font, QString outFileName)
             if ((y % 8 + 1) != 0)
             {
                 if (!prem)
+                {
                     stream << ", ";
+                }
                 prem = false;
                 stream << "0x";
                 if (QString::number(value, 16).size() < 2)
+                {
                     stream << '0';
+                }
                 stream << QString::number(value, 16).toUpper();
                 value = 0;
             }
         }
-        stream << "};" << endl;
-        stream << "const Letter " << fontName << "_letter_"
-               << QString::number(c) << " = {" << QString::number(width) << ", "
-               << fontName << "_data_" << QString::number(c) << "};" << endl;
+        stream << "};" << cendl;
+        stream << "const Letter " << fontName << "_letter_" << QString::number(c) << " = {" << QString::number(width) << ", " << fontName << "_data_"
+               << QString::number(c) << "};" << cendl;
     }
-    stream << endl << "// Table of letter struct" << endl;
+    stream << cendl << "// Table of letter struct" << cendl;
     QString declareTable = "const Letter* " + fontName + "_letters[] = {";
-    stream << declareTable << endl;
+    stream << declareTable << cendl;
     for (c = first; c <= last; ++c)
     {
-        stream << QString(" ").repeated(declareTable.size()) << "&" << fontName
-               << "_letter_" << QString::number(c) << ", " << endl;
+        stream << QString(" ").repeated(declareTable.size()) << "&" << fontName << "_letter_" << QString::number(c) << ", " << cendl;
     }
     stream << QString(" ").repeated(declareTable.size() - 1) << "};";
-    stream << endl << endl << "// Font structure" << endl;
-    stream << "const Font " << fontName << " = {" << QString::number(height)
-           << ", " << QString::number(first) << ", " << QString::number(last)
-           << ", " << fontName << "_letters"
+    stream << cendl << cendl << "// Font structure" << cendl;
+    stream << "const Font " << fontName << " = {" << QString::number(height) << ", " << QString::number(first) << ", " << QString::number(last) << ", "
+           << fontName << "_letters"
            << "};";
 
-    stream << endl << "#endif";
+    stream << cendl << "#endif";
 
     paint2.end();
     letters = letters.copy(0, 0, wl, height);
@@ -234,12 +262,12 @@ int main(int argc, char *argv[])
 
     /*QFontDatabase db;
     foreach(QString family, db.families())
-        out << family << endl;*/
+        out << family << cendl;*/
 
     // check input
     if (!parser.isSet(inputOption))
     {
-        out << "No input file or police name specified." << endl;
+        out << "No input file or police name specified." << cendl;
         return 1;
     }
     QString inputFile = parser.value(inputOption);
@@ -259,35 +287,35 @@ int main(int argc, char *argv[])
     {
         if (!QFile::exists(fileInfo.absoluteFilePath()))
         {
-            out << "File " << inputFile << " does not exist." << endl;
+            out << "File " << inputFile << " does not exist." << cendl;
             return 1;
         }
         QImage image(fileInfo.absoluteFilePath());
         if (image.size().width() == 0 || image.size().height() == 0)
         {
-            out << "Invalid image file format." << endl;
+            out << "Invalid image file format." << cendl;
             return 1;
         }
         exportImage(image, outputFile);
-        out << "Image " << inputFile << " " << image.size().width() << " x "
-            << image.size().height() << " px" << endl;
+        out << "Image " << inputFile << " " << image.size().width() << " x " << image.size().height() << " px" << cendl;
 
         return 0;
     }
 
     // font mode
-    QRegExp regPolice("([a-zA-Z_]+)([0-9]+)([bui]*)");
-    if (regPolice.indexIn(inputFile) == 0)
+    QRegularExpression regPolice("([a-zA-Z_]+)([0-9]+)([bui]*)");
+    QRegularExpressionMatch regPoliceMatch = regPolice.match(inputFile);
+    if (static_cast<int>(regPoliceMatch.hasMatch()) == 0)
     {
-        QString fontName = regPolice.cap(1).replace('_', " ");
-        int fontSize = regPolice.cap(2).toUInt();
-        QString fontStyle = regPolice.cap(3);
+        QString fontName = regPoliceMatch.captured(1).replace('_', " ");
+        int fontSize = regPoliceMatch.captured(2).toUInt();
+        QString fontStyle = regPoliceMatch.captured(3);
 
         int bold = fontStyle.contains('b') ? QFont::Bold : QFont::Normal;
         bool italic = fontStyle.contains('i');
 
         QFont font(fontName, fontSize, bold, italic);
-        out << "fontSize: " << fontSize << " family: " << font.family() << endl;
+        out << "fontSize: " << fontSize << " family: " << font.family() << cendl;
         exportFont(font, outputFile);
 
         return 0;

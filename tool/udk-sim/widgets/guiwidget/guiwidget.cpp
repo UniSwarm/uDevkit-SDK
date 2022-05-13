@@ -22,12 +22,14 @@
 
 #include <QLayout>
 
-GuiWidget::GuiWidget(QWidget *parent) : QWidget(parent)
+GuiWidget::GuiWidget(QWidget *parent)
+    : QWidget(parent)
 {
     createWidget();
 }
 
-GuiWidget::GuiWidget(uint16_t idPeriph, QSize size, int colorMode, QWidget *parent) : QWidget(parent)
+GuiWidget::GuiWidget(uint16_t idPeriph, QSize size, int colorMode, QWidget *parent)
+    : QWidget(parent)
 {
     _idPeriph = idPeriph;
     _size = size;

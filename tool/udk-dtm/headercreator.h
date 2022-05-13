@@ -7,7 +7,7 @@
 class HeaderCreator
 {
 public:
-    HeaderCreator(const EdcDb &db, const QString &picFilter, const QString &fileName);
+    HeaderCreator(const EdcDb &db, QString picFilter, const QString &fileName);
     ~HeaderCreator();
 
 protected:

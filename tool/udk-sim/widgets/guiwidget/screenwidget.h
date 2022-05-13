@@ -30,13 +30,13 @@ public:
 
     void setPos(uint16_t x, uint16_t y);
     void setRect(uint16_t x, uint16_t y, uint16_t width, uint16_t height);
-    void writeData(uint16_t *pix, size_t size);
+    void writeData(const uint16_t *pix, size_t size);
 
-    const QColor fromData(uint16_t pixValue);
+    QColor fromData(uint16_t pixValue) const;
 
     // QWidget interface
 protected:
-    void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *event) override;
 
 protected:
     QPixmap _pixmap;
@@ -45,4 +45,4 @@ protected:
     int _colorModde;
 };
 
-#endif // SCREENWIDGET_H
+#endif  // SCREENWIDGET_H

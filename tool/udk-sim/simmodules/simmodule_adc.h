@@ -15,16 +15,16 @@ class SimModuleAdc : public SimModule
 public:
     SimModuleAdc(SimClient *client, uint16_t idPeriph);
 
-    QWidget *widget() const;
+    [[nodiscard]] QWidget *widget() const override;
 
 public slots:
-    void pushData(uint16_t functionId, const QByteArray &data);
+    void pushData(uint16_t functionId, const QByteArray &data) override;
 
 protected slots:
-    void sendData(QByteArray str);
+    void sendData(const QByteArray &str);
 
 protected:
     AdcWidget *_adcWidget;
 };
 
-#endif // SIMMODULE_ADC_H
+#endif  // SIMMODULE_ADC_H

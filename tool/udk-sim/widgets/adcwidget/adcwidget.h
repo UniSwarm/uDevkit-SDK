@@ -19,9 +19,9 @@
 #ifndef ADCWIDGET_H
 #define ADCWIDGET_H
 
-#include <QWidget>
-#include <QSlider>
 #include <QLabel>
+#include <QSlider>
+#include <QWidget>
 
 #include "driver/adc/adc.h"
 #include "driver/adc/adc_sim.h"
@@ -53,4 +53,4 @@ protected:
     int _channelCount;
 };
 
-#endif // ADCWIDGET_H
+#endif  // ADCWIDGET_H

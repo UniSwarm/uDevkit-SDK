@@ -13,7 +13,12 @@ enum PeriphCap
 class PeriphericalHeaderCreator : public HeaderCreator
 {
 public:
-    PeriphericalHeaderCreator(const EdcDb &db, const QString &picFilter, const QString &deviceName, const QString &sfrFilter, PeriphCap caps, const QString &fileName);
+    PeriphericalHeaderCreator(const EdcDb &db,
+                              const QString &picFilter,
+                              const QString &deviceName,
+                              const QString &sfrFilter,
+                              PeriphCap caps,
+                              const QString &fileName);
 };
 
-#endif // PERIPHERICALHEADERCREATOR_H
+#endif  // PERIPHERICALHEADERCREATOR_H

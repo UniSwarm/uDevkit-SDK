@@ -15,10 +15,10 @@ class SimModuleUart : public SimModule
 public:
     SimModuleUart(SimClient *client, uint16_t idPeriph);
 
-    QWidget *widget() const;
+    [[nodiscard]] QWidget *widget() const override;
 
 public slots:
-    void pushData(uint16_t functionId, const QByteArray &data);
+    void pushData(uint16_t functionId, const QByteArray &data) override;
 
 protected slots:
     void sendData(QString str);
@@ -28,4 +28,4 @@ protected:
     UartWidget *_uartWidget;
 };
 
-#endif // SIMMODULEUART_H
+#endif  // SIMMODULEUART_H

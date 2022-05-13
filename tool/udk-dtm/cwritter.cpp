@@ -23,12 +23,9 @@ void CWritter::writeIfDefList(const QStringList &listDef)
     QStringList listDefSorted = listDef;
     QCollator coll;
     coll.setNumericMode(true);
-    std::sort(listDefSorted.begin(),
-              listDefSorted.end(),
-              [&](const QString &s1, const QString &s2)
-              {
-                  return coll.compare(s1, s2) < 0;
-              });
+    std::sort(listDefSorted.begin(), listDefSorted.end(), [&](const QString &s1, const QString &s2) {
+        return coll.compare(s1, s2) < 0;
+    });
 
     if (_ifDefState == StateIfDefNotStarted)
     {

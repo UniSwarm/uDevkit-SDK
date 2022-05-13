@@ -12,10 +12,16 @@
 #include <QApplication>
 #include <QCommandLineParser>
 
-#include <QTextStream>
 #include <QDir>
 #include <QMimeDatabase>
 #include <QMimeType>
+#include <QTextStream>
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+#    define cendl endl
+#else
+#    define cendl Qt::endl
+#endif
 
 QString typeFromExtension(const QString &file_name)
 {
@@ -38,14 +44,13 @@ void exportPathToStruct(const QString &path, const QString &outputFile)
     // files.replaceInStrings(".", "_");
 
     // header comments
-    text << "/* ================================================================" << endl;
-    text << "   ================= automatically generated file =================" << endl;
-    text << "   ==================== by HTMLGen (c)Robotips ====================" << endl;
-    text << "   ================================================================" << endl;
-    text << endl;
-    text << "  | " << QString("File name").leftJustified(30, ' ') << "| "
-         << QString("Struct name").leftJustified(30, ' ') << '|' << endl;
-    text << "   --------------------------------------------------------------- " << endl;
+    text << "/* ================================================================" << cendl;
+    text << "   ================= automatically generated file =================" << cendl;
+    text << "   ==================== by HTMLGen (c)Robotips ====================" << cendl;
+    text << "   ================================================================" << cendl;
+    text << cendl;
+    text << "  | " << QString("File name").leftJustified(30, ' ') << "| " << QString("Struct name").leftJustified(30, ' ') << '|' << cendl;
+    text << "   --------------------------------------------------------------- " << cendl;
 
     foreach (QString file, files)
     {
@@ -55,30 +60,25 @@ void exportPathToStruct(const QString &path, const QString &outputFile)
         filesLog.append(file);
         filesLog.append('\n');
 
-        text << "  | " << file.leftJustified(30, ' ') << "| "
-             << filewodot.leftJustified(30, ' ') << "|" << endl;
+        text << "  | " << file.leftJustified(30, ' ') << "| " << filewodot.leftJustified(30, ' ') << "|" << cendl;
     }
-    text << "   --------------------------------------------------------------- " << endl;
-    text << "*/" << endl;
-    text << endl;
-    
-    text << "#include <module/network.h>" << endl << endl;
+    text << "   --------------------------------------------------------------- " << cendl;
+    text << "*/" << cendl;
+    text << cendl;
 
-    text << "// ======== Struct content ======== " << endl;
+    text << "#include <module/network.h>" << cendl << cendl;
+
+    text << "// ======== Struct content ======== " << cendl;
     foreach (QString file, files)
     {
         QString filewodot = file;
         filewodot.replace(".", "_");
         QFile filebin(path + file);
         filebin.open(QIODevice::ReadOnly);
-        text << "// -> " << file << endl;
-        text << "const char " << filewodot << "_name[] = \"" << file
-             << "\";" << endl;
-        text << "const char " << filewodot << "_type[] = \""
-             << typeFromExtension(file) << "\";" << endl;
-        text << "const char " << filewodot << "_data[] = " << endl
-             << "{" << endl
-             << "    ";
+        text << "// -> " << file << cendl;
+        text << "const char " << filewodot << "_name[] = \"" << file << "\";" << cendl;
+        text << "const char " << filewodot << "_type[] = \"" << typeFromExtension(file) << "\";" << cendl;
+        text << "const char " << filewodot << "_data[] = " << cendl << "{" << cendl << "    ";
         unsigned int addr = 0;
         while (filebin.bytesAvailable() > 0)
         {
@@ -89,36 +89,43 @@ void exportPathToStruct(const QString &path, const QString &outputFile)
 
             hexdat = QString::number((unsigned char)data, 16);
             if (hexdat.size() < 2)
+            {
                 hexdat.prepend('0');
+            }
             text << "0x" << hexdat;
             if (filebin.bytesAvailable() > 0)
+            {
                 text << ", ";
+            }
             if (addr % 10 == 0)
-                text << endl << "    ";
+            {
+                text << cendl << "    ";
+            }
         }
-        text << endl << "};" << endl;
-        text << "const Fs_File " << filewodot << " = {" << filewodot << "_name, "
-             << filewodot << "_type, " << filewodot << "_data, " << addr << "};"
-             << endl
-             << endl;
+        text << cendl << "};" << cendl;
+        text << "const Fs_File " << filewodot << " = {" << filewodot << "_name, " << filewodot << "_type, " << filewodot << "_data, " << addr << "};" << cendl
+             << cendl;
     }
 
-    text << "// ======== List of files ======== " << endl;
-    text << "const Fs_File *files_ptr[] = {" << endl;
+    text << "// ======== List of files ======== " << cendl;
+    text << "const Fs_File *files_ptr[] = {" << cendl;
     int size = 0;
     foreach (QString file, files)
     {
         size++;
         text << "&" << file.replace(".", "_");
         if (size < files.count())
+        {
             text << ", ";
+        }
         if (size % 32 == 0)
-            text << endl;
+        {
+            text << cendl;
+        }
     }
-    text << "};" << endl;
+    text << "};" << cendl;
 
-    text << "const Fs_FilesList file_list = {files_ptr, " << files.count() << "};"
-         << endl;
+    text << "const Fs_FilesList file_list = {files_ptr, " << files.count() << "};" << cendl;
 
     output.close();
 }
@@ -136,19 +143,23 @@ files into file struct system for web server");
     parser.addHelpOption();
     parser.addVersionOption();
 
-    QCommandLineOption inputOption(QStringList() << "i" << "input",
-        "Input path file", "data/");
+    QCommandLineOption inputOption(QStringList() << "i"
+                                                 << "input",
+                                   "Input path file",
+                                   "data/");
     parser.addOption(inputOption);
-    QCommandLineOption outputOption(QStringList() << "o" << "output",
-        "Write generated data into <file>.", "html_data.c");
+    QCommandLineOption outputOption(QStringList() << "o"
+                                                  << "output",
+                                    "Write generated data into <file>.",
+                                    "html_data.c");
     parser.addOption(outputOption);
 
     parser.process(app);
-    
+
     // check input
     if (!parser.isSet(inputOption))
     {
-        out << "No input path specified." << endl;
+        out << "No input path specified." << cendl;
         return 1;
     }
     QString inputPath = parser.value(inputOption);
@@ -156,7 +167,7 @@ files into file struct system for web server");
     // output
     if (!parser.isSet(outputOption))
     {
-        out << "No output file or police name specified." << endl;
+        out << "No output file or police name specified." << cendl;
         return 1;
     }
     QString outputFile = parser.value(outputOption);

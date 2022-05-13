@@ -24,10 +24,12 @@ NvmHeaderCreator::NvmHeaderCreator(const EdcDb &db, const QString &picFilter, co
         programMemEndMap.insert(hexVal(flashSpace.endaddr, 6), parser->deviceName());
     }
 
-    *_cWritter << "// NVM_PROGRAM_BEGIN" << "\n";
+    *_cWritter << "// NVM_PROGRAM_BEGIN"
+               << "\n";
     writeSwitchDefineValue(programMemBeginMap, "NVM_PROGRAM_BEGIN");
 
     *_cWritter << "\n";
-    *_cWritter << "// NVM_PROGRAM_END" << "\n";
+    *_cWritter << "// NVM_PROGRAM_END"
+               << "\n";
     writeSwitchDefineValue(programMemEndMap, "NVM_PROGRAM_END");
 }

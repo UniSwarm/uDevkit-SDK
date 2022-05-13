@@ -24,7 +24,7 @@ SimModuleAdc::SimModuleAdc(SimClient *client, uint16_t idPeriph)
     : SimModule(client, ADC_SIM_MODULE, idPeriph)
 {
     _adcWidget = new AdcWidget(idPeriph);
-    connect(_adcWidget, SIGNAL(sendRequest(QByteArray)), (SimModuleAdc*)this, SLOT(sendData(QByteArray)));
+    connect(_adcWidget, SIGNAL(sendRequest(QByteArray)), (SimModuleAdc *)this, SLOT(sendData(QByteArray)));
     _adcWidget->show();
 }
 
@@ -41,7 +41,7 @@ void SimModuleAdc::pushData(uint16_t functionId, const QByteArray &data)
     }
 }
 
-void SimModuleAdc::sendData(QByteArray str)
+void SimModuleAdc::sendData(const QByteArray &str)
 {
     QByteArray data;
     data.append(str);
