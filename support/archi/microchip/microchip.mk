@@ -60,16 +60,22 @@ $(OUT_PWD)/%.o : %.s
 
 $(OUT_PWD)/%.o : %.cpp
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "$(COMPCOLOR)µCPP %-34s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
+	@printf "$(COMPCOLOR)µC++ %-34s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(CXX) $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 	@$(CXX) $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
 HEAP?=100
 
 # rule to link OBJECTS to an elf in OUT_PWD
+ifeq ($(filter %.cpp,$(SRC)),)
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	@printf "$(COMPCOLOR)µLD %-35s => %s\n$(NORM)" "*.o" $(OUT_PWD)/$(PROJECT).elf
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map"
+else
+$(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
+	@printf "$(COMPCOLOR)µLD++ %-33s => %s\n$(NORM)" "*.o" $(OUT_PWD)/$(PROJECT).elf
+	$(VERB)$(CXX) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map"
+endif
 
 $(OUT_PWD)/$(PROJECT).s : $(OUT_PWD)/$(PROJECT).elf
 	@printf "$(COMPCOLOR)objdump %-31s => %s\n$(NORM)" "$(OUT_PWD)/$(PROJECT).elf" $(OUT_PWD)/$(PROJECT).s
