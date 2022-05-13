@@ -24,7 +24,7 @@ SimModuleUart::SimModuleUart(SimClient *client, uint16_t idPeriph)
     : SimModule(client, UART_SIM_MODULE, idPeriph)
 {
     _uartWidget = new UartWidget(idPeriph);
-    connect(_uartWidget, SIGNAL(sendRequest(QString)), (SimModuleUart*)this, SLOT(sendData(QString)));
+    connect(_uartWidget, SIGNAL(sendRequest(QString)), (SimModuleUart *)this, SLOT(sendData(QString)));
     _uartWidget->show();
 }
 
@@ -37,21 +37,22 @@ void SimModuleUart::pushData(uint16_t functionId, const QByteArray &data)
 {
     switch (functionId)
     {
-    case UART_SIM_CONFIG:
-        memcpy((char*)&_config_uart, data.data(), sizeof(_config_uart));
-        _uartWidget->setConfig(_config_uart);
-        break;
-    case UART_SIM_WRITE:
-        _uartWidget->recFromUart(data.data());
-        break;
-    default:
-        break;
+        case UART_SIM_CONFIG:
+            memcpy((char *)&_config_uart, data.data(), sizeof(_config_uart));
+            _uartWidget->setConfig(_config_uart);
+            break;
+        case UART_SIM_WRITE:
+            _uartWidget->recFromUart(data.data());
+            break;
+        default:
+            break;
     }
 }
 
 void SimModuleUart::sendData(QString str)
 {
     QByteArray data;
-    data.append(str.replace("\\t","\t").replace("\\n","\n").replace("\\r","\r"));
+    QString strData = str.replace("\\t", "\t").replace("\\n", "\n").replace("\\r", "\r");
+    data.append(strData.toLocal8Bit());
     writeData(UART_SIM_READ, data);
 }

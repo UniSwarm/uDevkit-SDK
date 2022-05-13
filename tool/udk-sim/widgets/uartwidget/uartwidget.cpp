@@ -21,8 +21,8 @@
 #include <QLayout>
 #include <QPushButton>
 
-#include <QSerialPortInfo>
 #include <QDebug>
+#include <QSerialPortInfo>
 #include <QSettings>
 
 UartWidget::UartWidget(QWidget *parent)
@@ -36,12 +36,12 @@ UartWidget::UartWidget(uint16_t idPeriph, QWidget *parent)
     : QWidget(parent)
 {
     _idPeriph = idPeriph;
-    setWindowTitle(QString("UART %1").arg(_idPeriph+1));
+    setWindowTitle(QString("UART %1").arg(_idPeriph + 1));
     createWidget();
     _port = Q_NULLPTR;
 
     QSettings settings("UniSwarm", "RtSim");
-    settings.beginGroup(QString("UART%1").arg(_idPeriph+1));
+    settings.beginGroup(QString("UART%1").arg(_idPeriph + 1));
 
     QString port = settings.value("port", "").toString();
 
@@ -65,16 +65,16 @@ UartWidget::~UartWidget()
 void UartWidget::recFromUart(const QString &data)
 {
     QString dataReceived = data.toHtmlEscaped();
-    dataReceived = dataReceived.replace("\r","<b>\\r</b>");
-    dataReceived = dataReceived.replace("\n","<b>\\n</b>");
-    dataReceived = dataReceived.replace("\t","<b>\\t</b>");
-    //dataReceived = dataReceived.replace("\0","<b>\\0</b>");
+    dataReceived = dataReceived.replace("\r", "<b>\\r</b>");
+    dataReceived = dataReceived.replace("\n", "<b>\\n</b>");
+    dataReceived = dataReceived.replace("\t", "<b>\\t</b>");
+    // dataReceived = dataReceived.replace("\0","<b>\\0</b>");
     _logRec->appendHtml(dataReceived);
 
     if (_port)
     {
         QByteArray badat;
-        badat.append(data);
+        badat.append(data.toLocal8Bit());
         _port->write(badat);
     }
 }
@@ -82,7 +82,7 @@ void UartWidget::recFromUart(const QString &data)
 void UartWidget::setConfig(uart_dev config)
 {
     _config = config;
-    if(config.enabled==0)
+    if (config.enabled == 0)
         _statusEnabled->setText("disabled");
     else
         _statusEnabled->setText("enabled");
@@ -90,22 +90,20 @@ void UartWidget::setConfig(uart_dev config)
     char parity;
     switch (config.bitParity)
     {
-    case UART_BIT_PARITY_NONE:
-        parity = 'N';
-        break;
-    case UART_BIT_PARITY_EVEN:
-        parity = 'E';
-        break;
-    case UART_BIT_PARITY_ODD:
-        parity = 'O';
-        break;
-    default:
-        parity = 'U';
-        break;
+        case UART_BIT_PARITY_NONE:
+            parity = 'N';
+            break;
+        case UART_BIT_PARITY_EVEN:
+            parity = 'E';
+            break;
+        case UART_BIT_PARITY_ODD:
+            parity = 'O';
+            break;
+        default:
+            parity = 'U';
+            break;
     }
-    _params->setText(QString("%1%2%3").arg(config.baudSpeed)
-                     .arg(parity)
-                     .arg(config.bitStop));
+    _params->setText(QString("%1%2%3").arg(config.baudSpeed).arg(parity).arg(config.bitStop));
 }
 
 void UartWidget::sendToUart()
@@ -115,9 +113,9 @@ void UartWidget::sendToUart()
     if (_port == Q_NULLPTR)
     {
         dataToSend = _lineEdit->text();
-        dataToSend = dataToSend.replace("\\r","\r");
-        dataToSend = dataToSend.replace("\\n","\n");
-        dataToSend = dataToSend.replace("\\t","\t");
+        dataToSend = dataToSend.replace("\\r", "\r");
+        dataToSend = dataToSend.replace("\\n", "\n");
+        dataToSend = dataToSend.replace("\\t", "\t");
     }
     else
     {
@@ -128,9 +126,9 @@ void UartWidget::sendToUart()
     emit sendRequest(dataToSend);
 
     dataToSend = dataToSend.toHtmlEscaped();
-    dataToSend = dataToSend.replace("\r","<b>\\r</b>");
-    dataToSend = dataToSend.replace("\n","<b>\\n</b>");
-    dataToSend = dataToSend.replace("\t","<b>\\t</b>");
+    dataToSend = dataToSend.replace("\r", "<b>\\r</b>");
+    dataToSend = dataToSend.replace("\n", "<b>\\n</b>");
+    dataToSend = dataToSend.replace("\t", "<b>\\t</b>");
 
     _logSend->appendHtml(dataToSend);
 
@@ -140,7 +138,7 @@ void UartWidget::sendToUart()
 void UartWidget::portChanged(int index)
 {
     QSettings settings("UniSwarm", "RtSim");
-    settings.beginGroup(QString("UART%1").arg(_idPeriph+1));
+    settings.beginGroup(QString("UART%1").arg(_idPeriph + 1));
 
     if (_port != Q_NULLPTR)
     {
@@ -162,8 +160,8 @@ void UartWidget::portChanged(int index)
 
         _port = new QSerialPort(_serialPortComboBox->itemData(index).toString(), this);
         _port->open(QIODevice::ReadWrite);
-        _port->setBaudRate(115200/*_config.baudSpeed*/);
-        qDebug()<<_config.baudSpeed;
+        _port->setBaudRate(115200 /*_config.baudSpeed*/);
+        qDebug() << _config.baudSpeed;
         _port->setDataBits(QSerialPort::Data8);
         _port->setParity(QSerialPort::NoParity);
         _port->setStopBits(QSerialPort::OneStop);

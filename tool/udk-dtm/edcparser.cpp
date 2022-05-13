@@ -35,7 +35,7 @@ bool EDCParser::parseDocument()
 
         if (_xml->isStartElement())
         {
-            if (_xml->name() == "PIC")
+            if (_xml->name() == QString("PIC"))
             {
                 if (!parsePic())
                 {
@@ -72,21 +72,21 @@ bool EDCParser::parsePic()
         if (_xml->isStartElement())
         {
             _level++;
-            if (_xml->name() == "SFRDef")
+            if (_xml->name() == QString("SFRDef"))
             {
                 if (!parseSFRDef())
                 {
                     return false;
                 }
             }
-            if (_xml->name() == "ProgramSubspace")
+            if (_xml->name() == QString("ProgramSubspace"))
             {
                 if (!parseProgramSubSpace())
                 {
                     return false;
                 }
             }
-            if (_xml->name().endsWith("Sector"))
+            if (_xml->name().endsWith(QString("Sector")))
             {
                 if (!parseProgramSector())
                 {
@@ -97,7 +97,7 @@ bool EDCParser::parsePic()
         if (_xml->isEndElement())
         {
             _level--;
-            if (_xml->name() == "PIC" && _level == 0)
+            if (_xml->name() == QString("PIC") && _level == 0)
             {
                 return true;
             }
@@ -125,7 +125,7 @@ bool EDCParser::parseSFRDef()
     if (_xml->isStartElement())
     {
         _level++;
-        if (_xml->name() == "SFRMode")
+        if (_xml->name() == QString("SFRMode"))
         {
             if (!parseSFRMode())
             {
@@ -136,7 +136,7 @@ bool EDCParser::parseSFRDef()
     if (_xml->isEndElement())
     {
         _level--;
-        if (_xml->name() == "SFRModeList")
+        if (_xml->name() == QString("SFRModeList"))
         {
             return true;
         }
@@ -163,7 +163,7 @@ bool EDCParser::parseProgramSubSpace()
         if (_xml->isStartElement())
         {
             _level++;
-            if (_xml->name().endsWith("Sector"))
+            if (_xml->name().endsWith(QString("Sector")))
             {
                 if (!parseProgramSector())
                 {
@@ -174,7 +174,7 @@ bool EDCParser::parseProgramSubSpace()
         if (_xml->isEndElement())
         {
             _level--;
-            if (_xml->name() == "ProgramSubspace")
+            if (_xml->name() == QString("ProgramSubspace"))
             {
                 return true;
             }
