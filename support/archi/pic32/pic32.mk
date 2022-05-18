@@ -9,11 +9,14 @@ SIM = sim32
 OBJDUMP = xc32-objdump
 
 ifeq ("$(CC)","xc32-gcc") # XC32 compiler used
- CCFLAGS_XC += -no-legacy-libc
+ CXXFLAGS += -frtti -fno-enforce-eh-specs -fexceptions -fno-check-new -ffunction-sections -fdata-sections
  CCFLAGS_XC += -mprocessor=$(DEVICE)
  CCFLAGS += -Wall
  LDFLAGS_XC += -Wl,--defsym=_min_heap_size=$(HEAP)
 
+ ifneq ($(filter %.cpp,$(SRC)),)
+  LDFLAGS_XC += -Wl,--gc-sections
+ endif
 else                      # other compiler used
  XC32_PATH = $(abspath $(dir $(lastword $(shell whereis -b xc32-gcc)))..)/
  DEFPROC := $(shell echo $(DEVICE) |\

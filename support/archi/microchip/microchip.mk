@@ -61,31 +61,39 @@ $(OUT_PWD)/%.o : %.s
 $(OUT_PWD)/%.o : %.cpp
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "$(COMPCOLOR)µC++ %-34s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	$(VERB)$(CXX) $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
-	@$(CXX) $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
+	$(VERB)$(CXX) $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS_XC) $(CXXFLAGS_XC) -x c++ -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
+	@$(CXX) $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS_XC) $(CXXFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
 HEAP?=100
 
+.PHONY : showmem
+
 # rule to link OBJECTS to an elf in OUT_PWD
 ifeq ($(filter %.cpp,$(SRC)),)
+# Pure C project, link with gcc interface
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	@printf "$(COMPCOLOR)µLD %-35s => %s\n$(NORM)" "*.o" $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map"
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map"
+
+# prints memory report
+showmem : $(OUT_PWD)/$(PROJECT).elf
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map",--report-mem
 else
+# Mixed C / C++ project, link with g++ interface
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	@printf "$(COMPCOLOR)µLD++ %-33s => %s\n$(NORM)" "*.o" $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(CXX) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map"
+	$(VERB)$(CXX) $(CCFLAGS) $(CCFLAGS_XC) $(CXXFLAGS) $(CXXFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map"
+
+# prints memory report
+showmem : $(OUT_PWD)/$(PROJECT).elf
+	$(VERB)$(CXX) $(CCFLAGS) $(CCFLAGS_XC) $(CXXFLAGS) $(CXXFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map",--report-mem
 endif
 
 $(OUT_PWD)/$(PROJECT).s : $(OUT_PWD)/$(PROJECT).elf
 	@printf "$(COMPCOLOR)objdump %-31s => %s\n$(NORM)" "$(OUT_PWD)/$(PROJECT).elf" $(OUT_PWD)/$(PROJECT).s
 	$(VERB)$(OBJDUMP) -S -r $(OUT_PWD)/$(PROJECT).elf > $(OUT_PWD)/$(PROJECT).s
 
-.PHONY : showmem dbg.% dbg
-# prints memory report
-showmem : $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map",--report-mem
-
+.PHONY : dbg.% dbg
 # lists symbol present in final elf
 dbg : $(OUT_PWD)/$(PROJECT).elf
 	$(VERB)$(OBJDUMP) -S $(OUT_PWD)/$(PROJECT).elf |grep "F .text" |sort -k6
