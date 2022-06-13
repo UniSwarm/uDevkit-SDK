@@ -45,17 +45,36 @@ struct can_dev
     can_status flags;
 };
 
+#ifdef UDEVKIT_HAVE_CONFIG
+#    include "udevkit_config.h"
+#endif
+
 #if CAN_COUNT >= 1
-uint32_t __attribute__((coherent, aligned(16))) _can1_fifo_buffer[32 * 4];
+#    ifndef CAN1_FIFO_SIZE
+#        define CAN1_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U)) // 32 messages of 8 bytes
+#    endif
+uint8_t __attribute__((coherent, aligned(16))) _can1_fifo_buffer[CAN1_FIFO_SIZE];
 #endif
+
 #if CAN_COUNT >= 2
-uint32_t __attribute__((coherent, aligned(16))) _can2_fifo_buffer[32 * 4];
+#    ifndef CAN2_FIFO_SIZE
+#        define CAN2_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U)) // 32 messages of 8 bytes
+#    endif
+uint8_t __attribute__((coherent, aligned(16))) _can2_fifo_buffer[CAN2_FIFO_SIZE];
 #endif
+
 #if CAN_COUNT >= 3
-uint32_t __attribute__((coherent, aligned(16))) _can3_fifo_buffer[32 * 4];
+#    ifndef CAN3_FIFO_SIZE
+#        define CAN3_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U)) // 32 messages of 8 bytes
+#    endif
+uint8_t __attribute__((coherent, aligned(16))) _can3_fifo_buffer[CAN3_FIFO_SIZE];
 #endif
+
 #if CAN_COUNT >= 4
-uint32_t __attribute__((coherent, aligned(16))) _can4_fifo_buffer[32 * 4];
+#    ifndef CAN4_FIFO_SIZE
+#        define CAN4_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U)) // 32 messages of 8 bytes
+#    endif
+uint8_t __attribute__((coherent, aligned(16))) _can4_fifo_buffer[CAN4_FIFO_SIZE];
 #endif
 
 struct can_dev cans[] = {

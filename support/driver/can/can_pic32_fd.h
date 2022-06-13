@@ -129,4 +129,6 @@ typedef union
 }
 #endif
 
+#define CAN_MESSAGE_HEADER_SIZE 8U
+
 #endif  // CAN_PIC32_FD_H
