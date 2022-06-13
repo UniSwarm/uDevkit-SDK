@@ -45,6 +45,10 @@ struct timer_dev
     void (*handler)(void);
 };
 
+#ifdef UDEVKIT_HAVE_CONFIG
+#    include "udevkit_config.h"
+#endif
+
 struct timer_dev timers[] = {
 #if TIMER_COUNT >= 1
     {.periodUs = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
@@ -792,7 +796,7 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 #endif
 }
 
-#if TIMER_COUNT >= 1
+#if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
 void __ISR(_TIMER_1_VECTOR, TIPR) T1Interrupt(void)
 {
     if (timers[0].handler)
@@ -804,7 +808,7 @@ void __ISR(_TIMER_1_VECTOR, TIPR) T1Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT >= 2
+#if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
 void __ISR(_TIMER_2_VECTOR, TIPR) T2Interrupt(void)
 {
     if (timers[1].handler)
@@ -816,7 +820,7 @@ void __ISR(_TIMER_2_VECTOR, TIPR) T2Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT >= 3
+#if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
 void __ISR(_TIMER_3_VECTOR, TIPR) T3Interrupt(void)
 {
     if (timers[2].handler)
@@ -828,7 +832,7 @@ void __ISR(_TIMER_3_VECTOR, TIPR) T3Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT >= 4
+#if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
 void __ISR(_TIMER_4_VECTOR, TIPR) T4Interrupt(void)
 {
     if (timers[3].handler)
@@ -840,7 +844,7 @@ void __ISR(_TIMER_4_VECTOR, TIPR) T4Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT >= 5
+#if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
 void __ISR(_TIMER_5_VECTOR, TIPR) T5Interrupt(void)
 {
     if (timers[4].handler)
@@ -852,7 +856,7 @@ void __ISR(_TIMER_5_VECTOR, TIPR) T5Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT >= 6
+#if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
 void __ISR(_TIMER_6_VECTOR, TIPR) T6Interrupt(void)
 {
     if (timers[5].handler)
@@ -864,7 +868,7 @@ void __ISR(_TIMER_6_VECTOR, TIPR) T6Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT >= 7
+#if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
 void __ISR(_TIMER_7_VECTOR, TIPR) T7Interrupt(void)
 {
     if (timers[6].handler)
@@ -876,7 +880,7 @@ void __ISR(_TIMER_7_VECTOR, TIPR) T7Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT >= 8
+#if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
 void __ISR(_TIMER_8_VECTOR, TIPR) T8Interrupt(void)
 {
     if (timers[7].handler)
@@ -888,7 +892,7 @@ void __ISR(_TIMER_8_VECTOR, TIPR) T8Interrupt(void)
 }
 #endif
 
-#if TIMER_COUNT >= 9
+#if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
 void __ISR(_TIMER_9_VECTOR, TIPR) T9Interrupt(void)
 {
     if (timers[8].handler)
