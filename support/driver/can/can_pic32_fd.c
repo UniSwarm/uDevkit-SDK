@@ -470,7 +470,7 @@ CAN_MODE can_mode(rt_dev_t device)
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {
-        return 0;
+        return CAN_MODE_DISABLED;
     }
 
     return cans[can].mode;
@@ -805,7 +805,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
                 // FIFO full
                 return 0;
             }
-            buffer = PA_TO_KVA1(*CFD1FIFOUA(fifo));
+            buffer = (CAN_TxMsgBuffer *)PA_TO_KVA1(*CFD1FIFOUA(fifo));
             break;
 #    if CAN_COUNT >= 2
         case 1:
@@ -814,7 +814,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
                 // FIFO full
                 return 0;
             }
-            buffer = PA_TO_KVA1(*CFD2FIFOUA(fifo));
+            buffer = (CAN_TxMsgBuffer *)PA_TO_KVA1(*CFD2FIFOUA(fifo));
             break;
 #    endif
 #    if CAN_COUNT >= 3
@@ -824,7 +824,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
                 // FIFO full
                 return 0;
             }
-            buffer = PA_TO_KVA1(*CFD3FIFOUA(fifo));
+            buffer = (CAN_TxMsgBuffer *)PA_TO_KVA1(*CFD3FIFOUA(fifo));
             break;
 #    endif
 #    if CAN_COUNT >= 4
@@ -834,7 +834,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
                 // FIFO full
                 return 0;
             }
-            buffer = PA_TO_KVA1(*CFD4FIFOUA(fifo));
+            buffer = (CAN_TxMsgBuffer *)PA_TO_KVA1(*CFD4FIFOUA(fifo));
             break;
 #    endif
 
@@ -926,7 +926,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 #if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
 
-    CAN_FLAGS flagValue = 0;
+    CAN_FLAGS flagValue = CAN_VERS1;
     CAN_RxMsgBuffer *buffer = NULL;
 
     if (fifo == 0 || fifo >= CAN_FIFO_COUNT)
@@ -942,7 +942,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
                 // FIFO empty
                 return 0;
             }
-            buffer = PA_TO_KVA1(*CFD1FIFOUA(fifo));
+            buffer = (CAN_RxMsgBuffer *)PA_TO_KVA1(*CFD1FIFOUA(fifo));
             break;
 #    if CAN_COUNT >= 2
         case 1:
@@ -951,7 +951,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
                 // FIFO empty
                 return 0;
             }
-            buffer = PA_TO_KVA1(*CFD2FIFOUA(fifo));
+            buffer = (CAN_RxMsgBuffer *)PA_TO_KVA1(*CFD2FIFOUA(fifo));
             break;
 #    endif
 #    if CAN_COUNT >= 3
@@ -961,7 +961,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
                 // FIFO empty
                 return 0;
             }
-            buffer = PA_TO_KVA1(*CFD3FIFOUA(fifo));
+            buffer = (CAN_RxMsgBuffer *)PA_TO_KVA1(*CFD3FIFOUA(fifo));
             break;
 #    endif
 #    if CAN_COUNT >= 4
@@ -971,7 +971,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
                 // FIFO empty
                 return 0;
             }
-            buffer = PA_TO_KVA1(*CFD4FIFOUA(fifo));
+            buffer = (CAN_RxMsgBuffer *)PA_TO_KVA1(*CFD4FIFOUA(fifo));
             break;
 #    endif
 
@@ -982,7 +982,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     // ID
     if (buffer->ctrl.IDE == 1)
     {
-        flagValue = flagValue + CAN_VERS2BA;  // extended ID
+        flagValue = (CAN_FLAGS)(flagValue + CAN_VERS2BA);  // extended ID
         header->id = buffer->id.EID + (buffer->id.SID << 18);
     }
     else
@@ -1026,7 +1026,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     // flags
     if (buffer->ctrl.BRS == 1)
     {
-        flagValue += CAN_RTR;
+        flagValue = (CAN_FLAGS)(flagValue + CAN_RTR);
     }
     header->flags = flagValue;
 
