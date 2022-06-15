@@ -48,7 +48,10 @@ uint8_t can_propagSeg(rt_dev_t device);
 uint8_t can_s1Seg(rt_dev_t device);
 uint8_t can_s2Seg(rt_dev_t device);
 
-// ===== mailbox interface =====
+// ===== fifo interface =====
+int can_setTxFifo(rt_dev_t device, uint8_t fifo, uint8_t messageCount);
+int can_setRxFifo(rt_dev_t device, uint8_t fifo, uint8_t messageCount);
+
 typedef enum
 {
     CAN_VERS1 = 0x00,    ///< CAN version 1 with standard 11 bits identifier

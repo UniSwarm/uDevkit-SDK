@@ -51,30 +51,30 @@ struct can_dev
 
 #if CAN_COUNT >= 1
 #    ifndef CAN1_FIFO_SIZE
-#        define CAN1_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U)) // 32 messages of 8 bytes
+#        define CAN1_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
-uint8_t __attribute__((coherent, aligned(16))) _can1_fifo_buffer[CAN1_FIFO_SIZE];
+static uint8_t __attribute__((coherent, aligned(16))) _can1_fifo_buffer[CAN1_FIFO_SIZE];
 #endif
 
 #if CAN_COUNT >= 2
 #    ifndef CAN2_FIFO_SIZE
-#        define CAN2_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U)) // 32 messages of 8 bytes
+#        define CAN2_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
-uint8_t __attribute__((coherent, aligned(16))) _can2_fifo_buffer[CAN2_FIFO_SIZE];
+static uint8_t __attribute__((coherent, aligned(16))) _can2_fifo_buffer[CAN2_FIFO_SIZE];
 #endif
 
 #if CAN_COUNT >= 3
 #    ifndef CAN3_FIFO_SIZE
-#        define CAN3_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U)) // 32 messages of 8 bytes
+#        define CAN3_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
-uint8_t __attribute__((coherent, aligned(16))) _can3_fifo_buffer[CAN3_FIFO_SIZE];
+static uint8_t __attribute__((coherent, aligned(16))) _can3_fifo_buffer[CAN3_FIFO_SIZE];
 #endif
 
 #if CAN_COUNT >= 4
 #    ifndef CAN4_FIFO_SIZE
-#        define CAN4_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U)) // 32 messages of 8 bytes
+#        define CAN4_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
-uint8_t __attribute__((coherent, aligned(16))) _can4_fifo_buffer[CAN4_FIFO_SIZE];
+static uint8_t __attribute__((coherent, aligned(16))) _can4_fifo_buffer[CAN4_FIFO_SIZE];
 #endif
 
 struct can_dev cans[] = {
@@ -218,7 +218,7 @@ int can_enable(rt_dev_t device)
             // mask 0 for filter 0
             CFD1MASK0bits.MSID = 0x000;    // Ignore all bits in comparison
             CFD1MASK0bits.MEID = 0x00000;  // Ignore all bits in comparison
-            CFD1MASK0bits.MIDE = 0;        // Match all message types.
+            CFD1MASK0bits.MIDE = 0;        // Match all message types
             break;
 
 #    if CAN_COUNT >= 2
@@ -249,7 +249,7 @@ int can_enable(rt_dev_t device)
             // mask 0 for filter 0
             CFD2MASK0bits.MSID = 0x000;    // Ignore all bits in comparison
             CFD2MASK0bits.MEID = 0x00000;  // Ignore all bits in comparison
-            CFD2MASK0bits.MIDE = 0;        // Match all message types.
+            CFD2MASK0bits.MIDE = 0;        // Match all message types
             break;
 #    endif
 #    if CAN_COUNT >= 3
@@ -280,7 +280,7 @@ int can_enable(rt_dev_t device)
             // mask 0 for filter 0
             CFD3MASK0bits.MSID = 0x000;    // Ignore all bits in comparison
             CFD3MASK0bits.MEID = 0x00000;  // Ignore all bits in comparison
-            CFD3MASK0bits.MIDE = 0;        // Match all message types.
+            CFD3MASK0bits.MIDE = 0;        // Match all message types
             break;
 #    endif
 #    if CAN_COUNT >= 4
@@ -311,7 +311,7 @@ int can_enable(rt_dev_t device)
             // mask 0 for filter 0
             CFD4MASK0bits.MSID = 0x000;    // Ignore all bits in comparison
             CFD4MASK0bits.MEID = 0x00000;  // Ignore all bits in comparison
-            CFD4MASK0bits.MIDE = 0;        // Match all message types.
+            CFD4MASK0bits.MIDE = 0;        // Match all message types
             break;
 #    endif
     }
@@ -796,6 +796,108 @@ uint8_t can_s2Seg(rt_dev_t device)
 #define CFD4FIFOCONSET(fifo) (CFD4FIFOCON(fifo) + 2)
 #define CFD4FIFOSTA(fifo)    ((volatile uint32_t *)(&CFD4TXQSTA + (((uint8_t)fifo) * 12)))
 #define CFD4FIFOUA(fifo)     ((volatile uint32_t *)(&CFD4TXQUA + (((uint8_t)fifo) * 12)))
+
+int can_setTxFifo(rt_dev_t device, uint8_t fifo, uint8_t messageCount)
+{
+#if CAN_COUNT >= 1
+    uint8_t can = MINOR(device);
+
+    if (fifo >= CAN_FIFO_COUNT)
+    {
+        return -1;
+    }
+    if (messageCount > 32)
+    {
+        return -1;
+    }
+
+    __CFD1TXQCONbits_t *conBits = NULL;
+    switch (can)
+    {
+        case 0:
+            conBits = (__CFD1TXQCONbits_t *)CFD1FIFOCON(fifo);
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            conBits = (__CFD1TXQCONbits_t *)CFD2FIFOCON(fifo);
+            break;
+#    endif
+#    if CAN_COUNT >= 3
+        case 2:
+            conBits = (__CFD1TXQCONbits_t *)CFD3FIFOCON(fifo);
+            break;
+#    endif
+#    if CAN_COUNT >= 4
+        case 3:
+            conBits = (__CFD1TXQCONbits_t *)CFD4FIFOCON(fifo);
+            break;
+#    endif
+        default:
+            return -1;
+    }
+
+    conBits->FSIZE = messageCount - 1;
+    conBits->PLSIZE = CAN_FIFO_DATA8;  // 8 bytes of data
+    conBits->TXEN = 1;
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+int can_setRxFifo(rt_dev_t device, uint8_t fifo, uint8_t messageCount)
+{
+#if CAN_COUNT >= 1
+    uint8_t can = MINOR(device);
+
+    if (fifo == 0)
+    {
+        return -1;
+    }
+    if (fifo >= CAN_FIFO_COUNT)
+    {
+        return -1;
+    }
+    if (messageCount > 32)
+    {
+        return -1;
+    }
+
+    __CFD1TXQCONbits_t *conBits = NULL;
+    switch (can)
+    {
+        case 0:
+            conBits = (__CFD1TXQCONbits_t *)CFD1FIFOCON(fifo);
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            conBits = (__CFD1TXQCONbits_t *)CFD2FIFOCON(fifo);
+            break;
+#    endif
+#    if CAN_COUNT >= 3
+        case 2:
+            conBits = (__CFD1TXQCONbits_t *)CFD3FIFOCON(fifo);
+            break;
+#    endif
+#    if CAN_COUNT >= 4
+        case 3:
+            conBits = (__CFD1TXQCONbits_t *)CFD4FIFOCON(fifo);
+            break;
+#    endif
+        default:
+            return -1;
+    }
+
+    conBits->FSIZE = messageCount - 1;
+    conBits->PLSIZE = CAN_FIFO_DATA8;  // 8 bytes of data
+    conBits->TXEN = 0;
+
+    return 0;
+#else
+    return -1;
+#endif
+}
 
 /**
  * @brief Write a can message to fifo
