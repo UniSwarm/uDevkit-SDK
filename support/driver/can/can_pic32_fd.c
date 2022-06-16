@@ -1224,29 +1224,29 @@ int can_filterSet(rt_dev_t device, uint8_t nFilter, uint8_t fifo, uint32_t idFil
     switch (can)
     {
         case 0:
-            *CFD1MASK(idFilter) = filterMask;
-            *CFD1FLTOBJ(idFilter) = filterObj;
-            *CFD1FLTCON(idFilter) = (fifo & 0x1F);
+            *CFD1MASK(nFilter) = filterMask;
+            *CFD1FLTOBJ(nFilter) = filterObj;
+            *CFD1FLTCON(nFilter) = (fifo & 0x1F);
             break;
 #    if CAN_COUNT >= 2
         case 1:
-            *CFD2MASK(idFilter) = filterMask;
-            *CFD2FLTOBJ(idFilter) = filterObj;
-            *CFD2FLTCON(idFilter) = (fifo & 0x1F);
+            *CFD2MASK(nFilter) = filterMask;
+            *CFD2FLTOBJ(nFilter) = filterObj;
+            *CFD2FLTCON(nFilter) = (fifo & 0x1F);
             break;
 #    endif
 #    if CAN_COUNT >= 3
         case 2:
-            *CFD3MASK(idFilter) = filterMask;
-            *CFD3FLTOBJ(idFilter) = filterObj;
-            *CFD3FLTCON(idFilter) = (fifo & 0x1F);
+            *CFD3MASK(nFilter) = filterMask;
+            *CFD3FLTOBJ(nFilter) = filterObj;
+            *CFD3FLTCON(nFilter) = (fifo & 0x1F);
             break;
 #    endif
 #    if CAN_COUNT >= 4
         case 3:
-            *CFD4MASK(idFilter) = filterMask;
-            *CFD4FLTOBJ(idFilter) = filterObj;
-            *CFD4FLTCON(idFilter) = (fifo & 0x1F);
+            *CFD4MASK(nFilter) = filterMask;
+            *CFD4FLTOBJ(nFilter) = filterObj;
+            *CFD4FLTCON(nFilter) = (fifo & 0x1F);
             break;
 #    endif
 
