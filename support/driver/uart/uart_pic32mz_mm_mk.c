@@ -706,7 +706,12 @@ void __ISR(_UART1_TX_VECTOR, UIPR) U1TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U1TXIF = 0;  // 32MK Work around (errata 41)
-#    endif
+    char uart_tmpchar[1];
+    while (!U1STAbits.UTXBF && fifo_pop(&uarts[0].buffTx, uart_tmpchar, 1) == 1)
+    {
+        U1TXREG = uart_tmpchar[0];
+    }
+#    else
     size_t i;
     char uart_tmpchar[8];
     size_t readen = fifo_pop(&uarts[0].buffTx, uart_tmpchar, 8);
@@ -714,6 +719,8 @@ void __ISR(_UART1_TX_VECTOR, UIPR) U1TXInterrupt(void)
     {
         U1TXREG = uart_tmpchar[i];
     }
+#    endif
+
     if (fifo_len(&uarts[0].buffTx) == 0)
     {
         _U1TXIE = 0;
@@ -739,7 +746,12 @@ void __ISR(_UART2_TX_VECTOR, UIPR) U2TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U2TXIF = 0;  // 32MK Work around (errata 41)
-#    endif
+    char uart_tmpchar[1];
+    while (!U2STAbits.UTXBF && fifo_pop(&uarts[1].buffTx, uart_tmpchar, 1) == 1)
+    {
+        U2TXREG = uart_tmpchar[0];
+    }
+#    else
     size_t i;
     char uart_tmpchar[8];
     size_t readen = fifo_pop(&uarts[1].buffTx, uart_tmpchar, 8);
@@ -747,6 +759,8 @@ void __ISR(_UART2_TX_VECTOR, UIPR) U2TXInterrupt(void)
     {
         U2TXREG = uart_tmpchar[i];
     }
+#    endif
+
     if (fifo_len(&uarts[1].buffTx) == 0)
     {
         _U2TXIE = 0;
@@ -772,7 +786,12 @@ void __ISR(_UART3_TX_VECTOR, UIPR) U3TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U3TXIF = 0;  // 32MK Work around (errata 41)
-#    endif
+    char uart_tmpchar[1];
+    while (!U3STAbits.UTXBF && fifo_pop(&uarts[2].buffTx, uart_tmpchar, 1) == 1)
+    {
+        U3TXREG = uart_tmpchar[0];
+    }
+#    else
     size_t i;
     char uart_tmpchar[8];
     size_t readen = fifo_pop(&uarts[2].buffTx, uart_tmpchar, 8);
@@ -780,6 +799,8 @@ void __ISR(_UART3_TX_VECTOR, UIPR) U3TXInterrupt(void)
     {
         U3TXREG = uart_tmpchar[i];
     }
+#    endif
+
     if (fifo_len(&uarts[2].buffTx) == 0)
     {
         _U3TXIE = 0;
@@ -804,14 +825,13 @@ void __ISR(_UART3_RX_VECTOR, UIPR) U3RXInterrupt(void)
 void __ISR(_UART4_TX_VECTOR, UIPR) U4TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
-    //_U4TXIF = 0; // 32MK Work around (errata 41)
-    /*char uart_tmpchar[1];
+    _U4TXIF = 0;  // 32MK Work around (errata 41)
+    char uart_tmpchar[1];
     while (!U4STAbits.UTXBF && fifo_pop(&uarts[3].buffTx, uart_tmpchar, 1) == 1)
     {
         U4TXREG = uart_tmpchar[0];
-    }*/
+    }
 #    else
-#    endif
     size_t i;
     char uart_tmpchar[8];
     size_t readen = fifo_pop(&uarts[3].buffTx, uart_tmpchar, 8);
@@ -819,6 +839,8 @@ void __ISR(_UART4_TX_VECTOR, UIPR) U4TXInterrupt(void)
     {
         U4TXREG = uart_tmpchar[i];
     }
+#    endif
+
     if (fifo_len(&uarts[3].buffTx) == 0)
     {
         _U4TXIE = 0;
@@ -844,7 +866,12 @@ void __ISR(_UART5_TX_VECTOR, UIPR) U5TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U5TXIF = 0;  // 32MK Work around (errata 41)
-#    endif
+    char uart_tmpchar[1];
+    while (!U5STAbits.UTXBF && fifo_pop(&uarts[4].buffTx, uart_tmpchar, 1) == 1)
+    {
+        U5TXREG = uart_tmpchar[0];
+    }
+#    else
     size_t i;
     char uart_tmpchar[8];
     size_t readen = fifo_pop(&uarts[4].buffTx, uart_tmpchar, 8);
@@ -852,6 +879,8 @@ void __ISR(_UART5_TX_VECTOR, UIPR) U5TXInterrupt(void)
     {
         U5TXREG = uart_tmpchar[i];
     }
+#    endif
+
     if (fifo_len(&uarts[4].buffTx) == 0)
     {
         _U5TXIE = 0;
@@ -877,7 +906,12 @@ void __ISR(_UART6_TX_VECTOR, UIPR) U6TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U6TXIF = 0;  // 32MK Work around (errata 41)
-#    endif
+    char uart_tmpchar[1];
+    while (!U6STAbits.UTXBF && fifo_pop(&uarts[5].buffTx, uart_tmpchar, 1) == 1)
+    {
+        U6TXREG = uart_tmpchar[0];
+    }
+#    else
     size_t i;
     char uart_tmpchar[8];
     size_t readen = fifo_pop(&uarts[5].buffTx, uart_tmpchar, 8);
@@ -885,6 +919,8 @@ void __ISR(_UART6_TX_VECTOR, UIPR) U6TXInterrupt(void)
     {
         U6TXREG = uart_tmpchar[i];
     }
+#    endif
+
     if (fifo_len(&uarts[5].buffTx) == 0)
     {
         _U6TXIE = 0;
