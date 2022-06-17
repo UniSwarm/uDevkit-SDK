@@ -46,6 +46,7 @@ MSI_CORE_STATUS msi_primary_status(void)
 int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_t size)
 {
     UDK_UNUSED(size);
+    uint16_t writeU16[5];
 
     if (protocol == MSI_PROTOCOL_S2M)
     {
@@ -53,7 +54,12 @@ int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_
         {
             return -1;
         }
-        memcpy((void *)&SI1MBX5D, (const void *)data, 10);
+        memcpy((void *)writeU16, (const void *)data, 10);
+        SI1MBX5D = writeU16[0];
+        SI1MBX6D = writeU16[1];
+        SI1MBX7D = writeU16[2];
+        SI1MBX8D = writeU16[3];
+        SI1MBX9D = writeU16[4];
         return 0;
     }
     if (protocol == MSI_PROTOCOL_S2M2)
@@ -62,7 +68,10 @@ int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_
         {
             return -1;
         }
-        memcpy((void *)&SI1MBX13D, (const void *)data, 6);
+        memcpy((void *)writeU16, (const void *)data, 6);
+        SI1MBX13D = writeU16[0];
+        SI1MBX14D = writeU16[1];
+        SI1MBX15D = writeU16[2];
         return 0;
     }
     return -1;
@@ -97,6 +106,7 @@ int msi_protocol_canWrite(const uint8_t protocol)
 int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_size)
 {
     UDK_UNUSED(max_size);
+    uint16_t readU16[5];
 
     if (protocol == MSI_PROTOCOL_M2S)
     {
@@ -104,7 +114,13 @@ int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_s
         {
             return -1;
         }
-        memcpy((void *)data, (void *)&SI1MBX0D, 10);
+        uint16_t *ptr = readU16;
+        *(ptr++) = SI1MBX0D;
+        *(ptr++) = SI1MBX1D;
+        *(ptr++) = SI1MBX2D;
+        *(ptr++) = SI1MBX3D;
+        *(ptr++) = SI1MBX4D;
+        memcpy((void *)data, (void *)&readU16, 10);
         return 0;
     }
 
@@ -114,7 +130,11 @@ int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_s
         {
             return -1;
         }
-        memcpy((void *)data, (void *)&SI1MBX10D, 6);
+        uint16_t *ptr = readU16;
+        *(ptr++) = SI1MBX10D;
+        *(ptr++) = SI1MBX11D;
+        *(ptr++) = SI1MBX12D;
+        memcpy((void *)data, (void *)&readU16, 6);
         return 0;
     }
     return -1;

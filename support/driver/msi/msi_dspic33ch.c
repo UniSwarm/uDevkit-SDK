@@ -133,6 +133,7 @@ int msi_secondary_verify_program(const uint8_t secondary_id, __eds__ unsigned ch
 int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_t size)
 {
     UDK_UNUSED(size);
+    uint16_t writeU16[5];
 
     if (protocol == MSI_PROTOCOL_M2S)
     {
@@ -140,7 +141,12 @@ int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_
         {
             return -1;
         }
-        memcpy((void *)&MSI1MBX0D, (const void *)data, 10);
+        memcpy((void *)writeU16, (const void *)data, 10);
+        MSI1MBX0D = writeU16[0];
+        MSI1MBX1D = writeU16[1];
+        MSI1MBX2D = writeU16[2];
+        MSI1MBX3D = writeU16[3];
+        MSI1MBX4D = writeU16[4];
         return 0;
     }
     if (protocol == MSI_PROTOCOL_M2S2)
@@ -149,7 +155,10 @@ int msi_protocol_write(const uint8_t protocol, const unsigned char *data, uint8_
         {
             return -1;
         }
-        memcpy((void *)&MSI1MBX10D, (const void *)data, 6);
+        memcpy((void *)writeU16, (const void *)data, 6);
+        MSI1MBX10D = writeU16[0];
+        MSI1MBX11D = writeU16[1];
+        MSI1MBX12D = writeU16[2];
         return 0;
     }
     return -1;
@@ -184,6 +193,7 @@ int msi_protocol_canWrite(const uint8_t protocol)
 int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_size)
 {
     UDK_UNUSED(max_size);
+    uint16_t readU16[5];
 
     if (protocol == MSI_PROTOCOL_S2M)
     {
@@ -191,7 +201,13 @@ int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_s
         {
             return -1;
         }
-        memcpy((void *)data, (void *)&MSI1MBX5D, 10);
+        uint16_t *ptr = readU16;
+        *(ptr++) = MSI1MBX5D;
+        *(ptr++) = MSI1MBX6D;
+        *(ptr++) = MSI1MBX7D;
+        *(ptr++) = MSI1MBX8D;
+        *(ptr++) = MSI1MBX9D;
+        memcpy((void *)data, (void *)&readU16, 10);
         return 0;
     }
 
@@ -201,7 +217,11 @@ int msi_protocol_read(const uint8_t protocol, unsigned char *data, uint8_t max_s
         {
             return -1;
         }
-        memcpy((void *)data, (void *)&MSI1MBX13D, 6);
+        uint16_t *ptr = readU16;
+        *(ptr++) = MSI1MBX13D;
+        *(ptr++) = MSI1MBX14D;
+        *(ptr++) = MSI1MBX15D;
+        memcpy((void *)data, (void *)&readU16, 6);
         return 0;
     }
     return -1;
