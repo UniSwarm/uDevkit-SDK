@@ -400,6 +400,37 @@ qei_type qei_getValue(rt_dev_t device)
     return tmp32;
 }
 
+int qei_setValue(rt_dev_t device, qei_type value)
+{
+#if QEI_COUNT >= 1
+    uint8_t qei = MINOR(device);
+    if (qei > QEI_COUNT)
+    {
+        return -1;
+    }
+
+    switch (qei)
+    {
+        case 0:
+            POS1CNTL = value & 0x0000FFFF;
+            POS1HLD = value >> 16;
+            break;
+#    if QEI_COUNT >= 2
+        case 1:
+            POS2CNTL = value & 0x0000FFFF;
+            POS2HLD = value >> 16;
+            break;
+#    endif
+#    if QEI_COUNT >= 3
+        case 2:
+            POS3CNTL = value & 0x0000FFFF;
+            POS3HLD = value >> 16;
+#    endif
+    }
+#endif
+    return 0;
+}
+
 int qei_setHomeValue(rt_dev_t device, qei_type home)
 {
     UDK_UNUSED(device);

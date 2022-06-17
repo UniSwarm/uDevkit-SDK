@@ -59,6 +59,7 @@ int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum);
 
 // ======= device write/read ======
 qei_type qei_getValue(rt_dev_t device);
+int qei_setValue(rt_dev_t device, qei_type value);
 int qei_setHomeValue(rt_dev_t device, qei_type home);
 
 #ifdef __cplusplus
