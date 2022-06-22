@@ -373,6 +373,30 @@ uint8_t can_s2Seg(rt_dev_t device)
     return cans[can].s2Seg;
 }
 
+int can_setTxFifo(rt_dev_t device, uint8_t fifo, uint8_t messageCount)
+{
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    // TODO implement me
+    return 0;
+}
+
+int can_setRxFifo(rt_dev_t device, uint8_t fifo, uint8_t messageCount)
+{
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    // TODO implement me
+    return 0;
+}
+
 int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
     UDK_UNUSED(fifo);
