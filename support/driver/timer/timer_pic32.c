@@ -671,10 +671,6 @@ uint16_t timer_getValue(rt_dev_t device)
 #if TIMER_COUNT >= 1
     uint16_t value;
     uint8_t timer = MINOR(device);
-    if (timer >= TIMER_COUNT)
-    {
-        return 0;
-    }
 
     switch (timer)
     {
@@ -721,6 +717,8 @@ uint16_t timer_getValue(rt_dev_t device)
             value = TMR9;
             break;
 #    endif
+        default:
+            return 0;
     }
 
     return value;

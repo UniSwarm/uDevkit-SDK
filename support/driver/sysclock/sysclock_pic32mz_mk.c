@@ -67,7 +67,7 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
         {
             divisor = 1;
         }
-        uint32_t sourceFreq;
+        uint32_t sourceFreq = 1;
         switch (*refClockConAddr & 0x0000000F)
         {
             case SYSCLOCK_REFCLK_SRC_REFCLKI:

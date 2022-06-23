@@ -341,10 +341,6 @@ uint32_t i2c_baudSpeed(rt_dev_t device)
     uint16_t uBrg;
 
     uint8_t i2c = MINOR(device);
-    if (i2c >= I2C_COUNT)
-    {
-        return 0;
-    }
 
     switch (i2c)
     {
@@ -373,6 +369,8 @@ uint32_t i2c_baudSpeed(rt_dev_t device)
             uBrg = I2C5BRG;
             break;
 #    endif
+        default:
+            return 0;
     }
 
     systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_I2C);

@@ -436,7 +436,6 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
         default:
             return -1;
     }
-    cans[can].mode = mode;
 
     switch (can)
     {
@@ -471,6 +470,7 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
             break;
 #    endif
     }
+    cans[can].mode = mode;
 
     return 0;
 #else

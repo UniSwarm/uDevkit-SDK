@@ -476,10 +476,6 @@ uint32_t uart_baudSpeed(rt_dev_t device)
     uint8_t hs;
 
     uint8_t uart = MINOR(device);
-    if (uart >= UART_COUNT)
-    {
-        return 0;
-    }
 
     switch (uart)
     {
@@ -517,6 +513,8 @@ uint32_t uart_baudSpeed(rt_dev_t device)
             uBrg = U6BRG + 1;
             break;
 #endif
+        default:
+            return 0;
     }
 
     baudSpeed = uart_getClock(device) / uBrg;
