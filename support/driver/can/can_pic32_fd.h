@@ -28,6 +28,17 @@ extern "C" {
 
 typedef enum
 {
+    CAN_RXFIFO_NOT_EMPTY = 0x01,   ///<
+    CAN_TXFIFO_NOT_FULL = 0x01,    ///<
+    CAN_RXFIFO_HALF_FULL = 0x02,   ///<
+    CAN_TXFIFO_HALF_EMPTY = 0x02,  ///<
+    CAN_RXFIFO_FULL = 0x04,        ///<
+    CAN_TXFIFO_EMPTY = 0x04,       ///<
+    CAN_RXFIFO_OVERFLOW = 0x08,    ///<
+} CAN_FIFO_EVENTS;
+
+typedef enum
+{
     CAN_FIFO_DATA64 = 0b111,
     CAN_FIFO_DATA48 = 0b110,
     CAN_FIFO_DATA32 = 0b101,

@@ -17,6 +17,21 @@ extern "C" {
 
 #include <driver/device.h>
 
+#if defined(ARCHI_dspic30f)
+#    include "can_dspic30f.h"
+#elif defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
+#    include "can_dspic33c.h"
+#elif defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic33fj)                          \
+    || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
+#    include "can_pic24_dspic33.h"
+#elif defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                     \
+    || defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100)
+// PIC32MK with CANFD
+#    include "can_pic32_fd.h"
+#elif defined(ARCHI_pic32mx) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
+#    include "can_pic32.h"
+#endif
+
 // ====== bus assignation ======
 #define can(d) MKDEV(DEV_CLASS_CAN, (d)-1)
 rt_dev_t can_getFreeDevice(void);
@@ -52,6 +67,9 @@ uint8_t can_s2Seg(rt_dev_t device);
 int can_setTxFifo(rt_dev_t device, uint8_t fifo, uint8_t messageCount);
 int can_setRxFifo(rt_dev_t device, uint8_t fifo, uint8_t messageCount);
 
+int can_setFifoHandler(rt_dev_t device, void (*handler)(uint8_t fifo, uint8_t event));
+int can_setFifoEventsHandler(rt_dev_t device, uint8_t fifo, CAN_FIFO_EVENTS eventBits);
+
 typedef enum
 {
     CAN_VERS1 = 0x00,    ///< CAN version 1 with standard 11 bits identifier
@@ -84,21 +102,6 @@ typedef enum
 int can_filterSet(rt_dev_t device, uint8_t nFilter, uint8_t fifo, uint32_t idFilter, uint32_t mask, CAN_FRAME_FORMAT_FLAGS frame);
 int can_filterEnable(rt_dev_t device, uint8_t nFilter);
 int can_filterDisable(rt_dev_t device, uint8_t nFilter);
-
-#if defined(ARCHI_dspic30f)
-#    include "can_dspic30f.h"
-#elif defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
-#    include "can_dspic33c.h"
-#elif defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic33fj)                          \
-    || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
-#    include "can_pic24_dspic33.h"
-#elif defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                     \
-    || defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100)
-// PIC32MK with CANFD
-#    include "can_pic32_fd.h"
-#elif defined(ARCHI_pic32mx) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
-#    include "can_pic32.h"
-#endif
 
 #ifdef SIMULATOR
 #    include "can_sim.h"

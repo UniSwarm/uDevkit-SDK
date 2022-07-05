@@ -43,6 +43,7 @@ struct can_dev
     uint8_t s1Seg;
     uint8_t s2Seg;
     can_status flags;
+    void (*fifoHandler)(uint8_t fifo, uint8_t event);
 };
 
 #ifdef UDEVKIT_HAVE_CONFIG
@@ -780,21 +781,25 @@ uint8_t can_s2Seg(rt_dev_t device)
 #define CFD1FIFOCON(fifo)    ((volatile uint32_t *)(&CFD1TXQCON + (((uint8_t)fifo) * 12)))
 #define CFD1FIFOCONSET(fifo) (CFD1FIFOCON(fifo) + 2)
 #define CFD1FIFOSTA(fifo)    ((volatile uint32_t *)(&CFD1TXQSTA + (((uint8_t)fifo) * 12)))
+#define CFD1FIFOSTACLR(fifo) (CFD1FIFOSTA(fifo) + 1)
 #define CFD1FIFOUA(fifo)     ((volatile uint32_t *)(&CFD1TXQUA + (((uint8_t)fifo) * 12)))
 
 #define CFD2FIFOCON(fifo)    ((volatile uint32_t *)(&CFD2TXQCON + (((uint8_t)fifo) * 12)))
 #define CFD2FIFOCONSET(fifo) (CFD2FIFOCON(fifo) + 2)
 #define CFD2FIFOSTA(fifo)    ((volatile uint32_t *)(&CFD2TXQSTA + (((uint8_t)fifo) * 12)))
+#define CFD2FIFOSTACLR(fifo) (CFD1FIFOSTA(fifo) + 1)
 #define CFD2FIFOUA(fifo)     ((volatile uint32_t *)(&CFD2TXQUA + (((uint8_t)fifo) * 12)))
 
 #define CFD3FIFOCON(fifo)    ((volatile uint32_t *)(&CFD3TXQCON + (((uint8_t)fifo) * 12)))
 #define CFD3FIFOCONSET(fifo) (CFD3FIFOCON(fifo) + 2)
 #define CFD3FIFOSTA(fifo)    ((volatile uint32_t *)(&CFD3TXQSTA + (((uint8_t)fifo) * 12)))
+#define CFD3FIFOSTACLR(fifo) (CFD1FIFOSTA(fifo) + 1)
 #define CFD3FIFOUA(fifo)     ((volatile uint32_t *)(&CFD3TXQUA + (((uint8_t)fifo) * 12)))
 
 #define CFD4FIFOCON(fifo)    ((volatile uint32_t *)(&CFD4TXQCON + (((uint8_t)fifo) * 12)))
 #define CFD4FIFOCONSET(fifo) (CFD4FIFOCON(fifo) + 2)
 #define CFD4FIFOSTA(fifo)    ((volatile uint32_t *)(&CFD4TXQSTA + (((uint8_t)fifo) * 12)))
+#define CFD4FIFOSTACLR(fifo) (CFD1FIFOSTA(fifo) + 1)
 #define CFD4FIFOUA(fifo)     ((volatile uint32_t *)(&CFD4TXQUA + (((uint8_t)fifo) * 12)))
 
 int can_setTxFifo(rt_dev_t device, uint8_t fifo, uint8_t messageCount)
@@ -892,6 +897,104 @@ int can_setRxFifo(rt_dev_t device, uint8_t fifo, uint8_t messageCount)
     conBits->FSIZE = messageCount - 1;
     conBits->PLSIZE = CAN_FIFO_DATA8;  // 8 bytes of data
     conBits->TXEN = 0;
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+int can_setFifoHandler(rt_dev_t device, void (*handler)(uint8_t fifo, uint8_t event))
+{
+#if CAN_COUNT >= 1
+    uint8_t can = MINOR(device);
+
+    switch (can)
+    {
+        case 0:
+            CFD1INTbits.RXIE = 1;
+            CFD1INTbits.TXIE = 1;
+            _CAN1IP = 4;
+            _CAN1IE = 1;
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            CFD2INTbits.RXIE = 1;
+            CFD2INTbits.TXIE = 1;
+            _CAN2IP = 4;
+            _CAN2IE = 1;
+            break;
+#    endif
+#    if CAN_COUNT >= 3
+        case 2:
+            CFD3INTbits.RXIE = 1;
+            CFD3INTbits.TXIE = 1;
+            _CAN3IP = 4;
+            _CAN3IE = 1;
+            break;
+#    endif
+#    if CAN_COUNT >= 4
+        case 3:
+            CFD4INTbits.RXIE = 1;
+            CFD4INTbits.TXIE = 1;
+            _CAN4IP = 4;
+            _CAN4IE = 1;
+            break;
+#    endif
+        default:
+            return -1;
+    }
+    cans[can].fifoHandler = handler;
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+int can_setFifoEventsHandler(rt_dev_t device, uint8_t fifo, CAN_FIFO_EVENTS eventBits)
+{
+#if CAN_COUNT >= 1
+    uint8_t can = MINOR(device);
+
+    if (fifo == 0)
+    {
+        return -1;
+    }
+    if (fifo >= CAN_FIFO_COUNT)
+    {
+        return -1;
+    }
+
+    __CFD1FIFOCON1bits_t *conBits = NULL;
+    switch (can)
+    {
+        case 0:
+            conBits = (__CFD1FIFOCON1bits_t *)CFD1FIFOCON(fifo);
+            break;
+#    if CAN_COUNT >= 2
+        case 1:
+            conBits = (__CFD1FIFOCON1bits_t *)CFD2FIFOCON(fifo);
+            break;
+#    endif
+#    if CAN_COUNT >= 3
+        case 2:
+            conBits = (__CFD1FIFOCON1bits_t *)CFD3FIFOCON(fifo);
+            break;
+#    endif
+#    if CAN_COUNT >= 4
+        case 3:
+            conBits = (__CFD1FIFOCON1bits_t *)CFD4FIFOCON(fifo);
+            break;
+#    endif
+        default:
+            return -1;
+    }
+
+    conBits->RXOVIE = ((eventBits & CAN_RXFIFO_OVERFLOW) != 0) ? 1 : 0;     // Overflow Interrupt Enable bit
+    conBits->TFERFFIE = ((eventBits & CAN_RXFIFO_FULL) != 0) ? 1 : 0;       // Transmit/Receive FIFO Empty/Full Interrupt Enable bit
+    conBits->TFHRFHIE = ((eventBits & CAN_RXFIFO_HALF_FULL) != 0) ? 1 : 0;  // Transmit/Receive FIFO Half Empty/Half Full Interrupt Enable bit
+    conBits->TFNRFNIE = ((eventBits & CAN_RXFIFO_NOT_EMPTY) != 0) ? 1 : 0;  // Transmit/Receive FIFO Not Full/Not Empty Interrupt Enable bit
 
     return 0;
 #else
@@ -1352,3 +1455,59 @@ int can_filterDisable(rt_dev_t device, uint8_t nFilter)
     return -1;
 #endif
 }
+
+#if (CAN_COUNT >= 1)
+void __ISR(_CAN1_VECTOR, CANIPR) CAN1Interrupt(void)
+{
+    uint8_t fifo = CFD1VECbits.ICODE;  // TODO this register get also global can interrupts
+    if (cans[0].fifoHandler != NULL)
+    {
+        (*cans[0].fifoHandler)(fifo, *CFD1FIFOSTA(fifo) & 0x0000001F);
+    }
+    *CFD1FIFOSTACLR(fifo) = 0x0000001F;
+
+    _CAN1IF = 0;
+}
+#endif
+
+#if (CAN_COUNT >= 2)
+void __ISR(_CAN2_VECTOR, CANIPR) CAN2Interrupt(void)
+{
+    uint8_t fifo = CFD2VECbits.ICODE;  // TODO this register get also global can interrupts
+    if (cans[1].fifoHandler != NULL)
+    {
+        (*cans[1].fifoHandler)(fifo, *CFD2FIFOSTA(fifo) & 0x0000001F);
+    }
+    *CFD2FIFOSTACLR(fifo) = 0x0000001F;
+
+    _CAN2IF = 0;
+}
+#endif
+
+#if (CAN_COUNT >= 3)
+void __ISR(_CAN3_VECTOR, CANIPR) CAN3Interrupt(void)
+{
+    uint8_t fifo = CFD3VECbits.ICODE;  // TODO this register get also global can interrupts
+    if (cans[2].fifoHandler != NULL)
+    {
+        (*cans[2].fifoHandler)(fifo, *CFD3FIFOSTA(fifo) & 0x0000001F);
+    }
+    *CFD3FIFOSTACLR(fifo) = 0x0000001F;
+
+    _CAN3IF = 0;
+}
+#endif
+
+#if (CAN_COUNT >= 4)
+void __ISR(_CAN4_VECTOR, CANIPR) CAN4Interrupt(void)
+{
+    uint8_t fifo = CFD4VECbits.ICODE;  // TODO this register get also global can interrupts
+    if (cans[3].fifoHandler != NULL)
+    {
+        (*cans[3].fifoHandler)(fifo, *CFD4FIFOSTA(fifo) & 0x0000001F);
+    }
+    *CFD4FIFOSTACLR(fifo) = 0x0000001F;
+
+    _CAN4IF = 0;
+}
+#endif
