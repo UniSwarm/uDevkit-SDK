@@ -84,35 +84,25 @@ void board_setBridgesEnabled(int enable);
 
 // IOs
 #define IO_COUNT 0
-// UMC 90
-//#define IO_COUNT 8
-#define IO_1_IN PORTEbits.RE4
-#define IO_2_IN PORTEbits.RE5
-#define IO_3_IN PORTDbits.RD15
-#define IO_4_IN PORTEbits.RE3
-#define IO_5_IN PORTCbits.RC12
-#define IO_6_IN PORTDbits.RD0
-#define IO_7_IN PORTDbits.RD2
-#define IO_8_IN PORTEbits.RE14
 int8_t board_getIo(uint8_t io);
 
 // limit switches inputs
 #define LIMIT_SWITCH_NO_PORT   0
 #define LIMIT_SWITCH_NO_OFFSET 0
-// #define LIMIT_SWITCH_1_PORT    PORTC
-// #define LIMIT_SWITCH_1_OFFSET  1
-// #define LIMIT_SWITCH_2_PORT    PORTC
-// #define LIMIT_SWITCH_2_OFFSET  2
-// #define LIMIT_SWITCH_3_PORT    PORTC
-// #define LIMIT_SWITCH_3_OFFSET  0
-// #define LIMIT_SWITCH_4_PORT    PORTD
-// #define LIMIT_SWITCH_4_OFFSET  10
-// #define LIMIT_SWITCH_COUNT     4
 
 // STO
 #define STO_STATUS_OK_IN PORTEbits.RE0
 #define STO_OUTPUT       PORTEbits.RE1
 #define P12V_ENABLE      LATEbits.LATE2
+
+// IO dbg
+#ifndef SECONDARY
+#    define DBG1 LATBbits.LATB4
+#    define DBG2 LATEbits.LATE13
+#else
+#    define DBG1 LATDbits.LATD2
+#    define DBG2 LATEbits.LATE12
+#endif
 
 // Currents limits
 #define CURRENT_PEAK_LIMIT      3500

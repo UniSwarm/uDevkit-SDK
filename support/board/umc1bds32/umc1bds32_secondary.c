@@ -40,8 +40,14 @@ int board_init_io(void)
     _SDI1R = 62;             // coder_data = QEI1B_RX_DATA, RC14
     _RP41R = _RPOUT_S1SCK1;  // coder_clk = QEI1A_TX_DATA, RB9
 
+    // UART1 dbg
+    _RP66R = _RPOUT_S1U1TX;  // TX1 ==> RP66
+
     // Lock configuration pin
     lockIoConfig();
+
+    TRISDbits.TRISD2 = 0;   // DBG1
+    TRISEbits.TRISE12 = 0;  // DBG2
 #endif
 
     return 0;
