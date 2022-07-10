@@ -40,6 +40,17 @@ extern "C" {
 #    define CAN_COUNT 0
 #endif
 
+typedef enum
+{
+    CAN_RXFIFO_NOT_EMPTY = 0x01,   ///<
+    CAN_TXFIFO_NOT_FULL = 0x01,    ///<
+    CAN_RXFIFO_HALF_FULL = 0x02,   ///<
+    CAN_TXFIFO_HALF_EMPTY = 0x02,  ///<
+    CAN_RXFIFO_FULL = 0x04,        ///<
+    CAN_TXFIFO_EMPTY = 0x04,       ///<
+    CAN_RXFIFO_OVERFLOW = 0x08,    ///<
+} CAN_FIFO_EVENTS;
+
 #if defined(DEVICE_33CDV128MP506) || defined(DEVICE_33CDV256MP506) || defined(DEVICE_33CDVC128MP506) || defined(DEVICE_33CDVC256MP506)                         \
     || defined(DEVICE_33CH64MP502) || defined(DEVICE_33CH64MP503) || defined(DEVICE_33CH64MP505) || defined(DEVICE_33CH64MP506) || defined(DEVICE_33CH64MP508) \
     || defined(DEVICE_33CH128MP502) || defined(DEVICE_33CH128MP503) || defined(DEVICE_33CH128MP505) || defined(DEVICE_33CH128MP506)                            \
