@@ -397,6 +397,30 @@ int can_setRxFifo(rt_dev_t device, uint8_t fifo, uint8_t messageCount)
     return 0;
 }
 
+int can_setFifoHandler(rt_dev_t device, void (*handler)(uint8_t fifo, uint8_t event))
+{
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    // TODO implement me
+    return 0;
+}
+
+int can_setFifoEventsHandler(rt_dev_t device, uint8_t fifo, CAN_FIFO_EVENTS eventBits)
+{
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    // TODO implement me
+    return 0;
+}
+
 int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 {
     UDK_UNUSED(fifo);
