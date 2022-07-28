@@ -451,7 +451,7 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 #endif
 }
 
-#if TIMER_COUNT >= 1
+#if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _T1Interrupt(void)
 {
     if (_timers[0].handler)
