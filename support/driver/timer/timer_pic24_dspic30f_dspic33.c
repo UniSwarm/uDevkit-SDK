@@ -47,7 +47,11 @@ struct timer_dev
     void (*handler)(void);
 };
 
-struct timer_dev timers[] = {
+#ifdef UDEVKIT_HAVE_CONFIG
+#    include "udevkit_config.h"
+#endif
+
+struct timer_dev _timers[] = {
 #if TIMER_COUNT >= 1
     {.periodMs = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
@@ -77,6 +81,34 @@ struct timer_dev timers[] = {
 #endif
 };
 
+#if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
+void _T1Interrupt(void);
+#endif
+#if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
+void _T2Interrupt(void);
+#endif
+#if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
+void _T3Interrupt(void);
+#endif
+#if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
+void _T4Interrupt(void);
+#endif
+#if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
+void _T5Interrupt(void);
+#endif
+#if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
+void _T6Interrupt(void);
+#endif
+#if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
+void _T7Interrupt(void);
+#endif
+#if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
+void _T8Interrupt(void);
+#endif
+#if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
+void _T9Interrupt(void);
+#endif
+
 /**
  * @brief Gives a free timer device number
  * @return timer device number
@@ -89,7 +121,7 @@ rt_dev_t timer_getFreeDevice(void)
 
     for (i = 0; i < TIMER_COUNT; i++)
     {
-        if (timers[i].flags.used == 0)
+        if (_timers[i].flags.used == 0)
         {
             break;
         }
@@ -121,13 +153,13 @@ int timer_open(rt_dev_t device)
     {
         return -1;
     }
-    if (timers[timer].flags.used == 1)
+    if (_timers[timer].flags.used == 1)
     {
         return -1;
     }
 
-    timers[timer].flags.used = 1;
-    timers[timer].handler = NULL;
+    _timers[timer].flags.used = 1;
+    _timers[timer].handler = NULL;
 
     return 0;
 #else
@@ -150,7 +182,7 @@ int timer_close(rt_dev_t device)
 
     timer_disable(device);
 
-    timers[timer].flags.val = TIMER_FLAG_UNUSED;
+    _timers[timer].flags.val = TIMER_FLAG_UNUSED;
 
     return 0;
 #else
@@ -172,14 +204,14 @@ int timer_enable(rt_dev_t device)
         return -1;
     }
 
-    timers[timer].flags.enabled = 1;
+    _timers[timer].flags.enabled = 1;
 
     switch (timer)
     {
         case 0:
             T1CONbits.TON = 1;  // enable timer module
             _T1IF = 0;
-            if (timers[0].handler)
+            if (_timers[0].handler)
             {
                 _T1IE = 1;
             }
@@ -193,7 +225,7 @@ int timer_enable(rt_dev_t device)
         case 1:
             T2CONbits.TON = 1;  // enable timer module
             _T2IF = 0;
-            if (timers[1].handler)
+            if (_timers[1].handler)
             {
                 _T2IE = 1;
             }
@@ -208,7 +240,7 @@ int timer_enable(rt_dev_t device)
         case 2:
             T3CONbits.TON = 1;  // enable timer module
             _T3IF = 0;
-            if (timers[2].handler)
+            if (_timers[2].handler)
             {
                 _T3IE = 1;
             }
@@ -223,7 +255,7 @@ int timer_enable(rt_dev_t device)
         case 3:
             T4CONbits.TON = 1;  // enable timer module
             _T4IF = 0;
-            if (timers[3].handler)
+            if (_timers[3].handler)
             {
                 _T4IE = 1;
             }
@@ -238,7 +270,7 @@ int timer_enable(rt_dev_t device)
         case 4:
             T5CONbits.TON = 1;  // enable timer module
             _T5IF = 0;
-            if (timers[4].handler)
+            if (_timers[4].handler)
             {
                 _T5IE = 1;
             }
@@ -253,7 +285,7 @@ int timer_enable(rt_dev_t device)
         case 5:
             T6CONbits.TON = 1;  // enable timer module
             _T6IF = 0;
-            if (timers[5].handler)
+            if (_timers[5].handler)
             {
                 _T6IE = 1;
             }
@@ -268,7 +300,7 @@ int timer_enable(rt_dev_t device)
         case 6:
             T7CONbits.TON = 1;  // enable timer module
             _T7IF = 0;
-            if (timers[6].handler)
+            if (_timers[6].handler)
             {
                 _T7IE = 1;
             }
@@ -283,7 +315,7 @@ int timer_enable(rt_dev_t device)
         case 7:
             T8CONbits.TON = 1;  // enable timer module
             _T8IF = 0;
-            if (timers[7].handler)
+            if (_timers[7].handler)
             {
                 _T8IE = 1;
             }
@@ -298,7 +330,7 @@ int timer_enable(rt_dev_t device)
         case 8:
             T9CONbits.TON = 1;  // enable timer module
             _T9IF = 0;
-            if (timers[8].handler)
+            if (_timers[8].handler)
             {
                 _T9IE = 1;
             }
@@ -331,7 +363,7 @@ int timer_disable(rt_dev_t device)
         return -1;
     }
 
-    timers[timer].flags.enabled = 0;
+    _timers[timer].flags.enabled = 0;
 
     switch (timer)
     {
@@ -410,8 +442,8 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
         return -1;
     }
 
-    timers[timer].handler = handler;
-    if (timers[timer].flags.enabled == 1)
+    _timers[timer].handler = handler;
+    if (_timers[timer].flags.enabled == 1)
     {
         timer_enable(device);
     }
@@ -438,7 +470,7 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
         return -1;
     }
 
-    timers[timer].periodMs = periodMs;
+    _timers[timer].periodMs = periodMs;
 
     prvalue = sysclock_periphFreq(SYSCLOCK_CLOCK_TIMER) / 1000 * periodMs;
     if (prvalue > 65535)
@@ -527,7 +559,7 @@ uint32_t timer_periodMs(rt_dev_t device)
         return 0;
     }
 
-    return timers[timer].periodMs;
+    return _timers[timer].periodMs;
 #else
     return 0;
 #endif
@@ -669,11 +701,11 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 }
 
 #if TIMER_COUNT >= 1
-void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void)
+void __attribute__((interrupt, no_auto_psv, weak)) _T1Interrupt(void)
 {
-    if (timers[0].handler)
+    if (_timers[0].handler)
     {
-        (*timers[0].handler)();
+        (*_timers[0].handler)();
     }
 
     _T1IF = 0;
@@ -681,11 +713,11 @@ void __attribute__((interrupt, no_auto_psv)) _T1Interrupt(void)
 #endif
 
 #if TIMER_COUNT >= 2
-void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void)
+void __attribute__((interrupt, no_auto_psv, weak)) _T2Interrupt(void)
 {
-    if (timers[1].handler)
+    if (_timers[1].handler)
     {
-        (*timers[1].handler)();
+        (*_timers[1].handler)();
     }
 
     _T2IF = 0;
@@ -693,11 +725,11 @@ void __attribute__((interrupt, no_auto_psv)) _T2Interrupt(void)
 #endif
 
 #if TIMER_COUNT >= 3
-void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void)
+void __attribute__((interrupt, no_auto_psv, weak)) _T3Interrupt(void)
 {
-    if (timers[2].handler)
+    if (_timers[2].handler)
     {
-        (*timers[2].handler)();
+        (*_timers[2].handler)();
     }
 
     _T3IF = 0;
@@ -705,11 +737,11 @@ void __attribute__((interrupt, no_auto_psv)) _T3Interrupt(void)
 #endif
 
 #if TIMER_COUNT >= 4
-void __attribute__((interrupt, no_auto_psv)) _T4Interrupt(void)
+void __attribute__((interrupt, no_auto_psv, weak)) _T4Interrupt(void)
 {
-    if (timers[3].handler)
+    if (_timers[3].handler)
     {
-        (*timers[3].handler)();
+        (*_timers[3].handler)();
     }
 
     _T4IF = 0;
@@ -717,11 +749,11 @@ void __attribute__((interrupt, no_auto_psv)) _T4Interrupt(void)
 #endif
 
 #if TIMER_COUNT >= 5
-void __attribute__((interrupt, no_auto_psv)) _T5Interrupt(void)
+void __attribute__((interrupt, no_auto_psv, weak)) _T5Interrupt(void)
 {
-    if (timers[4].handler)
+    if (_timers[4].handler)
     {
-        (*timers[4].handler)();
+        (*_timers[4].handler)();
     }
 
     _T5IF = 0;
@@ -729,11 +761,11 @@ void __attribute__((interrupt, no_auto_psv)) _T5Interrupt(void)
 #endif
 
 #if TIMER_COUNT >= 6
-void __attribute__((interrupt, no_auto_psv)) _T6Interrupt(void)
+void __attribute__((interrupt, no_auto_psv, weak)) _T6Interrupt(void)
 {
-    if (timers[5].handler)
+    if (_timers[5].handler)
     {
-        (*timers[5].handler)();
+        (*_timers[5].handler)();
     }
 
     _T6IF = 0;
@@ -741,11 +773,11 @@ void __attribute__((interrupt, no_auto_psv)) _T6Interrupt(void)
 #endif
 
 #if TIMER_COUNT >= 7
-void __attribute__((interrupt, no_auto_psv)) _T7Interrupt(void)
+void __attribute__((interrupt, no_auto_psv, weak)) _T7Interrupt(void)
 {
-    if (timers[6].handler)
+    if (_timers[6].handler)
     {
-        (*timers[6].handler)();
+        (*_timers[6].handler)();
     }
 
     _T7IF = 0;
@@ -753,11 +785,11 @@ void __attribute__((interrupt, no_auto_psv)) _T7Interrupt(void)
 #endif
 
 #if TIMER_COUNT >= 8
-void __attribute__((interrupt, no_auto_psv)) _T8Interrupt(void)
+void __attribute__((interrupt, no_auto_psv, weak)) _T8Interrupt(void)
 {
-    if (timers[7].handler)
+    if (_timers[7].handler)
     {
-        (*timers[7].handler)();
+        (*_timers[7].handler)();
     }
 
     _T8IF = 0;
@@ -765,28 +797,28 @@ void __attribute__((interrupt, no_auto_psv)) _T8Interrupt(void)
 #endif
 
 #if TIMER_COUNT >= 9
-void __attribute__((interrupt, no_auto_psv)) _T9Interrupt(void)
+void __attribute__((interrupt, no_auto_psv, weak)) _T9Interrupt(void)
 {
-    if (timers[8].handler)
+    if (_timers[8].handler)
     {
-        (*timers[8].handler)();
+        (*_timers[8].handler)();
     }
 
     _T9IF = 0;
 }
 #endif
 
-void timer_reconfig(void)
+/*void timer_reconfig(void)
 {
     uint8_t i;
     rt_dev_t device;
 
     for (i = 0; i < TIMER_COUNT; i++)
     {
-        if (timers[i].flags.used == 1)
+        if (_timers[i].flags.used == 1)
         {
             device = MKDEV(DEV_CLASS_TIMER, i);
-            timer_setPeriodMs(device, timers[i].periodMs);
+            timer_setPeriodMs(device, _timers[i].periodMs);
         }
     }
-}
+}*/
