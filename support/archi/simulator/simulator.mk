@@ -45,19 +45,20 @@ INCLUDEPATH += -I$(OUT_SIM_PWD)
 
 # simulator support
 SIM_OBJECTS := $(addprefix $(OUT_SIM_PWD)/, $(notdir $(SRC:.c=.o) $(patsubst %.cpp,%.o,$(SIM_SRC:.c=.o))))
+-include $(wildcard $(OUT_SIM_PWD)/*.d)
 $(SIM_OBJECTS) : $(CONFIG_HEADERS)
 
 # rule to build OBJECTS to OUT_SIM_PWD and give dependencies
 $(OUT_SIM_PWD)/%.o : %.c
 	@test -d $(OUT_SIM_PWD) || mkdir -p $(OUT_SIM_PWD)
 	@printf "$(COMPCOLOR)CC %-36s => %s$(NORM)\n" $(notdir $<) $(OUT_SIM_PWD)/$(notdir $@)
-	$(VERB)$(CC_SIM) $(CCFLAGS) -c  $< $(DEFINES) $(DEFINES_SIM) $(INCLUDEPATH) -o  $(OUT_SIM_PWD)/$(notdir $@)
-	@$(CC_SIM) $(CCFLAGS) -MM $< $(DEFINES) $(DEFINES_SIM) $(INCLUDEPATH) -MT $(OUT_SIM_PWD)/$(notdir $@) > $(OUT_SIM_PWD)/$*_sim.d
+	$(VERB)$(CC_SIM) $(CCFLAGS) -c $< $(DEFINES) $(DEFINES_SIM) $(INCLUDEPATH) -o $(OUT_SIM_PWD)/$(notdir $@)
+	@$(CC_SIM) $(CCFLAGS) -MM $< $(DEFINES) $(DEFINES_SIM) $(INCLUDEPATH) -MT $(OUT_SIM_PWD)/$(notdir $@) > $(OUT_SIM_PWD)/$*.d
 $(OUT_SIM_PWD)/%.o : %.cpp
 	@test -d $(OUT_SIM_PWD) || mkdir -p $(OUT_SIM_PWD)
 	@printf "$(COMPCOLOR)CPPC %-34s => %s$(NORM)\n" $(notdir $<) $(OUT_SIM_PWD)/$(notdir $@)
-	$(VERB)$(CPPC_SIM) $(CCFLAGS) -c  $< $(DEFINES) $(DEFINES_SIM) $(INCLUDEPATH) -o  $(OUT_SIM_PWD)/$(notdir $@)
-	@$(CPPC_SIM) $(CCFLAGS) -MM $< $(DEFINES) $(DEFINES_SIM) $(INCLUDEPATH) -MT $(OUT_SIM_PWD)/$(notdir $@) > $(OUT_SIM_PWD)/$*_simcpp.d
+	$(VERB)$(CPPC_SIM) $(CCFLAGS) -c $< $(DEFINES) $(DEFINES_SIM) $(INCLUDEPATH) -o $(OUT_SIM_PWD)/$(notdir $@)
+	@$(CPPC_SIM) $(CCFLAGS) -MM $< $(DEFINES) $(DEFINES_SIM) $(INCLUDEPATH) -MT $(OUT_SIM_PWD)/$(notdir $@) > $(OUT_SIM_PWD)/$*.d
 
 # rule to link SIM_OBJECTS to an elf in OUT_SIM_PWD
 $(OUT_SIM_PWD)/$(SIM_EXE) : $(SIM_OBJECTS)
