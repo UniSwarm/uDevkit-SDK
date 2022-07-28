@@ -43,8 +43,14 @@ struct timer_dev
     void (*handler)(void);
 };
 
-static struct timer_dev timers[] = {
+#ifdef UDEVKIT_HAVE_CONFIG
+#    include "udevkit_config.h"
+#endif
+
+static struct timer_dev _timers[] = {
+#if TIMER_COUNT >= 1
     {.periodUs = 1000, .value = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
+#endif
 #if TIMER_COUNT >= 2
     {.periodUs = 1000, .value = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
@@ -71,153 +77,153 @@ static struct timer_dev timers[] = {
 #endif
 };
 
-#if TIMER_COUNT >= 1
-static void *timer1_handler(void *p_data)
+#if TIMER_COUNT >= 1 && !defined(TIMER1_DISABLE)
+static void *_timer1_thread(void *p_data)
 {
     UDK_UNUSED(p_data);
     while (1)
     {
-        usleep(timers[0].periodUs);
-        timers[0].value++;
-        if (timers[0].handler)
+        usleep(_timers[0].periodUs);
+        _timers[0].value++;
+        if (_timers[0].handler)
         {
-            (*timers[0].handler)();
+            (*_timers[0].handler)();
         }
     }
     return NULL;
 }
 #endif
 
-#if TIMER_COUNT >= 2
-static void *timer2_handler(void *p_data)
+#if TIMER_COUNT >= 2 && !defined(TIMER2_DISABLE)
+static void *_timer2_thread(void *p_data)
 {
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(timers[1].periodUs);
-        timers[1].value++;
-        if (timers[1].handler)
+        psleep(_timers[1].periodUs);
+        _timers[1].value++;
+        if (_timers[1].handler)
         {
-            (*timers[1].handler)();
+            (*_timers[1].handler)();
         }
     }
     return NULL;
 }
 #endif
 
-#if TIMER_COUNT >= 3
-static void *timer3_handler(void *p_data)
+#if TIMER_COUNT >= 3 && !defined(TIMER3_DISABLE)
+static void *_timer3_thread(void *p_data)
 {
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(timers[2].periodUs);
-        timers[2].value++;
-        if (timers[2].handler)
+        psleep(_timers[2].periodUs);
+        _timers[2].value++;
+        if (_timers[2].handler)
         {
-            (*timers[2].handler)();
+            (*_timers[2].handler)();
         }
     }
     return NULL;
 }
 #endif
 
-#if TIMER_COUNT >= 4
-static void *timer4_handler(void *p_data)
+#if TIMER_COUNT >= 4 && !defined(TIMER4_DISABLE)
+static void *_timer4_thread(void *p_data)
 {
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(timers[3].periodUs);
-        timers[3].value++;
-        if (timers[3].handler)
+        psleep(_timers[3].periodUs);
+        _timers[3].value++;
+        if (_timers[3].handler)
         {
-            (*timers[3].handler)();
+            (*_timers[3].handler)();
         }
     }
     return NULL;
 }
 #endif
 
-#if TIMER_COUNT >= 5
-static void *timer5_handler(void *p_data)
+#if TIMER_COUNT >= 5 && !defined(TIMER5_DISABLE)
+static void *_timer5_thread(void *p_data)
 {
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(timers[4].periodUs);
-        timers[4].value++;
-        if (timers[4].handler)
+        psleep(_timers[4].periodUs);
+        _timers[4].value++;
+        if (_timers[4].handler)
         {
-            (*timers[4].handler)();
+            (*_timers[4].handler)();
         }
     }
     return NULL;
 }
 #endif
 
-#if TIMER_COUNT >= 6
-static void *timer6_handler(void *p_data)
+#if TIMER_COUNT >= 6 && !defined(TIMER6_DISABLE)
+static void *_timer6_thread(void *p_data)
 {
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(timers[5].periodUs);
-        timers[5].value++;
-        if (timers[5].handler)
+        psleep(_timers[5].periodUs);
+        _timers[5].value++;
+        if (_timers[5].handler)
         {
-            (*timers[5].handler)();
+            (*_timers[5].handler)();
         }
     }
     return NULL;
 }
 #endif
 
-#if TIMER_COUNT >= 7
-static void *timer7_handler(void *p_data)
+#if TIMER_COUNT >= 7 && !defined(TIMER7_DISABLE)
+static void *_timer7_thread(void *p_data)
 {
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(timers[6].periodUs);
-        timers[6].value++;
-        if (timers[6].handler)
+        psleep(_timers[6].periodUs);
+        _timers[6].value++;
+        if (_timers[6].handler)
         {
-            (*timers[6].handler)();
+            (*_timers[6].handler)();
         }
     }
     return NULL;
 }
 #endif
 
-#if TIMER_COUNT >= 8
-static void *timer8_handler(void *p_data)
+#if TIMER_COUNT >= 8 && !defined(TIMER8_DISABLE)
+static void *_timer8_thread(void *p_data)
 {
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(timers[7].periodUs);
-        timers[7].value++;
-        if (timers[7].handler)
+        psleep(_timers[7].periodUs);
+        _timers[7].value++;
+        if (_timers[7].handler)
         {
-            (*timers[7].handler)();
+            (*_timers[7].handler)();
         }
     }
     return NULL;
 }
 #endif
 
-#if TIMER_COUNT >= 9
-static void *timer9_handler(void *p_data)
+#if TIMER_COUNT >= 9 && !defined(TIMER9_DISABLE)
+static void *_timer9_thread(void *p_data)
 {
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(timers[8].periodUs);
-        timers[8].value++;
-        if (timers[8].handler)
+        psleep(_timers[8].periodUs);
+        _timers[8].value++;
+        if (_timers[8].handler)
         {
-            (*timers[8].handler)();
+            (*_timers[8].handler)();
         }
     }
     return NULL;
@@ -234,7 +240,7 @@ rt_dev_t timer_getFreeDevice(void)
 
     for (i = 0; i < TIMER_COUNT; i++)
     {
-        if (timers[i].flags.used == 0)
+        if (_timers[i].flags.used == 0)
         {
             break;
         }
@@ -245,7 +251,7 @@ rt_dev_t timer_getFreeDevice(void)
         return NULLDEV;
     }
 
-    timers[i].flags.used = 1;
+    _timers[i].flags.used = 1;
 
     return MKDEV(DEV_CLASS_TIMER, i);
 }
@@ -261,13 +267,13 @@ int timer_open(rt_dev_t device)
     {
         return -1;
     }
-    if (timers[timer].flags.used == 1)
+    if (_timers[timer].flags.used == 1)
     {
         return -1;
     }
 
-    timers[timer].flags.used = 1;
-    timers[timer].handler = NULL;
+    _timers[timer].flags.used = 1;
+    _timers[timer].handler = NULL;
 
     return 0;
 }
@@ -287,7 +293,7 @@ int timer_close(rt_dev_t device)
 
     timer_disable(device);
 
-    timers[timer].flags.val = TIMER_FLAG_UNUSED;
+    _timers[timer].flags.val = TIMER_FLAG_UNUSED;
 
     return 0;
 #else
@@ -308,51 +314,53 @@ int timer_enable(rt_dev_t device)
         return -1;
     }
 
-    timers[timer].flags.enabled = 1;
+    _timers[timer].flags.enabled = 1;
 
     switch (timer)
     {
+#if TIMER_COUNT >= 1 && !defined(TIMER1_DISABLE)
         case 0:
-            pthread_create(&timers[timer].thread_timer, NULL, timer1_handler, NULL);
+            pthread_create(&_timers[timer].thread_timer, NULL, _timer1_thread, NULL);
             break;
-#if TIMER_COUNT >= 2
+#endif
+#if TIMER_COUNT >= 2 && !defined(TIMER2_DISABLE)
         case 1:
-            pthread_create(&timers[timer].thread_timer, NULL, timer2_handler, NULL);
+            pthread_create(&_timers[timer].thread_timer, NULL, _timer2_thread, NULL);
             break;
 #endif
-#if TIMER_COUNT >= 3
+#if TIMER_COUNT >= 3 && !defined(TIMER3_DISABLE)
         case 2:
-            pthread_create(&timers[timer].thread_timer, NULL, timer3_handler, NULL);
+            pthread_create(&_timers[timer].thread_timer, NULL, _timer3_thread, NULL);
             break;
 #endif
-#if TIMER_COUNT >= 4
+#if TIMER_COUNT >= 4 && !defined(TIMER4_DISABLE)
         case 3:
-            pthread_create(&timers[timer].thread_timer, NULL, timer4_handler, NULL);
+            pthread_create(&_timers[timer].thread_timer, NULL, _timer4_thread, NULL);
             break;
 #endif
-#if TIMER_COUNT >= 5
+#if TIMER_COUNT >= 5 && !defined(TIMER5_DISABLE)
         case 4:
-            pthread_create(&timers[timer].thread_timer, NULL, timer5_handler, NULL);
+            pthread_create(&_timers[timer].thread_timer, NULL, _timer5_thread, NULL);
             break;
 #endif
-#if TIMER_COUNT >= 6
+#if TIMER_COUNT >= 6 && !defined(TIMER6_DISABLE)
         case 5:
-            pthread_create(&timers[timer].thread_timer, NULL, timer6_handler, NULL);
+            pthread_create(&_timers[timer].thread_timer, NULL, _timer6_thread, NULL);
             break;
 #endif
-#if TIMER_COUNT >= 7
+#if TIMER_COUNT >= 7 && !defined(TIMER7_DISABLE)
         case 6:
-            pthread_create(&timers[timer].thread_timer, NULL, timer7_handler, NULL);
+            pthread_create(&_timers[timer].thread_timer, NULL, _timer7_thread, NULL);
             break;
 #endif
-#if TIMER_COUNT >= 8
+#if TIMER_COUNT >= 8 && !defined(TIMER8_DISABLE)
         case 7:
-            pthread_create(&timers[timer].thread_timer, NULL, timer8_handler, NULL);
+            pthread_create(&_timers[timer].thread_timer, NULL, _timer8_thread, NULL);
             break;
 #endif
-#if TIMER_COUNT >= 9
+#if TIMER_COUNT >= 9 && !defined(TIMER9_DISABLE)
         case 8:
-            pthread_create(&timers[timer].thread_timer, NULL, timer9_handler, NULL);
+            pthread_create(&_timers[timer].thread_timer, NULL, _timer9_thread, NULL);
             break;
 #endif
     }
@@ -373,9 +381,9 @@ int timer_disable(rt_dev_t device)
         return -1;
     }
 
-    timers[timer].flags.enabled = 0;
+    _timers[timer].flags.enabled = 0;
 
-    pthread_cancel(timers[timer].thread_timer);
+    pthread_cancel(_timers[timer].thread_timer);
 
     return 0;
 }
@@ -394,7 +402,7 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
         return -1;
     }
 
-    timers[timer].handler = handler;
+    _timers[timer].handler = handler;
 
     return 0;
 }
@@ -438,7 +446,7 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
         return -1;
     }
 
-    timers[timer].periodUs = periodMs * 1000;
+    _timers[timer].periodUs = periodMs * 1000;
 
     return 0;
 }
@@ -456,7 +464,7 @@ uint32_t timer_periodMs(rt_dev_t device)
         return 0;
     }
 
-    return timers[timer].periodUs / 1000;
+    return _timers[timer].periodUs / 1000;
 }
 
 /**
@@ -472,7 +480,7 @@ int timer_setPeriodUs(rt_dev_t device, uint32_t periodUs)
         return -1;
     }
 
-    timers[timer].periodUs = periodUs;
+    _timers[timer].periodUs = periodUs;
 
     return 0;
 }
@@ -490,7 +498,7 @@ uint32_t timer_periodUs(rt_dev_t device)
         return 0;
     }
 
-    return timers[timer].periodUs;
+    return _timers[timer].periodUs;
 }
 
 /**
@@ -506,7 +514,7 @@ uint16_t timer_getValue(rt_dev_t device)
         return 0;
     }
 
-    return timers[timer].value;
+    return _timers[timer].value;
 }
 
 /**
@@ -522,7 +530,7 @@ int timer_setValue(rt_dev_t device, uint16_t value)
         return -1;
     }
 
-    timers[timer].value = value;
+    _timers[timer].value = value;
 
     return 0;
 }
