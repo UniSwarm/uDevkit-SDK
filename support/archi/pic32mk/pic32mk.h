@@ -18,6 +18,9 @@ extern "C" {
 
 #include "../pic32/pic32.h"
 
+void archi_prefetch_enable(void);
+void archi_prefetch_disable(void);
+
 #ifdef __cplusplus
 }
 #endif
