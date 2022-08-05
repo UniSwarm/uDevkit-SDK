@@ -63,6 +63,16 @@ extern "C" {
 #    define CAN_COUNT 0
 #endif
 
+typedef enum
+{
+    CAN_RXFIFO_NOT_EMPTY = 0x01,   ///<
+    CAN_TXFIFO_NOT_FULL = 0x01,    ///<
+    CAN_RXFIFO_HALF_FULL = 0x02,   ///<
+    CAN_TXFIFO_HALF_EMPTY = 0x02,  ///<
+    CAN_RXFIFO_FULL = 0x04,        ///<
+    CAN_TXFIFO_EMPTY = 0x04,       ///<
+} CAN_FIFO_EVENTS;
+
 #if CAN_COUNT > 0
 #    define CAN_FIFO_COUNT 32
 #else
