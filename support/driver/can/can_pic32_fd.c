@@ -55,6 +55,7 @@ struct can_dev
 #        define CAN1_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
 static uint8_t __attribute__((coherent, aligned(16))) _can1_fifo_buffer[CAN1_FIFO_SIZE];
+void CAN1Interrupt(void);
 #endif
 
 #if CAN_COUNT >= 2
@@ -62,6 +63,7 @@ static uint8_t __attribute__((coherent, aligned(16))) _can1_fifo_buffer[CAN1_FIF
 #        define CAN2_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
 static uint8_t __attribute__((coherent, aligned(16))) _can2_fifo_buffer[CAN2_FIFO_SIZE];
+void CAN2Interrupt(void);
 #endif
 
 #if CAN_COUNT >= 3
@@ -69,6 +71,7 @@ static uint8_t __attribute__((coherent, aligned(16))) _can2_fifo_buffer[CAN2_FIF
 #        define CAN3_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
 static uint8_t __attribute__((coherent, aligned(16))) _can3_fifo_buffer[CAN3_FIFO_SIZE];
+void CAN3Interrupt(void);
 #endif
 
 #if CAN_COUNT >= 4
@@ -76,6 +79,7 @@ static uint8_t __attribute__((coherent, aligned(16))) _can3_fifo_buffer[CAN3_FIF
 #        define CAN4_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
 static uint8_t __attribute__((coherent, aligned(16))) _can4_fifo_buffer[CAN4_FIFO_SIZE];
+void CAN4Interrupt(void);
 #endif
 
 #ifndef CAN_TIMEOUT
