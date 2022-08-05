@@ -78,6 +78,10 @@ static uint8_t __attribute__((coherent, aligned(16))) _can3_fifo_buffer[CAN3_FIF
 static uint8_t __attribute__((coherent, aligned(16))) _can4_fifo_buffer[CAN4_FIFO_SIZE];
 #endif
 
+#ifndef CAN_TIMEOUT
+#    define CAN_TIMEOUT 10000
+#endif
+
 struct can_dev cans[] = {
 #if CAN_COUNT >= 1
     {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}},
@@ -402,6 +406,7 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
 #if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
     uint8_t modeBits;
+    int32_t timeout = CAN_TIMEOUT;
     if (can >= CAN_COUNT)
     {
         return 0;
@@ -443,31 +448,47 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
         case 0:
             CFD1CONbits.ON = 1;
             CFD1CONbits.REQOP = modeBits;
-            while (CFD1CONbits.OPMOD != modeBits)
+            while ((CFD1CONbits.OPMOD != modeBits) && (--timeout >= 0))
                 ;
+            if (CFD1CONbits.OPMOD != modeBits)
+            {
+                return -2;  // TODO map error enum
+            }
             break;
 #    if CAN_COUNT >= 2
         case 1:
             CFD2CONbits.ON = 1;
             CFD2CONbits.REQOP = modeBits;
-            while (CFD2CONbits.OPMOD != modeBits)
+            while ((CFD2CONbits.OPMOD != modeBits) && (--timeout >= 0))
                 ;
+            if (CFD2CONbits.OPMOD != modeBits)
+            {
+                return -2;  // TODO map error enum
+            }
             break;
 #    endif
 #    if CAN_COUNT >= 3
         case 2:
             CFD3CONbits.ON = 1;
             CFD3CONbits.REQOP = modeBits;
-            while (CFD3CONbits.OPMOD != modeBits)
+            while ((CFD3CONbits.OPMOD != modeBits) && (--timeout >= 0))
                 ;
+            if (CFD3CONbits.OPMOD != modeBits)
+            {
+                return -2;  // TODO map error enum
+            }
             break;
 #    endif
 #    if CAN_COUNT >= 4
         case 3:
             CFD4CONbits.ON = 1;
             CFD4CONbits.REQOP = modeBits;
-            while (CFD4CONbits.OPMOD != modeBits)
+            while ((CFD4CONbits.OPMOD != modeBits) && (--timeout >= 0))
                 ;
+            if (CFD4CONbits.OPMOD != modeBits)
+            {
+                return -2;  // TODO map error enum
+            }
             break;
 #    endif
     }
