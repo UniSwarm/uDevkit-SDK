@@ -321,9 +321,6 @@ int sysclock_setClock(uint32_t fosc)
  */
 int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 {
-    UDK_UNUSED(src);
-    UDK_UNUSED(fosc);
-
     /*uint32_t fin, fplli, fsys;
     uint16_t multiplier;
     uint8_t prediv, postdiv1, postdiv2;
@@ -407,7 +404,14 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         PLLDIVbits.POST2DIV = 2;  // N3 = 2  ==> 160MHz
     }
 
-    __builtin_write_OSCCONH(0x03);  // primary osc input
+    if (src == SYSCLOCK_SRC_FRC)
+    {
+        __builtin_write_OSCCONH(SYSCLOCK_SRC_FRCPLL);  // frc input
+    }
+    else
+    {
+        __builtin_write_OSCCONH(SYSCLOCK_SRC_PPLL);  // primary osc input
+    }
     __builtin_write_OSCCONL(OSCCON | 0x01);
 
     // Wait for Clock switch to occur
