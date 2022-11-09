@@ -23,6 +23,7 @@
 uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t flags)
 {
     uint16_t value = 0;
+    uint16_t byte;
     i2c_start(device);
     if (i2c_putc(device, (uint8_t)(address & 0xFE)) == -1)
     {
@@ -54,10 +55,21 @@ uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t fl
     }
     if (flags & I2C_REG16)
     {
-        value = i2c_getc(device) << 8;
+        byte = i2c_getc(device);
         i2c_ack(device);
     }
-    value += i2c_getc(device);
+    value = i2c_getc(device);
+    if (flags & I2C_REG16)
+    {
+        if (flags & I2C_READ_LSBFIRST)
+        {
+            value = (value << 8) + byte;
+        }
+        else
+        {
+            value = value + (byte << 8);
+        }
+    }
     i2c_nack(device);
     i2c_stop(device);
     return value;
