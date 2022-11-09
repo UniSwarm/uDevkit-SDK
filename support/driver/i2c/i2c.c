@@ -55,6 +55,7 @@ uint16_t i2c_readreg(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t fl
     if (flags & I2C_REG16)
     {
         value = i2c_getc(device) << 8;
+        i2c_ack(device);
     }
     value += i2c_getc(device);
     i2c_nack(device);
