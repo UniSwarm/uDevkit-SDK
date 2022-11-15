@@ -68,6 +68,11 @@ HEAP?=100
 
 .PHONY : showmem
 
+ifneq ($(LINKER_SCRIPT),)
+    #LDFLAGS_XC += -Wl,--script,$(LINKER_SCRIPT)
+    LDFLAGS_XC += -T$(LINKER_SCRIPT)
+endif
+
 # rule to link OBJECTS to an elf in OUT_PWD
 ifeq ($(filter %.cpp,$(SRC)),)
 # Pure C project, link with gcc interface
