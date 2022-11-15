@@ -33,7 +33,14 @@ size_t fifo_size(Fifo *fifo)
 
 size_t fifo_len(Fifo *fifo)
 {
-    return (fifo->tail > fifo->head) ? fifo->size + fifo->head - fifo->tail : fifo->head - fifo->tail;
+    if (fifo->tail > fifo->head)
+    {
+        return fifo->size + fifo->head - fifo->tail;
+    }
+    else
+    {
+        return fifo->head - fifo->tail;
+    }
 }
 
 size_t fifo_avail(Fifo *fifo)
