@@ -181,6 +181,10 @@ int i2c_writereg(rt_dev_t device, uint16_t address, uint16_t reg, uint16_t value
     }
     if (flags & I2C_REG16)
     {
+        if (flags & I2C_READ_LSBFIRST)
+        {
+            value = (value >> 8) | (value << 8);
+        }
         if (i2c_putc(device, (uint8_t)(value >> 8)) != 0)
         {
             i2c_stop(device);
