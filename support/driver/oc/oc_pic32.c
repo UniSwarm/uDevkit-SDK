@@ -14,6 +14,7 @@
  */
 
 #include "oc.h"
+
 #include <driver/timer.h>
 
 #include <archi.h>
@@ -105,6 +106,8 @@ struct oc_dev ocs[] = {
 #define OC_PIC32_SINGLE_LOWHIGH    0b100
 #define OC_PIC32_CONTINOUS_LOWHIGH 0b101
 
+static int _oc_setInternalMode(rt_dev_t device, uint8_t mode);
+
 /**
  * @brief Gives a free OC device number
  * @return OC device number
@@ -186,7 +189,7 @@ int oc_close(rt_dev_t device)
 #endif
 }
 
-int oc_setInternalMode(rt_dev_t device, uint8_t mode)
+int _oc_setInternalMode(rt_dev_t device, uint8_t mode)
 {
 #if OC_COUNT >= 1
     uint8_t oc = MINOR(device), enabled = 0;
@@ -320,7 +323,7 @@ int oc_enable(rt_dev_t device)
 
     ocs[oc].flags.enabled = 1;
 
-    return oc_setInternalMode(device, ocs[oc].flags.imode);
+    return _oc_setInternalMode(device, ocs[oc].flags.imode);
 #else
     return -1;
 #endif
@@ -342,7 +345,7 @@ int oc_disable(rt_dev_t device)
 
     ocs[oc].flags.enabled = 0;
 
-    return oc_setInternalMode(device, OC_PIC32_DISABLE);
+    return _oc_setInternalMode(device, OC_PIC32_DISABLE);
 #else
     return -1;
 #endif
@@ -400,7 +403,7 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
 
     if (ocs[oc].flags.enabled)
     {
-        return oc_setInternalMode(device, imode);
+        return _oc_setInternalMode(device, imode);
     }
     return 0;
 #else
