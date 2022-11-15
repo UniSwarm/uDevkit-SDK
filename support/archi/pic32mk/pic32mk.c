@@ -15,8 +15,14 @@ void archi_init(void)
 {
     // enable multiple vector interrupts
     INTCONSET = _INTCON_MVEC_MASK;
-    PRISS = 0x11110000;  // interrupts with priority >= 4 use shadow reg set 1,
-                         // other shadows reg set 0
+
+#if defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100)                       \
+    || defined(DEVICE_32MK0512MCF064) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK1024GPD064) || defined(DEVICE_32MK1024GPD100)                    \
+    || defined(DEVICE_32MK1024GPE064) || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024MCF064) || defined(DEVICE_32MK1024MCF100)
+    PRISS = 0x11110000;  // interrupts with priority >= 4 use shadow reg set 1, other shadows reg set 0
+#else
+    PRISS = 0x76543210;  // Shadows registers assigned to each priority
+#endif
     enable_interrupt();
 }
 
