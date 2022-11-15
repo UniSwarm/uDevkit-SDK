@@ -16,6 +16,8 @@
 
 #include <archi.h>
 
+static uint8_t _adc_sarFromChannel(uint8_t channel);
+
 int adc_init(void)
 {
     // initialize ADC calibration setting
@@ -183,7 +185,7 @@ int adc_setSamplingCycles(uint8_t core, uint16_t cycles)
     return 0;
 }
 
-uint8_t adc_sarFromChannel(uint8_t channel)
+uint8_t _adc_sarFromChannel(uint8_t channel)
 {
     if (channel <= 4)
     {
@@ -213,7 +215,7 @@ int16_t adc_getValue(uint8_t channel)
         mask = 1 << (channel - 32);
     }
 
-    sar = adc_sarFromChannel(channel);
+    sar = _adc_sarFromChannel(channel);
     switch (sar)
     {
         case 0:
