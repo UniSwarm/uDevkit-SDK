@@ -6,9 +6,9 @@ else
  IPE_EXE := ipecmd.sh
 endif
 
-DEV_PROG?=PK3  # default value pickit3 (PK3), possible value: real ice (RICE), ICD3/4 (ICD3 / ICD4), pickit on board (PKOB) or pickit4 (PK4)
-ifeq (,$(filter $(DEV_PROG),PKOB PK3 PK4 ICD3 ICD4 RICE))
- $(error Invalid DEV_PROG name '$(DEV_PROG)', choose between 'PKOB', 'PK3', 'PK4', 'ICD3', 'ICD4' or 'RICE')
+DEV_PROG?=PK3  # default value pickit3 (PK3), possible value: real ice (RICE), ICE4, SNAP, ICD3/4 (ICD3 / ICD4), pickit on board (PKOB, PKOB4) or pickit4 (PK4)
+ifeq (,$(filter $(DEV_PROG),PKOB PKOB4 SNAP PK3 PK4 ICD3 ICD4 RICE ICE4))
+ $(error Invalid DEV_PROG name '$(DEV_PROG)', choose between 'PKOB', 'PKOB4', 'SNAP', 'PK3', 'PK4', 'ICD3', 'ICD4', 'ICE4' or 'RICE')
 endif
 
 IPEFLAGS ?= -M
