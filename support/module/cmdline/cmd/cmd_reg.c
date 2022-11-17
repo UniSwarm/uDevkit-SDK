@@ -9,9 +9,12 @@
  * @brief Register commands
  */
 
+#include "cmds.h"
+
 #include "cmd_stdio.h"
 
 #include <archi.h>
+
 #include <stdint.h>
 
 void cmd_reg_help(void)

@@ -9,9 +9,11 @@
  * @brief UART commands
  */
 
-#include "driver/uart.h"
+#include "cmds.h"
 
 #include "cmd_stdio.h"
+
+#include <driver/uart.h>
 
 int cmd_uart(int argc, char **argv)
 {

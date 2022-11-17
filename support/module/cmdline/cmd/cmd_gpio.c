@@ -9,11 +9,15 @@
  * @brief GPIO commands
  */
 
-#include "driver/gpio.h"
+#include "cmds.h"
 
 #include "cmd_stdio.h"
 
-void cmd_gpio_help(void)
+#include <driver/gpio.h>
+
+static void _cmd_gpio_help(void);
+
+void _cmd_gpio_help(void)
 {
     puts("gpio <gpio-pin>");
     puts("gpio <gpio-pin> set");
@@ -33,14 +37,14 @@ int cmd_gpio(int argc, char **argv)
     // no args -> print help
     if (argc == 1)
     {
-        cmd_gpio_help();
+        _cmd_gpio_help();
         return 0;
     }
 
     // help
     if (strcmp(argv[1], "help") == 0)
     {
-        cmd_gpio_help();
+        _cmd_gpio_help();
         return 0;
     }
 

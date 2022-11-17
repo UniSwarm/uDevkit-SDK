@@ -18,13 +18,13 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "driver/device.h"
+#include <driver/device.h>
 
 #include "modules.h"
 
-int cmd_help(int argc, char **argv);
+static int _cmd_help(int argc, char **argv);
 
-Cmd cmds[] = {
+const Cmd _cmds[] = {
 #ifdef USE_gpio
     {"gpio", cmd_uart},
 #endif
@@ -48,18 +48,17 @@ Cmd cmds[] = {
 #endif
     {"reg", cmd_reg},
     {"led", cmd_led},
-    {"help", cmd_help},
+    {"help", _cmd_help},
     {"", NULL}};
 
-extern rt_dev_t cmdline_device_in;
-extern rt_dev_t cmdline_device_out;
+extern rt_dev_t _cmdline_device_out;
 
 #define CMDLINE_ARGC_MAX 10
 
 int cmd_exec(char *line)
 {
     uint16_t i, argc;
-    Cmd *cmd;
+    const Cmd *cmd;
     char *argv[CMDLINE_ARGC_MAX];
     char *sep;
 
@@ -88,40 +87,40 @@ int cmd_exec(char *line)
 
     // looking for command name
     cmd = NULL;
-    for (i = 0; i < sizeof(cmds); i++)
+    for (i = 0; i < sizeof(_cmds); i++)
     {
-        if (cmds[i].cmdFnPtr == 0)
+        if (_cmds[i].cmdFnPtr == NULL)
         {
             break;
         }
-        if (strcmp(cmds[i].name, line) == 0)
+        if (strcmp(_cmds[i].name, line) == 0)
         {
-            cmd = &cmds[i];
+            cmd = &_cmds[i];
             break;
         }
     }
 
     // execute command if found
-    if (cmd != 0)
-    {
-        return (*cmd->cmdFnPtr)(argc, argv);
-    }
-    else
+    if (cmd == NULL)
     {
         return -1;
     }
+    return (*cmd->cmdFnPtr)(argc, argv);
 }
 
-int cmd_help(int argc, char **argv)
+int _cmd_help(int argc, char **argv)
 {
+    UDK_UNUSED(argc);
+    UDK_UNUSED(argv);
+
     uint16_t i;
-    for (i = 0; i < sizeof(cmds); i++)
+    for (i = 0; i < sizeof(_cmds); i++)
     {
-        if (cmds[i].cmdFnPtr == 0)
+        if (_cmds[i].cmdFnPtr == 0)
         {
             break;
         }
-        cmd_puts(cmds[i].name);
+        cmd_puts(_cmds[i].name);
     }
     return 0;
 }
@@ -129,12 +128,12 @@ int cmd_help(int argc, char **argv)
 void cmd_puts(const char *str)
 {
     char cmd[10];
-    device_write(cmdline_device_out, str, strlen(str));
-    device_write(cmdline_device_out, "\n", 1);
+    device_write(_cmdline_device_out, str, strlen(str));
+    device_write(_cmdline_device_out, "\n", 1);
 
     // move cursor 200 column before
     cmdline_curses_left(cmd, 200);
-    device_write(cmdline_device_out, cmd, strlen(cmd));
+    device_write(_cmdline_device_out, cmd, strlen(cmd));
 }
 
 int cmd_printf(const char *format, ...)
@@ -147,10 +146,10 @@ int cmd_printf(const char *format, ...)
     done = vsprintf(buff, format, arg);
     va_end(arg);
 
-    device_write(cmdline_device_out, buff, strlen(buff));
-    device_write(cmdline_device_out, "\r\n", 1);
+    device_write(_cmdline_device_out, buff, strlen(buff));
+    device_write(_cmdline_device_out, "\r\n", 1);
     cmdline_curses_left(buff, 200);
-    device_write(cmdline_device_out, buff, strlen(buff));
+    device_write(_cmdline_device_out, buff, strlen(buff));
 
     return done;
 }

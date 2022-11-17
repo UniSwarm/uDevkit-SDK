@@ -9,9 +9,11 @@
  * @brief AX commands
  */
 
-#include "driver/ax12.h"
+#include "cmds.h"
 
 #include "cmd_stdio.h"
+
+#include <driver/ax12.h>
 
 int cmd_ax(int argc, char **argv)
 {

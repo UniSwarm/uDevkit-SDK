@@ -9,9 +9,11 @@
  * @brief ADC commands
  */
 
-#include "driver/adc.h"
+#include "cmds.h"
 
 #include "cmd_stdio.h"
+
+#include <driver/adc.h>
 
 int cmd_adc(int argc, char **argv)
 {

@@ -9,9 +9,11 @@
  * @brief I2C commands
  */
 
-#include "driver/i2c.h"
+#include "cmds.h"
 
 #include "cmd_stdio.h"
+
+#include <driver/i2c.h>
 
 int cmd_i2c(int argc, char **argv)
 {

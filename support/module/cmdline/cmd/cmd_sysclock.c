@@ -9,13 +9,19 @@
  * @brief Sysclock commands
  */
 
-#define SYSCLOCK_DEBUG
-#include "driver/sysclock.h"
-#include "driver/uart.h"
+#define SYSCLOCK_DEBUG  // keep this line before includes
+
+#include "cmds.h"
+
+#include "cmd_stdio.h"
+
+#include <driver/sysclock.h>
+#include <driver/uart.h>
 
 #include "modules.h"
 
-#include "cmd_stdio.h"
+static void cmd_sysclock_statusclk(SYSCLOCK_SOURCE source);
+static void cmd_sysclock_status(void);
 
 void cmd_sysclock_statusclk(SYSCLOCK_SOURCE source)
 {

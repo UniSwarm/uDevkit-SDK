@@ -9,9 +9,11 @@
  * @brief Leds commands
  */
 
-#include "board.h"
+#include "cmds.h"
 
 #include "cmd_stdio.h"
+
+#include "board.h"
 
 int cmd_led(int argc, char **argv)
 {

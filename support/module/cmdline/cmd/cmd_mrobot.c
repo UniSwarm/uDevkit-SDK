@@ -9,9 +9,11 @@
  * @brief MRobot module commands
  */
 
-#include "module/mrobot.h"
+#include "cmds.h"
 
 #include "cmd_stdio.h"
+
+#include <module/mrobot.h>
 
 int cmd_mrobot(int argc, char **argv)
 {

@@ -16,15 +16,30 @@
 extern "C" {
 #endif
 
+#include "modules.h"
+
+#ifdef USE_gpio
 int cmd_gpio(int argc, char **argv);
-int cmd_ls(int argc, char **argv);
+#endif
+#ifdef USE_uart
 int cmd_uart(int argc, char **argv);
-int cmd_i2c(int argc, char **argv);
-int cmd_mrobot(int argc, char **argv);
-int cmd_adc(int argc, char **argv);
-int cmd_ax(int argc, char **argv);
-int cmd_led(int argc, char **argv);
+#endif
+#ifdef USE_sysclock
 int cmd_sysclock(int argc, char **argv);
+#endif
+#ifdef USE_i2c
+int cmd_i2c(int argc, char **argv);
+#endif
+#ifdef USE_adc
+int cmd_adc(int argc, char **argv);
+#endif
+#ifdef USE_ax12
+int cmd_ax(int argc, char **argv);
+#endif
+#ifdef USE_MODULE_mrobot
+int cmd_mrobot(int argc, char **argv);
+#endif
+int cmd_led(int argc, char **argv);
 int cmd_reg(int argc, char **argv);
 
 #ifdef __cplusplus
