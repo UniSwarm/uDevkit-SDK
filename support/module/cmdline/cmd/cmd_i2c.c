@@ -35,6 +35,7 @@ int cmd_i2c(int argc, char **argv)
     if (strcmp(argv[1], "help") == 0)
     {
         puts("i2c <bus-id>");
+        puts("i2c <bus-id> scan");
         puts("i2c <bus-id> setspeed <speed>");
         puts("i2c <bus-id> readreg <addr> <regaddr>");
         puts("i2c <bus-id> writereg <addr> <regaddr> <value>");
@@ -69,6 +70,23 @@ int cmd_i2c(int argc, char **argv)
     }
 
     // parse argv 2
+    // == scan > i2c <bus-id> scan
+    if (strcmp(argv[2], "scan") == 0)
+    {
+        for (uint16_t i2c_addr = 0; i2c_addr <= 255; i2c_addr += 2)
+        {
+            i2c_start(i2c_dev);
+            int ack = i2c_putc(i2c_dev, i2c_addr);
+            i2c_stop(i2c_dev);
+
+            if (ack == 0)
+            {
+                printf("0x%02X\r\n", i2c_addr);
+            }
+        }
+        return 0;
+    }
+
     // == setspeed > i2c <bus-id> setspeed <speed>
     if (strcmp(argv[2], "setspeed") == 0)
     {
