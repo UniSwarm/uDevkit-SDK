@@ -26,7 +26,7 @@ static int _cmd_help(int argc, char **argv);
 
 const Cmd _cmds[] = {
 #ifdef USE_gpio
-    {"gpio", cmd_uart},
+    {"gpio", cmd_gpio},
 #endif
 #ifdef USE_uart
     {"uart", cmd_uart},
