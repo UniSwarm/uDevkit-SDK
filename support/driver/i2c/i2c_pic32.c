@@ -872,8 +872,10 @@ int i2c_putc(rt_dev_t device, const char data)
 #    ifdef I2C_NUM1
         case I2C_NUM1:
             I2C1TRN = data;
-            if (I2C1STATbits.IWCOL)  // write collision detection
+            if (I2C1STATbits.BCL || I2C1STATbits.IWCOL)  // write collision detection
             {
+                I2C1STATbits.BCL = 0;
+                I2C1STATbits.IWCOL = 0;
                 return -1;
             }
 
@@ -889,8 +891,10 @@ int i2c_putc(rt_dev_t device, const char data)
 #    ifdef I2C_NUM2
         case I2C_NUM2:
             I2C2TRN = data;
-            if (I2C2STATbits.IWCOL)  // write collision detection
+            if (I2C2STATbits.BCL || I2C2STATbits.IWCOL)  // write collision detection
             {
+                I2C2STATbits.BCL = 0;
+                I2C2STATbits.IWCOL = 0;
                 return -1;
             }
 
@@ -906,8 +910,10 @@ int i2c_putc(rt_dev_t device, const char data)
 #    ifdef I2C_NUM3
         case I2C_NUM3:
             I2C3TRN = data;
-            if (I2C3STATbits.IWCOL)  // write collision detection
+            if (I2C3STATbits.BCL || I2C3STATbits.IWCOL)  // write collision detection
             {
+                I2C3STATbits.BCL = 0;
+                I2C3STATbits.IWCOL = 0;
                 return -1;
             }
 
@@ -923,8 +929,10 @@ int i2c_putc(rt_dev_t device, const char data)
 #    ifdef I2C_NUM4
         case I2C_NUM4:
             I2C4TRN = data;
-            if (I2C4STATbits.IWCOL)  // write collision detection
+            if (I2C4STATbits.BCL || I2C4STATbits.IWCOL)  // write collision detection
             {
+                I2C4STATbits.BCL = 0;
+                I2C4STATbits.IWCOL = 0;
                 return -1;
             }
 
@@ -940,8 +948,10 @@ int i2c_putc(rt_dev_t device, const char data)
 #    ifdef I2C_NUM5
         case I2C_NUM5:
             I2C5TRN = data;
-            if (I2C5STATbits.IWCOL)  // write collision detection
+            if (I2C5STATbits.BCL || I2C5STATbits.IWCOL)  // write collision detection
             {
+                I2C5STATbits.BCL = 0;
+                I2C5STATbits.IWCOL = 0;
                 return -1;
             }
 
