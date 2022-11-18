@@ -88,16 +88,16 @@ void CAN4Interrupt(void);
 
 struct can_dev cans[] = {
 #if CAN_COUNT >= 1
-    {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}},
+    {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}, .fifoHandler = NULL},
 #endif
 #if CAN_COUNT >= 2
-    {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}},
+    {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}, .fifoHandler = NULL},
 #endif
 #if CAN_COUNT >= 3
-    {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}},
+    {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}, .fifoHandler = NULL},
 #endif
 #if CAN_COUNT >= 4
-    {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}},
+    {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}, .fifoHandler = NULL},
 #endif
 };
 
