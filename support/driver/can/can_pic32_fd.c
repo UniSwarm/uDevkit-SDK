@@ -360,7 +360,7 @@ int can_disable(rt_dev_t device)
             break;
 #    if CAN_COUNT >= 2
         case 1:
-            _CAN1IE = 0;  // disable can global interrupt
+            _CAN2IE = 0;  // disable can global interrupt
             CFD2CONbits.REQOP = 4;
             while (CFD2CONbits.OPMOD != 4)
                 ;
@@ -371,7 +371,7 @@ int can_disable(rt_dev_t device)
 #    endif
 #    if CAN_COUNT >= 3
         case 2:
-            _CAN1IE = 0;  // disable can global interrupt
+            _CAN3IE = 0;  // disable can global interrupt
             CFD3CONbits.REQOP = 4;
             while (CFD3CONbits.OPMOD != 4)
                 ;
@@ -382,7 +382,7 @@ int can_disable(rt_dev_t device)
 #    endif
 #    if CAN_COUNT >= 4
         case 3:
-            _CAN1IE = 0;  // disable can global interrupt
+            _CAN4IE = 0;  // disable can global interrupt
             CFD4CONbits.REQOP = 4;
             while (CFD4CONbits.OPMOD != 4)
                 ;
