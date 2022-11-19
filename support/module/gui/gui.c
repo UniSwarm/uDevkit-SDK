@@ -10,6 +10,7 @@
  */
 
 #include "gui.h"
+
 #include "screenController/screenController.h"
 
 Color _gui_penColor = 1;
@@ -201,14 +202,12 @@ void gui_drawText(uint16_t x, uint16_t y, const char *txt)
 
 void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char *txt, uint8_t flags)
 {
-    int16_t octet;
-    uint16_t i, j;
+    int16_t byte;
     char bit;
-    const Letter *letter;
     const char *c;
-    uint16_t text_width, xstartmargin, xendmargin;
-    uint16_t text_height, ystartmargin, yendmargin;
-    uint16_t wcurrent;
+    int16_t text_width, xstartmargin, xendmargin;
+    int16_t text_height, ystartmargin, yendmargin;
+    int16_t wcurrent;
     uint8_t out_of_rect = 0;
 
     if (_gui_font == NULL)
@@ -275,9 +274,9 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
     gui_ctrl_setRectScreen(x, y, w, h);
 
     // xstartmargin
-    for (j = 0; j < xstartmargin; j++)
+    for (int16_t j = 0; j < xstartmargin; j++)
     {
-        for (i = 0; i < h; i++)
+        for (int16_t i = 0; i < h; i++)
         {
             gui_ctrl_write_data(_gui_brushColor);
         }
@@ -288,55 +287,57 @@ void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char
     wcurrent = 0;
     while ((*c != '\0') && (out_of_rect != 1))
     {
-        if (*c >= _gui_font->first && *c <= _gui_font->last)
+        if (*c < _gui_font->first || *c > _gui_font->last)
         {
-            octet = -1;
-            letter = _gui_font->letters[*c - _gui_font->first];
-            for (j = 0; j < letter->width; j++)
-            {
-                // verifying if wcurrent is out of rect
-                if (wcurrent >= text_width)
-                {
-                    out_of_rect = 1;
-                    break;
-                }
-
-                for (i = 0; i < ystartmargin; i++)
-                {
-                    gui_ctrl_write_data(_gui_brushColor);
-                }
-                for (i = 0; i < _gui_font->height; i++)
-                {
-                    if ((i & 0x0007) == 0)
-                    {
-                        bit = 1;
-                        octet++;
-                    }
-                    if ((letter->data[octet]) & bit)
-                    {
-                        gui_ctrl_write_data(_gui_penColor);
-                    }
-                    else
-                    {
-                        gui_ctrl_write_data(_gui_brushColor);
-                    }
-                    bit = bit << 1;
-                }
-                for (i = 0; i < yendmargin; i++)
-                {
-                    gui_ctrl_write_data(_gui_brushColor);
-                }
-
-                wcurrent++;
-            }
+            continue;
         }
+        byte = -1;
+        const Letter *letter = _gui_font->letters[*c - _gui_font->first];
+        for (int16_t j = 0; j < letter->width; j++)
+        {
+            // verifying if wcurrent is out of rect
+            if (wcurrent >= text_width)
+            {
+                out_of_rect = 1;
+                break;
+            }
+
+            for (int16_t i = 0; i < ystartmargin; i++)
+            {
+                gui_ctrl_write_data(_gui_brushColor);
+            }
+            for (int16_t i = 0; i < _gui_font->height; i++)
+            {
+                if ((i & 0x0007) == 0)
+                {
+                    bit = 1;
+                    byte++;
+                }
+                if ((letter->data[byte]) & bit)
+                {
+                    gui_ctrl_write_data(_gui_penColor);
+                }
+                else
+                {
+                    gui_ctrl_write_data(_gui_brushColor);
+                }
+                bit = bit << 1;
+            }
+            for (int16_t i = 0; i < yendmargin; i++)
+            {
+                gui_ctrl_write_data(_gui_brushColor);
+            }
+
+            wcurrent++;
+        }
+
         c++;
     }
 
     // xendmargin
-    for (j = 0; j < xendmargin; j++)
+    for (int16_t j = 0; j < xendmargin; j++)
     {
-        for (i = 0; i < h; i++)
+        for (int16_t i = 0; i < h; i++)
         {
             gui_ctrl_write_data(_gui_brushColor);
         }
@@ -382,10 +383,12 @@ uint16_t gui_getFontTextWidth(const char *txt)
 {
     uint16_t width = 0;
     const char *c = txt;
+
     if (_gui_font == NULL)
     {
         return 0;
     }
+
     while (*c != '\0')
     {
         if (*c >= _gui_font->first && *c <= _gui_font->last)

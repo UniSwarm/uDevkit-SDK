@@ -7,11 +7,6 @@
 
 #include "screenController/screenController.h"
 
-Color _gui_penColor;
-Color _gui_brushColor;
-uint16_t _gui_x, _gui_y;
-const Font *_gui_font;
-
 #define BUFFPIXSIZE 200
 uint16_t buffPix[BUFFPIXSIZE];
 int idPix = 0;
