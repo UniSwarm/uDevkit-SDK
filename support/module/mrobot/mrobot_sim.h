@@ -20,4 +20,8 @@ extern "C" {
 
 #define MROBOT_SIM_MODULE 0x0038
 
+#ifdef __cplusplus
+}
+#endif
+
 #endif
