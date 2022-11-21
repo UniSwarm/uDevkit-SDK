@@ -53,7 +53,7 @@ struct uart_dev
     STATIC_FIFO(buffTx, UART_BUFFTX_SIZE);
 };
 
-struct uart_dev uarts[] = {
+struct uart_dev _uarts[] = {
     {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}},
 #if UART_COUNT >= 2
     {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}},
@@ -71,6 +71,29 @@ struct uart_dev uarts[] = {
     {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}},
 #endif
 };
+
+void U1RXInterrupt(void);
+void U1TXInterrupt(void);
+#if UART_COUNT >= 2
+void U2RXInterrupt(void);
+void U2TXInterrupt(void);
+#endif
+#if UART_COUNT >= 3
+void U3RXInterrupt(void);
+void U3TXInterrupt(void);
+#endif
+#if UART_COUNT >= 4
+void U4RXInterrupt(void);
+void U4TXInterrupt(void);
+#endif
+#if UART_COUNT >= 5
+void U5RXInterrupt(void);
+void U5TXInterrupt(void);
+#endif
+#if UART_COUNT >= 6
+void U6RXInterrupt(void);
+void U6TXInterrupt(void);
+#endif
 
 #if defined(ARCHI_pic32mk)
 uint32_t uart_getClock(rt_dev_t device)
@@ -104,7 +127,7 @@ rt_dev_t uart_getFreeDevice(void)
 
     for (i = 0; i < UART_COUNT; i++)
     {
-        if (uarts[i].flags.used == 0)
+        if (_uarts[i].flags.used == 0) 
         {
             break;
         }
@@ -137,14 +160,14 @@ int uart_open(rt_dev_t device)
     {
         return -1;
     }
-    if (uarts[uart].flags.used == 1)
+    if (_uarts[uart].flags.used == 1)
     {
         return -1;
     }
 
-    uarts[uart].flags.used = 1;
-    STATIC_FIFO_INIT(uarts[uart].buffRx, UART_BUFFRX_SIZE);
-    STATIC_FIFO_INIT(uarts[uart].buffTx, UART_BUFFTX_SIZE);
+    _uarts[uart].flags.used = 1;
+    STATIC_FIFO_INIT(_uarts[uart].buffRx, UART_BUFFRX_SIZE);
+    STATIC_FIFO_INIT(_uarts[uart].buffTx, UART_BUFFTX_SIZE);
 
     return 0;
 #else
@@ -168,7 +191,7 @@ int uart_close(rt_dev_t device)
 
     uart_disable(device);
 
-    uarts[uart].flags.val = UART_FLAG_UNUSED;
+    _uarts[uart].flags.val = UART_FLAG_UNUSED;
     return 0;
 #else
     return -1;
@@ -188,7 +211,7 @@ int uart_enable(rt_dev_t device)
         return -1;
     }
 
-    uarts[uart].flags.enabled = 1;
+    _uarts[uart].flags.enabled = 1;
 
     switch (uart)
     {
@@ -316,7 +339,7 @@ int uart_disable(rt_dev_t device)
         return -1;
     }
 
-    uarts[uart].flags.enabled = 0;
+    _uarts[uart].flags.enabled = 0;
 
     switch (uart)
     {
@@ -390,13 +413,13 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
     }
 
     // disable uart if it was already enabled
-    if (uarts[uart].flags.enabled == 1)
+    if (_uarts[uart].flags.enabled == 1)
     {
         uart_disable(device);
         enabled = 1;
     }
 
-    uarts[uart].baudSpeed = baudSpeed;
+    _uarts[uart].baudSpeed = baudSpeed;
 
     // baud rate computation
     systemClockPeriph = uart_getClock(device);
@@ -543,7 +566,7 @@ uint32_t uart_effectiveBaudSpeed(rt_dev_t device)
         return 0;
     }
 
-    return uarts[uart].baudSpeed;
+    return _uarts[uart].baudSpeed;
 }
 
 /**
@@ -566,7 +589,7 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLength, uint8_t bitParity, uin
         return -1;
     }
 
-    flags = uarts[uart].flags;
+    flags = _uarts[uart].flags;
     if (bitLength == 9)
     {
         flags.bit9 = 1;
@@ -601,7 +624,7 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLength, uint8_t bitParity, uin
     }
 
     // update flags
-    uarts[uart].flags = flags;
+    _uarts[uart].flags = flags;
 
     switch (uart)
     {
@@ -656,7 +679,7 @@ uint8_t uart_bitLength(rt_dev_t device)
         return 0;
     }
 
-    if (uarts[uart].flags.bit9 == 1)
+    if (_uarts[uart].flags.bit9 == 1)
     {
         return 9;
     }
@@ -676,7 +699,7 @@ uint8_t uart_bitParity(rt_dev_t device)
         return -1;
     }
 
-    return uarts[uart].flags.parity;
+    return _uarts[uart].flags.parity;
 }
 
 /**
@@ -692,7 +715,7 @@ uint8_t uart_bitStop(rt_dev_t device)
         return -1;
     }
 
-    if (uarts[uart].flags.stop == 1)
+    if (_uarts[uart].flags.stop == 1)
     {
         return 2;
     }
@@ -705,21 +728,21 @@ void __ISR(_UART1_TX_VECTOR, UIPR) U1TXInterrupt(void)
 #    if defined(ARCHI_pic32mk)
     _U1TXIF = 0;  // 32MK Work around (errata 41)
     char uart_tmpchar[1];
-    while (!U1STAbits.UTXBF && fifo_pop(&uarts[0].buffTx, uart_tmpchar, 1) == 1)
+    while (!U1STAbits.UTXBF && fifo_pop(&_uarts[0].buffTx, uart_tmpchar, 1) == 1)
     {
         U1TXREG = uart_tmpchar[0];
     }
 #    else
     size_t i;
     char uart_tmpchar[8];
-    size_t readen = fifo_pop(&uarts[0].buffTx, uart_tmpchar, 8);
+    size_t readen = fifo_pop(&_uarts[0].buffTx, uart_tmpchar, 8);
     for (i = 0; i < readen; i++)
     {
         U1TXREG = uart_tmpchar[i];
     }
 #    endif
 
-    if (fifo_len(&uarts[0].buffTx) == 0)
+    if (fifo_len(&_uarts[0].buffTx) == 0)
     {
         _U1TXIE = 0;
     }
@@ -732,7 +755,7 @@ void __ISR(_UART1_RX_VECTOR, UIPR) U1RXInterrupt(void)
     while (U1STAbits.URXDA == 1)
     {
         rec[0] = U1RXREG;
-        fifo_push(&uarts[0].buffRx, rec, 1);
+        fifo_push(&_uarts[0].buffRx, rec, 1);
     }
 
     _U1RXIF = 0;
@@ -745,21 +768,21 @@ void __ISR(_UART2_TX_VECTOR, UIPR) U2TXInterrupt(void)
 #    if defined(ARCHI_pic32mk)
     _U2TXIF = 0;  // 32MK Work around (errata 41)
     char uart_tmpchar[1];
-    while (!U2STAbits.UTXBF && fifo_pop(&uarts[1].buffTx, uart_tmpchar, 1) == 1)
+    while (!U2STAbits.UTXBF && fifo_pop(&_uarts[1].buffTx, uart_tmpchar, 1) == 1)
     {
         U2TXREG = uart_tmpchar[0];
     }
 #    else
     size_t i;
     char uart_tmpchar[8];
-    size_t readen = fifo_pop(&uarts[1].buffTx, uart_tmpchar, 8);
+    size_t readen = fifo_pop(&_uarts[1].buffTx, uart_tmpchar, 8);
     for (i = 0; i < readen; i++)
     {
         U2TXREG = uart_tmpchar[i];
     }
 #    endif
 
-    if (fifo_len(&uarts[1].buffTx) == 0)
+    if (fifo_len(&_uarts[1].buffTx) == 0)
     {
         _U2TXIE = 0;
     }
@@ -772,7 +795,7 @@ void __ISR(_UART2_RX_VECTOR, UIPR) U2RXInterrupt(void)
     while (U2STAbits.URXDA == 1)
     {
         rec[0] = U2RXREG;
-        fifo_push(&uarts[1].buffRx, rec, 1);
+        fifo_push(&_uarts[1].buffRx, rec, 1);
     }
 
     _U2RXIF = 0;
@@ -785,21 +808,21 @@ void __ISR(_UART3_TX_VECTOR, UIPR) U3TXInterrupt(void)
 #    if defined(ARCHI_pic32mk)
     _U3TXIF = 0;  // 32MK Work around (errata 41)
     char uart_tmpchar[1];
-    while (!U3STAbits.UTXBF && fifo_pop(&uarts[2].buffTx, uart_tmpchar, 1) == 1)
+    while (!U3STAbits.UTXBF && fifo_pop(&_uarts[2].buffTx, uart_tmpchar, 1) == 1)
     {
         U3TXREG = uart_tmpchar[0];
     }
 #    else
     size_t i;
     char uart_tmpchar[8];
-    size_t readen = fifo_pop(&uarts[2].buffTx, uart_tmpchar, 8);
+    size_t readen = fifo_pop(&_uarts[2].buffTx, uart_tmpchar, 8);
     for (i = 0; i < readen; i++)
     {
         U3TXREG = uart_tmpchar[i];
     }
 #    endif
 
-    if (fifo_len(&uarts[2].buffTx) == 0)
+    if (fifo_len(&_uarts[2].buffTx) == 0)
     {
         _U3TXIE = 0;
     }
@@ -812,7 +835,7 @@ void __ISR(_UART3_RX_VECTOR, UIPR) U3RXInterrupt(void)
     while (U3STAbits.URXDA == 1)
     {
         rec[0] = U3RXREG;
-        fifo_push(&uarts[2].buffRx, rec, 1);
+        fifo_push(&_uarts[2].buffRx, rec, 1);
     }
 
     _U3RXIF = 0;
@@ -825,21 +848,21 @@ void __ISR(_UART4_TX_VECTOR, UIPR) U4TXInterrupt(void)
 #    if defined(ARCHI_pic32mk)
     _U4TXIF = 0;  // 32MK Work around (errata 41)
     char uart_tmpchar[1];
-    while (!U4STAbits.UTXBF && fifo_pop(&uarts[3].buffTx, uart_tmpchar, 1) == 1)
+    while (!U4STAbits.UTXBF && fifo_pop(&_uarts[3].buffTx, uart_tmpchar, 1) == 1)
     {
         U4TXREG = uart_tmpchar[0];
     }
 #    else
     size_t i;
     char uart_tmpchar[8];
-    size_t readen = fifo_pop(&uarts[3].buffTx, uart_tmpchar, 8);
+    size_t readen = fifo_pop(&_uarts[3].buffTx, uart_tmpchar, 8);
     for (i = 0; i < readen; i++)
     {
         U4TXREG = uart_tmpchar[i];
     }
 #    endif
 
-    if (fifo_len(&uarts[3].buffTx) == 0)
+    if (fifo_len(&_uarts[3].buffTx) == 0)
     {
         _U4TXIE = 0;
     }
@@ -852,7 +875,7 @@ void __ISR(_UART4_RX_VECTOR, UIPR) U4RXInterrupt(void)
     while (U4STAbits.URXDA == 1)
     {
         rec[0] = U4RXREG;
-        fifo_push(&uarts[3].buffRx, rec, 1);
+        fifo_push(&_uarts[3].buffRx, rec, 1);
     }
 
     _U4RXIF = 0;
@@ -865,21 +888,21 @@ void __ISR(_UART5_TX_VECTOR, UIPR) U5TXInterrupt(void)
 #    if defined(ARCHI_pic32mk)
     _U5TXIF = 0;  // 32MK Work around (errata 41)
     char uart_tmpchar[1];
-    while (!U5STAbits.UTXBF && fifo_pop(&uarts[4].buffTx, uart_tmpchar, 1) == 1)
+    while (!U5STAbits.UTXBF && fifo_pop(&_uarts[4].buffTx, uart_tmpchar, 1) == 1)
     {
         U5TXREG = uart_tmpchar[0];
     }
 #    else
     size_t i;
     char uart_tmpchar[8];
-    size_t readen = fifo_pop(&uarts[4].buffTx, uart_tmpchar, 8);
+    size_t readen = fifo_pop(&_uarts[4].buffTx, uart_tmpchar, 8);
     for (i = 0; i < readen; i++)
     {
         U5TXREG = uart_tmpchar[i];
     }
 #    endif
 
-    if (fifo_len(&uarts[4].buffTx) == 0)
+    if (fifo_len(&_uarts[4].buffTx) == 0)
     {
         _U5TXIE = 0;
     }
@@ -892,7 +915,7 @@ void __ISR(_UART5_RX_VECTOR, UIPR) U5RXInterrupt(void)
     while (U5STAbits.URXDA == 1)
     {
         rec[0] = U5RXREG;
-        fifo_push(&uarts[4].buffRx, rec, 1);
+        fifo_push(&_uarts[4].buffRx, rec, 1);
     }
 
     _U5RXIF = 0;
@@ -905,21 +928,21 @@ void __ISR(_UART6_TX_VECTOR, UIPR) U6TXInterrupt(void)
 #    if defined(ARCHI_pic32mk)
     _U6TXIF = 0;  // 32MK Work around (errata 41)
     char uart_tmpchar[1];
-    while (!U6STAbits.UTXBF && fifo_pop(&uarts[5].buffTx, uart_tmpchar, 1) == 1)
+    while (!U6STAbits.UTXBF && fifo_pop(&_uarts[5].buffTx, uart_tmpchar, 1) == 1)
     {
         U6TXREG = uart_tmpchar[0];
     }
 #    else
     size_t i;
     char uart_tmpchar[8];
-    size_t readen = fifo_pop(&uarts[5].buffTx, uart_tmpchar, 8);
+    size_t readen = fifo_pop(&_uarts[5].buffTx, uart_tmpchar, 8);
     for (i = 0; i < readen; i++)
     {
         U6TXREG = uart_tmpchar[i];
     }
 #    endif
 
-    if (fifo_len(&uarts[5].buffTx) == 0)
+    if (fifo_len(&_uarts[5].buffTx) == 0)
     {
         _U6TXIE = 0;
     }
@@ -932,7 +955,7 @@ void __ISR(_UART6_RX_VECTOR, UIPR) U6RXInterrupt(void)
     while (U6STAbits.URXDA == 1)
     {
         rec[0] = U6RXREG;
-        fifo_push(&uarts[5].buffRx, rec, 1);
+        fifo_push(&_uarts[5].buffRx, rec, 1);
     }
 
     _U6RXIF = 0;
@@ -986,7 +1009,7 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 #endif
     }
 
-    fifoWritten = fifo_push(&uarts[uart].buffTx, data, size);
+    fifoWritten = fifo_push(&_uarts[uart].buffTx, data, size);
 
     switch (uart)
     {
@@ -1083,7 +1106,7 @@ ssize_t uart_datardy(rt_dev_t device)
         return -1;
     }
 
-    return fifo_len(&uarts[uart].buffRx);
+    return fifo_len(&_uarts[uart].buffRx);
 }
 
 /**
@@ -1102,7 +1125,7 @@ ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
         return 0;
     }
 
-    size_read = fifo_pop(&uarts[uart].buffRx, data, size_max);
+    size_read = fifo_pop(&_uarts[uart].buffRx, data, size_max);
 
     return size_read;
 }
