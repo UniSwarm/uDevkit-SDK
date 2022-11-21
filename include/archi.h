@@ -18,6 +18,10 @@ extern "C" {
 
 void archi_init(void);
 
+void archi_reset(void);
+void archi_sleep(void);
+void archi_idle(void);
+
 // ======== Microchip 16 bits family =======
 #if defined(ARCHI_dspic30f)
 #    include "../support/archi/dspic30f/dspic30f.h"

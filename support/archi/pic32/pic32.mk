@@ -30,6 +30,8 @@ $(warning $(DEFPROC))
 endif
 
 vpath %.h $(UDEVKIT)/support/archi/pic32/
+vpath %.c $(UDEVKIT)/support/archi/pic32/
+ARCHI_SRC += pic32.c
 HEADER += pic32.h
 
 -include $(UDEVKIT)/support/archi/microchip/microchip.mk
