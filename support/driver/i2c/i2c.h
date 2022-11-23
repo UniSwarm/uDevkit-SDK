@@ -76,6 +76,9 @@ int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[
 #    warning Unsuported ARCHI
 #endif
 
+// ======= dynamic clock =======
+void i2c_reconfig(void);
+
 #ifdef __cplusplus
 }
 #endif
