@@ -252,6 +252,17 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
     return 0;
 }
 
+ssize_t uart_datardy(rt_dev_t device)
+{
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+    {
+        return -1;
+    }
+
+    return 0;
+}
+
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
 {
     ssize_t size_read;
@@ -270,4 +281,8 @@ ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
     }
 
     return size_read;
+}
+
+void uart_reconfig(void)
+{
 }

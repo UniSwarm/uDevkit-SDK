@@ -587,3 +587,10 @@ int i2c_writeregs(rt_dev_t device, uint16_t address, uint16_t reg, uint8_t regs[
     i2c_stop(device);
     return -1;
 }
+
+/**
+ * @brief Reconfigure clocks for all activated I2C devices. Call this function on clock change.
+ */
+void i2c_reconfig(void)
+{
+}

@@ -534,3 +534,10 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 
     return 0;
 }
+
+/**
+ * @brief Reconfigure clocks for all activated TIMERs devices. Call this function on clock change.
+ */
+void timer_reconfig(void)
+{
+}
