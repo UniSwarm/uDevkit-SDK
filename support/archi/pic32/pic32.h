@@ -29,11 +29,11 @@ extern "C" {
 #        define disable_interrupt()                                                                                                                            \
             {                                                                                                                                                  \
             }
-#    else
+#    else  // !__XC32
 #        define nop()               _nop()
 #        define enable_interrupt()  __builtin_enable_interrupts()
 #        define disable_interrupt() __builtin_disable_interrupts()
-#    endif
+#    endif  // __XC32
 #    include <sys/attribs.h>
 #    include <sys/kmem.h>
 #    include <xc.h>
@@ -52,15 +52,17 @@ extern "C" {
         {                                                                                                                                                      \
             unlockConfig();                                                                                                                                    \
             CFGCONbits.IOLOCK = 0;                                                                                                                             \
+            lockConfig();                                                                                                                                      \
         } while (0);
 #    define lockIoConfig()                                                                                                                                     \
         do                                                                                                                                                     \
         {                                                                                                                                                      \
+            unlockConfig();                                                                                                                                    \
             CFGCONbits.IOLOCK = 1;                                                                                                                             \
             lockConfig();                                                                                                                                      \
         } while (0);
 
-#else
+#else  // SIMULATOR
 #    define nop()                                                                                                                                              \
         {                                                                                                                                                      \
         }
@@ -68,6 +70,16 @@ extern "C" {
         {                                                                                                                                                      \
         }
 #    define disable_interrupt()                                                                                                                                \
+        {                                                                                                                                                      \
+        }
+
+#    define archi_reset()                                                                                                                                      \
+        {                                                                                                                                                      \
+        }
+#    define archi_sleep()                                                                                                                                      \
+        {                                                                                                                                                      \
+        }
+#    define archi_idle()                                                                                                                                       \
         {                                                                                                                                                      \
         }
 
@@ -84,7 +96,7 @@ extern "C" {
 #    define lockIoConfig()                                                                                                                                     \
         {                                                                                                                                                      \
         }
-#endif
+#endif  // SIMULATOR
 
 #define unlockClockConfig() unlockConfig()
 #define lockClockConfig()   lockConfig()
