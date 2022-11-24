@@ -463,19 +463,17 @@ void __attribute__((interrupt, auto_psv, weak)) _T1Interrupt(void)
 }
 #endif
 
-/*
+/**
+ * @brief Reconfigure clocks for all activated TIMERs devices. Call this function on clock change.
+ */
 void timer_reconfig(void)
 {
-    uint8_t i;
-    rt_dev_t device;
-
-    for (i = 0; i < TIMER_COUNT; i++)
+    for (uint8_t i = 0; i < TIMER_COUNT; i++)
     {
-        if (_timers[i].flags.used == 1)
+        if (_timers[i].flags.used == 1 && _timers[i].periodUs != 0)
         {
-            device = MKDEV(DEV_CLASS_TIMER, i);
-            timer_setPeriodMs(device, _timers[i].periodMs);
+            rt_dev_t device = MKDEV(DEV_CLASS_TIMER, i);
+            timer_setPeriodUs(device, _timers[i].periodUs);
         }
     }
 }
-*/

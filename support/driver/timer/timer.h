@@ -58,6 +58,9 @@ uint16_t timer_getValue(rt_dev_t device);
 #    warning "Unsupported ARCHI"
 #endif
 
+// ======= dynamic clock =======
+void timer_reconfig(void);
+
 #ifdef __cplusplus
 }
 #endif
