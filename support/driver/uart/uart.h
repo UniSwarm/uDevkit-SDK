@@ -64,6 +64,9 @@ ssize_t uart_datardy(rt_dev_t device);
 #    include "uart_pic32mz_mm_mk.h"
 #endif
 
+// ======= dynamic clock =======
+void uart_reconfig(void);
+
 #ifdef __cplusplus
 }
 #endif

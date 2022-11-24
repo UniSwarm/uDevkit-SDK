@@ -53,6 +53,10 @@ struct uart_dev
     STATIC_FIFO(buffTx, UART_BUFFTX_SIZE);
 };
 
+#ifdef UDEVKIT_HAVE_CONFIG
+#    include "udevkit_config.h"
+#endif
+
 struct uart_dev _uarts[] = {
     {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}},
 #if UART_COUNT >= 2
@@ -127,7 +131,7 @@ rt_dev_t uart_getFreeDevice(void)
 
     for (i = 0; i < UART_COUNT; i++)
     {
-        if (_uarts[i].flags.used == 0) 
+        if (_uarts[i].flags.used == 0)
         {
             break;
         }
@@ -1128,4 +1132,19 @@ ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
     size_read = fifo_pop(&_uarts[uart].buffRx, data, size_max);
 
     return size_read;
+}
+
+/**
+ * @brief Reconfigure clocks for all activated UARTs devices. Call this function on clock change.
+ */
+void uart_reconfig(void)
+{
+    for (uint8_t i = 0; i < UART_COUNT; i++)
+    {
+        if (_uarts[i].flags.used == 1 && _uarts[i].baudSpeed != 0)
+        {
+            rt_dev_t device = MKDEV(DEV_CLASS_UART, i);
+            uart_setBaudSpeed(device, _uarts[i].baudSpeed);
+        }
+    }
 }

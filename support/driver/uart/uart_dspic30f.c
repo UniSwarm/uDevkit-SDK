@@ -682,3 +682,18 @@ ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
     return -1;
 #endif
 }
+
+/**
+ * @brief Reconfigure clocks for all activated UARTs devices. Call this function on clock change.
+ */
+void uart_reconfig(void)
+{
+    for (uint8_t i = 0; i < UART_COUNT; i++)
+    {
+        if (_uarts[i].flags.used == 1 && _uarts[i].baudSpeed != 0)
+        {
+            rt_dev_t device = MKDEV(DEV_CLASS_UART, i);
+            uart_setBaudSpeed(device, _uarts[i].baudSpeed);
+        }
+    }
+}
