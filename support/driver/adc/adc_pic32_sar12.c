@@ -26,7 +26,9 @@ int adc_init(void)
     ADC2CFG = DEVADC2;
     ADC3CFG = DEVADC3;
     ADC4CFG = DEVADC4;
-    // ADC5CFG = DEVADC5;
+#ifdef ADC_HAVE_DEDICATED_CORE5
+    ADC5CFG = DEVADC5;
+#endif  // ADC_HAVE_DEDICATED_CORE5
     // ADC6CFG = DEVADC6;
     ADC7CFG = DEVADC7;
 
@@ -106,6 +108,12 @@ int adc_init(void)
     ADCTRG1 = 0x01010101;  // Set triggers from software.
     ADCTRG2 = 0x01010101;  // Set triggers from software.
     ADCTRG3 = 0x01010101;  // Set triggers from software.
+    ADCTRG4 = 0x01010101;  // Set triggers from software.
+    ADCTRG5 = 0x01010101;  // Set triggers from software.
+#if (defined(ADC_HAVE_CH20) | defined(ADC_HAVE_CH21) | defined(ADC_HAVE_CH22) | defined(ADC_HAVE_CH23))
+    ADCTRG6 = 0x01010101;  // Set triggers from software.
+#endif
+    ADCTRG7 = 0x01010101;  // Set triggers from software.
 
     // Early interrupt
     ADCEIEN1 = 0;  // No early interrupt
@@ -126,6 +134,9 @@ int adc_init(void)
     ADCANCONbits.ANEN2 = 1;  // Enable the clock to analog bias
     ADCANCONbits.ANEN3 = 1;  // Enable the clock to analog bias
     ADCANCONbits.ANEN4 = 1;  // Enable the clock to analog bias
+#ifdef ADC_HAVE_DEDICATED_CORE5
+    ADCANCONbits.ANEN5 = 1;  // Enable the clock to analog bias
+#endif                       // ADC_HAVE_DEDICATED_CORE5
     ADCANCONbits.ANEN7 = 1;  // Enable the clock to analog bias
 
     // Wait for ADC to be ready
@@ -139,6 +150,10 @@ int adc_init(void)
         ;  // Wait until ADC3 is ready
     while (!ADCANCONbits.WKRDY4)
         ;  // Wait until ADC4 is ready
+#ifdef ADC_HAVE_DEDICATED_CORE5
+    while (!ADCANCONbits.WKRDY5)
+        ;  // Wait until ADC5 is ready
+#endif     // ADC_HAVE_DEDICATED_CORE5
     while (!ADCANCONbits.WKRDY7)
         ;  // Wait until ADC7 is ready
 
@@ -187,10 +202,17 @@ int adc_setSamplingCycles(uint8_t core, uint16_t cycles)
 
 uint8_t _adc_sarFromChannel(uint8_t channel)
 {
+#ifdef ADC_HAVE_DEDICATED_CORE5
+    if (channel <= 5)
+    {
+        return channel;
+    }
+#else
     if (channel <= 4)
     {
         return channel;
     }
+#endif  // ADC_HAVE_DEDICATED_CORE5
     if (channel >= 45 && channel <= 49)
     {
         return channel - 45;
@@ -204,44 +226,51 @@ int16_t adc_getValue(uint8_t channel)
     uint32_t mask;
     uint8_t sar;
 
-    ADCCON3 = ADCCON3 & 0xFF00FFFF;
+    ADCCON3CLR = 0x00FF0000;  // disable all ADC*
 
     if (channel <= 31)
     {
-        mask = 1 << channel;
+        mask = 1U << channel;
     }
     else
     {
-        mask = 1 << (channel - 32);
+        mask = 1U << (channel - 32);
     }
 
     sar = _adc_sarFromChannel(channel);
     switch (sar)
     {
         case 0:
-            ADCTRGMODEbits.SH0ALT = (channel == 0) ? 0 : 1;  // ADC0 = AN0/AN45
-            ADCCON3bits.DIGEN0 = 1;                          // Enable ADC0
+            ADCTRGMODEbits.SH0ALT = 0;  // ADC0 = AN0
+            ADCCON3bits.DIGEN0 = 1;     // Enable ADC0
             break;
 
         case 1:
-            ADCTRGMODEbits.SH1ALT = (channel == 0) ? 0 : 1;  // ADC1 = AN1/AN46
-            ADCCON3bits.DIGEN1 = 1;                          // Enable ADC1
+            ADCTRGMODEbits.SH1ALT = 0;  // ADC1 = AN1
+            ADCCON3bits.DIGEN1 = 1;     // Enable ADC1
             break;
 
         case 2:
-            ADCTRGMODEbits.SH2ALT = (channel == 0) ? 0 : 1;  // ADC2 = AN2/AN47
-            ADCCON3bits.DIGEN2 = 1;                          // Enable ADC2
+            ADCTRGMODEbits.SH2ALT = 0;  // ADC2 = AN2
+            ADCCON3bits.DIGEN2 = 1;     // Enable ADC2
             break;
 
         case 3:
-            ADCTRGMODEbits.SH3ALT = (channel == 0) ? 0 : 1;  // ADC3 = AN3/AN48
-            ADCCON3bits.DIGEN3 = 1;                          // Enable ADC3
+            ADCTRGMODEbits.SH3ALT = 0;  // ADC3 = AN3
+            ADCCON3bits.DIGEN3 = 1;     // Enable ADC3
             break;
 
         case 4:
-            ADCTRGMODEbits.SH4ALT = (channel == 0) ? 0 : 1;  // ADC4 = AN4/AN49
-            ADCCON3bits.DIGEN4 = 1;                          // Enable ADC4
+            ADCTRGMODEbits.SH4ALT = 0;  // ADC4 = AN4
+            ADCCON3bits.DIGEN4 = 1;     // Enable ADC4
             break;
+
+#ifdef ADC_HAVE_DEDICATED_CORE5
+        case 5:
+            ADCTRGMODEbits.SH5ALT = 0;  // ADC5 = AN5
+            ADCCON3bits.DIGEN5 = 1;     // Enable ADC5
+            break;
+#endif  // ADC_HAVE_DEDICATED_CORE5
 
         case 7:
             if (channel <= 31)
