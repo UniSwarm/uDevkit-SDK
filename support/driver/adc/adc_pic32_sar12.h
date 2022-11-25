@@ -19,6 +19,10 @@
 extern "C" {
 #endif
 
+volatile int32_t *adc_buffAddr(uint8_t channel);
+
+#define ADC_MAX_RESOLUTION_BIT 12
+
 // ====================================== Channel availability ======================================
 #if defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ1024EFE064)                       \
     || defined(DEVICE_32MZ1024EFF064) || defined(DEVICE_32MZ1024EFG064) || defined(DEVICE_32MZ1024EFH064) || defined(DEVICE_32MZ1024EFK064)                    \

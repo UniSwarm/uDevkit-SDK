@@ -200,33 +200,10 @@ int adc_setSamplingCycles(uint8_t core, uint16_t cycles)
     return 0;
 }
 
-uint8_t _adc_sarFromChannel(uint8_t channel)
+int adc_startSampling(uint8_t channel)
 {
-#ifdef ADC_HAVE_DEDICATED_CORE5
-    if (channel <= 5)
-    {
-        return channel;
-    }
-#else
-    if (channel <= 4)
-    {
-        return channel;
-    }
-#endif  // ADC_HAVE_DEDICATED_CORE5
-    if (channel >= 45 && channel <= 49)
-    {
-        return channel - 45;
-    }
-    return 7;
-}
-
-int16_t adc_getValue(uint8_t channel)
-{
-    volatile uint32_t *result;
     uint32_t mask;
     uint8_t sar;
-
-    ADCCON3CLR = 0x00FF0000;  // disable all ADC*
 
     if (channel <= 31)
     {
@@ -285,8 +262,95 @@ int16_t adc_getValue(uint8_t channel)
             break;
     }
 
+    if (adc_setTriggerSource(channel, ADC_TRGSRC_SOFTWARE_EDGE_TRIGGER) < 0)
+    {
+        return -1;
+    }
+
     // Trigger a conversion
     ADCCON3bits.GSWTRG = 1;
+    return 0;
+}
+
+int adc_dataReady(uint8_t channel)
+{
+    uint32_t mask;
+
+    if (channel >= ADC_CHANNEL_MAX)
+    {
+        return -1;
+    }
+
+    if (channel <= 31)
+    {
+        mask = 1U << channel;
+        return ((ADCDSTAT1 & mask) == 0) ? 0 : 1;
+    }
+    else
+    {
+        mask = 1U << (channel - 32);
+        return ((ADCDSTAT2 & mask) == 0) ? 0 : 1;
+    }
+}
+
+int16_t adc_value(uint8_t channel)
+{
+    if (channel >= ADC_CHANNEL_MAX)
+    {
+        return 0;
+    }
+    return (int16_t) * (volatile int32_t *)((&ADCDATA0) + (channel << 2));
+}
+
+volatile int32_t *adc_buffAddr(uint8_t channel)
+{
+    if (channel >= ADC_CHANNEL_MAX)
+    {
+        return NULL;
+    }
+    return (volatile int32_t *)((&ADCDATA0) + (channel << 2));
+}
+
+uint8_t _adc_sarFromChannel(uint8_t channel)
+{
+#ifdef ADC_HAVE_DEDICATED_CORE5
+    if (channel <= 5)
+    {
+        return channel;
+    }
+#else
+    if (channel <= 4)
+    {
+        return channel;
+    }
+#endif  // ADC_HAVE_DEDICATED_CORE5
+    if (channel >= 45 && channel <= 49)
+    {
+        return channel - 45;
+    }
+    return 7;
+}
+
+int16_t adc_getValue(uint8_t channel)
+{
+    volatile uint32_t *result;
+    uint32_t mask;
+
+    ADCCON3CLR = 0x00FF0000;  // disable all ADC*
+
+    if (channel <= 31)
+    {
+        mask = 1U << channel;
+    }
+    else
+    {
+        mask = 1U << (channel - 32);
+    }
+
+    if (adc_startSampling(channel) < 0)
+    {
+        return 0;
+    }
 
     // Wait the conversions to complete
     if (channel <= 31)
@@ -301,7 +365,7 @@ int16_t adc_getValue(uint8_t channel)
     }
 
     // return result
-    result = &ADCDATA0 + channel;
+    result = &ADCDATA0 + (channel << 2);
     return *result;
 }
 
