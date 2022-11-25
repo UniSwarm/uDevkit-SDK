@@ -15,28 +15,52 @@
 
 #include <driver/adc.h>
 
+static void _cmd_adc_help(void);
+
+void _cmd_adc_help(void)
+{
+    puts("adc");
+    puts("adc scan");
+    puts("adc <channel>");
+}
+
 int cmd_adc(int argc, char **argv)
 {
-    int8_t param;
     uint16_t value;
     if (argc < 2)
     {
-        return 1;
+        printf("%d channels, %d max channel\r\n", (int)ADC_CHANNEL_COUNT, (int)ADC_CHANNEL_MAX);
+        printf("%d bits resolution\r\n", (int)ADC_MAX_RESOLUTION_BIT);
+        return 0;
     }
 
     // help
     if (strcmp(argv[1], "help") == 0)
     {
-        puts("adc <channel>");
+        _cmd_adc_help();
         return 0;
     }
 
-    param = atoi(argv[1]);
+    // scan
+    if (strcmp(argv[1], "scan") == 0)
+    {
+        for (int channel = 0; channel <= ADC_CHANNEL_MAX; channel++)
+        {
+            if (adc_channelExists(channel))
+            {
+                value = adc_getValue(channel);
+                printf("channel %d : %d => %.3fV\r\n", channel, value, (float)value / (1U << ADC_MAX_RESOLUTION_BIT) * 3.3);
+            }
+        }
+        return 0;
+    }
+
+    int8_t channel = atoi(argv[1]);
 
     // read value of an adc channel
     // > adc <adc-channel>
-    value = adc_getValue(param);
-    printf("%d/1023 => %.3fV\r\n", value, (float)value / 1024.0 * 3.3);
+    value = adc_getValue(channel);
+    printf("%d => %.3fV\r\n", value, (float)value / (1U << ADC_MAX_RESOLUTION_BIT) * 3.3);
 
     return 0;
 }
