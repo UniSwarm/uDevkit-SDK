@@ -19,6 +19,8 @@
 extern "C" {
 #endif
 
+#define ADC_MAX_RESOLUTION_BIT 10
+
 #ifdef __cplusplus
 }
 #endif

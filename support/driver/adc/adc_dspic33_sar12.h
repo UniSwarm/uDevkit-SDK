@@ -18,6 +18,10 @@
 extern "C" {
 #endif
 
+volatile int16_t *adc_buffAddr(uint8_t channel);
+
+#define ADC_MAX_RESOLUTION_BIT 12
+
 // ====================================== Channel availability ======================================
 #if defined(DEVICE_33EP128GS702)
 #    define ADC_CHANNEL_COUNT 11
