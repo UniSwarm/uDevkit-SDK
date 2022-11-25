@@ -304,3 +304,20 @@ int16_t adc_getValue(uint8_t channel)
     result = &ADCDATA0 + channel;
     return *result;
 }
+
+#define ADCTRG(channel) ((volatile uint8_t *)(&ADCTRG1) + (((uint8_t)(channel)&0xFC) * 4 + ((uint8_t)(channel)&0x03)))
+int adc_setTriggerSource(uint8_t channel, uint8_t triggerSource)
+{
+    if (channel >= ADC_CHANNEL_MAX)
+    {
+        return -1;
+    }
+    if (channel >= 32)  // no trigger for channel > 32
+    {
+        return -1;
+    }
+
+    (*ADCTRG(channel)) = triggerSource;
+
+    return 0;
+}
