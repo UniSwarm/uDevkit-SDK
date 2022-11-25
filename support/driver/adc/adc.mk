@@ -28,6 +28,7 @@ ifeq ($(ARCHI),$(filter $(ARCHI), pic32mzef pic32mzda pic32mk))
  HEADER += adc_pic32_sar12.h
 endif
 
+SRC += adc.c
 SIM_SRC += adc_sim.c
 
 endif

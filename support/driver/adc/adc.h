@@ -16,6 +16,8 @@
 extern "C" {
 #endif
 
+#include <stdbool.h>
+
 #include <driver/device.h>
 
 #include "adc_device.h"
@@ -34,6 +36,8 @@ int16_t adc_value(uint8_t channel);
 volatile int16_t *adc_buffAddr(uint8_t channel);
 int16_t adc_getValue(uint8_t channel);
 // int adc_setSamplingPeriod(uint16_t priodMs);
+
+bool adc_channelExists(uint8_t channel);
 
 int adc_setTriggerSource(uint8_t channel, uint8_t triggerSource);
 
