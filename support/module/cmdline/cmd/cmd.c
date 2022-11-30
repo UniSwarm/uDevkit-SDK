@@ -26,30 +26,33 @@
 static int _cmd_help(int argc, char **argv);
 
 const Cmd _cmds[] = {
-#ifdef USE_gpio
-    {"gpio", cmd_gpio},
-#endif
-#ifdef USE_uart
-    {"uart", cmd_uart},
-#endif
-#ifdef USE_sysclock
-    {"sysclock", cmd_sysclock},
-#endif
-#ifdef USE_i2c
-    {"i2c", cmd_i2c},
-#endif
 #ifdef USE_adc
     {"adc", cmd_adc},
 #endif
 #ifdef USE_ax12
     {"ax", cmd_ax},
 #endif
+#ifdef USE_can
+    {"can", cmd_can},
+#endif
+#ifdef USE_gpio
+    {"gpio", cmd_gpio},
+#endif
+    {"help", _cmd_help},
+#ifdef USE_i2c
+    {"i2c", cmd_i2c},
+#endif
+    {"led", cmd_led},
 #ifdef USE_MODULE_mrobot
     {"mrobot", cmd_mrobot},
 #endif
     {"reg", cmd_reg},
-    {"led", cmd_led},
-    {"help", _cmd_help},
+#ifdef USE_sysclock
+    {"sysclock", cmd_sysclock},
+#endif
+#ifdef USE_uart
+    {"uart", cmd_uart},
+#endif
     {"", NULL}};
 
 extern rt_dev_t _cmdline_device_out;

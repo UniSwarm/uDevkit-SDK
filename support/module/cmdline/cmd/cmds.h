@@ -36,6 +36,9 @@ int cmd_adc(int argc, char **argv);
 #ifdef USE_ax12
 int cmd_ax(int argc, char **argv);
 #endif
+#ifdef USE_can
+int cmd_can(int argc, char **argv);
+#endif
 #ifdef USE_MODULE_mrobot
 int cmd_mrobot(int argc, char **argv);
 #endif
