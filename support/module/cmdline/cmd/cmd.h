@@ -27,6 +27,9 @@ int cmd_exec(char *line);
 void cmd_puts(const char *str);
 int cmd_printf(const char *format, ...);
 
+int cmd_task(void);
+void cmd_setTask(int (*cmdTaskPtr)(void));
+
 #ifdef __cplusplus
 }
 #endif

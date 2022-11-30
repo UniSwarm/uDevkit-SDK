@@ -25,6 +25,7 @@
 #endif
 
 #include <ctype.h>
+#include <limits.h>
 #include <string.h>
 
 rt_dev_t _cmdline_device_in;
@@ -56,6 +57,7 @@ static void _cmdline_up(void);
 static void _cmdline_down(void);
 static void _cmdline_clear(void);
 static void _cmdline_processline(char *line);
+static void _cmdline_newline(void);
 static void _cmdline_reset(void);
 static void _cmdline_pushchar(const char c);
 static void _cmdline_backspace(void);
@@ -163,7 +165,7 @@ void _cmdline_clear(void)
     device_write(_cmdline_device_out, cmd, strlen(cmd));
 }
 
-void _cmdline_reset(void)
+void _cmdline_newline(void)
 {
     char cmd[10];
     _cmdline_id = 0;
@@ -172,41 +174,65 @@ void _cmdline_reset(void)
     cmdline_history_id = -1;
     cmdline_curses_left(cmd, 200);
     device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor 200 column before
+}
+
+void _cmdline_reset(void)
+{
+    _cmdline_newline();
     device_write(_cmdline_device_out, "> ", 2);
 }
 
 void _cmdline_processline(char *line)
 {
-    if (line[0] != 0)
+    if (line[0] == 0)
     {
-        // save history
-        for (int i = _cmdline_history_end; i > 0; i--)
-        {
-            strcpy(_cmdline_oldline[i], _cmdline_oldline[i - 1]);
-        }
-        if (_cmdline_history_end < CMDLINE_HISTORY_COUNT - 1)
-        {
-            _cmdline_history_end++;
-        }
-        strcpy(_cmdline_oldline[0], _cmdline_line);
-        cmdline_history_id = -1;
-
-        int ret = cmd_exec(line);
-        if (ret < 0)
-        {
-            device_write(_cmdline_device_out, "Invalid command '", 17);
-            device_write(_cmdline_device_out, _cmdline_line, strlen(_cmdline_line));
-            device_write(_cmdline_device_out, "'\r\n", 3);
-        }
-        else if (ret > 0)
-        {
-            device_write(_cmdline_device_out, "'", 1);
-            device_write(_cmdline_device_out, _cmdline_line, strlen(_cmdline_line));
-            device_write(_cmdline_device_out, "' failed to exec\r\n", 18);
-        }
+        _cmdline_reset();
+        return;
     }
 
-    _cmdline_reset();
+    // save history
+    for (int i = _cmdline_history_end; i > 0; i--)
+    {
+        strcpy(_cmdline_oldline[i], _cmdline_oldline[i - 1]);
+    }
+    if (_cmdline_history_end < CMDLINE_HISTORY_COUNT - 1)
+    {
+        _cmdline_history_end++;
+    }
+    strcpy(_cmdline_oldline[0], _cmdline_line);
+    cmdline_history_id = -1;
+
+    int ret = cmd_exec(line);
+
+    if (ret > 0)  // command not finished
+    {
+        _cmdline_newline();
+        return;
+    }
+
+    if (ret == INT_MIN)  // command not found
+    {
+        device_write(_cmdline_device_out, "Invalid command '", 17);
+        device_write(_cmdline_device_out, _cmdline_line, strlen(_cmdline_line));
+        device_write(_cmdline_device_out, "'\r\n", 3);
+        _cmdline_reset();
+        return;
+    }
+
+    if (ret < 0)  // error in command
+    {
+        device_write(_cmdline_device_out, "'", 1);
+        device_write(_cmdline_device_out, _cmdline_line, strlen(_cmdline_line));
+        device_write(_cmdline_device_out, "' failed to exec\r\n", 18);
+        _cmdline_reset();
+        return;
+    }
+
+    if (ret == 0)  // command finished and whell executed
+    {
+        _cmdline_reset();
+        return;
+    }
 }
 
 void _cmdline_pushchar(const char c)
@@ -284,6 +310,7 @@ uint8_t _cmdline_getLine(void)
 #else
             {
                 device_write(_cmdline_device_out, "^C\n\r", 4);
+                cmd_setTask(NULL);  // finished current task
                 _cmdline_reset();
                 continue;
             }
@@ -417,6 +444,7 @@ void cmdline_task(void)
     {
         _cmdline_processline(_cmdline_line);
     }
+    cmd_task();
 }
 
 #ifdef TEST_CMDLINE

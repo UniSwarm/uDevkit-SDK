@@ -14,6 +14,7 @@
 #include "../cmdline_curses.h"
 #include "cmds.h"
 
+#include <limits.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
@@ -52,6 +53,8 @@ const Cmd _cmds[] = {
     {"", NULL}};
 
 extern rt_dev_t _cmdline_device_out;
+
+int (*_cmdline_cmdTaskPtr)(void) = NULL;
 
 #define CMDLINE_ARGC_MAX 10
 
@@ -103,7 +106,7 @@ int cmd_exec(char *line)
     // execute command if found
     if (cmd == NULL)
     {
-        return -1;
+        return INT_MIN;
     }
     return (*cmd->cmdFnPtr)(argc, argv);
 }
@@ -152,4 +155,23 @@ int cmd_printf(const char *format, ...)
     device_write(_cmdline_device_out, buff, strlen(buff));
 
     return done;
+}
+
+int cmd_task(void)
+{
+    if (_cmdline_cmdTaskPtr == NULL)
+    {
+        return 0;  // no command task active
+    }
+
+    if ((*_cmdline_cmdTaskPtr)() <= 0)
+    {
+        return 0;  // command task finished or crashed
+    }
+    return 1;
+}
+
+void cmd_setTask(int (*cmdTaskPtr)(void))
+{
+    _cmdline_cmdTaskPtr = cmdTaskPtr;
 }
