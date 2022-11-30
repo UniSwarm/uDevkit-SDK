@@ -22,7 +22,7 @@ int cmd_led(int argc, char **argv)
 
     if (argc < 2)
     {
-        return 1;
+        return -1;
     }
 
     // first arg numeric : convert to ledid
@@ -30,7 +30,7 @@ int cmd_led(int argc, char **argv)
     if (ledid >= LED_COUNT)
     {
         puts("Invalid led id");
-        return 1;
+        return -1;
     }
 
     // if no more arg, print status of led

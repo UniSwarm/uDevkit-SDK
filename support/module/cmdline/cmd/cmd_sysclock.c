@@ -68,7 +68,7 @@ int cmd_sysclock(int argc, char **argv)
         int source;
         if (argc < 2)
         {
-            return 1;
+            return -1;
         }
 
         for (source = 0; source <= SYSCLOCK_SRC_MAX; source++)
@@ -103,5 +103,5 @@ int cmd_sysclock(int argc, char **argv)
         return 0;
     }
 
-    return 1;
+    return -1;
 }

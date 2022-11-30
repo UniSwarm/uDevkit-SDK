@@ -56,6 +56,11 @@ int cmd_adc(int argc, char **argv)
     }
 
     int8_t channel = atoi(argv[1]);
+    if (adc_channelExists(channel))
+    {
+        printf("Invalid channel %d\r\n", channel);
+        return -1;
+    }
 
     // read value of an adc channel
     // > adc <adc-channel>

@@ -44,7 +44,7 @@ int cmd_mrobot(int argc, char **argv)
     // parse argv 2, 3
     if (argc < 4)
     {
-        return 1;
+        return -1;
     }
     param1 = atoi(argv[2]);
     param2 = atoi(argv[3]);
@@ -65,7 +65,7 @@ int cmd_mrobot(int argc, char **argv)
     }
     if (argc < 5)
     {
-        return 1;
+        return -1;
     }
     param3 = atoi(argv[4]);
     // == setpos > mrobot setpos <xpos> <ypos> <tpos>
@@ -87,5 +87,5 @@ int cmd_mrobot(int argc, char **argv)
         return 0;
     }
 
-    return 1;
+    return -1;
 }

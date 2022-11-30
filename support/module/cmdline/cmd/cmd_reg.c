@@ -17,7 +17,9 @@
 
 #include <stdint.h>
 
-void cmd_reg_help(void)
+static void _cmd_reg_help(void);
+
+void _cmd_reg_help(void)
 {
     puts("reg read <hex-addr>");
     puts("reg write <hex-addr> <hex-value>");
@@ -28,26 +30,26 @@ int cmd_reg(int argc, char **argv)
 {
     if (argc < 2)
     {
-        cmd_reg_help();
+        _cmd_reg_help();
         return 0;
     }
 
     // help
     if (strcmp(argv[1], "help") == 0)
     {
-        cmd_reg_help();
+        _cmd_reg_help();
         return 0;
     }
 
     if (argc < 3)
     {
-        return 1;
+        return -1;
     }
 
     volatile rt_reg_ptr_t *addr = (volatile rt_reg_ptr_t *)strtoul(argv[2], NULL, 16);
     if (addr == 0)
     {
-        return 1;
+        return -1;
     }
 
     if (strcmp(argv[1], "read") == 0)
@@ -88,7 +90,7 @@ int cmd_reg(int argc, char **argv)
 
     if (argc < 4)
     {
-        return 1;
+        return -1;
     }
     volatile unsigned int value = (unsigned int)strtoul(argv[3], NULL, 16);
     if (strcmp(argv[1], "write") == 0)
@@ -98,5 +100,5 @@ int cmd_reg(int argc, char **argv)
         return 0;
     }
 
-    return 1;
+    return -1;
 }

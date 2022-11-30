@@ -24,7 +24,7 @@ int cmd_i2c(int argc, char **argv)
 
 #if !defined(I2C_COUNT) || I2C_COUNT == 0
     puts("No i2c module");
-    return 1;
+    return 0;
 #else
     // no args -> print number of i2cs buses
     if (argc == 1)
@@ -58,7 +58,7 @@ int cmd_i2c(int argc, char **argv)
     if (i2c_id <= 0 || i2c_id > I2C_COUNT)
     {
         printf("Invalid i2c id %d\r\n", i2c_id);
-        return 0;
+        return -1;
     }
     i2c_dev = i2c(i2c_id);
 
@@ -67,7 +67,6 @@ int cmd_i2c(int argc, char **argv)
     if (argc == 2)
     {
         printf("Config: %d bits address %luHz (%luHz)\r\n", (int)i2c_addressWidth(i2c_dev), i2c_effectiveBaudSpeed(i2c_dev), i2c_baudSpeed(i2c_dev));
-
         return 0;
     }
 
@@ -94,7 +93,7 @@ int cmd_i2c(int argc, char **argv)
     {
         if (argc < 4)
         {
-            return 1;
+            return -1;
         }
         uint32_t baudSpeed;
         baudSpeed = atol(argv[3]);
@@ -104,7 +103,7 @@ int cmd_i2c(int argc, char **argv)
 
     if (argc < 5)
     {
-        return 1;
+        return -1;
     }
     addr = atoi(argv[3]);
     regaddr = atoi(argv[4]);
@@ -118,7 +117,7 @@ int cmd_i2c(int argc, char **argv)
 
     if (argc < 6)
     {
-        return 1;
+        return -1;
     }
     value = atoi(argv[5]);
     // == writereg > i2c <bus-id> writereg <addr> <regaddr> <value>
@@ -129,6 +128,6 @@ int cmd_i2c(int argc, char **argv)
         return 0;
     }
 
-    return 1;
+    return -1;
 #endif
 }

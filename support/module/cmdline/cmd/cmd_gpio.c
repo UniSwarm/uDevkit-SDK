@@ -103,5 +103,5 @@ int cmd_gpio(int argc, char **argv)
         }
     }
 
-    return 1;
+    return -1;
 }

@@ -23,7 +23,7 @@ int cmd_uart(int argc, char **argv)
 
 #if !defined(UART_COUNT) || UART_COUNT == 0
     puts("No UART module");
-    return 1;
+    return 0;
 #else
     // no args -> print number of uarts
     if (argc == 1)
@@ -57,7 +57,7 @@ int cmd_uart(int argc, char **argv)
     if (uart_id <= 0 || uart_id > UART_COUNT)
     {
         printf("Invalid uart id %d\r\n", uart_id);
-        return 0;
+        return -1;
     }
     uart_dev = uart(uart_id);
 
@@ -98,7 +98,7 @@ int cmd_uart(int argc, char **argv)
 
     if (argc < 3)
     {
-        return 1;
+        return -1;
     }
     // == read > uart <uart-id> read
     if (strcmp(argv[2], "read") == 0)
@@ -110,9 +110,10 @@ int cmd_uart(int argc, char **argv)
         puts(buff);
         return 0;
     }
+
     if (argc < 4)
     {
-        return 1;
+        return -1;
     }
     // == write > uart <uart-id> write <data-to-write>
     if (strcmp(argv[2], "write") == 0)
@@ -131,6 +132,6 @@ int cmd_uart(int argc, char **argv)
         return 0;
     }
 
-    return 1;
+    return -1;
 #endif
 }

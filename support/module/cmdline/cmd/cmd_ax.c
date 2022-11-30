@@ -22,7 +22,7 @@ int cmd_ax(int argc, char **argv)
 
     if (argc < 2)
     {
-        return 1;
+        return -1;
     }
 
     // help
@@ -47,7 +47,9 @@ int cmd_ax(int argc, char **argv)
     }
 
     if (argc < 4)
-        return 1;
+    {
+        return -1;
+    }
     pos = atoi(argv[3]);
 
     // > ax <ax-id> move <pos> [<speed>] [<torque>]
@@ -69,12 +71,14 @@ int cmd_ax(int argc, char **argv)
     if (strcmp(argv[2], "setled") == 0)
     {
         ax12_setLed(axid, (uint8_t)pos);
+        puts("ok");
     }
 
     // > ax <ax-id> setid <newid>
     if (strcmp(argv[2], "setid") == 0)
     {
         ax12_setId(axid, (uint8_t)pos);
+        puts("ok");
     }
 
     return 0;
