@@ -17,7 +17,7 @@
 
 int cmd_uart(int argc, char **argv)
 {
-    uint8_t uart = 255;
+    uint8_t uart_id = 255;
     rt_dev_t uart_dev;
     char c;
 
@@ -47,19 +47,19 @@ int cmd_uart(int argc, char **argv)
     c = argv[1][0];
     if (isdigit(c))
     {
-        uart = c - '0';
+        uart_id = c - '0';
         c = argv[1][1];
         if (isdigit(c))
         {
-            uart = uart * 10 + (c - '0');
+            uart_id = uart_id * 10 + (c - '0');
         }
     }
-    if (uart >= UART_COUNT)
+    if (uart_id <= 0 || uart_id > UART_COUNT)
     {
-        printf("Invalid uart id %d\r\n", uart);
+        printf("Invalid uart id %d\r\n", uart_id);
         return 0;
     }
-    uart_dev = MKDEV(DEV_CLASS_UART, uart);
+    uart_dev = uart(uart_id);
 
     // if no more arg, print properties of uart
     // > uart <uart-id>
@@ -71,17 +71,20 @@ int cmd_uart(int argc, char **argv)
             case UART_BIT_PARITY_NONE:
                 parity = 'N';
                 break;
+
             case UART_BIT_PARITY_EVEN:
                 parity = 'E';
                 break;
+
             case UART_BIT_PARITY_ODD:
                 parity = 'O';
                 break;
+
             default:
                 parity = 'U';
                 break;
         }
-        printf("Config: %lubds %d%c%d (%lubds)\r\n",
+        printf("Config: %luBd %d%c%d (%luBd)\r\n",
                uart_effectiveBaudSpeed(uart_dev),
                (int)uart_bitLength(uart_dev),
                parity,

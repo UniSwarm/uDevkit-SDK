@@ -17,7 +17,7 @@
 
 int cmd_i2c(int argc, char **argv)
 {
-    uint8_t i2c = 255;
+    uint8_t i2c_id = 255;
     rt_dev_t i2c_dev;
     char c;
     uint16_t addr, regaddr, value;
@@ -44,23 +44,23 @@ int cmd_i2c(int argc, char **argv)
         return 0;
     }
 
-    // first arg numeric : convert to i2c id
+    // first arg numeric : convert to i2c_id
     c = argv[1][0];
     if (isdigit(c))
     {
-        i2c = c - '0';
+        i2c_id = c - '0';
         c = argv[1][1];
         if (isdigit(c))
         {
-            i2c = i2c * 10 + (c - '0');
+            i2c_id = i2c_id * 10 + (c - '0');
         }
     }
-    if (i2c >= I2C_COUNT)
+    if (i2c_id <= 0 || i2c_id > I2C_COUNT)
     {
-        printf("Invalid i2c id %d\r\n", i2c);
+        printf("Invalid i2c id %d\r\n", i2c_id);
         return 0;
     }
-    i2c_dev = MKDEV(DEV_CLASS_I2C, i2c);
+    i2c_dev = i2c(i2c_id);
 
     // if no more arg, print properties of i2c
     // > i2c <bus-id>
