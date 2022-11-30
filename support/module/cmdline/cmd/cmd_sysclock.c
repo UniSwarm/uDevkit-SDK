@@ -15,6 +15,8 @@
 
 #include "cmd_stdio.h"
 
+#include <archi.h>
+#include <driver/i2c.h>
 #include <driver/sysclock.h>
 #include <driver/uart.h>
 
@@ -75,18 +77,22 @@ int cmd_sysclock(int argc, char **argv)
         {
             if (strcmp(argv[2], sysclock_sources_str[source]) == 0)
             {
-                uint16_t i;
                 int res = sysclock_switchSourceTo(source);
 
 #ifdef USE_uart
-                // uart_reconfig();
+                uart_reconfig();
 #endif
 #ifdef USE_timer
-                // timer_reconfig();
+                timer_reconfig();
+#endif
+#ifdef USE_i2c
+                i2c_reconfig();
 #endif
 
-                for (i = 0; i < 65000; i++)
-                    ;
+                for (uint16_t i = 0; i < 65000; i++)
+                {
+                    nop();
+                }
 
                 printf("ret code: %d\n", res);
                 return 0;
