@@ -108,12 +108,20 @@ int adc_init(void)
     ADCTRG1 = 0x01010101;  // Set triggers from software.
     ADCTRG2 = 0x01010101;  // Set triggers from software.
     ADCTRG3 = 0x01010101;  // Set triggers from software.
+#ifdef ARCHI_pic32mk
+#    if (defined(ADC_HAVE_CH12) | defined(ADC_HAVE_CH13) | defined(ADC_HAVE_CH14) | defined(ADC_HAVE_CH15))
     ADCTRG4 = 0x01010101;  // Set triggers from software.
+#    endif
+#    if (defined(ADC_HAVE_CH16) | defined(ADC_HAVE_CH17) | defined(ADC_HAVE_CH18) | defined(ADC_HAVE_CH19))
     ADCTRG5 = 0x01010101;  // Set triggers from software.
-#if (defined(ADC_HAVE_CH20) | defined(ADC_HAVE_CH21) | defined(ADC_HAVE_CH22) | defined(ADC_HAVE_CH23))
+#    endif
+#    if (defined(ADC_HAVE_CH20) | defined(ADC_HAVE_CH21) | defined(ADC_HAVE_CH22) | defined(ADC_HAVE_CH23))
     ADCTRG6 = 0x01010101;  // Set triggers from software.
-#endif
+#    endif
+#    if (defined(ADC_HAVE_CH24) | defined(ADC_HAVE_CH25) | defined(ADC_HAVE_CH26) | defined(ADC_HAVE_CH27))
     ADCTRG7 = 0x01010101;  // Set triggers from software.
+#    endif
+#endif
 
     // Early interrupt
     ADCEIEN1 = 0;  // No early interrupt
@@ -336,7 +344,7 @@ int16_t adc_getValue(uint8_t channel)
     volatile uint32_t *result;
     uint32_t mask;
 
-    ADCCON3CLR = 0x00FF0000;  // disable all ADC*
+    ADCCON3 &= 0xFF00FFFF;  // disable all ADC*
 
     if (channel <= 31)
     {
