@@ -781,3 +781,18 @@ uint8_t i2c_getc(rt_dev_t device)
     return -1;
 #endif
 }
+
+/**
+ * @brief Reconfigure clocks for all activated I2C devices. Call this function on clock change.
+ */
+void i2c_reconfig(void)
+{
+    for (uint8_t i = 0; i < I2C_COUNT; i++)
+    {
+        if (i2cs[i].flags.used == 1 && i2cs[i].baudSpeed != 0)
+        {
+            rt_dev_t device = MKDEV(DEV_CLASS_I2C, i);
+            i2c_setBaudSpeed(device, i2cs[i].baudSpeed);
+        }
+    }
+}
