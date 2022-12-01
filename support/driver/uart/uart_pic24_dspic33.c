@@ -53,7 +53,7 @@ struct uart_dev
     STATIC_FIFO(buffTx, UART_BUFFTX_SIZE);
 };
 
-struct uart_dev uarts[] = {
+struct uart_dev _uarts[] = {
 #if UART_COUNT >= 1
     {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}},
 #endif
@@ -86,7 +86,7 @@ rt_dev_t uart_getFreeDevice(void)
 
     for (i = 0; i < UART_COUNT; i++)
     {
-        if (uarts[i].flags.used == 0)
+        if (_uarts[i].flags.used == 0)
         {
             break;
         }
@@ -119,14 +119,14 @@ int uart_open(rt_dev_t device)
     {
         return -1;
     }
-    if (uarts[uart].flags.used == 1)
+    if (_uarts[uart].flags.used == 1)
     {
         return -1;
     }
 
-    uarts[uart].flags.used = 1;
-    STATIC_FIFO_INIT(uarts[uart].buffRx, UART_BUFFRX_SIZE);
-    STATIC_FIFO_INIT(uarts[uart].buffTx, UART_BUFFTX_SIZE);
+    _uarts[uart].flags.used = 1;
+    STATIC_FIFO_INIT(_uarts[uart].buffRx, UART_BUFFRX_SIZE);
+    STATIC_FIFO_INIT(_uarts[uart].buffTx, UART_BUFFTX_SIZE);
 
     return 0;
 #else
@@ -150,7 +150,7 @@ int uart_close(rt_dev_t device)
 
     uart_disable(device);
 
-    uarts[uart].flags.val = UART_FLAG_UNUSED;
+    _uarts[uart].flags.val = UART_FLAG_UNUSED;
     return 0;
 #else
     return -1;
@@ -171,7 +171,7 @@ int uart_enable(rt_dev_t device)
         return -1;
     }
 
-    uarts[uart].flags.enabled = 1;
+    _uarts[uart].flags.enabled = 1;
 
     switch (uart)
     {
@@ -312,7 +312,7 @@ int uart_disable(rt_dev_t device)
         return -1;
     }
 
-    uarts[uart].flags.enabled = 0;
+    _uarts[uart].flags.enabled = 0;
 
     switch (uart)
     {
@@ -387,13 +387,13 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
     }
 
     // disable uart if it was already enabled
-    if (uarts[uart].flags.enabled == 1)
+    if (_uarts[uart].flags.enabled == 1)
     {
         uart_disable(device);
         enabled = 1;
     }
 
-    uarts[uart].baudSpeed = baudSpeed;
+    _uarts[uart].baudSpeed = baudSpeed;
 
     // baud rate computation
     systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_UART);
@@ -549,7 +549,7 @@ uint32_t uart_effectiveBaudSpeed(rt_dev_t device)
         return 0;
     }
 
-    return uarts[uart].baudSpeed;
+    return _uarts[uart].baudSpeed;
 }
 
 /**
@@ -573,7 +573,7 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLength, uint8_t bitParity, uin
         return -1;
     }
 
-    flags = uarts[uart].flags;
+    flags = _uarts[uart].flags;
     if (bitLength == 9)
     {
         flags.bit9 = 1;
@@ -608,7 +608,7 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLength, uint8_t bitParity, uin
     }
 
     // update flags
-    uarts[uart].flags = flags;
+    _uarts[uart].flags = flags;
 
     switch (uart)
     {
@@ -666,7 +666,7 @@ uint8_t uart_bitLength(rt_dev_t device)
         return 0;
     }
 
-    if (uarts[uart].flags.bit9 == 1)
+    if (_uarts[uart].flags.bit9 == 1)
     {
         return 9;
     }
@@ -686,7 +686,7 @@ uint8_t uart_bitParity(rt_dev_t device)
         return -1;
     }
 
-    return uarts[uart].flags.parity;
+    return _uarts[uart].flags.parity;
 }
 
 /**
@@ -702,7 +702,7 @@ uint8_t uart_bitStop(rt_dev_t device)
         return -1;
     }
 
-    if (uarts[uart].flags.stop == 1)
+    if (_uarts[uart].flags.stop == 1)
     {
         return 2;
     }
@@ -713,7 +713,7 @@ uint8_t uart_bitStop(rt_dev_t device)
 void __attribute__((interrupt, no_auto_psv)) _U1TXInterrupt(void)
 {
     char uart_tmpchar[1];
-    while (!U1STAbits.UTXBF && fifo_pop(&uarts[0].buffTx, uart_tmpchar, 1) == 1)
+    while (!U1STAbits.UTXBF && fifo_pop(&_uarts[0].buffTx, uart_tmpchar, 1) == 1)
     {
         U1TXREG = uart_tmpchar[0];
     }
@@ -725,7 +725,7 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
     char rec[4];
     rec[0] = U1RXREG;
 
-    fifo_push(&uarts[0].buffRx, rec, 1);
+    fifo_push(&_uarts[0].buffRx, rec, 1);
 
     _U1RXIF = 0;
 }
@@ -735,7 +735,7 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
 void __attribute__((interrupt, no_auto_psv)) _U2TXInterrupt(void)
 {
     char uart_tmpchar[1];
-    while (!U2STAbits.UTXBF && fifo_pop(&uarts[1].buffTx, uart_tmpchar, 1) == 1)
+    while (!U2STAbits.UTXBF && fifo_pop(&_uarts[1].buffTx, uart_tmpchar, 1) == 1)
     {
         U2TXREG = uart_tmpchar[0];
     }
@@ -747,7 +747,7 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
     char rec[4];
     rec[0] = U2RXREG;
 
-    fifo_push(&uarts[1].buffRx, rec, 1);
+    fifo_push(&_uarts[1].buffRx, rec, 1);
 
     _U2RXIF = 0;
 }
@@ -757,7 +757,7 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
 void __attribute__((interrupt, no_auto_psv)) _U3TXInterrupt(void)
 {
     char uart_tmpchar[1];
-    while (!U3STAbits.UTXBF && fifo_pop(&uarts[2].buffTx, uart_tmpchar, 1) == 1)
+    while (!U3STAbits.UTXBF && fifo_pop(&_uarts[2].buffTx, uart_tmpchar, 1) == 1)
     {
         U3TXREG = uart_tmpchar[0];
     }
@@ -769,7 +769,7 @@ void __attribute__((interrupt, no_auto_psv)) _U3RXInterrupt(void)
     char rec[4];
     rec[0] = U3RXREG;
 
-    fifo_push(&uarts[2].buffRx, rec, 1);
+    fifo_push(&_uarts[2].buffRx, rec, 1);
 
     _U3RXIF = 0;
 }
@@ -779,7 +779,7 @@ void __attribute__((interrupt, no_auto_psv)) _U3RXInterrupt(void)
 void __attribute__((interrupt, no_auto_psv)) _U4TXInterrupt(void)
 {
     char uart_tmpchar[1];
-    while (!U4STAbits.UTXBF && fifo_pop(&uarts[3].buffTx, uart_tmpchar, 1) == 1)
+    while (!U4STAbits.UTXBF && fifo_pop(&_uarts[3].buffTx, uart_tmpchar, 1) == 1)
     {
         U4TXREG = uart_tmpchar[0];
     }
@@ -791,7 +791,7 @@ void __attribute__((interrupt, no_auto_psv)) _U4RXInterrupt(void)
     char rec[4];
     rec[0] = U4RXREG;
 
-    fifo_push(&uarts[3].buffRx, rec, 1);
+    fifo_push(&_uarts[3].buffRx, rec, 1);
 
     _U4RXIF = 0;
 }
@@ -801,7 +801,7 @@ void __attribute__((interrupt, no_auto_psv)) _U4RXInterrupt(void)
 void __attribute__((interrupt, no_auto_psv)) _U5TXInterrupt(void)
 {
     char uart_tmpchar[1];
-    while (!U5STAbits.UTXBF && fifo_pop(&uarts[4].buffTx, uart_tmpchar, 1) == 1)
+    while (!U5STAbits.UTXBF && fifo_pop(&_uarts[4].buffTx, uart_tmpchar, 1) == 1)
     {
         U5TXREG = uart_tmpchar[0];
     }
@@ -813,7 +813,7 @@ void __attribute__((interrupt, no_auto_psv)) _U5RXInterrupt(void)
     char rec[4];
     rec[0] = U5RXREG;
 
-    fifo_push(&uarts[4].buffRx, rec, 1);
+    fifo_push(&_uarts[4].buffRx, rec, 1);
 
     _U5RXIF = 0;
 }
@@ -823,7 +823,7 @@ void __attribute__((interrupt, no_auto_psv)) _U5RXInterrupt(void)
 void __attribute__((interrupt, no_auto_psv)) _U6TXInterrupt(void)
 {
     char uart_tmpchar[1];
-    while (!U6STAbits.UTXBF && fifo_pop(&uarts[5].buffTx, uart_tmpchar, 1) == 1)
+    while (!U6STAbits.UTXBF && fifo_pop(&_uarts[5].buffTx, uart_tmpchar, 1) == 1)
     {
         U6TXREG = uart_tmpchar[0];
     }
@@ -835,7 +835,7 @@ void __attribute__((interrupt, no_auto_psv)) _U6RXInterrupt(void)
     char rec[4];
     rec[0] = U6RXREG;
 
-    fifo_push(&uarts[5].buffRx, rec, 1);
+    fifo_push(&_uarts[5].buffRx, rec, 1);
 
     _U6RXIF = 0;
 }
@@ -889,7 +889,7 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 #    endif
     }
 
-    fifoWritten = fifo_push(&uarts[uart].buffTx, data, size);
+    fifoWritten = fifo_push(&_uarts[uart].buffTx, data, size);
 
     switch (uart)
     {
@@ -1013,7 +1013,7 @@ ssize_t uart_datardy(rt_dev_t device)
         return -1;
     }
 
-    return fifo_len(&uarts[uart].buffRx);
+    return fifo_len(&_uarts[uart].buffRx);
 }
 
 /**
@@ -1032,7 +1032,7 @@ ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
         return 0;
     }
 
-    size_read = fifo_pop(&uarts[uart].buffRx, data, size_max);
+    size_read = fifo_pop(&_uarts[uart].buffRx, data, size_max);
 
     return size_read;
 }
