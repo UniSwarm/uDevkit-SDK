@@ -28,7 +28,7 @@ extern "C" {
 #elif defined(ARCHI_pic32mk)
 #    include "qei_pic32mk.h"
 #else
-#    warning Unsuported ARCHI
+#    define QEI_COUNT 0
 #endif
 
 #ifdef QEI_32B
