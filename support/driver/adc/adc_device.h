@@ -27,6 +27,10 @@ extern "C" {
 #    include "adc_pic24e_dspic33e.h"
 #elif defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mk)
 #    include "adc_pic32_sar12.h"
+#else
+#    define ADC_CHANNEL_COUNT      0
+#    define ADC_CHANNEL_MAX        0
+#    define ADC_MAX_RESOLUTION_BIT 0
 #endif
 
 #ifdef ADC_CHANNEL_HAVE_CH0

@@ -21,6 +21,10 @@ extern "C" {
 
 #define ADC_MAX_RESOLUTION_BIT 10
 
+// TODO fix me
+#define ADC_CHANNEL_COUNT 0
+#define ADC_CHANNEL_MAX   0
+
 #ifdef __cplusplus
 }
 #endif
