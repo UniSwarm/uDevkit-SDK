@@ -17,11 +17,6 @@
 
 int cmd_i2c(int argc, char **argv)
 {
-    uint8_t i2c_id = 255;
-    rt_dev_t i2c_dev;
-    char c;
-    uint16_t addr, regaddr, value;
-
 #if !defined(I2C_COUNT) || I2C_COUNT == 0
     puts("No i2c module");
     return 0;
@@ -45,7 +40,8 @@ int cmd_i2c(int argc, char **argv)
     }
 
     // first arg numeric : convert to i2c_id
-    c = argv[1][0];
+    uint8_t i2c_id = 255;
+    char c = argv[1][0];
     if (isdigit(c))
     {
         i2c_id = c - '0';
@@ -60,7 +56,7 @@ int cmd_i2c(int argc, char **argv)
         printf("Invalid i2c id %d\r\n", i2c_id);
         return -1;
     }
-    i2c_dev = i2c(i2c_id);
+    rt_dev_t i2c_dev = i2c(i2c_id);
 
     // if no more arg, print properties of i2c
     // > i2c <bus-id>
@@ -74,7 +70,7 @@ int cmd_i2c(int argc, char **argv)
     // == scan > i2c <bus-id> scan
     if (strcmp(argv[2], "scan") == 0)
     {
-        for (uint16_t i2c_addr = 0; i2c_addr <= 255; i2c_addr += 2)
+        for (uint16_t i2c_addr = 4; i2c_addr <= 238; i2c_addr += 2)
         {
             i2c_start(i2c_dev);
             int ack = i2c_putc(i2c_dev, i2c_addr);
@@ -95,8 +91,7 @@ int cmd_i2c(int argc, char **argv)
         {
             return -1;
         }
-        uint32_t baudSpeed;
-        baudSpeed = atol(argv[3]);
+        uint32_t baudSpeed = atol(argv[3]);
         i2c_setBaudSpeed(i2c_dev, baudSpeed);
         return 0;
     }
@@ -105,12 +100,12 @@ int cmd_i2c(int argc, char **argv)
     {
         return -1;
     }
-    addr = atoi(argv[3]);
-    regaddr = atoi(argv[4]);
+    uint16_t addr = atoi(argv[3]);
+    uint16_t regaddr = atoi(argv[4]);
     // == readreg > i2c <bus-id> readreg <addr> <regaddr>
     if (strcmp(argv[2], "readreg") == 0)
     {
-        value = i2c_readreg(i2c_dev, addr, regaddr, I2C_REG8 | I2C_REGADDR8);
+        uint16_t value = i2c_readreg(i2c_dev, addr, regaddr, I2C_REG8 | I2C_REGADDR8);
         printf("'%d' 0x%X\r\n", value, value);
         return 0;
     }
@@ -119,7 +114,7 @@ int cmd_i2c(int argc, char **argv)
     {
         return -1;
     }
-    value = atoi(argv[5]);
+    uint16_t value = atoi(argv[5]);
     // == writereg > i2c <bus-id> writereg <addr> <regaddr> <value>
     if (strcmp(argv[2], "writereg") == 0)
     {
