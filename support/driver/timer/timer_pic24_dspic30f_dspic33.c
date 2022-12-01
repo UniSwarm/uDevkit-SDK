@@ -815,10 +815,10 @@ void timer_reconfig(void)
 {
     for (uint8_t i = 0; i < TIMER_COUNT; i++)
     {
-        if (_timers[i].flags.used == 1 && _timers[i].periodUs != 0)
+        if (_timers[i].flags.used == 1 && _timers[i].periodMs != 0)
         {
             rt_dev_t device = MKDEV(DEV_CLASS_TIMER, i);
-            timer_setPeriodUs(device, _timers[i].periodUs);
+            timer_setPeriodMs(device, _timers[i].periodMs);
         }
     }
 }
