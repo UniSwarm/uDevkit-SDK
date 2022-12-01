@@ -30,6 +30,18 @@ extern "C" {
 #    include "can_pic32_fd.h"
 #elif defined(ARCHI_pic32mx) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
 #    include "can_pic32.h"
+#else
+#    define CAN_COUNT 0
+typedef enum
+{
+    CAN_RXFIFO_NOT_EMPTY,
+    CAN_TXFIFO_NOT_FULL,
+    CAN_RXFIFO_HALF_FULL,
+    CAN_TXFIFO_HALF_EMPTY,
+    CAN_RXFIFO_FULL,
+    CAN_TXFIFO_EMPTY,
+    CAN_RXFIFO_OVERFLOW,
+} CAN_FIFO_EVENTS;
 #endif
 
 // ====== bus assignation ======
