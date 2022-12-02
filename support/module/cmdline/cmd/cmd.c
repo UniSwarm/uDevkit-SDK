@@ -24,6 +24,7 @@
 #include "modules.h"
 
 static int _cmd_help(int argc, char **argv);
+static void _cmd_carriageReturn(void);
 
 const Cmd _cmds[] = {
 #ifdef USE_adc
@@ -131,31 +132,44 @@ int _cmd_help(int argc, char **argv)
     return 0;
 }
 
-void cmd_puts(const char *str)
+void _cmd_carriageReturn(void)
 {
     char cmd[10];
+    cmdline_curses_left(cmd, 200);
+    device_write(_cmdline_device_out, cmd, strlen(cmd));
+}
+
+void cmd_puts(const char *str)
+{
     device_write(_cmdline_device_out, str, strlen(str));
     device_write(_cmdline_device_out, "\n", 1);
 
-    // move cursor 200 column before
-    cmdline_curses_left(cmd, 200);
-    device_write(_cmdline_device_out, cmd, strlen(cmd));
+    _cmd_carriageReturn();
 }
 
 int cmd_printf(const char *format, ...)
 {
     va_list arg;
     int done;
-    char buff[100];
+    char buff[256];
 
     va_start(arg, format);
     done = vsprintf(buff, format, arg);
     va_end(arg);
 
-    device_write(_cmdline_device_out, buff, strlen(buff));
-    device_write(_cmdline_device_out, "\r\n", 1);
-    cmdline_curses_left(buff, 200);
-    device_write(_cmdline_device_out, buff, strlen(buff));
+    char *begin = buff;
+    char *end = strchr(begin, '\r');
+    while (end != NULL)
+    {
+        device_write(_cmdline_device_out, begin, end - begin);
+        device_write(_cmdline_device_out, "\r\n", 1);
+
+        _cmd_carriageReturn();
+
+        begin = end + 1;
+        end = strchr(begin, '\r');
+    }
+    device_write(_cmdline_device_out, begin, strlen(begin));
 
     return done;
 }
