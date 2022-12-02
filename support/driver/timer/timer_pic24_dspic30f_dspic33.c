@@ -602,7 +602,7 @@ uint32_t timer_periodMs(rt_dev_t device)
  * @param device timer device number
  * @return value if ok, 0 in case of error
  */
-uint16_t timer_getValue(rt_dev_t device)
+uint16_t timer_value(rt_dev_t device)
 {
 #if TIMER_COUNT >= 1
     uint16_t value;

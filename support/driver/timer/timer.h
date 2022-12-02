@@ -45,7 +45,7 @@ int timer_setCounter(rt_dev_t device, uint16_t diviser);
 
 #define timer_clearValue(device) timer_setValue((device), 0)
 int timer_setValue(rt_dev_t device, uint16_t value);
-uint16_t timer_getValue(rt_dev_t device);
+uint16_t timer_value(rt_dev_t device);
 
 // ======= specific include =======
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) \
