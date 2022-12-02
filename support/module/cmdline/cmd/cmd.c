@@ -51,6 +51,9 @@ const Cmd _cmds[] = {
 #ifdef USE_sysclock
     {"sysclock", cmd_sysclock},
 #endif
+#ifdef USE_timer
+    {"timer", cmd_timer},
+#endif
 #ifdef USE_uart
     {"uart", cmd_uart},
 #endif

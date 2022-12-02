@@ -28,6 +28,9 @@ endif
 ifneq (,$(findstring can,$(DRIVERS)))
   SRC := $(SRC) cmd_can.c
 endif
+ifneq (,$(findstring timer,$(DRIVERS)))
+  SRC := $(SRC) cmd_timer.c
+endif
 
   SRC := $(SRC) cmd_sysclock.c
 
