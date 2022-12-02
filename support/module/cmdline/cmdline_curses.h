@@ -26,6 +26,15 @@ extern "C" {
 #define cmdline_curses_left(cmd, num)           cmdline_curses_buildcmdnum((cmd), 'D', (num))
 #define cmdline_curses_clear(cmd)               cmdline_curses_buildcmdnum((cmd), 'J', 2)
 
+#define CMDLINE_NRM  "\x1B[0m"
+#define CMDLINE_RED  "\x1B[31m"
+#define CMDLINE_GRN  "\x1B[32m"
+#define CMDLINE_YEL  "\x1B[33m"
+#define CMDLINE_BLU  "\x1B[34m"
+#define CMDLINE_MAG  "\x1B[35m"
+#define CMDLINE_CYN  "\x1B[36m"
+#define CMDLINE_WHT  "\x1B[37m"
+
 #ifdef __cplusplus
 }
 #endif
