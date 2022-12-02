@@ -23,10 +23,12 @@ extern "C" {
 rt_dev_t timer_getFreeDevice(void);
 int timer_open(rt_dev_t device);
 int timer_close(rt_dev_t device);
+bool timer_isOpened(rt_dev_t device);
 
 // ==== device enable/disable =====
 int timer_enable(rt_dev_t device);
 int timer_disable(rt_dev_t device);
+bool timer_isEnabled(rt_dev_t device);
 
 int timer_setHandler(rt_dev_t device, void (*handler)(void));
 

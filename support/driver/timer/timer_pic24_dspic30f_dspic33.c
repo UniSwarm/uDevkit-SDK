@@ -191,6 +191,22 @@ int timer_close(rt_dev_t device)
 }
 
 /**
+ * @brief Timer sdk state
+ * @param device timer device number
+ * @return true if timer was openned by timer_open function
+ */
+bool timer_isOpened(rt_dev_t device)
+{
+    uint8_t timer = MINOR(device);
+    if (timer >= TIMER_COUNT)
+    {
+        return -1;
+    }
+    
+    return (_timers[timer].flags.used == 1);
+}
+
+/**
  * @brief Enable the specified timer device
  * @param device timer device number
  * @return 0 if ok, -1 in case of error
@@ -425,6 +441,22 @@ int timer_disable(rt_dev_t device)
 #else
     return -1;
 #endif
+}
+
+/**
+ * @brief Timer sdk enabled state
+ * @param device timer device number
+ * @return true if timer was enabled by timer_enable function
+ */
+bool timer_isEnabled(rt_dev_t device)
+{
+    uint8_t timer = MINOR(device);
+    if (timer >= TIMER_COUNT)
+    {
+        return -1;
+    }
+    
+    return (_timers[timer].flags.enabled == 1);
 }
 
 /**
