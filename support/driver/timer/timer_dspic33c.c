@@ -47,7 +47,7 @@ struct timer_dev
 #    include "udevkit_config.h"
 #endif
 
-struct timer_dev _timers[] = {
+static struct timer_dev _timers[] = {
 #if TIMER_COUNT >= 1
     {.periodUs = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
@@ -150,7 +150,7 @@ bool timer_isOpened(rt_dev_t device)
     {
         return -1;
     }
-    
+
     return (_timers[timer].flags.used == 1);
 }
 
@@ -235,7 +235,7 @@ bool timer_isEnabled(rt_dev_t device)
     {
         return -1;
     }
-    
+
     return (_timers[timer].flags.enabled == 1);
 }
 

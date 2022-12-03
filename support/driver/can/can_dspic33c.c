@@ -52,7 +52,7 @@ uint32_t __attribute__((aligned(4))) CAN1FIFO[40 * 19];
 uint32_t __attribute__((aligned(4))) CAN2FIFO[40 * 19];
 #endif
 
-struct can_dev _cans[] = {
+static struct can_dev _cans[] = {
 #if CAN_COUNT >= 1
     {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}},
 #endif

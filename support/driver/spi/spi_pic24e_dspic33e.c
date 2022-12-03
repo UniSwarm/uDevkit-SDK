@@ -49,7 +49,7 @@ struct spi_dev
     STATIC_FIFO(buff, SPI_BUFF_SIZE);
 };
 
-struct spi_dev spis[] = {
+static struct spi_dev _spis[] = {
     {.freq = 0, .flags = {{.val = SPI_FLAG_UNUSED}}},
 #if SPI_COUNT >= 2
     {.freq = 0, .flags = {{.val = SPI_FLAG_UNUSED}}},
@@ -73,7 +73,7 @@ rt_dev_t spi_getFreeDevice(void)
 
     for (i = 0; i < SPI_COUNT; i++)
     {
-        if (spis[i].flags.val == SPI_FLAG_UNUSED)
+        if (_spis[i].flags.val == SPI_FLAG_UNUSED)
         {
             break;
         }
@@ -101,13 +101,13 @@ int spi_open(rt_dev_t device)
     {
         return -1;
     }
-    if (spis[spi].flags.used == 1)
+    if (_spis[spi].flags.used == 1)
     {
         return -1;
     }
 
-    spis[spi].flags.used = 1;
-    STATIC_FIFO_INIT(spis[spi].buff, SPI_BUFF_SIZE);
+    _spis[spi].flags.used = 1;
+    STATIC_FIFO_INIT(_spis[spi].buff, SPI_BUFF_SIZE);
 
     return 0;
 }
@@ -124,7 +124,7 @@ int spi_close(rt_dev_t device)
         return -1;
     }
 
-    spis[spi].flags.val = SPI_FLAG_UNUSED;
+    _spis[spi].flags.val = SPI_FLAG_UNUSED;
 
     return spi_disable(device);
 }
@@ -142,7 +142,7 @@ int spi_enable(rt_dev_t device)
         return -1;
     }
 
-    spis[spi].flags.enabled = 1;
+    _spis[spi].flags.enabled = 1;
 
     switch (spi)
     {
@@ -182,7 +182,7 @@ int spi_disable(rt_dev_t device)
         return -1;
     }
 
-    spis[spi].flags.enabled = 0;
+    _spis[spi].flags.enabled = 0;
 
     switch (spi)
     {
@@ -233,13 +233,13 @@ int spi_setFreq(rt_dev_t device, uint32_t freq)
         return -1;
     }
 
-    spis[spi].freq = freq;
+    _spis[spi].freq = freq;
 
     systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_SPI);
     sdiv = systemClockPeriph / freq;
 
     // disable device if it is already enabled
-    if (spis[spi].flags.enabled == 1)
+    if (_spis[spi].flags.enabled == 1)
     {
         enabled = 1;
         spi_disable(device);
@@ -280,8 +280,8 @@ int spi_setFreq(rt_dev_t device, uint32_t freq)
 
     sdivs = ~(sdivs - 1);
 
-    spis[spi].sdivp = sdivp;
-    spis[spi].sdivs = sdivs;
+    _spis[spi].sdivp = sdivp;
+    _spis[spi].sdivs = sdivs;
 
     switch (spi)
     {
@@ -335,10 +335,10 @@ uint32_t spi_freq(rt_dev_t device)
     }
 
     // secondary divisor : 1 (0x7) to 8(0x0)
-    sdivs = ~(spis[spi].sdivs) + 1;
+    sdivs = ~(_spis[spi].sdivs) + 1;
 
     // primary divisor   : 1 (0x3), 4(0x2), 16(0x1), 64(0x0)
-    sdivp = spis[spi].sdivp;
+    sdivp = _spis[spi].sdivp;
     switch (sdivp)
     {
         case 0x3:
@@ -377,7 +377,7 @@ uint32_t spi_effectiveFreq(rt_dev_t device)
         return 0;
     }
 
-    return spis[spi].freq;
+    return _spis[spi].freq;
 }
 
 /**
@@ -407,7 +407,7 @@ int spi_setBitLength(rt_dev_t device, uint8_t bitLength)
     {
         return -1;
     }
-    spis[spi].flags.bit16 = bit16;
+    _spis[spi].flags.bit16 = bit16;
 
     switch (spi)
     {
@@ -447,7 +447,7 @@ uint8_t spi_bitLength(rt_dev_t device)
         return 0;
     }
 
-    if (spis[spi].flags.bit16 == 1)
+    if (_spis[spi].flags.bit16 == 1)
     {
         return 16;
     }
@@ -504,7 +504,7 @@ int spi_flush(rt_dev_t device)
         return -1;
     }
 
-    if (spis[spi].flags.enabled != 1)
+    if (_spis[spi].flags.enabled != 1)
     {
         return -1;
     }
@@ -547,7 +547,7 @@ ssize_t spi_read(rt_dev_t device, char *data, size_t size_max)
         return -1;
     }
 
-    size_read = fifo_pop(&spis[spi].buff, data, size_max);
+    size_read = fifo_pop(&_spis[spi].buff, data, size_max);
 
     return size_read;
 }
@@ -556,7 +556,7 @@ ssize_t spi_read(rt_dev_t device, char *data, size_t size_max)
 void __attribute__((interrupt, no_auto_psv)) _SPI1Interrupt(void)
 {
     char uart_tmpchar[1];
-    while (!U1STAbits.UTXBF && fifo_pop(&spis[0].buff, uart_tmpchar, 1) == 1)
+    while (!U1STAbits.UTXBF && fifo_pop(&_spis[0].buff, uart_tmpchar, 1) == 1)
     {
         SPI1BUF = uart_tmpchar[0];
     }
@@ -566,7 +566,7 @@ void __attribute__((interrupt, no_auto_psv)) _SPI1Interrupt(void)
     char rec[4];
     rec[0] = SPI1BUF;
 
-    fifo_push(&spis[0].buff, rec, 1);
+    fifo_push(&_spis[0].buff, rec, 1);
 
     _U1RXIF = 0;
 }

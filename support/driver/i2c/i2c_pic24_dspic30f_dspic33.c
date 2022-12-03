@@ -42,7 +42,7 @@ struct i2c_dev
     i2c_status flags;
 };
 
-struct i2c_dev i2cs[] = {
+static struct i2c_dev _i2cs[] = {
     {.baudSpeed = 0, .flags = {{.val = I2C_FLAG_UNUSED}}},
 #if I2C_COUNT >= 2
     {.baudSpeed = 0, .flags = {{.val = I2C_FLAG_UNUSED}}},
@@ -64,7 +64,7 @@ rt_dev_t i2c_getFreeDevice(void)
 
     for (i = 0; i < I2C_COUNT; i++)
     {
-        if (i2cs[i].flags.val == I2C_FLAG_UNUSED)
+        if (_i2cs[i].flags.val == I2C_FLAG_UNUSED)
         {
             break;
         }
@@ -97,12 +97,12 @@ int i2c_open(rt_dev_t device)
     {
         return -1;
     }
-    if (i2cs[i2c].flags.used == 1)
+    if (_i2cs[i2c].flags.used == 1)
     {
         return -1;
     }
 
-    i2cs[i2c].flags.used = 1;
+    _i2cs[i2c].flags.used = 1;
     return 0;
 #else
     return -1;
@@ -125,7 +125,7 @@ int i2c_close(rt_dev_t device)
 
     i2c_disable(device);
 
-    i2cs[i2c].flags.val = I2C_FLAG_UNUSED;
+    _i2cs[i2c].flags.val = I2C_FLAG_UNUSED;
     return 0;
 #else
     return -1;
@@ -146,7 +146,7 @@ int i2c_enable(rt_dev_t device)
         return -1;
     }
 
-    i2cs[i2c].flags.enabled = 1;
+    _i2cs[i2c].flags.enabled = 1;
 
     switch (i2c)
     {
@@ -185,7 +185,7 @@ int i2c_disable(rt_dev_t device)
         return -1;
     }
 
-    i2cs[i2c].flags.enabled = 0;
+    _i2cs[i2c].flags.enabled = 0;
 
     switch (i2c)
     {
@@ -238,7 +238,7 @@ int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
         return -1;
     }
 
-    i2cs[i2c].baudSpeed = baudSpeed;
+    _i2cs[i2c].baudSpeed = baudSpeed;
 
     systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_I2C);
     uBrg = (systemClockPeriph / baudSpeed) - (systemClockPeriph / I2C_FPGD) - 2;
@@ -327,7 +327,7 @@ uint32_t i2c_effectiveBaudSpeed(rt_dev_t device)
         return 0;
     }
 
-    return i2cs[i2c].baudSpeed;
+    return _i2cs[i2c].baudSpeed;
 }
 
 /**
@@ -358,7 +358,7 @@ int i2c_setAddressWidth(rt_dev_t device, uint8_t addressWidth)
         return -1;
     }
 
-    i2cs[i2c].flags.addrW10 = addrW10;
+    _i2cs[i2c].flags.addrW10 = addrW10;
 
     switch (i2c)
     {
@@ -397,7 +397,7 @@ uint8_t i2c_addressWidth(rt_dev_t device)
         return 0;
     }
 
-    if (i2cs[i2c].flags.addrW10 == 1)
+    if (_i2cs[i2c].flags.addrW10 == 1)
     {
         return 10;
     }
@@ -789,10 +789,10 @@ void i2c_reconfig(void)
 {
     for (uint8_t i = 0; i < I2C_COUNT; i++)
     {
-        if (i2cs[i].flags.used == 1 && i2cs[i].baudSpeed != 0)
+        if (_i2cs[i].flags.used == 1 && _i2cs[i].baudSpeed != 0)
         {
             rt_dev_t device = MKDEV(DEV_CLASS_I2C, i);
-            i2c_setBaudSpeed(device, i2cs[i].baudSpeed);
+            i2c_setBaudSpeed(device, _i2cs[i].baudSpeed);
         }
     }
 }

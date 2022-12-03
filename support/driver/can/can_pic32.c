@@ -59,7 +59,7 @@ unsigned int CAN3FIFO[32 * 4];
 unsigned int CAN4FIFO[32 * 4];
 #endif
 
-struct can_dev _cans[] = {
+static struct can_dev _cans[] = {
 #if CAN_COUNT >= 1
     {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}},
 #endif

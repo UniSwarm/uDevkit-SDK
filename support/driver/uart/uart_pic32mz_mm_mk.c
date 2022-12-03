@@ -57,7 +57,7 @@ struct uart_dev
 #    include "udevkit_config.h"
 #endif
 
-struct uart_dev _uarts[] = {
+static struct uart_dev _uarts[] = {
     {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}},
 #if UART_COUNT >= 2
     {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}},

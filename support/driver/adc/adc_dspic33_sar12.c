@@ -122,7 +122,7 @@ struct adc_dev
 #endif  // !ADC_NOHANDLER
 };
 
-struct adc_dev adcs[] = {
+static struct adc_dev _adcs[] = {
 #if ADC_CHANNEL_MAX >= 1
     {
 #    ifndef ADC_NOHANDLER
@@ -970,7 +970,7 @@ int adc_setHandler(uint8_t channel, void (*handler)(int16_t))
             break;
 #    endif
     }
-    adcs[channel].handler = handler;
+    _adcs[channel].handler = handler;
     return 0;
 #else
     UDK_UNUSED(channel);
@@ -982,7 +982,7 @@ int adc_setHandler(uint8_t channel, void (*handler)(int16_t))
 #if defined(ADC_CHANNEL_HAVE_CH0) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN0Interrupt(void)
 {
-    (*adcs[0].handler)(ADCBUF0);
+    (*_adcs[0].handler)(ADCBUF0);
     _ADCAN0IF = 0;
 }
 #endif
@@ -990,7 +990,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN0Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH1) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN1Interrupt(void)
 {
-    (*adcs[1].handler)(ADCBUF1);
+    (*_adcs[1].handler)(ADCBUF1);
     _ADCAN1IF = 0;
 }
 #endif
@@ -998,7 +998,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN1Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH2) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN2Interrupt(void)
 {
-    (*adcs[2].handler)(ADCBUF2);
+    (*_adcs[2].handler)(ADCBUF2);
     _ADCAN2IF = 0;
 }
 #endif
@@ -1006,7 +1006,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN2Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH3) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN3Interrupt(void)
 {
-    (*adcs[3].handler)(ADCBUF3);
+    (*_adcs[3].handler)(ADCBUF3);
     _ADCAN3IF = 0;
 }
 #endif
@@ -1014,7 +1014,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN3Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH4) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN4Interrupt(void)
 {
-    (*adcs[4].handler)(ADCBUF4);
+    (*_adcs[4].handler)(ADCBUF4);
     _ADCAN4IF = 0;
 }
 #endif
@@ -1022,7 +1022,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN4Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH5) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN5Interrupt(void)
 {
-    (*adcs[5].handler)(ADCBUF5);
+    (*_adcs[5].handler)(ADCBUF5);
     _ADCAN5IF = 0;
 }
 #endif
@@ -1030,7 +1030,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN5Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH6) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN6Interrupt(void)
 {
-    (*adcs[6].handler)(ADCBUF6);
+    (*_adcs[6].handler)(ADCBUF6);
     _ADCAN6IF = 0;
 }
 #endif
@@ -1038,7 +1038,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN6Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH7) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN7Interrupt(void)
 {
-    (*adcs[7].handler)(ADCBUF7);
+    (*_adcs[7].handler)(ADCBUF7);
     _ADCAN7IF = 0;
 }
 #endif
@@ -1046,7 +1046,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN7Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH8) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN8Interrupt(void)
 {
-    (*adcs[8].handler)(ADCBUF8);
+    (*_adcs[8].handler)(ADCBUF8);
     _ADCAN8IF = 0;
 }
 #endif
@@ -1054,7 +1054,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN8Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH9) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN9Interrupt(void)
 {
-    (*adcs[9].handler)(ADCBUF9);
+    (*_adcs[9].handler)(ADCBUF9);
     _ADCAN9IF = 0;
 }
 #endif
@@ -1062,7 +1062,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN9Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH10) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN10Interrupt(void)
 {
-    (*adcs[10].handler)(ADCBUF10);
+    (*_adcs[10].handler)(ADCBUF10);
     _ADCAN10IF = 0;
 }
 #endif
@@ -1070,7 +1070,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN10Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH11) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN11Interrupt(void)
 {
-    (*adcs[11].handler)(ADCBUF11);
+    (*_adcs[11].handler)(ADCBUF11);
     _ADCAN11IF = 0;
 }
 #endif
@@ -1078,7 +1078,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN11Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH12) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN12Interrupt(void)
 {
-    (*adcs[12].handler)(ADCBUF12);
+    (*_adcs[12].handler)(ADCBUF12);
     _ADCAN12IF = 0;
 }
 #endif
@@ -1086,7 +1086,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN12Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH13) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN13Interrupt(void)
 {
-    (*adcs[13].handler)(ADCBUF13);
+    (*_adcs[13].handler)(ADCBUF13);
     _ADCAN13IF = 0;
 }
 #endif
@@ -1094,7 +1094,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN13Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH14) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN14Interrupt(void)
 {
-    (*adcs[14].handler)(ADCBUF14);
+    (*_adcs[14].handler)(ADCBUF14);
     _ADCAN14IF = 0;
 }
 #endif
@@ -1102,7 +1102,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN14Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH15) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN15Interrupt(void)
 {
-    (*adcs[15].handler)(ADCBUF15);
+    (*_adcs[15].handler)(ADCBUF15);
     _ADCAN15IF = 0;
 }
 #endif
@@ -1110,7 +1110,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN15Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH16) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN16Interrupt(void)
 {
-    (*adcs[16].handler)(ADCBUF16);
+    (*_adcs[16].handler)(ADCBUF16);
     _ADCAN16IF = 0;
 }
 #endif
@@ -1118,7 +1118,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN16Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH17) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN17Interrupt(void)
 {
-    (*adcs[17].handler)(ADCBUF17);
+    (*_adcs[17].handler)(ADCBUF17);
     _ADCAN17IF = 0;
 }
 #endif
@@ -1126,7 +1126,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN17Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH18) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN18Interrupt(void)
 {
-    (*adcs[18].handler)(ADCBUF18);
+    (*_adcs[18].handler)(ADCBUF18);
     _ADCAN18IF = 0;
 }
 #endif
@@ -1134,7 +1134,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN18Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH19) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN19Interrupt(void)
 {
-    (*adcs[19].handler)(ADCBUF19);
+    (*_adcs[19].handler)(ADCBUF19);
     _ADCAN19IF = 0;
 }
 #endif
@@ -1142,7 +1142,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN19Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH20) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN20Interrupt(void)
 {
-    (*adcs[20].handler)(ADCBUF20);
+    (*_adcs[20].handler)(ADCBUF20);
     _ADCAN20IF = 0;
 }
 #endif
@@ -1150,7 +1150,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN20Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH21) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN21Interrupt(void)
 {
-    (*adcs[21].handler)(ADCBUF21);
+    (*_adcs[21].handler)(ADCBUF21);
     _ADCAN21IF = 0;
 }
 #endif
@@ -1158,7 +1158,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN21Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH22) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN22Interrupt(void)
 {
-    (*adcs[22].handler)(ADCBUF22);
+    (*_adcs[22].handler)(ADCBUF22);
     _ADCAN22IF = 0;
 }
 #endif
@@ -1166,7 +1166,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN22Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH23) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN23Interrupt(void)
 {
-    (*adcs[23].handler)(ADCBUF23);
+    (*_adcs[23].handler)(ADCBUF23);
     _ADCAN23IF = 0;
 }
 #endif
@@ -1174,7 +1174,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN23Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH24) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN24Interrupt(void)
 {
-    (*adcs[24].handler)(ADCBUF24);
+    (*_adcs[24].handler)(ADCBUF24);
     _ADCAN24IF = 0;
 }
 #endif
@@ -1182,7 +1182,7 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN24Interrupt(void)
 #if defined(ADC_CHANNEL_HAVE_CH25) && !defined(ADC_NOHANDLER)
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN25Interrupt(void)
 {
-    (*adcs[25].handler)(ADCBUF25);
+    (*_adcs[25].handler)(ADCBUF25);
     _ADCAN25IF = 0;
 }
 #endif

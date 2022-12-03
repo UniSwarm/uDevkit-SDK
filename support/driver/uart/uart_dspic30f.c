@@ -52,7 +52,7 @@ struct uart_dev
     STATIC_FIFO(buffTx, UART_BUFFTX_SIZE);
 };
 
-struct uart_dev _uarts[] = {
+static struct uart_dev _uarts[] = {
 #if UART_COUNT >= 1
     {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}},
 #endif

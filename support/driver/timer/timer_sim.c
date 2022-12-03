@@ -47,7 +47,7 @@ struct timer_dev
 #    include "udevkit_config.h"
 #endif
 
-static struct timer_dev _timers[] = {
+static static struct timer_dev _timers[] = {
 #if TIMER_COUNT >= 1
     {.periodUs = 1000, .value = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
@@ -302,6 +302,22 @@ int timer_close(rt_dev_t device)
 }
 
 /**
+ * @brief Timer sdk state
+ * @param device timer device number
+ * @return true if timer was openned by timer_open function
+ */
+bool timer_isOpened(rt_dev_t device)
+{
+    uint8_t timer = MINOR(device);
+    if (timer >= TIMER_COUNT)
+    {
+        return -1;
+    }
+
+    return (_timers[timer].flags.used == 1);
+}
+
+/**
  * @brief Enable the specified timer device
  * @param device timer device number
  * @return 0 if ok, -1 in case of error
@@ -386,6 +402,22 @@ int timer_disable(rt_dev_t device)
     pthread_cancel(_timers[timer].thread_timer);
 
     return 0;
+}
+
+/**
+ * @brief Timer sdk enabled state
+ * @param device timer device number
+ * @return true if timer was enabled by timer_enable function
+ */
+bool timer_isEnabled(rt_dev_t device)
+{
+    uint8_t timer = MINOR(device);
+    if (timer >= TIMER_COUNT)
+    {
+        return -1;
+    }
+
+    return (_timers[timer].flags.enabled == 1);
 }
 
 /**
@@ -506,7 +538,7 @@ uint32_t timer_periodUs(rt_dev_t device)
  * @param device timer device number
  * @return value if ok, 0 in case of error
  */
-uint16_t timer_getValue(rt_dev_t device)
+uint16_t timer_value(rt_dev_t device)
 {
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)

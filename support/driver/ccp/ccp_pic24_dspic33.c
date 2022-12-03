@@ -71,7 +71,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT8Interrupt(void);
 void __attribute__((interrupt, auto_psv, weak)) _CCT9Interrupt(void);
 #endif
 
-struct ccp_dev ccps[] = {
+static struct ccp_dev _ccps[] = {
 #if CCP_COUNT >= 1
     {.periodUs = 0, .flags = {{.val = CCP_FLAG_UNUSED}}, .handler = NULL},
 #endif
@@ -113,7 +113,7 @@ rt_dev_t ccp_getFreeDevice(void)
 
     for (i = 0; i < CCP_COUNT; i++)
     {
-        if (ccps[i].flags.used == 0)
+        if (_ccps[i].flags.used == 0)
         {
             break;
         }
@@ -145,13 +145,13 @@ int ccp_open(rt_dev_t device)
     {
         return -1;
     }
-    if (ccps[ccp].flags.used == 1)
+    if (_ccps[ccp].flags.used == 1)
     {
         return -1;
     }
 
-    ccps[ccp].flags.used = 1;
-    ccps[ccp].handler = NULL;
+    _ccps[ccp].flags.used = 1;
+    _ccps[ccp].handler = NULL;
 
     return 0;
 #else
@@ -174,7 +174,7 @@ int ccp_close(rt_dev_t device)
 
     ccp_disable(device);
 
-    ccps[ccp].flags.val = CCP_FLAG_UNUSED;
+    _ccps[ccp].flags.val = CCP_FLAG_UNUSED;
 
     return 0;
 #else
@@ -196,20 +196,20 @@ int ccp_enable(rt_dev_t device)
         return -1;
     }
 
-    ccps[ccp].flags.enabled = 1;
+    _ccps[ccp].flags.enabled = 1;
 
     switch (ccp)
     {
         case 0:
             _CCT1IF = 0;
-            _CCT1IE = (ccps[ccp].handler != 0);
+            _CCT1IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT1IP = 4;
             CCP1CON1Lbits.CCPON = 1;  // enable ccp module
             break;
 #    if CCP_COUNT >= 2
         case 1:
             _CCT2IF = 0;
-            _CCT2IE = (ccps[ccp].handler != 0);
+            _CCT2IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT2IP = 4;
             CCP2CON1Lbits.CCPON = 1;  // enable ccp module
             break;
@@ -217,7 +217,7 @@ int ccp_enable(rt_dev_t device)
 #    if CCP_COUNT >= 3
         case 2:
             _CCT3IF = 0;
-            _CCT3IE = (ccps[ccp].handler != 0);
+            _CCT3IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT3IP = 4;
             CCP3CON1Lbits.CCPON = 1;  // enable ccp module
             break;
@@ -225,7 +225,7 @@ int ccp_enable(rt_dev_t device)
 #    if CCP_COUNT >= 4
         case 3:
             _CCT4IF = 0;
-            _CCT4IE = (ccps[ccp].handler != 0);
+            _CCT4IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT4IP = 4;
             CCP4CON1Lbits.CCPON = 1;  // enable ccp module
             break;
@@ -233,7 +233,7 @@ int ccp_enable(rt_dev_t device)
 #    if CCP_COUNT >= 5
         case 4:
             _CCT5IF = 0;
-            _CCT5IE = (ccps[ccp].handler != 0);
+            _CCT5IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT5IP = 4;
             CCP5CON1Lbits.CCPON = 1;  // enable ccp module
             break;
@@ -241,7 +241,7 @@ int ccp_enable(rt_dev_t device)
 #    if CCP_COUNT >= 6
         case 5:
             _CCT6IF = 0;
-            _CCT6IE = (ccps[ccp].handler != 0);
+            _CCT6IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT6IP = 4;
             CCP6CON1Lbits.CCPON = 1;  // enable ccp module
             break;
@@ -249,7 +249,7 @@ int ccp_enable(rt_dev_t device)
 #    if CCP_COUNT >= 7
         case 6:
             _CCT7IF = 0;
-            _CCT7IE = (ccps[ccp].handler != 0);
+            _CCT7IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT7IP = 4;
             CCP7CON1Lbits.CCPON = 1;  // enable ccp module
             break;
@@ -257,7 +257,7 @@ int ccp_enable(rt_dev_t device)
 #    if CCP_COUNT >= 8
         case 7:
             _CCT8IF = 0;
-            _CCT8IE = (ccps[ccp].handler != 0);
+            _CCT8IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT8IP = 4;
             CCP8CON1Lbits.CCPON = 1;  // enable ccp module
             break;
@@ -265,7 +265,7 @@ int ccp_enable(rt_dev_t device)
 #    if CCP_COUNT >= 9
         case 8:
             _CCT9IF = 0;
-            _CCT9IE = (ccps[ccp].handler != 0);
+            _CCT9IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT9IP = 4;
             CCP9CON1Lbits.CCPON = 1;  // enable ccp module
             break;
@@ -292,7 +292,7 @@ int ccp_disable(rt_dev_t device)
         return -1;
     }
 
-    ccps[ccp].flags.enabled = 0;
+    _ccps[ccp].flags.enabled = 0;
 
     switch (ccp)
     {
@@ -371,8 +371,8 @@ int ccp_setHandler(rt_dev_t device, void (*handler)(void))
         return -1;
     }
 
-    ccps[ccp].handler = handler;
-    if (ccps[ccp].flags.enabled == 1)
+    _ccps[ccp].handler = handler;
+    if (_ccps[ccp].flags.enabled == 1)
     {
         ccp_enable(device);
     }
@@ -755,7 +755,7 @@ int ccp_setPeriodMs(rt_dev_t device, uint32_t periodMs)
         return -1;
     }
 
-    ccps[ccp].periodUs = periodMs * 1000;
+    _ccps[ccp].periodUs = periodMs * 1000;
 
     uint32_t freqCCp = sysclock_periphFreq(SYSCLOCK_CLOCK_CCP);
     prvalue = (float)freqCCp / 1000.0 * (float)periodMs;
@@ -780,7 +780,7 @@ uint32_t ccp_periodMs(rt_dev_t device)
         return 0;
     }
 
-    return ccps[ccp].periodUs / 1000;
+    return _ccps[ccp].periodUs / 1000;
 #else
     return 0;
 #endif
@@ -801,7 +801,7 @@ int ccp_setPeriodUs(rt_dev_t device, uint32_t periodUs)
         return -1;
     }
 
-    ccps[ccp].periodUs = periodUs;
+    _ccps[ccp].periodUs = periodUs;
 
     uint32_t freqCCp = sysclock_periphFreq(SYSCLOCK_CLOCK_CCP);
     prvalue = (float)freqCCp / 1000000.0 * (float)periodUs;
@@ -826,7 +826,7 @@ uint32_t ccp_periodUs(rt_dev_t device)
         return 0;
     }
 
-    return ccps[ccp].periodUs;
+    return _ccps[ccp].periodUs;
 #else
     return 0;
 #endif
@@ -979,7 +979,7 @@ int ccp_setValue(rt_dev_t device, uint32_t value)
 #if CCP_COUNT >= 1
 void __attribute__((interrupt, auto_psv, weak)) _CCT1Interrupt(void)
 {
-    (*ccps[0].handler)();
+    (*_ccps[0].handler)();
     _CCT1IF = 0;
 }
 #endif
@@ -987,7 +987,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT1Interrupt(void)
 #if CCP_COUNT >= 2
 void __attribute__((interrupt, auto_psv, weak)) _CCT2Interrupt(void)
 {
-    (*ccps[1].handler)();
+    (*_ccps[1].handler)();
     _CCT2IF = 0;
 }
 #endif
@@ -995,7 +995,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT2Interrupt(void)
 #if CCP_COUNT >= 3
 void __attribute__((interrupt, auto_psv, weak)) _CCT3Interrupt(void)
 {
-    (*ccps[2].handler)();
+    (*_ccps[2].handler)();
     _CCT3IF = 0;
 }
 #endif
@@ -1003,7 +1003,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT3Interrupt(void)
 #if CCP_COUNT >= 4
 void __attribute__((interrupt, auto_psv, weak)) _CCT4Interrupt(void)
 {
-    (*ccps[3].handler)();
+    (*_ccps[3].handler)();
     _CCT4IF = 0;
 }
 #endif
@@ -1011,7 +1011,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT4Interrupt(void)
 #if CCP_COUNT >= 5
 void __attribute__((interrupt, auto_psv, weak)) _CCT5Interrupt(void)
 {
-    (*ccps[4].handler)();
+    (*_ccps[4].handler)();
     _CCT5IF = 0;
 }
 #endif
@@ -1019,7 +1019,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT5Interrupt(void)
 #if CCP_COUNT >= 6
 void __attribute__((interrupt, auto_psv, weak)) _CCT6Interrupt(void)
 {
-    (*ccps[5].handler)();
+    (*_ccps[5].handler)();
     _CCT6IF = 0;
 }
 #endif
@@ -1027,7 +1027,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT6Interrupt(void)
 #if CCP_COUNT >= 7
 void __attribute__((interrupt, auto_psv, weak)) _CCT7Interrupt(void)
 {
-    (*ccps[6].handler)();
+    (*_ccps[6].handler)();
     _CCT7IF = 0;
 }
 #endif
@@ -1035,7 +1035,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT7Interrupt(void)
 #if CCP_COUNT >= 8
 void __attribute__((interrupt, auto_psv, weak)) _CCT8Interrupt(void)
 {
-    (*ccps[7].handler)();
+    (*_ccps[7].handler)();
     _CCT8IF = 0;
 }
 #endif
@@ -1043,7 +1043,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT8Interrupt(void)
 #if CCP_COUNT >= 9
 void __attribute__((interrupt, auto_psv, weak)) _CCT9Interrupt(void)
 {
-    (*ccps[8].handler)();
+    (*_ccps[8].handler)();
     _CCT9IF = 0;
 }
 #endif

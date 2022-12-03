@@ -11,7 +11,7 @@
 
 #include "qei_sim.h"
 
-static uint8_t qei_state = 0;
+static uint8_t _qeis[QEI_COUNT] = {0};
 
 /**
  * @brief Gives a free QEI device number and open it
@@ -19,27 +19,30 @@ static uint8_t qei_state = 0;
  */
 rt_dev_t qei_getFreeDevice(void)
 {
-    rt_dev_t device;
 #if QEI_COUNT >= 1
-    if (!(qei_state & 0x01))
-    {
-        qei_state = qei_state | 0x01;
-        device = MKDEV(DEV_CLASS_QEI, 1);
-        qei_open(device);
-        return device;
-    }
-#endif
-#if QEI_COUNT >= 2
-    if (!(qei_state & 0x02))
-    {
-        qei_state = qei_state | 0x02;
-        device = MKDEV(DEV_CLASS_QEI, 2);
-        qei_open(device);
-        return device;
-    }
-#endif
+    uint8_t i;
+    rt_dev_t device;
 
+    for (i = 0; i < QEI_COUNT; i++)
+    {
+        if (_qeis[i] == 0)
+        {
+            break;
+        }
+    }
+
+    if (i == QEI_COUNT)
+    {
+        return NULLDEV;
+    }
+    device = MKDEV(DEV_CLASS_QEI, i);
+
+    qei_open(device);
+
+    return device;
+#else
     return NULLDEV;
+#endif
 }
 
 /**
@@ -51,18 +54,21 @@ int qei_open(rt_dev_t device)
 {
 #if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
-    if (qei == 1)
+    if (qei >= QEI_COUNT)
     {
-        qei_state = qei_state | 0x01;
+        return -1;
     }
-#endif
-#if QEI_COUNT >= 2
-    if (qei == 2)
+    if (_qeis[qei] == 1)
     {
-        qei_state = qei_state | 0x02;
+        return -1;
     }
-#endif
+
+    _qeis[qei] = 1;
+
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -78,18 +84,14 @@ int qei_close(rt_dev_t device)
     {
         return -1;
     }
-    if (qei == 1)
-    {
-        qei_state = qei_state & 0xFE;
-    }
-#endif
-#if QEI_COUNT >= 2
-    if (qei == 2)
-    {
-        qei_state = qei_state & 0xFD;
-    }
-#endif
+
+    qei_disable(device);
+
+    _qeis[qei] = 0;
     return 0;
+#else
+    return -1;
+#endif
 }
 
 /**

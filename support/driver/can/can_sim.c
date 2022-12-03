@@ -41,16 +41,9 @@ SOCKET _can_soc = -1;
 #    warning No device
 #endif
 
-/****************************************************************************************/
-/*          Privates functions                                                          */
 void can_sendconfig(uint8_t can);
 
-/****************************************************************************************/
-/*          External variable                                                           */
-
-/****************************************************************************************/
-/*          Local variable                                                              */
-CAN_DEV _cans[] = {
+can_dev _cans[] = {
     {.bitRate = 0, .bus = "can0"},
 #if CAN_COUNT >= 2
     {.bitRate = 0, .bus = "can1"},

@@ -17,11 +17,7 @@
 
 #include <archi.h>
 
-#if !defined(QEI_COUNT) || QEI_COUNT == 0
-#    warning No device QEI periph on the current device
-#endif
-
-uint8_t qei_state = 0;
+static uint8_t _qei_state = 0;
 
 /**
  * @brief Gives a free QEI device number and open it
@@ -33,7 +29,7 @@ rt_dev_t qei_getFreeDevice(void)
     uint8_t i;
     rt_dev_t device;
 
-    if (qei_state == 0)
+    if (_qei_state == 0)
     {
         return NULLDEV;
     }
@@ -61,12 +57,12 @@ int qei_open(rt_dev_t device)
     {
         return -1;
     }
-    if (qei_state == 1)
+    if (_qei_state == 1)
     {
         return -1;
     }
 
-    qei_state = 1;
+    _qei_state = 1;
 
     return 0;
 #else
@@ -90,7 +86,7 @@ int qei_close(rt_dev_t device)
 
     qei_disable(device);
 
-    qei_state = 0;
+    _qei_state = 0;
     return 0;
 #else
     return -1;

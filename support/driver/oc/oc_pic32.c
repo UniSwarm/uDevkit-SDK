@@ -47,7 +47,7 @@ struct oc_dev
     oc_status flags;
 };
 
-struct oc_dev ocs[] = {
+static struct oc_dev _ocs[] = {
 #if OC_COUNT >= 1
     {.rVal = 0, .rsVal = 0, .timer = 0, .flags = {{.val = OC_FLAG_UNUSED}}},
 #endif
@@ -120,7 +120,7 @@ rt_dev_t oc_getFreeDevice(void)
 
     for (i = 0; i < OC_COUNT; i++)
     {
-        if (ocs[i].flags.used == 0)
+        if (_ocs[i].flags.used == 0)
         {
             break;
         }
@@ -153,12 +153,12 @@ int oc_open(rt_dev_t device)
     {
         return -1;
     }
-    if (ocs[oc].flags.used == 1)
+    if (_ocs[oc].flags.used == 1)
     {
         return -1;
     }
 
-    ocs[oc].flags.used = 1;
+    _ocs[oc].flags.used = 1;
 
     return 0;
 #else
@@ -182,7 +182,7 @@ int oc_close(rt_dev_t device)
 
     oc_disable(device);
 
-    ocs[oc].flags.val = OC_FLAG_UNUSED;
+    _ocs[oc].flags.val = OC_FLAG_UNUSED;
     return 0;
 #else
     return -1;
@@ -321,9 +321,9 @@ int oc_enable(rt_dev_t device)
         return -1;
     }
 
-    ocs[oc].flags.enabled = 1;
+    _ocs[oc].flags.enabled = 1;
 
-    return _oc_setInternalMode(device, ocs[oc].flags.imode);
+    return _oc_setInternalMode(device, _ocs[oc].flags.imode);
 #else
     return -1;
 #endif
@@ -343,7 +343,7 @@ int oc_disable(rt_dev_t device)
         return -1;
     }
 
-    ocs[oc].flags.enabled = 0;
+    _ocs[oc].flags.enabled = 0;
 
     return _oc_setInternalMode(device, OC_PIC32_DISABLE);
 #else
@@ -367,7 +367,7 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
         return -1;
     }
 
-    ocs[oc].flags.mode = mode;
+    _ocs[oc].flags.mode = mode;
 
     switch (mode)
     {
@@ -399,9 +399,9 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
             imode = OC_PIC32_CONTINOUS_LOWHIGH;
             break;
     }
-    ocs[oc].flags.imode = imode;
+    _ocs[oc].flags.imode = imode;
 
-    if (ocs[oc].flags.enabled)
+    if (_ocs[oc].flags.enabled)
     {
         return _oc_setInternalMode(device, imode);
     }
@@ -425,7 +425,7 @@ uint8_t oc_mode(rt_dev_t device)
         return 0;
     }
 
-    return ocs[oc].flags.mode;
+    return _ocs[oc].flags.mode;
 #else
     return 0;
 #endif
@@ -447,8 +447,8 @@ int oc_setRVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
         return -1;
     }
 
-    ocs[oc].rVal = rVal;
-    ocs[oc].rsVal = rsVal;
+    _ocs[oc].rVal = rVal;
+    _ocs[oc].rsVal = rsVal;
 
     switch (oc)
     {
@@ -568,7 +568,7 @@ uint32_t oc_rVal(rt_dev_t device)
         return 0;
     }
 
-    return ocs[oc].rVal;
+    return _ocs[oc].rVal;
 #else
     return 0;
 #endif
@@ -588,7 +588,7 @@ uint32_t oc_rsVal(rt_dev_t device)
         return 0;
     }
 
-    return ocs[oc].rsVal;
+    return _ocs[oc].rsVal;
 #else
     return 0;
 #endif
@@ -608,7 +608,7 @@ int oc_setTimer(rt_dev_t device, uint8_t timer)
         return -1;  // invalid timer id
     }
 
-    ocs[oc].timer = timer;
+    _ocs[oc].timer = timer;
 
     switch (oc)
     {
@@ -711,7 +711,7 @@ rt_dev_t oc_getTimer(rt_dev_t device)
     if (CFGCONbits.OCACLK == 0)
 #    endif
     {
-        if (ocs[oc].timer == 0)
+        if (_ocs[oc].timer == 0)
         {
             return timer(2);  // timer 2
         }
@@ -728,7 +728,7 @@ rt_dev_t oc_getTimer(rt_dev_t device)
             case 0:
             case 1:
             case 2:
-                if (ocs[oc].timer == 0)
+                if (_ocs[oc].timer == 0)
                 {
                     return timer(4);  // timer 4
                 }
@@ -741,7 +741,7 @@ rt_dev_t oc_getTimer(rt_dev_t device)
             case 3:
             case 4:
             case 5:
-                if (ocs[oc].timer == 0)
+                if (_ocs[oc].timer == 0)
                 {
                     return timer(2);  // timer 2
                 }
@@ -755,7 +755,7 @@ rt_dev_t oc_getTimer(rt_dev_t device)
             case 6:
             case 7:
             case 8:
-                if (ocs[oc].timer == 0)
+                if (_ocs[oc].timer == 0)
                 {
                     return timer(6);  // timer 6
                 }
@@ -769,7 +769,7 @@ rt_dev_t oc_getTimer(rt_dev_t device)
             case 9:
             case 10:
             case 11:
-                if (ocs[oc].timer == 0)
+                if (_ocs[oc].timer == 0)
                 {
                     return timer(8);  // timer 8
                 }
@@ -784,7 +784,7 @@ rt_dev_t oc_getTimer(rt_dev_t device)
             case 13:
             case 14:
             case 15:
-                if (ocs[oc].timer == 0)
+                if (_ocs[oc].timer == 0)
                 {
                     return timer(2);  // timer 2
                 }

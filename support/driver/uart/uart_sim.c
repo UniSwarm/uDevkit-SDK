@@ -22,17 +22,9 @@
 
 #include <stdio.h>
 
-/****************************************************************************************/
-/*          Privates functions                                                          */
-void uart_sendconfig(uint8_t uart);
+static void _uart_sendconfig(uint8_t uart);
 
-/****************************************************************************************/
-/*          External variable                                                           */
-
-/****************************************************************************************/
-/*          Local variable                                                              */
-
-uart_dev uarts[] = {
+static uart_dev _uarts[] = {
     {.baudSpeed = 0},
 #if UART_COUNT >= 2
     {.baudSpeed = 0},
@@ -51,9 +43,9 @@ uart_dev uarts[] = {
 #endif
 };
 
-void uart_sendconfig(uint8_t uart)
+void _uart_sendconfig(uint8_t uart)
 {
-    simulator_send(UART_SIM_MODULE, uart, UART_SIM_CONFIG, (char *)&uarts[uart], sizeof(uart_dev));
+    simulator_send(UART_SIM_MODULE, uart, UART_SIM_CONFIG, (char *)&_uarts[uart], sizeof(uart_dev));
 }
 
 rt_dev_t uart_getFreeDevice(void)
@@ -63,7 +55,7 @@ rt_dev_t uart_getFreeDevice(void)
 
     for (i = 0; i < UART_COUNT; i++)
     {
-        if (uarts[i].baudSpeed == 0)
+        if (_uarts[i].baudSpeed == 0)
         {
             break;
         }
@@ -88,11 +80,11 @@ int uart_open(rt_dev_t device)
         return -1;
     }
 
-    uarts[uart].baudSpeed = 115200;
-    uarts[uart].bitLength = 8;
-    uarts[uart].bitStop = 1;
-    uarts[uart].bitParity = UART_BIT_PARITY_NONE;
-    uart_sendconfig(uart);
+    _uarts[uart].baudSpeed = 115200;
+    _uarts[uart].bitLength = 8;
+    _uarts[uart].bitStop = 1;
+    _uarts[uart].bitParity = UART_BIT_PARITY_NONE;
+    _uart_sendconfig(uart);
 
     return 0;
 }
@@ -105,8 +97,8 @@ int uart_close(rt_dev_t device)
         return -1;
     }
 
-    uarts[uart].baudSpeed = 0;
-    uart_sendconfig(uart);
+    _uarts[uart].baudSpeed = 0;
+    _uart_sendconfig(uart);
 
     return 0;
 }
@@ -119,8 +111,8 @@ int uart_enable(rt_dev_t device)
         return -1;
     }
 
-    uarts[uart].enabled = 1;
-    uart_sendconfig(uart);
+    _uarts[uart].enabled = 1;
+    _uart_sendconfig(uart);
 
     return 0;
 }
@@ -133,8 +125,8 @@ int uart_disable(rt_dev_t device)
         return -1;
     }
 
-    uarts[uart].enabled = 0;
-    uart_sendconfig(uart);
+    _uarts[uart].enabled = 0;
+    _uart_sendconfig(uart);
 
     return 0;
 }
@@ -147,8 +139,8 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
         return 0;
     }
 
-    uarts[uart].baudSpeed = baudSpeed;
-    uart_sendconfig(uart);
+    _uarts[uart].baudSpeed = baudSpeed;
+    _uart_sendconfig(uart);
 
     return 0;
 }
@@ -161,7 +153,7 @@ uint32_t uart_baudSpeed(rt_dev_t device)
         return 0;
     }
 
-    return uarts[uart].baudSpeed;
+    return _uarts[uart].baudSpeed;
 }
 
 uint32_t uart_effectiveBaudSpeed(rt_dev_t device)
@@ -172,7 +164,7 @@ uint32_t uart_effectiveBaudSpeed(rt_dev_t device)
         return 0;
     }
 
-    return uarts[uart].baudSpeed;
+    return _uarts[uart].baudSpeed;
 }
 
 int uart_setBitConfig(rt_dev_t device, uint8_t bitLength, uint8_t bitParity, uint8_t bitStop)
@@ -183,10 +175,10 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLength, uint8_t bitParity, uin
         return -1;
     }
 
-    uarts[uart].bitLength = bitLength;
-    uarts[uart].bitStop = bitStop;
-    uarts[uart].bitParity = bitParity;
-    uart_sendconfig(uart);
+    _uarts[uart].bitLength = bitLength;
+    _uarts[uart].bitStop = bitStop;
+    _uarts[uart].bitParity = bitParity;
+    _uart_sendconfig(uart);
 
     return 0;
 }
@@ -199,7 +191,7 @@ uint8_t uart_bitLength(rt_dev_t device)
         return 0;
     }
 
-    return uarts[uart].bitLength;
+    return _uarts[uart].bitLength;
 }
 
 uint8_t uart_bitParity(rt_dev_t device)
@@ -210,7 +202,7 @@ uint8_t uart_bitParity(rt_dev_t device)
         return -1;
     }
 
-    return uarts[uart].bitParity;
+    return _uarts[uart].bitParity;
 }
 
 uint8_t uart_bitStop(rt_dev_t device)
@@ -221,7 +213,7 @@ uint8_t uart_bitStop(rt_dev_t device)
         return -1;
     }
 
-    return uarts[uart].bitStop;
+    return _uarts[uart].bitStop;
 }
 
 int uart_transmitFinished(rt_dev_t device)

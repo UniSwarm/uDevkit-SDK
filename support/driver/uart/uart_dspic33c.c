@@ -64,7 +64,7 @@ void __attribute__((interrupt, auto_psv, weak)) _U3TXInterrupt(void);
 void __attribute__((interrupt, auto_psv, weak)) _U3RXInterrupt(void);
 #endif
 
-struct uart_dev _uarts[] = {
+static struct uart_dev _uarts[] = {
 #if UART_COUNT >= 1
     {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}},
 #endif

@@ -33,7 +33,7 @@ struct i2c_dev
     i2c_status flags;
 };
 
-struct i2c_dev i2cs[] = {
+static struct i2c_dev _i2cs[] = {
 #if I2C_COUNT >= 1
     {.baudSpeed = 0, .flags = {{.val = I2C_FLAG_UNUSED}}},
 #endif
@@ -71,7 +71,7 @@ rt_dev_t i2c_getFreeDevice(void)
 
     for (i = 0; i < I2C_COUNT; i++)
     {
-        if (i2cs[i].flags.val == I2C_FLAG_UNUSED)
+        if (_i2cs[i].flags.val == I2C_FLAG_UNUSED)
         {
             break;
         }
@@ -104,7 +104,7 @@ int i2c_open(rt_dev_t device)
         return -1;
     }
 
-    i2cs[i2c].flags.used = 1;
+    _i2cs[i2c].flags.used = 1;
     return 0;
 #else
     return -1;
@@ -126,7 +126,7 @@ int i2c_close(rt_dev_t device)
 
     i2c_disable(device);
 
-    i2cs[i2c].flags.val = I2C_FLAG_UNUSED;
+    _i2cs[i2c].flags.val = I2C_FLAG_UNUSED;
     return 0;
 #else
     return -1;
@@ -146,7 +146,7 @@ int i2c_enable(rt_dev_t device)
         return -1;
     }
 
-    i2cs[i2c].flags.enabled = 1;
+    _i2cs[i2c].flags.enabled = 1;
 
     // TODO SIM
 
@@ -166,7 +166,7 @@ int i2c_disable(rt_dev_t device)
         return -1;
     }
 
-    i2cs[i2c].flags.enabled = 0;
+    _i2cs[i2c].flags.enabled = 0;
 
     // TODO SIM
 
@@ -192,7 +192,7 @@ int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
         return -1;
     }
 
-    i2cs[i2c].baudSpeed = baudSpeed;
+    _i2cs[i2c].baudSpeed = baudSpeed;
 
     // TODO SIM
 
@@ -212,7 +212,7 @@ uint32_t i2c_baudSpeed(rt_dev_t device)
         return 0;
     }
 
-    return i2cs[i2c].baudSpeed;
+    return _i2cs[i2c].baudSpeed;
 }
 
 /**
@@ -228,7 +228,7 @@ uint32_t i2c_effectiveBaudSpeed(rt_dev_t device)
         return 0;
     }
 
-    return i2cs[i2c].baudSpeed;
+    return _i2cs[i2c].baudSpeed;
 }
 
 /**
@@ -258,7 +258,7 @@ int i2c_setAddressWidth(rt_dev_t device, uint8_t addressWidth)
         return -1;
     }
 
-    i2cs[i2c].flags.addrW10 = addrW10;
+    _i2cs[i2c].flags.addrW10 = addrW10;
 
     // TODO SIM
 
@@ -278,7 +278,7 @@ uint8_t i2c_addressWidth(rt_dev_t device)
         return -1;
     }
 
-    if (i2cs[i2c].flags.addrW10 == 1)
+    if (_i2cs[i2c].flags.addrW10 == 1)
     {
         return 10;
     }
