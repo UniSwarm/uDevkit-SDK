@@ -183,6 +183,22 @@ int can_close(rt_dev_t device)
 }
 
 /**
+ * @brief CAN sdk state
+ * @param device can device number
+ * @return true if can was openned by can_open function
+ */
+bool can_isOpened(rt_dev_t device)
+{
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    return (_cans[can].flags.used == 1);
+}
+
+/**
  * @brief Enables the specified CAN bus
  * @param device CAN bus number
  * @return 0 if ok, -1 in case of error
@@ -397,6 +413,22 @@ int can_disable(rt_dev_t device)
 #else
     return -1;
 #endif
+}
+
+/**
+ * @brief Can sdk enabled state
+ * @param device can device number
+ * @return true if can was enabled by can_enable function
+ */
+bool can_isEnabled(rt_dev_t device)
+{
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    return (_cans[can].flags.enabled == 1);
 }
 
 /**

@@ -243,6 +243,22 @@ int can_close(rt_dev_t device)
     return 0;
 }
 
+/**
+ * @brief CAN sdk state
+ * @param device can device number
+ * @return true if can was openned by can_open function
+ */
+bool can_isOpened(rt_dev_t device)
+{
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    return (_cans[can].flags.used == 1);
+}
+
 int can_enable(rt_dev_t device)
 {
     uint8_t can = MINOR(device);
@@ -274,6 +290,22 @@ int can_disable(rt_dev_t device)
     can_sendconfig(can);
 
     return 0;
+}
+
+/**
+ * @brief Can sdk enabled state
+ * @param device can device number
+ * @return true if can was enabled by can_enable function
+ */
+bool can_isEnabled(rt_dev_t device)
+{
+    uint8_t can = MINOR(device);
+    if (can >= CAN_COUNT)
+    {
+        return -1;
+    }
+
+    return (_cans[can].flags.enabled == 1);
 }
 
 int can_setMode(rt_dev_t device, CAN_MODE mode)

@@ -22,10 +22,12 @@ extern "C" {
 rt_dev_t can_getFreeDevice(void);
 int can_open(rt_dev_t device);
 int can_close(rt_dev_t device);
+bool can_isOpened(rt_dev_t device);
 
 // ==== bus enable/disable =====
 int can_enable(rt_dev_t device);
 int can_disable(rt_dev_t device);
+bool can_isEnabled(rt_dev_t device);
 
 // ======== bus settings =======
 typedef enum
