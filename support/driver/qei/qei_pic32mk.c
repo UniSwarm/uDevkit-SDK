@@ -288,7 +288,7 @@ int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum)
  * @param device QEI device number
  * @return position
  */
-qei_type qei_getValue(rt_dev_t device)
+qei_type qei_value(rt_dev_t device)
 {
 #if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
