@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-#include <driver/device.h>
+#include "ccp_device.h"
 
 // ====== device assignation ======
 #define ccp(d) MKDEV(DEV_CLASS_CCP, ((d)-1))
@@ -53,15 +53,6 @@ uint32_t ccp_period(rt_dev_t device);
 #define ccp_clearValue(device) ccp_setValue((device), 0)
 int ccp_setValue(rt_dev_t device, uint32_t value);
 uint32_t ccp_getValue(rt_dev_t device);
-
-// ======= specific include =======
-#if defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
-#    include "ccp_pic24_dspic33.h"
-#elif defined(ARCHI_pic32mm)
-#    include "ccp_pic32.h"
-#else
-#    warning "Unsupported ARCHI"
-#endif
 
 #ifdef __cplusplus
 }
