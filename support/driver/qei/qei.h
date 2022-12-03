@@ -6,7 +6,7 @@
  *
  * @date April 18, 2016, 22:33 PM
  *
- * @brief Quadrature Encoder Interface support driver
+ * @brief Quadrature Encoder Interface (QEI) support driver
  */
 
 #ifndef QEI_H
@@ -16,26 +16,7 @@
 extern "C" {
 #endif
 
-#include <driver/device.h>
-
-// ======= specific include =======
-#if defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic33fj)
-#    include "qei_pic24f_dspic33f.h"
-#elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
-#    include "qei_pic24e_dspic33e.h"
-#elif defined(ARCHI_dspic30f)
-#    include "qei_dspic30f.h"
-#elif defined(ARCHI_pic32mk)
-#    include "qei_pic32mk.h"
-#else
-#    define QEI_COUNT 0
-#endif
-
-#ifdef QEI_32B
-typedef uint32_t qei_type;
-#else
-typedef uint16_t qei_type;
-#endif
+#include "qei_device.h"
 
 // ====== device assignation ======
 #define qei(d) MKDEV(DEV_CLASS_QEI, (d)-1)
