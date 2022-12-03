@@ -59,7 +59,7 @@ unsigned int CAN3FIFO[32 * 4];
 unsigned int CAN4FIFO[32 * 4];
 #endif
 
-struct can_dev cans[] = {
+struct can_dev _cans[] = {
 #if CAN_COUNT >= 1
     {.bitRate = 0, .flags = {{.val = CAN_FLAG_UNUSED}}},
 #endif
@@ -86,7 +86,7 @@ rt_dev_t can_getFreeDevice(void)
 
     for (i = 0; i < CAN_COUNT; i++)
     {
-        if (cans[i].flags.used == 0)
+        if (_cans[i].flags.used == 0)
         {
             break;
         }
@@ -119,12 +119,12 @@ int can_open(rt_dev_t device)
     {
         return -1;
     }
-    if (cans[can].flags.used == 1)
+    if (_cans[can].flags.used == 1)
     {
         return -1;
     }
 
-    cans[can].flags.used = 1;
+    _cans[can].flags.used = 1;
 
     return 0;
 #else
@@ -148,7 +148,7 @@ int can_close(rt_dev_t device)
 
     can_disable(device);
 
-    cans[can].flags.val = CAN_FLAG_UNUSED;
+    _cans[can].flags.val = CAN_FLAG_UNUSED;
     return 0;
 #else
     return -1;
@@ -169,7 +169,7 @@ int can_enable(rt_dev_t device)
         return -1;
     }
 
-    cans[can].flags.enabled = 1;
+    _cans[can].flags.enabled = 1;
 
     switch (can)
     {
@@ -289,7 +289,7 @@ int can_disable(rt_dev_t device)
         return -1;
     }
 
-    cans[can].flags.enabled = 0;
+    _cans[can].flags.enabled = 0;
 
     switch (can)
     {
@@ -393,7 +393,7 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
         default:
             return -1;
     }
-    cans[can].mode = mode;
+    _cans[can].mode = mode;
 
     switch (can)
     {
@@ -453,7 +453,7 @@ CAN_MODE can_mode(rt_dev_t device)
         return 0;
     }
 
-    return cans[can].mode;
+    return _cans[can].mode;
 #else
     return 0;
 #endif
@@ -505,10 +505,10 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
         return -1;
     }
 
-    cans[can].bitRate = bitRate;
-    cans[can].propagSeg = propagSeg;
-    cans[can].s1Seg = s1Seg;
-    cans[can].s2Seg = s2Seg;
+    _cans[can].bitRate = bitRate;
+    _cans[can].propagSeg = propagSeg;
+    _cans[can].s1Seg = s1Seg;
+    _cans[can].s2Seg = s2Seg;
 
     /* possible work arround for PIC32MK
     if (can == 2 || can == 3)
@@ -609,7 +609,7 @@ uint32_t can_bitRate(rt_dev_t device)
         return 0;
     }
 
-    return cans[can].bitRate;
+    return _cans[can].bitRate;
 #else
     return 0;
 #endif
@@ -631,7 +631,7 @@ uint32_t can_effectiveBitRate(rt_dev_t device)
     }
 
     uint16_t bitRateDiv = 1;
-    uint8_t quantums = cans[can].propagSeg + cans[can].s1Seg + cans[can].s2Seg + 1;
+    uint8_t quantums = _cans[can].propagSeg + _cans[can].s1Seg + _cans[can].s2Seg + 1;
 
     switch (can)
     {
@@ -679,7 +679,7 @@ uint8_t can_propagSeg(rt_dev_t device)
         return 0;
     }
 
-    return cans[can].propagSeg;
+    return _cans[can].propagSeg;
 #else
     return 0;
 #endif
@@ -699,7 +699,7 @@ uint8_t can_s1Seg(rt_dev_t device)
         return 0;
     }
 
-    return cans[can].s1Seg;
+    return _cans[can].s1Seg;
 #else
     return 0;
 #endif
@@ -719,7 +719,7 @@ uint8_t can_s2Seg(rt_dev_t device)
         return 0;
     }
 
-    return cans[can].s2Seg;
+    return _cans[can].s2Seg;
 #else
     return 0;
 #endif
