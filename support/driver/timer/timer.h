@@ -16,7 +16,7 @@
 extern "C" {
 #endif
 
-#include <driver/device.h>
+#include "timer_device.h"
 
 // ====== device assignation ======
 #define timer(d) MKDEV(DEV_CLASS_TIMER, ((d)-1))
@@ -46,19 +46,6 @@ int timer_setCounter(rt_dev_t device, uint16_t diviser);
 #define timer_clearValue(device) timer_setValue((device), 0)
 int timer_setValue(rt_dev_t device, uint16_t value);
 uint16_t timer_value(rt_dev_t device);
-
-// ======= specific include =======
-#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) \
-    || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
-#    include "timer_pic24_dspic30f_dspic33.h"
-#elif defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
-#    include "timer_dspic33c.h"
-#elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)                       \
-    || defined(ARCHI_pic32mzda)
-#    include "timer_pic32.h"
-#else
-#    warning "Unsupported ARCHI"
-#endif
 
 // ======= dynamic clock =======
 void timer_reconfig(void);
