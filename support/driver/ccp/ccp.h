@@ -52,7 +52,7 @@ uint32_t ccp_period(rt_dev_t device);
 
 #define ccp_clearValue(device) ccp_setValue((device), 0)
 int ccp_setValue(rt_dev_t device, uint32_t value);
-uint32_t ccp_getValue(rt_dev_t device);
+uint32_t ccp_value(rt_dev_t device);
 
 #ifdef __cplusplus
 }

@@ -837,7 +837,7 @@ uint32_t ccp_periodUs(rt_dev_t device)
  * @param device ccp device number
  * @return value if ok, 0 in case of error
  */
-uint32_t ccp_getValue(rt_dev_t device)
+uint32_t ccp_value(rt_dev_t device)
 {
 #if CCP_COUNT >= 1
     uint32_t value = 0;
