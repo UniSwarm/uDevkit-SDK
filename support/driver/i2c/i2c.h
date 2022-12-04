@@ -23,10 +23,12 @@ extern "C" {
 rt_dev_t i2c_getFreeDevice(void);
 int i2c_open(rt_dev_t device);
 int i2c_close(rt_dev_t device);
+bool i2c_isOpened(rt_dev_t device);
 
 // ==== device enable/disable =====
 int i2c_enable(rt_dev_t device);
 int i2c_disable(rt_dev_t device);
+bool i2c_isEnabled(rt_dev_t device);
 
 // ======== device settings =======
 #define I2C_BAUD_100K 100000

@@ -155,6 +155,22 @@ int i2c_close(rt_dev_t device)
 }
 
 /**
+ * @brief I2C sdk state
+ * @param device i2c device number
+ * @return true if i2c was openned by i2c_open function
+ */
+bool i2c_isOpened(rt_dev_t device)
+{
+    uint8_t i2c = MINOR(device);
+    if (i2c >= I2C_COUNT)
+    {
+        return -1;
+    }
+
+    return (_i2cs[i2c].flags.used == 1);
+}
+
+/**
  * @brief Enable the specified i2c bus device
  * @param device i2c bus device number
  * @return 0 if ok, -1 in case of error
@@ -259,6 +275,22 @@ int i2c_disable(rt_dev_t device)
 #else
     return -1;
 #endif
+}
+
+/**
+ * @brief I2C sdk enabled state
+ * @param device i2c device number
+ * @return true if i2c was enabled by i2c_enable function
+ */
+bool i2c_isEnabled(rt_dev_t device)
+{
+    uint8_t i2c = MINOR(device);
+    if (i2c >= I2C_COUNT)
+    {
+        return -1;
+    }
+
+    return (_i2cs[i2c].flags.enabled == 1);
 }
 
 /**
