@@ -29,7 +29,7 @@ typedef struct
     uint8_t used;
     uint8_t mode;
     char bus[20];
-} can_dev;
+} can_sim_dev;
 
 typedef struct
 {

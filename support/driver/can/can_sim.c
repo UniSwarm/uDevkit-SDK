@@ -43,7 +43,7 @@ SOCKET _can_soc = -1;
 
 void can_sendconfig(uint8_t can);
 
-can_dev _cans[] = {
+static can_sim_dev _cans[] = {
     {.bitRate = 0, .bus = "can0"},
 #if CAN_COUNT >= 2
     {.bitRate = 0, .bus = "can1"},
@@ -58,7 +58,7 @@ can_dev _cans[] = {
 
 void can_sendconfig(uint8_t can)
 {
-    simulator_send(CAN_SIM_MODULE, can, CAN_SIM_CONFIG, (char *)&_cans[can], sizeof(CAN_DEV));
+    simulator_send(CAN_SIM_MODULE, can, CAN_SIM_CONFIG, (char *)&_cans[can], sizeof(can_sim_dev));
 }
 
 rt_dev_t can_getFreeDevice(void)
@@ -249,7 +249,7 @@ bool can_isOpened(rt_dev_t device)
         return -1;
     }
 
-    return (_cans[can].flags.used == 1);
+    return (_cans[can].used == 1);
 }
 
 int can_enable(rt_dev_t device)
@@ -298,7 +298,7 @@ bool can_isEnabled(rt_dev_t device)
         return -1;
     }
 
-    return (_cans[can].flags.enabled == 1);
+    return (_cans[can].enabled == 1);
 }
 
 int can_setMode(rt_dev_t device, CAN_MODE mode)

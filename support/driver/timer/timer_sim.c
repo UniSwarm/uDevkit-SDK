@@ -47,7 +47,7 @@ struct timer_dev
 #    include "udevkit_config.h"
 #endif
 
-static static struct timer_dev _timers[] = {
+static struct timer_dev _timers[] = {
 #if TIMER_COUNT >= 1
     {.periodUs = 1000, .value = 0, .flags = {{.val = TIMER_FLAG_UNUSED}}, .handler = NULL},
 #endif
