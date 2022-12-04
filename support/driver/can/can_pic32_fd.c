@@ -195,7 +195,7 @@ bool can_isOpened(rt_dev_t device)
         return -1;
     }
 
-    return (__cans[can].flags.used == 1);
+    return (_cans[can].flags.used == 1);
 }
 
 /**
@@ -428,7 +428,7 @@ bool can_isEnabled(rt_dev_t device)
         return -1;
     }
 
-    return (__cans[can].flags.enabled == 1);
+    return (_cans[can].flags.enabled == 1);
 }
 
 /**
