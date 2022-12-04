@@ -22,10 +22,12 @@ extern "C" {
 rt_dev_t ccp_getFreeDevice(void);
 int ccp_open(rt_dev_t device);
 int ccp_close(rt_dev_t device);
+bool ccp_isOpened(rt_dev_t device);
 
 // ==== device enable/disable =====
 int ccp_enable(rt_dev_t device);
 int ccp_disable(rt_dev_t device);
+bool ccp_isEnabled(rt_dev_t device);
 
 int ccp_setHandler(rt_dev_t device, void (*handler)(void));
 
