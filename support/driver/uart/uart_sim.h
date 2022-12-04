@@ -25,6 +25,7 @@ typedef struct
     uint8_t bitParity;
     uint8_t bitLength;
     uint8_t enabled;
+    uint8_t used;
 } uart_dev;
 
 #define UART_SIM_MODULE 0x0010

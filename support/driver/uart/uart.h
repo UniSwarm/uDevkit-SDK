@@ -23,10 +23,12 @@ extern "C" {
 rt_dev_t uart_getFreeDevice(void);
 int uart_open(rt_dev_t device);
 int uart_close(rt_dev_t device);
+bool uart_isOpened(rt_dev_t device);
 
 // ==== device enable/disable =====
 int uart_enable(rt_dev_t device);
 int uart_disable(rt_dev_t device);
+bool uart_isEnabled(rt_dev_t device);
 
 // ======== device settings =======
 int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed);

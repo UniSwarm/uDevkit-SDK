@@ -55,7 +55,7 @@ rt_dev_t uart_getFreeDevice(void)
 
     for (i = 0; i < UART_COUNT; i++)
     {
-        if (_uarts[i].baudSpeed == 0)
+        if (_uarts[i].used == 0)
         {
             break;
         }
@@ -84,6 +84,8 @@ int uart_open(rt_dev_t device)
     _uarts[uart].bitLength = 8;
     _uarts[uart].bitStop = 1;
     _uarts[uart].bitParity = UART_BIT_PARITY_NONE;
+    _uarts[uart].used = 1;
+    _uarts[uart].enabled = 0;
     _uart_sendconfig(uart);
 
     return 0;
@@ -97,10 +99,26 @@ int uart_close(rt_dev_t device)
         return -1;
     }
 
-    _uarts[uart].baudSpeed = 0;
+    _uarts[uart].used = 0;
     _uart_sendconfig(uart);
 
     return 0;
+}
+
+/**
+ * @brief UART sdk state
+ * @param device uart device number
+ * @return true if uart was openned by uart_open function
+ */
+bool uart_isOpened(rt_dev_t device)
+{
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+    {
+        return -1;
+    }
+
+    return (_uarts[uart].used == 1);
 }
 
 int uart_enable(rt_dev_t device)
@@ -129,6 +147,22 @@ int uart_disable(rt_dev_t device)
     _uart_sendconfig(uart);
 
     return 0;
+}
+
+/**
+ * @brief UART sdk enabled state
+ * @param device uart device number
+ * @return true if uart was enabled by uart_enable function
+ */
+bool uart_isEnabled(rt_dev_t device)
+{
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+    {
+        return -1;
+    }
+
+    return (_uarts[uart].enabled == 1);
 }
 
 int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)

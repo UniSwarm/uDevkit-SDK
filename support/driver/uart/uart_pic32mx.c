@@ -155,6 +155,22 @@ int uart_close(rt_dev_t device)
 }
 
 /**
+ * @brief UART sdk state
+ * @param device uart device number
+ * @return true if uart was openned by uart_open function
+ */
+bool uart_isOpened(rt_dev_t device)
+{
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+    {
+        return -1;
+    }
+
+    return (_uarts[uart].flags.used == 1);
+}
+
+/**
  * @brief Enables the specified uart device
  * @param device uart device number
  * @return 0 if ok, -1 in case of error
@@ -318,6 +334,22 @@ int uart_disable(rt_dev_t device)
     }
 
     return 0;
+}
+
+/**
+ * @brief UART sdk enabled state
+ * @param device uart device number
+ * @return true if uart was enabled by uart_enable function
+ */
+bool uart_isEnabled(rt_dev_t device)
+{
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+    {
+        return -1;
+    }
+
+    return (_uarts[uart].flags.enabled == 1);
 }
 
 /**
