@@ -1,3 +1,13 @@
+/**
+ * @file rtboard1_1_fuses.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016
+ * @copyright UniSwarm 2018-2022
+ *
+ * @date April 11, 2016, 06:07 PM
+ *
+ * @brief Fuses for RTboard v1.1 from Robotips
+ */
 
 // FGS
 #pragma config GWRP = OFF  // General Segment Write-Protect bit (General Segment may be written)

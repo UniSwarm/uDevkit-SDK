@@ -11,7 +11,7 @@
  *  https://uniswarm.fr/uboards/udt/udt1fr
  */
 
-/*** DEVCFG0 ***/
+/*** DEVCFG0
 #pragma config DEBUG = OFF
 #pragma config JTAGEN = OFF
 #pragma config ICESEL = ICS_PGx1
@@ -28,7 +28,7 @@
 #pragma config EJTAGBEN = NORMAL
 #pragma config CP = ON
 
-/*** DEVCFG1 ***/
+/*** DEVCFG1
 #pragma config FNOSC = SPLL
 #pragma config DMTINTV = WIN_127_128
 #pragma config FSOSCEN = OFF
@@ -44,7 +44,7 @@
 #pragma config DMTCNT = DMT31
 #pragma config FDMTEN = OFF
 
-/*** DEVCFG2 ***/
+/*** DEVCFG2
 #pragma config FPLLIDIV = DIV_3
 #pragma config FPLLRNG = RANGE_5_10_MHZ
 #pragma config FPLLICLK = PLL_POSC
@@ -52,7 +52,7 @@
 #pragma config FPLLODIV = DIV_4
 #pragma config UPLLFSEL = FREQ_24MHZ
 
-/*** DEVCFG3 ***/
+/*** DEVCFG3
 #pragma config USERID = 0xffff
 #pragma config FMIIEN = OFF
 #if BOARD_VERSION < 110
@@ -65,6 +65,6 @@
 #pragma config IOL1WAY = OFF
 #pragma config FUSBIDIO = OFF
 
-/*** BF1SEQ0 ***/
+/*** BF1SEQ0
 #pragma config TSEQ = 0x0000
 #pragma config CSEQ = 0xffff

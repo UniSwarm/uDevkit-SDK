@@ -6,7 +6,7 @@
  *
  * @date April 25, 2016, 08:49 AM
  *
- * @brief Definitions for RTboard from Robotips
+ * @brief Code for A6screenboard from Robotips
  */
 
 #ifndef A6SCREENBOARD_H

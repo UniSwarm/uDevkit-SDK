@@ -1,3 +1,13 @@
+/**
+ * @file swarmtips_fuses.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016
+ * @copyright UniSwarm 2018-2022
+ *
+ * @date August 13, 2016, 12:04 PM
+ *
+ * @brief Fuses for Swarmtips platform from Robotips
+ */
 
 // FGS
 #pragma config GWRP = OFF  // General Segment Write-Protect bit (General Segment may be written)

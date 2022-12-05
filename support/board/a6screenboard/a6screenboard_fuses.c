@@ -1,3 +1,13 @@
+/**
+ * @file a6screenboard_fuses.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016
+ * @copyright UniSwarm 2018-2022
+ *
+ * @date April 25, 2016, 08:49 AM
+ *
+ * @brief Code for A6screenboard from Robotips
+ */
 
 // FGS
 #pragma config GWRP = OFF  // General Segment Write-Protect bit (General Segment may be written)

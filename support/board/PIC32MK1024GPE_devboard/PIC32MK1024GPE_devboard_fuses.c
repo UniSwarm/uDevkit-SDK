@@ -1,6 +1,15 @@
+/**
+ * @file PIC32MK1024GPE_devboard_fuses.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2017
+ * @copyright UniSwarm 2018-2022
+ *
+ * @date October 25, 2017, 17:13 AM
+ *
+ * @brief Fuses for PIC32MK1024GPE dev board board (DM320106)
+ */
 
-/*** DEVCFG0 ***/
-
+// DEVCFG0
 #pragma config DEBUG = OFF
 #pragma config JTAGEN = OFF
 #pragma config ICESEL = ICS_PGx1
@@ -16,8 +25,7 @@
 #pragma config EJTAGBEN = NORMAL
 #pragma config CP = OFF
 
-/*** DEVCFG1 ***/
-
+// DEVCFGG1
 #pragma config FNOSC = SPLL
 #pragma config DMTINTV = WIN_127_128
 #pragma config FSOSCEN = OFF
@@ -32,8 +40,8 @@
 #pragma config FWDTWINSZ = WINSZ_25
 #pragma config DMTCNT = DMT31
 #pragma config FDMTEN = OFF
-/*** DEVCFG2 ***/
 
+// DEVCFG2
 #pragma config FPLLIDIV = DIV_1
 #pragma config FPLLRNG = RANGE_8_16_MHZ
 #pragma config FPLLICLK = PLL_POSC
@@ -47,8 +55,8 @@
 #pragma config FDSEN = ON
 #pragma config BORSEL = HIGH
 #pragma config UPLLEN = OFF
-/*** DEVCFG3 ***/
 
+// DEVCFG3
 #pragma config USERID = 0xffff
 #pragma config FUSBIDIO2 = ON
 #pragma config FVBUSIO2 = ON
@@ -58,7 +66,6 @@
 #pragma config FUSBIDIO1 = ON
 #pragma config FVBUSIO1 = ON
 
-/*** BF1SEQ0 ***/
-
+// BF1SEQ0
 #pragma config TSEQ = 0x0000
 #pragma config CSEQ = 0xffff

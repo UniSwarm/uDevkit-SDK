@@ -1,3 +1,19 @@
+/**
+ * @file curiosity_32MM_USB_fuses.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2017
+ * @copyright UniSwarm 2018-2022
+ *
+ * @date July 28, 2017, 15:34 PM
+ *
+ * @brief Code for Curiosity 32MM USB board (DM320107)
+ *
+ * product page:
+ *  http://www.microchip.com/Developmenttools/ProductDetails.aspx?PartNO=DM320107
+ * datasheet:
+ *  http://ww1.microchip.com/downloads/en/DeviceDoc/50002576a%20PIC32MM%20USB%20Curiosity%20Development%20Board%20Quick%20Start%20Guide.pdf
+ */
+
 
 // FDEVOPT
 #pragma config SOSCHP = OFF     // Secondary Oscillator High Power Enable bit (SOSC oprerates in normal power mode.)

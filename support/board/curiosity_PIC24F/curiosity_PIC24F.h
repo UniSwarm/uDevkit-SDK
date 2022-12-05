@@ -4,14 +4,14 @@
  * @copyright Robotips 2017
  * @copyright UniSwarm 2018-2022
  *
- * @date July 28, 2017, 15:34 PM
+ * @date November 23, 2017, 03:12 PM
  *
- * @brief Code for Curiosity 32MM USB board (DM320107)
+ * @brief Code for Curiosity PIC24F board (DM240004)
  *
  * product page:
- *  http://www.microchip.com/Developmenttools/ProductDetails.aspx?PartNO=DM24004
+ *  https://www.microchip.com/en-us/development-tool/DM240004
  * datasheet:
- *  http://ww1.microchip.com/downloads/en/DeviceDoc/50002534a.pdf
+ *  https://ww1.microchip.com/downloads/en/DeviceDoc/50002534a.pdf
  */
 
 #ifndef CURIOSITY_PIC24F_H

@@ -1,6 +1,15 @@
+/**
+ * @file swarmtips2_fuses.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2022
+ *
+ * @date April 15, 2017, 01:16 AM
+ *
+ * @brief Fuses for swarmtips2 from Robotips
+ */
 
-/*** DEVCFG0 ***/
-
+// DEVCFG0
 #pragma config DEBUG = OFF
 #pragma config JTAGEN = OFF
 #pragma config ICESEL = ICS_PGx1
@@ -17,8 +26,7 @@
 #pragma config EJTAGBEN = NORMAL
 #pragma config CP = OFF
 
-/*** DEVCFG1 ***/
-
+// DEVCFG1
 #pragma config FNOSC = FRCDIV
 #pragma config DMTINTV = WIN_127_128
 #pragma config FSOSCEN = OFF
@@ -34,8 +42,7 @@
 #pragma config DMTCNT = DMT31
 #pragma config FDMTEN = OFF
 
-/*** DEVCFG2 ***/
-
+// DEVCFG2
 #pragma config FPLLIDIV = DIV_3
 #pragma config FPLLRNG = RANGE_13_26_MHZ
 #pragma config FPLLICLK = PLL_POSC
@@ -43,8 +50,7 @@
 #pragma config FPLLODIV = DIV_2
 #pragma config UPLLFSEL = FREQ_24MHZ
 
-/*** DEVCFG3 ***/
-
+// DEVCFG3
 #pragma config USERID = 0xFFFF
 #pragma config FMIIEN = OFF
 #pragma config FETHIO = ON
@@ -53,7 +59,6 @@
 #pragma config IOL1WAY = OFF
 #pragma config FUSBIDIO = ON
 
-/*** BF1SEQ0 ***/
-
+// BF1SEQ0
 #pragma config TSEQ = 0xFFFF
 #pragma config CSEQ = 0xFFFF

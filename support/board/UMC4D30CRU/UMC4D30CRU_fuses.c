@@ -1,5 +1,14 @@
+/**
+ * @file UMC4D30CRU_fuses.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright UniSwarm 2018-2022
+ *
+ * @date March 21, 2018, 20:00 PM
+ *
+ * @brief Code for UMC4D30CRU board (or UMC4D30CRU-I)
+ */
 
-/*** DEVCFG0 ***/
+// DEVCFG0
 #pragma config DEBUG = OFF
 #pragma config JTAGEN = OFF
 #pragma config ICESEL = ICS_PGx2
@@ -15,7 +24,7 @@
 #pragma config EJTAGBEN = NORMAL
 #pragma config CP = OFF
 
-/*** DEVCFG1 ***/
+// DEVCFG1
 #pragma config FNOSC = FRC
 #pragma config DMTINTV = WIN_127_128
 #pragma config FSOSCEN = OFF
@@ -31,7 +40,7 @@
 #pragma config DMTCNT = DMT31
 #pragma config FDMTEN = OFF
 
-/*** DEVCFG2 ***/
+// DEVCFG2
 #pragma config FPLLIDIV = DIV_1
 #pragma config FPLLRNG = RANGE_8_16_MHZ
 #pragma config FPLLICLK = PLL_POSC
@@ -46,7 +55,7 @@
 #pragma config BORSEL = HIGH
 #pragma config UPLLEN = OFF
 
-/*** DEVCFG3 ***/
+// DEVCFG3
 #pragma config USERID = 0xffff
 #pragma config PWMLOCK = OFF
 #pragma config FUSBIDIO2 = OFF
@@ -57,6 +66,6 @@
 #pragma config FUSBIDIO1 = OFF
 #pragma config FVBUSIO1 = OFF
 
-/*** BF1SEQ0 ***/
+// BF1SEQ0
 #pragma config TSEQ = 0x0000
 #pragma config CSEQ = 0xffff

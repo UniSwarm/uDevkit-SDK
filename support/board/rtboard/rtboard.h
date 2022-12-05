@@ -7,6 +7,12 @@
  * @date April 11, 2016, 06:07 PM
  *
  * @brief Definitions for RTboard from Robotips
+ *
+ * product page:
+ *  https://www.robotips.fr/fr/projet/RTboard
+ *  https://hackaday.io/project/20901-rtboard-10
+ * datasheet:
+ *  https://www.robotips.fr/data/gpage/11/squaretips_mother-board_schematics.pdf
  */
 
 #ifndef RTBOARD_H

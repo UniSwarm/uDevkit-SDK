@@ -4,7 +4,7 @@
  * @copyright Robotips 2016
  * @copyright UniSwarm 2018-2022
  *
- * @date April 49, 2016, 08:49 AM
+ * @date April 25, 2016, 08:49 AM
  *
  * @brief Code for A6screenboard from Robotips
  */

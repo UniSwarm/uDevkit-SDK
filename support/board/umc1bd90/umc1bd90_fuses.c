@@ -11,7 +11,7 @@
  *  https://uniswarm.eu/uboards/umc/umc1bd90
  */
 
-// ################################# primary configuration #################################
+// ################################# Primary configuration #################################
 // FSEC
 #pragma config BWRP = OFF     // Boot Segment Write-Protect bit->Boot Segment may be written
 #pragma config BSS = STNDRD   // Boot Segment Code-Protect Level bits->Standard security

@@ -7,6 +7,12 @@
  * @date March 01, 2017, 06:09 PM
  *
  * @brief Definitions for pic32-emz64 from Olimex
+ *
+ * product page:
+ *  https://www.olimex.com/Products/PIC/Development/PIC32-EMZ64/open-source-hardware
+ *
+ * datasheet:
+ *  https://www.olimex.com/Products/PIC/Development/PIC32-EMZ64/resources/PIC32-EMZ64_user_manual.pdf
  */
 
 #ifndef EMZ64_H

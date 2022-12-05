@@ -1,3 +1,16 @@
+/**
+ * @file uio44_fuses.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright UniSwarm 2018-2022
+ *
+ * @date November 28, 2018, 09:30 AM
+ *
+ * @brief Fuses for UIO44(FR) / UIO44(FR)-I board
+ *
+ * product page:
+ *  https://uniswarm.eu/uboards/uio/uio44
+ */
+
 // FSEC
 #pragma config BWRP = OFF      // Boot Segment Write-Protect bit->Boot Segment may be written
 #pragma config BSS = DISABLED  // Boot Segment Code-Protect Level bits->No Protection (other than BWRP)
@@ -35,7 +48,7 @@
 #pragma config FWDTEN = ON_SW      // Watchdog Timer Enable bit->WDT controlled via SW, use WDTCON.ON bit
 
 // FPOR
-//#pragma config BSSO = BOOT      // Boot Space Start Option->Optional startup after reset, execute instruction at start
+// #pragma config BSSO = BOOT      // Boot Space Start Option->Optional startup after reset, execute instruction at start
 // of boot space.
 
 // FICD

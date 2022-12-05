@@ -1,3 +1,13 @@
+/**
+ * @file uio8ad_fuses.c
+ * @author Sebastien CAUX (sebcaux)
+ * @copyright UniSwarm 2020-2022
+ *
+ * @date August 31, 2020, 11:30 AM
+ *
+ * @brief Fuses for UIO8AD(FR) / UIO8AD(FR)-I board
+ */
+
 // FSEC
 #pragma config BWRP = OFF     // Boot Segment Write-Protect bit->Boot Segment may be written
 #pragma config BSS = STNDRD   // Boot Segment Code-Protect Level bits->Standard security
@@ -35,7 +45,7 @@
 #pragma config FWDTEN = ON_SW      // Watchdog Timer Enable bit->WDT controlled via SW, use WDTCON.ON bit
 
 // FPOR
-//#pragma config BSSO = BOOT      // Boot Space Start Option->Optional startup after reset, execute instruction at start
+// #pragma config BSSO = BOOT      // Boot Space Start Option->Optional startup after reset, execute instruction at start
 // of boot space.
 
 // FICD
