@@ -24,16 +24,17 @@
 #    include <driver/adc.h>
 #endif
 
-uint8_t board_led_state = 0;
-
 #ifdef SIMULATOR
 #    include <stdio.h>
 #endif
 
-rt_dev_t swarmtips2_i2c_tof;
-rt_dev_t swarmtips2_i2c_ihm;
+static uint8_t _board_led_state = 0;
+static rt_dev_t _swarmtips2_i2c_tof;
+static rt_dev_t _swarmtips2_i2c_ihm;
 
-int board_init_io(void)
+static int _board_init_io(void);
+
+int _board_init_io(void)
 {
 #ifndef SIMULATOR
     int i;
@@ -136,38 +137,38 @@ int board_init_ledpwm(void)
 int board_init_tof(void)
 {
     int i;
-    swarmtips2_i2c_tof = i2c(TOF_I2C_BUS);
-    i2c_open(swarmtips2_i2c_tof);
-    i2c_setBaudSpeed(swarmtips2_i2c_tof, I2C_BAUD_400K);
-    i2c_enable(swarmtips2_i2c_tof);
+    _swarmtips2_i2c_tof = i2c(TOF_I2C_BUS);
+    i2c_open(_swarmtips2_i2c_tof);
+    i2c_setBaudSpeed(_swarmtips2_i2c_tof, I2C_BAUD_400K);
+    i2c_enable(_swarmtips2_i2c_tof);
 
-    i2c_writereg(swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 1, 0x00, 0);  // leds off and disable tof 2 and tof 3
-    i2c_writereg(swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 3, 0x00, 0);  // all io as output
+    i2c_writereg(_swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 1, 0x00, 0);  // leds off and disable tof 2 and tof 3
+    i2c_writereg(_swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 3, 0x00, 0);  // all io as output
 
 #ifdef USE_MODULE_sensor
     // tof1
-    VL6180X_setAddr(swarmtips2_i2c_tof, 0x52, TOF1_ADDR);
+    VL6180X_setAddr(_swarmtips2_i2c_tof, 0x52, TOF1_ADDR);
     for (i = 0; i < 65000; i++)
         ;
-    VL6180X_init(swarmtips2_i2c_tof, TOF1_ADDR);
+    VL6180X_init(_swarmtips2_i2c_tof, TOF1_ADDR);
 
     // tof2
-    i2c_writereg(swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 1, 0x01, 0);  // enable tof 2
+    i2c_writereg(_swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 1, 0x01, 0);  // enable tof 2
     for (i = 0; i < 65000; i++)
         ;
-    VL6180X_setAddr(swarmtips2_i2c_tof, 0x52, TOF2_ADDR);
+    VL6180X_setAddr(_swarmtips2_i2c_tof, 0x52, TOF2_ADDR);
     for (i = 0; i < 65000; i++)
         ;
-    VL6180X_init(swarmtips2_i2c_tof, TOF2_ADDR);
+    VL6180X_init(_swarmtips2_i2c_tof, TOF2_ADDR);
 
     // tof3
-    i2c_writereg(swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 1, 0x03, 0);  // enable tof 3
+    i2c_writereg(_swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 1, 0x03, 0);  // enable tof 3
     for (i = 0; i < 65000; i++)
         ;
-    VL6180X_setAddr(swarmtips2_i2c_tof, 0x52, TOF3_ADDR);
+    VL6180X_setAddr(_swarmtips2_i2c_tof, 0x52, TOF3_ADDR);
     for (i = 0; i < 65000; i++)
         ;
-    VL6180X_init(swarmtips2_i2c_tof, TOF3_ADDR);
+    VL6180X_init(_swarmtips2_i2c_tof, TOF3_ADDR);
 #endif
 
     return 0;
@@ -175,12 +176,12 @@ int board_init_tof(void)
 
 rt_dev_t board_i2c_tof(void)
 {
-    return swarmtips2_i2c_tof;
+    return _swarmtips2_i2c_tof;
 }
 
 rt_dev_t board_i2c_ihm(void)
 {
-    return swarmtips2_i2c_ihm;
+    return _swarmtips2_i2c_ihm;
 }
 
 int board_init_buzzer(void)
@@ -221,13 +222,13 @@ void board_buzz(uint16_t freq)
 int board_init_ihm(void)
 {
     // i2c ihm board
-    swarmtips2_i2c_ihm = i2c(IHM_I2C_BUS);
-    i2c_open(swarmtips2_i2c_ihm);
-    i2c_setBaudSpeed(swarmtips2_i2c_ihm, I2C_BAUD_400K);
-    i2c_enable(swarmtips2_i2c_ihm);
+    _swarmtips2_i2c_ihm = i2c(IHM_I2C_BUS);
+    i2c_open(_swarmtips2_i2c_ihm);
+    i2c_setBaudSpeed(_swarmtips2_i2c_ihm, I2C_BAUD_400K);
+    i2c_enable(_swarmtips2_i2c_ihm);
 
-    i2c_writereg(swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 3, 0x0E, 0);  // led IHM as output
-    i2c_writereg(swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 1, 0, 0);     // led IHM off
+    i2c_writereg(_swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 3, 0x0E, 0);  // led IHM as output
+    i2c_writereg(_swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 1, 0, 0);     // led IHM off
 
     return 0;
 }
@@ -241,7 +242,7 @@ int8_t board_getButton(uint8_t button)
         return 0;
     }
 
-    ret = i2c_readregs(swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 0, &value, 1, 0);
+    ret = i2c_readregs(_swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 0, &value, 1, 0);
     if (ret != 0)
     {
         return 0;
@@ -288,7 +289,7 @@ int board_init(void)
     sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, 24000000);  // 24MHz
     archi_init();
 
-    board_init_io();
+    _board_init_io();
 
     sysclock_setClock(24000000);  // 24MHz
     sysclock_switchSourceTo(SYSCLOCK_SRC_POSC);
@@ -330,42 +331,42 @@ int board_setLed(uint8_t led, uint8_t state)
         case 3:
             if (state != 0)
             {
-                board_led_state |= 0x01;
+                _board_led_state |= 0x01;
             }
             else
             {
-                board_led_state &= 0xFE;
+                _board_led_state &= 0xFE;
             }
             break;
 
         case 4:
             if (state != 0)
             {
-                board_led_state |= 0x02;
+                _board_led_state |= 0x02;
             }
             else
             {
-                board_led_state &= 0xFD;
+                _board_led_state &= 0xFD;
             }
             break;
 
         case 5:
             if (state != 0)
             {
-                board_led_state |= 0x04;
-                i2c_writereg(swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 1, 1, 0);  // led IHM off
+                _board_led_state |= 0x04;
+                i2c_writereg(_swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 1, 1, 0);  // led IHM off
             }
             else
             {
-                board_led_state &= 0xFB;
-                i2c_writereg(swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 1, 0, 0);  // led IHM on
+                _board_led_state &= 0xFB;
+                i2c_writereg(_swarmtips2_i2c_ihm, IHM_IOEXP_ADDR, 1, 0, 0);  // led IHM on
             }
             break;
     }
 
     if (led == 3 || led == 4)
     {
-        i2c_writereg(swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 1, board_led_state << 2 | 0x03, 0);
+        i2c_writereg(_swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 1, _board_led_state << 2 | 0x03, 0);
     }
     return 0;
 }
@@ -403,16 +404,16 @@ int8_t board_getLed(uint8_t led)
             return OC7R >> 1;
 
         case 3:
-            return ((board_led_state & 0x01) == 1);
+            return ((_board_led_state & 0x01) == 1);
 
         case 4:
-            return ((board_led_state & 0x02) == 1);
+            return ((_board_led_state & 0x02) == 1);
 
         case 5:
-            return ((board_led_state & 0x04) == 1);
+            return ((_board_led_state & 0x04) == 1);
     }
     return 0;
 #else
-    return board_led_state & (!(1 << led));
+    return _board_led_state & (!(1 << led));
 #endif
 }

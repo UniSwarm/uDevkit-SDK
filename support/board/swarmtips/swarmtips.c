@@ -15,16 +15,17 @@
 #include <driver/i2c.h>
 #include <driver/sysclock.h>
 
-rt_dev_t board_leds[LED_COUNT];
-
 #include "modules.h"
 #ifdef USE_MODULE_sensor
 #    include <module/sensor.h>
 #endif
 
-rt_dev_t swarmtips_i2c_tof;
+static rt_dev_t _board_leds[LED_COUNT];
+static rt_dev_t _swarmtips_i2c_tof;
 
-int board_init_io(void)
+static int _board_init_io(void);
+
+int _board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
@@ -67,10 +68,10 @@ int board_init_io(void)
     OSCCONbits.IOLOCK = 1;
 #endif
 
-    board_leds[0] = gpio_pin(GPIO_PORTB, 3);
-    gpio_setBitConfig(board_leds[0], GPIO_OUTPUT);
-    board_leds[1] = gpio_pin(GPIO_PORTD, 11);
-    gpio_setBitConfig(board_leds[1], GPIO_OUTPUT);
+    _board_leds[0] = gpio_pin(GPIO_PORTB, 3);
+    gpio_setBitConfig(_board_leds[0], GPIO_OUTPUT);
+    _board_leds[1] = gpio_pin(GPIO_PORTD, 11);
+    gpio_setBitConfig(_board_leds[1], GPIO_OUTPUT);
 
     return 0;
 }
@@ -80,19 +81,19 @@ int board_init(void)
     uint16_t i, j;
     archi_init();
 
-    board_init_io();
+    _board_init_io();
 
-    swarmtips_i2c_tof = i2c_getFreeDevice();
-    // i2c_open(swarmtips_i2c_tof);
-    i2c_setBaudSpeed(swarmtips_i2c_tof, I2C_BAUD_400K);
-    i2c_enable(swarmtips_i2c_tof);
+    _swarmtips_i2c_tof = i2c_getFreeDevice();
+    // i2c_open(_swarmtips_i2c_tof);
+    i2c_setBaudSpeed(_swarmtips_i2c_tof, I2C_BAUD_400K);
+    i2c_enable(_swarmtips_i2c_tof);
 
     for (j = 0; j < 2; j++)
         for (i = 0; i < 65000; i++)
             ;
 
 #ifdef USE_MODULE_sensor
-    VL6180X_init(swarmtips_i2c_tof, 0x52);
+    VL6180X_init(_swarmtips_i2c_tof, 0x52);
 #endif
 
     return 0;
@@ -100,7 +101,7 @@ int board_init(void)
 
 rt_dev_t board_i2c_tof(void)
 {
-    return swarmtips_i2c_tof;
+    return _swarmtips_i2c_tof;
 }
 
 int board_setLed(uint8_t led, uint8_t state)
@@ -112,11 +113,11 @@ int board_setLed(uint8_t led, uint8_t state)
 
     if (state & 1)
     {
-        gpio_setBit(board_leds[led]);
+        gpio_setBit(_board_leds[led]);
     }
     else
     {
-        gpio_clearBit(board_leds[led]);
+        gpio_clearBit(_board_leds[led]);
     }
     return 0;
 }
@@ -128,7 +129,7 @@ int board_toggleLed(uint8_t led)
         return -1;
     }
 
-    gpio_toggleBit(board_leds[led]);
+    gpio_toggleBit(_board_leds[led]);
     return 0;
 }
 
@@ -139,7 +140,7 @@ int8_t board_getLed(uint8_t led)
         return -1;
     }
 
-    return gpio_readBit(board_leds[led]);
+    return gpio_readBit(_board_leds[led]);
 }
 
 int8_t board_getButton(uint8_t button)

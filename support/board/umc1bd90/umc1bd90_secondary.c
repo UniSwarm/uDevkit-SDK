@@ -16,11 +16,11 @@
 #include <driver/gpio.h>
 #include <driver/sysclock.h>
 
-rt_dev_t board_leds[LED_COUNT];
+static rt_dev_t _board_leds[LED_COUNT];
 
-int board_init_io(void);
+static int _board_init_io(void);
 
-int board_init_io(void)
+int _board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
@@ -52,7 +52,7 @@ int board_init(void)
     sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, SYSCLOCK_POSC);
     archi_init();
 
-    board_init_io();
+    _board_init_io();
 
     return 0;
 }

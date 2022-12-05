@@ -16,11 +16,11 @@
 #include <driver/gpio.h>
 #include <driver/sysclock.h>
 
-rt_dev_t board_leds[LED_COUNT];
+static rt_dev_t _board_leds[LED_COUNT];
 
-int board_init_io(void);
+static int _board_init_io(void);
 
-int board_init_io(void)
+int _board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
@@ -32,12 +32,12 @@ int board_init_io(void)
     TRISBbits.TRISB14 = 0;
 #endif
 
-    board_leds[0] = gpio_pin(GPIO_PORTB, 11);
-    gpio_setBitConfig(board_leds[0], GPIO_OUTPUT);
-    board_leds[1] = gpio_pin(GPIO_PORTB, 12);
-    gpio_setBitConfig(board_leds[1], GPIO_OUTPUT);
-    board_leds[2] = gpio_pin(GPIO_PORTB, 13);
-    gpio_setBitConfig(board_leds[2], GPIO_OUTPUT);
+    _board_leds[0] = gpio_pin(GPIO_PORTB, 11);
+    gpio_setBitConfig(_board_leds[0], GPIO_OUTPUT);
+    _board_leds[1] = gpio_pin(GPIO_PORTB, 12);
+    gpio_setBitConfig(_board_leds[1], GPIO_OUTPUT);
+    _board_leds[2] = gpio_pin(GPIO_PORTB, 13);
+    gpio_setBitConfig(_board_leds[2], GPIO_OUTPUT);
     board_setLed(0, 1);
     board_setLed(1, 1);
     board_setLed(2, 1);
@@ -50,7 +50,7 @@ int board_init(void)
     // sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, SYSCLOCK_POSC);
     archi_init();
 
-    board_init_io();
+    _board_init_io();
 
     return 0;
 }
@@ -64,11 +64,11 @@ int board_setLed(uint8_t led, uint8_t state)
 
     if (state & 1)
     {
-        gpio_setBit(board_leds[led]);
+        gpio_setBit(_board_leds[led]);
     }
     else
     {
-        gpio_clearBit(board_leds[led]);
+        gpio_clearBit(_board_leds[led]);
     }
     return 0;
 }
@@ -80,7 +80,7 @@ int board_toggleLed(uint8_t led)
         return -1;
     }
 
-    gpio_toggleBit(board_leds[led]);
+    gpio_toggleBit(_board_leds[led]);
     return 0;
 }
 
@@ -91,7 +91,7 @@ int8_t board_getLed(uint8_t led)
         return -1;
     }
 
-    return gpio_readBit(board_leds[led]);
+    return gpio_readBit(_board_leds[led]);
 }
 
 int8_t board_getButton(uint8_t button)

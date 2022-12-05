@@ -14,7 +14,6 @@
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/50002576a%20PIC32MM%20USB%20Curiosity%20Development%20Board%20Quick%20Start%20Guide.pdf
  */
 
-
 // FDEVOPT
 #pragma config SOSCHP = OFF     // Secondary Oscillator High Power Enable bit (SOSC oprerates in normal power mode.)
 #pragma config ALTI2C = ON      // Alternate I2C1 Pins Location Enable bit (Alternate I2C1 pins are used)

@@ -17,9 +17,9 @@
 #include <driver/gpio.h>
 #include <driver/sysclock.h>
 
-int _board_init_io(void);
+static rt_dev_t _board_leds[LED_COUNT];
 
-rt_dev_t _board_leds[LED_COUNT];
+static int _board_init_io(void);
 
 #ifdef SIMULATOR
 int _board_sim_bridgesEnable = 0;

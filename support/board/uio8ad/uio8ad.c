@@ -19,16 +19,16 @@
 
 #include "pwm.h"
 
-rt_dev_t _board_leds[LED_COUNT];
-rt_dev_t _board_outs_H[OUT_COUNT];
-rt_dev_t _board_outs_L[OUT_COUNT];
-rt_dev_t _board_out3h_en;
+static rt_dev_t _board_leds[LED_COUNT];
+static rt_dev_t _board_outs_H[OUT_COUNT];
+static rt_dev_t _board_outs_L[OUT_COUNT];
+static rt_dev_t _board_out3h_en;
 DO_MODE _board_outs_mode[OUT_COUNT];
 uint8_t _board_analogin[ANALOGIN_COUNT];
 
-int board_init_io(void);
+static int _board_init_io(void);
 
-int board_init_io(void)
+int _board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
@@ -164,7 +164,7 @@ int board_init(void)
     sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, SYSCLOCK_POSC);
     archi_init();
 
-    board_init_io();
+    _board_init_io();
 
     return 0;
 }

@@ -17,13 +17,15 @@
 
 #include "emz64.h"
 
-#include "driver/gpio.h"
-#include "driver/sysclock.h"
+#include <driver/gpio.h>
+#include <driver/sysclock.h>
 
-rt_dev_t board_leds[LED_COUNT];
-rt_dev_t board_buttons[BUTTON_COUNT];
+static rt_dev_t _board_leds[LED_COUNT];
+static rt_dev_t _board_buttons[BUTTON_COUNT];
 
-int board_init_io(void)
+static int _board_init_io(void);
+
+int _board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
@@ -47,19 +49,19 @@ int board_init_io(void)
     LATBbits.LATB11 = 1;  // eth nreset in active state
 #endif
 
-    board_leds[0] = gpio_pin(GPIO_PORTB, 8);
-    gpio_setBitConfig(board_leds[0], GPIO_OUTPUT);
-    board_leds[1] = gpio_pin(GPIO_PORTB, 9);
-    gpio_setBitConfig(board_leds[1], GPIO_OUTPUT);
-    board_leds[2] = gpio_pin(GPIO_PORTB, 10);
-    gpio_setBitConfig(board_leds[2], GPIO_OUTPUT);
+    _board_leds[0] = gpio_pin(GPIO_PORTB, 8);
+    gpio_setBitConfig(_board_leds[0], GPIO_OUTPUT);
+    _board_leds[1] = gpio_pin(GPIO_PORTB, 9);
+    gpio_setBitConfig(_board_leds[1], GPIO_OUTPUT);
+    _board_leds[2] = gpio_pin(GPIO_PORTB, 10);
+    gpio_setBitConfig(_board_leds[2], GPIO_OUTPUT);
 
-    board_buttons[0] = gpio_pin(GPIO_PORTB, 12);
-    gpio_setBitConfig(board_buttons[0], GPIO_INPUT | GPIO_PULLUP);
-    board_buttons[1] = gpio_pin(GPIO_PORTB, 13);
-    gpio_setBitConfig(board_buttons[1], GPIO_INPUT | GPIO_PULLUP);
-    board_buttons[2] = gpio_pin(GPIO_PORTB, 14);
-    gpio_setBitConfig(board_buttons[2], GPIO_INPUT | GPIO_PULLUP);
+    _board_buttons[0] = gpio_pin(GPIO_PORTB, 12);
+    gpio_setBitConfig(_board_buttons[0], GPIO_INPUT | GPIO_PULLUP);
+    _board_buttons[1] = gpio_pin(GPIO_PORTB, 13);
+    gpio_setBitConfig(_board_buttons[1], GPIO_INPUT | GPIO_PULLUP);
+    _board_buttons[2] = gpio_pin(GPIO_PORTB, 14);
+    gpio_setBitConfig(_board_buttons[2], GPIO_INPUT | GPIO_PULLUP);
 
     return 0;
 }
@@ -69,7 +71,7 @@ int board_init(void)
     sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, 24000000);  // 24MHz
     archi_init();
 
-    board_init_io();
+    _board_init_io();
 
     return 0;
 }
@@ -83,11 +85,11 @@ int board_setLed(uint8_t led, uint8_t state)
 
     if (state & 1)
     {
-        gpio_setBit(board_leds[led]);
+        gpio_setBit(_board_leds[led]);
     }
     else
     {
-        gpio_clearBit(board_leds[led]);
+        gpio_clearBit(_board_leds[led]);
     }
     return 0;
 }
@@ -99,7 +101,7 @@ int board_toggleLed(uint8_t led)
         return -1;
     }
 
-    gpio_toggleBit(board_leds[led]);
+    gpio_toggleBit(_board_leds[led]);
     return 0;
 }
 
@@ -110,7 +112,7 @@ int8_t board_getLed(uint8_t led)
         return -1;
     }
 
-    return gpio_readBit(board_leds[led]);
+    return gpio_readBit(_board_leds[led]);
 }
 
 int8_t board_getButton(uint8_t button)
@@ -121,7 +123,7 @@ int8_t board_getButton(uint8_t button)
         return -1;
     }
 
-    value = gpio_readBit(board_buttons[button]);
+    value = gpio_readBit(_board_buttons[button]);
     if (value == GPIO_HIGH)
     {
         return 0;

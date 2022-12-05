@@ -11,7 +11,9 @@
 
 #include "a6screenboard.h"
 
-int board_init_io(void)
+static int _board_init_io(void);
+
+int _board_init_io(void)
 {
 #ifndef SIMULATOR
     ANSELB = 0x0000;  // all analog inputs of port B as digital buffer
@@ -62,7 +64,7 @@ int board_init(void)
 {
     archi_init();
 
-    board_init_io();
+    _board_init_io();
 
     return 0;
 }
