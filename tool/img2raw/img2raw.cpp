@@ -163,7 +163,7 @@ void exportFont(QFont font, const QString &outFileName)
         paint.drawText(QRect(0, 0, 50, 50), Qt::AlignLeft | Qt::AlignTop, QString(c));
         paint.end();
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 10, 0)
+#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
         width = metric.width(c);
 #else
         width = metric.horizontalAdvance(c);
