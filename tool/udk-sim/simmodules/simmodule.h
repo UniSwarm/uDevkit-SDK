@@ -11,13 +11,13 @@ class SimModule : public QObject
 public:
     explicit SimModule(SimClient *client, uint16_t idModule, uint16_t idPeriph);
 
-    [[nodiscard]] SimClient *client() const;
-    [[nodiscard]] uint16_t idModule() const;
-    [[nodiscard]] uint16_t idPeriph() const;
+    SimClient *client() const;
+    uint16_t idModule() const;
+    uint16_t idPeriph() const;
 
     void writeData(uint16_t functionId, const QByteArray &data);
 
-    [[nodiscard]] virtual QWidget *widget() const = 0;
+    virtual QWidget *widget() const = 0;
 
 signals:
 

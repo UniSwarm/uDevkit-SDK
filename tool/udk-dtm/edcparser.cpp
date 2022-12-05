@@ -48,9 +48,7 @@ bool EDCParser::parseDocument()
 
     QCollator coll;
     coll.setNumericMode(true);
-    std::sort(_sfrs.begin(), _sfrs.end(), [&](const EDCSFRDef &sfr1, const EDCSFRDef &sfr2) {
-        return coll.compare(sfr1.name, sfr2.name) < 0;
-    });
+    std::sort(_sfrs.begin(), _sfrs.end(), [&](const EDCSFRDef &sfr1, const EDCSFRDef &sfr2) { return coll.compare(sfr1.name, sfr2.name) < 0; });
 
     return true;
 }

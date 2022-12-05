@@ -32,19 +32,19 @@ public:
     explicit SimProject(QObject *parent = nullptr);
     ~SimProject() override;
 
-    [[nodiscard]] QString exePath() const;
+    QString exePath() const;
     bool setExePath(const QString &exePath);
 
-    [[nodiscard]] bool isValid() const;
+    bool isValid() const;
     enum Status
     {
         Invalid,
         Stopped,
         Running
     };
-    [[nodiscard]] Status status() const;
+    Status status() const;
 
-    [[nodiscard]] SimClient *client() const;
+    SimClient *client() const;
     void setClient(SimClient *client);
 
 signals:

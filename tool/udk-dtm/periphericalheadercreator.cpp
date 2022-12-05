@@ -64,9 +64,7 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db,
         QStringList adBuff = cpuAadbuff.values(cpu);
         QCollator coll;
         coll.setNumericMode(true);
-        std::sort(adBuff.begin(), adBuff.end(), [&](const QString &s1, const QString &s2) {
-            return coll.compare(s1, s2) < 0;
-        });
+        std::sort(adBuff.begin(), adBuff.end(), [&](const QString &s1, const QString &s2) { return coll.compare(s1, s2) < 0; });
 
         QRegularExpressionMatch match = sfrRegExp.match(adBuff.last());
         int max = match.captured(1).toInt() + 1;

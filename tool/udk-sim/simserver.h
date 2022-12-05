@@ -32,7 +32,7 @@ protected:
     SimServer(QObject *parent = Q_NULLPTR);
 
 public:
-    [[nodiscard]] bool isConnected() const;
+    bool isConnected() const;
     static SimServer *instance();
 
 signals:

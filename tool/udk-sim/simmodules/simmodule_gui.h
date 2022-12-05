@@ -16,7 +16,7 @@ class SimModuleGui : public SimModule
 public:
     SimModuleGui(SimClient *client, uint16_t idPeriph);
 
-    [[nodiscard]] QWidget *widget() const override;
+    QWidget *widget() const override;
 
 public slots:
     void pushData(uint16_t functionId, const QByteArray &data) override;

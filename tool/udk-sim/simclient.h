@@ -31,7 +31,7 @@ class SimClient : public QObject
 public:
     SimClient(QTcpSocket *socket);
 
-    [[nodiscard]] SimModule *module(uint16_t idModule, uint16_t idPeriph) const;
+    SimModule *module(uint16_t idModule, uint16_t idPeriph) const;
 
     void writeData(uint16_t moduleId, uint16_t periphId, uint16_t functionId, const QByteArray &data);
 

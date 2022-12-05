@@ -27,11 +27,11 @@ public:
 
     bool parse();
 
-    [[nodiscard]] const QString &cpuName() const;
-    [[nodiscard]] const QString &deviceName() const;
+    const QString &cpuName() const;
+    const QString &deviceName() const;
 
-    [[nodiscard]] const QList<EDCSFRDef> &sfrs() const;
-    [[nodiscard]] const QMap<QString, EDCProgramSpace> &programSpaces() const;
+    const QList<EDCSFRDef> &sfrs() const;
+    const QMap<QString, EDCProgramSpace> &programSpaces() const;
 
 protected:
     bool parseDocument();

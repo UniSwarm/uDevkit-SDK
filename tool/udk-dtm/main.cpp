@@ -46,9 +46,7 @@ QStringList picFileList(const QString &picFilter, const QStringList &excludeDevi
     // Remove redondant CPU
     QCollator coll;
     coll.setNumericMode(true);
-    std::sort(fileList.begin(), fileList.end(), [&](const QString &s1, const QString &s2) {
-        return coll.compare(s1, s2) > 0;
-    });
+    std::sort(fileList.begin(), fileList.end(), [&](const QString &s1, const QString &s2) { return coll.compare(s1, s2) > 0; });
     QSet<QString> set;
     QMutableListIterator<QString> i(fileList);
     while (i.hasNext())
