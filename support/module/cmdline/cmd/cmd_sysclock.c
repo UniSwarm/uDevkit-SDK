@@ -39,13 +39,13 @@ void cmd_sysclock_statusclk(SYSCLOCK_SOURCE source)
         freq /= 1000;
         idUnit++;
     }
-    printf("%s: %ld %cHz\n", sysclock_sources_str[source], freq, unit[idUnit]);
+    printf("%s: %ld %cHz\r\n", sysclock_sources_str[source], freq, unit[idUnit]);
 }
 
 void cmd_sysclock_status(void)
 {
     int source;
-    printf("Current clock source: %s\n", sysclock_sources_str[sysclock_source()]);
+    printf("Current clock source: %s\r\n", sysclock_sources_str[sysclock_source()]);
     for (source = 0; source <= SYSCLOCK_SRC_MAX; source++)
     {
         cmd_sysclock_statusclk((SYSCLOCK_SOURCE)source);
@@ -94,7 +94,7 @@ int cmd_sysclock(int argc, char **argv)
                     nop();
                 }
 
-                printf("ret code: %d\n", res);
+                printf("ret code: %d\r\n", res);
                 return 0;
             }
         }
