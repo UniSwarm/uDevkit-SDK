@@ -23,10 +23,12 @@
 
 #include "modules.h"
 
+#define CMDLINE_ARGC_MAX       10
+
 static int _cmd_help(int argc, char **argv);
 static void _cmd_carriageReturn(void);
 
-const Cmd _cmds[] = {
+const Cmd _cmd_cmds[] = {
 #ifdef USE_adc
     {"adc", cmd_adc},
 #endif
@@ -63,20 +65,15 @@ extern rt_dev_t _cmdline_device_out;
 
 int (*_cmdline_cmdTaskPtr)(void) = NULL;
 
-#define CMDLINE_ARGC_MAX 10
-
 int cmd_exec(char *line)
 {
-    uint16_t i, argc;
-    const Cmd *cmd;
     char *argv[CMDLINE_ARGC_MAX];
-    char *sep;
 
     // parse line to argc argv
-    sep = line;
-    i = 1;
+    char *sep = line;
+    uint16_t argc = 1;
     argv[0] = sep;
-    while (sep != NULL && i < CMDLINE_ARGC_MAX)
+    while (sep != NULL && argc < CMDLINE_ARGC_MAX)
     {
         sep = strchr(sep, ' ');
         if (sep != 0)
@@ -84,7 +81,7 @@ int cmd_exec(char *line)
             *sep = '\0';
             if (*(sep + 1) != ' ' && *(sep + 1) != '\0')
             {
-                argv[i++] = sep + 1;
+                argv[argc++] = sep + 1;
             }
             sep++;
         }
@@ -93,22 +90,9 @@ int cmd_exec(char *line)
             break;
         }
     }
-    argc = i;
 
     // looking for command name
-    cmd = NULL;
-    for (i = 0; i < sizeof(_cmds); i++)
-    {
-        if (_cmds[i].cmdFnPtr == NULL)
-        {
-            break;
-        }
-        if (strcmp(_cmds[i].name, line) == 0)
-        {
-            cmd = &_cmds[i];
-            break;
-        }
-    }
+    const Cmd *cmd = cmd_findFromName(line);
 
     // execute command if found
     if (cmd == NULL)
@@ -123,14 +107,13 @@ int _cmd_help(int argc, char **argv)
     UDK_UNUSED(argc);
     UDK_UNUSED(argv);
 
-    uint16_t i;
-    for (i = 0; i < sizeof(_cmds); i++)
+    for (uint16_t i = 0; i < sizeof(_cmd_cmds); i++)
     {
-        if (_cmds[i].cmdFnPtr == 0)
+        if (_cmd_cmds[i].cmdFnPtr == 0)
         {
             break;
         }
-        cmd_puts(_cmds[i].name);
+        cmd_puts(_cmd_cmds[i].name);
     }
     return 0;
 }
@@ -194,4 +177,23 @@ int cmd_task(void)
 void cmd_setTask(int (*cmdTaskPtr)(void))
 {
     _cmdline_cmdTaskPtr = cmdTaskPtr;
+}
+
+const Cmd *cmd_findFromName(char *name)
+{
+    const Cmd *cmd = NULL;
+    for (uint i = 0; i < sizeof(_cmd_cmds); i++)
+    {
+        if (_cmd_cmds[i].cmdFnPtr == NULL)
+        {
+            break;
+        }
+        if (strcmp(_cmd_cmds[i].name, name) == 0)
+        {
+            cmd = &_cmd_cmds[i];
+            break;
+        }
+    }
+    
+    return cmd;
 }

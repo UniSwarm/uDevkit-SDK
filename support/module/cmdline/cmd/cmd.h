@@ -18,7 +18,7 @@ extern "C" {
 
 typedef struct
 {
-    char name[20];
+    char name[10];
     int (*cmdFnPtr)(int, char **);
 } Cmd;
 
@@ -29,6 +29,8 @@ int cmd_printf(const char *format, ...);
 
 int cmd_task(void);
 void cmd_setTask(int (*cmdTaskPtr)(void));
+
+const Cmd *cmd_findFromName(char *name);
 
 #ifdef __cplusplus
 }
