@@ -109,16 +109,16 @@ int adc_init(void)
     ADCTRG2 = 0x01010101;  // Set triggers from software.
     ADCTRG3 = 0x01010101;  // Set triggers from software.
 #ifdef ARCHI_pic32mk
-#    if (defined(ADC_HAVE_CH12) | defined(ADC_HAVE_CH13) | defined(ADC_HAVE_CH14) | defined(ADC_HAVE_CH15))
+#    if (defined(ADC_CHANNEL_HAVE_CH12) | defined(ADC_CHANNEL_HAVE_CH13) | defined(ADC_CHANNEL_HAVE_CH14) | defined(ADC_CHANNEL_HAVE_CH15))
     ADCTRG4 = 0x01010101;  // Set triggers from software.
 #    endif
-#    if (defined(ADC_HAVE_CH16) | defined(ADC_HAVE_CH17) | defined(ADC_HAVE_CH18) | defined(ADC_HAVE_CH19))
+#    if (defined(ADC_CHANNEL_HAVE_CH16) | defined(ADC_CHANNEL_HAVE_CH17) | defined(ADC_CHANNEL_HAVE_CH18) | defined(ADC_CHANNEL_HAVE_CH19))
     ADCTRG5 = 0x01010101;  // Set triggers from software.
 #    endif
-#    if (defined(ADC_HAVE_CH20) | defined(ADC_HAVE_CH21) | defined(ADC_HAVE_CH22) | defined(ADC_HAVE_CH23))
+#    if (defined(ADC_CHANNEL_HAVE_CH20) | defined(ADC_CHANNEL_HAVE_CH21) | defined(ADC_CHANNEL_HAVE_CH22) | defined(ADC_CHANNEL_HAVE_CH23))
     ADCTRG6 = 0x01010101;  // Set triggers from software.
 #    endif
-#    if (defined(ADC_HAVE_CH24) | defined(ADC_HAVE_CH25) | defined(ADC_HAVE_CH26) | defined(ADC_HAVE_CH27))
+#    if (defined(ADC_CHANNEL_HAVE_CH24) | defined(ADC_CHANNEL_HAVE_CH25) | defined(ADC_CHANNEL_HAVE_CH26) | defined(ADC_CHANNEL_HAVE_CH27))
     ADCTRG7 = 0x01010101;  // Set triggers from software.
 #    endif
 #endif

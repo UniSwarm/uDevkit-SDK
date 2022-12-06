@@ -16,10 +16,6 @@
 extern "C" {
 #endif
 
-#include <stdbool.h>
-
-#include <driver/device.h>
-
 #include "adc_device.h"
 
 int adc_init(void);

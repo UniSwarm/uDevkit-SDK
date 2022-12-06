@@ -119,9 +119,9 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
     || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK100)                    \
     || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM100)
-#    define ADC_HAVE_CH45
-#    define ADC_HAVE_CH46
-#    define ADC_HAVE_CH47
+#    define ADC_CHANNEL_HAVE_CH45
+#    define ADC_CHANNEL_HAVE_CH46
+#    define ADC_CHANNEL_HAVE_CH47
 #endif
 #if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
     || defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100)                    \
@@ -130,12 +130,12 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD064) || defined(DEVICE_32MK1024GPD100)                    \
     || defined(DEVICE_32MK1024GPE064) || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK064) || defined(DEVICE_32MK1024GPK100)                    \
     || defined(DEVICE_32MK1024MCF064) || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100)
-#    define ADC_HAVE_CH48
-#    define ADC_HAVE_CH49
-#    define ADC_HAVE_CH50
-#    define ADC_HAVE_CH51
-#    define ADC_HAVE_CH52
-#    define ADC_HAVE_CH53
+#    define ADC_CHANNEL_HAVE_CH48
+#    define ADC_CHANNEL_HAVE_CH49
+#    define ADC_CHANNEL_HAVE_CH50
+#    define ADC_CHANNEL_HAVE_CH51
+#    define ADC_CHANNEL_HAVE_CH52
+#    define ADC_CHANNEL_HAVE_CH53
 #endif
 #if defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144)                       \
     || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144)                    \
@@ -161,7 +161,7 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
     || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
     || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_HAVE_CH42
+#    define ADC_CHANNEL_HAVE_CH42
 #endif
 #if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
     || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064)                    \
@@ -192,13 +192,13 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176) || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176)                    \
     || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176) || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176)                    \
     || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_HAVE_CH35
-#    define ADC_HAVE_CH36
-#    define ADC_HAVE_CH37
-#    define ADC_HAVE_CH38
-#    define ADC_HAVE_CH39
-#    define ADC_HAVE_CH40
-#    define ADC_HAVE_CH41
+#    define ADC_CHANNEL_HAVE_CH35
+#    define ADC_CHANNEL_HAVE_CH36
+#    define ADC_CHANNEL_HAVE_CH37
+#    define ADC_CHANNEL_HAVE_CH38
+#    define ADC_CHANNEL_HAVE_CH39
+#    define ADC_CHANNEL_HAVE_CH40
+#    define ADC_CHANNEL_HAVE_CH41
 #endif
 #if defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF100)                       \
     || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144) || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ0512EFK124)                    \
@@ -227,11 +227,11 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
     || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
     || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_HAVE_CH28
-#    define ADC_HAVE_CH29
-#    define ADC_HAVE_CH30
-#    define ADC_HAVE_CH31
-#    define ADC_HAVE_CH32
+#    define ADC_CHANNEL_HAVE_CH28
+#    define ADC_CHANNEL_HAVE_CH29
+#    define ADC_CHANNEL_HAVE_CH30
+#    define ADC_CHANNEL_HAVE_CH31
+#    define ADC_CHANNEL_HAVE_CH32
 #endif
 #if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
     || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064)                    \
@@ -265,12 +265,12 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176) || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176)                    \
     || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176) || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176)                    \
     || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_HAVE_CH20
-#    define ADC_HAVE_CH21
-#    define ADC_HAVE_CH22
-#    define ADC_HAVE_CH23
-#    define ADC_HAVE_CH33
-#    define ADC_HAVE_CH34
+#    define ADC_CHANNEL_HAVE_CH20
+#    define ADC_CHANNEL_HAVE_CH21
+#    define ADC_CHANNEL_HAVE_CH22
+#    define ADC_CHANNEL_HAVE_CH23
+#    define ADC_CHANNEL_HAVE_CH33
+#    define ADC_CHANNEL_HAVE_CH34
 #endif
 #if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
     || defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100)                    \
@@ -306,11 +306,11 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
     || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
     || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_HAVE_CH19
-#    define ADC_HAVE_CH24
-#    define ADC_HAVE_CH25
-#    define ADC_HAVE_CH26
-#    define ADC_HAVE_CH27
+#    define ADC_CHANNEL_HAVE_CH19
+#    define ADC_CHANNEL_HAVE_CH24
+#    define ADC_CHANNEL_HAVE_CH25
+#    define ADC_CHANNEL_HAVE_CH26
+#    define ADC_CHANNEL_HAVE_CH27
 #endif
 #if defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144)                       \
     || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFF100) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144)                    \
@@ -324,7 +324,7 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MZ2048EFG064) || defined(DEVICE_32MZ2048EFG100) || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144)                    \
     || defined(DEVICE_32MZ2048EFH064) || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144)                    \
     || defined(DEVICE_32MZ2048EFM064) || defined(DEVICE_32MZ2048EFM100) || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144)
-#    define ADC_HAVE_CH44
+#    define ADC_CHANNEL_HAVE_CH44
 #endif
 #if defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144)                       \
     || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFF100) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144)                    \
@@ -356,7 +356,7 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
     || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
     || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_HAVE_CH43
+#    define ADC_CHANNEL_HAVE_CH43
 #endif
 #if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
     || defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100)                    \
@@ -395,25 +395,25 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
     || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
     || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_HAVE_CH0
-#    define ADC_HAVE_CH1
-#    define ADC_HAVE_CH2
-#    define ADC_HAVE_CH3
-#    define ADC_HAVE_CH4
-#    define ADC_HAVE_CH5
-#    define ADC_HAVE_CH6
-#    define ADC_HAVE_CH7
-#    define ADC_HAVE_CH8
-#    define ADC_HAVE_CH9
-#    define ADC_HAVE_CH10
-#    define ADC_HAVE_CH11
-#    define ADC_HAVE_CH12
-#    define ADC_HAVE_CH13
-#    define ADC_HAVE_CH14
-#    define ADC_HAVE_CH15
-#    define ADC_HAVE_CH16
-#    define ADC_HAVE_CH17
-#    define ADC_HAVE_CH18
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH12
+#    define ADC_CHANNEL_HAVE_CH13
+#    define ADC_CHANNEL_HAVE_CH14
+#    define ADC_CHANNEL_HAVE_CH15
+#    define ADC_CHANNEL_HAVE_CH16
+#    define ADC_CHANNEL_HAVE_CH17
+#    define ADC_CHANNEL_HAVE_CH18
 #endif
 
 // ==================================== Dedicated core availability ====================================
