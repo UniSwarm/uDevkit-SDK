@@ -30,6 +30,11 @@
 
 rt_dev_t _cmdline_device_in;
 rt_dev_t _cmdline_device_out;
+enum
+{
+    CMDLINE_STATE_INIT,
+    CMDLINE_STATE_RUN,
+} _cmdline_state = CMDLINE_STATE_INIT;
 
 #define CMDLINE_BUFFREAD_SIZE 50
 #define CMDLINE_LINE_SIZE     100
@@ -428,8 +433,7 @@ uint8_t _cmdline_getLine(void)
 
 void cmdline_init(void)
 {
-    _cmdline_clear();
-    _cmdline_reset();
+    _cmdline_state = CMDLINE_STATE_RUN;
 }
 
 void cmdline_setDevice(rt_dev_t deviceIn, rt_dev_t deviceOut)
@@ -440,11 +444,22 @@ void cmdline_setDevice(rt_dev_t deviceIn, rt_dev_t deviceOut)
 
 void cmdline_task(void)
 {
-    if (_cmdline_getLine() != 0)
+    switch (_cmdline_state)
     {
-        _cmdline_processline(_cmdline_line);
+        case CMDLINE_STATE_INIT:
+            _cmdline_clear();
+            _cmdline_reset();
+            _cmdline_state = CMDLINE_STATE_RUN;
+            break;
+
+        case CMDLINE_STATE_RUN:
+            if (_cmdline_getLine() != 0)
+            {
+                _cmdline_processline(_cmdline_line);
+            }
+            cmd_task();
+            break;
     }
-    cmd_task();
 }
 
 #ifdef TEST_CMDLINE
