@@ -493,3 +493,8 @@ int main(void)
     }
 }
 #endif
+
+int cmdline_addCommand(const char name[10], int (*cmdFnPtr)(int, char **))
+{
+    return cmd_addCommand(name, cmdFnPtr);
+}

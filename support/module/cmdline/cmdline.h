@@ -16,12 +16,13 @@
 extern "C" {
 #endif
 
-#include "driver/device.h"
-#include <stdint.h>
+#include <driver/device.h>
 
 void cmdline_init(void);
 void cmdline_setDevice(rt_dev_t deviceIn, rt_dev_t deviceOut);
 void cmdline_task(void);
+
+int cmdline_addCommand(const char name[10], int (*cmdFnPtr)(int, char **));
 
 #ifdef __cplusplus
 }

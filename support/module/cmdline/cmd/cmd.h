@@ -32,6 +32,8 @@ void cmd_setTask(int (*cmdTaskPtr)(void));
 
 const Cmd *cmd_findFromName(char *name);
 
+int cmd_addCommand(const char name[10], int (*cmdFnPtr)(int, char **));
+
 #ifdef __cplusplus
 }
 #endif

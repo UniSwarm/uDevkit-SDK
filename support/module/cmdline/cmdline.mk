@@ -1,6 +1,8 @@
 ifndef CMDLINE_MODULE
 CMDLINE_MODULE=
 
+CMDLINE_PATH := $(dir $(lastword $(MAKEFILE_LIST)))
+
 vpath %.h $(MODULEPATH) $(MODULEPATH)cmd
 vpath %.c $(MODULEPATH) $(MODULEPATH)cmd
 
@@ -37,5 +39,7 @@ endif
 ifneq (,$(findstring mrobot,$(MODULES)))
   SRC := $(SRC) cmd_mrobot.c
 endif
+
+INCLUDEPATH += -I$(CMDLINE_PATH)
 
 endif

@@ -24,6 +24,7 @@
 #include "modules.h"
 
 #define CMDLINE_ARGC_MAX       10
+#define CMDLINE_CUSTOM_CMD_MAX 10
 
 static int _cmd_help(int argc, char **argv);
 static void _cmd_carriageReturn(void);
@@ -60,6 +61,8 @@ const Cmd _cmd_cmds[] = {
     {"uart", cmd_uart},
 #endif
     {"", NULL}};
+
+Cmd _cmd_custom_cmds[CMDLINE_CUSTOM_CMD_MAX];
 
 extern rt_dev_t _cmdline_device_out;
 
@@ -194,6 +197,46 @@ const Cmd *cmd_findFromName(char *name)
             break;
         }
     }
+
+    if (cmd == NULL)
+    {
+        // looking for command name in custom commands
+        for (uint i = 0; i < CMDLINE_CUSTOM_CMD_MAX; i++)
+        {
+            if (_cmd_custom_cmds[i].cmdFnPtr == NULL)
+            {
+                break;
+            }
+            if (strcmp(_cmd_custom_cmds[i].name, name) == 0)
+            {
+                cmd = &_cmd_custom_cmds[i];
+                break;
+            }
+        }
+    }
     
     return cmd;
+}
+
+int cmd_addCommand(const char name[10], int (*cmdFnPtr)(int, char **))
+{
+    Cmd *cmd = NULL;
+    for (int i = 0; i < CMDLINE_CUSTOM_CMD_MAX; i++)
+    {
+        if (_cmd_custom_cmds[i].cmdFnPtr == NULL)
+        {
+            cmd = &_cmd_custom_cmds[i];
+            break;
+        }
+    }
+    if (cmd == NULL)
+    {
+        return -1;
+    }
+
+    strcpy(cmd->name, name);
+    cmd->cmdFnPtr = cmdFnPtr;
+    puts(cmd->name);
+
+    return 0;
 }
