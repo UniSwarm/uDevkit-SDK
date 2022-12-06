@@ -11,9 +11,44 @@
 
 #include "cmds.h"
 
+#include "../cmdline_curses.h"
 #include "cmd_stdio.h"
 
 #include <driver/i2c.h>
+
+static void _cmd_i2c_help(void);
+static void _cmd_i2c_printConfig(rt_dev_t i2c_dev);
+
+void _cmd_i2c_help(void)
+{
+    puts("i2c <bus-id>");
+    puts("i2c <bus-id> scan");
+    puts("i2c <bus-id> setspeed <speed>");
+    puts("i2c <bus-id> readreg <addr> <regaddr>");
+    puts("i2c <bus-id> writereg <addr> <regaddr> <value>");
+}
+
+void _cmd_i2c_printConfig(rt_dev_t i2c_dev)
+{
+    if (i2c_isOpened(i2c_dev))
+    {
+        printf(CMDLINE_GRN " Opened," CMDLINE_NRM);
+    }
+    else
+    {
+        printf(CMDLINE_RED " Closed," CMDLINE_NRM);
+    }
+
+    if (i2c_isEnabled(i2c_dev))
+    {
+        printf(CMDLINE_GRN " enabled, " CMDLINE_NRM);
+    }
+    else
+    {
+        printf(CMDLINE_RED " disabled," CMDLINE_NRM);
+    }
+        printf(" config: %d bits address %luHz (%luHz)\r\n", (int)i2c_addressWidth(i2c_dev), i2c_effectiveBaudSpeed(i2c_dev), i2c_baudSpeed(i2c_dev));
+}
 
 int cmd_i2c(int argc, char **argv)
 {
@@ -25,17 +60,19 @@ int cmd_i2c(int argc, char **argv)
     if (argc == 1)
     {
         printf("count: %d\r\n", (int)I2C_COUNT);
+        for (uint8_t i2c_id = 1; i2c_id <= I2C_COUNT; i2c_id++)
+        {
+            printf("I2C %d:", i2c_id);
+            rt_dev_t i2c_dev = i2c(i2c_id);
+            _cmd_i2c_printConfig(i2c_dev);
+        }
         return 0;
     }
 
     // help
     if (strcmp(argv[1], "help") == 0)
     {
-        puts("i2c <bus-id>");
-        puts("i2c <bus-id> scan");
-        puts("i2c <bus-id> setspeed <speed>");
-        puts("i2c <bus-id> readreg <addr> <regaddr>");
-        puts("i2c <bus-id> writereg <addr> <regaddr> <value>");
+        _cmd_i2c_help();
         return 0;
     }
 
@@ -62,7 +99,7 @@ int cmd_i2c(int argc, char **argv)
     // > i2c <bus-id>
     if (argc == 2)
     {
-        printf("Config: %d bits address %luHz (%luHz)\r\n", (int)i2c_addressWidth(i2c_dev), i2c_effectiveBaudSpeed(i2c_dev), i2c_baudSpeed(i2c_dev));
+        _cmd_i2c_printConfig(i2c_dev);
         return 0;
     }
 
