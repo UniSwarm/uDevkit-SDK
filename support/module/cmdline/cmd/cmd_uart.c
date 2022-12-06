@@ -11,16 +11,71 @@
 
 #include "cmds.h"
 
+#include "../cmdline_curses.h"
 #include "cmd_stdio.h"
 
 #include <driver/uart.h>
 
+static void _cmd_uart_help(void);
+static void _cmd_uart_printConfig(rt_dev_t uart_dev);
+
+void _cmd_uart_help(void)
+{
+    puts("uart");
+    puts("uart <uart-id>");
+    puts("uart <uart-id> read");
+    puts("uart <uart-id> write <data-to-write>");
+    puts("uart <uart-id> setbs <baud-speed>");
+}
+
+void _cmd_uart_printConfig(rt_dev_t uart_dev)
+{
+    if (uart_isOpened(uart_dev))
+    {
+        printf(CMDLINE_GRN " Opened," CMDLINE_NRM);
+    }
+    else
+    {
+        printf(CMDLINE_RED " Closed," CMDLINE_NRM);
+    }
+
+    if (uart_isEnabled(uart_dev))
+    {
+        printf(CMDLINE_GRN " enabled, " CMDLINE_NRM);
+    }
+    else
+    {
+        printf(CMDLINE_RED " disabled," CMDLINE_NRM);
+    }
+    char parity;
+    switch (uart_bitParity(uart_dev))
+    {
+        case UART_BIT_PARITY_NONE:
+            parity = 'N';
+            break;
+
+        case UART_BIT_PARITY_EVEN:
+            parity = 'E';
+            break;
+
+        case UART_BIT_PARITY_ODD:
+            parity = 'O';
+            break;
+
+        default:
+            parity = 'U';
+            break;
+    }
+    printf(" config: %luBd %d%c%d (%luBd)\r\n",
+           uart_effectiveBaudSpeed(uart_dev),
+           (int)uart_bitLength(uart_dev),
+           parity,
+           (int)uart_bitStop(uart_dev),
+           uart_baudSpeed(uart_dev));
+}
+
 int cmd_uart(int argc, char **argv)
 {
-    uint8_t uart_id = 255;
-    rt_dev_t uart_dev;
-    char c;
-
 #if !defined(UART_COUNT) || UART_COUNT == 0
     puts("No UART module");
     return 0;
@@ -29,22 +84,25 @@ int cmd_uart(int argc, char **argv)
     if (argc == 1)
     {
         printf("count: %d\r\n", (int)UART_COUNT);
+        for (uint8_t uart_id = 1; uart_id <= UART_COUNT; uart_id++)
+        {
+            printf("UART %d:", uart_id);
+            rt_dev_t uart_dev = uart(uart_id);
+            _cmd_uart_printConfig(uart_dev);
+        }
         return 0;
     }
 
     // help
     if (strcmp(argv[1], "help") == 0)
     {
-        puts("uart");
-        puts("uart <uart-id>");
-        puts("uart <uart-id> read");
-        puts("uart <uart-id> write <data-to-write>");
-        puts("uart <uart-id> setbs <baud-speed>");
+        _cmd_uart_help();
         return 0;
     }
 
     // first arg numeric : convert to uart id
-    c = argv[1][0];
+    uint8_t uart_id = 255;
+    char c = argv[1][0];
     if (isdigit(c))
     {
         uart_id = c - '0';
@@ -59,38 +117,13 @@ int cmd_uart(int argc, char **argv)
         printf("Invalid uart id %d\r\n", uart_id);
         return -1;
     }
-    uart_dev = uart(uart_id);
+    rt_dev_t uart_dev = uart(uart_id);
 
     // if no more arg, print properties of uart
     // > uart <uart-id>
     if (argc == 2)
     {
-        char parity;
-        switch (uart_bitParity(uart_dev))
-        {
-            case UART_BIT_PARITY_NONE:
-                parity = 'N';
-                break;
-
-            case UART_BIT_PARITY_EVEN:
-                parity = 'E';
-                break;
-
-            case UART_BIT_PARITY_ODD:
-                parity = 'O';
-                break;
-
-            default:
-                parity = 'U';
-                break;
-        }
-        printf("Config: %luBd %d%c%d (%luBd)\r\n",
-               uart_effectiveBaudSpeed(uart_dev),
-               (int)uart_bitLength(uart_dev),
-               parity,
-               (int)uart_bitStop(uart_dev),
-               uart_baudSpeed(uart_dev));
-
+        _cmd_uart_printConfig(uart_dev);
         return 0;
     }
 
