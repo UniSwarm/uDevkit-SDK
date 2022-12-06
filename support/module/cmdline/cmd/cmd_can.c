@@ -10,17 +10,19 @@
 
 #include "cmds.h"
 
+#include "../cmdline_curses.h"
 #include "cmd_stdio.h"
 
 #include <driver/can.h>
 
 static void _cmd_can_help(void);
+static void _cmd_can_printConfig(rt_dev_t can_dev);
 static void _cmd_can_dump(int can_id, CAN_MSG_HEADER *can_header, char rdata[]);
 static int _cmd_can_dump_task(void);
 
-uint8_t _cmd_can_id = 0;
-rt_dev_t _cmd_can_can_dev = 0;
-uint8_t _cmd_can_fifo_id = 0;
+static uint8_t _cmd_can_id = 0;
+static rt_dev_t _cmd_can_can_dev = 0;
+static uint8_t _cmd_can_fifo_id = 0;
 
 void _cmd_can_help(void)
 {
@@ -28,7 +30,29 @@ void _cmd_can_help(void)
     puts("can <can-id>");
     puts("can <can-id> rec <fifo-id>");
     puts("can <can-id> dump <fifo-id>");
-    //puts("can <can-id> send <fifo-id> <id> <data-to-send>");
+    // puts("can <can-id> send <fifo-id> <id> <data-to-send>");
+}
+
+void _cmd_can_printConfig(rt_dev_t can_dev)
+{
+    if (can_isOpened(can_dev))
+    {
+        printf(CMDLINE_GRN " Opened," CMDLINE_NRM);
+    }
+    else
+    {
+        printf(CMDLINE_RED " Closed," CMDLINE_NRM);
+    }
+
+    if (can_isEnabled(can_dev))
+    {
+        printf(CMDLINE_GRN " enabled, " CMDLINE_NRM);
+    }
+    else
+    {
+        printf(CMDLINE_RED " disabled," CMDLINE_NRM);
+    }
+    printf(" config: %lubds (%lubds real)\r\n", can_bitRate(can_dev), can_effectiveBitRate(can_dev));
 }
 
 void _cmd_can_dump(int can_id, CAN_MSG_HEADER *can_header, char rdata[])
@@ -43,7 +67,7 @@ void _cmd_can_dump(int can_id, CAN_MSG_HEADER *can_header, char rdata[])
     }
     else
     {
-        str += sprintf(str, "%03X", can_header->id & 0x1FFFFFFF);
+        str += sprintf(str, "%03X", can_header->id & 0x7FF);
     }
 
     str += sprintf(str, "   [%d]", can_header->size);
@@ -62,7 +86,6 @@ void _cmd_can_dump(int can_id, CAN_MSG_HEADER *can_header, char rdata[])
             *(str++) = hex[(rdata[i]) & 0x0F];
         }
     }
-    //*(str++) = '\n';
     *(str++) = '\0';
 
     puts(buffer);
@@ -70,11 +93,6 @@ void _cmd_can_dump(int can_id, CAN_MSG_HEADER *can_header, char rdata[])
 
 int cmd_can(int argc, char **argv)
 {
-    uint8_t can_id = 255;
-    uint8_t fifo_id = 0;
-    rt_dev_t can_dev;
-    char c;
-
 #if (!defined(CAN_COUNT) || CAN_COUNT == 0)
     puts("No CAN module");
     return 0;
@@ -83,6 +101,12 @@ int cmd_can(int argc, char **argv)
     if (argc == 1)
     {
         printf("count: %d\r\n", (int)CAN_COUNT);
+        for (uint8_t can_id = 1; can_id <= CAN_COUNT; can_id++)
+        {
+            printf("CAN %d:", can_id);
+            rt_dev_t can_dev = can(can_id);
+            _cmd_can_printConfig(can_dev);
+        }
         return 0;
     }
 
@@ -94,7 +118,8 @@ int cmd_can(int argc, char **argv)
     }
 
     // first arg numeric : convert to can id
-    c = argv[1][0];
+    uint8_t can_id = 255;
+    char c = argv[1][0];
     if (isdigit(c))
     {
         can_id = c - '0';
@@ -109,14 +134,13 @@ int cmd_can(int argc, char **argv)
         printf("Invalid can id %d\r\n", can_id);
         return -1;
     }
-    can_dev = can(can_id);
+    rt_dev_t can_dev = can(can_id);
 
     // if no more arg, print properties of can
     // > can <can-id>
     if (argc == 2)
     {
-        printf("Config: %lubds (%lubds real)\r\n", can_bitRate(can_dev), can_effectiveBitRate(can_dev));
-
+        _cmd_can_printConfig(can_dev);
         return 0;
     }
 
@@ -127,7 +151,7 @@ int cmd_can(int argc, char **argv)
         return -1;
     }
 
-    fifo_id = atoi(argv[3]);
+    uint8_t fifo_id = atoi(argv[3]);
     // == rec > can <can-id> rec <fifo-id>
     if (strcmp(argv[2], "rec") == 0)
     {
