@@ -23,8 +23,23 @@
 #    error "No uart on the current device or unknow device"
 #endif
 
-#define UART_BUFFRX_SIZE 64
-#define UART_BUFFTX_SIZE 64
+#ifdef UDEVKIT_HAVE_CONFIG
+#    include "udevkit_config.h"
+#endif
+
+#ifndef UART_BUFFRX_SIZE
+#    define UART_BUFFRX_SIZE 64
+#endif
+#ifndef UART_BUFFTX_SIZE
+#    define UART_BUFFTX_SIZE 64
+#endif
+
+#ifndef UART_INTERRUPT_IPR
+#    define UART_INTERRUPT_IPR UIPR
+#endif
+#ifndef UART_INTERRUPT_PRIORITY
+#    define UART_INTERRUPT_PRIORITY 3
+#endif
 
 #define UART_FLAG_UNUSED 0x00
 typedef struct
@@ -52,10 +67,6 @@ struct uart_dev
     STATIC_FIFO(buffRx, UART_BUFFRX_SIZE);
     STATIC_FIFO(buffTx, UART_BUFFTX_SIZE);
 };
-
-#ifdef UDEVKIT_HAVE_CONFIG
-#    include "udevkit_config.h"
-#endif
 
 static struct uart_dev _uarts[] = {
     {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}},
@@ -117,7 +128,7 @@ uint32_t uart_getClock(rt_dev_t device)
         return sysclock_periphFreq(SYSCLOCK_CLOCK_UART3_6);
     }
 }
-#endif
+#endif  // ARCHI_pic32mk
 
 /**
  * @brief Gives a free uart device number and open it
@@ -236,11 +247,11 @@ int uart_enable(rt_dev_t device)
     switch (uart)
     {
         case 0:
-            _U1RXIP = 3;  // interrupt priority for receptor
+            _U1RXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for receptor
             _U1RXIF = 0;  // clear receive Flag
             _U1RXIE = 1;  // enable receive interrupt
 
-            _U1TXIP = 3;  // interrupt priority for transmitor
+            _U1TXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for transmitor
             _U1TXIF = 0;  // clear transmit Flag
             _U1TXIE = 0;  // disable transmit interrupt
 #ifndef ARCHI_pic32mk
@@ -253,11 +264,11 @@ int uart_enable(rt_dev_t device)
             break;
 #if UART_COUNT >= 2
         case 1:
-            _U2RXIP = 3;  // interrupt priority for receptor
+            _U2RXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for receptor
             _U2RXIF = 0;  // clear receive Flag
             _U2RXIE = 1;  // enable receive interrupt
 
-            _U2TXIP = 3;  // interrupt priority for transmitor
+            _U2TXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for transmitor
             _U2TXIF = 0;  // clear transmit Flag
             _U2TXIE = 0;  // disable transmit interrupt
 #    ifndef ARCHI_pic32mk
@@ -271,11 +282,11 @@ int uart_enable(rt_dev_t device)
 #endif
 #if UART_COUNT >= 3
         case 2:
-            _U3RXIP = 3;  // interrupt priority for receptor
+            _U3RXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for receptor
             _U3RXIF = 0;  // clear receive Flag
             _U3RXIE = 1;  // enable receive interrupt
 
-            _U3TXIP = 3;  // interrupt priority for transmitor
+            _U3TXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for transmitor
             _U3TXIF = 0;  // clear transmit Flag
             _U3TXIE = 0;  // disable transmit interrupt
 #    ifndef ARCHI_pic32mk
@@ -289,11 +300,11 @@ int uart_enable(rt_dev_t device)
 #endif
 #if UART_COUNT >= 4
         case 3:
-            _U4RXIP = 3;  // interrupt priority for receptor
+            _U4RXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for receptor
             _U4RXIF = 0;  // clear receive Flag
             _U4RXIE = 1;  // enable receive interrupt
 
-            _U4TXIP = 3;  // interrupt priority for transmitor
+            _U4TXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for transmitor
             _U4TXIF = 0;  // clear transmit Flag
             _U4TXIE = 0;  // disable transmit interrupt
 #    ifndef ARCHI_pic32mk
@@ -307,11 +318,11 @@ int uart_enable(rt_dev_t device)
 #endif
 #if UART_COUNT >= 5
         case 4:
-            _U5RXIP = 3;  // interrupt priority for receptor
+            _U5RXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for receptor
             _U5RXIF = 0;  // clear receive Flag
             _U5RXIE = 1;  // enable receive interrupt
 
-            _U5TXIP = 3;  // interrupt priority for transmitor
+            _U5TXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for transmitor
             _U5TXIF = 0;  // clear transmit Flag
             _U5TXIE = 0;  // disable transmit interrupt
 #    ifndef ARCHI_pic32mk
@@ -325,11 +336,11 @@ int uart_enable(rt_dev_t device)
 #endif
 #if UART_COUNT >= 6
         case 5:
-            _U6RXIP = 3;  // interrupt priority for receptor
+            _U6RXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for receptor
             _U6RXIF = 0;  // clear receive Flag
             _U6RXIE = 1;  // enable receive interrupt
 
-            _U6TXIP = 3;  // interrupt priority for transmitor
+            _U6TXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for transmitor
             _U6TXIF = 0;  // clear transmit Flag
             _U6TXIE = 0;  // disable transmit interrupt
 #    ifndef ARCHI_pic32mk
@@ -759,7 +770,7 @@ uint8_t uart_bitStop(rt_dev_t device)
 }
 
 #if UART_COUNT >= 1
-void __ISR(_UART1_TX_VECTOR, UIPR) U1TXInterrupt(void)
+void __ISR(_UART1_TX_VECTOR, UART_INTERRUPT_IPR) U1TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U1TXIF = 0;  // 32MK Work around (errata 41)
@@ -785,7 +796,7 @@ void __ISR(_UART1_TX_VECTOR, UIPR) U1TXInterrupt(void)
     _U1TXIF = 0;
 }
 
-void __ISR(_UART1_RX_VECTOR, UIPR) U1RXInterrupt(void)
+void __ISR(_UART1_RX_VECTOR, UART_INTERRUPT_IPR) U1RXInterrupt(void)
 {
     char rec[4];
     while (U1STAbits.URXDA == 1)
@@ -799,7 +810,7 @@ void __ISR(_UART1_RX_VECTOR, UIPR) U1RXInterrupt(void)
 #endif
 
 #if UART_COUNT >= 2
-void __ISR(_UART2_TX_VECTOR, UIPR) U2TXInterrupt(void)
+void __ISR(_UART2_TX_VECTOR, UART_INTERRUPT_IPR) U2TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U2TXIF = 0;  // 32MK Work around (errata 41)
@@ -825,7 +836,7 @@ void __ISR(_UART2_TX_VECTOR, UIPR) U2TXInterrupt(void)
     _U2TXIF = 0;
 }
 
-void __ISR(_UART2_RX_VECTOR, UIPR) U2RXInterrupt(void)
+void __ISR(_UART2_RX_VECTOR, UART_INTERRUPT_IPR) U2RXInterrupt(void)
 {
     char rec[4];
     while (U2STAbits.URXDA == 1)
@@ -839,7 +850,7 @@ void __ISR(_UART2_RX_VECTOR, UIPR) U2RXInterrupt(void)
 #endif
 
 #if UART_COUNT >= 3
-void __ISR(_UART3_TX_VECTOR, UIPR) U3TXInterrupt(void)
+void __ISR(_UART3_TX_VECTOR, UART_INTERRUPT_IPR) U3TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U3TXIF = 0;  // 32MK Work around (errata 41)
@@ -865,7 +876,7 @@ void __ISR(_UART3_TX_VECTOR, UIPR) U3TXInterrupt(void)
     _U3TXIF = 0;
 }
 
-void __ISR(_UART3_RX_VECTOR, UIPR) U3RXInterrupt(void)
+void __ISR(_UART3_RX_VECTOR, UART_INTERRUPT_IPR) U3RXInterrupt(void)
 {
     char rec[4];
     while (U3STAbits.URXDA == 1)
@@ -879,7 +890,7 @@ void __ISR(_UART3_RX_VECTOR, UIPR) U3RXInterrupt(void)
 #endif
 
 #if UART_COUNT >= 4
-void __ISR(_UART4_TX_VECTOR, UIPR) U4TXInterrupt(void)
+void __ISR(_UART4_TX_VECTOR, UART_INTERRUPT_IPR) U4TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U4TXIF = 0;  // 32MK Work around (errata 41)
@@ -905,7 +916,7 @@ void __ISR(_UART4_TX_VECTOR, UIPR) U4TXInterrupt(void)
     _U4TXIF = 0;
 }
 
-void __ISR(_UART4_RX_VECTOR, UIPR) U4RXInterrupt(void)
+void __ISR(_UART4_RX_VECTOR, UART_INTERRUPT_IPR) U4RXInterrupt(void)
 {
     char rec[4];
     while (U4STAbits.URXDA == 1)
@@ -919,7 +930,7 @@ void __ISR(_UART4_RX_VECTOR, UIPR) U4RXInterrupt(void)
 #endif
 
 #if UART_COUNT >= 5
-void __ISR(_UART5_TX_VECTOR, UIPR) U5TXInterrupt(void)
+void __ISR(_UART5_TX_VECTOR, UART_INTERRUPT_IPR) U5TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U5TXIF = 0;  // 32MK Work around (errata 41)
@@ -945,7 +956,7 @@ void __ISR(_UART5_TX_VECTOR, UIPR) U5TXInterrupt(void)
     _U5TXIF = 0;
 }
 
-void __ISR(_UART5_RX_VECTOR, UIPR) U5RXInterrupt(void)
+void __ISR(_UART5_RX_VECTOR, UART_INTERRUPT_IPR) U5RXInterrupt(void)
 {
     char rec[4];
     while (U5STAbits.URXDA == 1)
@@ -959,7 +970,7 @@ void __ISR(_UART5_RX_VECTOR, UIPR) U5RXInterrupt(void)
 #endif
 
 #if UART_COUNT >= 6
-void __ISR(_UART6_TX_VECTOR, UIPR) U6TXInterrupt(void)
+void __ISR(_UART6_TX_VECTOR, UART_INTERRUPT_IPR) U6TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U6TXIF = 0;  // 32MK Work around (errata 41)
@@ -985,7 +996,7 @@ void __ISR(_UART6_TX_VECTOR, UIPR) U6TXInterrupt(void)
     _U6TXIF = 0;
 }
 
-void __ISR(_UART6_RX_VECTOR, UIPR) U6RXInterrupt(void)
+void __ISR(_UART6_RX_VECTOR, UART_INTERRUPT_IPR) U6RXInterrupt(void)
 {
     char rec[4];
     while (U6STAbits.URXDA == 1)
