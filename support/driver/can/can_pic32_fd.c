@@ -50,10 +50,10 @@ struct can_dev
 #    include "udevkit_config.h"
 #endif
 
-#ifndef UART_INTERRUPT_IPR
+#ifndef CAN_INTERRUPT_IPR
 #    define CAN_INTERRUPT_IPR CANIPR
 #endif
-#ifndef UART_INTERRUPT_PRIORITY
+#ifndef CAN_INTERRUPT_PRIORITY
 #    define CAN_INTERRUPT_PRIORITY 4
 #endif
 
