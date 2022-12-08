@@ -22,7 +22,10 @@
 #    warning "No uart on the current device or unknow device"
 #endif
 
-#define TIMER_FLAG_UNUSED 0x00
+enum
+{
+    TIMER_FLAG_UNUSED = 0x00
+};
 typedef struct
 {
     union
@@ -121,22 +124,20 @@ void T9Interrupt(void);
 rt_dev_t timer_getFreeDevice(void)
 {
 #if TIMER_COUNT >= 1
-    uint8_t i;
-    rt_dev_t device;
-
-    for (i = 0; i < TIMER_COUNT; i++)
+    uint8_t timer_id;
+    for (timer_id = 0; timer_id < TIMER_COUNT; timer_id++)
     {
-        if (_timers[i].flags.used == 0)
+        if (_timers[timer_id].flags.used == 0)
         {
             break;
         }
     }
 
-    if (i == TIMER_COUNT)
+    if (timer_id == TIMER_COUNT)
     {
         return NULLDEV;
     }
-    device = MKDEV(DEV_CLASS_TIMER, i);
+    rt_dev_t device = MKDEV(DEV_CLASS_TIMER, timer_id);
 
     timer_open(device);
 
@@ -232,28 +233,14 @@ int timer_enable(rt_dev_t device)
         case 0:
             T1CONbits.ON = 1;  // enable timer module
             _T1IF = 0;
-            if (_timers[0].handler)
-            {
-                _T1IE = 1;
-            }
-            else
-            {
-                _T1IE = 0;
-            }
+            _T1IE = (_timers[0].handler != NULL) ? 1 : 0;
             _T1IP = TIMER_INTERRUPT_PRIORITY;
             break;
 #    if TIMER_COUNT >= 2
         case 1:
             T2CONbits.ON = 1;  // enable timer module
             _T2IF = 0;
-            if (_timers[1].handler)
-            {
-                _T2IE = 1;
-            }
-            else
-            {
-                _T2IE = 0;
-            }
+            _T2IE = (_timers[1].handler != NULL) ? 1 : 0;
             _T2IP = TIMER_INTERRUPT_PRIORITY;
             break;
 #    endif
@@ -261,14 +248,7 @@ int timer_enable(rt_dev_t device)
         case 2:
             T3CONbits.ON = 1;  // enable timer module
             _T3IF = 0;
-            if (_timers[2].handler)
-            {
-                _T3IE = 1;
-            }
-            else
-            {
-                _T3IE = 0;
-            }
+            _T3IE = (_timers[2].handler != NULL) ? 1 : 0;
             _T3IP = TIMER_INTERRUPT_PRIORITY;
             break;
 #    endif
@@ -276,14 +256,7 @@ int timer_enable(rt_dev_t device)
         case 3:
             T4CONbits.ON = 1;  // enable timer module
             _T4IF = 0;
-            if (_timers[3].handler)
-            {
-                _T4IE = 1;
-            }
-            else
-            {
-                _T4IE = 0;
-            }
+            _T4IE = (_timers[3].handler != NULL) ? 1 : 0;
             _T4IP = TIMER_INTERRUPT_PRIORITY;
             break;
 #    endif
@@ -291,14 +264,7 @@ int timer_enable(rt_dev_t device)
         case 4:
             T5CONbits.ON = 1;  // enable timer module
             _T5IF = 0;
-            if (_timers[4].handler)
-            {
-                _T5IE = 1;
-            }
-            else
-            {
-                _T5IE = 0;
-            }
+            _T5IE = (_timers[4].handler != NULL) ? 1 : 0;
             _T5IP = TIMER_INTERRUPT_PRIORITY;
             break;
 #    endif
@@ -306,14 +272,7 @@ int timer_enable(rt_dev_t device)
         case 5:
             T6CONbits.ON = 1;  // enable timer module
             _T6IF = 0;
-            if (_timers[5].handler)
-            {
-                _T6IE = 1;
-            }
-            else
-            {
-                _T6IE = 0;
-            }
+            _T6IE = (_timers[5].handler != NULL) ? 1 : 0;
             _T6IP = TIMER_INTERRUPT_PRIORITY;
             break;
 #    endif
@@ -321,14 +280,7 @@ int timer_enable(rt_dev_t device)
         case 6:
             T7CONbits.ON = 1;  // enable timer module
             _T7IF = 0;
-            if (_timers[6].handler)
-            {
-                _T7IE = 1;
-            }
-            else
-            {
-                _T7IE = 0;
-            }
+            _T7IE = (_timers[6].handler != NULL) ? 1 : 0;
             _T7IP = TIMER_INTERRUPT_PRIORITY;
             break;
 #    endif
@@ -336,14 +288,7 @@ int timer_enable(rt_dev_t device)
         case 7:
             T8CONbits.ON = 1;  // enable timer module
             _T8IF = 0;
-            if (_timers[7].handler)
-            {
-                _T8IE = 1;
-            }
-            else
-            {
-                _T8IE = 0;
-            }
+            _T8IE = (_timers[7].handler != NULL) ? 1 : 0;
             _T8IP = TIMER_INTERRUPT_PRIORITY;
             break;
 #    endif
@@ -351,14 +296,7 @@ int timer_enable(rt_dev_t device)
         case 8:
             T9CONbits.ON = 1;  // enable timer module
             _T9IF = 0;
-            if (_timers[8].handler)
-            {
-                _T9IE = 1;
-            }
-            else
-            {
-                _T9IE = 0;
-            }
+            _T9IE = (_timers[8].handler != NULL) ? 1 : 0;
             _T9IP = TIMER_INTERRUPT_PRIORITY;
             break;
 #    endif
@@ -497,10 +435,9 @@ int timer_setHandler(rt_dev_t device, void (*handler)(void))
  * @param prvalue reset value of timer, does not consider the time
  * @return 0 if ok, -1 in case of error
  */
-int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
+int timer_setPeriod(rt_dev_t device, uint32_t period)
 {
 #if TIMER_COUNT >= 1
-    uint8_t div = 0;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -508,68 +445,69 @@ int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
     }
 
     // TODO PR and TMR are 32 bit width on T2 to T9 on PIC32MK
-    if (prvalue > 65535)
+    uint8_t divisor = 0;
+    if (period > 65535)
     {
-        div = 0b111;  // 256 divisor for type A (0b11) and for type B (0b111)
-        prvalue >>= 8;
-        if (prvalue > 65535)
+        divisor = 0b111;  // 256 divisor for type A (0b11) and for type B (0b111)
+        period >>= 8;
+        if (period > 65535)
         {
-            prvalue = 65535;
+            period = 65535;
         }
     }
 
     switch (timer)
     {
         case 0:
-            T1CONbits.TCKPS = div;  // set divide number
-            PR1 = prvalue;          // pr value, comparator value
+            T1CONbits.TCKPS = divisor;  // set divide number
+            PR1 = period;               // pr value, comparator value
             break;
 #    if TIMER_COUNT >= 2
         case 1:
-            T2CONbits.TCKPS = div;  // set divide number
-            PR2 = prvalue;          // pr value, comparator value
+            T2CONbits.TCKPS = divisor;  // set divide number
+            PR2 = period;               // pr value, comparator value
             break;
 #    endif
 #    if TIMER_COUNT >= 3
         case 2:
-            T3CONbits.TCKPS = div;  // set divide number
-            PR3 = prvalue;          // pr value, comparator value
+            T3CONbits.TCKPS = divisor;  // set divide number
+            PR3 = period;               // pr value, comparator value
             break;
 #    endif
 #    if TIMER_COUNT >= 4
         case 3:
-            T4CONbits.TCKPS = div;  // set divide number
-            PR4 = prvalue;          // pr value, comparator value
+            T4CONbits.TCKPS = divisor;  // set divide number
+            PR4 = period;               // pr value, comparator value
             break;
 #    endif
 #    if TIMER_COUNT >= 5
         case 4:
-            T5CONbits.TCKPS = div;  // set divide number
-            PR5 = prvalue;          // pr value, comparator value
+            T5CONbits.TCKPS = divisor;  // set divide number
+            PR5 = period;               // pr value, comparator value
             break;
 #    endif
 #    if TIMER_COUNT >= 6
         case 5:
-            T6CONbits.TCKPS = div;  // set divide number
-            PR6 = prvalue;          // pr value, comparator value
+            T6CONbits.TCKPS = divisor;  // set divide number
+            PR6 = period;               // pr value, comparator value
             break;
 #    endif
 #    if TIMER_COUNT >= 7
         case 6:
-            T7CONbits.TCKPS = div;  // set divide number
-            PR7 = prvalue;          // pr value, comparator value
+            T7CONbits.TCKPS = divisor;  // set divide number
+            PR7 = period;               // pr value, comparator value
             break;
 #    endif
 #    if TIMER_COUNT >= 8
         case 7:
-            T8CONbits.TCKPS = div;  // set divide number
-            PR8 = prvalue;          // pr value, comparator value
+            T8CONbits.TCKPS = divisor;  // set divide number
+            PR8 = period;               // pr value, comparator value
             break;
 #    endif
 #    if TIMER_COUNT >= 9
         case 8:
-            T9CONbits.TCKPS = div;  // set divide number
-            PR9 = prvalue;          // pr value, comparator value
+            T9CONbits.TCKPS = divisor;  // set divide number
+            PR9 = period;               // pr value, comparator value
             break;
 #    endif
     }
