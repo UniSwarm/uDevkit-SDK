@@ -18,6 +18,8 @@ extern "C" {
 
 #ifndef SIMULATOR
 
+#    include <sys/attribs.h>
+#    include <sys/kmem.h>
 #    ifndef __XC32
 #        define __prog__
 #        define nop()                                                                                                                                          \
@@ -29,13 +31,13 @@ extern "C" {
 #        define disable_interrupt()                                                                                                                            \
             {                                                                                                                                                  \
             }
+#        define __ISR(a, b)
+
 #    else  // !__XC32
 #        define nop()               _nop()
 #        define enable_interrupt()  __builtin_enable_interrupts()
 #        define disable_interrupt() __builtin_disable_interrupts()
 #    endif  // __XC32
-#    include <sys/attribs.h>
-#    include <sys/kmem.h>
 #    include <xc.h>
 
 #    define unlockConfig()                                                                                                                                     \
@@ -44,8 +46,13 @@ extern "C" {
             SYSKEY = 0;                                                                                                                                        \
             SYSKEY = 0xAA996655;                                                                                                                               \
             SYSKEY = 0x556699AA;                                                                                                                               \
-        } while (0);
-#    define lockConfig() SYSKEY = 0x33333333
+        } while (0)
+
+#    define lockConfig()                                                                                                                                       \
+        do                                                                                                                                                     \
+        {                                                                                                                                                      \
+            SYSKEY = 0x33333333;                                                                                                                               \
+        } while (0)
 
 #    define unlockIoConfig()                                                                                                                                   \
         do                                                                                                                                                     \
@@ -53,14 +60,14 @@ extern "C" {
             unlockConfig();                                                                                                                                    \
             CFGCONbits.IOLOCK = 0;                                                                                                                             \
             lockConfig();                                                                                                                                      \
-        } while (0);
+        } while (0)
 #    define lockIoConfig()                                                                                                                                     \
         do                                                                                                                                                     \
         {                                                                                                                                                      \
             unlockConfig();                                                                                                                                    \
             CFGCONbits.IOLOCK = 1;                                                                                                                             \
             lockConfig();                                                                                                                                      \
-        } while (0);
+        } while (0)
 
 #else  // SIMULATOR
 #    define nop()                                                                                                                                              \
