@@ -10,7 +10,7 @@
 
 #include "archi.h"
 
-void __attribute__ ((noreturn)) archi_reset(void)
+void __attribute__((noreturn)) archi_reset(void)
 {
     unlockConfig();
 
