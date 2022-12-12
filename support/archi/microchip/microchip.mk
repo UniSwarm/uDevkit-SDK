@@ -1,4 +1,7 @@
 
+# default rule for Microchip
+all : hex
+
 # IPE_EXE cmd
 ifeq ($(OS),Windows_NT)
  IPE_EXE := ipecmd.exe
