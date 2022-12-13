@@ -118,6 +118,20 @@ int _cmd_help(int argc, char **argv)
         }
         cmd_puts(_cmd_cmds[i].name);
     }
+
+    uint custom_count = 0;
+    for (uint16_t i = 0; i < CMDLINE_CUSTOM_CMD_MAX; i++)
+    {
+        if (_cmd_custom_cmds[i].cmdFnPtr == NULL)
+        {
+            continue;
+        }
+        if (custom_count++ == 0)
+        {
+            cmd_puts("+ Custom commands:");
+        }
+        cmd_puts(_cmd_custom_cmds[i].name);
+    }
     return 0;
 }
 
@@ -214,7 +228,7 @@ const Cmd *cmd_findFromName(char *name)
             }
         }
     }
-    
+
     return cmd;
 }
 
