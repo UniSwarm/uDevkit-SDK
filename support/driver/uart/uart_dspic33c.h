@@ -69,7 +69,7 @@ extern "C" {
 #    define UART_COUNT 0
 #endif
 
-#define UART_MAXBRG 0x000FFFFF  // 20 bits divisor
+#define UART_MAXBRG ((uint32_t)0x000FFFFFU)  // 20 bits divisor
 
 #ifdef __cplusplus
 }
