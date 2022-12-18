@@ -75,7 +75,7 @@ typedef struct
     uint8_t size;
 } CAN_MSG_HEADER;
 
-int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data);
+int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *data);
 int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data);
 
 // ===== filter interface =====

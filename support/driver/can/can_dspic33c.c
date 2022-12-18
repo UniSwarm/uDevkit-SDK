@@ -632,7 +632,7 @@ uint8_t can_s2Seg(rt_dev_t device)
  * @param header CAN message header struct (id, flags, data size)
  * @return 0 if message is successfully putted inside fifo, -1 in case of error
  */
-int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
+int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *data)
 {
     UDK_UNUSED(fifo);
 

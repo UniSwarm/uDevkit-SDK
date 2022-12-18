@@ -210,7 +210,7 @@ int can_enable(rt_dev_t device)
     {
         case 0:
             // assign memory
-            C1FIFOBA = KVA_TO_PA(CAN1FIFO);
+            C1FIFOBA = KVA_TO_PA(_can1_fifo_buffer);
             // fifo 0 (transmit)
             C1FIFOCON0bits.FSIZE = 15;
             C1FIFOCON0SET = 0x80;
@@ -233,7 +233,7 @@ int can_enable(rt_dev_t device)
 #    if CAN_COUNT >= 2
         case 1:
             // assign memory
-            C2FIFOBA = KVA_TO_PA(CAN2FIFO);
+            C2FIFOBA = KVA_TO_PA(_can2_fifo_buffer);
             // fifo 0 (transmit)
             C2FIFOCON0bits.FSIZE = 15;
             C2FIFOCON0SET = 0x80;
@@ -257,7 +257,7 @@ int can_enable(rt_dev_t device)
 #    if CAN_COUNT >= 3
         case 2:
             // assign memory
-            C3FIFOBA = KVA_TO_PA(CAN3FIFO);
+            C3FIFOBA = KVA_TO_PA(_can3_fifo_buffer);
             // fifo 0 (transmit)
             C3FIFOCON0bits.FSIZE = 15;
             C3FIFOCON0SET = 0x80;
@@ -281,7 +281,7 @@ int can_enable(rt_dev_t device)
 #    if CAN_COUNT >= 4
         case 3:
             // assign memory
-            C4FIFOBA = KVA_TO_PA(CAN4FIFO);
+            C4FIFOBA = KVA_TO_PA(_can4_fifo_buffer);
             // fifo 0 (transmit)
             C4FIFOCON0bits.FSIZE = 15;
             C4FIFOCON0SET = 0x80;
@@ -783,7 +783,7 @@ uint8_t can_s2Seg(rt_dev_t device)
  * @param header CAN message header struct (id, flags, data size)
  * @return 0 if message is successfully putted inside fifo, -1 in case of error
  */
-int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
+int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *data)
 {
     UDK_UNUSED(fifo);
 #if CAN_COUNT >= 1
