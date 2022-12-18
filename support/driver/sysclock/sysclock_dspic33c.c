@@ -175,7 +175,8 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
             break;
 
         case SYSCLOCK_SRC_PPLL:
-            freq = _sysclock_pll;  // primary oscillator with PLL
+        case SYSCLOCK_SRC_FRCPLL:
+            freq = _sysclock_pll >> 1;  // primary oscillator with PLL
             break;
 
         case SYSCLOCK_SRC_BFRC:
@@ -211,10 +212,6 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 
                 freq = freq / divisor;  // FRC / divisor
             }
-            break;
-
-        case SYSCLOCK_SRC_FRCPLL:
-            freq = _sysclock_pll;  // FRC with PLL
             break;
     }
     return freq;
