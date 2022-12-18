@@ -325,10 +325,6 @@ int sysclock_setClock(uint32_t fosc)
  */
 int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 {
-    /*uint32_t fin, fplli, fsys;
-    uint16_t multiplier;
-    uint8_t prediv, postdiv1, postdiv2;
-
     if (src != SYSCLOCK_SRC_FRC && src != SYSCLOCK_SRC_POSC)
     {
         return -4;
@@ -336,77 +332,76 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 
     if (fosc > SYSCLOCK_FOSC_MAX)
     {
-        return -1; // cannot generate fosc > SYSCLOCK_FOSC_MAX
+        return -1;  // cannot generate fosc > SYSCLOCK_FOSC_MAX
     }
-
     if (fosc < SYSCLOCK_FSYS_MIN / 8)
     {
-        return -1; // cannot generate fosc < SYSCLOCK_FSYS_MIN / 8
+        return -1;  // cannot generate fosc < SYSCLOCK_FSYS_MIN / 8
     }
 
-    fin = sysclock_sourceFreq(src);
+    uint32_t fin = sysclock_sourceFreq(src);
     if (fin == 0)
     {
         return -1;
     }
-
-    // calculate post-diviser and fsys
-    postdiv = 2;
-    fsys = fosc << 2;
-
-    //                         PLLFBDIV
-    // Fosc = Fin * --------------------------------
-    //               PLLPRE * (POST1DIV * POST2DIV)
-
-    CLKDIVbits.PLLPRE = 1; // N1=1
-    PLLFBDbits.PLLFBDIV = 100; // M = 100
-    PLLDIVbits.POST1DIV = 5; // N2=5
-    PLLDIVbits.POST2DIV = 1; // N3=1
-
-    if (src == SYSCLOCK_SRC_FRC)
+    if (fin < SYSCLOCK_FPLLI_MIN)
     {
-        __builtin_write_OSCCONH(SYSCLOCK_SRC_FRCPLL); // frc input
-        __builtin_write_OSCCONL(OSCCON | 0x01);
-    }
-    else
-    {
-        __builtin_write_OSCCONH(SYSCLOCK_SRC_PPLL); // primary osc input
-        __builtin_write_OSCCONL(OSCCON | 0x01);
+        return -2;
     }
 
-    // Wait for Clock switch to occur
-    while (OSCCONbits.OSWEN != 0);
-
-    // Wait for PLL to lock
-    while (OSCCONbits.LOCK != 1);
-
-    _sysclock_pll = sysclock_getPLLClock();;
-    _sysclock_sysfreq = _sysclock_pll;*/
-
-#ifdef SYSCLOCK_POSC
-    if (SYSCLOCK_POSC == 8000000)
+    uint16_t prediv = fin / SYSCLOCK_FPLLI_MIN;
+    uint32_t fplli = fin / prediv;
+    if (fplli > SYSCLOCK_FPLLI_MAX)
     {
-        CLKDIVbits.PLLPRE = 1;  // N1=1
+        return -2;
     }
-    else
-    {
-        CLKDIVbits.PLLPRE = 3;  // N1=3
-    }
-#else
-    CLKDIVbits.PLLPRE = 1;  // N1=1
-#endif
 
-    PLLFBDbits.PLLFBDIV = 80;  // M = 80 ==> 640MHz FVco
-    PLLDIVbits.POST1DIV = 2;   // N2 = 2  ==> 320MHz
+    uint8_t postdiv1, postdiv2;
+    uint16_t multiplier = 0;
+    int32_t error = 0x7FFFFFFF;
+    for (uint8_t mpostdiv1 = SYSCLOCK_POSTDIV1_MIN; mpostdiv1 <= SYSCLOCK_POSTDIV1_MAX; mpostdiv1++)
+    {
+        for (uint16_t mpostdiv2 = SYSCLOCK_POSTDIV2_MIN; mpostdiv2 <= mpostdiv1; mpostdiv2++)
+        {
+            uint16_t mmultiplier = (fosc * mpostdiv1 * mpostdiv2) / fplli;
+            if (mmultiplier < SYSCLOCK_PLLM_MIN || mmultiplier > SYSCLOCK_PLLM_MAX)
+            {
+                continue;
+            }
+            uint32_t fvco = fplli * mmultiplier;
+            if (fvco < SYSCLOCK_FVCO_MIN || fvco > SYSCLOCK_FVCO_MAX)
+            {
+                continue;
+            }
 
-    if (fosc == 160000000)
-    {
-        PLLDIVbits.POST2DIV = 1;  // N3 = 1  ==> 320MHz
+            int32_t merror = fvco / (mpostdiv1 * mpostdiv2) - fosc;
+            if (merror < 0)
+            {
+                merror = -merror;
+            }
+            if (merror < error && mmultiplier <= SYSCLOCK_PLLM_MAX && mmultiplier >= SYSCLOCK_PLLM_MIN)
+            {
+                multiplier = mmultiplier;
+                error = merror;
+                postdiv1 = mpostdiv1;
+                postdiv2 = mpostdiv2;
+                if (merror == 0)
+                {
+                    mpostdiv1 = SYSCLOCK_POSTDIV1_MAX + 1;
+                    break;
+                }
+            }
+        }
     }
-    else
+    if (multiplier == 0)
     {
-        PLLDIVbits.POST2DIV = 2;  // N3 = 2  ==> 160MHz
+        return -5;
     }
+
+    CLKDIVbits.PLLPRE = prediv;
+    PLLFBDbits.PLLFBDIV = multiplier;
+    PLLDIVbits.POST1DIV = postdiv1;
+    PLLDIVbits.POST2DIV = postdiv2;
 
     if (src == SYSCLOCK_SRC_FRC)
     {
