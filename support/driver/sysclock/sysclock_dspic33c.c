@@ -415,27 +415,24 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 
     // Wait for Clock switch to occur
     while (OSCCONbits.OSWEN != 0)
+    {
         ;
+    }
     // Wait for PLL to lock
     while (OSCCONbits.LOCK != 1)
+    {
         ;
+    }
 
     _sysclock_pll = sysclock_getPLLClock();
     _sysclock_sysfreq = _sysclock_pll >> 1;
-
-    /*REFOCONHbits.RODIV = 10; // /10
-    REFOCONLbits.ROSEL = 0b0001; // Fp (FOSC/2)
-    REFOCONLbits.ROEN = 1;
-    REFOCONLbits.ROOUT = 1;*/
 
     return 0;
 }
 
 uint32_t sysclock_getPLLClock(void)
 {
-    uint32_t fin, fpllo;
-    uint16_t prediv, multiplier, postdiv;
-
+    uint32_t fin;
     if (OSCCONbits.COSC == SYSCLOCK_SRC_FRCPLL)  // FRC as input
     {
         fin = sysclock_sourceFreq(SYSCLOCK_SRC_FRC);
@@ -449,11 +446,11 @@ uint32_t sysclock_getPLLClock(void)
         return 0;
     }
 
-    prediv = CLKDIVbits.PLLPRE;
-    multiplier = PLLFBDbits.PLLFBDIV;
-    postdiv = (PLLDIVbits.POST1DIV) * (PLLDIVbits.POST2DIV);
+    uint16_t prediv = CLKDIVbits.PLLPRE;
+    uint16_t multiplier = PLLFBDbits.PLLFBDIV;
+    uint16_t postdiv = (PLLDIVbits.POST1DIV) * (PLLDIVbits.POST2DIV);
 
     _sysclock_vco = fin / prediv * multiplier;
-    fpllo = _sysclock_vco / postdiv;
+    uint32_t fpllo = _sysclock_vco / postdiv;
     return fpllo;
 }
