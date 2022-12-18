@@ -11,4 +11,4 @@ DRIVERS += gpio
 
 SRC += curiosity_dsPIC33CK.c
 HEADER += curiosity_dsPIC33CK.h
-ARCHI_SRC += curiosity_dsPIC33CK.c
+ARCHI_SRC += curiosity_dsPIC33CK_fuses.c
