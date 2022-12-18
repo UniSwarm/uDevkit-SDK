@@ -180,6 +180,8 @@ typedef union
     uint32_t messageWord[4];  ///< CAN TX message organized as a set of 32 bit words
 } CAN_RxMsgBuffer;
 
+#define CAN_MESSAGE_HEADER_SIZE 8U
+
 #ifdef __cplusplus
 }
 #endif

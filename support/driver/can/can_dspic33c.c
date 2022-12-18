@@ -45,11 +45,22 @@ struct can_dev
     can_status flags;
 };
 
-#if CAN_COUNT >= 1
-uint32_t __attribute__((aligned(4))) CAN1FIFO[40 * 19];
+#ifdef UDEVKIT_HAVE_CONFIG
+#    include "udevkit_config.h"
 #endif
+
+#if CAN_COUNT >= 1
+#    ifndef CAN1_FIFO_SIZE
+#        define CAN1_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
+#    endif
+static uint8_t __attribute__((aligned(4), noload)) _can1_fifo_buffer[CAN1_FIFO_SIZE];
+#endif
+
 #if CAN_COUNT >= 2
-uint32_t __attribute__((aligned(4))) CAN2FIFO[40 * 19];
+#    ifndef CAN2_FIFO_SIZE
+#        define CAN2_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
+#    endif
+static uint8_t __attribute__((aligned(4), noload)) _can2_fifo_buffer[CAN2_FIFO_SIZE];
 #endif
 
 static struct can_dev _cans[] = {
@@ -175,7 +186,7 @@ int can_enable(rt_dev_t device)
     {
         case 0:
             C1FIFOBAH = 0x0000;
-            C1FIFOBAL = (uint16_t)(&CAN1FIFO);
+            C1FIFOBAL = (uint16_t)(&_can1_fifo_buffer);
 
             // Configure TEF to save 5 messages
             C1CONLbits.BRSDIS = 0x0;
@@ -205,7 +216,7 @@ int can_enable(rt_dev_t device)
 #    if CAN_COUNT >= 2
         case 1:
             C2FIFOBAH = 0x0000;
-            C2FIFOBAL = (uint16_t)(&CAN2FIFO);
+            C2FIFOBAL = (uint16_t)(&_can2_fifo_buffer);
 
             // Configure TEF to save 5 messages
             C2CONLbits.BRSDIS = 0x0;

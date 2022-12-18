@@ -116,6 +116,8 @@ typedef struct
 #define CAN_filter_EIDL(idFilter) ((uint16_t)(idFilter << 11) & 0xF800)
 #define CAN_filter_EIDH(idFilter) ((uint16_t)(idFilter >> 5) & 0x1FFF)
 
+#define CAN_MESSAGE_HEADER_SIZE 8U
+
 #ifdef __cplusplus
 }
 #endif

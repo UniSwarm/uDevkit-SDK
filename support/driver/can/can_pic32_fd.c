@@ -64,7 +64,7 @@ struct can_dev
 #    ifndef CAN1_FIFO_SIZE
 #        define CAN1_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
-static uint8_t __attribute__((coherent, aligned(16))) _can1_fifo_buffer[CAN1_FIFO_SIZE];
+static uint8_t __attribute__((coherent, aligned(16), noload)) _can1_fifo_buffer[CAN1_FIFO_SIZE];
 void CAN1Interrupt(void);
 #endif
 
@@ -72,7 +72,7 @@ void CAN1Interrupt(void);
 #    ifndef CAN2_FIFO_SIZE
 #        define CAN2_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
-static uint8_t __attribute__((coherent, aligned(16))) _can2_fifo_buffer[CAN2_FIFO_SIZE];
+static uint8_t __attribute__((coherent, aligned(16), noload)) _can2_fifo_buffer[CAN2_FIFO_SIZE];
 void CAN2Interrupt(void);
 #endif
 
@@ -80,7 +80,7 @@ void CAN2Interrupt(void);
 #    ifndef CAN3_FIFO_SIZE
 #        define CAN3_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
-static uint8_t __attribute__((coherent, aligned(16))) _can3_fifo_buffer[CAN3_FIFO_SIZE];
+static uint8_t __attribute__((coherent, aligned(16), noload)) _can3_fifo_buffer[CAN3_FIFO_SIZE];
 void CAN3Interrupt(void);
 #endif
 
@@ -88,7 +88,7 @@ void CAN3Interrupt(void);
 #    ifndef CAN4_FIFO_SIZE
 #        define CAN4_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
-static uint8_t __attribute__((coherent, aligned(16))) _can4_fifo_buffer[CAN4_FIFO_SIZE];
+static uint8_t __attribute__((coherent, aligned(16), noload)) _can4_fifo_buffer[CAN4_FIFO_SIZE];
 void CAN4Interrupt(void);
 #endif
 
