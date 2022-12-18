@@ -276,15 +276,22 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
         nop();
     }
 
-    // enable interrupts
-    enable_interrupt();
-
     if (sysclock_source() != source)
     {
         return -3;  // Error when switch clock source
     }
+    if (source == SYSCLOCK_SRC_FRCPLL || source == SYSCLOCK_SRC_PPLL)
+    {
+        // Wait for PLL to lock
+        while (OSCCONbits.LOCK != 1)
+            ;
+        _sysclock_pll = sysclock_getPLLClock();
+    }
 
-    _sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
+    _sysclock_sysfreq = sysclock_sourceFreq(source);
+
+    // enable interrupts
+    enable_interrupt();
 
     return 0;
 }
