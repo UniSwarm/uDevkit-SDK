@@ -7,13 +7,21 @@ HX = xc16-bin2hex
 SIM = sim30
 OBJDUMP = xc16-objdump
 
+CC_VERSION := $(shell $(CC) --version | egrep -o "v([0-9]+\\.[0-9]+)")
+CC_VERSION_MAJOR := $(shell echo $(CC_VERSION) | cut -f2 -dv | cut -f1 -d.)
+CC_VERSION_MINOR := $(shell echo $(CC_VERSION) | cut -f2 -d.)
+
+#$(info $(CC_VERSION) $(CC_VERSION_MAJOR))
+
 XC16_PATH = $(abspath $(dir $(lastword $(shell whereis -b xc16-gcc)))..)/
 ifeq ("$(LK_SCRIPT)","")
  LK_SCRIPT = p$(DEVICE).gld
 endif
 
 ifeq ("$(CC)","xc16-gcc") # XC16 compiler used
- CCFLAGS_XC += -no-legacy-libc
+ ifeq ("$(CC_VERSION_MAJOR)","1")
+  CCFLAGS_XC += -no-legacy-libc
+ endif
  CCFLAGS_XC += -mcpu=$(DEVICE)
  CCFLAGS_XC += -mno-eds-warn
  CCFLAGS_XC += -std=c99
