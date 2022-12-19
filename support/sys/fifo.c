@@ -9,7 +9,7 @@
  * @brief Low level fifo for udevkit-SDK
  */
 
-#include "sys/fifo.h"
+#include <sys/fifo.h>
 
 #ifdef TEST_FIFO
 #    include <assert.h>

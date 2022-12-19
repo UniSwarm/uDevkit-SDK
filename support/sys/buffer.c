@@ -9,7 +9,7 @@
  * @brief Buffer for string construction
  */
 
-#include "sys/buffer.h"
+#include <sys/buffer.h>
 
 void buffer_init(Buffer *buffer, char *data, size_t size)
 {
