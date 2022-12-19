@@ -118,6 +118,21 @@ typedef struct
 
 #define CAN_MESSAGE_HEADER_SIZE 8U
 
+typedef enum
+{
+    CAN_CLK_AFVCO_4 = 0b1010,   ///< AFVCO_4
+    CAN_CLK_AFVCO_3 = 0b1001,   ///< AFVCO_3
+    CAN_CLK_AFVCO_2 = 0b1000,   ///< AFVCO_2
+    CAN_CLK_AFVCO = 0b0111,     ///< AFVCO
+    CAN_CLK_AFPLLO = 0b0110,    ///< AFPLLO
+    CAN_CLK_FVCO_4 = 0b0101,    ///< FVCO_4
+    CAN_CLK_FVCO_3 = 0b0100,    ///< FVCO_3
+    CAN_CLK_FVCO_2 = 0b0011,    ///< FVCO_2
+    CAN_CLK_FPLLO = 0b0010,     ///< FPLLO
+    CAN_CLK_FVCO = 0b0001,      ///< FVCO
+    CAN_CLK_NO_CLOCK = 0b0000,  ///< NO_CLOCK
+} CAN_CLK;
+
 #ifdef __cplusplus
 }
 #endif

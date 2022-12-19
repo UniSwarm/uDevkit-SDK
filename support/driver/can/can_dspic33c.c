@@ -457,6 +457,25 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     _cans[can].s1Seg = s1Seg;
     _cans[can].s2Seg = s2Seg;
 
+    uint32_t fvco = sysclock_periphFreq(SYSCLOCK_CLOCK_VCO);
+    uint32_t can_clk = CAN_CLK_FVCO;
+    uint32_t fcan = fvco;
+    if (fvco > 640e6)
+    {
+        can_clk = CAN_CLK_FVCO_2;
+        fcan = fvco / 2;
+    }
+    else if (fvco > 1280e6)
+    {
+        can_clk = CAN_CLK_FVCO_3;
+        fcan = fvco / 3;
+    }
+    uint16_t can_clk_div = fcan / 80000000;
+    fcan = fcan / can_clk_div;
+    CANCLKCONbits.CANCLKSEL = can_clk;          // CAN Clock Source
+    CANCLKCONbits.CANCLKDIV = can_clk_div - 1;  // divide by N
+    CANCLKCONbits.CANCLKEN = 1;                 // CAN clock enabled
+
     bitRateDiv = sysclock_periphFreq(SYSCLOCK_CLOCK_CAN) / (bitRate * quantum * 2);
     if (bitRateDiv > 256)
     {
@@ -469,10 +488,6 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             C1CONHbits.REQOP = 4;
             while (C1CONHbits.OPMOD != 4)
                 ;
-
-            CANCLKCONbits.CANCLKSEL = 3;      // CAN Clock Source = VCO/2 = 640/2 = 320MHz
-            CANCLKCONbits.CANCLKDIV = 4 - 1;  // divide by 4 i.e. 320/4 = 80MHz
-            CANCLKCONbits.CANCLKEN = 1;       // enabled
 
             /*C1NBTCFGHbits.BRP = bitRateDiv - 1; // Baud Rate Prescaler bits (1-256)
             C1NBTCFGHbits.TSEG1 = s1Seg - 1; // Phase Buffer Segment 1 (1-256)
