@@ -34,7 +34,7 @@ include $(UDEVKIT)/support/archi/simulator/simulator.mk
 # generate list of used drivers modules
 empty:=
 space:= \n $(empty)
-$(OUT_PWD)/modules.h : $(firstword $(MAKEFILE_LIST))
+$(OUT_PWD)/modules.h : $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIST))
 	@printf "$(COMPCOLOR)MK %-36s => %s\n$(NORM)" Makefile $(OUT_PWD)/module.h
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "\n// defines use of modules and drivers\n\

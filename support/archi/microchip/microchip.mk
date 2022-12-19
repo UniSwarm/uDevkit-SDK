@@ -42,26 +42,26 @@ OBJECTS := $(addprefix $(OUT_PWD)/, $(OBJECTS))
 $(OBJECTS) : $(CONFIG_HEADERS)
 
 # rule to build OBJECTS to OUT_PWD and give dependencies
-$(OUT_PWD)/%.o : %.c
+$(OUT_PWD)/%.o : %.c $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIST))
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 	$(VERB)$(OBJDUMP) -S -r $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.lst
 
-$(OUT_PWD)/%.o : %.S
+$(OUT_PWD)/%.o : %.S $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIST))
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
-$(OUT_PWD)/%.o : %.s
+$(OUT_PWD)/%.o : %.s $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIST))
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
 
-$(OUT_PWD)/%.o : %.cpp
+$(OUT_PWD)/%.o : %.cpp $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIST))
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "$(COMPCOLOR)µC++ %-34s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(CXX) $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS_XC) $(CXXFLAGS_XC) -x c++ -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
