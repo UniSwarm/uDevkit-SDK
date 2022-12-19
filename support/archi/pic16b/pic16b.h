@@ -25,7 +25,10 @@ extern "C" {
 #ifndef SIMULATOR
 #    include <xc.h>
 
-#    define nop() __builtin_nop()
+#    define nop()         __builtin_nop()
+#    define archi_reset() __asm__ volatile("reset")
+#    define archi_sleep() __builtin_pwrsav(0)
+#    define archi_idle()  __builtin_pwrsav(1)
 
 #    if defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) || defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
 #        define enable_interrupt()  INTCON2bits.GIE = 1
@@ -64,10 +67,18 @@ extern "C" {
 #    define archi_init()                                                                                                                                       \
         {                                                                                                                                                      \
         }
-#    define reset() asm("RESET")
 
 #else
 #    define nop()                                                                                                                                              \
+        {                                                                                                                                                      \
+        }
+#    define archi_reset()                                                                                                                                      \
+        {                                                                                                                                                      \
+        }
+#    define archi_sleep()                                                                                                                                      \
+        {                                                                                                                                                      \
+        }
+#    define archi_idle()                                                                                                                                       \
         {                                                                                                                                                      \
         }
 #    define enable_interrupt()                                                                                                                                 \
@@ -86,9 +97,6 @@ extern "C" {
         {                                                                                                                                                      \
         }
 #    define lockIoConfig()                                                                                                                                     \
-        {                                                                                                                                                      \
-        }
-#    define reset()                                                                                                                                            \
         {                                                                                                                                                      \
         }
 #endif
