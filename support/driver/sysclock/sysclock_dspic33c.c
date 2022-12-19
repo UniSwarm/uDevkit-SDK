@@ -23,6 +23,7 @@ static uint32_t _sysclock_sysfreq = 0;
 static uint32_t _sysclock_posc = 0;
 static uint32_t _sysclock_pllo = 0;
 static uint32_t _sysclock_vco = 0;
+static uint32_t _sysclock_apllo = 0;
 static uint32_t _sysclock_avco = 0;
 
 /**
@@ -78,6 +79,9 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 
         case SYSCLOCK_CLOCK_VCO4:
             return _sysclock_vco >> 2;
+
+        case SYSCLOCK_CLOCK_AFPLLO:
+            return _sysclock_apllo;
 
         case SYSCLOCK_CLOCK_AVCO:
             return _sysclock_avco;
@@ -458,4 +462,26 @@ uint32_t sysclock_getPLLClock(void)
     _sysclock_vco = fin / prediv * multiplier;
     uint32_t fpllo = _sysclock_vco / postdiv;
     return fpllo;
+}
+
+uint32_t sysclock_getAPLLClock(void)
+{
+    uint32_t fin;
+    if (ACLKCON1bits.FRCSEL == 1)  // FRC as input
+    {
+        fin = sysclock_sourceFreq(SYSCLOCK_SRC_FRC);
+    }
+    else  // POSC as input
+    {
+        fin = sysclock_sourceFreq(SYSCLOCK_SRC_POSC);
+    }
+
+    uint16_t prediv = ACLKCON1bits.APLLPRE;
+    uint16_t multiplier = APLLFBD1bits.APLLFBDIV;
+    uint16_t postdiv = (APLLDIV1bits.APOST1DIV) * (APLLDIV1bits.APOST2DIV);
+
+    _sysclock_avco = fin / prediv * multiplier;
+    uint32_t afpllo = _sysclock_vco / postdiv;
+    _sysclock_apllo = afpllo;
+    return afpllo;
 }

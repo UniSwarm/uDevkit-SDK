@@ -34,6 +34,7 @@ typedef enum
     SYSCLOCK_CLOCK_VCO2,        ///< PLL VCO / 2
     SYSCLOCK_CLOCK_VCO3,        ///< PLL VCO / 3
     SYSCLOCK_CLOCK_VCO4,        ///< PLL VCO / 4
+    SYSCLOCK_CLOCK_AFPLLO,      ///< Auxiliary PLL outpout
     SYSCLOCK_CLOCK_AVCO,        ///< Auxiliary PLL VCO
     SYSCLOCK_CLOCK_AVCO2,       ///< Auxiliary PLL VCO / 2
     SYSCLOCK_CLOCK_AVCO3,       ///< Auxiliary PLL VCO / 3
@@ -167,6 +168,8 @@ static const char *sysclock_sources_str[] = {"FRC", "FRCPLL", "POSC", "PPLL", ""
 
 int sysclock_setPLLClock(uint32_t freq, uint8_t src);
 uint32_t sysclock_getPLLClock(void);
+
+uint32_t sysclock_getAPLLClock(void);
 
 #ifdef __cplusplus
 }
