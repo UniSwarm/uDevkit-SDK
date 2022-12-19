@@ -29,6 +29,7 @@ typedef enum
     SYSCLOCK_CLOCK_PBCLK,       ///< peripheral bus
     SYSCLOCK_CLOCK_REFCLK,      ///< reference clock module
     SYSCLOCK_CLOCK_FRC,         ///< FRC div
+    SYSCLOCK_CLOCK_FPLLO,       ///< PLL outpout
     SYSCLOCK_CLOCK_VCO,         ///< PLL VCO
     SYSCLOCK_CLOCK_VCO2,        ///< PLL VCO / 2
     SYSCLOCK_CLOCK_VCO3,        ///< PLL VCO / 3

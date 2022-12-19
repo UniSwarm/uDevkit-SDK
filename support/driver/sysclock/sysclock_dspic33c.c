@@ -21,7 +21,7 @@
 
 static uint32_t _sysclock_sysfreq = 0;
 static uint32_t _sysclock_posc = 0;
-static uint32_t _sysclock_pll = 0;
+static uint32_t _sysclock_pllo = 0;
 static uint32_t _sysclock_vco = 0;
 static uint32_t _sysclock_avco = 0;
 
@@ -63,6 +63,9 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 
         case SYSCLOCK_CLOCK_FRC:
             return sysclock_sourceFreq(SYSCLOCK_SRC_FRC);
+
+        case SYSCLOCK_CLOCK_FPLLO:
+            return _sysclock_pllo;
 
         case SYSCLOCK_CLOCK_VCO:
             return _sysclock_vco;
@@ -176,7 +179,7 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 
         case SYSCLOCK_SRC_PPLL:
         case SYSCLOCK_SRC_FRCPLL:
-            freq = _sysclock_pll >> 1;  // primary oscillator with PLL
+            freq = _sysclock_pllo >> 1;  // primary oscillator with PLL
             break;
 
         case SYSCLOCK_SRC_BFRC:
@@ -284,8 +287,10 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
     {
         // Wait for PLL to lock
         while (OSCCONbits.LOCK != 1)
+        {
             ;
-        _sysclock_pll = sysclock_getPLLClock();
+        }
+        _sysclock_pllo = sysclock_getPLLClock();
     }
 
     _sysclock_sysfreq = sysclock_sourceFreq(source);
@@ -356,7 +361,7 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         return -2;
     }
 
-    uint8_t postdiv1, postdiv2;
+    uint8_t postdiv1 = 0, postdiv2 = 0;
     uint16_t multiplier = 0;
     int32_t error = 0x7FFFFFFF;
     for (uint8_t mpostdiv1 = SYSCLOCK_POSTDIV1_MIN; mpostdiv1 <= SYSCLOCK_POSTDIV1_MAX; mpostdiv1++)
@@ -424,8 +429,8 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         ;
     }
 
-    _sysclock_pll = sysclock_getPLLClock();
-    _sysclock_sysfreq = _sysclock_pll >> 1;
+    _sysclock_pllo = sysclock_getPLLClock();
+    _sysclock_sysfreq = _sysclock_pllo >> 1;
 
     return 0;
 }
