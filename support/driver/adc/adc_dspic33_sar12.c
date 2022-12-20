@@ -122,225 +122,227 @@ struct adc_dev
 #endif  // !ADC_NOHANDLER
 };
 
+#ifndef ADC_NOHANDLER
 static struct adc_dev _adcs[] = {
-#if ADC_CHANNEL_MAX >= 1
+#    if ADC_CHANNEL_MAX >= 1
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 2
+#    endif
+#    if ADC_CHANNEL_MAX >= 2
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 3
+#    endif
+#    if ADC_CHANNEL_MAX >= 3
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 4
+#    endif
+#    if ADC_CHANNEL_MAX >= 4
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 5
+#    endif
+#    if ADC_CHANNEL_MAX >= 5
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 6
+#    endif
+#    if ADC_CHANNEL_MAX >= 6
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 7
+#    endif
+#    if ADC_CHANNEL_MAX >= 7
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 8
+#    endif
+#    if ADC_CHANNEL_MAX >= 8
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 9
+#    endif
+#    if ADC_CHANNEL_MAX >= 9
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 10
+#    endif
+#    if ADC_CHANNEL_MAX >= 10
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 11
+#    endif
+#    if ADC_CHANNEL_MAX >= 11
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 12
+#    endif
+#    if ADC_CHANNEL_MAX >= 12
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 13
+#    endif
+#    if ADC_CHANNEL_MAX >= 13
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 14
+#    endif
+#    if ADC_CHANNEL_MAX >= 14
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 15
+#    endif
+#    if ADC_CHANNEL_MAX >= 15
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 16
+#    endif
+#    if ADC_CHANNEL_MAX >= 16
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 17
+#    endif
+#    if ADC_CHANNEL_MAX >= 17
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 18
+#    endif
+#    if ADC_CHANNEL_MAX >= 18
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 19
+#    endif
+#    if ADC_CHANNEL_MAX >= 19
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 20
+#    endif
+#    if ADC_CHANNEL_MAX >= 20
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 21
+#    endif
+#    if ADC_CHANNEL_MAX >= 21
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 22
+#    endif
+#    if ADC_CHANNEL_MAX >= 22
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 23
+#    endif
+#    if ADC_CHANNEL_MAX >= 23
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 24
+#    endif
+#    if ADC_CHANNEL_MAX >= 24
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 25
+#    endif
+#    if ADC_CHANNEL_MAX >= 25
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 26
+#    endif
+#    if ADC_CHANNEL_MAX >= 26
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 27
+#    endif
+#    if ADC_CHANNEL_MAX >= 27
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 28
+#    endif
+#    if ADC_CHANNEL_MAX >= 28
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 29
+#    endif
+#    if ADC_CHANNEL_MAX >= 29
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 30
+#    endif
+#    if ADC_CHANNEL_MAX >= 30
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
-#if ADC_CHANNEL_MAX >= 31
+#    endif
+#    if ADC_CHANNEL_MAX >= 31
     {
-#    ifndef ADC_NOHANDLER
+#        ifndef ADC_NOHANDLER
         .handler = NULL,
-#    endif  // !ADC_NOHANDLER
+#        endif  // !ADC_NOHANDLER
     },
-#endif
+#    endif
 };
+#endif  // !ADC_NOHANDLER
 
 void adc_calib(void)
 {
