@@ -12,8 +12,8 @@
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/60001344B.pdf
  */
 
-#ifndef ADC_PIC32MZ_H
-#define ADC_PIC32MZ_H
+#ifndef ADC_PIC32_SAR12_H
+#define ADC_PIC32_SAR12_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -24,7 +24,13 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
 #define ADC_MAX_RESOLUTION_BIT 12
 
 // ====================================== Channel availability ======================================
-#if defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ1024EFE064)                       \
+#if defined(DEVICE_32MK0128MCA028)
+#    define ADC_CHANNEL_COUNT 12
+#elif defined(DEVICE_32MK0128MCA032)
+#    define ADC_CHANNEL_COUNT 14
+#elif defined(DEVICE_32MK0128MCA048)
+#    define ADC_CHANNEL_COUNT 20
+#elif defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ1024EFE064)                     \
     || defined(DEVICE_32MZ1024EFF064) || defined(DEVICE_32MZ1024EFG064) || defined(DEVICE_32MZ1024EFH064) || defined(DEVICE_32MZ1024EFK064)                    \
     || defined(DEVICE_32MZ1024EFM064) || defined(DEVICE_32MZ2048EFG064) || defined(DEVICE_32MZ2048EFH064) || defined(DEVICE_32MZ2048EFM064)
 #    define ADC_CHANNEL_COUNT 21
@@ -104,43 +110,93 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MZ2048EFH064) || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144)                    \
     || defined(DEVICE_32MZ2048EFM064) || defined(DEVICE_32MZ2048EFM100) || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144)
 #    define ADC_CHANNEL_MAX 45
-#elif defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                     \
-    || defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100)                    \
-    || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512GPK064) || defined(DEVICE_32MK0512GPK100)                    \
-    || defined(DEVICE_32MK0512MCF064) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
-    || defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD064) || defined(DEVICE_32MK1024GPD100)                    \
-    || defined(DEVICE_32MK1024GPE064) || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK064) || defined(DEVICE_32MK1024GPK100)                    \
-    || defined(DEVICE_32MK1024MCF064) || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100)
+#elif defined(DEVICE_32MK0128MCA028) || defined(DEVICE_32MK0128MCA032) || defined(DEVICE_32MK0128MCA048) || defined(DEVICE_32MK0256GPG048)                     \
+    || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512GPD064)                    \
+    || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048)                    \
+    || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512GPK064) || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF064)                    \
+    || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064) || defined(DEVICE_32MK0512MCM064)                    \
+    || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD064) || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE064)                    \
+    || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK064) || defined(DEVICE_32MK1024GPK100) || defined(DEVICE_32MK1024MCF064)                    \
+    || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100)
 #    define ADC_CHANNEL_MAX 54
 #endif
 
-#if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
-    || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064)                    \
-    || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
-    || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK100)                    \
-    || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM100)
-#    define ADC_CHANNEL_HAVE_CH45
-#    define ADC_CHANNEL_HAVE_CH46
-#    define ADC_CHANNEL_HAVE_CH47
+#if defined(DEVICE_32MK0128MCA028) || defined(DEVICE_32MK0128MCA032) || defined(DEVICE_32MK0128MCA048) || defined(DEVICE_32MK0256GPG048)                       \
+    || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512GPD064)                    \
+    || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048)                    \
+    || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512GPK064) || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF064)                    \
+    || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064) || defined(DEVICE_32MK0512MCM064)                    \
+    || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD064) || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE064)                    \
+    || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK064) || defined(DEVICE_32MK1024GPK100) || defined(DEVICE_32MK1024MCF064)                    \
+    || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100)
+#    define ADC_CHANNEL_HAVE_50
+#    define ADC_CHANNEL_HAVE_53
 #endif
-#if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
-    || defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100)                    \
-    || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512GPK064) || defined(DEVICE_32MK0512GPK100)                    \
-    || defined(DEVICE_32MK0512MCF064) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
-    || defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD064) || defined(DEVICE_32MK1024GPD100)                    \
-    || defined(DEVICE_32MK1024GPE064) || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK064) || defined(DEVICE_32MK1024GPK100)                    \
-    || defined(DEVICE_32MK1024MCF064) || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100)
-#    define ADC_CHANNEL_HAVE_CH48
-#    define ADC_CHANNEL_HAVE_CH49
-#    define ADC_CHANNEL_HAVE_CH50
-#    define ADC_CHANNEL_HAVE_CH51
-#    define ADC_CHANNEL_HAVE_CH52
-#    define ADC_CHANNEL_HAVE_CH53
+#if defined(DEVICE_32MK0128MCA028) || defined(DEVICE_32MK0128MCA032) || defined(DEVICE_32MK0128MCA048) || defined(DEVICE_32MK0256GPG048)                       \
+    || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512GPD064)                    \
+    || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048)                    \
+    || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512GPK064) || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF064)                    \
+    || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064) || defined(DEVICE_32MK0512MCM064)                    \
+    || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD064) || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE064)                    \
+    || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK064) || defined(DEVICE_32MK1024GPK100) || defined(DEVICE_32MK1024MCF064)                    \
+    || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100) || defined(DEVICE_32MZ0512EFE064)                    \
+    || defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF064)                    \
+    || defined(DEVICE_32MZ0512EFF100) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144) || defined(DEVICE_32MZ0512EFK064)                    \
+    || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024EFE064)                    \
+    || defined(DEVICE_32MZ1024EFE100) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144) || defined(DEVICE_32MZ1024EFF064)                    \
+    || defined(DEVICE_32MZ1024EFF100) || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144) || defined(DEVICE_32MZ1024EFG064)                    \
+    || defined(DEVICE_32MZ1024EFG100) || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144) || defined(DEVICE_32MZ1024EFH064)                    \
+    || defined(DEVICE_32MZ1024EFH100) || defined(DEVICE_32MZ1024EFH124) || defined(DEVICE_32MZ1024EFH144) || defined(DEVICE_32MZ1024EFK064)                    \
+    || defined(DEVICE_32MZ1024EFK100) || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144) || defined(DEVICE_32MZ1024EFM064)                    \
+    || defined(DEVICE_32MZ1024EFM100) || defined(DEVICE_32MZ1024EFM124) || defined(DEVICE_32MZ1024EFM144) || defined(DEVICE_32MZ1025DAA169)                    \
+    || defined(DEVICE_32MZ1025DAA176) || defined(DEVICE_32MZ1025DAA288) || defined(DEVICE_32MZ1025DAB169) || defined(DEVICE_32MZ1025DAB176)                    \
+    || defined(DEVICE_32MZ1025DAB288) || defined(DEVICE_32MZ1025DAG169) || defined(DEVICE_32MZ1025DAG176) || defined(DEVICE_32MZ1025DAH169)                    \
+    || defined(DEVICE_32MZ1025DAH176) || defined(DEVICE_32MZ1025DAK169) || defined(DEVICE_32MZ1025DAK176) || defined(DEVICE_32MZ1025DAL169)                    \
+    || defined(DEVICE_32MZ1025DAL176) || defined(DEVICE_32MZ1025DAR169) || defined(DEVICE_32MZ1025DAR176) || defined(DEVICE_32MZ1025DAS169)                    \
+    || defined(DEVICE_32MZ1025DAS176) || defined(DEVICE_32MZ1064DAA169) || defined(DEVICE_32MZ1064DAA176) || defined(DEVICE_32MZ1064DAA288)                    \
+    || defined(DEVICE_32MZ1064DAB169) || defined(DEVICE_32MZ1064DAB176) || defined(DEVICE_32MZ1064DAB288) || defined(DEVICE_32MZ1064DAG169)                    \
+    || defined(DEVICE_32MZ1064DAG176) || defined(DEVICE_32MZ1064DAH169) || defined(DEVICE_32MZ1064DAH176) || defined(DEVICE_32MZ1064DAK169)                    \
+    || defined(DEVICE_32MZ1064DAK176) || defined(DEVICE_32MZ1064DAL169) || defined(DEVICE_32MZ1064DAL176) || defined(DEVICE_32MZ1064DAR169)                    \
+    || defined(DEVICE_32MZ1064DAR176) || defined(DEVICE_32MZ1064DAS169) || defined(DEVICE_32MZ1064DAS176) || defined(DEVICE_32MZ2025DAA169)                    \
+    || defined(DEVICE_32MZ2025DAA176) || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169) || defined(DEVICE_32MZ2025DAB176)                    \
+    || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176) || defined(DEVICE_32MZ2025DAH169)                    \
+    || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176) || defined(DEVICE_32MZ2025DAL169)                    \
+    || defined(DEVICE_32MZ2025DAL176) || defined(DEVICE_32MZ2025DAR169) || defined(DEVICE_32MZ2025DAR176) || defined(DEVICE_32MZ2025DAS169)                    \
+    || defined(DEVICE_32MZ2025DAS176) || defined(DEVICE_32MZ2048EFG064) || defined(DEVICE_32MZ2048EFG100) || defined(DEVICE_32MZ2048EFG124)                    \
+    || defined(DEVICE_32MZ2048EFG144) || defined(DEVICE_32MZ2048EFH064) || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFH124)                    \
+    || defined(DEVICE_32MZ2048EFH144) || defined(DEVICE_32MZ2048EFM064) || defined(DEVICE_32MZ2048EFM100) || defined(DEVICE_32MZ2048EFM124)                    \
+    || defined(DEVICE_32MZ2048EFM144) || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176) || defined(DEVICE_32MZ2064DAA288)                    \
+    || defined(DEVICE_32MZ2064DAB169) || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288) || defined(DEVICE_32MZ2064DAG169)                    \
+    || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176) || defined(DEVICE_32MZ2064DAK169)                    \
+    || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176) || defined(DEVICE_32MZ2064DAR169)                    \
+    || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
+#    define ADC_CHANNEL_HAVE_0
+#    define ADC_CHANNEL_HAVE_1
+#    define ADC_CHANNEL_HAVE_2
+#    define ADC_CHANNEL_HAVE_3
+#    define ADC_CHANNEL_HAVE_4
+#    define ADC_CHANNEL_HAVE_5
+#    define ADC_CHANNEL_HAVE_13
+#    define ADC_CHANNEL_HAVE_15
+#    define ADC_CHANNEL_HAVE_16
+#    define ADC_CHANNEL_HAVE_17
 #endif
-#if defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144)                       \
-    || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144)                    \
-    || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144) || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144)                    \
-    || defined(DEVICE_32MZ1024EFH124) || defined(DEVICE_32MZ1024EFH144) || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144)                    \
+#if defined(DEVICE_32MK0128MCA032) || defined(DEVICE_32MK0128MCA048) || defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064)                       \
+    || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100)                    \
+    || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064)                    \
+    || defined(DEVICE_32MK0512GPK064) || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF064) || defined(DEVICE_32MK0512MCF100)                    \
+    || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064) || defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK0512MCM100)                    \
+    || defined(DEVICE_32MK1024GPD064) || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE064) || defined(DEVICE_32MK1024GPE100)                    \
+    || defined(DEVICE_32MK1024GPK064) || defined(DEVICE_32MK1024GPK100) || defined(DEVICE_32MK1024MCF064) || defined(DEVICE_32MK1024MCF100)                    \
+    || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100) || defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFE100)                    \
+    || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFF100)                    \
+    || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144) || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ0512EFK100)                    \
+    || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024EFE064) || defined(DEVICE_32MZ1024EFE100)                    \
+    || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144) || defined(DEVICE_32MZ1024EFF064) || defined(DEVICE_32MZ1024EFF100)                    \
+    || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144) || defined(DEVICE_32MZ1024EFG064) || defined(DEVICE_32MZ1024EFG100)                    \
+    || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144) || defined(DEVICE_32MZ1024EFH064) || defined(DEVICE_32MZ1024EFH100)                    \
+    || defined(DEVICE_32MZ1024EFH124) || defined(DEVICE_32MZ1024EFH144) || defined(DEVICE_32MZ1024EFK064) || defined(DEVICE_32MZ1024EFK100)                    \
+    || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144) || defined(DEVICE_32MZ1024EFM064) || defined(DEVICE_32MZ1024EFM100)                    \
     || defined(DEVICE_32MZ1024EFM124) || defined(DEVICE_32MZ1024EFM144) || defined(DEVICE_32MZ1025DAA169) || defined(DEVICE_32MZ1025DAA176)                    \
     || defined(DEVICE_32MZ1025DAA288) || defined(DEVICE_32MZ1025DAB169) || defined(DEVICE_32MZ1025DAB176) || defined(DEVICE_32MZ1025DAB288)                    \
     || defined(DEVICE_32MZ1025DAG169) || defined(DEVICE_32MZ1025DAG176) || defined(DEVICE_32MZ1025DAH169) || defined(DEVICE_32MZ1025DAH176)                    \
@@ -155,95 +211,33 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176) || defined(DEVICE_32MZ2025DAH169) || defined(DEVICE_32MZ2025DAH176)                    \
     || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176) || defined(DEVICE_32MZ2025DAL169) || defined(DEVICE_32MZ2025DAL176)                    \
     || defined(DEVICE_32MZ2025DAR169) || defined(DEVICE_32MZ2025DAR176) || defined(DEVICE_32MZ2025DAS169) || defined(DEVICE_32MZ2025DAS176)                    \
-    || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144) || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144)                    \
-    || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144) || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176)                    \
-    || defined(DEVICE_32MZ2064DAA288) || defined(DEVICE_32MZ2064DAB169) || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288)                    \
-    || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
-    || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
-    || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_CHANNEL_HAVE_CH42
-#endif
-#if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
-    || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064)                    \
-    || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
-    || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK100)                    \
-    || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144)                    \
-    || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144) || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144)                    \
-    || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144) || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144)                    \
-    || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144) || defined(DEVICE_32MZ1024EFH124) || defined(DEVICE_32MZ1024EFH144)                    \
-    || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144) || defined(DEVICE_32MZ1024EFM124) || defined(DEVICE_32MZ1024EFM144)                    \
-    || defined(DEVICE_32MZ1025DAA169) || defined(DEVICE_32MZ1025DAA176) || defined(DEVICE_32MZ1025DAA288) || defined(DEVICE_32MZ1025DAB169)                    \
-    || defined(DEVICE_32MZ1025DAB176) || defined(DEVICE_32MZ1025DAB288) || defined(DEVICE_32MZ1025DAG169) || defined(DEVICE_32MZ1025DAG176)                    \
-    || defined(DEVICE_32MZ1025DAH169) || defined(DEVICE_32MZ1025DAH176) || defined(DEVICE_32MZ1025DAK169) || defined(DEVICE_32MZ1025DAK176)                    \
-    || defined(DEVICE_32MZ1025DAL169) || defined(DEVICE_32MZ1025DAL176) || defined(DEVICE_32MZ1025DAR169) || defined(DEVICE_32MZ1025DAR176)                    \
-    || defined(DEVICE_32MZ1025DAS169) || defined(DEVICE_32MZ1025DAS176) || defined(DEVICE_32MZ1064DAA169) || defined(DEVICE_32MZ1064DAA176)                    \
-    || defined(DEVICE_32MZ1064DAA288) || defined(DEVICE_32MZ1064DAB169) || defined(DEVICE_32MZ1064DAB176) || defined(DEVICE_32MZ1064DAB288)                    \
-    || defined(DEVICE_32MZ1064DAG169) || defined(DEVICE_32MZ1064DAG176) || defined(DEVICE_32MZ1064DAH169) || defined(DEVICE_32MZ1064DAH176)                    \
-    || defined(DEVICE_32MZ1064DAK169) || defined(DEVICE_32MZ1064DAK176) || defined(DEVICE_32MZ1064DAL169) || defined(DEVICE_32MZ1064DAL176)                    \
-    || defined(DEVICE_32MZ1064DAR169) || defined(DEVICE_32MZ1064DAR176) || defined(DEVICE_32MZ1064DAS169) || defined(DEVICE_32MZ1064DAS176)                    \
-    || defined(DEVICE_32MZ2025DAA169) || defined(DEVICE_32MZ2025DAA176) || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169)                    \
-    || defined(DEVICE_32MZ2025DAB176) || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176)                    \
-    || defined(DEVICE_32MZ2025DAH169) || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176)                    \
-    || defined(DEVICE_32MZ2025DAL169) || defined(DEVICE_32MZ2025DAL176) || defined(DEVICE_32MZ2025DAR169) || defined(DEVICE_32MZ2025DAR176)                    \
-    || defined(DEVICE_32MZ2025DAS169) || defined(DEVICE_32MZ2025DAS176) || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144)                    \
-    || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144) || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144)                    \
+    || defined(DEVICE_32MZ2048EFG064) || defined(DEVICE_32MZ2048EFG100) || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144)                    \
+    || defined(DEVICE_32MZ2048EFH064) || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144)                    \
+    || defined(DEVICE_32MZ2048EFM064) || defined(DEVICE_32MZ2048EFM100) || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144)                    \
     || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176) || defined(DEVICE_32MZ2064DAA288) || defined(DEVICE_32MZ2064DAB169)                    \
     || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288) || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176)                    \
     || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176) || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176)                    \
     || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176) || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176)                    \
     || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_CHANNEL_HAVE_CH35
-#    define ADC_CHANNEL_HAVE_CH36
-#    define ADC_CHANNEL_HAVE_CH37
-#    define ADC_CHANNEL_HAVE_CH38
-#    define ADC_CHANNEL_HAVE_CH39
-#    define ADC_CHANNEL_HAVE_CH40
-#    define ADC_CHANNEL_HAVE_CH41
+#    define ADC_CHANNEL_HAVE_9
+#    define ADC_CHANNEL_HAVE_12
 #endif
-#if defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF100)                       \
-    || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144) || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ0512EFK124)                    \
-    || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024EFE100) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144)                    \
-    || defined(DEVICE_32MZ1024EFF100) || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144) || defined(DEVICE_32MZ1024EFG100)                    \
-    || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144) || defined(DEVICE_32MZ1024EFH100) || defined(DEVICE_32MZ1024EFH124)                    \
-    || defined(DEVICE_32MZ1024EFH144) || defined(DEVICE_32MZ1024EFK100) || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144)                    \
-    || defined(DEVICE_32MZ1024EFM100) || defined(DEVICE_32MZ1024EFM124) || defined(DEVICE_32MZ1024EFM144) || defined(DEVICE_32MZ1025DAA169)                    \
-    || defined(DEVICE_32MZ1025DAA176) || defined(DEVICE_32MZ1025DAA288) || defined(DEVICE_32MZ1025DAB169) || defined(DEVICE_32MZ1025DAB176)                    \
-    || defined(DEVICE_32MZ1025DAB288) || defined(DEVICE_32MZ1025DAG169) || defined(DEVICE_32MZ1025DAG176) || defined(DEVICE_32MZ1025DAH169)                    \
-    || defined(DEVICE_32MZ1025DAH176) || defined(DEVICE_32MZ1025DAK169) || defined(DEVICE_32MZ1025DAK176) || defined(DEVICE_32MZ1025DAL169)                    \
-    || defined(DEVICE_32MZ1025DAL176) || defined(DEVICE_32MZ1025DAR169) || defined(DEVICE_32MZ1025DAR176) || defined(DEVICE_32MZ1025DAS169)                    \
-    || defined(DEVICE_32MZ1025DAS176) || defined(DEVICE_32MZ1064DAA169) || defined(DEVICE_32MZ1064DAA176) || defined(DEVICE_32MZ1064DAA288)                    \
-    || defined(DEVICE_32MZ1064DAB169) || defined(DEVICE_32MZ1064DAB176) || defined(DEVICE_32MZ1064DAB288) || defined(DEVICE_32MZ1064DAG169)                    \
-    || defined(DEVICE_32MZ1064DAG176) || defined(DEVICE_32MZ1064DAH169) || defined(DEVICE_32MZ1064DAH176) || defined(DEVICE_32MZ1064DAK169)                    \
-    || defined(DEVICE_32MZ1064DAK176) || defined(DEVICE_32MZ1064DAL169) || defined(DEVICE_32MZ1064DAL176) || defined(DEVICE_32MZ1064DAR169)                    \
-    || defined(DEVICE_32MZ1064DAR176) || defined(DEVICE_32MZ1064DAS169) || defined(DEVICE_32MZ1064DAS176) || defined(DEVICE_32MZ2025DAA169)                    \
-    || defined(DEVICE_32MZ2025DAA176) || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169) || defined(DEVICE_32MZ2025DAB176)                    \
-    || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176) || defined(DEVICE_32MZ2025DAH169)                    \
-    || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176) || defined(DEVICE_32MZ2025DAL169)                    \
-    || defined(DEVICE_32MZ2025DAL176) || defined(DEVICE_32MZ2025DAR169) || defined(DEVICE_32MZ2025DAR176) || defined(DEVICE_32MZ2025DAS169)                    \
-    || defined(DEVICE_32MZ2025DAS176) || defined(DEVICE_32MZ2048EFG100) || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144)                    \
-    || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144) || defined(DEVICE_32MZ2048EFM100)                    \
-    || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144) || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176)                    \
-    || defined(DEVICE_32MZ2064DAA288) || defined(DEVICE_32MZ2064DAB169) || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288)                    \
-    || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
-    || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
-    || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_CHANNEL_HAVE_CH28
-#    define ADC_CHANNEL_HAVE_CH29
-#    define ADC_CHANNEL_HAVE_CH30
-#    define ADC_CHANNEL_HAVE_CH31
-#    define ADC_CHANNEL_HAVE_CH32
-#endif
-#if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
-    || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064)                    \
-    || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
-    || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK100)                    \
-    || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM100) || defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124)                    \
-    || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF100) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144)                    \
-    || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024EFE100)                    \
-    || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144) || defined(DEVICE_32MZ1024EFF100) || defined(DEVICE_32MZ1024EFF124)                    \
-    || defined(DEVICE_32MZ1024EFF144) || defined(DEVICE_32MZ1024EFG100) || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144)                    \
-    || defined(DEVICE_32MZ1024EFH100) || defined(DEVICE_32MZ1024EFH124) || defined(DEVICE_32MZ1024EFH144) || defined(DEVICE_32MZ1024EFK100)                    \
-    || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144) || defined(DEVICE_32MZ1024EFM100) || defined(DEVICE_32MZ1024EFM124)                    \
+#if defined(DEVICE_32MK0128MCA048) || defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048)                       \
+    || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064)                    \
+    || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512GPK064)                    \
+    || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF064) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048)                    \
+    || defined(DEVICE_32MK0512MCJ064) || defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD064)                    \
+    || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE064) || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK064)                    \
+    || defined(DEVICE_32MK1024GPK100) || defined(DEVICE_32MK1024MCF064) || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM064)                    \
+    || defined(DEVICE_32MK1024MCM100) || defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124)                    \
+    || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFF100) || defined(DEVICE_32MZ0512EFF124)                    \
+    || defined(DEVICE_32MZ0512EFF144) || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ0512EFK124)                    \
+    || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024EFE064) || defined(DEVICE_32MZ1024EFE100) || defined(DEVICE_32MZ1024EFE124)                    \
+    || defined(DEVICE_32MZ1024EFE144) || defined(DEVICE_32MZ1024EFF064) || defined(DEVICE_32MZ1024EFF100) || defined(DEVICE_32MZ1024EFF124)                    \
+    || defined(DEVICE_32MZ1024EFF144) || defined(DEVICE_32MZ1024EFG064) || defined(DEVICE_32MZ1024EFG100) || defined(DEVICE_32MZ1024EFG124)                    \
+    || defined(DEVICE_32MZ1024EFG144) || defined(DEVICE_32MZ1024EFH064) || defined(DEVICE_32MZ1024EFH100) || defined(DEVICE_32MZ1024EFH124)                    \
+    || defined(DEVICE_32MZ1024EFH144) || defined(DEVICE_32MZ1024EFK064) || defined(DEVICE_32MZ1024EFK100) || defined(DEVICE_32MZ1024EFK124)                    \
+    || defined(DEVICE_32MZ1024EFK144) || defined(DEVICE_32MZ1024EFM064) || defined(DEVICE_32MZ1024EFM100) || defined(DEVICE_32MZ1024EFM124)                    \
     || defined(DEVICE_32MZ1024EFM144) || defined(DEVICE_32MZ1025DAA169) || defined(DEVICE_32MZ1025DAA176) || defined(DEVICE_32MZ1025DAA288)                    \
     || defined(DEVICE_32MZ1025DAB169) || defined(DEVICE_32MZ1025DAB176) || defined(DEVICE_32MZ1025DAB288) || defined(DEVICE_32MZ1025DAG169)                    \
     || defined(DEVICE_32MZ1025DAG176) || defined(DEVICE_32MZ1025DAH169) || defined(DEVICE_32MZ1025DAH176) || defined(DEVICE_32MZ1025DAK169)                    \
@@ -257,20 +251,21 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MZ2025DAB169) || defined(DEVICE_32MZ2025DAB176) || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169)                    \
     || defined(DEVICE_32MZ2025DAG176) || defined(DEVICE_32MZ2025DAH169) || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2025DAK169)                    \
     || defined(DEVICE_32MZ2025DAK176) || defined(DEVICE_32MZ2025DAL169) || defined(DEVICE_32MZ2025DAL176) || defined(DEVICE_32MZ2025DAR169)                    \
-    || defined(DEVICE_32MZ2025DAR176) || defined(DEVICE_32MZ2025DAS169) || defined(DEVICE_32MZ2025DAS176) || defined(DEVICE_32MZ2048EFG100)                    \
-    || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144) || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFH124)                    \
-    || defined(DEVICE_32MZ2048EFH144) || defined(DEVICE_32MZ2048EFM100) || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144)                    \
-    || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176) || defined(DEVICE_32MZ2064DAA288) || defined(DEVICE_32MZ2064DAB169)                    \
-    || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288) || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176)                    \
-    || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176) || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176)                    \
-    || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176) || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176)                    \
-    || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_CHANNEL_HAVE_CH20
-#    define ADC_CHANNEL_HAVE_CH21
-#    define ADC_CHANNEL_HAVE_CH22
-#    define ADC_CHANNEL_HAVE_CH23
-#    define ADC_CHANNEL_HAVE_CH33
-#    define ADC_CHANNEL_HAVE_CH34
+    || defined(DEVICE_32MZ2025DAR176) || defined(DEVICE_32MZ2025DAS169) || defined(DEVICE_32MZ2025DAS176) || defined(DEVICE_32MZ2048EFG064)                    \
+    || defined(DEVICE_32MZ2048EFG100) || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144) || defined(DEVICE_32MZ2048EFH064)                    \
+    || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144) || defined(DEVICE_32MZ2048EFM064)                    \
+    || defined(DEVICE_32MZ2048EFM100) || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144) || defined(DEVICE_32MZ2064DAA169)                    \
+    || defined(DEVICE_32MZ2064DAA176) || defined(DEVICE_32MZ2064DAA288) || defined(DEVICE_32MZ2064DAB169) || defined(DEVICE_32MZ2064DAB176)                    \
+    || defined(DEVICE_32MZ2064DAB288) || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169)                    \
+    || defined(DEVICE_32MZ2064DAH176) || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169)                    \
+    || defined(DEVICE_32MZ2064DAL176) || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169)                    \
+    || defined(DEVICE_32MZ2064DAS176)
+#    define ADC_CHANNEL_HAVE_6
+#    define ADC_CHANNEL_HAVE_7
+#    define ADC_CHANNEL_HAVE_8
+#    define ADC_CHANNEL_HAVE_10
+#    define ADC_CHANNEL_HAVE_11
+#    define ADC_CHANNEL_HAVE_14
 #endif
 #if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
     || defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100)                    \
@@ -278,85 +273,11 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MK0512MCF064) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
     || defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD064) || defined(DEVICE_32MK1024GPD100)                    \
     || defined(DEVICE_32MK1024GPE064) || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK064) || defined(DEVICE_32MK1024GPK100)                    \
-    || defined(DEVICE_32MK1024MCF064) || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100)                    \
-    || defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF100)                    \
-    || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144) || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ0512EFK124)                    \
-    || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024EFE100) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144)                    \
-    || defined(DEVICE_32MZ1024EFF100) || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144) || defined(DEVICE_32MZ1024EFG100)                    \
-    || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144) || defined(DEVICE_32MZ1024EFH100) || defined(DEVICE_32MZ1024EFH124)                    \
-    || defined(DEVICE_32MZ1024EFH144) || defined(DEVICE_32MZ1024EFK100) || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144)                    \
-    || defined(DEVICE_32MZ1024EFM100) || defined(DEVICE_32MZ1024EFM124) || defined(DEVICE_32MZ1024EFM144) || defined(DEVICE_32MZ1025DAA169)                    \
-    || defined(DEVICE_32MZ1025DAA176) || defined(DEVICE_32MZ1025DAA288) || defined(DEVICE_32MZ1025DAB169) || defined(DEVICE_32MZ1025DAB176)                    \
-    || defined(DEVICE_32MZ1025DAB288) || defined(DEVICE_32MZ1025DAG169) || defined(DEVICE_32MZ1025DAG176) || defined(DEVICE_32MZ1025DAH169)                    \
-    || defined(DEVICE_32MZ1025DAH176) || defined(DEVICE_32MZ1025DAK169) || defined(DEVICE_32MZ1025DAK176) || defined(DEVICE_32MZ1025DAL169)                    \
-    || defined(DEVICE_32MZ1025DAL176) || defined(DEVICE_32MZ1025DAR169) || defined(DEVICE_32MZ1025DAR176) || defined(DEVICE_32MZ1025DAS169)                    \
-    || defined(DEVICE_32MZ1025DAS176) || defined(DEVICE_32MZ1064DAA169) || defined(DEVICE_32MZ1064DAA176) || defined(DEVICE_32MZ1064DAA288)                    \
-    || defined(DEVICE_32MZ1064DAB169) || defined(DEVICE_32MZ1064DAB176) || defined(DEVICE_32MZ1064DAB288) || defined(DEVICE_32MZ1064DAG169)                    \
-    || defined(DEVICE_32MZ1064DAG176) || defined(DEVICE_32MZ1064DAH169) || defined(DEVICE_32MZ1064DAH176) || defined(DEVICE_32MZ1064DAK169)                    \
-    || defined(DEVICE_32MZ1064DAK176) || defined(DEVICE_32MZ1064DAL169) || defined(DEVICE_32MZ1064DAL176) || defined(DEVICE_32MZ1064DAR169)                    \
-    || defined(DEVICE_32MZ1064DAR176) || defined(DEVICE_32MZ1064DAS169) || defined(DEVICE_32MZ1064DAS176) || defined(DEVICE_32MZ2025DAA169)                    \
-    || defined(DEVICE_32MZ2025DAA176) || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169) || defined(DEVICE_32MZ2025DAB176)                    \
-    || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176) || defined(DEVICE_32MZ2025DAH169)                    \
-    || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176) || defined(DEVICE_32MZ2025DAL169)                    \
-    || defined(DEVICE_32MZ2025DAL176) || defined(DEVICE_32MZ2025DAR169) || defined(DEVICE_32MZ2025DAR176) || defined(DEVICE_32MZ2025DAS169)                    \
-    || defined(DEVICE_32MZ2025DAS176) || defined(DEVICE_32MZ2048EFG100) || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144)                    \
-    || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144) || defined(DEVICE_32MZ2048EFM100)                    \
-    || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144) || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176)                    \
-    || defined(DEVICE_32MZ2064DAA288) || defined(DEVICE_32MZ2064DAB169) || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288)                    \
-    || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
-    || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
-    || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_CHANNEL_HAVE_CH19
-#    define ADC_CHANNEL_HAVE_CH24
-#    define ADC_CHANNEL_HAVE_CH25
-#    define ADC_CHANNEL_HAVE_CH26
-#    define ADC_CHANNEL_HAVE_CH27
-#endif
-#if defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144)                       \
-    || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFF100) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144)                    \
-    || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144)                    \
-    || defined(DEVICE_32MZ1024EFE064) || defined(DEVICE_32MZ1024EFE100) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144)                    \
-    || defined(DEVICE_32MZ1024EFF064) || defined(DEVICE_32MZ1024EFF100) || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144)                    \
-    || defined(DEVICE_32MZ1024EFG064) || defined(DEVICE_32MZ1024EFG100) || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144)                    \
-    || defined(DEVICE_32MZ1024EFH064) || defined(DEVICE_32MZ1024EFH100) || defined(DEVICE_32MZ1024EFH124) || defined(DEVICE_32MZ1024EFH144)                    \
-    || defined(DEVICE_32MZ1024EFK064) || defined(DEVICE_32MZ1024EFK100) || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144)                    \
-    || defined(DEVICE_32MZ1024EFM064) || defined(DEVICE_32MZ1024EFM100) || defined(DEVICE_32MZ1024EFM124) || defined(DEVICE_32MZ1024EFM144)                    \
-    || defined(DEVICE_32MZ2048EFG064) || defined(DEVICE_32MZ2048EFG100) || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144)                    \
-    || defined(DEVICE_32MZ2048EFH064) || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144)                    \
-    || defined(DEVICE_32MZ2048EFM064) || defined(DEVICE_32MZ2048EFM100) || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144)
-#    define ADC_CHANNEL_HAVE_CH44
-#endif
-#if defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144)                       \
-    || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFF100) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144)                    \
-    || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144)                    \
-    || defined(DEVICE_32MZ1024EFE064) || defined(DEVICE_32MZ1024EFE100) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144)                    \
-    || defined(DEVICE_32MZ1024EFF064) || defined(DEVICE_32MZ1024EFF100) || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144)                    \
-    || defined(DEVICE_32MZ1024EFG064) || defined(DEVICE_32MZ1024EFG100) || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144)                    \
-    || defined(DEVICE_32MZ1024EFH064) || defined(DEVICE_32MZ1024EFH100) || defined(DEVICE_32MZ1024EFH124) || defined(DEVICE_32MZ1024EFH144)                    \
-    || defined(DEVICE_32MZ1024EFK064) || defined(DEVICE_32MZ1024EFK100) || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144)                    \
-    || defined(DEVICE_32MZ1024EFM064) || defined(DEVICE_32MZ1024EFM100) || defined(DEVICE_32MZ1024EFM124) || defined(DEVICE_32MZ1024EFM144)                    \
-    || defined(DEVICE_32MZ1025DAA169) || defined(DEVICE_32MZ1025DAA176) || defined(DEVICE_32MZ1025DAA288) || defined(DEVICE_32MZ1025DAB169)                    \
-    || defined(DEVICE_32MZ1025DAB176) || defined(DEVICE_32MZ1025DAB288) || defined(DEVICE_32MZ1025DAG169) || defined(DEVICE_32MZ1025DAG176)                    \
-    || defined(DEVICE_32MZ1025DAH169) || defined(DEVICE_32MZ1025DAH176) || defined(DEVICE_32MZ1025DAK169) || defined(DEVICE_32MZ1025DAK176)                    \
-    || defined(DEVICE_32MZ1025DAL169) || defined(DEVICE_32MZ1025DAL176) || defined(DEVICE_32MZ1025DAR169) || defined(DEVICE_32MZ1025DAR176)                    \
-    || defined(DEVICE_32MZ1025DAS169) || defined(DEVICE_32MZ1025DAS176) || defined(DEVICE_32MZ1064DAA169) || defined(DEVICE_32MZ1064DAA176)                    \
-    || defined(DEVICE_32MZ1064DAA288) || defined(DEVICE_32MZ1064DAB169) || defined(DEVICE_32MZ1064DAB176) || defined(DEVICE_32MZ1064DAB288)                    \
-    || defined(DEVICE_32MZ1064DAG169) || defined(DEVICE_32MZ1064DAG176) || defined(DEVICE_32MZ1064DAH169) || defined(DEVICE_32MZ1064DAH176)                    \
-    || defined(DEVICE_32MZ1064DAK169) || defined(DEVICE_32MZ1064DAK176) || defined(DEVICE_32MZ1064DAL169) || defined(DEVICE_32MZ1064DAL176)                    \
-    || defined(DEVICE_32MZ1064DAR169) || defined(DEVICE_32MZ1064DAR176) || defined(DEVICE_32MZ1064DAS169) || defined(DEVICE_32MZ1064DAS176)                    \
-    || defined(DEVICE_32MZ2025DAA169) || defined(DEVICE_32MZ2025DAA176) || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169)                    \
-    || defined(DEVICE_32MZ2025DAB176) || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176)                    \
-    || defined(DEVICE_32MZ2025DAH169) || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176)                    \
-    || defined(DEVICE_32MZ2025DAL169) || defined(DEVICE_32MZ2025DAL176) || defined(DEVICE_32MZ2025DAR169) || defined(DEVICE_32MZ2025DAR176)                    \
-    || defined(DEVICE_32MZ2025DAS169) || defined(DEVICE_32MZ2025DAS176) || defined(DEVICE_32MZ2048EFG064) || defined(DEVICE_32MZ2048EFG100)                    \
-    || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144) || defined(DEVICE_32MZ2048EFH064) || defined(DEVICE_32MZ2048EFH100)                    \
-    || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144) || defined(DEVICE_32MZ2048EFM064) || defined(DEVICE_32MZ2048EFM100)                    \
-    || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144) || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176)                    \
-    || defined(DEVICE_32MZ2064DAA288) || defined(DEVICE_32MZ2064DAB169) || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288)                    \
-    || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
-    || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
-    || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_CHANNEL_HAVE_CH43
+    || defined(DEVICE_32MK1024MCF064) || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100)
+#    define ADC_CHANNEL_HAVE_48
+#    define ADC_CHANNEL_HAVE_49
+#    define ADC_CHANNEL_HAVE_51
+#    define ADC_CHANNEL_HAVE_52
 #endif
 #if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
     || defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100)                    \
@@ -395,34 +316,281 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
     || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
     || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_CHANNEL_HAVE_CH0
-#    define ADC_CHANNEL_HAVE_CH1
-#    define ADC_CHANNEL_HAVE_CH2
-#    define ADC_CHANNEL_HAVE_CH3
-#    define ADC_CHANNEL_HAVE_CH4
-#    define ADC_CHANNEL_HAVE_CH5
-#    define ADC_CHANNEL_HAVE_CH6
-#    define ADC_CHANNEL_HAVE_CH7
-#    define ADC_CHANNEL_HAVE_CH8
-#    define ADC_CHANNEL_HAVE_CH9
-#    define ADC_CHANNEL_HAVE_CH10
-#    define ADC_CHANNEL_HAVE_CH11
-#    define ADC_CHANNEL_HAVE_CH12
-#    define ADC_CHANNEL_HAVE_CH13
-#    define ADC_CHANNEL_HAVE_CH14
-#    define ADC_CHANNEL_HAVE_CH15
-#    define ADC_CHANNEL_HAVE_CH16
-#    define ADC_CHANNEL_HAVE_CH17
-#    define ADC_CHANNEL_HAVE_CH18
+#    define ADC_CHANNEL_HAVE_18
+#endif
+#if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
+    || defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100)                    \
+    || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512GPK064) || defined(DEVICE_32MK0512GPK100)                    \
+    || defined(DEVICE_32MK0512MCF064) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
+    || defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD064) || defined(DEVICE_32MK1024GPD100)                    \
+    || defined(DEVICE_32MK1024GPE064) || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK064) || defined(DEVICE_32MK1024GPK100)                    \
+    || defined(DEVICE_32MK1024MCF064) || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100)                    \
+    || defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF100)                    \
+    || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144) || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ0512EFK124)                    \
+    || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024EFE100) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144)                    \
+    || defined(DEVICE_32MZ1024EFF100) || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144) || defined(DEVICE_32MZ1024EFG100)                    \
+    || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144) || defined(DEVICE_32MZ1024EFH100) || defined(DEVICE_32MZ1024EFH124)                    \
+    || defined(DEVICE_32MZ1024EFH144) || defined(DEVICE_32MZ1024EFK100) || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144)                    \
+    || defined(DEVICE_32MZ1024EFM100) || defined(DEVICE_32MZ1024EFM124) || defined(DEVICE_32MZ1024EFM144) || defined(DEVICE_32MZ1025DAA169)                    \
+    || defined(DEVICE_32MZ1025DAA176) || defined(DEVICE_32MZ1025DAA288) || defined(DEVICE_32MZ1025DAB169) || defined(DEVICE_32MZ1025DAB176)                    \
+    || defined(DEVICE_32MZ1025DAB288) || defined(DEVICE_32MZ1025DAG169) || defined(DEVICE_32MZ1025DAG176) || defined(DEVICE_32MZ1025DAH169)                    \
+    || defined(DEVICE_32MZ1025DAH176) || defined(DEVICE_32MZ1025DAK169) || defined(DEVICE_32MZ1025DAK176) || defined(DEVICE_32MZ1025DAL169)                    \
+    || defined(DEVICE_32MZ1025DAL176) || defined(DEVICE_32MZ1025DAR169) || defined(DEVICE_32MZ1025DAR176) || defined(DEVICE_32MZ1025DAS169)                    \
+    || defined(DEVICE_32MZ1025DAS176) || defined(DEVICE_32MZ1064DAA169) || defined(DEVICE_32MZ1064DAA176) || defined(DEVICE_32MZ1064DAA288)                    \
+    || defined(DEVICE_32MZ1064DAB169) || defined(DEVICE_32MZ1064DAB176) || defined(DEVICE_32MZ1064DAB288) || defined(DEVICE_32MZ1064DAG169)                    \
+    || defined(DEVICE_32MZ1064DAG176) || defined(DEVICE_32MZ1064DAH169) || defined(DEVICE_32MZ1064DAH176) || defined(DEVICE_32MZ1064DAK169)                    \
+    || defined(DEVICE_32MZ1064DAK176) || defined(DEVICE_32MZ1064DAL169) || defined(DEVICE_32MZ1064DAL176) || defined(DEVICE_32MZ1064DAR169)                    \
+    || defined(DEVICE_32MZ1064DAR176) || defined(DEVICE_32MZ1064DAS169) || defined(DEVICE_32MZ1064DAS176) || defined(DEVICE_32MZ2025DAA169)                    \
+    || defined(DEVICE_32MZ2025DAA176) || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169) || defined(DEVICE_32MZ2025DAB176)                    \
+    || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176) || defined(DEVICE_32MZ2025DAH169)                    \
+    || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176) || defined(DEVICE_32MZ2025DAL169)                    \
+    || defined(DEVICE_32MZ2025DAL176) || defined(DEVICE_32MZ2025DAR169) || defined(DEVICE_32MZ2025DAR176) || defined(DEVICE_32MZ2025DAS169)                    \
+    || defined(DEVICE_32MZ2025DAS176) || defined(DEVICE_32MZ2048EFG100) || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144)                    \
+    || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144) || defined(DEVICE_32MZ2048EFM100)                    \
+    || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144) || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176)                    \
+    || defined(DEVICE_32MZ2064DAA288) || defined(DEVICE_32MZ2064DAB169) || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288)                    \
+    || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
+    || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
+    || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
+#    define ADC_CHANNEL_HAVE_19
+#    define ADC_CHANNEL_HAVE_24
+#    define ADC_CHANNEL_HAVE_25
+#    define ADC_CHANNEL_HAVE_26
+#    define ADC_CHANNEL_HAVE_27
+#endif
+#if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
+    || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064)                    \
+    || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
+    || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK100)                    \
+    || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM100)
+#    define ADC_CHANNEL_HAVE_45
+#    define ADC_CHANNEL_HAVE_46
+#    define ADC_CHANNEL_HAVE_47
+#endif
+#if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
+    || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064)                    \
+    || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
+    || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK100)                    \
+    || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM100) || defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124)                    \
+    || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF100) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144)                    \
+    || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024EFE100)                    \
+    || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144) || defined(DEVICE_32MZ1024EFF100) || defined(DEVICE_32MZ1024EFF124)                    \
+    || defined(DEVICE_32MZ1024EFF144) || defined(DEVICE_32MZ1024EFG100) || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144)                    \
+    || defined(DEVICE_32MZ1024EFH100) || defined(DEVICE_32MZ1024EFH124) || defined(DEVICE_32MZ1024EFH144) || defined(DEVICE_32MZ1024EFK100)                    \
+    || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144) || defined(DEVICE_32MZ1024EFM100) || defined(DEVICE_32MZ1024EFM124)                    \
+    || defined(DEVICE_32MZ1024EFM144) || defined(DEVICE_32MZ1025DAA169) || defined(DEVICE_32MZ1025DAA176) || defined(DEVICE_32MZ1025DAA288)                    \
+    || defined(DEVICE_32MZ1025DAB169) || defined(DEVICE_32MZ1025DAB176) || defined(DEVICE_32MZ1025DAB288) || defined(DEVICE_32MZ1025DAG169)                    \
+    || defined(DEVICE_32MZ1025DAG176) || defined(DEVICE_32MZ1025DAH169) || defined(DEVICE_32MZ1025DAH176) || defined(DEVICE_32MZ1025DAK169)                    \
+    || defined(DEVICE_32MZ1025DAK176) || defined(DEVICE_32MZ1025DAL169) || defined(DEVICE_32MZ1025DAL176) || defined(DEVICE_32MZ1025DAR169)                    \
+    || defined(DEVICE_32MZ1025DAR176) || defined(DEVICE_32MZ1025DAS169) || defined(DEVICE_32MZ1025DAS176) || defined(DEVICE_32MZ1064DAA169)                    \
+    || defined(DEVICE_32MZ1064DAA176) || defined(DEVICE_32MZ1064DAA288) || defined(DEVICE_32MZ1064DAB169) || defined(DEVICE_32MZ1064DAB176)                    \
+    || defined(DEVICE_32MZ1064DAB288) || defined(DEVICE_32MZ1064DAG169) || defined(DEVICE_32MZ1064DAG176) || defined(DEVICE_32MZ1064DAH169)                    \
+    || defined(DEVICE_32MZ1064DAH176) || defined(DEVICE_32MZ1064DAK169) || defined(DEVICE_32MZ1064DAK176) || defined(DEVICE_32MZ1064DAL169)                    \
+    || defined(DEVICE_32MZ1064DAL176) || defined(DEVICE_32MZ1064DAR169) || defined(DEVICE_32MZ1064DAR176) || defined(DEVICE_32MZ1064DAS169)                    \
+    || defined(DEVICE_32MZ1064DAS176) || defined(DEVICE_32MZ2025DAA169) || defined(DEVICE_32MZ2025DAA176) || defined(DEVICE_32MZ2025DAA288)                    \
+    || defined(DEVICE_32MZ2025DAB169) || defined(DEVICE_32MZ2025DAB176) || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169)                    \
+    || defined(DEVICE_32MZ2025DAG176) || defined(DEVICE_32MZ2025DAH169) || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2025DAK169)                    \
+    || defined(DEVICE_32MZ2025DAK176) || defined(DEVICE_32MZ2025DAL169) || defined(DEVICE_32MZ2025DAL176) || defined(DEVICE_32MZ2025DAR169)                    \
+    || defined(DEVICE_32MZ2025DAR176) || defined(DEVICE_32MZ2025DAS169) || defined(DEVICE_32MZ2025DAS176) || defined(DEVICE_32MZ2048EFG100)                    \
+    || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144) || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFH124)                    \
+    || defined(DEVICE_32MZ2048EFH144) || defined(DEVICE_32MZ2048EFM100) || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144)                    \
+    || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176) || defined(DEVICE_32MZ2064DAA288) || defined(DEVICE_32MZ2064DAB169)                    \
+    || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288) || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176)                    \
+    || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176) || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176)                    \
+    || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176) || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176)                    \
+    || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
+#    define ADC_CHANNEL_HAVE_20
+#    define ADC_CHANNEL_HAVE_21
+#    define ADC_CHANNEL_HAVE_22
+#    define ADC_CHANNEL_HAVE_23
+#    define ADC_CHANNEL_HAVE_33
+#    define ADC_CHANNEL_HAVE_34
+#endif
+#if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
+    || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064)                    \
+    || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
+    || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK100)                    \
+    || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144)                    \
+    || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144) || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144)                    \
+    || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144) || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144)                    \
+    || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144) || defined(DEVICE_32MZ1024EFH124) || defined(DEVICE_32MZ1024EFH144)                    \
+    || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144) || defined(DEVICE_32MZ1024EFM124) || defined(DEVICE_32MZ1024EFM144)                    \
+    || defined(DEVICE_32MZ1025DAA169) || defined(DEVICE_32MZ1025DAA176) || defined(DEVICE_32MZ1025DAA288) || defined(DEVICE_32MZ1025DAB169)                    \
+    || defined(DEVICE_32MZ1025DAB176) || defined(DEVICE_32MZ1025DAB288) || defined(DEVICE_32MZ1025DAG169) || defined(DEVICE_32MZ1025DAG176)                    \
+    || defined(DEVICE_32MZ1025DAH169) || defined(DEVICE_32MZ1025DAH176) || defined(DEVICE_32MZ1025DAK169) || defined(DEVICE_32MZ1025DAK176)                    \
+    || defined(DEVICE_32MZ1025DAL169) || defined(DEVICE_32MZ1025DAL176) || defined(DEVICE_32MZ1025DAR169) || defined(DEVICE_32MZ1025DAR176)                    \
+    || defined(DEVICE_32MZ1025DAS169) || defined(DEVICE_32MZ1025DAS176) || defined(DEVICE_32MZ1064DAA169) || defined(DEVICE_32MZ1064DAA176)                    \
+    || defined(DEVICE_32MZ1064DAA288) || defined(DEVICE_32MZ1064DAB169) || defined(DEVICE_32MZ1064DAB176) || defined(DEVICE_32MZ1064DAB288)                    \
+    || defined(DEVICE_32MZ1064DAG169) || defined(DEVICE_32MZ1064DAG176) || defined(DEVICE_32MZ1064DAH169) || defined(DEVICE_32MZ1064DAH176)                    \
+    || defined(DEVICE_32MZ1064DAK169) || defined(DEVICE_32MZ1064DAK176) || defined(DEVICE_32MZ1064DAL169) || defined(DEVICE_32MZ1064DAL176)                    \
+    || defined(DEVICE_32MZ1064DAR169) || defined(DEVICE_32MZ1064DAR176) || defined(DEVICE_32MZ1064DAS169) || defined(DEVICE_32MZ1064DAS176)                    \
+    || defined(DEVICE_32MZ2025DAA169) || defined(DEVICE_32MZ2025DAA176) || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169)                    \
+    || defined(DEVICE_32MZ2025DAB176) || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176)                    \
+    || defined(DEVICE_32MZ2025DAH169) || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176)                    \
+    || defined(DEVICE_32MZ2025DAL169) || defined(DEVICE_32MZ2025DAL176) || defined(DEVICE_32MZ2025DAR169) || defined(DEVICE_32MZ2025DAR176)                    \
+    || defined(DEVICE_32MZ2025DAS169) || defined(DEVICE_32MZ2025DAS176) || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144)                    \
+    || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144) || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144)                    \
+    || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176) || defined(DEVICE_32MZ2064DAA288) || defined(DEVICE_32MZ2064DAB169)                    \
+    || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288) || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176)                    \
+    || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176) || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176)                    \
+    || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176) || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176)                    \
+    || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
+#    define ADC_CHANNEL_HAVE_35
+#    define ADC_CHANNEL_HAVE_36
+#    define ADC_CHANNEL_HAVE_37
+#    define ADC_CHANNEL_HAVE_38
+#    define ADC_CHANNEL_HAVE_39
+#    define ADC_CHANNEL_HAVE_40
+#    define ADC_CHANNEL_HAVE_41
+#endif
+#if defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144)                       \
+    || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFF100) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144)                    \
+    || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144)                    \
+    || defined(DEVICE_32MZ1024EFE064) || defined(DEVICE_32MZ1024EFE100) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144)                    \
+    || defined(DEVICE_32MZ1024EFF064) || defined(DEVICE_32MZ1024EFF100) || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144)                    \
+    || defined(DEVICE_32MZ1024EFG064) || defined(DEVICE_32MZ1024EFG100) || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144)                    \
+    || defined(DEVICE_32MZ1024EFH064) || defined(DEVICE_32MZ1024EFH100) || defined(DEVICE_32MZ1024EFH124) || defined(DEVICE_32MZ1024EFH144)                    \
+    || defined(DEVICE_32MZ1024EFK064) || defined(DEVICE_32MZ1024EFK100) || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144)                    \
+    || defined(DEVICE_32MZ1024EFM064) || defined(DEVICE_32MZ1024EFM100) || defined(DEVICE_32MZ1024EFM124) || defined(DEVICE_32MZ1024EFM144)                    \
+    || defined(DEVICE_32MZ2048EFG064) || defined(DEVICE_32MZ2048EFG100) || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144)                    \
+    || defined(DEVICE_32MZ2048EFH064) || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144)                    \
+    || defined(DEVICE_32MZ2048EFM064) || defined(DEVICE_32MZ2048EFM100) || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144)
+#    define ADC_CHANNEL_HAVE_44
+#endif
+#if defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144)                       \
+    || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFF100) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144)                    \
+    || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144)                    \
+    || defined(DEVICE_32MZ1024EFE064) || defined(DEVICE_32MZ1024EFE100) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144)                    \
+    || defined(DEVICE_32MZ1024EFF064) || defined(DEVICE_32MZ1024EFF100) || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144)                    \
+    || defined(DEVICE_32MZ1024EFG064) || defined(DEVICE_32MZ1024EFG100) || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144)                    \
+    || defined(DEVICE_32MZ1024EFH064) || defined(DEVICE_32MZ1024EFH100) || defined(DEVICE_32MZ1024EFH124) || defined(DEVICE_32MZ1024EFH144)                    \
+    || defined(DEVICE_32MZ1024EFK064) || defined(DEVICE_32MZ1024EFK100) || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144)                    \
+    || defined(DEVICE_32MZ1024EFM064) || defined(DEVICE_32MZ1024EFM100) || defined(DEVICE_32MZ1024EFM124) || defined(DEVICE_32MZ1024EFM144)                    \
+    || defined(DEVICE_32MZ1025DAA169) || defined(DEVICE_32MZ1025DAA176) || defined(DEVICE_32MZ1025DAA288) || defined(DEVICE_32MZ1025DAB169)                    \
+    || defined(DEVICE_32MZ1025DAB176) || defined(DEVICE_32MZ1025DAB288) || defined(DEVICE_32MZ1025DAG169) || defined(DEVICE_32MZ1025DAG176)                    \
+    || defined(DEVICE_32MZ1025DAH169) || defined(DEVICE_32MZ1025DAH176) || defined(DEVICE_32MZ1025DAK169) || defined(DEVICE_32MZ1025DAK176)                    \
+    || defined(DEVICE_32MZ1025DAL169) || defined(DEVICE_32MZ1025DAL176) || defined(DEVICE_32MZ1025DAR169) || defined(DEVICE_32MZ1025DAR176)                    \
+    || defined(DEVICE_32MZ1025DAS169) || defined(DEVICE_32MZ1025DAS176) || defined(DEVICE_32MZ1064DAA169) || defined(DEVICE_32MZ1064DAA176)                    \
+    || defined(DEVICE_32MZ1064DAA288) || defined(DEVICE_32MZ1064DAB169) || defined(DEVICE_32MZ1064DAB176) || defined(DEVICE_32MZ1064DAB288)                    \
+    || defined(DEVICE_32MZ1064DAG169) || defined(DEVICE_32MZ1064DAG176) || defined(DEVICE_32MZ1064DAH169) || defined(DEVICE_32MZ1064DAH176)                    \
+    || defined(DEVICE_32MZ1064DAK169) || defined(DEVICE_32MZ1064DAK176) || defined(DEVICE_32MZ1064DAL169) || defined(DEVICE_32MZ1064DAL176)                    \
+    || defined(DEVICE_32MZ1064DAR169) || defined(DEVICE_32MZ1064DAR176) || defined(DEVICE_32MZ1064DAS169) || defined(DEVICE_32MZ1064DAS176)                    \
+    || defined(DEVICE_32MZ2025DAA169) || defined(DEVICE_32MZ2025DAA176) || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169)                    \
+    || defined(DEVICE_32MZ2025DAB176) || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176)                    \
+    || defined(DEVICE_32MZ2025DAH169) || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176)                    \
+    || defined(DEVICE_32MZ2025DAL169) || defined(DEVICE_32MZ2025DAL176) || defined(DEVICE_32MZ2025DAR169) || defined(DEVICE_32MZ2025DAR176)                    \
+    || defined(DEVICE_32MZ2025DAS169) || defined(DEVICE_32MZ2025DAS176) || defined(DEVICE_32MZ2048EFG064) || defined(DEVICE_32MZ2048EFG100)                    \
+    || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144) || defined(DEVICE_32MZ2048EFH064) || defined(DEVICE_32MZ2048EFH100)                    \
+    || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144) || defined(DEVICE_32MZ2048EFM064) || defined(DEVICE_32MZ2048EFM100)                    \
+    || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144) || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176)                    \
+    || defined(DEVICE_32MZ2064DAA288) || defined(DEVICE_32MZ2064DAB169) || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288)                    \
+    || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
+    || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
+    || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
+#    define ADC_CHANNEL_HAVE_43
+#endif
+#if defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF100)                       \
+    || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144) || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ0512EFK124)                    \
+    || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024EFE100) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144)                    \
+    || defined(DEVICE_32MZ1024EFF100) || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144) || defined(DEVICE_32MZ1024EFG100)                    \
+    || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144) || defined(DEVICE_32MZ1024EFH100) || defined(DEVICE_32MZ1024EFH124)                    \
+    || defined(DEVICE_32MZ1024EFH144) || defined(DEVICE_32MZ1024EFK100) || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144)                    \
+    || defined(DEVICE_32MZ1024EFM100) || defined(DEVICE_32MZ1024EFM124) || defined(DEVICE_32MZ1024EFM144) || defined(DEVICE_32MZ1025DAA169)                    \
+    || defined(DEVICE_32MZ1025DAA176) || defined(DEVICE_32MZ1025DAA288) || defined(DEVICE_32MZ1025DAB169) || defined(DEVICE_32MZ1025DAB176)                    \
+    || defined(DEVICE_32MZ1025DAB288) || defined(DEVICE_32MZ1025DAG169) || defined(DEVICE_32MZ1025DAG176) || defined(DEVICE_32MZ1025DAH169)                    \
+    || defined(DEVICE_32MZ1025DAH176) || defined(DEVICE_32MZ1025DAK169) || defined(DEVICE_32MZ1025DAK176) || defined(DEVICE_32MZ1025DAL169)                    \
+    || defined(DEVICE_32MZ1025DAL176) || defined(DEVICE_32MZ1025DAR169) || defined(DEVICE_32MZ1025DAR176) || defined(DEVICE_32MZ1025DAS169)                    \
+    || defined(DEVICE_32MZ1025DAS176) || defined(DEVICE_32MZ1064DAA169) || defined(DEVICE_32MZ1064DAA176) || defined(DEVICE_32MZ1064DAA288)                    \
+    || defined(DEVICE_32MZ1064DAB169) || defined(DEVICE_32MZ1064DAB176) || defined(DEVICE_32MZ1064DAB288) || defined(DEVICE_32MZ1064DAG169)                    \
+    || defined(DEVICE_32MZ1064DAG176) || defined(DEVICE_32MZ1064DAH169) || defined(DEVICE_32MZ1064DAH176) || defined(DEVICE_32MZ1064DAK169)                    \
+    || defined(DEVICE_32MZ1064DAK176) || defined(DEVICE_32MZ1064DAL169) || defined(DEVICE_32MZ1064DAL176) || defined(DEVICE_32MZ1064DAR169)                    \
+    || defined(DEVICE_32MZ1064DAR176) || defined(DEVICE_32MZ1064DAS169) || defined(DEVICE_32MZ1064DAS176) || defined(DEVICE_32MZ2025DAA169)                    \
+    || defined(DEVICE_32MZ2025DAA176) || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169) || defined(DEVICE_32MZ2025DAB176)                    \
+    || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176) || defined(DEVICE_32MZ2025DAH169)                    \
+    || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176) || defined(DEVICE_32MZ2025DAL169)                    \
+    || defined(DEVICE_32MZ2025DAL176) || defined(DEVICE_32MZ2025DAR169) || defined(DEVICE_32MZ2025DAR176) || defined(DEVICE_32MZ2025DAS169)                    \
+    || defined(DEVICE_32MZ2025DAS176) || defined(DEVICE_32MZ2048EFG100) || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144)                    \
+    || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144) || defined(DEVICE_32MZ2048EFM100)                    \
+    || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144) || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176)                    \
+    || defined(DEVICE_32MZ2064DAA288) || defined(DEVICE_32MZ2064DAB169) || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288)                    \
+    || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
+    || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
+    || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
+#    define ADC_CHANNEL_HAVE_28
+#    define ADC_CHANNEL_HAVE_29
+#    define ADC_CHANNEL_HAVE_30
+#    define ADC_CHANNEL_HAVE_31
+#    define ADC_CHANNEL_HAVE_32
+#endif
+#if defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144)                       \
+    || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144)                    \
+    || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144) || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144)                    \
+    || defined(DEVICE_32MZ1024EFH124) || defined(DEVICE_32MZ1024EFH144) || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144)                    \
+    || defined(DEVICE_32MZ1024EFM124) || defined(DEVICE_32MZ1024EFM144) || defined(DEVICE_32MZ1025DAA169) || defined(DEVICE_32MZ1025DAA176)                    \
+    || defined(DEVICE_32MZ1025DAA288) || defined(DEVICE_32MZ1025DAB169) || defined(DEVICE_32MZ1025DAB176) || defined(DEVICE_32MZ1025DAB288)                    \
+    || defined(DEVICE_32MZ1025DAG169) || defined(DEVICE_32MZ1025DAG176) || defined(DEVICE_32MZ1025DAH169) || defined(DEVICE_32MZ1025DAH176)                    \
+    || defined(DEVICE_32MZ1025DAK169) || defined(DEVICE_32MZ1025DAK176) || defined(DEVICE_32MZ1025DAL169) || defined(DEVICE_32MZ1025DAL176)                    \
+    || defined(DEVICE_32MZ1025DAR169) || defined(DEVICE_32MZ1025DAR176) || defined(DEVICE_32MZ1025DAS169) || defined(DEVICE_32MZ1025DAS176)                    \
+    || defined(DEVICE_32MZ1064DAA169) || defined(DEVICE_32MZ1064DAA176) || defined(DEVICE_32MZ1064DAA288) || defined(DEVICE_32MZ1064DAB169)                    \
+    || defined(DEVICE_32MZ1064DAB176) || defined(DEVICE_32MZ1064DAB288) || defined(DEVICE_32MZ1064DAG169) || defined(DEVICE_32MZ1064DAG176)                    \
+    || defined(DEVICE_32MZ1064DAH169) || defined(DEVICE_32MZ1064DAH176) || defined(DEVICE_32MZ1064DAK169) || defined(DEVICE_32MZ1064DAK176)                    \
+    || defined(DEVICE_32MZ1064DAL169) || defined(DEVICE_32MZ1064DAL176) || defined(DEVICE_32MZ1064DAR169) || defined(DEVICE_32MZ1064DAR176)                    \
+    || defined(DEVICE_32MZ1064DAS169) || defined(DEVICE_32MZ1064DAS176) || defined(DEVICE_32MZ2025DAA169) || defined(DEVICE_32MZ2025DAA176)                    \
+    || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169) || defined(DEVICE_32MZ2025DAB176) || defined(DEVICE_32MZ2025DAB288)                    \
+    || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176) || defined(DEVICE_32MZ2025DAH169) || defined(DEVICE_32MZ2025DAH176)                    \
+    || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176) || defined(DEVICE_32MZ2025DAL169) || defined(DEVICE_32MZ2025DAL176)                    \
+    || defined(DEVICE_32MZ2025DAR169) || defined(DEVICE_32MZ2025DAR176) || defined(DEVICE_32MZ2025DAS169) || defined(DEVICE_32MZ2025DAS176)                    \
+    || defined(DEVICE_32MZ2048EFG124) || defined(DEVICE_32MZ2048EFG144) || defined(DEVICE_32MZ2048EFH124) || defined(DEVICE_32MZ2048EFH144)                    \
+    || defined(DEVICE_32MZ2048EFM124) || defined(DEVICE_32MZ2048EFM144) || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176)                    \
+    || defined(DEVICE_32MZ2064DAA288) || defined(DEVICE_32MZ2064DAB169) || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288)                    \
+    || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
+    || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
+    || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
+#    define ADC_CHANNEL_HAVE_42
 #endif
 
-// ==================================== Dedicated core availability ====================================
-#if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
-    || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512GPK064) || defined(DEVICE_32MK0512GPK100)                    \
-    || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064) || defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK0512MCM100)                    \
-    || defined(DEVICE_32MK1024GPK064) || defined(DEVICE_32MK1024GPK100) || defined(DEVICE_32MK1024MCF064) || defined(DEVICE_32MK1024MCM064)                    \
-    || defined(DEVICE_32MK1024MCM100)
-#    define ADC_HAVE_DEDICATED_CORE6
+// ================================== Dedicated core availability ==================================
+#if defined(DEVICE_32MK0128MCA028) || defined(DEVICE_32MK0128MCA032) || defined(DEVICE_32MK0128MCA048) || defined(DEVICE_32MK0256GPG048)                       \
+    || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512GPD064)                    \
+    || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048)                    \
+    || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512GPK064) || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF064)                    \
+    || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064) || defined(DEVICE_32MK0512MCM064)                    \
+    || defined(DEVICE_32MK0512MCM100) || defined(DEVICE_32MK1024GPD064) || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE064)                    \
+    || defined(DEVICE_32MK1024GPE100) || defined(DEVICE_32MK1024GPK064) || defined(DEVICE_32MK1024GPK100) || defined(DEVICE_32MK1024MCF064)                    \
+    || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100) || defined(DEVICE_32MZ0512EFE064)                    \
+    || defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF064)                    \
+    || defined(DEVICE_32MZ0512EFF100) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144) || defined(DEVICE_32MZ0512EFK064)                    \
+    || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024EFE064)                    \
+    || defined(DEVICE_32MZ1024EFE100) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144) || defined(DEVICE_32MZ1024EFF064)                    \
+    || defined(DEVICE_32MZ1024EFF100) || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144) || defined(DEVICE_32MZ1024EFG064)                    \
+    || defined(DEVICE_32MZ1024EFG100) || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144) || defined(DEVICE_32MZ1024EFH064)                    \
+    || defined(DEVICE_32MZ1024EFH100) || defined(DEVICE_32MZ1024EFH124) || defined(DEVICE_32MZ1024EFH144) || defined(DEVICE_32MZ1024EFK064)                    \
+    || defined(DEVICE_32MZ1024EFK100) || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFK144) || defined(DEVICE_32MZ1024EFM064)                    \
+    || defined(DEVICE_32MZ1024EFM100) || defined(DEVICE_32MZ1024EFM124) || defined(DEVICE_32MZ1024EFM144) || defined(DEVICE_32MZ1025DAA169)                    \
+    || defined(DEVICE_32MZ1025DAA176) || defined(DEVICE_32MZ1025DAA288) || defined(DEVICE_32MZ1025DAB169) || defined(DEVICE_32MZ1025DAB176)                    \
+    || defined(DEVICE_32MZ1025DAB288) || defined(DEVICE_32MZ1025DAG169) || defined(DEVICE_32MZ1025DAG176) || defined(DEVICE_32MZ1025DAH169)                    \
+    || defined(DEVICE_32MZ1025DAH176) || defined(DEVICE_32MZ1025DAK169) || defined(DEVICE_32MZ1025DAK176) || defined(DEVICE_32MZ1025DAL169)                    \
+    || defined(DEVICE_32MZ1025DAL176) || defined(DEVICE_32MZ1025DAR169) || defined(DEVICE_32MZ1025DAR176) || defined(DEVICE_32MZ1025DAS169)                    \
+    || defined(DEVICE_32MZ1025DAS176) || defined(DEVICE_32MZ1064DAA169) || defined(DEVICE_32MZ1064DAA176) || defined(DEVICE_32MZ1064DAA288)                    \
+    || defined(DEVICE_32MZ1064DAB169) || defined(DEVICE_32MZ1064DAB176) || defined(DEVICE_32MZ1064DAB288) || defined(DEVICE_32MZ1064DAG169)                    \
+    || defined(DEVICE_32MZ1064DAG176) || defined(DEVICE_32MZ1064DAH169) || defined(DEVICE_32MZ1064DAH176) || defined(DEVICE_32MZ1064DAK169)                    \
+    || defined(DEVICE_32MZ1064DAK176) || defined(DEVICE_32MZ1064DAL169) || defined(DEVICE_32MZ1064DAL176) || defined(DEVICE_32MZ1064DAR169)                    \
+    || defined(DEVICE_32MZ1064DAR176) || defined(DEVICE_32MZ1064DAS169) || defined(DEVICE_32MZ1064DAS176) || defined(DEVICE_32MZ2025DAA169)                    \
+    || defined(DEVICE_32MZ2025DAA176) || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169) || defined(DEVICE_32MZ2025DAB176)                    \
+    || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176) || defined(DEVICE_32MZ2025DAH169)                    \
+    || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176) || defined(DEVICE_32MZ2025DAL169)                    \
+    || defined(DEVICE_32MZ2025DAL176) || defined(DEVICE_32MZ2025DAR169) || defined(DEVICE_32MZ2025DAR176) || defined(DEVICE_32MZ2025DAS169)                    \
+    || defined(DEVICE_32MZ2025DAS176) || defined(DEVICE_32MZ2048EFG064) || defined(DEVICE_32MZ2048EFG100) || defined(DEVICE_32MZ2048EFG124)                    \
+    || defined(DEVICE_32MZ2048EFG144) || defined(DEVICE_32MZ2048EFH064) || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFH124)                    \
+    || defined(DEVICE_32MZ2048EFH144) || defined(DEVICE_32MZ2048EFM064) || defined(DEVICE_32MZ2048EFM100) || defined(DEVICE_32MZ2048EFM124)                    \
+    || defined(DEVICE_32MZ2048EFM144) || defined(DEVICE_32MZ2064DAA169) || defined(DEVICE_32MZ2064DAA176) || defined(DEVICE_32MZ2064DAA288)                    \
+    || defined(DEVICE_32MZ2064DAB169) || defined(DEVICE_32MZ2064DAB176) || defined(DEVICE_32MZ2064DAB288) || defined(DEVICE_32MZ2064DAG169)                    \
+    || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176) || defined(DEVICE_32MZ2064DAK169)                    \
+    || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176) || defined(DEVICE_32MZ2064DAR169)                    \
+    || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
+#    define ADC_HAVE_DEDICATED_CORE0
+#    define ADC_HAVE_DEDICATED_CORE1
+#    define ADC_HAVE_DEDICATED_CORE7
 #endif
 #if defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                       \
     || defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100)                    \
@@ -470,12 +638,9 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
     || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
     || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define ADC_HAVE_DEDICATED_CORE0
-#    define ADC_HAVE_DEDICATED_CORE1
 #    define ADC_HAVE_DEDICATED_CORE2
 #    define ADC_HAVE_DEDICATED_CORE3
 #    define ADC_HAVE_DEDICATED_CORE4
-#    define ADC_HAVE_DEDICATED_CORE7
 #endif
 
 #define ADC_TRGSRC_PWM_GENERATOR_12_TRIGGER    0b11110
@@ -514,4 +679,4 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
 }
 #endif
 
-#endif  // ADC_PIC32MZ_H
+#endif  // ADC_PIC32_SAR12_H
