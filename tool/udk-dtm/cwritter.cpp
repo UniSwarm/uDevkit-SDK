@@ -1,6 +1,7 @@
 #include "cwritter.h"
 
 #include <QCollator>
+#include <QProcess>
 
 CWritter::CWritter(const QString &fileName)
 {
@@ -13,17 +14,25 @@ CWritter::CWritter(const QString &fileName)
 
 CWritter::~CWritter()
 {
+    close();
+}
+
+void CWritter::close()
+{
     _file->close();
+    QProcess p;
+    p.start("clang-format", QStringList() << "-i" << _file->fileName());
+    p.waitForFinished(500);
 }
 
 void CWritter::writeIfDefList(const QStringList &listDef)
 {
-    int i = 0;
-
     QStringList listDefSorted = listDef;
     QCollator coll;
     coll.setNumericMode(true);
-    std::sort(listDefSorted.begin(), listDefSorted.end(), [&](const QString &s1, const QString &s2) { return coll.compare(s1, s2) < 0; });
+    std::sort(listDefSorted.begin(), listDefSorted.end(), [&](const QString &s1, const QString &s2) {
+        return coll.compare(s1, s2) < 0;
+    });
 
     if (_ifDefState == StateIfDefNotStarted)
     {
@@ -34,13 +43,15 @@ void CWritter::writeIfDefList(const QStringList &listDef)
     {
         *_stream << "#elif ";
     }
+
+    int i = 0;
     for (const QString &def : listDefSorted)
     {
         i++;
         *_stream << "defined(" << def << ")";
         if (i < listDefSorted.count())
         {
-            if (i % 3 == 0)
+            if (i % 4 == 0)
             {
                 *_stream << " \\\n";
             }
@@ -64,9 +75,6 @@ void CWritter::writeIfDefListEnd()
 
 void CWritter::writeDefList(const QStringList &listDef, const QStringList &values)
 {
-    QCollator coll;
-    coll.setNumericMode(true);
-
     int i = 0;
     for (const QString &def : listDef)
     {

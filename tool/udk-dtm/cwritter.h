@@ -11,6 +11,8 @@ public:
     CWritter(const QString &fileName);
     ~CWritter();
 
+    void close();
+
     void writeIfDefList(const QStringList &listDef);
     void writeIfDefElse();
     void writeIfDefListEnd();
