@@ -4,7 +4,7 @@
 #include "cwritter.h"
 #include "edcdb.h"
 
-class HeaderCreator
+class HeaderCreator : public CWritter
 {
 public:
     HeaderCreator(const EdcDb &db, QString picFilter, const QString &fileName);
@@ -13,7 +13,6 @@ public:
 protected:
     const EdcDb &_db;
     QString _picFilter;
-    CWritter *_cWritter;
 
     void writeSwitchDefineValue(const QMultiMap<QString, QString> &mapValueCPU, const QString &defineName);
 

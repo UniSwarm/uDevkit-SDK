@@ -77,24 +77,24 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db,
     {
         for (uint count : regCount.uniqueKeys())
         {
-            _cWritter->writeIfDefList(regCount.values(count));
+            writeIfDefList(regCount.values(count));
 
             QStringList defines;
             QStringList values;
             defines << deviceName + "_COUNT";
             values << QString::number(count);
-            _cWritter->writeDefList(defines, values);
+            writeDefList(defines, values);
         }
         if (!regCount.uniqueKeys().isEmpty())
         {
-            _cWritter->writeIfDefElse();
+            writeIfDefElse();
             QStringList defines;
             QStringList values;
             defines << deviceName + "_COUNT";
             values << "0";
-            _cWritter->writeDefList(defines, values);
-            _cWritter->writeIfDefListEnd();
-            (*_cWritter) << "\n";
+            writeDefList(defines, values);
+            writeIfDefListEnd();
+            *this << "\n";
         }
     }
 
@@ -136,8 +136,7 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db,
                 QString idDef = match.captured(1);
                 defines << QString("%1_HAVE_PORT%2").arg(deviceName).arg(idDef);
             }
-            _cWritter->writeDefList(defines);
-            _cWritter->writeIfDefListEnd();
         }
+        *this << "\n";
     }
 }

@@ -5,15 +5,14 @@
 #include <utility>
 
 HeaderCreator::HeaderCreator(const EdcDb &db, QString picFilter, const QString &fileName)
-    : _db(db)
+    : CWritter(fileName)
+    , _db(db)
     , _picFilter(std::move(picFilter))
 {
-    _cWritter = new CWritter(fileName);
 }
 
 HeaderCreator::~HeaderCreator()
 {
-    delete _cWritter;
 }
 
 void HeaderCreator::writeSwitchDefineValue(const QMultiMap<QString, QString> &mapValueCPU, const QString &defineName)
@@ -34,15 +33,15 @@ void HeaderCreator::writeSwitchDefineValue(const QMultiMap<QString, QString> &ma
 
     for (const auto &key : qAsConst(keys))
     {
-        _cWritter->writeIfDefList(mapValueCPU.values(key));
+        writeIfDefList(mapValueCPU.values(key));
 
         QStringList defines;
         QStringList values;
         defines << defineName;
         values << key;
-        _cWritter->writeDefList(defines, values);
+        writeDefList(defines, values);
     }
-    _cWritter->writeIfDefListEnd();
+    writeIfDefListEnd();
 }
 
 QString HeaderCreator::hexVal(int val, uint width)
