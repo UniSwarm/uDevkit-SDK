@@ -17,23 +17,50 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db,
     QMultiMap<QString, QString> adbuffCpu;
     QMultiMap<QString, QString> cpuAadbuff;
 
-    QRegularExpression sfrRegExp(sfrFilter);
+    const QStringList &sfrFilterPart = sfrFilter.split("\\.");
+    QString regFilter;
+    QString fieldFilter;
+    if (sfrFilterPart.count() > 1)
+    {
+        regFilter = sfrFilterPart[0];
+        fieldFilter = sfrFilterPart[1];
+    }
+    else
+    {
+        regFilter = sfrFilter;
+    }
+    QRegularExpression sfrFullRegExp(sfrFilter);
+    QRegularExpression sfrRegExp(regFilter);
+    QRegularExpression sfrFieldRegExp(fieldFilter);
 
     // Get regs from Db
-    QRegularExpression picFileRegExp(picFilter);
-    for (EDCParser *parser : db.parsers())
+    int deviceCount = 0;
+    QRegularExpression picFileRegExp(_picFilter);
+    for (EDCParser *parser : _db.parsers())
     {
         if (!picFileRegExp.match(parser->cpuName()).hasMatch())
         {
             continue;
         }
+        deviceCount++;
 
         QStringList sfrList;
         for (const EDCSFRDef &sfr : qAsConst(parser->sfrs()))
         {
             if (sfrRegExp.match(sfr.name).hasMatch())
             {
-                sfrList << sfr.name;
+                if (fieldFilter.isEmpty())
+                {
+                    sfrList << sfr.name;
+                    continue;
+                }
+                for (const EDCSFRFieldDef &field : qAsConst(sfr.fields))
+                {
+                    if (sfrFieldRegExp.match(field.name).hasMatch())
+                    {
+                        sfrList << sfr.name + '.' + field.name;
+                    }
+                }
             }
         }
 
@@ -43,6 +70,7 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db,
         }
 
         QString adFilter = sfrFilter;
+        adFilter.replace("\\.", ".");
         adFilter.remove(QRegularExpression("[\\^\\$]"));
         for (int i = 0; i < 64; i++)
         {
@@ -103,18 +131,18 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db,
     {
         for (uint max : regMax.uniqueKeys())
         {
-            _cWritter->writeIfDefList(regMax.values(max));
+            writeIfDefList(regMax.values(max));
 
             QStringList defines;
             QStringList values;
             defines << deviceName + "_MAX";
             values << QString::number(max);
-            _cWritter->writeDefList(defines, values);
+            writeDefList(defines, values);
         }
         if (!regMax.uniqueKeys().isEmpty())
         {
-            _cWritter->writeIfDefListEnd();
-            (*_cWritter) << "\n";
+            writeIfDefListEnd();
+            *this << "\n";
         }
     }
 
