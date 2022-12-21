@@ -18,7 +18,9 @@ public:
                               const QString &deviceName,
                               const QString &sfrFilter,
                               PeriphCap caps,
-                              const QString &fileName);
+                              const QString &fileName,
+                              const QString &haveExp = QString());
+    void append(const QString &deviceName, const QString &sfrFilter, PeriphCap caps, const QString &haveExp = QString());
 };
 
 #endif  // PERIPHERICALHEADERCREATOR_H

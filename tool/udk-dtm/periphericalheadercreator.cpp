@@ -11,8 +11,14 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db,
                                                      const QString &deviceName,
                                                      const QString &sfrFilter,
                                                      PeriphCap caps,
-                                                     const QString &fileName)
+                                                     const QString &fileName,
+                                                     const QString &haveExp)
     : HeaderCreator(db, picFilter, fileName)
+{
+    append(deviceName, sfrFilter, caps, haveExp);
+}
+
+void PeriphericalHeaderCreator::append(const QString &deviceName, const QString &sfrFilter, PeriphCap caps, const QString &haveExp)
 {
     QMultiMap<QString, QString> adbuffCpu;
     QMultiMap<QString, QString> cpuAadbuff;
@@ -72,14 +78,10 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db,
         QString adFilter = sfrFilter;
         adFilter.replace("\\.", ".");
         adFilter.remove(QRegularExpression("[\\^\\$]"));
-        for (int i = 0; i < 64; i++)
+        const QStringList sfrListFiltered = sfrList.filter(QRegularExpression(adFilter));
+        for (const QString &def : sfrListFiltered)
         {
-            QString adBuff = adFilter;
-            adBuff.replace(QRegularExpression("\\(.*\\)"), QString::number(i));
-            if (sfrList.contains(adBuff))
-            {
-                adbuffCpu.insert(adBuff, parser->deviceName());
-            }
+            adbuffCpu.insert(def, parser->deviceName());
         }
     }
 
@@ -89,15 +91,34 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db,
     const QList<QString> &cpuUniqueKeys = cpuAadbuff.uniqueKeys();
     for (const QString &cpu : qAsConst(cpuUniqueKeys))
     {
-        QStringList adBuff = cpuAadbuff.values(cpu);
-        QCollator coll;
-        coll.setNumericMode(true);
-        std::sort(adBuff.begin(), adBuff.end(), [&](const QString &s1, const QString &s2) { return coll.compare(s1, s2) < 0; });
+        const QStringList &adBuff = cpuAadbuff.values(cpu);
 
-        QRegularExpressionMatch match = sfrRegExp.match(adBuff.last());
-        int max = match.captured(1).toInt() + 1;
         int count = adBuff.count();
         regCount.insert(count, cpu);
+
+        int max = 0;
+        for (const QString &def : adBuff)
+        {
+            QRegularExpressionMatch match = sfrFullRegExp.match(def);
+            QString matchPart = match.captured(1);
+            if (matchPart.isEmpty())
+            {
+                continue;
+            }
+            int value = 0;
+            if (matchPart[0].isLetter())
+            {
+                value = matchPart[0].toLatin1() - 'A';
+            }
+            else
+            {
+                value = match.captured(1).toInt() + 1;
+            }
+            if (max < value)
+            {
+                max = value;
+            }
+        }
         regMax.insert(max, cpu);
     }
 
@@ -147,6 +168,12 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db,
     }
 
     // have channel
+    QString haveExpression = haveExp;
+    if (haveExpression.isEmpty())
+    {
+        haveExpression = deviceName + "_HAVE_%1";
+    }
+    bool hasArg = haveExpression.contains("%1");
     if ((caps & P_HAVE) != 0)
     {
         QMultiMap<QStringList, QString> adbuffCpuList;
@@ -154,15 +181,44 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db,
         {
             adbuffCpuList.insert(adbuffCpu.values(adBuff), adBuff);
         }
-        for (const QStringList &cpus : adbuffCpuList.uniqueKeys())
+
+        QList<QStringList> cpusKeys = adbuffCpuList.uniqueKeys();
+        std::sort(cpusKeys.begin(), cpusKeys.end(), [&](const QStringList &s1, const QStringList &s2) {
+            return s1.size() > s2.size();
+        });
+
+        for (const QStringList &cpus : cpusKeys)
         {
-            _cWritter->writeIfDefList(cpus);
+            bool allCPU = (cpus.count() == deviceCount);
+            if (!allCPU)
+            {
+                writeIfDefList(cpus);
+            }
             QStringList defines;
             for (const QString &def : adbuffCpuList.values(cpus))
             {
-                QRegularExpressionMatch match = sfrRegExp.match(def);
+                QRegularExpressionMatch match = sfrFullRegExp.match(def);
                 QString idDef = match.captured(1);
-                defines << QString("%1_HAVE_PORT%2").arg(deviceName).arg(idDef);
+                if (hasArg)
+                {
+                    defines << haveExpression.arg(idDef);
+                }
+                else
+                {
+                    defines << haveExpression;
+                }
+            }
+
+            QCollator coll;
+            coll.setNumericMode(true);
+            QStringList sortedDef = defines;
+            std::sort(sortedDef.begin(), sortedDef.end(), [&](const QString &s1, const QString &s2) {
+                return coll.compare(s1, s2) < 0;
+            });
+            writeDefList(sortedDef);
+            if (!allCPU)
+            {
+                writeIfDefListEnd();
             }
         }
         *this << "\n";
