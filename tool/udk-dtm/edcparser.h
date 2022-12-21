@@ -7,10 +7,19 @@
 #include <QString>
 #include <QXmlStreamReader>
 
+struct EDCSFRFieldDef
+{
+    QString name;
+    uint adrr;
+    uint size;
+};
+
 struct EDCSFRDef
 {
     QString name;
     uint adrr;
+    uint impl;
+    QList<EDCSFRFieldDef> fields;
 };
 
 struct EDCProgramSpace
@@ -36,10 +45,11 @@ public:
 protected:
     bool parseDocument();
     bool parsePic();
+    bool parseDataSpace();
     bool parseSFRDef();
     bool parseProgramSubSpace();
     bool parseProgramSector();
-    bool parseSFRMode();
+    bool parseSFRMode(EDCSFRDef &sfrDef);
 
     QString _filePath;
     QXmlStreamReader *_xml;
@@ -48,8 +58,6 @@ protected:
     QString _deviceName;
     QList<EDCSFRDef> _sfrs;
     QMap<QString, EDCProgramSpace> _programSpaces;
-
-    int _level;
 };
 
 #endif  // EDCPARSER_H
