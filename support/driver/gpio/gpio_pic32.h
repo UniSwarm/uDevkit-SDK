@@ -21,7 +21,40 @@ extern "C" {
 #endif
 
 // compute PORT count and existance on device
-#if defined(DEVICE_32MX120F064H) || defined(DEVICE_32MX130F128H) || defined(DEVICE_32MX150F256H) || defined(DEVICE_32MX170F512H)                               \
+#if defined(DEVICE_32MM0016GPL020) || defined(DEVICE_32MM0032GPL020) || defined(DEVICE_32MM0064GPL020) || defined(DEVICE_32MX110F016B)                         \
+    || defined(DEVICE_32MX120F032B) || defined(DEVICE_32MX130F064B) || defined(DEVICE_32MX130F256B) || defined(DEVICE_32MX150F128B)                            \
+    || defined(DEVICE_32MX154F128B) || defined(DEVICE_32MX170F256B) || defined(DEVICE_32MX174F256B) || defined(DEVICE_32MX210F016B)                            \
+    || defined(DEVICE_32MX220F032B) || defined(DEVICE_32MX230F064B) || defined(DEVICE_32MX230F256B) || defined(DEVICE_32MX250F128B)                            \
+    || defined(DEVICE_32MX254F128B) || defined(DEVICE_32MX270F256B) || defined(DEVICE_32MX274F256B)
+#    define GPIO_HAVE_PORTA
+#    define GPIO_HAVE_PORTB
+#    define GPIO_PORT_COUNT 2
+#    define GPIO_PORT_MAX   2
+#elif defined(DEVICE_32MM0016GPL028) || defined(DEVICE_32MM0016GPL036) || defined(DEVICE_32MM0032GPL028) || defined(DEVICE_32MM0032GPL036)                     \
+    || defined(DEVICE_32MM0064GPL028) || defined(DEVICE_32MM0064GPL036) || defined(DEVICE_32MM0064GPM028) || defined(DEVICE_32MM0064GPM036)                    \
+    || defined(DEVICE_32MM0128GPM028) || defined(DEVICE_32MM0128GPM036) || defined(DEVICE_32MM0256GPM028) || defined(DEVICE_32MM0256GPM036)                    \
+    || defined(DEVICE_32MX110F016C) || defined(DEVICE_32MX110F016D) || defined(DEVICE_32MX120F032C) || defined(DEVICE_32MX120F032D)                            \
+    || defined(DEVICE_32MX130F064C) || defined(DEVICE_32MX130F064D) || defined(DEVICE_32MX130F256D) || defined(DEVICE_32MX150F128C)                            \
+    || defined(DEVICE_32MX150F128D) || defined(DEVICE_32MX154F128D) || defined(DEVICE_32MX170F256D) || defined(DEVICE_32MX174F256D)                            \
+    || defined(DEVICE_32MX210F016C) || defined(DEVICE_32MX210F016D) || defined(DEVICE_32MX220F032C) || defined(DEVICE_32MX220F032D)                            \
+    || defined(DEVICE_32MX230F064C) || defined(DEVICE_32MX230F064D) || defined(DEVICE_32MX230F256D) || defined(DEVICE_32MX250F128C)                            \
+    || defined(DEVICE_32MX250F128D) || defined(DEVICE_32MX254F128D) || defined(DEVICE_32MX270F256D) || defined(DEVICE_32MX274F256D)
+#    define GPIO_HAVE_PORTA
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTC
+#    define GPIO_PORT_COUNT 3
+#    define GPIO_PORT_MAX   3
+#elif defined(DEVICE_32MK0128MCA028) || defined(DEVICE_32MK0128MCA032) || defined(DEVICE_32MK0128MCA048) || defined(DEVICE_32MK0256GPG048)                     \
+    || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MM0064GPM048)                    \
+    || defined(DEVICE_32MM0064GPM064) || defined(DEVICE_32MM0128GPM048) || defined(DEVICE_32MM0128GPM064) || defined(DEVICE_32MM0256GPM048)                    \
+    || defined(DEVICE_32MM0256GPM064)
+#    define GPIO_HAVE_PORTA
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTC
+#    define GPIO_HAVE_PORTD
+#    define GPIO_PORT_COUNT 4
+#    define GPIO_PORT_MAX   4
+#elif defined(DEVICE_32MX120F064H) || defined(DEVICE_32MX130F128H) || defined(DEVICE_32MX150F256H) || defined(DEVICE_32MX170F512H)                             \
     || defined(DEVICE_32MX230F128H) || defined(DEVICE_32MX250F256H) || defined(DEVICE_32MX270F512H) || defined(DEVICE_32MX320F032H)                            \
     || defined(DEVICE_32MX320F064H) || defined(DEVICE_32MX320F128H) || defined(DEVICE_32MX330F064H) || defined(DEVICE_32MX340F128H)                            \
     || defined(DEVICE_32MX340F256H) || defined(DEVICE_32MX340F512H) || defined(DEVICE_32MX350F128H) || defined(DEVICE_32MX350F256H)                            \
@@ -42,36 +75,8 @@ extern "C" {
 #    define GPIO_HAVE_PORTE
 #    define GPIO_HAVE_PORTF
 #    define GPIO_HAVE_PORTG
-#    define GPIO_COUNT 6
-#elif defined(DEVICE_32MM0016GPL020) || defined(DEVICE_32MM0032GPL020) || defined(DEVICE_32MM0064GPL020) || defined(DEVICE_32MX110F016B)                       \
-    || defined(DEVICE_32MX120F032B) || defined(DEVICE_32MX130F064B) || defined(DEVICE_32MX130F256B) || defined(DEVICE_32MX150F128B)                            \
-    || defined(DEVICE_32MX154F128B) || defined(DEVICE_32MX170F256B) || defined(DEVICE_32MX174F256B) || defined(DEVICE_32MX210F016B)                            \
-    || defined(DEVICE_32MX220F032B) || defined(DEVICE_32MX230F064B) || defined(DEVICE_32MX230F256B) || defined(DEVICE_32MX250F128B)                            \
-    || defined(DEVICE_32MX254F128B) || defined(DEVICE_32MX270F256B) || defined(DEVICE_32MX274F256B)
-#    define GPIO_HAVE_PORTA
-#    define GPIO_HAVE_PORTB
-#    define GPIO_COUNT 2
-#elif defined(DEVICE_32MM0016GPL028) || defined(DEVICE_32MM0016GPL036) || defined(DEVICE_32MM0032GPL028) || defined(DEVICE_32MM0032GPL036)                     \
-    || defined(DEVICE_32MM0064GPL028) || defined(DEVICE_32MM0064GPL036) || defined(DEVICE_32MM0064GPM028) || defined(DEVICE_32MM0064GPM036)                    \
-    || defined(DEVICE_32MM0128GPM028) || defined(DEVICE_32MM0128GPM036) || defined(DEVICE_32MM0256GPM028) || defined(DEVICE_32MM0256GPM036)                    \
-    || defined(DEVICE_32MX110F016C) || defined(DEVICE_32MX110F016D) || defined(DEVICE_32MX120F032C) || defined(DEVICE_32MX120F032D)                            \
-    || defined(DEVICE_32MX130F064C) || defined(DEVICE_32MX130F064D) || defined(DEVICE_32MX130F256D) || defined(DEVICE_32MX150F128C)                            \
-    || defined(DEVICE_32MX150F128D) || defined(DEVICE_32MX154F128D) || defined(DEVICE_32MX170F256D) || defined(DEVICE_32MX174F256D)                            \
-    || defined(DEVICE_32MX210F016C) || defined(DEVICE_32MX210F016D) || defined(DEVICE_32MX220F032C) || defined(DEVICE_32MX220F032D)                            \
-    || defined(DEVICE_32MX230F064C) || defined(DEVICE_32MX230F064D) || defined(DEVICE_32MX230F256D) || defined(DEVICE_32MX250F128C)                            \
-    || defined(DEVICE_32MX250F128D) || defined(DEVICE_32MX254F128D) || defined(DEVICE_32MX270F256D) || defined(DEVICE_32MX274F256D)
-#    define GPIO_HAVE_PORTA
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTC
-#    define GPIO_COUNT 3
-#elif defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512MCJ048)                     \
-    || defined(DEVICE_32MM0064GPM048) || defined(DEVICE_32MM0064GPM064) || defined(DEVICE_32MM0128GPM048) || defined(DEVICE_32MM0128GPM064)                    \
-    || defined(DEVICE_32MM0256GPM048) || defined(DEVICE_32MM0256GPM064)
-#    define GPIO_HAVE_PORTA
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTC
-#    define GPIO_HAVE_PORTD
-#    define GPIO_COUNT 4
+#    define GPIO_PORT_COUNT 6
+#    define GPIO_PORT_MAX   7
 #elif defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100)                     \
     || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512GPK064)                    \
     || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF064) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ064)                    \
@@ -99,7 +104,8 @@ extern "C" {
 #    define GPIO_HAVE_PORTE
 #    define GPIO_HAVE_PORTF
 #    define GPIO_HAVE_PORTG
-#    define GPIO_COUNT 7
+#    define GPIO_PORT_COUNT 7
+#    define GPIO_PORT_MAX   7
 #elif defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ1024ECG124)                     \
     || defined(DEVICE_32MZ1024ECH124) || defined(DEVICE_32MZ1024ECM124) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFF124)                    \
     || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFH124) || defined(DEVICE_32MZ1024EFK124) || defined(DEVICE_32MZ1024EFM124)                    \
@@ -114,7 +120,8 @@ extern "C" {
 #    define GPIO_HAVE_PORTG
 #    define GPIO_HAVE_PORTH
 #    define GPIO_HAVE_PORTJ
-#    define GPIO_COUNT 9
+#    define GPIO_PORT_COUNT 9
+#    define GPIO_PORT_MAX   10
 #elif defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF144) || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024ECG144)                     \
     || defined(DEVICE_32MZ1024ECH144) || defined(DEVICE_32MZ1024ECM144) || defined(DEVICE_32MZ1024EFE144) || defined(DEVICE_32MZ1024EFF144)                    \
     || defined(DEVICE_32MZ1024EFG144) || defined(DEVICE_32MZ1024EFH144) || defined(DEVICE_32MZ1024EFK144) || defined(DEVICE_32MZ1024EFM144)                    \
@@ -148,7 +155,11 @@ extern "C" {
 #    define GPIO_HAVE_PORTH
 #    define GPIO_HAVE_PORTJ
 #    define GPIO_HAVE_PORTK
-#    define GPIO_COUNT 10
+#    define GPIO_PORT_COUNT 10
+#    define GPIO_PORT_MAX   11
+#else
+#    define GPIO_PORT_COUNT 0
+#    define GPIO_PORT_MAX   0
 #endif
 
 #define GPIO_MAX_PORTWIDTH     16
