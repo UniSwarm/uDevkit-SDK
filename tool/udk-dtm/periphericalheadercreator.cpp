@@ -20,9 +20,6 @@ PeriphericalHeaderCreator::PeriphericalHeaderCreator(const EdcDb &db,
 
 void PeriphericalHeaderCreator::append(const QString &deviceName, const QString &sfrFilter, PeriphCap caps, const QString &haveExp)
 {
-    QMultiMap<QString, QString> adbuffCpu;
-    QMultiMap<QString, QString> cpuAadbuff;
-
     const QStringList &sfrFilterPart = sfrFilter.split("\\.");
     QString regFilter;
     QString fieldFilter;
@@ -42,6 +39,8 @@ void PeriphericalHeaderCreator::append(const QString &deviceName, const QString 
     // Get regs from Db
     int deviceCount = 0;
     QRegularExpression picFileRegExp(_picFilter);
+    QMultiMap<QString, QString> sfrCpuListMap;
+    QMultiMap<QString, QString> cpuSfrListMap;
     for (EDCParser *parser : _db.parsers())
     {
         if (!picFileRegExp.match(parser->cpuName()).hasMatch())
@@ -72,7 +71,7 @@ void PeriphericalHeaderCreator::append(const QString &deviceName, const QString 
 
         for (const QString &sfr : qAsConst(sfrList))
         {
-            cpuAadbuff.insert(parser->deviceName(), sfr);
+            cpuSfrListMap.insert(parser->deviceName(), sfr);
         }
 
         QString adFilter = sfrFilter;
@@ -81,67 +80,37 @@ void PeriphericalHeaderCreator::append(const QString &deviceName, const QString 
         const QStringList sfrListFiltered = sfrList.filter(QRegularExpression(adFilter));
         for (const QString &def : sfrListFiltered)
         {
-            adbuffCpu.insert(def, parser->deviceName());
+            sfrCpuListMap.insert(def, parser->deviceName());
         }
     }
 
-    // Count reg
+    // Count sfr and process max
     QMultiMap<uint, QString> regCount;
     QMultiMap<uint, QString> regMax;
-    const QList<QString> &cpuUniqueKeys = cpuAadbuff.uniqueKeys();
+    const QList<QString> &cpuUniqueKeys = cpuSfrListMap.uniqueKeys();
     for (const QString &cpu : qAsConst(cpuUniqueKeys))
     {
-        const QStringList &adBuff = cpuAadbuff.values(cpu);
+        const QStringList &sfrList = cpuSfrListMap.values(cpu);
 
-        int count = adBuff.count();
+        int count = sfrList.count();
         regCount.insert(count, cpu);
 
-        int max = 0;
-        for (const QString &def : adBuff)
-        {
-            QRegularExpressionMatch match = sfrFullRegExp.match(def);
-            QString matchPart = match.captured(1);
-            if (matchPart.isEmpty())
-            {
-                continue;
-            }
-            int value = 0;
-            if (matchPart[0].isLetter())
-            {
-                value = matchPart[0].toLatin1() - 'A';
-            }
-            else
-            {
-                value = match.captured(1).toInt() + 1;
-            }
-            if (max < value)
-            {
-                max = value;
-            }
-        }
+        int max = proccessMax(sfrList, sfrFullRegExp);
         regMax.insert(max, cpu);
     }
 
     if ((caps & P_COUNT) != 0)
     {
-        for (uint count : regCount.uniqueKeys())
+        const QList<uint> &countList = regCount.uniqueKeys();
+        for (uint count : countList)
         {
             writeIfDefList(regCount.values(count));
-
-            QStringList defines;
-            QStringList values;
-            defines << deviceName + "_COUNT";
-            values << QString::number(count);
-            writeDefList(defines, values);
+            writeDefList(QStringList() << deviceName + "_COUNT", QStringList() << QString::number(count));
         }
         if (!regCount.uniqueKeys().isEmpty())
         {
             writeIfDefElse();
-            QStringList defines;
-            QStringList values;
-            defines << deviceName + "_COUNT";
-            values << "0";
-            writeDefList(defines, values);
+            writeDefList(QStringList() << deviceName + "_COUNT", QStringList() << "0");
             writeIfDefListEnd();
             *this << "\n";
         }
@@ -150,24 +119,27 @@ void PeriphericalHeaderCreator::append(const QString &deviceName, const QString 
     // Max
     if ((caps & P_MAX) != 0)
     {
-        for (uint max : regMax.uniqueKeys())
+        const QList<uint> &maxList = regMax.uniqueKeys();
+        if (maxList.count() == 1 && regMax.values(maxList.first()).size() == deviceCount)
         {
-            writeIfDefList(regMax.values(max));
-
-            QStringList defines;
-            QStringList values;
-            defines << deviceName + "_MAX";
-            values << QString::number(max);
-            writeDefList(defines, values);
+            writeDefList(QStringList() << deviceName + "_MAX", QStringList() << QString::number(maxList.first()));
         }
-        if (!regMax.uniqueKeys().isEmpty())
+        else
+        {
+            for (uint max : maxList)
+            {
+                writeIfDefList(regMax.values(max));
+                writeDefList(QStringList() << deviceName + "_MAX", QStringList() << QString::number(max));
+            }
+        }
+        if (maxList.size() > 1)
         {
             writeIfDefListEnd();
-            *this << "\n";
         }
+        *this << "\n";
     }
 
-    // have channel
+    // Write have
     QString haveExpression = haveExp;
     if (haveExpression.isEmpty())
     {
@@ -176,18 +148,19 @@ void PeriphericalHeaderCreator::append(const QString &deviceName, const QString 
     bool hasArg = haveExpression.contains("%1");
     if ((caps & P_HAVE) != 0)
     {
-        QMultiMap<QStringList, QString> adbuffCpuList;
-        for (const QString &adBuff : adbuffCpu.uniqueKeys())
+        const QStringList &regList = sfrCpuListMap.uniqueKeys();
+        QMultiMap<QStringList, QString> regCpuList;
+        for (const QString &reg : regList)
         {
-            adbuffCpuList.insert(adbuffCpu.values(adBuff), adBuff);
+            regCpuList.insert(sfrCpuListMap.values(reg), reg);
         }
 
-        QList<QStringList> cpusKeys = adbuffCpuList.uniqueKeys();
+        QList<QStringList> cpusKeys = regCpuList.uniqueKeys();
         std::sort(cpusKeys.begin(), cpusKeys.end(), [&](const QStringList &s1, const QStringList &s2) {
             return s1.size() > s2.size();
         });
 
-        for (const QStringList &cpus : cpusKeys)
+        for (const QStringList &cpus : qAsConst(cpusKeys))
         {
             bool allCPU = (cpus.count() == deviceCount);
             if (!allCPU)
@@ -195,7 +168,8 @@ void PeriphericalHeaderCreator::append(const QString &deviceName, const QString 
                 writeIfDefList(cpus);
             }
             QStringList defines;
-            for (const QString &def : adbuffCpuList.values(cpus))
+            const QStringList &defCpus = regCpuList.values(cpus);
+            for (const QString &def : defCpus)
             {
                 QRegularExpressionMatch match = sfrFullRegExp.match(def);
                 QString idDef = match.captured(1);
@@ -223,4 +197,32 @@ void PeriphericalHeaderCreator::append(const QString &deviceName, const QString 
         }
         *this << "\n";
     }
+}
+
+int PeriphericalHeaderCreator::proccessMax(const QStringList &sfrList, const QRegularExpression &regExp)
+{
+    int max = 0;
+    for (const QString &def : sfrList)
+    {
+        QRegularExpressionMatch match = regExp.match(def);
+        QString matchPart = match.captured(1);
+        if (matchPart.isEmpty())
+        {
+            continue;
+        }
+        int value = 0;
+        if (matchPart[0].isLetter())
+        {
+            value = matchPart[0].toLatin1() - 'A' + 1;
+        }
+        else
+        {
+            value = match.captured(1).toInt();
+        }
+        if (max < value)
+        {
+            max = value;
+        }
+    }
+    return max;
 }

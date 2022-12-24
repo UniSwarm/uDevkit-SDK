@@ -21,6 +21,8 @@ public:
                               const QString &fileName,
                               const QString &haveExp = QString());
     void append(const QString &deviceName, const QString &sfrFilter, PeriphCap caps, const QString &haveExp = QString());
+
+    int proccessMax(const QStringList &sfrList, const QRegularExpression &regExp);
 };
 
 #endif  // PERIPHERICALHEADERCREATOR_H
