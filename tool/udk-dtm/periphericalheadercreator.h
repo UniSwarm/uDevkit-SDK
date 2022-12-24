@@ -8,6 +8,7 @@ enum PeriphCap
     P_COUNT = 0x01,
     P_HAVE = 0x02,
     P_MAX = 0x04,
+    P_UNIQUE = 0x08,
 };
 
 class PeriphericalHeaderCreator : public HeaderCreator

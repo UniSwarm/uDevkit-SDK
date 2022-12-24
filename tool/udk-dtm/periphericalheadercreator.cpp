@@ -99,7 +99,8 @@ void PeriphericalHeaderCreator::append(const QString &deviceName, const QString 
         regMax.insert(max, cpu);
     }
 
-    if ((caps & P_COUNT) != 0)
+    // Write count
+    if ((caps & P_COUNT) != 0 && (caps & P_UNIQUE) == 0)
     {
         const QList<uint> &countList = regCount.uniqueKeys();
         for (uint count : countList)
@@ -116,8 +117,8 @@ void PeriphericalHeaderCreator::append(const QString &deviceName, const QString 
         }
     }
 
-    // Max
-    if ((caps & P_MAX) != 0)
+    // Write max
+    if ((caps & P_MAX) != 0 && (caps & P_UNIQUE) == 0)
     {
         const QList<uint> &maxList = regMax.uniqueKeys();
         if (maxList.count() == 1 && regMax.values(maxList.first()).size() == deviceCount)
@@ -146,7 +147,7 @@ void PeriphericalHeaderCreator::append(const QString &deviceName, const QString 
         haveExpression = deviceName + "_HAVE_%1";
     }
     bool hasArg = haveExpression.contains("%1");
-    if ((caps & P_HAVE) != 0)
+    if ((caps & P_HAVE) != 0 && (caps & P_UNIQUE) == 0)
     {
         const QStringList &regList = sfrCpuListMap.uniqueKeys();
         QMultiMap<QStringList, QString> regCpuList;
@@ -195,6 +196,61 @@ void PeriphericalHeaderCreator::append(const QString &deviceName, const QString 
                 writeIfDefListEnd();
             }
         }
+        *this << "\n";
+    }
+
+    if ((caps & P_UNIQUE) != 0)
+    {
+        const QStringList &cpuList = cpuSfrListMap.uniqueKeys();
+        QMultiMap<QStringList, QString> cpuRegList;
+        for (const QString &cpu : cpuList)
+        {
+            cpuRegList.insert(cpuSfrListMap.values(cpu), cpu);
+        }
+
+        QList<QStringList> regsKeys = cpuRegList.uniqueKeys();
+        for (const QStringList &regs : qAsConst(regsKeys))
+        {
+            const QStringList &cpusList = cpuRegList.values(regs);
+            writeIfDefList(cpusList);
+
+            if ((caps & P_HAVE) != 0)
+            {
+                QStringList defines;
+                for (const QString &reg : regs)
+                {
+                    QRegularExpressionMatch match = sfrFullRegExp.match(reg);
+                    QString idDef = match.captured(1);
+                    if (hasArg)
+                    {
+                        defines << haveExpression.arg(idDef);
+                    }
+                    else
+                    {
+                        defines << haveExpression;
+                    }
+                }
+                QCollator coll;
+                coll.setNumericMode(true);
+                QStringList sortedDef = defines;
+                std::sort(sortedDef.begin(), sortedDef.end(), [&](const QString &s1, const QString &s2) {
+                    return coll.compare(s1, s2) < 0;
+                });
+                writeDefList(sortedDef);
+            }
+
+            if ((caps & P_COUNT) != 0)
+            {
+                writeDefList(QStringList() << deviceName + "_COUNT", QStringList() << QString::number(regs.count()));
+            }
+
+            if ((caps & P_MAX) != 0)
+            {
+                int max = proccessMax(regs, sfrFullRegExp);
+                writeDefList(QStringList() << deviceName + "_MAX", QStringList() << QString::number(max));
+            }
+        }
+        writeIfDefListEnd();
         *this << "\n";
     }
 }
