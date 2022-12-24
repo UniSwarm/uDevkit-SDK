@@ -30,7 +30,7 @@ bool EDCParser::parseDocument()
 {
     while (_xml->readNextStartElement())
     {
-        if (_xml->name() == QString("PIC"))
+        if (_xml->name() == QStringLiteral("PIC"))
         {
             parsePic();
         }
@@ -59,17 +59,15 @@ bool EDCParser::parsePic()
 
     while (_xml->readNextStartElement())
     {
-        QStringRef name = _xml->name();
-        // qDebug() << name;
-        if (_xml->name() == QString("DataSpace") || _xml->name() == "PhysicalSpace")
+        if (_xml->name() == QStringLiteral("DataSpace") || _xml->name() == QStringLiteral("PhysicalSpace"))
         {
             parseDataSpace();
         }
-        else if (_xml->name() == QString("ProgramSubspace"))
+        else if (_xml->name() == QStringLiteral("ProgramSubspace"))
         {
             parseProgramSubSpace();
         }
-        else if (_xml->name().endsWith(QString("Sector")))
+        else if (_xml->name().endsWith(QStringLiteral("Sector")))
         {
             parseProgramSector();
         }
@@ -85,11 +83,11 @@ bool EDCParser::parseDataSpace()
 {
     while (_xml->readNextStartElement())
     {
-        if (_xml->name().endsWith("SFRDef"))
+        if (_xml->name().endsWith(QStringLiteral("SFRDef")))
         {
             parseSFRDef();
         }
-        else if (_xml->name() == "RegardlessOfMode" || _xml->name() == "SFRDataSector")
+        else if (_xml->name() == QStringLiteral("RegardlessOfMode") || _xml->name() == QStringLiteral("SFRDataSector"))
         {
             parseDataSpace();
         }
@@ -115,23 +113,19 @@ bool EDCParser::parseSFRDef()
     bool ok;
     sfrDef.adrr = _xml->attributes().value("edc:_addr").toUInt(&ok, 0);
     sfrDef.impl = _xml->attributes().value("edc:impl").toUInt(&ok, 0);
-    // qDebug() << sfrDef.name;
-
-    // _xml->readNext();
 
     while (_xml->readNextStartElement())
     {
-        if (_xml->name() == QString("SFRMode"))
+        if (_xml->name() == QStringLiteral("SFRMode"))
         {
             parseSFRMode(sfrDef);
         }
-        else if (_xml->name() == QString("SFRModeList"))
+        else if (_xml->name() == QStringLiteral("SFRModeList"))
         {
             continue;
         }
         else
         {
-            // qDebug() << "NONO" << _xml->name();
             _xml->skipCurrentElement();
         }
     }
@@ -152,7 +146,7 @@ bool EDCParser::parseProgramSubSpace()
 
     while (_xml->readNextStartElement())
     {
-        if (_xml->name().endsWith(QString("Sector")))
+        if (_xml->name().endsWith(QStringLiteral("Sector")))
         {
             parseProgramSector();
         }
@@ -187,17 +181,13 @@ bool EDCParser::parseSFRMode(EDCSFRDef &sfrDef)
     int bitAddr = 0;
     while (_xml->readNextStartElement())
     {
-        if (_xml->name().endsWith(QString("AdjustPoint")))
+        if (_xml->name().endsWith(QStringLiteral("AdjustPoint")))
         {
             bitAddr += _xml->attributes().value("edc:offset").toUInt(&ok, 0);
             _xml->skipCurrentElement();
         }
-        else if (_xml->name().endsWith(QString("SFRFieldDef")))
+        else if (_xml->name().endsWith(QStringLiteral("SFRFieldDef")))
         {
-            /*if (sfrDef.name == "ADCON4L")
-            {
-                qDebug() << sfrDef.name << _xml->attributes().value("edc:cname").toString() << bitAddr;
-            }*/
             EDCSFRFieldDef field;
             field.name = _xml->attributes().value("edc:cname").toString();
             field.adrr = bitAddr;
