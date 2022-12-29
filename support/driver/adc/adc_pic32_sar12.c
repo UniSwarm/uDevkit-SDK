@@ -33,12 +33,10 @@ int adc_init(void)
     ADC7CFG = DEVADC7;
 
     // Configure ADCCON1
-    ADCCON1 = 0;  // No ADCCON1 features are enabled including: Stop-in-Idle, turbo,
-    // CVD mode, Fractional mode and scan trigger source.
+    ADCCON1 = 0;  // No ADCCON1 features are enabled including: Stop-in-Idle, turbo, CVD mode, Fractional mode and scan trigger source.
 
     // Configure ADCCON2
-    ADCCON2 = 0;  // Since, we are using only the Class 1 inputs, no setting is
-    // required for ADCDIV
+    ADCCON2 = 0;  // Since, we are using only the Class 1 inputs, no setting is required for ADCDIV
 
     // Initialize warm up time register
     ADCANCON = 0;
@@ -284,7 +282,7 @@ int adc_dataReady(uint8_t channel)
 {
     uint32_t mask;
 
-    if (channel >= ADC_CHANNEL_MAX)
+    if (channel > ADC_CHANNEL_MAX)
     {
         return -1;
     }
@@ -303,7 +301,7 @@ int adc_dataReady(uint8_t channel)
 
 int16_t adc_value(uint8_t channel)
 {
-    if (channel >= ADC_CHANNEL_MAX)
+    if (channel > ADC_CHANNEL_MAX)
     {
         return 0;
     }
@@ -312,7 +310,7 @@ int16_t adc_value(uint8_t channel)
 
 volatile int32_t *adc_buffAddr(uint8_t channel)
 {
-    if (channel >= ADC_CHANNEL_MAX)
+    if (channel > ADC_CHANNEL_MAX)
     {
         return NULL;
     }
@@ -380,7 +378,7 @@ int16_t adc_getValue(uint8_t channel)
 #define ADCTRG(channel) ((volatile uint8_t *)(&ADCTRG1) + (((uint8_t)(channel)&0xFC) * 4 + ((uint8_t)(channel)&0x03)))
 int adc_setTriggerSource(uint8_t channel, uint8_t triggerSource)
 {
-    if (channel >= ADC_CHANNEL_MAX)
+    if (channel > ADC_CHANNEL_MAX)
     {
         return -1;
     }

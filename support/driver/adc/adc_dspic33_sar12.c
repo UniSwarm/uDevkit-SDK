@@ -124,6 +124,13 @@ struct adc_dev
 
 #ifndef ADC_NOHANDLER
 static struct adc_dev _adcs[] = {
+#    if ADC_CHANNEL_MAX >= 0
+    {
+#        ifndef ADC_NOHANDLER
+        .handler = NULL,
+#        endif  // !ADC_NOHANDLER
+    },
+#    endif
 #    if ADC_CHANNEL_MAX >= 1
     {
 #        ifndef ADC_NOHANDLER
@@ -328,13 +335,6 @@ static struct adc_dev _adcs[] = {
     },
 #    endif
 #    if ADC_CHANNEL_MAX >= 30
-    {
-#        ifndef ADC_NOHANDLER
-        .handler = NULL,
-#        endif  // !ADC_NOHANDLER
-    },
-#    endif
-#    if ADC_CHANNEL_MAX >= 31
     {
 #        ifndef ADC_NOHANDLER
         .handler = NULL,
@@ -639,7 +639,7 @@ int adc_setSamplingCycles(uint8_t core, uint16_t cycles)
 
 int adc_startSampling(uint8_t channel)
 {
-    if (channel >= ADC_CHANNEL_MAX)
+    if (channel > ADC_CHANNEL_MAX)
     {
         return -1;
     }
@@ -658,7 +658,7 @@ int adc_dataReady(uint8_t channel)
     int ready;
     uint16_t bitMask;
 
-    if (channel >= ADC_CHANNEL_MAX)
+    if (channel > ADC_CHANNEL_MAX)
     {
         return -1;
     }
@@ -678,7 +678,7 @@ int adc_dataReady(uint8_t channel)
 
 int16_t adc_value(uint8_t channel)
 {
-    if (channel >= ADC_CHANNEL_MAX)
+    if (channel > ADC_CHANNEL_MAX)
     {
         return -1;
     }
@@ -687,7 +687,7 @@ int16_t adc_value(uint8_t channel)
 
 volatile int16_t *adc_buffAddr(uint8_t channel)
 {
-    if (channel >= ADC_CHANNEL_MAX)
+    if (channel > ADC_CHANNEL_MAX)
     {
         return NULL;
     }
@@ -697,7 +697,7 @@ volatile int16_t *adc_buffAddr(uint8_t channel)
 int16_t adc_getValue(uint8_t channel)
 {
     uint16_t bitMask;
-    if (channel >= ADC_CHANNEL_MAX)
+    if (channel > ADC_CHANNEL_MAX)
     {
         return -1;
     }
@@ -726,7 +726,7 @@ int16_t adc_getValue(uint8_t channel)
 
 int adc_setTriggerSource(uint8_t channel, uint8_t triggerSource)
 {
-    if (channel >= ADC_CHANNEL_MAX)
+    if (channel > ADC_CHANNEL_MAX)
     {
         return -1;
     }
@@ -740,7 +740,7 @@ int adc_setTriggerSource(uint8_t channel, uint8_t triggerSource)
 int adc_setHandler(uint8_t channel, void (*handler)(int16_t))
 {
 #ifndef ADC_NOHANDLER
-    if (channel >= ADC_CHANNEL_MAX)
+    if (channel > ADC_CHANNEL_MAX)
     {
         return -1;
     }
