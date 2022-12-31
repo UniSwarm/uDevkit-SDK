@@ -93,3 +93,13 @@ QTextStream &CWritter::operator<<(const QString &s)
     *_stream << s;
     return *_stream;
 }
+
+QString CWritter::hex(int64_t n, int bits)
+{
+    return "0x" + QString::number(n, 16).toUpper().rightJustified(bits / 4, '0') + "L";
+}
+
+QString CWritter::hex(uint64_t n, int bits)
+{
+    return "0x" + QString::number(n, 16).toUpper().rightJustified(bits / 4, '0') + "LU";
+}

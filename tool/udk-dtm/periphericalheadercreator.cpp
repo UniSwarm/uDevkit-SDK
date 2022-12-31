@@ -217,6 +217,7 @@ void PeriphericalHeaderCreator::append(const QString &deviceName, const QString 
             if ((caps & P_HAVE) != 0)
             {
                 QStringList defines;
+                uint64_t mask = 0;
                 for (const QString &reg : regs)
                 {
                     QRegularExpressionMatch match = sfrFullRegExp.match(reg);
@@ -229,6 +230,7 @@ void PeriphericalHeaderCreator::append(const QString &deviceName, const QString 
                     {
                         defines << haveExpression;
                     }
+                    mask |= (1LU << (idValue(idDef) & 0x3F));
                 }
                 QCollator coll;
                 coll.setNumericMode(true);
@@ -237,6 +239,21 @@ void PeriphericalHeaderCreator::append(const QString &deviceName, const QString 
                     return coll.compare(s1, s2) < 0;
                 });
                 writeDefList(sortedDef);
+
+                if ((caps & P_HAVE_MASK) != 0)
+                {
+                    int max = proccessMax(regs, sfrFullRegExp);
+                    int bits = 16;
+                    if (max > bits)
+                    {
+                        bits = 32;
+                    }
+                    if (max > bits)
+                    {
+                        bits = 64;
+                    }
+                    writeDefList(QStringList() << deviceName + "_HAVE_MASK", QStringList() << hex(mask, bits));
+                }
             }
 
             if ((caps & P_COUNT) != 0)
@@ -266,19 +283,23 @@ int PeriphericalHeaderCreator::proccessMax(const QStringList &sfrList, const QRe
         {
             continue;
         }
-        int value = 0;
-        if (matchPart[0].isLetter())
-        {
-            value = matchPart[0].toLatin1() - 'A' + 1;
-        }
-        else
-        {
-            value = match.captured(1).toInt();
-        }
+        int value = idValue(matchPart);
         if (max < value)
         {
             max = value;
         }
     }
     return max;
+}
+
+uint PeriphericalHeaderCreator::idValue(const QString &idString)
+{
+    if (idString[0].isLetter())
+    {
+        return idString[0].toLatin1() - 'A' + 1;
+    }
+    else
+    {
+        return idString.toUInt();
+    }
 }

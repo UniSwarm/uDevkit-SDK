@@ -21,6 +21,9 @@ public:
 
     QTextStream &operator<<(const QString &s);
 
+    QString hex(int64_t n, int bits = 0);
+    QString hex(uint64_t n, int bits = 0);
+
 protected:
     QFile *_file;
     QTextStream *_stream;
