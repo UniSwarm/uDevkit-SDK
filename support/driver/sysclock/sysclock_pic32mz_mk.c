@@ -119,8 +119,6 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
  */
 int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
 {
-    volatile uint32_t *divisorAddr;
-
     if (OSCCONbits.CLKLOCK == 1)
     {
         return -1;  // Clocks and PLL are locked, source cannot be changed
@@ -139,7 +137,7 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
     }
 
     // get divisor bus value
-    divisorAddr = &PB1DIV + (((uint8_t)busClock - 1) << 2);
+    volatile uint32_t *divisorAddr = &PB1DIV + (((uint8_t)busClock - 1) << 2);
 
     // wait for divisor can be changed
     while ((*divisorAddr & _PB1DIV_PBDIVRDY_MASK) == 0)
@@ -169,7 +167,7 @@ int sysclock_setClockDiv(SYSCLOCK_CLOCK busClock, uint16_t div)
 int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 {
     int32_t freq = -1;
-    uint16_t div;
+    uint16_t divisor;
     int32_t osctune;
     switch (source)
     {
@@ -182,14 +180,14 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 #endif
 
         case SYSCLOCK_SRC_FRC:
-            div = OSCCONbits.FRCDIV;
-            if (div != 0b111)
+            divisor = OSCCONbits.FRCDIV;
+            if (divisor != 0b111)
             {
-                div = 1 << div;
+                divisor = 1 << divisor;
             }
             else
             {
-                div = 256;
+                divisor = 256;
             }
 
             osctune = OSCTUN;
@@ -198,7 +196,7 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
                 osctune = (osctune | 0xFFFFFFE0);
             }
 
-            freq = (8000000 + osctune * 31250) / div;  // 8MHz typ FRC, tuned by OSCTUN (+/- 12.5%), divided by FRCDIV
+            freq = (8000000 + osctune * 31250) / divisor;  // 8MHz typ FRC, tuned by OSCTUN (+/- 12.5%), divided by FRCDIV
             break;
 
         case SYSCLOCK_SRC_LPRC:
@@ -328,13 +326,6 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
  */
 int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 {
-    uint32_t fin, fpllo;
-    uint16_t prediv = 1, multiplier = 1;
-    uint8_t postdiv, postdivBits;
-    uint16_t mprediv, mmultiplier;
-    int32_t merror, error;
-    uint8_t inputBit;
-
     if (sysclock_source() == SYSCLOCK_SRC_SPLL)
     {
         return -1;  // cannot change PLL when it is used
@@ -345,6 +336,8 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         return -1;  // cannot generate fosc > SYSCLOCK_FOSC_MAX
     }
 
+    uint8_t inputBit;
+    uint32_t fin;
 #ifdef SYSCLOCK_SRC_FRC2
     if (src == SYSCLOCK_SRC_FRC2 || src == SYSCLOCK_SRC_FRC)
 #else
@@ -365,8 +358,8 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     }
 
     // post div
-    postdiv = 32;
-    postdivBits = 0b101;
+    uint8_t postdiv = 32;
+    uint8_t postdivBits = 0b101;
     while (fosc * postdiv > SYSCLOCK_FVCO_MAX && postdiv >= 2)
     {
         postdiv = postdiv >> 1;
@@ -376,14 +369,16 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
     {
         return -1;
     }
-    fpllo = fosc * postdiv;
+
+    uint32_t fpllo = fosc * postdiv;
 
     // best pre divisor and multiplier computation
-    error = 0x7FFFFFFF;
-    for (mprediv = 1; mprediv <= 8; mprediv++)
+    uint16_t prediv = 1, multiplier = 1;
+    int32_t error = 0x7FFFFFFF;
+    for (uint16_t mprediv = 1; mprediv <= 8; mprediv++)
     {
-        mmultiplier = fpllo / (fin / mprediv);
-        merror = fin / mprediv * mmultiplier / postdiv - fpllo;
+        uint16_t mmultiplier = fpllo / (fin / mprediv);
+        int32_t merror = fin / mprediv * mmultiplier / postdiv - fpllo;
         if (merror < 0)
         {
             merror = -merror;
@@ -426,9 +421,7 @@ int sysclock_setClock(uint32_t fosc)
 
 uint32_t sysclock_getPLLClock(void)
 {
-    uint32_t fin, fpllo;
-    uint16_t prediv, multiplier, postdiv;
-
+    uint32_t fin;
     if (SPLLCONbits.PLLICLK == 1)  // FRC as input
     {
         fin = sysclock_sourceFreq(SYSCLOCK_SRC_FRC);
@@ -438,10 +431,10 @@ uint32_t sysclock_getPLLClock(void)
         fin = sysclock_sourceFreq(SYSCLOCK_SRC_POSC);
     }
 
-    prediv = SPLLCONbits.PLLIDIV + 1;
-    multiplier = SPLLCONbits.PLLMULT + 1;
-    postdiv = 1 << (SPLLCONbits.PLLODIV);
+    uint16_t prediv = SPLLCONbits.PLLIDIV + 1;
+    uint16_t multiplier = SPLLCONbits.PLLMULT + 1;
+    uint16_t postdiv = 1 << (SPLLCONbits.PLLODIV);
 
-    fpllo = fin / prediv * multiplier / postdiv;
+    uint32_t fpllo = fin / prediv * multiplier / postdiv;
     return fpllo;
 }
