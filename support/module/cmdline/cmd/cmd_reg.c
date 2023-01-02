@@ -46,7 +46,7 @@ int cmd_reg(int argc, char **argv)
         return -1;
     }
 
-    volatile rt_reg_ptr_t *addr = (volatile rt_reg_ptr_t *)strtoul(argv[2], NULL, 16);
+    volatile rt_reg_t *addr = (volatile rt_reg_t *)((unsigned int)strtoul(argv[2], NULL, 16));
     if (addr == 0)
     {
         return -1;

@@ -16,13 +16,21 @@
 extern "C" {
 #endif
 
+#include <archi.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#if (REGSIZE == 4)
+#    define CMD_X32 "X"
+#else
+#    define CMD_X32 "lX"
+#endif
+
 #define puts(str)           cmd_puts((str))
 #define printf(format, ...) cmd_printf((format), ##__VA_ARGS__)
+
 #include "cmd.h"
 
 #ifdef __cplusplus
