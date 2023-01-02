@@ -414,9 +414,20 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
  */
 int sysclock_setClock(uint32_t fosc)
 {
-    return sysclock_setPLLClock(fosc, SYSCLOCK_SRC_POSC);
-    /*_sysclock_sysfreq = fosc;
-    return 0;*/
+    uint8_t src = SYSCLOCK_SRC_FRC;
+    if (_sysclock_posc != 0)
+    {
+        src = SYSCLOCK_SRC_POSC;
+    }
+    if (sysclock_source() == SYSCLOCK_SRC_SPLL)  // change sysclock to SRC (FRC or POSC) if source is already PLL
+    {
+        sysclock_switchSourceTo(src);
+    }
+    if (sysclock_setPLLClock(fosc, src) != 0)
+    {
+        return -1;
+    }
+    return sysclock_switchSourceTo(SYSCLOCK_SRC_SPLL);
 }
 
 uint32_t sysclock_getPLLClock(void)
