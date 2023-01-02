@@ -22,34 +22,59 @@
 
 #include "modules.h"
 
-static void cmd_sysclock_statusclk(SYSCLOCK_SOURCE source);
-static void cmd_sysclock_status(void);
+static void _cmd_sysclock_help(void);
+static void _cmd_sysclock_statusclk(const char *sourceStr, int32_t freq);
+static void _cmd_sysclock_status(void);
+static void _cmd_sysclock_reconfig(void);
 
-void cmd_sysclock_statusclk(SYSCLOCK_SOURCE source)
+void _cmd_sysclock_help(void)
+{
+    puts("sysclock status");
+    puts("sysclock switch <source-clock-name>");
+    puts("sysclock setpll <pll-freq>");
+}
+
+void _cmd_sysclock_statusclk(const char *sourceStr, int32_t freq)
 {
     uint8_t idUnit = 0;
     char unit[] = {' ', 'k', 'M', 'G'};
-    int32_t freq = sysclock_sourceFreq(source);
     if (freq == -1)
     {
         return;
     }
-    while (freq >= 1000)
+    float freq_fp = freq;
+    while (freq_fp >= 1000.0f)
     {
-        freq /= 1000;
+        freq_fp /= 1000.0f;
         idUnit++;
     }
-    printf("%s: %ld %cHz\r\n", sysclock_sources_str[source], freq, unit[idUnit]);
+    printf("%s: %.3f %cHz\r\n", sourceStr, freq_fp, unit[idUnit]);
 }
 
-void cmd_sysclock_status(void)
+void _cmd_sysclock_status(void)
 {
-    int source;
-    printf("Current clock source: %s\r\n", sysclock_sources_str[sysclock_source()]);
-    for (source = 0; source <= SYSCLOCK_SRC_MAX; source++)
+    SYSCLOCK_SOURCE currentSource = sysclock_source();
+    printf("Current clock source: ");
+    _cmd_sysclock_statusclk(sysclock_sources_str[currentSource], sysclock_sourceFreq(currentSource));
+    for (int source = 0; source <= SYSCLOCK_SRC_MAX; source++)
     {
-        cmd_sysclock_statusclk((SYSCLOCK_SOURCE)source);
+        _cmd_sysclock_statusclk(sysclock_sources_str[source], sysclock_sourceFreq((SYSCLOCK_SOURCE)source));
     }
+
+    // _cmd_sysclock_statusclk("Fvco", sysclock_periphFreq(SYSCLOCK_CLOCK_VCO));
+}
+
+void _cmd_sysclock_reconfig(void)
+{
+#ifdef USE_uart
+    uart_reconfig();
+#endif
+#ifdef USE_timer
+    timer_reconfig();
+#endif
+#ifdef USE_i2c
+    i2c_reconfig();
+#endif
 }
 
 int cmd_sysclock(int argc, char **argv)
@@ -57,14 +82,25 @@ int cmd_sysclock(int argc, char **argv)
     // no args -> show status
     if (argc == 1)
     {
-        cmd_sysclock_status();
+        _cmd_sysclock_status();
         return 0;
     }
+
+    // help
+    if (strcmp(argv[1], "help") == 0)
+    {
+        _cmd_sysclock_help();
+        return 0;
+    }
+
+    // status
     if (strcmp(argv[1], "status") == 0)
     {
-        cmd_sysclock_status();
+        _cmd_sysclock_status();
         return 0;
     }
+
+    // switch <source-clock-name>
     if (strcmp(argv[1], "switch") == 0)
     {
         int source;
@@ -79,15 +115,7 @@ int cmd_sysclock(int argc, char **argv)
             {
                 int res = sysclock_switchSourceTo(source);
 
-#ifdef USE_uart
-                uart_reconfig();
-#endif
-#ifdef USE_timer
-                timer_reconfig();
-#endif
-#ifdef USE_i2c
-                i2c_reconfig();
-#endif
+                _cmd_sysclock_reconfig();
 
                 for (uint16_t i = 0; i < 65000; i++)
                 {
@@ -100,12 +128,34 @@ int cmd_sysclock(int argc, char **argv)
         }
         return 0;
     }
-
-    // help
-    if (strcmp(argv[1], "help") == 0)
+    if (strcmp(argv[1], "setpll") == 0)
     {
-        puts("sysclock status");
-        puts("sysclock switch <source-clock-name>");
+        if (argc < 2)
+        {
+            return -1;
+        }
+
+        uint32_t pllFreq = atol(argv[2]);
+
+        int res;
+        if (sysclock_sourceFreq(SYSCLOCK_SRC_POSC) == 0)
+        {
+            res = sysclock_setPLLClock(pllFreq, SYSCLOCK_SRC_FRC);
+        }
+        else
+        {
+            res = sysclock_setPLLClock(pllFreq, SYSCLOCK_SRC_POSC);
+        }
+
+        _cmd_sysclock_reconfig();
+
+        for (volatile uint16_t i = 0; i < 65000; i++)
+        {
+            nop();
+        }
+
+        _cmd_sysclock_status();
+        printf("ret code: %d\r\n", res);
         return 0;
     }
 
