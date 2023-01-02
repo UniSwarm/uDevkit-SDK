@@ -130,17 +130,17 @@ int8_t board_getButton(uint8_t button)
     return 0;
 }
 
-rt_dev_t board__iso_en_gpio(void)
+rt_dev_t board_iso_en_gpio(void)
 {
     return _iso_en_gpio;
 }
 
-rt_dev_t board__iso_rs485_re_gpio(void)
+rt_dev_t board_iso_rs485_re_gpio(void)
 {
     return _iso_rs485_re_gpio;
 }
 
-rt_dev_t board__iso_rs485_de_gpio(void)
+rt_dev_t board_iso_rs485_de_gpio(void)
 {
     return _iso_rs485_de_gpio;
 }
