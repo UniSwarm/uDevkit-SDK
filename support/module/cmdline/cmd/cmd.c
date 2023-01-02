@@ -119,7 +119,7 @@ int _cmd_help(int argc, char **argv)
         cmd_puts(_cmd_cmds[i].name);
     }
 
-    uint custom_count = 0;
+    uint16_t custom_count = 0;
     for (uint16_t i = 0; i < CMDLINE_CUSTOM_CMD_MAX; i++)
     {
         if (_cmd_custom_cmds[i].cmdFnPtr == NULL)
@@ -199,7 +199,7 @@ void cmd_setTask(int (*cmdTaskPtr)(void))
 const Cmd *cmd_findFromName(char *name)
 {
     const Cmd *cmd = NULL;
-    for (uint i = 0; i < sizeof(_cmd_cmds); i++)
+    for (unsigned int i = 0; i < sizeof(_cmd_cmds); i++)
     {
         if (_cmd_cmds[i].cmdFnPtr == NULL)
         {
@@ -215,7 +215,7 @@ const Cmd *cmd_findFromName(char *name)
     if (cmd == NULL)
     {
         // looking for command name in custom commands
-        for (uint i = 0; i < CMDLINE_CUSTOM_CMD_MAX; i++)
+        for (unsigned int i = 0; i < CMDLINE_CUSTOM_CMD_MAX; i++)
         {
             if (_cmd_custom_cmds[i].cmdFnPtr == NULL)
             {
