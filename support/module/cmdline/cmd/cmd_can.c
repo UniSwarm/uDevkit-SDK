@@ -24,6 +24,7 @@ static uint8_t _cmd_can_id = 0;
 static rt_dev_t _cmd_can_can_dev = 0;
 static uint8_t _cmd_can_fifo_id = 0;
 
+#if (defined(CAN_COUNT) && CAN_COUNT > 0)
 void _cmd_can_help(void)
 {
     puts("can");
@@ -63,11 +64,11 @@ void _cmd_can_dump(int can_id, CAN_MSG_HEADER *can_header, char rdata[])
     str += sprintf(str, "can%d  ", can_id);
     if ((can_header->flags & CAN_VERS2BA) == CAN_VERS2BA)
     {
-        str += sprintf(str, "%08X", can_header->id & 0x1FFFFFFF);
+        str += sprintf(str, "%08" CMD_X32, can_header->id & 0x1FFFFFFF);
     }
     else
     {
-        str += sprintf(str, "%03X", can_header->id & 0x7FF);
+        str += sprintf(str, "%03" CMD_X32, can_header->id & 0x7FF);
     }
 
     str += sprintf(str, "   [%d]", can_header->size);
@@ -90,6 +91,7 @@ void _cmd_can_dump(int can_id, CAN_MSG_HEADER *can_header, char rdata[])
 
     puts(buffer);
 }
+#endif
 
 int cmd_can(int argc, char **argv)
 {
@@ -193,6 +195,7 @@ int cmd_can(int argc, char **argv)
 #endif
 }
 
+#if (defined(CAN_COUNT) && CAN_COUNT > 0)
 int _cmd_can_dump_task(void)
 {
     CAN_MSG_HEADER can_header;
@@ -203,3 +206,4 @@ int _cmd_can_dump_task(void)
     }
     return 1;  // not finished
 }
+#endif
