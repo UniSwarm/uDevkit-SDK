@@ -33,6 +33,10 @@ extern "C" {
 #    define ADC_CHANNEL_COUNT      0
 #    define ADC_CHANNEL_MAX        0
 #    define ADC_MAX_RESOLUTION_BIT 0
+#    define ADC_CHANNEL_HAVE_MASK  0x00U
+
+#    define ADC_COMPARATOR_COUNT     0
+#    define ADC_DIGITAL_FILTER_COUNT 0
 #endif
 
 #ifdef ADC_CHANNEL_HAVE_CH0

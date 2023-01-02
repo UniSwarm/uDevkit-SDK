@@ -86,8 +86,9 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_CH41
 #    define ADC_CHANNEL_HAVE_CH42
 #    define ADC_CHANNEL_HAVE_CH43
-#    define ADC_CHANNEL_COUNT 44
-#    define ADC_CHANNEL_MAX   43
+#    define ADC_CHANNEL_HAVE_MASK 0x00000FFFFFFFFFFFLU
+#    define ADC_CHANNEL_COUNT     44
+#    define ADC_CHANNEL_MAX       43
 #elif defined(DEVICE_32MZ0512EFE064) || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ1024EFE064)                     \
     || defined(DEVICE_32MZ1024EFF064) || defined(DEVICE_32MZ1024EFG064) || defined(DEVICE_32MZ1024EFH064) || defined(DEVICE_32MZ1024EFK064)                    \
     || defined(DEVICE_32MZ1024EFM064) || defined(DEVICE_32MZ2048EFG064) || defined(DEVICE_32MZ2048EFH064) || defined(DEVICE_32MZ2048EFM064)
@@ -112,8 +113,9 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_CH18
 #    define ADC_CHANNEL_HAVE_CH43
 #    define ADC_CHANNEL_HAVE_CH44
-#    define ADC_CHANNEL_COUNT 21
-#    define ADC_CHANNEL_MAX   44
+#    define ADC_CHANNEL_HAVE_MASK 0x000018000007FFFFLU
+#    define ADC_CHANNEL_COUNT     21
+#    define ADC_CHANNEL_MAX       44
 #elif defined(DEVICE_32MZ0512EFE100) || defined(DEVICE_32MZ0512EFF100) || defined(DEVICE_32MZ0512EFK100) || defined(DEVICE_32MZ1024EFE100)                     \
     || defined(DEVICE_32MZ1024EFF100) || defined(DEVICE_32MZ1024EFG100) || defined(DEVICE_32MZ1024EFH100) || defined(DEVICE_32MZ1024EFK100)                    \
     || defined(DEVICE_32MZ1024EFM100) || defined(DEVICE_32MZ2048EFG100) || defined(DEVICE_32MZ2048EFH100) || defined(DEVICE_32MZ2048EFM100)
@@ -154,8 +156,9 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_CH34
 #    define ADC_CHANNEL_HAVE_CH43
 #    define ADC_CHANNEL_HAVE_CH44
-#    define ADC_CHANNEL_COUNT 37
-#    define ADC_CHANNEL_MAX   44
+#    define ADC_CHANNEL_HAVE_MASK 0x00001807FFFFFFFFLU
+#    define ADC_CHANNEL_COUNT     37
+#    define ADC_CHANNEL_MAX       44
 #elif defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144)                     \
     || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144) || defined(DEVICE_32MZ1024EFE124) || defined(DEVICE_32MZ1024EFE144)                    \
     || defined(DEVICE_32MZ1024EFF124) || defined(DEVICE_32MZ1024EFF144) || defined(DEVICE_32MZ1024EFG124) || defined(DEVICE_32MZ1024EFG144)                    \
@@ -207,8 +210,9 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_CH42
 #    define ADC_CHANNEL_HAVE_CH43
 #    define ADC_CHANNEL_HAVE_CH44
-#    define ADC_CHANNEL_COUNT 45
-#    define ADC_CHANNEL_MAX   44
+#    define ADC_CHANNEL_HAVE_MASK 0x00001FFFFFFFFFFFLU
+#    define ADC_CHANNEL_COUNT     45
+#    define ADC_CHANNEL_MAX       44
 #elif defined(DEVICE_32MK0128MCA032)
 #    define ADC_CHANNEL_HAVE_CH0
 #    define ADC_CHANNEL_HAVE_CH1
@@ -224,8 +228,9 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_CH17
 #    define ADC_CHANNEL_HAVE_CH50
 #    define ADC_CHANNEL_HAVE_CH53
-#    define ADC_CHANNEL_COUNT 14
-#    define ADC_CHANNEL_MAX   53
+#    define ADC_CHANNEL_HAVE_MASK 0x002400000003B23FLU
+#    define ADC_CHANNEL_COUNT     14
+#    define ADC_CHANNEL_MAX       53
 #elif defined(DEVICE_32MK0128MCA028)
 #    define ADC_CHANNEL_HAVE_CH0
 #    define ADC_CHANNEL_HAVE_CH1
@@ -239,8 +244,9 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_CH17
 #    define ADC_CHANNEL_HAVE_CH50
 #    define ADC_CHANNEL_HAVE_CH53
-#    define ADC_CHANNEL_COUNT 12
-#    define ADC_CHANNEL_MAX   53
+#    define ADC_CHANNEL_HAVE_MASK 0x002400000003A03FLU
+#    define ADC_CHANNEL_COUNT     12
+#    define ADC_CHANNEL_MAX       53
 #elif defined(DEVICE_32MK0128MCA048)
 #    define ADC_CHANNEL_HAVE_CH0
 #    define ADC_CHANNEL_HAVE_CH1
@@ -262,8 +268,9 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_CH17
 #    define ADC_CHANNEL_HAVE_CH50
 #    define ADC_CHANNEL_HAVE_CH53
-#    define ADC_CHANNEL_COUNT 20
-#    define ADC_CHANNEL_MAX   53
+#    define ADC_CHANNEL_HAVE_MASK 0x002400000003FFFFLU
+#    define ADC_CHANNEL_COUNT     20
+#    define ADC_CHANNEL_MAX       53
 #elif defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPK064) || defined(DEVICE_32MK0512MCF064)                     \
     || defined(DEVICE_32MK0512MCM064) || defined(DEVICE_32MK1024GPD064) || defined(DEVICE_32MK1024GPE064) || defined(DEVICE_32MK1024GPK064)                    \
     || defined(DEVICE_32MK1024MCF064) || defined(DEVICE_32MK1024MCM064)
@@ -297,8 +304,9 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_CH51
 #    define ADC_CHANNEL_HAVE_CH52
 #    define ADC_CHANNEL_HAVE_CH53
-#    define ADC_CHANNEL_COUNT 30
-#    define ADC_CHANNEL_MAX   53
+#    define ADC_CHANNEL_HAVE_MASK 0x003F00000F0FFFFFLU
+#    define ADC_CHANNEL_COUNT     30
+#    define ADC_CHANNEL_MAX       53
 #elif defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                     \
     || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE100) || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064)                    \
     || defined(DEVICE_32MK0512GPK100) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
@@ -350,8 +358,9 @@ volatile int32_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_CH51
 #    define ADC_CHANNEL_HAVE_CH52
 #    define ADC_CHANNEL_HAVE_CH53
-#    define ADC_CHANNEL_COUNT 46
-#    define ADC_CHANNEL_MAX   53
+#    define ADC_CHANNEL_HAVE_MASK 0x003FE3FE0FFFFFFFLU
+#    define ADC_CHANNEL_COUNT     46
+#    define ADC_CHANNEL_MAX       53
 #endif
 
 // ================================== Dedicated core availability ==================================
