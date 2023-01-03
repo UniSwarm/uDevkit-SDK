@@ -2,10 +2,16 @@ UDEVKIT = ../..
 
 PROJECT = archtest
 
-CCFLAGS += -Wall
+CCFLAGS += -finline-functions
+
+CCFLAGS += -O2
+CCFLAGS += -W -Wall -Wsign-compare -Wmissing-prototypes -Wnested-externs -Wstrict-prototypes
+CCFLAGS += -Werror=implicit -Werror=implicit-int -Werror=missing-declarations -Werror-implicit-function-declaration -Wmissing-noreturn -Werror=return-type -Werror=implicit-int -Werror=shadow -Werror=uninitialized
+CCFLAGS += -Werror=pointer-arith -Werror=type-limits -Wwrite-strings -Wstrict-overflow=5 -Werror=int-to-pointer-cast
+CCFLAGS += -Winline -Wundef -Wchar-subscripts -Wmissing-braces -Wparentheses -Wsequence-point -Wswitch #-Wcast-qual
 
 DRIVERS += sysclock uart timer i2c gpio can qei adc # oc pwm
-# MODULES += cmdline
+MODULES += cmdline
 
 SRC += main.c
 
