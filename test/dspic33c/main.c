@@ -1,19 +1,18 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdint.h>
 
-#include "modules.h"
-#include "board.h"
 #include "archi.h"
+#include "board.h"
+#include "modules.h"
 
 #ifdef SIMULATOR
-    unsigned char *dspic33c_slave;
+unsigned char *dspic33c_secondary;
 #else
-    #include "dspic33c_slave.h"
-    //extern __eds__ unsigned char *dspic33c_slave;
+extern unsigned char dspic33c_secondary[] __attribute__((space(psv)));
 #endif
 
-char led=0;
+char led = 0;
 void tt()
 {
     board_toggleLed(0);
@@ -32,22 +31,22 @@ int main(void)
 
 #ifndef SIMULATOR
     _RP66R = 0b001110;
-    REFOCONHbits.RODIV = 5; // /10
-    REFOCONLbits.ROSEL = 0b0001; // Fp (FOSC/2)
+    REFOCONHbits.RODIV = 5;       // /10
+    REFOCONLbits.ROSEL = 0b0001;  // Fp (FOSC/2)
     REFOCONLbits.ROEN = 1;
     REFOCONLbits.ROOUT = 1;
 #endif
 
-    msi_slave_program(1, dspic33c_slave);
-    msi_slave_start(1);
+    msi_secondary_program(1, dspic33c_secondary);
+    msi_secondary_start(1);
 
-    //T1CONbits.TECS = 0b10;
-    //T1CONbits.TON = 1;
-    //PR1 = 0xFFFF;
+    // T1CONbits.TECS = 0b10;
+    // T1CONbits.TON = 1;
+    // PR1 = 0xFFFF;
 
-    //sysclock_setClock(200000000);
-    //sysclock_setClockDiv(SYSCLOCK_CLOCK_TIMER, 16);
-    //sysclock_setClockDiv(SYSCLOCK_CLOCK_UART, 16);
+    // sysclock_setClock(200000000);
+    // sysclock_setClockDiv(SYSCLOCK_CLOCK_TIMER, 16);
+    // sysclock_setClockDiv(SYSCLOCK_CLOCK_UART, 16);
 
     // uart debug init
     uartDbg = uart(2);
@@ -68,21 +67,25 @@ int main(void)
 
     enable_interrupt();
 
-    while(1)
+    while (1)
     {
-        #ifdef SIMULATOR
-            usleep(1000);
-        #endif
+#ifdef SIMULATOR
+        usleep(1000);
+#endif
 
         cmdline_task();
 
-        //board_setLed(0, 1);
-        //uart_write(uartDbg, "Led ON", 6);
-        for(j=0; j<5; j++) for(i=0; i<65000; i++);
+        // board_setLed(0, 1);
+        // uart_write(uartDbg, "Led ON", 6);
+        for (j = 0; j < 5; j++)
+            for (i = 0; i < 65000; i++)
+                ;
 
-        //board_setLed(0, 0);
-        //uart_write(uartDbg, "Led OFF", 7);
-        for(j=0; j<5; j++) for(i=0; i<65000; i++);
+        // board_setLed(0, 0);
+        // uart_write(uartDbg, "Led OFF", 7);
+        for (j = 0; j < 5; j++)
+            for (i = 0; i < 65000; i++)
+                ;
     }
 
     return 0;

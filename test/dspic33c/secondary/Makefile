@@ -1,10 +1,10 @@
 UDEVKIT = ../../..
 
 DEV_PROG = ICD4
-PROJECT = dspic33c_slave
+PROJECT = dspic33c_secondary
 
 BOARD = curiosity_dsPIC33CH
-SLAVE = 1
+SECONDARY = 1
 
 OUT_PWD = build
 

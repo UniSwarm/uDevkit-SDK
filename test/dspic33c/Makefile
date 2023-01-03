@@ -14,20 +14,21 @@ DRIVERS += sysclock timer gpio uart qei i2c can adc msi
 MODULES += cmdline
 
 SRC += main.c
-ARCHI_SRC += build/dspic33c_slave.s
 
 all : hex
 
-build/dspic33c_slave.s: slave/build/dspic33c_slave.elf
-	cd build; xc16-bin2hex ../slave/build/dspic33c_slave.elf --image dspic33c_slave || true
+vpath %.s $(OUT_PWD)
+ARCHI_SRC += dspic33c_secondary.s
+build/dspic33c_secondary.s: secondary/build/dspic33c_secondary.elf
+	cd build; xc16-bin2hex ../secondary/build/dspic33c_secondary.elf --image dspic33c_secondary || true
 
-.PHONY: slave/build/dspic33c_slave.elf clean-slave
-slave/build/dspic33c_slave.elf:
-	cd slave; CCFLAGS="$(CCFLAGS)" $(MAKE)
+.PHONY: secondary/build/dspic33c_secondary.elf clean-secondary
+secondary/build/dspic33c_secondary.elf:
+	cd secondary; CCFLAGS="$(CCFLAGS)" $(MAKE)
 
-clean: clean-slave
-clean-slave:
-	cd slave; $(MAKE) clean
+clean: clean-secondary
+clean-secondary:
+	cd secondary; $(MAKE) clean
 
 all : hex
 
