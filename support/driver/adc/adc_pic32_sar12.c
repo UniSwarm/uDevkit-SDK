@@ -130,9 +130,13 @@ int adc_init(void)
 
     // Wait for voltage reference to be stable
     while (!ADCCON2bits.BGVRRDY)
+    {
         ;  // Wait until the reference voltage is ready
+    }
     while (ADCCON2bits.REFFLT)
+    {
         ;  // Wait if there is a fault with the reference voltage
+    }
 
     // Enable clock to analog circuit
     ADCANCONbits.ANEN0 = 1;  // Enable the clock to analog bias
@@ -147,21 +151,47 @@ int adc_init(void)
 
     // Wait for ADC to be ready
     while (!ADCANCONbits.WKRDY0)
+    {
         ;  // Wait until ADC0 is ready
+    }
     while (!ADCANCONbits.WKRDY1)
+    {
         ;  // Wait until ADC1 is ready
+    }
+#ifdef ADC_HAVE_DEDICATED_CORE2
     while (!ADCANCONbits.WKRDY2)
+    {
         ;  // Wait until ADC2 is ready
+    }
+#endif  // ADC_HAVE_DEDICATED_CORE2
+#ifdef ADC_HAVE_DEDICATED_CORE3
     while (!ADCANCONbits.WKRDY3)
+    {
         ;  // Wait until ADC3 is ready
+    }
+#endif  // ADC_HAVE_DEDICATED_CORE3
+#ifdef ADC_HAVE_DEDICATED_CORE4
     while (!ADCANCONbits.WKRDY4)
+    {
         ;  // Wait until ADC4 is ready
+    }
+#endif  // ADC_HAVE_DEDICATED_CORE4
 #ifdef ADC_HAVE_DEDICATED_CORE5
     while (!ADCANCONbits.WKRDY5)
+    {
         ;  // Wait until ADC5 is ready
-#endif     // ADC_HAVE_DEDICATED_CORE5
+    }
+#endif  // ADC_HAVE_DEDICATED_CORE5
+#ifdef ADC_HAVE_DEDICATED_CORE6
+    while (!ADCANCONbits.WKRDY6)
+    {
+        ;  // Wait until ADC6 is ready
+    }
+#endif  // ADC_HAVE_DEDICATED_CORE5
     while (!ADCANCONbits.WKRDY7)
+    {
         ;  // Wait until ADC7 is ready
+    }
 
     return 0;
 }
@@ -292,11 +322,9 @@ int adc_dataReady(uint8_t channel)
         mask = 1U << channel;
         return ((ADCDSTAT1 & mask) == 0) ? 0 : 1;
     }
-    else
-    {
-        mask = 1U << (channel - 32);
-        return ((ADCDSTAT2 & mask) == 0) ? 0 : 1;
-    }
+
+    mask = 1U << (channel - 32);
+    return ((ADCDSTAT2 & mask) == 0) ? 0 : 1;
 }
 
 int16_t adc_value(uint8_t channel)
@@ -362,17 +390,21 @@ int16_t adc_getValue(uint8_t channel)
     if (channel <= 31)
     {
         while ((ADCDSTAT1 & mask) == 0)
+        {
             ;
+        }
     }
     else
     {
         while ((ADCDSTAT2 & mask) == 0)
+        {
             ;
+        }
     }
 
     // return result
     result = &ADCDATA0 + (channel << 2);
-    return *result;
+    return (int16_t)*result;
 }
 
 #define ADCTRG(channel) ((volatile uint8_t *)(&ADCTRG1) + (((uint8_t)(channel)&0xFC) * 4 + ((uint8_t)(channel)&0x03)))
