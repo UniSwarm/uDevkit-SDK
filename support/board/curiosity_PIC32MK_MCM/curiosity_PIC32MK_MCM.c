@@ -37,24 +37,32 @@ int _board_init_io(void)
     // remappable pins
     // Unlock configuration pin
     unlockIoConfig();
+
+    // UART3 pins (micro bus A)
     U3RXR = 0b0101;   // RX3 ==> RPC7
     RPC6R = 0b00001;  // TX3 ==> RPC6
 
+    // UART4 pins (micro bus B)
     U4RXR = 0b1101;    // RX4 ==> RPD3
     RPA12R = 0b00010;  // TX4 ==> RPA12
 
+    // UART6 pins debug
     U6RXR = 0b1101;   // RX6 ==> RPA15
     RPA4R = 0b01011;  // TX6 ==> RPA4
 
+    // CAN1 pins
     C1RXR = 0b1000;   // CAN1RX ==> RE14
     RPE0R = 0b01100;  // CAN1TX ==> RE0
 
+    // CAN2 pins
     C2RXR = 0b1100;    // CAN2RX ==> RE1
     RPE15R = 0b01100;  // CAN2TX ==> RE15
 
+    // CAN3 pins
     C3RXR = 0b1010;    // CAN3RX ==> RG6
     RPC15R = 0b01100;  // CAN3TX ==> RC15
 
+    // CAN4 pins
     C4RXR = 0b0110;   // CAN4RX ==> RC2
     RPB1R = 0b01100;  // CAN4TX ==> RB1
     lockIoConfig();

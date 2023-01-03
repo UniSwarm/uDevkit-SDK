@@ -53,10 +53,15 @@ int8_t board_getLed(uint8_t led);
 #define BUTTON_3     2
 int8_t board_getButton(uint8_t button);
 
-// analog iputs
+// analog inputs
 #define POTENTIOMETER_ADC_CHAN ADC_CHANNEL_CH0
 #define TEMP_ADC_CHAN          ADC_CHANNEL_CH16
 #define VBUS_ADC_CHAN          ADC_CHANNEL_CH21
+
+// Peripherals assignation
+#define UART_MIKROBUS_A_ID 1
+#define UART_MIKROBUS_B_ID 2
+#define UART_DGB_ID        3
 
 #ifdef __cplusplus
 }
