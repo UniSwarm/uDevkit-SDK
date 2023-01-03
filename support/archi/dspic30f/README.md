@@ -1,8 +1,10 @@
 # dsPIC30F support
 
+NOT recommended for new design.
+
 This architecture support file handle all dsPIC30F devices.
 
-(29 devices on july 2017)
+(29 devices on January 2023)
 
 |Compatible devices|
 |---------|

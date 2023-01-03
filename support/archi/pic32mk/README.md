@@ -20,13 +20,13 @@ Devices with asterixis are future devices and not yet released.
 
 ## Main features
 
-|Feature|GPD - GPE - MCF|GPG - MCJ|GPK - MCM|
-|-------|:------:|:------:|:------:|
-|Core|32 bits|32 bits|32 bits|
-|Performance|198 DMIPS|198 DMIPS|198 DMIPS|
-|Program memory|512kb - 1024kb|256kb - 512kb **ECC Flash**|512kb - 1024kb **ECC Flash**|
-|Data memory|128kb - 256kb|66kb|128kb - 256kb|
-|Pins|64-100|48-64|64-100|
+|Feature|GPD - GPE - MCF|MCA|GPG - MCJ|GPK - MCM|
+|-------|:------:|:------:|:------:|:------:|
+|Core|32 bits|32 bits|32 bits|32 bits|
+|Performance|198 DMIPS|198 DMIPS|198 DMIPS|198 DMIPS|
+|Program memory|512kb - 1024kb|128kb|256kb - 512kb **ECC Flash**|512kb - 1024kb **ECC Flash**|
+|Data memory|128kb - 256kb|32kb|66kb|128kb - 256kb|
+|Pins|64-100|28-48|48-64|64-100|
 
 ## Common devices
 
@@ -36,6 +36,7 @@ Devices with asterixis are future devices and not yet released.
 |PIC32MK GPD     |        6|        9|       16|       16|        4|        6|        0|        0|        0|         0|         0|         0|         0|
 |PIC32MK GPK     |        6|        9|       16|       16|        4|        6|        0|        0|        0|         0|         0|         0|         0|
 |PIC32MK GPE     |        6|        9|       16|       16|        4|        6|        4|        0|        0|         0|         0|         0|         0|
+|PIC32MK MCA     |        2|        5|        4|        4|        2|        2|        0|        0|        1|         2|         4|         0|         0|
 |PIC32MK MCJ     |        2|        9|        9|        9|        2|        2|      1Fd|        0|        4|         3|         9|         0|         0|
 |PIC32MK MCF     |        6|        9|       16|       16|        4|        6|        4|        0|        0|         6|        12|         0|         0|
 |PIC32MK MCM     |        6|        9|       16|       16|        4|        6|      4Fd|        0|        0|         6|        12|         0|         0|
@@ -55,7 +56,7 @@ Devices with asterixis are future devices and not yet released.
 
 ## Devices list
 
-28 devices on june 2021.
+31 devices on January 2023.
 
 ### GPG devices
 
@@ -85,10 +86,10 @@ Same as GPD with ECC flash.
 
 |GPK compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[*PIC32MK0512GPK064](http://microchip.com/wwwproducts/en/PIC32MK0512GPK064)| 524 kb| 131 kb| 64|
-|[*PIC32MK1024GPK064](http://microchip.com/wwwproducts/en/PIC32MK1024GPK064)|1049 kb| 262 kb| 64|
-|[*PIC32MK0512GPK100](http://microchip.com/wwwproducts/en/PIC32MK0512GPK100)| 524 kb| 131 kb|100|
-|[*PIC32MK1024GPK100](http://microchip.com/wwwproducts/en/PIC32MK1024GPK100)|1049 kb| 262 kb|100|
+|[PIC32MK0512GPK064](http://microchip.com/wwwproducts/en/PIC32MK0512GPK064)| 524 kb| 131 kb| 64|
+|[PIC32MK1024GPK064](http://microchip.com/wwwproducts/en/PIC32MK1024GPK064)|1049 kb| 262 kb| 64|
+|[PIC32MK0512GPK100](http://microchip.com/wwwproducts/en/PIC32MK0512GPK100)| 524 kb| 131 kb|100|
+|[PIC32MK1024GPK100](http://microchip.com/wwwproducts/en/PIC32MK1024GPK100)|1049 kb| 262 kb|100|
 
 ### GPE devices
 
@@ -100,6 +101,16 @@ Same as GPD with 4 CAN peripherals.
 |[PIC32MK1024GPE064](http://microchip.com/wwwproducts/en/PIC32MK1024GPE064)|1024 kb|262 kb| 64|
 |[PIC32MK0512GPE100](http://microchip.com/wwwproducts/en/PIC32MK0512GPE100)| 524 kb|131 kb|100|
 |[PIC32MK1024GPE100](http://microchip.com/wwwproducts/en/PIC32MK1024GPE100)|1024 kb|262 kb|100|
+
+### MCA devices
+
+Entry range for small motor control needs. 2 QEI modules and 4 enhanced PWM.
+
+|MCJ compatible devices|Program|Data|Pins|
+|---------|--:|--:|--:|
+|[PIC32MK0128MCA028](http://microchip.com/wwwproducts/en/PIC32MK0128MCA028) |131 kb|32 k|28|
+|[PIC32MK0128MCA032](http://microchip.com/wwwproducts/en/PIC32MK0128MCA032) |131 kb|32 k|32|
+|[PIC32MK0128MCA048](http://microchip.com/wwwproducts/en/PIC32MK0128MCA048) |131 kb|32 k|48|
 
 ### MCJ devices
 
@@ -129,7 +140,7 @@ Same as GPD with 4 CAN Fd peripheral, 6 QEI modules, 12 enhanced PWM and ECC fla
 
 |MCM compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[*PIC32MK0512MCM064](http://microchip.com/wwwproducts/en/PIC32MK0512MCM064)| 524 kb| 131 kb| 64|
-|[*PIC32MK1024MCM064](http://microchip.com/wwwproducts/en/PIC32MK1024MCM064)|1049 kb| 262 kb| 64|
-|[*PIC32MK0512MCM100](http://microchip.com/wwwproducts/en/PIC32MK0512MCM100)| 524 kb| 131 kb|100|
-|[*PIC32MK1024MCM100](http://microchip.com/wwwproducts/en/PIC32MK1024MCM100)|1049 kb| 262 kb|100|
+|[PIC32MK0512MCM064](http://microchip.com/wwwproducts/en/PIC32MK0512MCM064)| 524 kb| 131 kb| 64|
+|[PIC32MK1024MCM064](http://microchip.com/wwwproducts/en/PIC32MK1024MCM064)|1049 kb| 262 kb| 64|
+|[PIC32MK0512MCM100](http://microchip.com/wwwproducts/en/PIC32MK0512MCM100)| 524 kb| 131 kb|100|
+|[PIC32MK1024MCM100](http://microchip.com/wwwproducts/en/PIC32MK1024MCM100)|1049 kb| 262 kb|100|

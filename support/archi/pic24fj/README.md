@@ -2,7 +2,7 @@
 
 This architecture support file handle all PIC24FJ devices.
 
-(197 devices on june 2021)
+(197 devices on January 2023)
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|

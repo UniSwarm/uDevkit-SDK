@@ -41,7 +41,7 @@ This family is splitted into three variations :
 
 ## Devices list
 
-48 devices on june 2021.
+48 devices on January 2023.
 
 ### EFE / EFG devices
 

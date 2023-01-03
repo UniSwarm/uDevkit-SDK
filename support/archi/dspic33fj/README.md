@@ -45,7 +45,7 @@ This range is oldest than [dsPIC33EP](../dspic33ep/README.md).
 
 ## Devices list
 
-114 devices on July 2018.
+114 devices on January 2023.
 
 ### GP family
 

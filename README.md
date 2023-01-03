@@ -6,12 +6,12 @@
 
 Embedded systems SDK for Uniswarm boards and others (dsPIC33, dsPIC30, PIC24 and PIC32 compatible) https://uniswarm.eu/udevkit
 
-Currently works for all 16 bits and 32 bits Microchip devices (1009 devices on june 2021):
+Currently works for all 16 bits and 32 bits Microchip devices (1087 devices on January 2023):
 
 |Range|Famillies|Device count|
 |-----|---------|-----------:|
-|[Microchip 16bits](support/archi/pic16b/README.md)|[dsPIC30F](support/archi/dspic30f/README.md), [dsPIC33CH](support/archi/dspic33ch/README.md), [dsPIC33CK](support/archi/dspic33ck/README.md), [dsPIC33EP](support/archi/dspic33ep/README.md), [dsPIC33EV](support/archi/dspic33ev/README.md), [dsPIC33FJ](support/archi/dspic33fj/README.md), [PIC24EP](support/archi/pic24ep/README.md), [PIC24F](support/archi/pic24f/README.md), [PIC24FJ](support/archi/pic24fj/README.md) and [PIC24HJ](support/archi/pic24hj/README.md)|696|
-|[Microchip 32bits](support/archi/pic32/README.md)|[PIC32MM](support/archi/pic32mm/README.md), [PIC32MK](support/archi/pic32mk/README.md), [PIC32MX](support/archi/pic32mx/README.md), [PIC32MZDA](support/archi/pic32mzda/README.md), [PIC32MZEC](support/archi/pic32mzec/README.md) and [PIC32MZEF](support/archi/pic32mzef/README.md)|313|
+|[Microchip 16bits](support/archi/pic16b/README.md)|[dsPIC30F](support/archi/dspic30f/README.md), [dsPIC33CH](support/archi/dspic33ch/README.md), [dsPIC33CK](support/archi/dspic33ck/README.md), [dsPIC33EP](support/archi/dspic33ep/README.md), [dsPIC33EV](support/archi/dspic33ev/README.md), [dsPIC33FJ](support/archi/dspic33fj/README.md), [PIC24EP](support/archi/pic24ep/README.md), [PIC24F](support/archi/pic24f/README.md), [PIC24FJ](support/archi/pic24fj/README.md) and [PIC24HJ](support/archi/pic24hj/README.md)|771|
+|[Microchip 32bits](support/archi/pic32/README.md)|[PIC32MM](support/archi/pic32mm/README.md), [PIC32MK](support/archi/pic32mk/README.md), [PIC32MX](support/archi/pic32mx/README.md), [PIC32MZDA](support/archi/pic32mzda/README.md), [PIC32MZEC](support/archi/pic32mzec/README.md) and [PIC32MZEF](support/archi/pic32mzef/README.md)|316|
 
 ## How to use ?
 uDevkit want to be very easy to use with no non-standard system. To manage your

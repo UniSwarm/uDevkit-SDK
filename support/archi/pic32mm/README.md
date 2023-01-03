@@ -39,7 +39,7 @@ This family is splitted into two subfamilies :
 
 ## Devices list
 
-21 devices on june 2021.
+21 devices on January 2023.
 
 ### GPD devices
 

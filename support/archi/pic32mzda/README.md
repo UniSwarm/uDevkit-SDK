@@ -36,7 +36,7 @@ An hardware crypto module is optionally available.
 
 ## Devices list
 
-72 devices on june 2021.
+72 devices on January 2023.
 
 ### Devices without DDR
 

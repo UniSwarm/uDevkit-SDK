@@ -44,7 +44,7 @@ same functionalities and a floating-point unit.
 
 ## Devices list
 
-24 devices on june 2021.
+24 devices on January 2023.
 
 ### ECG devices
 

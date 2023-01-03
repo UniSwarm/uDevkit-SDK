@@ -2,7 +2,7 @@
 
 This architecture support file handle all PIC24F devices.
 
-(50 devices on feb 2017)
+(50 devices on January 2023)
 
 Warning do not mix with PIC24FJ
 

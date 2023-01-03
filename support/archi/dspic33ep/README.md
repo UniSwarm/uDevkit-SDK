@@ -45,7 +45,7 @@ This range is very similar to [PIC24EP](../pic24ep/README.md) with an additional
 
 ## Devices list
 
-101 devices on november 2017.
+101 devices on January 2023.
 
 ### GS family
 

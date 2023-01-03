@@ -45,7 +45,7 @@ This family is splitted into multiple subfamilies :
 
 ## Devices list
 
-120 devices on june 2021.
+120 devices on January 2023.
 
 ### MX1 / MX2 devices
 

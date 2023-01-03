@@ -34,7 +34,7 @@ dsPIC33EV family is a robustified version of [dsPIC33EP](../dspic33ep/README.md)
 
 ## Devices list
 
-32 devices on february 2018.
+32 devices on January 2023.
 
 ### GM00X subfamily
 

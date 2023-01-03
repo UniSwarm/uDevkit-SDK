@@ -1,17 +1,17 @@
 # dsPIC33CH support
 
-dsPIC33CH family is the first Microchip *dual core* [16 bits](../pic16b/README.md) MCU. The main core have 16 kb of dedicated RAM and the slave core 4 kb
-with a hardware MSI cache coherency protocol. Architecture and peripherals are similar to [dsPIC33CK](../dspic33ck/README.md), the simple core version.
+dsPIC33CH family is the first Microchip *dual core* [16 bits](../pic16b/README.md) MCU.
+Architecture and peripherals are similar to [dsPIC33CK](../dspic33ck/README.md), the simple core version.
 
-A lot of peripherals (UART, Timer...) are not compatible with others dsPIC ranges. Full support of drivers may needs additional time.
+A lot of peripherals (UART, Timer...) are not compatible with others dsPIC ranges.
 
 This family have variations of flash memory, pin count and CAN FD for 5XX subfamily.
 
-Slave core is marked with final S1. Slave core does not have same peripherals. They have 4 - 16 kb of ram and 24 - 73 kb of PRAM.
+Secondary core is marked with final S1. Secondary core does not have same peripherals. They have 4 - 16 kb of ram and 24 - 73 kb of PRAM.
 
 ## Main features
 
-|Feature|dsPIC33CH master core|dsPIC33CH slave core|
+|Feature|dsPIC33CH master core|dsPIC33CH secondary core|
 |-------|:------:|:------:|
 |Core|16 bits|16 bits|
 |Performance|90 DMIPS|100 DMIPS|
@@ -43,13 +43,13 @@ Slave core is marked with final S1. Slave core does not have same peripherals. T
 
 ## Devices list
 
-32 devices on August 2018, plus relative slave core with a final *S1* which are similar core.
+33 devices on January 2023, plus relative secondary core with a final *S1* which are similar core.
 
 ### MP20X subfamily
 
 Base device.
 
-|Compatible devices|Program|Data|Slave program|Slave data|Pins|
+|Compatible devices|Program|Data|Secondary program|Secondary data|Pins|
 |---------|--:|--:|--:|--:|--:|
 |[dsPIC33CH64MP202](http://microchip.com/wwwproducts/en/dsPIC33CH64MP202)  |  66 kb| 16 kb| 24 kb|  4 kb| 28|
 |[dsPIC33CH128MP202](http://microchip.com/wwwproducts/en/dsPIC33CH128MP202)| 134 kb| 16 kb| 24 kb|  4 kb| 28|
@@ -66,13 +66,14 @@ Base device.
 |[dsPIC33CH64MP208](http://microchip.com/wwwproducts/en/dsPIC33CH64MP208)  |  66 kb| 16 kb| 24 kb|  4 kb| 80|
 |[dsPIC33CH128MP208](http://microchip.com/wwwproducts/en/dsPIC33CH128MP208)| 134 kb| 16 kb| 24 kb|  4 kb| 80|
 |[dsPIC33CH256MP208](http://microchip.com/wwwproducts/en/dsPIC33CH256MP208)| 269 kb| 33 kb| 73 kb| 16 kb| 80|
+|[dsPIC33CH256MP218](http://microchip.com/wwwproducts/en/dsPIC33CH256MP218)| 269 kb| 49 kb| 73 kb| 16 kb| 80|
 |[dsPIC33CH512MP208](http://microchip.com/wwwproducts/en/dsPIC33CH512MP208)| 540 kb| 49 kb| 73 kb| 16 kb| 80|
 
 ### MP50X subfamily
 
 Contains all functionnalities of 20X plus CAN FD device (2 CAN Fd buses for 256k and 512k flash version).
 
-|Compatible devices|Program|Data|Slave program|Slave data|Pins|
+|Compatible devices|Program|Data|Secondary program|Secondary data|Pins|
 |---------|--:|--:|--:|--:|--:|
 |[dsPIC33CH64MP502](http://microchip.com/wwwproducts/en/dsPIC33CH64MP502)  |  66 kb| 16 kb| 24 kb|  4 kb| 28|
 |[dsPIC33CH128MP502](http://microchip.com/wwwproducts/en/dsPIC33CH128MP502)| 134 kb| 16 kb| 24 kb|  4 kb| 28|
@@ -97,12 +98,12 @@ dsPIC33CH is the first range of dsPIC with two cores in one package. Each core h
 They share access to pins by using MUX. GPIO are shared, they can both read pins but only one can write to it.
 The owner of each pin is defined by the configuration word.
 
-Memory program are also independent but the slave program is stocked in the single flash at a special address.
-This space is copied to slave's PRAM at startup. So, only one hex file is needed to program both cores.
+Memory program are also independent but the secondary program is stocked in the single flash at a special address.
+This space is copied to secondary's PRAM at startup. So, only one hex file is needed to program both cores.
 
 Debug could be individual by defined debug pairs for each cores.
 
-MCLR pin reset both cores, but a special reset could be defined for slave only.
+MCLR pin reset both cores, but a special reset could be defined for secondary only.
 
 Clock sources are the same but they have independent PLLs and divisers.
 
