@@ -446,7 +446,7 @@ int can_setFifoEventsHandler(rt_dev_t device, uint8_t fifo, CAN_FIFO_EVENTS even
     return 0;
 }
 
-int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
+int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *data)
 {
     UDK_UNUSED(fifo);
 
