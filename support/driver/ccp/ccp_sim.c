@@ -307,6 +307,22 @@ int ccp_close(rt_dev_t device)
 }
 
 /**
+ * @brief CCP sdk state
+ * @param device ccp device number
+ * @return true if ccp was openned by ccp_open function
+ */
+bool ccp_isOpened(rt_dev_t device)
+{
+    uint8_t ccp = MINOR(device);
+    if (ccp >= CCP_COUNT)
+    {
+        return -1;
+    }
+
+    return (_ccps[ccp].flags.used == 1);
+}
+
+/**
  * @brief Enable the specified ccp device
  * @param device ccp device number
  * @return 0 if ok, -1 in case of error
@@ -395,6 +411,22 @@ int ccp_disable(rt_dev_t device)
 #else
     return -1;
 #endif
+}
+
+/**
+ * @brief CCP sdk enabled state
+ * @param device ccp device number
+ * @return true if ccp was enabled by ccp_enable function
+ */
+bool ccp_isEnabled(rt_dev_t device)
+{
+    uint8_t ccp = MINOR(device);
+    if (ccp >= CCP_COUNT)
+    {
+        return -1;
+    }
+
+    return (_ccps[ccp].flags.enabled == 1);
 }
 
 /**
