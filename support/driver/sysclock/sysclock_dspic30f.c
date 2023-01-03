@@ -165,3 +165,9 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
     // TODO implement me
     return -1;
 }
+
+int sysclock_setClock(uint32_t freq)
+{
+    // TODO implement me
+    return -1;
+}
