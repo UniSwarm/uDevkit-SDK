@@ -6,7 +6,7 @@
  *
  * @date May 07, 2017, 10:07 AM
  *
- * @brief ADC driver support for PIC32MZDA and PIC32MZEF
+ * @brief ADC driver support for PIC32MZDA, PIC32MZEF and PIC32MK
  *
  * Implementation based on Microchip document DS60001344B :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/60001344B.pdf

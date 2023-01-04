@@ -6,7 +6,7 @@
  *
  * @date May 07, 2017, 10:07 AM
  *
- * @brief ADC driver support for PIC32MZDA and PIC32MZEF
+ * @brief ADC driver support for PIC32MZDA, PIC32MZEF and PIC32MK
  *
  * Implementation based on Microchip document DS60001344B :
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/60001344B.pdf
@@ -21,16 +21,30 @@ static uint8_t _adc_sarFromChannel(uint8_t channel);
 int adc_init(void)
 {
     // initialize ADC calibration setting
+#ifdef ADC_HAVE_DEDICATED_CORE0
     ADC0CFG = DEVADC0;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE1
     ADC1CFG = DEVADC1;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE2
     ADC2CFG = DEVADC2;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE3
     ADC3CFG = DEVADC3;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE4
     ADC4CFG = DEVADC4;
+#endif
 #ifdef ADC_HAVE_DEDICATED_CORE5
     ADC5CFG = DEVADC5;
-#endif  // ADC_HAVE_DEDICATED_CORE5
-    // ADC6CFG = DEVADC6;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE6
+    ADC6CFG = DEVADC6;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE7
     ADC7CFG = DEVADC7;
+#endif
 
     // Configure ADCCON1
     ADCCON1 = 0;  // No ADCCON1 features are enabled including: Stop-in-Idle, turbo, CVD mode, Fractional mode and scan trigger source.
@@ -49,56 +63,52 @@ int adc_init(void)
     ADCCON3bits.VREFSEL = 0;    // Select AVDD and AVSS as reference source
 
     // Select ADC sample time and conversion clock
+#ifdef ADC_HAVE_DEDICATED_CORE0
     ADC0TIMEbits.ADCDIV = 1;  // ADC0 clock frequency is half of control clock = TAD0
     ADC0TIMEbits.SAMC = 5;    // ADC0 sampling time = 5 * TAD0
     ADC0TIMEbits.SELRES = 3;  // ADC0 resolution is 12 bits
+#endif
+
+#ifdef ADC_HAVE_DEDICATED_CORE1
     ADC1TIMEbits.ADCDIV = 1;  // ADC1 clock frequency is half of control clock = TAD1
     ADC1TIMEbits.SAMC = 5;    // ADC1 sampling time = 5 * TAD1
     ADC1TIMEbits.SELRES = 3;  // ADC1 resolution is 12 bits
+#endif
+
+#ifdef ADC_HAVE_DEDICATED_CORE2
     ADC2TIMEbits.ADCDIV = 1;  // ADC2 clock frequency is half of control clock = TAD2
     ADC2TIMEbits.SAMC = 5;    // ADC2 sampling time = 5 * TAD2
     ADC2TIMEbits.SELRES = 3;  // ADC2 resolution is 12 bits
+#endif
+
+#ifdef ADC_HAVE_DEDICATED_CORE3
     ADC3TIMEbits.ADCDIV = 1;  // ADC3 clock frequency is half of control clock = TAD3
     ADC3TIMEbits.SAMC = 5;    // ADC3 sampling time = 5 * TAD2
     ADC3TIMEbits.SELRES = 3;  // ADC3 resolution is 12 bits
+#endif
+
+#ifdef ADC_HAVE_DEDICATED_CORE4
     ADC4TIMEbits.ADCDIV = 1;  // ADC4 clock frequency is half of control clock = TAD4
     ADC4TIMEbits.SAMC = 5;    // ADC4 sampling time = 5 * TAD2
     ADC4TIMEbits.SELRES = 3;  // ADC4 resolution is 12 bits
-    ADCCON2bits.ADCDIV = 1;   // ADC7 clock frequency is half of control clock = TAD7
-    ADCCON2bits.SAMC = 5;     // ADC7 sampling time = 5 * TAD2
-    ADCCON1bits.SELRES = 3;   // ADC7 resolution is 12 bits
-
-    // Select ADC input mode
-    ADCIMCON1 = 0;  // unsigned data format - Single ended mode
-    ADCIMCON2 = 0;  // unsigned data format - Single ended mode
-    ADCIMCON3 = 0;  // unsigned data format - Single ended mode
-
-    // Configure ADCGIRQENx
-    ADCGIRQEN1 = 0;  // No interrupts are used
-    ADCGIRQEN2 = 0;
-
-    // Configure ADCCSSx
-    ADCCSS1 = 0;  // No scanning is used
-    ADCCSS2 = 0;
-
-    // Configure ADCCMPCONx
-    ADCCMPCON1 = 0;  // No digital comparators are used. Setting the ADCCMPCONx
-    ADCCMPCON2 = 0;  // register to '0' ensures that the comparator is disabled.
-    ADCCMPCON3 = 0;  // Other registers are “don't care”.
-    ADCCMPCON4 = 0;
-#ifndef ARCHI_pic32mk
-    ADCCMPCON5 = 0;
-    ADCCMPCON6 = 0;
 #endif
 
-    // Configure ADCFLTRx
-    ADCFLTR1 = 0;  // No oversampling filters are used.
-    ADCFLTR2 = 0;
-    ADCFLTR3 = 0;
-    ADCFLTR4 = 0;
-#ifndef ARCHI_pic32mk
-    ADCFLTR5 = 0;
-    ADCFLTR6 = 0;
+#ifdef ADC_HAVE_DEDICATED_CORE5
+    ADC5TIMEbits.ADCDIV = 1;  // ADC5 clock frequency is half of control clock = TAD5
+    ADC5TIMEbits.SAMC = 5;    // ADC5 sampling time = 5 * TAD2
+    ADC5TIMEbits.SELRES = 3;  // ADC5 resolution is 12 bits
+#endif
+
+#ifdef ADC_HAVE_DEDICATED_CORE6
+    ADC6TIMEbits.ADCDIV = 1;  // ADC6 clock frequency is half of control clock = TAD6
+    ADC6TIMEbits.SAMC = 5;    // ADC6 sampling time = 5 * TAD2
+    ADC6TIMEbits.SELRES = 3;  // ADC6 resolution is 12 bits
+#endif
+
+#ifdef ADC_HAVE_DEDICATED_CORE7
+    ADCCON2bits.ADCDIV = 1;  // ADC7 clock frequency is half of control clock = TAD7
+    ADCCON2bits.SAMC = 5;    // ADC7 sampling time = 5 * TAD2
+    ADCCON1bits.SELRES = 3;  // ADC7 resolution is 12 bits
 #endif
 
     // Set up the trigger sources
@@ -121,10 +131,6 @@ int adc_init(void)
 #    endif
 #endif
 
-    // Early interrupt
-    ADCEIEN1 = 0;  // No early interrupt
-    ADCEIEN2 = 0;
-
     // Turn the ADC on
     ADCCON1bits.ON = 1;
 
@@ -139,15 +145,30 @@ int adc_init(void)
     }
 
     // Enable clock to analog circuit
+#ifdef ADC_HAVE_DEDICATED_CORE0
     ADCANCONbits.ANEN0 = 1;  // Enable the clock to analog bias
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE1
     ADCANCONbits.ANEN1 = 1;  // Enable the clock to analog bias
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE2
     ADCANCONbits.ANEN2 = 1;  // Enable the clock to analog bias
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE3
     ADCANCONbits.ANEN3 = 1;  // Enable the clock to analog bias
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE4
     ADCANCONbits.ANEN4 = 1;  // Enable the clock to analog bias
+#endif
 #ifdef ADC_HAVE_DEDICATED_CORE5
     ADCANCONbits.ANEN5 = 1;  // Enable the clock to analog bias
-#endif                       // ADC_HAVE_DEDICATED_CORE5
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE6
+    ADCANCONbits.ANEN6 = 1;  // Enable the clock to analog bias
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE7
     ADCANCONbits.ANEN7 = 1;  // Enable the clock to analog bias
+#endif
 
     // Wait for ADC to be ready
     while (!ADCANCONbits.WKRDY0)
@@ -163,31 +184,31 @@ int adc_init(void)
     {
         ;  // Wait until ADC2 is ready
     }
-#endif  // ADC_HAVE_DEDICATED_CORE2
+#endif
 #ifdef ADC_HAVE_DEDICATED_CORE3
     while (!ADCANCONbits.WKRDY3)
     {
         ;  // Wait until ADC3 is ready
     }
-#endif  // ADC_HAVE_DEDICATED_CORE3
+#endif
 #ifdef ADC_HAVE_DEDICATED_CORE4
     while (!ADCANCONbits.WKRDY4)
     {
         ;  // Wait until ADC4 is ready
     }
-#endif  // ADC_HAVE_DEDICATED_CORE4
+#endif
 #ifdef ADC_HAVE_DEDICATED_CORE5
     while (!ADCANCONbits.WKRDY5)
     {
         ;  // Wait until ADC5 is ready
     }
-#endif  // ADC_HAVE_DEDICATED_CORE5
+#endif
 #ifdef ADC_HAVE_DEDICATED_CORE6
     while (!ADCANCONbits.WKRDY6)
     {
         ;  // Wait until ADC6 is ready
     }
-#endif  // ADC_HAVE_DEDICATED_CORE5
+#endif
     while (!ADCANCONbits.WKRDY7)
     {
         ;  // Wait until ADC7 is ready
@@ -253,37 +274,54 @@ int adc_startSampling(uint8_t channel)
     sar = _adc_sarFromChannel(channel);
     switch (sar)
     {
+#ifdef ADC_HAVE_DEDICATED_CORE0
         case 0:
             ADCTRGMODEbits.SH0ALT = 0;  // ADC0 = AN0
             ADCCON3bits.DIGEN0 = 1;     // Enable ADC0
             break;
+#endif
 
+#ifdef ADC_HAVE_DEDICATED_CORE1
         case 1:
             ADCTRGMODEbits.SH1ALT = 0;  // ADC1 = AN1
             ADCCON3bits.DIGEN1 = 1;     // Enable ADC1
             break;
+#endif
 
+#ifdef ADC_HAVE_DEDICATED_CORE2
         case 2:
             ADCTRGMODEbits.SH2ALT = 0;  // ADC2 = AN2
             ADCCON3bits.DIGEN2 = 1;     // Enable ADC2
             break;
+#endif
 
+#ifdef ADC_HAVE_DEDICATED_CORE3
         case 3:
             ADCTRGMODEbits.SH3ALT = 0;  // ADC3 = AN3
             ADCCON3bits.DIGEN3 = 1;     // Enable ADC3
             break;
+#endif
 
+#ifdef ADC_HAVE_DEDICATED_CORE4
         case 4:
             ADCTRGMODEbits.SH4ALT = 0;  // ADC4 = AN4
             ADCCON3bits.DIGEN4 = 1;     // Enable ADC4
             break;
+#endif
 
 #ifdef ADC_HAVE_DEDICATED_CORE5
         case 5:
             ADCTRGMODEbits.SH5ALT = 0;  // ADC5 = AN5
             ADCCON3bits.DIGEN5 = 1;     // Enable ADC5
             break;
-#endif  // ADC_HAVE_DEDICATED_CORE5
+#endif
+
+#ifdef ADC_HAVE_DEDICATED_CORE6
+        case 6:
+            ADCTRGMODEbits.SH6ALT = 0;  // ADC6 = AN6
+            ADCCON3bits.DIGEN6 = 1;     // Enable ADC6
+            break;
+#endif
 
         case 7:
             if (channel <= 31)
@@ -357,7 +395,7 @@ uint8_t _adc_sarFromChannel(uint8_t channel)
     {
         return channel;
     }
-#endif  // ADC_HAVE_DEDICATED_CORE5
+#endif
     if (channel >= 45 && channel <= 49)
     {
         return channel - 45;
