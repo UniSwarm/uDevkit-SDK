@@ -15,8 +15,8 @@
 
 #include "sysclock.h"
 
-#include "board.h"
 #include <archi.h>
+#include <board.h>
 
 static uint32_t _sysclock_sysfreq = 0;
 static uint32_t _sysclock_sosc = 0;
@@ -284,7 +284,7 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 #endif
 
     // disable interrupts
-    disable_interrupt();
+    uint32_t int_flag = disable_interrupt();
 
     // unlock clock config (OSCCON is write protected)
     unlockClockConfig();
@@ -305,8 +305,11 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
         nop();
     }
 
-    // enable interrupts
-    enable_interrupt();
+    // restore interrupts
+    if ((int_flag & 0x00000001) != 0)
+    {
+        enable_interrupt();
+    }
 
     if (sysclock_source() != source)
     {
@@ -391,15 +394,22 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         }
     }
 
-    // set prediv, post and multiplier in bits
-    disable_interrupt();
+    // disable interrupts
+    uint32_t int_flag = disable_interrupt();
+
     unlockClockConfig();  // unlock clock config (OSCCON is write protected)
+    // set prediv, post and multiplier in bits
     SPLLCONbits.PLLICLK = inputBit;
     SPLLCONbits.PLLODIV = postdivBits;
     SPLLCONbits.PLLMULT = multiplier - 1;
     SPLLCONbits.PLLIDIV = prediv - 1;
     lockClockConfig();
-    enable_interrupt();
+
+    // restore interrupts
+    if ((int_flag & 0x00000001) != 0)
+    {
+        enable_interrupt();
+    }
 
     _sysclock_pll = sysclock_getPLLClock();
 

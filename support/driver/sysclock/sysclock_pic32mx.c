@@ -187,7 +187,7 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
 #endif
 
     // disable interrupts
-    disable_interrupt();
+    uint32_t int_flag = disable_interrupt();
 
     // unlock clock config (OSCCON is write protected)
     unlockClockConfig();
@@ -208,8 +208,11 @@ int sysclock_switchSourceTo(SYSCLOCK_SOURCE source)
         nop();
     }
 
-    // enable interrupts
-    enable_interrupt();
+    // restore interrupts
+    if ((int_flag & 0x00000001) != 0)
+    {
+        enable_interrupt();
+    }
 
     if (sysclock_source() != source)
     {
