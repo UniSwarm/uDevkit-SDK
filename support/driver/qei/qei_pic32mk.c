@@ -29,7 +29,6 @@ rt_dev_t qei_getFreeDevice(void)
 #if QEI_COUNT >= 1
     uint8_t i;
     rt_dev_t device;
-
     for (i = 0; i < QEI_COUNT; i++)
     {
         if (_qeis[i] == 0)
@@ -114,11 +113,7 @@ int qei_enable(rt_dev_t device)
     {
         return -1;
     }
-#else
-    return -1;
-#endif
 
-#if QEI_COUNT >= 1
     switch (qei)
     {
         case 0:
@@ -151,6 +146,8 @@ int qei_enable(rt_dev_t device)
 #    endif
     }
     return 0;
+#else
+    return -1;
 #endif
 }
 
@@ -167,11 +164,7 @@ int qei_disable(rt_dev_t device)
     {
         return -1;
     }
-#else
-    return -1;
-#endif
 
-#if QEI_COUNT >= 1
     switch (qei)
     {
         case 0:
@@ -204,6 +197,8 @@ int qei_disable(rt_dev_t device)
 #    endif
     }
     return 0;
+#else
+    return -1;
 #endif
 }
 
@@ -221,11 +216,7 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
     {
         return -1;
     }
-#else
-    return -1;
-#endif
 
-#if QEI_COUNT >= 1
     switch (qei)
     {
         case 0:
@@ -253,6 +244,8 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
 #    endif
     }
     return 0;
+#else
+    return -1;
 #endif
 }
 
@@ -290,6 +283,11 @@ qei_type qei_value(rt_dev_t device)
 {
 #if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
+    if (qei > QEI_COUNT)
+    {
+        return -1;
+    }
+
     switch (qei)
     {
         case 0:
@@ -316,6 +314,8 @@ qei_type qei_value(rt_dev_t device)
 #    endif
     }
     return 0;
+#else
+    return -1;
 #endif
 }
 
