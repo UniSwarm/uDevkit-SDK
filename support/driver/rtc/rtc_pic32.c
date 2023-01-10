@@ -102,14 +102,28 @@ int rtc_setDateTime(const struct tm *dateTime)
     {
         return -1;
     }
+
+    // convert date time to hw bcd
     uint32_t hwDate = _rtc_dateToHw(dateTime);
     uint32_t hwTime = _rtc_timeToHw(dateTime);
-    disable_interrupt();
+
+    // disable interrupts
+    uint32_t int_flag = disable_interrupt();
+
+    // wait for windows sync
     while (RTCCONbits.RTCSYNC == 1)
         ;
+
+    // write date and time
     RTCDATE = hwDate;
     RTCTIME = hwTime;
-    enable_interrupt();
+
+    // restore interrupts
+    if ((int_flag & 0x00000001) != 0)
+    {
+        enable_interrupt();
+    }
+
     return 0;
 #else
     return -1;
@@ -123,8 +137,12 @@ int rtc_dateTime(struct tm *dateTime)
     {
         return -1;
     }
-    _rtc_hwToDate(RTCDATE, dateTime);
-    _rtc_hwToTime(RTCTIME, dateTime);
+
+    uint32_t hwDate = RTCDATE;
+    uint32_t hwTime = RTCTIME;
+
+    _rtc_hwToDate(hwDate, dateTime);
+    _rtc_hwToTime(hwTime, dateTime);
 
     dateTime->tm_yday = 0;
     dateTime->tm_isdst = 0;
