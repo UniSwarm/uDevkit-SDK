@@ -13,8 +13,8 @@
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/61125F.pdf
  */
 
-#ifndef RTC_PIC32MZ_H
-#define RTC_PIC32MZ_H
+#ifndef RTC_PIC32_H
+#define RTC_PIC32_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -108,4 +108,4 @@ extern "C" {
 }
 #endif
 
-#endif  // RTC_PIC32MZ_H
+#endif  // RTC_PIC32_H
