@@ -15,6 +15,6 @@ ifeq ($(ARCHI),$(filter $(ARCHI),pic32mm pic32mk pic32mx pic32mzda pic32mzec pic
  HEADER += rtc_pic32.h
 endif
 
-# SIM_SRC += rtc_sim.c
+SIM_SRC += rtc_sim.c
 
 endif
