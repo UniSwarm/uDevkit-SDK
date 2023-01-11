@@ -3,9 +3,9 @@
  * @author Sebastien CAUX (sebcaux)
  * @copyright UniSwarm 2020-2022
  *
- * @date march 20, 2020, 08:32
+ * @date March 20, 2020, 08:32 AM
  *
- * @brief NVM (non volatile memory) support drivers for dsPIC30F, dsPIC33FJ,
+ * @brief NVM (Non Volatile Memory) support drivers for dsPIC30F, dsPIC33FJ,
  * dsPIC33EP, dsPIC33EV, PIC24F, PIC24FJ, PIC24EP and PIC24HJ
  */
 

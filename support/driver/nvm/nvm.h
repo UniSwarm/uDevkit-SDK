@@ -4,9 +4,9 @@
  * @copyright Robotips 2016
  * @copyright UniSwarm 2018-2022
  *
- * @date novembre 10, 2016, 18:01
+ * @date November 10, 2016, 06:01 PM
  *
- * @brief NVM (non volatile memory) support drivers
+ * @brief NVM (Non Volatile Memory) support drivers
  */
 
 #ifndef NVM_H
@@ -15,6 +15,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include "nvm_device.h"
 
 #include <driver/device.h>
 
@@ -33,13 +35,6 @@ uint32_t nvm_pageAddress(uint16_t pageNum);
 
 // TODO temporary
 void nvm_writeDoubleWord(uint32_t addrWord, const char *data);
-
-#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33ep) \
-    || defined(ARCHI_dspic33ev) || defined(ARCHI_dspic33fj) || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
-#    include "nvm_pic24_dspic30f_dspic33.h"
-#else
-#    error Unsuported ARCHI
-#endif
 
 #ifdef __cplusplus
 }

@@ -3,19 +3,21 @@
  * @author Sebastien CAUX (sebcaux)
  * @copyright UniSwarm 2020-2022
  *
- * @date march 20, 2020, 08:32
+ * @date March 20, 2020, 08:32 AM
  *
- * @brief NVM (non volatile memory) support for uDevKit SDK simulator
+ * @brief NVM (Non Volatile Memory) support for uDevKit SDK simulator
  */
 
 #include "nvm.h"
 
-#include "board.h"
-#include "simulator.h"
+#include <board.h>
+#include <simulator.h>
 
 #include <archi.h>
 #include <string.h>
 
+// TODO improved sim support for PIC32
+// Get Flash size and SIZE_WORD from device specific file
 #define __PROGRAM_LENGTH 512000
 
 #define SIZE_WORD        4u  // 3 + phantom
@@ -23,9 +25,9 @@
 
 static FILE *_nvm_file;
 
-void nvm_init(void);
+static void _nvm_init(void);
 
-void nvm_init(void)
+static void _nvm_init(void)
 {
     char path[50] = "";
     strcat(path, BOARD_NAME);
@@ -62,13 +64,13 @@ ssize_t nvm_read(uint32_t addr, char *data, size_t size)
 
     if (_nvm_file == NULL)
     {
-        nvm_init();
+        _nvm_init();
     }
 
     fseek(_nvm_file, addr, SEEK_SET);
 
-    fread(d, size, 1, _nvm_file);
-    for (i = 0; i < size; i++)
+    ssize_t read_size = fread(d, size, 1, _nvm_file);
+    for (i = 0; i < read_size; i++)
     {
         if ((i % 4) == 3)
         {
@@ -77,7 +79,7 @@ ssize_t nvm_read(uint32_t addr, char *data, size_t size)
         data[j] = d[i];
         j++;
     }
-    return size;
+    return read_size;
 }
 
 /**
@@ -93,7 +95,7 @@ ssize_t nvm_readPage(uint32_t addr, char *data)
 
     if (_nvm_file == NULL)
     {
-        nvm_init();
+        _nvm_init();
     }
 
     pageAddr = addr & NVM_FLASH_PAGE_MASK;      // align the address with top of page
@@ -113,7 +115,7 @@ ssize_t nvm_erasePage(uint32_t addr)
 {
     if (_nvm_file == NULL)
     {
-        nvm_init();
+        _nvm_init();
     }
 
     char temp[NVM_FLASH_PAGE_BYTE];
@@ -134,7 +136,7 @@ void nvm_writeDoubleWord(uint32_t addrWord, const char *data)
 {
     if (_nvm_file == NULL)
     {
-        nvm_init();
+        _nvm_init();
     }
 
     char tab[8];
@@ -164,7 +166,7 @@ ssize_t nvm_write(uint32_t addr, const char *data, size_t size)
 
     if (_nvm_file == NULL)
     {
-        nvm_init();
+        _nvm_init();
     }
 
     end = (((uint16_t)size) / SIZE_DOUBLE_WORD) * SIZE_DOUBLE_WORD;
