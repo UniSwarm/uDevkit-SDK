@@ -11,6 +11,8 @@
 
 #include "simulator.h"
 
+#include "archi.h"
+
 #include "simulator_pthread.h"
 #include "simulator_socket.h"
 
@@ -25,7 +27,12 @@
 
 static std::map<uint64_t, std::queue<std::vector<char>>> packages;
 
-void simulator_init()
+void archi_init(void)
+{
+    simulator_init();
+}
+
+void simulator_init(void)
 {
     atexit(simulator_end);
     setbuf(stdout, NULL);
@@ -35,7 +42,7 @@ void simulator_init()
     simulator_pthread_init();
 }
 
-void simulator_end()
+void simulator_end(void)
 {
     simulator_socket_end();
     puts("end simulator execution\n");
@@ -53,7 +60,7 @@ void simulator_send(uint16_t moduleId, uint16_t periphId, uint16_t functionId, c
     free(simDat);
 }
 
-int simulator_rec_task()
+int simulator_rec_task(void)
 {
     char data[2048];
     uint16_t sizePacket, moduleId, periphId, functionId;
