@@ -59,13 +59,14 @@ bool EDCParser::parsePic()
 
     while (_xml->readNextStartElement())
     {
+        // qDebug() << _xml->name();
         if (_xml->name() == QStringLiteral("DataSpace") || _xml->name() == QStringLiteral("PhysicalSpace"))
         {
             parseDataSpace();
         }
-        else if (_xml->name() == QStringLiteral("ProgramSubspace"))
+        else if (_xml->name() == QStringLiteral("ProgramSpace"))
         {
-            parseProgramSubSpace();
+            parseProgramSpace();
         }
         else if (_xml->name().endsWith(QStringLiteral("Sector")))
         {
@@ -83,6 +84,7 @@ bool EDCParser::parseDataSpace()
 {
     while (_xml->readNextStartElement())
     {
+        // qDebug() << "+ " << _xml->name();
         if (_xml->name().endsWith(QStringLiteral("SFRDef")))
         {
             parseSFRDef();
@@ -90,6 +92,10 @@ bool EDCParser::parseDataSpace()
         else if (_xml->name() == QStringLiteral("RegardlessOfMode") || _xml->name() == QStringLiteral("SFRDataSector"))
         {
             parseDataSpace();
+        }
+        else if (_xml->name().endsWith(QStringLiteral("Sector")))
+        {
+            parseProgramSector();
         }
         else
         {
@@ -135,9 +141,30 @@ bool EDCParser::parseSFRDef()
     return true;
 }
 
+bool EDCParser::parseProgramSpace()
+{
+    while (_xml->readNextStartElement())
+    {
+        if (_xml->name() == QStringLiteral("ProgramSubspace"))
+        {
+            parseProgramSubSpace();
+        }
+        else if (_xml->name().endsWith(QStringLiteral("Sector")))
+        {
+            parseProgramSector();
+        }
+        else
+        {
+            _xml->skipCurrentElement();
+        }
+    }
+    return true;
+}
+
 bool EDCParser::parseProgramSubSpace()
 {
     QString partitionmode = _xml->attributes().value("edc:partitionmode").toString();
+    // qDebug() << partitionmode;
     if (partitionmode.isEmpty() || partitionmode != "single")
     {
         _xml->skipCurrentElement();
@@ -165,8 +192,10 @@ bool EDCParser::parseProgramSector()
     EDCProgramSpace programSpace;
     programSpace.name = _xml->attributes().value("edc:regionid").toString().toUpper();
     programSpace.beginaddr = _xml->attributes().value("edc:beginaddr").toUInt(&ok, 0);
-    programSpace.endaddr = _xml->attributes().value("edc:endaddr").toUInt(&ok, 0);
+    programSpace.endaddr = _xml->attributes().value("edc:endaddr").toUInt(&ok, 0) - 1;
+    // qDebug() << "programSpace" << programSpace.name << programSpace.beginaddr;
     _programSpaces.insert(programSpace.name, programSpace);
+    _xml->skipCurrentElement();
     return true;
 }
 

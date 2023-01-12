@@ -47,6 +47,7 @@ protected:
     bool parsePic();
     bool parseDataSpace();
     bool parseSFRDef();
+    bool parseProgramSpace();
     bool parseProgramSubSpace();
     bool parseProgramSector();
     bool parseSFRMode(EDCSFRDef &sfrDef);
