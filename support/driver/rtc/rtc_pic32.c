@@ -12,7 +12,7 @@
  *  http://ww1.microchip.com/downloads/en/DeviceDoc/61125F.pdf
  */
 
-#include "rtc_pic32.h"
+#include "rtc.h"
 
 #include <archi.h>
 
