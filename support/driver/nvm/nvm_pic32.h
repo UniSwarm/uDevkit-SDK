@@ -20,11 +20,23 @@
 extern "C" {
 #endif
 
+int nvm_writeWords(uint32_t address, const uint32_t *data);
+int nvm_writeRow(uint32_t address, const uint32_t *data);
+int nvm_erasePage(uint32_t address);
+
 // #define NVM_FLASH_PAGE_BYTE  4096
 // #define NVM_FLASH_PAGE_MASK  0xFFFFF000
 // #define NVM_FLASH_PAGE_SHIFT 12
 // #define NVM_FLASH_ROW_BYTE   512
 // #define NVM_HAS_FLASH
+
+#if defined(ARCHI_pic32mx)
+#    define NVM_WORD_COUNT 1
+#elif defined(ARCHI_pic32mm)
+#    define NVM_WORD_COUNT 2
+#elif defined(ARCHI_pic32mk) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
+#    define NVM_WORD_COUNT 4
+#endif
 
 // NVM_PROGRAM_BEGIN
 #define NVM_PROGRAM_BEGIN 0x1D000000
