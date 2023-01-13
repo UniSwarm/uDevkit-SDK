@@ -113,8 +113,8 @@ void asserv_task(void)
 long int c1, c2;
 void asserv_locTask(void)
 {
-    c1 = qei_getValue(coder1);
-    c2 = qei_getValue(coder2);
+    c1 = qei_value(coder1);
+    c2 = qei_value(coder2);
 
     // loc
     v1 = c1 - ancc1;
