@@ -5,4 +5,4 @@
 void ihm_init();
 void ihm_task();
 
-#endif // IHM_H
+#endif  // IHM_H

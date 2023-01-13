@@ -1,10 +1,10 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdint.h>
 
-#include "modules.h"
-#include "board.h"
 #include "archi.h"
+#include "board.h"
+#include "modules.h"
 
 #include "ihm.h"
 #include "motors.h"
@@ -23,8 +23,9 @@ int main(void)
 
     motors_init();
 
-    for (j=0;j<5;j++)
-        for (i=0;i<65000;i++);
+    for (j = 0; j < 5; j++)
+        for (i = 0; i < 65000; i++)
+            ;
 
     // module init
     network_init();
@@ -36,11 +37,11 @@ int main(void)
     motors_setSpeed(600);
     motors_moveForward(200);
 
-    while(1)
+    while (1)
     {
-        #ifdef SIMULATOR
-            usleep(1000);
-        #endif
+#ifdef SIMULATOR
+        usleep(1000);
+#endif
         network_task();
         ihm_task();
 

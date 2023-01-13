@@ -47,7 +47,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // DOM-IGNORE-END
 
 #ifndef _SYSTEM_CONFIG_H
-#define _SYSTEM_CONFIG_H
+#    define _SYSTEM_CONFIG_H
 
 // *****************************************************************************
 // *****************************************************************************
@@ -59,56 +59,55 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 */
 
 // DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
+#    ifdef __cplusplus  // Provide C++ Compatibility
 
 extern "C" {
 
-#endif
+#    endif
 // DOM-IGNORE-END
 
 /*** USB Driver Configuration ***/
 
 /* Enables Device Support */
-#define DRV_USBHS_DEVICE_SUPPORT      true
+#    define DRV_USBHS_DEVICE_SUPPORT true
 
 /* Disable Device Support */
-#define DRV_USBHS_HOST_SUPPORT      false
+#    define DRV_USBHS_HOST_SUPPORT false
 
 /* Maximum USB driver instances */
-#define DRV_USBHS_INSTANCES_NUMBER    1
-
+#    define DRV_USBHS_INSTANCES_NUMBER 1
 
 /* Interrupt mode enabled */
-#define DRV_USBHS_INTERRUPT_MODE      true
+#    define DRV_USBHS_INTERRUPT_MODE true
 
 /* Number of Endpoints used */
-#define DRV_USBHS_ENDPOINTS_NUMBER    5
+#    define DRV_USBHS_ENDPOINTS_NUMBER 5
 
 /*** USB Device Stack Configuration ***/
 
 /* The USB Device Layer will not initialize the USB Driver */
-#define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
+#    define USB_DEVICE_DRIVER_INITIALIZE_EXPLICIT
 
 /* Maximum device layer instances */
-#define USB_DEVICE_INSTANCES_NUMBER     1
+#    define USB_DEVICE_INSTANCES_NUMBER 1
 
 /* EP0 size in bytes */
-#define USB_DEVICE_EP0_BUFFER_SIZE      64
+#    define USB_DEVICE_EP0_BUFFER_SIZE 64
 
 /* Maximum instances of CDC function driver */
-#define USB_DEVICE_CDC_INSTANCES_NUMBER     2
+#    define USB_DEVICE_CDC_INSTANCES_NUMBER 2
 
 /* CDC Transfer Queue Size for both read and
    write. Applicable to all instances of the
    function driver */
-#define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED 6
+#    define USB_DEVICE_CDC_QUEUE_DEPTH_COMBINED 6
 
 // *****************************************************************************
 /* BSP Configuration Options
-*/
-#define BSP_OSC_FREQUENCY 24000000
+ */
+#    define BSP_OSC_FREQUENCY 24000000
 
-#endif // _SYSTEM_CONFIG_H
+#endif  // _SYSTEM_CONFIG_H
 /*******************************************************************************
  End of File
 */

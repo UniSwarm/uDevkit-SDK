@@ -6,9 +6,7 @@ OUT_PWD = build
 
 DEV_PROG?=RICE
 
-# CCFLAGS += -pedantic
-
-DRIVERS += uart i2c timer pwm adc gpio # usb_hal
+DRIVERS += uart i2c timer pwm adc gpio
 
 MODULES += network
 NETWORK_DRIVERS = esp8266

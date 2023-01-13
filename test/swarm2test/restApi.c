@@ -19,11 +19,11 @@ void rest_api_exec(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *buffer)
 {
     JsonBuffer json;
     write_header_json(buffer);
-    json_init(&json, buffer+strlen(buffer), 100, JSON_MONOBLOC);
+    json_init(&json, buffer + strlen(buffer), 100, JSON_MONOBLOC);
 
     if (strcmp(restUrl, "status") == 0)
     {
-        if (querry_type==HTTP_QUERRY_TYPE_GET)
+        if (querry_type == HTTP_QUERRY_TYPE_GET)
         {
             id++;
             json_open_object(&json);
