@@ -8,8 +8,9 @@
  * @brief NVM (Non Volatile Memory) support drivers for PIC32MK,
  * PIC32MX, PIC32MZDA, PIC32MZEC and PIC32MZEF
  *
- * Implementation based on Microchip document DS60001121G :
+ * Implementation based on Microchip documents DS60001121G and DS60001193B:
  *  https://ww1.microchip.com/downloads/en/DeviceDoc/60001121g.pdf
+ *  https://ww1.microchip.com/downloads/en/DeviceDoc/60001193B.pdf
  */
 
 #ifndef NVM_PIC32_H

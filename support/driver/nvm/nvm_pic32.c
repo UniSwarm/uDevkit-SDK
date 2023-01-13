@@ -8,11 +8,12 @@
  * @brief NVM (Non Volatile Memory) support drivers for PIC32MK,
  * PIC32MX, PIC32MZDA, PIC32MZEC and PIC32MZEF
  *
- * Implementation based on Microchip document DS60001121G :
+ * Implementation based on Microchip documents DS60001121G and DS60001193B:
  *  https://ww1.microchip.com/downloads/en/DeviceDoc/60001121g.pdf
+ *  https://ww1.microchip.com/downloads/en/DeviceDoc/60001193B.pdf
  */
 
-#include "nvm_pic32.h"
+#include "nvm.h"
 
 #include <archi.h>
 
@@ -50,7 +51,7 @@ static void _nvm_processOperation(void)
     NVMKEY = 0x0U;
     NVMKEY = 0xAA996655U;
     NVMKEY = 0x556699AAU;
-    NVMCONSET = _NVMCON_WREN_MASK;
+    NVMCONSET = _NVMCON_WR_MASK;
     // >ATOMIC BLOCK
 
     // restore DMA
@@ -119,7 +120,7 @@ int nvm_writeQuadWord(uint32_t address, const uint32_t *data)
     _nvm_processOperation();
 
     // Wait for finished
-    while (NVMCONbits.WR)
+    while (NVMCONbits.WR != 0)
     {
         ;
     }
@@ -145,13 +146,18 @@ int nvm_writeRow(uint32_t address, const uint32_t *data)
     // Launch write
     _nvm_processOperation();
 
+    // Wait for finished
+    while (NVMCONbits.WR != 0)
+    {
+        ;
+    }
     // Do not wait for finished, too long operation
     // pool WR outsite
 
     return 0;
 }
 
-int nvm_erasePage(uint32_t address, const uint32_t *data)
+int nvm_erasePage(uint32_t address)
 {
     // Set physical address and operation
     NVMADDR = KVA_TO_PA(address);

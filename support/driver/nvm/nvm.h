@@ -18,8 +18,6 @@ extern "C" {
 
 #include "nvm_device.h"
 
-#include <driver/device.h>
-
 // ========= byte manipulation ========
 ssize_t nvm_read(uint32_t addr, char *data, size_t size);
 ssize_t nvm_write(uint32_t addr, const char *data, size_t size);
