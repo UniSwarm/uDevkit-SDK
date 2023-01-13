@@ -1,27 +1,22 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdint.h>
 
+#include "archi.h"
 #include "modules.h"
 #include "robot.h"
-#include "archi.h"
 
 extern void rest_api_exec(char *restUrl, HTTP_QUERRY_TYPE querry_type, char *buffer);
 extern const Fs_FilesList file_list;
 
-//#include "a6channels.h"
+// #include "a6channels.h"
 
-unsigned int pos[] = {
-    1500, 1000,
-    2000, 1000,
-    2000, 1500,
-    1500, 1500
-};
+unsigned int pos[] = {1500, 1000, 2000, 1000, 2000, 1500, 1500, 1500};
 unsigned char step = 2;
 
 int main(void)
 {
-	unsigned int i, j, e=0;
+    unsigned int i, j, e = 0;
     uint16_t value_x, value_y, value_z;
     rt_dev_t uartDbg;
     rt_dev_t i2c;
@@ -31,7 +26,7 @@ int main(void)
     uint8_t acc[8];
     MrobotPose pose;
     float valueF;
-    char led=0;
+    char led = 0;
 
     robot_init();
     sysclock_setClock(120000000);
@@ -71,21 +66,22 @@ int main(void)
     pose.t = 0;
     mrobot_setPose(pose);
 
-	MrobotPoint pos;
-	pos.x = 1500;
-	pos.y = 1000;
+    MrobotPoint pos;
+    pos.x = 1500;
+    pos.y = 1000;
     mrobot_goto(pos, 100);
 
-    j=0;
-    while(1)
+    j = 0;
+    while (1)
     {
         network_task();
         usb_serial_task();
-        for(i=0;i<65000;i++);
+        for (i = 0; i < 65000; i++)
+            ;
 
-        #ifdef SIMULATOR
-            usleep(1000);
-        #endif
+#ifdef SIMULATOR
+        usleep(1000);
+#endif
 
         /*if(asserv_getDistance() <= 15.0)
         {
@@ -99,15 +95,15 @@ int main(void)
         value = sharp_convert(adc_getValue(ANS0), FarSharp);
         /*value = adc_getValue(25);	// AnS2*/
         value2 = sharp_convert(adc_getValue(ANS2), FarSharp);
-        //ax12_moveTo(1, value, 512, 512);
+        // ax12_moveTo(1, value, 512, 512);
 
-        if(value < 150 || value2 < 150)
+        if (value < 150 || value2 < 150)
             mrobot_pause();
         else
             mrobot_restart();
 
         i2c_readregs(i2c, 0x38, 0x00, acc, 7, I2C_REG8 | I2C_REGADDR8);
-        if(acc[0] & 0x08)
+        if (acc[0] & 0x08)
         {
             value_x = acc[1];
             value_y = acc[3];
@@ -115,23 +111,25 @@ int main(void)
         }
 
         pose = mrobot_pose();
-        sprintf(buff, "d1:%d\td2:%d\tx:%d\ty:%d\tt:%d\tacx:%d\tacy:%d\tacz:%d\r\n",
+        sprintf(buff,
+                "d1:%d\td2:%d\tx:%d\ty:%d\tt:%d\tacx:%d\tacy:%d\tacz:%d\r\n",
                 value,
                 value2,
                 (int)pose.x,
                 (int)pose.y,
-                (int)(pose.t/3.14*180.0),
-                value_x, value_y, value_z
-        );
+                (int)(pose.t / 3.14 * 180.0),
+                value_x,
+                value_y,
+                value_z);
 
-        if(e++>10)
+        if (e++ > 10)
         {
-			// ==================== USB =======================
-            //usb_serial_write(usb_serial, buff, strlen(buff));
-			e=0;
-		}
+            // ==================== USB =======================
+            // usb_serial_write(usb_serial, buff, strlen(buff));
+            e = 0;
+        }
 
-        if(j++>50)
+        if (j++ > 50)
         {
             int16_t *ptr;
             ptr = (int16_t *)buff;
@@ -144,7 +142,7 @@ int main(void)
             *ptr = percent;
 
             ptr++;
-            valueF = (float)volt * 35.6; // mV
+            valueF = (float)volt * 35.6;  // mV
             *ptr = (uint16_t)valueF;
 
             ptr++;
@@ -163,10 +161,10 @@ int main(void)
             *ptr = pose.t * 180.0 / 3.1415;
 
             a6_write(buff, 16);
-            j=0;
+            j = 0;
             board_setLed(0, led);
             led++;
-            //uart_write(uartDbg, buff, strlen(buff));
+            // uart_write(uartDbg, buff, strlen(buff));
         }
 
         cmdline_task();

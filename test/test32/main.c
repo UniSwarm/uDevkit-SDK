@@ -1,12 +1,12 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdint.h>
 
-#include "modules.h"
-#include "board.h"
 #include "archi.h"
+#include "board.h"
+#include "modules.h"
 
-char led=0;
+char led = 0;
 void tt()
 {
     board_setLed(1, led++);
@@ -20,13 +20,13 @@ int main(void)
     char buff[100];
 
     archi_init();
-    //sysclock_setClock(200000000);
+    // sysclock_setClock(200000000);
     sysclock_setClockDiv(SYSCLOCK_CLOCK_TIMER, 16);
     sysclock_setClockDiv(SYSCLOCK_CLOCK_UART, 16);
 
     board_init();
 
-    //board_setLed(1, 1);
+    // board_setLed(1, 1);
 
     gui_init(0);
 
@@ -64,18 +64,22 @@ int main(void)
     gui_ctrl_update();
 #endif
 
-    while(1)
+    while (1)
     {
-        #ifdef SIMULATOR
-            usleep(1000);
-        #endif
-        
+#ifdef SIMULATOR
+        usleep(1000);
+#endif
+
         cmdline_task();
 
         board_setLed(2, 1);
-        for(j=0; j<5; j++) for(i=0; i<65000; i++);
+        for (j = 0; j < 5; j++)
+            for (i = 0; i < 65000; i++)
+                ;
         board_setLed(2, 0);
-        for(j=0; j<5; j++) for(i=0; i<65000; i++);
+        for (j = 0; j < 5; j++)
+            for (i = 0; i < 65000; i++)
+                ;
     }
 
     return 0;

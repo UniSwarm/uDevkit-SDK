@@ -10,4 +10,4 @@ void steppers_start();
 
 void steppers_setSpeed(int16_t speed);
 
-#endif // STEPPERS_H
+#endif  // STEPPERS_H
