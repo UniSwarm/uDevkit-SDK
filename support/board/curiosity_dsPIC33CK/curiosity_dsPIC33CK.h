@@ -1,7 +1,7 @@
 /**
  * @file curiosity_dsPIC33CK.h
  * @author Sebastien CAUX (secaux)
- * @copyright UniSwarm 2022
+ * @copyright UniSwarm 2022-2023
  *
  * @date December 15, 2022, 07:42 PM
  *

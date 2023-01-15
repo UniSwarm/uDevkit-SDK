@@ -1,8 +1,8 @@
 /**
  * @file rtboard.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
- * @copyright UniSwarm 2018-2022
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2023
  *
  * @date April 25, 2016, 08:49 AM
  *

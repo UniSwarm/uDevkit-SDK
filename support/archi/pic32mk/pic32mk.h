@@ -2,7 +2,7 @@
  * @file pic32mk.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date March 12, 2017, 11:35 AM
  *

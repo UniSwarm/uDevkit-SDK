@@ -1,7 +1,7 @@
 /**
  * @file umc1bd90_secondary.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2022
+ * @copyright UniSwarm 2022-2023
  *
  * @date April 25, 2022, 02:35 PM
  *

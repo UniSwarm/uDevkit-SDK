@@ -1,7 +1,7 @@
 /**
  * @file spi_device.h
  * @author Sebastien CAUX (secaux)
- * @copyright UniSwarm 2022
+ * @copyright UniSwarm 2022-2023
  *
  * @date December 3, 2022, 01:35 PM
  *

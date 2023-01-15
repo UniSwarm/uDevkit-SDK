@@ -1,7 +1,7 @@
 /**
  * @file dspic33ck.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2017-2022
+ * @copyright UniSwarm 2017-2023
  *
  * @date November 10, 2017, 09:36 AM
  *

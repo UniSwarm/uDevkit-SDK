@@ -1,7 +1,7 @@
 /**
  * @file ccp.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2019-2022
+ * @copyright UniSwarm 2019-2023
  *
  * @date May 08, 2019, 09:40 AM
  *

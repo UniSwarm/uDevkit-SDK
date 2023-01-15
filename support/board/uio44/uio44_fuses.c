@@ -1,7 +1,7 @@
 /**
  * @file uio44_fuses.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date November 28, 2018, 09:30 AM
  *

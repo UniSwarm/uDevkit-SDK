@@ -1,7 +1,7 @@
 /**
  * @file ccp_sim.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2019-2022
+ * @copyright UniSwarm 2019-2023
  *
  * @date June 09, 2019, 00:50 AM
  *

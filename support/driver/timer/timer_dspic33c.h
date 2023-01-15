@@ -1,7 +1,7 @@
 /**
  * @file timer_dspic33c.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date June 01, 2018, 05:28 PM
  *

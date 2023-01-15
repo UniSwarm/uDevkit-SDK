@@ -1,7 +1,7 @@
 /**
  * @file msi_dspic33ch.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date March 2, 10:00 AM
  *

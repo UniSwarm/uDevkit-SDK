@@ -1,7 +1,7 @@
 /**
  * @file can_pic32_fd.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2022
+ * @copyright UniSwarm 2022-2023
  *
  * @date April 19, 2022, 10:57 PM
  *

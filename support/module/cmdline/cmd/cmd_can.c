@@ -1,7 +1,7 @@
 /**
  * @file cmd_can.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2022
+ * @copyright UniSwarm 2022-2023
  *
  * @date November 14, 2022, 02:46 PM
  *

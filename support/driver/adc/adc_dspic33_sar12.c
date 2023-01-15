@@ -1,7 +1,7 @@
 /**
  * @file adc_dspic33_sar12.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date December 13, 2018, 09:26 AM
  *

@@ -1,7 +1,7 @@
 /**
  * @file udt1cr-i.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date November 26, 2018, 18:00 PM
  *

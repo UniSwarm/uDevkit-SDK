@@ -2,7 +2,7 @@
  * @file uart_dspic30f.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date August 09, 2016, 11:44 AM
  *

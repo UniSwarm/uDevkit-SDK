@@ -2,7 +2,7 @@
  * @file pwm_sim.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date May 10, 2017, 13:00 PM
  *

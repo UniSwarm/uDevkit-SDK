@@ -1,8 +1,8 @@
 /**
  * @file gui_sim.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
- * @copyright UniSwarm 2018-2022
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2023
  *
  * @date November 05, 2016, 23:20 AM
  *

@@ -2,7 +2,7 @@
  * @file archi.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date April 12, 2016, 08:33 AM
  *

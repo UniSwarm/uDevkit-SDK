@@ -1,7 +1,8 @@
 /**
  * @file htmlGen.cpp
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2017
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2023
  *
  * @date June 2, 2017, 14:07 PM
  *

@@ -1,7 +1,7 @@
 /**
  * @file msi_sim.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2019-2022
+ * @copyright UniSwarm 2019-2023
  *
  * @date March 20 2019, 19:45 PM
  *

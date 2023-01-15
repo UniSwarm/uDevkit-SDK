@@ -1,7 +1,8 @@
 /**
  * @file img2raw.c
  * @author Sebastien CAUX (sebcaux) / Charles-Antoine NOURY (CharlyBigoud)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2023
  *
  * @date April 25, 2016, 18:39 PM
  *

@@ -1,8 +1,8 @@
 /**
  * @file pwm_pic24_dspic30f_dspic33.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
- * @copyright UniSwarm 2018-2022
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2023
  *
  * @date August 20, 2016, 12:33 PM
  *

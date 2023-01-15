@@ -1,8 +1,8 @@
 /**
  * @file gui.c
  * @author Sebastien CAUX (sebcaux) / Charles-Antoine NOURY (charlybigoud)
- * @copyright Robotips 2016
- * @copyright UniSwarm 2017-2022
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2017-2023
  *
  * @date April 25, 2016, 18:35 AM
  *

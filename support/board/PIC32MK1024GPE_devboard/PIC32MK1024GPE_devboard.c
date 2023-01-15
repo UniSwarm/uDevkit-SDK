@@ -2,7 +2,7 @@
  * @file PIC32MK1024GPE_devboard.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date October 25, 2017, 17:13 AM
  *

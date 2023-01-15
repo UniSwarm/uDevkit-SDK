@@ -1,7 +1,7 @@
 /**
  * @file umc-chop32.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2022
+ * @copyright UniSwarm 2022-2023
  *
  * @date August 22, 2022, 10:00 AM
  *

@@ -2,7 +2,7 @@
  * @file gpio_device.h
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date March 20, 2017, 20:38 AM
  *

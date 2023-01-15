@@ -1,7 +1,7 @@
 /**
  * @file adc.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2022
+ * @copyright UniSwarm 2022-2023
  *
  * @date November 25, 2022, 12:53 PM
  *

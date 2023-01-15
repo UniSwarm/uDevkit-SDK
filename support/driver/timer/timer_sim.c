@@ -2,7 +2,7 @@
  * @file timer_sim.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2016-2017
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date September 27, 2016, 11:37 AM
  *

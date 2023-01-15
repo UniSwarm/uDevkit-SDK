@@ -2,7 +2,7 @@
  * @file sysclock_pic32mx.c
  * @author Sebastien CAUX (sebcaux)
  * @copyright Robotips 2017
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date July 12, 2017, 23:30 PM
  *

@@ -1,7 +1,7 @@
 /**
  * @file can.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2017-2022
+ * @copyright UniSwarm 2017-2023
  *
  * @date December 8 2017, 09:10 AM
  *

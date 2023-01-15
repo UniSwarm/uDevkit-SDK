@@ -1,7 +1,7 @@
 /**
  * @file curiosity_PIC32MK_MCM_fuses.c
  * @author Sebastien CAUX (secaux)
- * @copyright UniSwarm 2022
+ * @copyright UniSwarm 2022-2023
  *
  * @date December 5, 2022, 09:53 PM
  *

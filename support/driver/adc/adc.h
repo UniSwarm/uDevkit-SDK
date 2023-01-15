@@ -1,8 +1,8 @@
 /**
  * @file adc.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
- * @copyright UniSwarm 2017-2022
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2017-2023
  *
  * @date April 19, 2016, 10:56 AM
  *

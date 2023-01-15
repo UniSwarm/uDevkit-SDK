@@ -1,7 +1,7 @@
 /**
  * @file dma_sim.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2021-2022
+ * @copyright UniSwarm 2021-2023
  *
  * @date October 16, 2021, 03:03 PM
  *

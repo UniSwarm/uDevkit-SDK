@@ -1,7 +1,7 @@
 /**
  * @file nvm_pic24_dspic30f_dspic33.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2020-2022
+ * @copyright UniSwarm 2020-2023
  *
  * @date March 20, 2020, 08:32 AM
  *

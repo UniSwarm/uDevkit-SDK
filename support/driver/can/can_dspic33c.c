@@ -1,7 +1,7 @@
 /**
  * @file can_dspic33c.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date September 8 2018, 09:05 AM
  *

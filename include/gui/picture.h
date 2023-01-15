@@ -1,7 +1,8 @@
 /**
  * @file picture.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright Robotips 2016
+ * @copyright Robotips 2016-2017
+ * @copyright UniSwarm 2018-2023
  *
  * @date June 12, 2016, 11:28 PM
  *

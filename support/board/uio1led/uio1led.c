@@ -1,7 +1,7 @@
 /**
  * @file uio1led.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2021-2022
+ * @copyright UniSwarm 2021-2023
  *
  * @date August 11, 2021, 07:42 PM
  *

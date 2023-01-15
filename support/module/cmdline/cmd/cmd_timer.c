@@ -1,7 +1,7 @@
 /**
  * @file cmd_timer.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2022
+ * @copyright UniSwarm 2022-2023
  *
  * @date December 1, 2022, 11:27 AM
  *

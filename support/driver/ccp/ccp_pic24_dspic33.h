@@ -1,7 +1,7 @@
 /**
  * @file ccp_pic24_dspic33.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018-2022
+ * @copyright UniSwarm 2018-2023
  *
  * @date December 17, 2018, 23:00 PM
  *
