@@ -18,11 +18,11 @@ extern "C" {
 
 #include "nvm_device.h"
 
-// ========= byte manipulation ========
+// =================== byte manipulation ==================
 ssize_t nvm_read(uint32_t addr, char *data, size_t size);
 ssize_t nvm_write(uint32_t addr, const char *data, size_t size);
 
-// ========= page manipulation ========
+// =================== page manipulation ==================
 ssize_t nvm_writePage(uint32_t addr, const char *data);
 ssize_t nvm_erasePage(uint32_t addr);
 ssize_t nvm_readPage(uint32_t addr, char *data);
@@ -31,8 +31,9 @@ ssize_t nvm_readPage(uint32_t addr, char *data);
 uint16_t nvm_pageNumber(uint32_t addr);
 uint32_t nvm_pageAddress(uint16_t pageNum);
 
-// TODO temporary
-void nvm_writeDoubleWord(uint32_t addrWord, const char *data);
+// ====================== NVM status ======================
+bool nvm_ready(void);
+void nvm_waitForReady(void);
 
 #ifdef __cplusplus
 }

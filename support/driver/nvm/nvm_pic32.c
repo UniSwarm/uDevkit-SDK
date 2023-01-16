@@ -158,3 +158,16 @@ int nvm_erasePage(uint32_t address)
 
     return 0;
 }
+
+bool nvm_ready(void)
+{
+    return (NVMCONbits.WR != 0);
+}
+
+void nvm_waitForReady(void)
+{
+    while (NVMCONbits.WR != 0)
+    {
+        ;
+    }
+}

@@ -248,3 +248,16 @@ uint32_t nvm_pageAddress(uint16_t pageNum)
     uint32_t pageAddr = (uint32_t)pageNum << NVM_FLASH_PAGE_SHIFT;
     return pageAddr;
 }
+
+bool nvm_ready(void)
+{
+    return (NVMCONbits.WR != 0);
+}
+
+void nvm_waitForReady(void)
+{
+    while (NVMCONbits.WR != 0)
+    {
+        ;
+    }
+}
