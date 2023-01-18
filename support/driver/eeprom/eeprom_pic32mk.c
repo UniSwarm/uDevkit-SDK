@@ -15,6 +15,7 @@
 
 #include <string.h>
 
+#if EEPROM_COUNT > 0
 static void _eeprom_processOperation(void);
 
 typedef enum
@@ -31,7 +32,7 @@ static void _eeprom_processOperation(void)
     // disable interrupts
     uint32_t int_flag = disable_interrupt();
 
-#ifdef DMACON
+#    ifdef DMACON
     // disable DMA
     uint32_t dma_flag = DMACONbits.SUSPEND;
     if (dma_flag == 0)
@@ -42,7 +43,7 @@ static void _eeprom_processOperation(void)
             ;
         }
     }
-#endif  // DMACON
+#    endif  // DMACON
 
     // <ATOMIC BLOCK
     EEKEY = 0xEDB7;
@@ -50,13 +51,13 @@ static void _eeprom_processOperation(void)
     EECONSET = _EECON_RW_MASK;
     // >ATOMIC BLOCK
 
-#ifdef DMACON
+#    ifdef DMACON
     // restore DMA
     if (dma_flag == 0)
     {
         DMACONbits.SUSPEND = 0;
     }
-#endif  // DMACON
+#    endif  // DMACON
 
     // restore interrupts
     if ((int_flag & 0x00000001) != 0)
@@ -64,9 +65,11 @@ static void _eeprom_processOperation(void)
         enable_interrupt();
     }
 }
+#endif
 
 int eeprom_init(void)
 {
+#if EEPROM_COUNT > 0
     eeprom_reconfig();
 
     EECONbits.ON = 1;
@@ -99,10 +102,14 @@ int eeprom_init(void)
     eeprom_waitForReady();
 
     return 0;
+#else
+    return -1;
+#endif
 }
 
 int eeprom_readWord(uint32_t addr, uint32_t *data)
 {
+#if EEPROM_COUNT > 0
     if ((EECONbits.RW != 0))
     {
         return -1;
@@ -121,10 +128,14 @@ int eeprom_readWord(uint32_t addr, uint32_t *data)
 
     *data = EEDATA;
     return 1;
+#else
+    return -1;
+#endif
 }
 
 int eeprom_writeWord(uint32_t addr, uint32_t *data)
 {
+#if EEPROM_COUNT > 0
     if ((EECONbits.RW != 0))
     {
         return -1;
@@ -145,23 +156,33 @@ int eeprom_writeWord(uint32_t addr, uint32_t *data)
     // EEPROM_WordWrite(addr, *data);
 
     return 1;
+#else
+    return -1;
+#endif
 }
 
 bool eeprom_ready(void)
 {
+#if EEPROM_COUNT > 0
     return (EECONbits.RW != 0);
+#else
+    return false;
+#endif
 }
 
 void eeprom_waitForReady(void)
 {
+#if EEPROM_COUNT > 0
     while (EECONbits.RW != 0)
     {
         ;
     }
+#endif
 }
 
 void eeprom_reconfig(void)
 {
+#if EEPROM_COUNT > 0
     uint32_t pb2freq = sysclock_periphFreq(SYSCLOCK_CLOCK_PBCLK2);
     if (pb2freq < 40000000)
     {
@@ -187,4 +208,5 @@ void eeprom_reconfig(void)
     {
         CFGCON2bits.EEWS = 5;
     }
+#endif
 }
