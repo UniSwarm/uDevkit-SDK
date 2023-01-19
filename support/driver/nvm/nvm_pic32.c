@@ -71,13 +71,13 @@ static void _nvm_processOperation(void)
     }
 }
 
-ssize_t nvm_read(uint32_t addr, char *data, size_t size)
+ssize_t nvm_read(nvm_addr addr, char *data, size_t size)
 {
     memcpy(data, KVA0_TO_KVA1(addr), size);
     return size;
 }
 
-int nvm_writeWords(uint32_t address, const uint32_t *data)
+int nvm_writeWords(nvm_addr addr, const uint32_t *data)
 {
     const uint32_t *ptrData = data;
 
@@ -92,7 +92,7 @@ int nvm_writeWords(uint32_t address, const uint32_t *data)
     NVMDATA3 = *(ptrData++);
 #    endif
 #endif
-    NVMADDR = KVA_TO_PA(address);
+    NVMADDR = KVA_TO_PA(addr);
     NVMCONbits.WREN = 0;
     NVMCONbits.NVMOP = NVM_OP_QUAD_DOUBLE_WORD_PROGRAM;
 
@@ -115,11 +115,11 @@ int nvm_writeWords(uint32_t address, const uint32_t *data)
     return NVM_WORD_COUNT;
 }
 
-int nvm_writeRow(uint32_t address, const uint32_t *data)
+int nvm_writeRow(nvm_addr addr, const uint32_t *data)
 {
     // Set data, physical address and operation
     NVMSRCADDR = (uint32_t)KVA_TO_PA(data);
-    NVMADDR = KVA_TO_PA(address);
+    NVMADDR = KVA_TO_PA(addr);
     NVMCONbits.WREN = 0;
     NVMCONbits.NVMOP = NVM_OP_ROW_PROGRAM;
 
@@ -129,21 +129,16 @@ int nvm_writeRow(uint32_t address, const uint32_t *data)
     // Launch write
     _nvm_processOperation();
 
-    // Wait for finished
-    while (NVMCONbits.WR != 0)
-    {
-        ;
-    }
     // Do not wait for finished, too long operation
     // pool WR outsite
 
     return 0;
 }
 
-int nvm_erasePage(uint32_t address)
+int nvm_erasePage(nvm_addr addr)
 {
     // Set physical address and operation
-    NVMADDR = KVA_TO_PA(address);
+    NVMADDR = KVA_TO_PA(addr);
     NVMCONbits.WREN = 0;
     NVMCONbits.NVMOP = NVM_OP_PAGE_ERASE;
 

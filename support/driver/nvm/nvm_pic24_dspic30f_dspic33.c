@@ -17,7 +17,7 @@
 #    warning "No flash on the current device or unknown device"
 #endif
 
-void nvm_writeDoubleWord(uint32_t addrWord, const char *data);
+void nvm_writeDoubleWord(nvm_addr addr, const char *data);
 
 /**
  * @brief Reads a defined number of bytes flash memory
@@ -25,7 +25,7 @@ void nvm_writeDoubleWord(uint32_t addrWord, const char *data);
  * @param ramBuffer array of read data
  * @param size number of words to read
  */
-ssize_t nvm_read(uint32_t addr, char *data, size_t size)
+ssize_t nvm_read(nvm_addr addr, char *data, size_t size)
 {
     uint16_t offset, i = 0;
     size_t sizeRemaining;
@@ -74,7 +74,7 @@ ssize_t nvm_read(uint32_t addr, char *data, size_t size)
  * @param addraddr of the page to write
  * @param data array of the data to write (2 * three bytes)
  */
-void nvm_writeDoubleWord(uint32_t addrWord, const char *data)
+void nvm_writeDoubleWord(nvm_addr addr, const char *data)
 {
     unsigned char *udata = (unsigned char *)data;
 
@@ -87,8 +87,8 @@ void nvm_writeDoubleWord(uint32_t addrWord, const char *data)
     __builtin_tblwtl(2, (((uint16_t)udata[4]) << 8) + udata[3]);
     __builtin_tblwth(2, (uint8_t)udata[5]);  // load write latches
 
-    NVMADRL = addrWord;
-    NVMADRH = addrWord >> 16;  // set target write address
+    NVMADRL = addr;
+    NVMADRH = addr >> 16;  // set target write address
 
     __builtin_disi(6);      // Disable interrupts for NVM unlock
     __builtin_write_NVM();  // unlock and wait until WR = 0
@@ -102,7 +102,7 @@ void nvm_writeDoubleWord(uint32_t addrWord, const char *data)
  * @param data array of the data to write
  * @param size size of the data to write in number of bytes
  */
-ssize_t nvm_write(uint32_t addr, const char *data, size_t size)
+ssize_t nvm_write(nvm_addr addr, const char *data, size_t size)
 {
     uint32_t currentAddr;
     size_t sizeRemaining, i;
@@ -169,7 +169,7 @@ ssize_t nvm_write(uint32_t addr, const char *data, size_t size)
  * @param addr address of the page to read
  * @param data array of the data to read
  */
-ssize_t nvm_readPage(uint32_t addr, char *data)
+ssize_t nvm_readPage(nvm_addr addr, char *data)
 {
     uint32_t pageAddr;
     size_t pageSize;
@@ -177,7 +177,7 @@ ssize_t nvm_readPage(uint32_t addr, char *data)
 
     pageAddr = addr & NVM_FLASH_PAGE_MASK;      // align the address with top of page
     pageSize = (NVM_FLASH_PAGE_BYTE >> 2) * 3;  // calculate the exact number of byte
-    /* only 3 out of 4 bytes are useful because of phantom byte */
+    // only 3 out of 4 bytes are useful because of phantom byte
 
     size_read = nvm_read(pageAddr, data, pageSize);
 
@@ -188,7 +188,7 @@ ssize_t nvm_readPage(uint32_t addr, char *data)
  * @brief Erases a page of flash memory
  * @param addraddr of the page to read
  */
-ssize_t nvm_erasePage(uint32_t addr)
+ssize_t nvm_erasePage(nvm_addr addr)
 {
     ssize_t size_erase;
 
@@ -212,7 +212,7 @@ ssize_t nvm_erasePage(uint32_t addr)
  * @param addr address of the page to write
  * @param data array of the data to write
  */
-ssize_t nvm_writePage(uint32_t addr, const char *data)
+ssize_t nvm_writePage(nvm_addr addr, const char *data)
 {
     uint32_t pageAddr;
     size_t pageSize;
@@ -221,7 +221,7 @@ ssize_t nvm_writePage(uint32_t addr, const char *data)
     addr >>= 1;
     pageAddr = addr & NVM_FLASH_PAGE_MASK;      // align the address with top of page
     pageSize = (NVM_FLASH_PAGE_BYTE >> 2) * 3;  // calculate the exact number of byte
-    /* only 3 out of 4 bytes are useful because of phantom byte */
+    // only 3 out of 4 bytes are useful because of phantom byte
 
     nvm_erasePage(pageAddr);  // the page needs to be erase before any writing
     size_write = nvm_write(pageAddr, data, pageSize);
@@ -233,7 +233,7 @@ ssize_t nvm_writePage(uint32_t addr, const char *data)
  * @brief transform an address to page number
  * @param addr address of the page
  */
-uint16_t nvm_pageNumber(uint32_t addr)
+uint16_t nvm_pageNumber(nvm_addr addr)
 {
     uint16_t pageNum = addr >> NVM_FLASH_PAGE_SHIFT;
     return pageNum;

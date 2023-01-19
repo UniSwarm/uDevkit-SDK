@@ -16,6 +16,10 @@
 extern "C" {
 #endif
 
+typedef uint32_t nvm_addr;
+
+void nvm_writeDoubleWord(nvm_addr addr, const char *data);
+
 #if defined(ARCHI_dspic30f)
 #    define NVM_FLASH_PAGE_BYTE  128
 #    define NVM_FLASH_PAGE_MASK  0xFFFFFF00

@@ -19,17 +19,17 @@ extern "C" {
 #include "nvm_device.h"
 
 // =================== byte manipulation ==================
-ssize_t nvm_read(uint32_t addr, char *data, size_t size);
-ssize_t nvm_write(uint32_t addr, const char *data, size_t size);
+ssize_t nvm_read(nvm_addr addr, char *data, size_t size);
+ssize_t nvm_write(nvm_addr addr, const char *data, size_t size);
 
 // =================== page manipulation ==================
-ssize_t nvm_writePage(uint32_t addr, const char *data);
-ssize_t nvm_erasePage(uint32_t addr);
-ssize_t nvm_readPage(uint32_t addr, char *data);
+ssize_t nvm_writePage(nvm_addr addr, const char *data);
+ssize_t nvm_erasePage(nvm_addr addr);
+ssize_t nvm_readPage(nvm_addr addr, char *data);
 
 // =========  address and page number translation  ========
-uint16_t nvm_pageNumber(uint32_t addr);
-uint32_t nvm_pageAddress(uint16_t pageNum);
+uint16_t nvm_pageNumber(nvm_addr addr);
+nvm_addr nvm_pageAddress(uint16_t pageNum);
 
 // ====================== NVM status ======================
 bool nvm_ready(void);
