@@ -50,7 +50,7 @@ void gui_drawFillRect(uint16_t x1, uint16_t y1, uint16_t w, uint16_t h);
 #define GUI_FONT_ALIGN_VLEFT   0x01  // |TXT        |
 #define GUI_FONT_ALIGN_VRIGHT  0x02  // |        TXT|
 #define GUI_FONT_ALIGN_VMIDDLE 0x03  // |    TXT    |
-                                     // _____________
+
 #define GUI_FONT_ALIGN_HTOP    0x04  //      TOP
 #define GUI_FONT_ALIGN_HMIDDLE 0x0C  //    MIDDLE
 #define GUI_FONT_ALIGN_HBOTTOM 0x08  //    BOTTOM
