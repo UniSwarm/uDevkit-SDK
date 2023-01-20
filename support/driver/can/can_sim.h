@@ -17,7 +17,21 @@ extern "C" {
 
 #include <driver/device.h>
 
-#include <stdint.h>
+#include "simulator_socket.h"
+
+#if defined(WIN32) || defined(_WIN32)
+#    include <winsock2.h>
+#    define SOCKET_MODE 0
+
+#elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__) || defined(__APPLE__)
+#    include <fcntl.h>
+#    include <linux/can.h>
+#    include <linux/can/raw.h>
+#    include <net/if.h>
+#    include <sys/ioctl.h>
+#else
+#    error can sim not supported for your platform
+#endif
 
 typedef struct
 {
@@ -29,6 +43,7 @@ typedef struct
     uint8_t used;
     uint8_t mode;
     char bus[20];
+    SOCKET socket;
 } can_sim_dev;
 
 typedef struct

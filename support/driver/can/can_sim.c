@@ -8,34 +8,16 @@
  * @brief CAN udevkit simulator support for simulation purpose
  */
 
-#define _DEFAULT_SOURCE
-
 #include "can_sim.h"
 
 #include "can.h"
-#include "simulator.h"
 
-#include "driver/sysclock.h"
-#include "sys/fifo.h"
+#include <driver/sysclock.h>
 
 #include <stdio.h>
 #include <string.h>
 
-SOCKET _can_soc = -1;
-
-#if defined(WIN32) || defined(_WIN32)
-#    include <winsock2.h>
-#    define SOCKET_MODE 0
-
-#elif defined(linux) || defined(LINUX) || defined(__linux__) || defined(unix) || defined(UNIX) || defined(__unix__) || defined(__APPLE__)
-#    include <fcntl.h>
-#    include <linux/can.h>
-#    include <linux/can/raw.h>
-#    include <net/if.h>
-#    include <sys/ioctl.h>
-#else
-#    error can sim not supported for your platform
-#endif
+#include "simulator.h"
 
 #if !defined(CAN_COUNT) || CAN_COUNT == 0
 #    warning No device
@@ -44,15 +26,15 @@ SOCKET _can_soc = -1;
 void can_sendconfig(uint8_t can);
 
 static can_sim_dev _cans[] = {
-    {.bitRate = 0, .bus = "can0"},
+    {.bitRate = 0, .socket = -1, .bus = "can0"},
 #if CAN_COUNT >= 2
-    {.bitRate = 0, .bus = "can1"},
+    {.bitRate = 0, .socket = -1, .bus = "can1"},
 #endif
 #if CAN_COUNT >= 3
-    {.bitRate = 0, .bus = "can2"},
+    {.bitRate = 0, .socket = -1, .bus = "can2"},
 #endif
 #if CAN_COUNT >= 4
-    {.bitRate = 0, .bus = "can3"},
+    {.bitRate = 0, .socket = -1, .bus = "can3"},
 #endif
 };
 
@@ -109,14 +91,14 @@ int can_sim_isConnected(rt_dev_t device)
     }
 
 #ifdef SIM_UNIX
-    if (_can_soc == -1)
+    if (_cans[can].socket == -1)
     {
         return 0;
     }
 
     int error = 0;
     socklen_t len = sizeof(error);
-    int retval = getsockopt(_can_soc, SOL_SOCKET, SO_ERROR, &error, &len);
+    int retval = getsockopt(_cans[can].socket, SOL_SOCKET, SO_ERROR, &error, &len);
     if (retval != 0 || error != 0)
     {
         can_close(device);
@@ -142,8 +124,8 @@ int can_open(rt_dev_t device)
     struct sockaddr_can addr;
 
     // open socket
-    _can_soc = socket(PF_CAN, SOCK_RAW, CAN_RAW);
-    if (_can_soc < 0)
+    _cans[can].socket = socket(PF_CAN, SOCK_RAW, CAN_RAW);
+    if (_cans[can].socket < 0)
     {
         return -1;
     }
@@ -151,21 +133,24 @@ int can_open(rt_dev_t device)
     addr.can_family = AF_CAN;
     strcpy(ifr.ifr_name, _cans[can].bus);
 
-    if (ioctl(_can_soc, SIOCGIFINDEX, &ifr) < 0)
+    if (ioctl(_cans[can].socket, SIOCGIFINDEX, &ifr) < 0)
     {
-        _can_soc = -1;
-        close(_can_soc);
+        printf("[CAN] Cannot connect to %s, please create it with theses commands and restart:\r\n", _cans[can].bus);
+        printf("\tip link add dev %s type vcan\r\n", _cans[can].bus);
+        printf("\tip link set up %s\r\n", _cans[can].bus);
+        _cans[can].socket = -1;
+        close(_cans[can].socket);
         return -1;
     }
 
     addr.can_ifindex = ifr.ifr_ifindex;
 
-    fcntl(_can_soc, F_SETFL, O_NONBLOCK);
+    fcntl(_cans[can].socket, F_SETFL, O_NONBLOCK);
 
-    if (bind(_can_soc, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+    if (bind(_cans[can].socket, (struct sockaddr *)&addr, sizeof(addr)) < 0)
     {
-        _can_soc = -1;
-        close(_can_soc);
+        _cans[can].socket = -1;
+        close(_cans[can].socket);
         return -1;
     }
 #endif
@@ -179,8 +164,8 @@ int can_open(rt_dev_t device)
 #    endif
 
     // socket creation
-    _can_soc = socket(AF_INET, SOCK_STREAM, 0);
-    if (_can_soc == INVALID_SOCKET)
+    _cans[can].socket = socket(AF_INET, SOCK_STREAM, 0);
+    if (_cans[can].socket == INVALID_SOCKET)
     {
         perror("socket()");
         exit(errno);
@@ -192,19 +177,19 @@ int can_open(rt_dev_t device)
     ssin.sin_port = htons(35468);
 
     // socket connection to host
-    if (connect(_can_soc, (SOCKADDR *)&ssin, sizeof(ssin)) != SOCKET_ERROR)
+    if (connect(_cans[can].socket, (SOCKADDR *)&ssin, sizeof(ssin)) != SOCKET_ERROR)
     {
         printf("Connected successfully to port %s %d\n", inet_ntoa(ssin.sin_addr), htons(ssin.sin_port));
     }
     else
     {
         printf("Cannot connect to port %d\n", SIM_SOCKET_PORT);
-        closesocket(_can_soc);
-        _can_soc = 0;
+        closesocket(_cans[can].socket);
+        _cans[can].socket = 0;
     }
     u_long ret;
     u_long ul = 1;
-    ioctlsocket(_can_soc, FIONBIO, (unsigned long *)&ul);
+    ioctlsocket(_cans[can].socket, FIONBIO, (unsigned long *)&ul);
     if (ret == 0)
     {
         return 0;
@@ -230,7 +215,7 @@ int can_close(rt_dev_t device)
     WSACleanup();
 #    endif
 
-    closesocket(_can_soc);
+    closesocket(_cans[can].socket);
 #endif
 
     return 0;
@@ -264,7 +249,7 @@ int can_enable(rt_dev_t device)
     can_sendconfig(can);
 
 #ifdef SIM_WIN
-    send(_can_soc, "connect:can0\n", 13, 0);
+    send(_cans[can].socket, "connect:can0\n", 13, 0);
     usleep(100);
 #endif
 
@@ -476,7 +461,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
     {
         frame.data[i] = data[i];
     }
-    retval = write(_can_soc, &frame, sizeof(struct can_frame));
+    retval = write(_cans[can].socket, &frame, sizeof(struct can_frame));
     if (retval != sizeof(struct can_frame))
     {
         return -1;
@@ -493,7 +478,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
         id += 2;
     }
     sockdata[id] = '\n';
-    send(_can_soc, sockdata, id + 1, 0);
+    send(_cans[can].socket, sockdata, id + 1, 0);
 #endif
 
     return 1;
@@ -542,7 +527,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 #ifdef SIM_UNIX
     struct can_frame frame;
 
-    int recvbytes = read(_can_soc, &frame, sizeof(struct can_frame));
+    int recvbytes = read(_cans[can].socket, &frame, sizeof(struct can_frame));
     if (recvbytes >= 0)
     {
         header->id = frame.can_id & 0x1FFFFFFF;
@@ -568,7 +553,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 #ifdef SIM_WIN
     char sockdata[50];
     u_long ret;
-    int size = recv(_can_soc, sockdata, 50, SOCKET_MODE);
+    int size = recv(_cans[can].socket, sockdata, 50, SOCKET_MODE);
     if (size <= 0)
     {
         return 0;
