@@ -29,8 +29,8 @@ int spi_enable(rt_dev_t device);
 int spi_disable(rt_dev_t device);
 
 // ======== device settings =======
-int spi_setfreq(rt_dev_t device, uint32_t freq);
-uint32_t spi_Freq(rt_dev_t device);
+int spi_setFreq(rt_dev_t device, uint32_t freq);
+uint32_t spi_freq(rt_dev_t device);
 uint32_t spi_effectiveFreq(rt_dev_t device);
 
 int spi_setBitLength(rt_dev_t device, uint8_t bitLength);
