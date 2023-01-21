@@ -22,28 +22,29 @@ extern "C" {
 
 #if defined(DEVICE_32MX420F032H) || defined(DEVICE_32MX440F128H) || defined(DEVICE_32MX440F256H) || defined(DEVICE_32MX440F512H)
 #    define SPI_COUNT 1
-#elif defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                     \
-    || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
-    || defined(DEVICE_32MM0016GPL020) || defined(DEVICE_32MM0016GPL028) || defined(DEVICE_32MM0016GPL036) || defined(DEVICE_32MM0032GPL020)                    \
-    || defined(DEVICE_32MM0032GPL028) || defined(DEVICE_32MM0032GPL036) || defined(DEVICE_32MM0064GPL020) || defined(DEVICE_32MM0064GPL028)                    \
-    || defined(DEVICE_32MM0064GPL036) || defined(DEVICE_32MX110F016B) || defined(DEVICE_32MX110F016C) || defined(DEVICE_32MX110F016D)                          \
-    || defined(DEVICE_32MX120F032B) || defined(DEVICE_32MX120F032C) || defined(DEVICE_32MX120F032D) || defined(DEVICE_32MX130F064B)                            \
-    || defined(DEVICE_32MX130F064C) || defined(DEVICE_32MX130F064D) || defined(DEVICE_32MX130F256B) || defined(DEVICE_32MX130F256D)                            \
-    || defined(DEVICE_32MX150F128B) || defined(DEVICE_32MX150F128C) || defined(DEVICE_32MX150F128D) || defined(DEVICE_32MX154F128B)                            \
-    || defined(DEVICE_32MX154F128D) || defined(DEVICE_32MX170F256B) || defined(DEVICE_32MX170F256D) || defined(DEVICE_32MX174F256B)                            \
-    || defined(DEVICE_32MX174F256D) || defined(DEVICE_32MX210F016B) || defined(DEVICE_32MX210F016C) || defined(DEVICE_32MX210F016D)                            \
-    || defined(DEVICE_32MX220F032B) || defined(DEVICE_32MX220F032C) || defined(DEVICE_32MX220F032D) || defined(DEVICE_32MX230F064B)                            \
-    || defined(DEVICE_32MX230F064C) || defined(DEVICE_32MX230F064D) || defined(DEVICE_32MX230F256B) || defined(DEVICE_32MX230F256D)                            \
-    || defined(DEVICE_32MX250F128B) || defined(DEVICE_32MX250F128C) || defined(DEVICE_32MX250F128D) || defined(DEVICE_32MX254F128B)                            \
-    || defined(DEVICE_32MX254F128D) || defined(DEVICE_32MX270F256B) || defined(DEVICE_32MX270F256D) || defined(DEVICE_32MX274F256B)                            \
-    || defined(DEVICE_32MX274F256D) || defined(DEVICE_32MX320F032H) || defined(DEVICE_32MX320F064H) || defined(DEVICE_32MX320F128H)                            \
-    || defined(DEVICE_32MX320F128L) || defined(DEVICE_32MX330F064H) || defined(DEVICE_32MX330F064L) || defined(DEVICE_32MX340F128H)                            \
-    || defined(DEVICE_32MX340F128L) || defined(DEVICE_32MX340F256H) || defined(DEVICE_32MX340F512H) || defined(DEVICE_32MX350F128H)                            \
-    || defined(DEVICE_32MX350F128L) || defined(DEVICE_32MX350F256H) || defined(DEVICE_32MX350F256L) || defined(DEVICE_32MX360F256L)                            \
-    || defined(DEVICE_32MX360F512L) || defined(DEVICE_32MX370F512H) || defined(DEVICE_32MX370F512L) || defined(DEVICE_32MX430F064H)                            \
-    || defined(DEVICE_32MX430F064L) || defined(DEVICE_32MX440F128L) || defined(DEVICE_32MX450F128H) || defined(DEVICE_32MX450F128L)                            \
-    || defined(DEVICE_32MX450F256H) || defined(DEVICE_32MX450F256L) || defined(DEVICE_32MX460F256L) || defined(DEVICE_32MX460F512L)                            \
-    || defined(DEVICE_32MX470F512H) || defined(DEVICE_32MX470F512L)
+#elif defined(DEVICE_32MK0128MCA028) || defined(DEVICE_32MK0128MCA032) || defined(DEVICE_32MK0128MCA048) || defined(DEVICE_32MK0256GPG048)                     \
+    || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064) || defined(DEVICE_32MK0512GPG048)                    \
+    || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064) || defined(DEVICE_32MM0016GPL020)                    \
+    || defined(DEVICE_32MM0016GPL028) || defined(DEVICE_32MM0016GPL036) || defined(DEVICE_32MM0032GPL020) || defined(DEVICE_32MM0032GPL028)                    \
+    || defined(DEVICE_32MM0032GPL036) || defined(DEVICE_32MM0064GPL020) || defined(DEVICE_32MM0064GPL028) || defined(DEVICE_32MM0064GPL036)                    \
+    || defined(DEVICE_32MX110F016B) || defined(DEVICE_32MX110F016C) || defined(DEVICE_32MX110F016D) || defined(DEVICE_32MX120F032B)                            \
+    || defined(DEVICE_32MX120F032C) || defined(DEVICE_32MX120F032D) || defined(DEVICE_32MX130F064B) || defined(DEVICE_32MX130F064C)                            \
+    || defined(DEVICE_32MX130F064D) || defined(DEVICE_32MX130F256B) || defined(DEVICE_32MX130F256D) || defined(DEVICE_32MX150F128B)                            \
+    || defined(DEVICE_32MX150F128C) || defined(DEVICE_32MX150F128D) || defined(DEVICE_32MX154F128B) || defined(DEVICE_32MX154F128D)                            \
+    || defined(DEVICE_32MX170F256B) || defined(DEVICE_32MX170F256D) || defined(DEVICE_32MX174F256B) || defined(DEVICE_32MX174F256D)                            \
+    || defined(DEVICE_32MX210F016B) || defined(DEVICE_32MX210F016C) || defined(DEVICE_32MX210F016D) || defined(DEVICE_32MX220F032B)                            \
+    || defined(DEVICE_32MX220F032C) || defined(DEVICE_32MX220F032D) || defined(DEVICE_32MX230F064B) || defined(DEVICE_32MX230F064C)                            \
+    || defined(DEVICE_32MX230F064D) || defined(DEVICE_32MX230F256B) || defined(DEVICE_32MX230F256D) || defined(DEVICE_32MX250F128B)                            \
+    || defined(DEVICE_32MX250F128C) || defined(DEVICE_32MX250F128D) || defined(DEVICE_32MX254F128B) || defined(DEVICE_32MX254F128D)                            \
+    || defined(DEVICE_32MX270F256B) || defined(DEVICE_32MX270F256D) || defined(DEVICE_32MX274F256B) || defined(DEVICE_32MX274F256D)                            \
+    || defined(DEVICE_32MX320F032H) || defined(DEVICE_32MX320F064H) || defined(DEVICE_32MX320F128H) || defined(DEVICE_32MX320F128L)                            \
+    || defined(DEVICE_32MX330F064H) || defined(DEVICE_32MX330F064L) || defined(DEVICE_32MX340F128H) || defined(DEVICE_32MX340F128L)                            \
+    || defined(DEVICE_32MX340F256H) || defined(DEVICE_32MX340F512H) || defined(DEVICE_32MX350F128H) || defined(DEVICE_32MX350F128L)                            \
+    || defined(DEVICE_32MX350F256H) || defined(DEVICE_32MX350F256L) || defined(DEVICE_32MX360F256L) || defined(DEVICE_32MX360F512L)                            \
+    || defined(DEVICE_32MX370F512H) || defined(DEVICE_32MX370F512L) || defined(DEVICE_32MX430F064H) || defined(DEVICE_32MX430F064L)                            \
+    || defined(DEVICE_32MX440F128L) || defined(DEVICE_32MX450F128H) || defined(DEVICE_32MX450F128L) || defined(DEVICE_32MX450F256H)                            \
+    || defined(DEVICE_32MX450F256L) || defined(DEVICE_32MX460F256L) || defined(DEVICE_32MX460F512L) || defined(DEVICE_32MX470F512H)                            \
+    || defined(DEVICE_32MX470F512L)
 #    define SPI_COUNT 2
 #elif defined(DEVICE_32MM0064GPM028) || defined(DEVICE_32MM0064GPM036) || defined(DEVICE_32MM0064GPM048) || defined(DEVICE_32MM0064GPM064)                     \
     || defined(DEVICE_32MM0128GPM028) || defined(DEVICE_32MM0128GPM036) || defined(DEVICE_32MM0128GPM048) || defined(DEVICE_32MM0128GPM064)                    \
