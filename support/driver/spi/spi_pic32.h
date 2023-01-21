@@ -110,6 +110,270 @@ extern "C" {
 #    define SPI_COUNT 0
 #endif
 
+#ifndef _SPI1EIE
+#    if defined(ARCHI_pic32mm)
+
+#        if defined(DEVICE_32MM0016GPL020) || defined(DEVICE_32MM0016GPL028) || defined(DEVICE_32MM0016GPL036) || defined(DEVICE_32MM0032GPL020)               \
+            || defined(DEVICE_32MM0032GPL028) || defined(DEVICE_32MM0032GPL036) || defined(DEVICE_32MM0064GPL020) || defined(DEVICE_32MM0064GPL028)            \
+            || defined(DEVICE_32MM0064GPL036)
+// interrupt bits helpers for MM GPL
+#            define _SPI1EIE  IEC0bits.SPI1EIE
+#            define _SPI1EIF  IFS0bits.SPI1EIF
+#            define _SPI1EIP  IPC5bits.SPI1EIP
+#            define _SPI1EIS  IPC5bits.SPI1EIS
+#            define _SPI1RXIE IEC0bits.SPI1RXIE
+#            define _SPI1RXIF IFS0bits.SPI1RXIF
+#            define _SPI1RXIP IPC5bits.SPI1RXIP
+#            define _SPI1RXIS IPC5bits.SPI1RXIS
+#            define _SPI1TXIE IEC0bits.SPI1TXIE
+#            define _SPI1TXIF IFS0bits.SPI1TXIF
+#            define _SPI1TXIP IPC5bits.SPI1TXIP
+#            define _SPI1TXIS IPC5bits.SPI1TXIS
+#            define _SPI2EIE  IEC1bits.SPI2EIE
+#            define _SPI2EIF  IFS1bits.SPI2EIF
+#            define _SPI2EIP  IPC9bits.SPI2EIP
+#            define _SPI2EIS  IPC9bits.SPI2EIS
+#            define _SPI2RXIE IEC1bits.SPI2RXIE
+#            define _SPI2RXIF IFS1bits.SPI2RXIF
+#            define _SPI2RXIP IPC9bits.SPI2RXIP
+#            define _SPI2RXIS IPC9bits.SPI2RXIS
+#            define _SPI2TXIE IEC1bits.SPI2TXIE
+#            define _SPI2TXIF IFS1bits.SPI2TXIF
+#            define _SPI2TXIP IPC9bits.SPI2TXIP
+#            define _SPI2TXIS IPC9bits.SPI2TXIS
+#        else
+// interrupt bits helpers for MM GPM
+#            define _SPI1EIE  IEC1bits.SPI1EIE
+#            define _SPI1EIF  IFS1bits.SPI1EIF
+#            define _SPI1EIP  IPC10bits.SPI1EIP
+#            define _SPI1EIS  IPC10bits.SPI1EIS
+#            define _SPI1RXIE IEC1bits.SPI1RXIE
+#            define _SPI1RXIF IFS1bits.SPI1RXIF
+#            define _SPI1RXIP IPC10bits.SPI1RXIP
+#            define _SPI1RXIS IPC10bits.SPI1RXIS
+#            define _SPI1TXIE IEC1bits.SPI1TXIE
+#            define _SPI1TXIF IFS1bits.SPI1TXIF
+#            define _SPI1TXIP IPC10bits.SPI1TXIP
+#            define _SPI1TXIS IPC10bits.SPI1TXIS
+#            define _SPI2EIE  IEC1bits.SPI2EIE
+#            define _SPI2EIF  IFS1bits.SPI2EIF
+#            define _SPI2EIP  IPC11bits.SPI2EIP
+#            define _SPI2EIS  IPC11bits.SPI2EIS
+#            define _SPI2RXIE IEC1bits.SPI2RXIE
+#            define _SPI2RXIF IFS1bits.SPI2RXIF
+#            define _SPI2RXIP IPC11bits.SPI2RXIP
+#            define _SPI2RXIS IPC11bits.SPI2RXIS
+#            define _SPI2TXIE IEC1bits.SPI2TXIE
+#            define _SPI2TXIF IFS1bits.SPI2TXIF
+#            define _SPI2TXIP IPC11bits.SPI2TXIP
+#            define _SPI2TXIS IPC11bits.SPI2TXIS
+#            define _SPI3EIE  IEC1bits.SPI3EIE
+#            define _SPI3EIF  IFS1bits.SPI3EIF
+#            define _SPI3EIP  IPC11bits.SPI3EIP
+#            define _SPI3EIS  IPC11bits.SPI3EIS
+#            define _SPI3RXIE IEC1bits.SPI3RXIE
+#            define _SPI3RXIF IFS1bits.SPI3RXIF
+#            define _SPI3RXIP IPC12bits.SPI3RXIP
+#            define _SPI3RXIS IPC12bits.SPI3RXIS
+#            define _SPI3TXIE IEC1bits.SPI3TXIE
+#            define _SPI3TXIF IFS1bits.SPI3TXIF
+#            define _SPI3TXIP IPC12bits.SPI3TXIP
+#            define _SPI3TXIS IPC12bits.SPI3TXIS
+#        endif
+
+#    elif defined(ARCHI_pic32mk)
+// interrupt bits helpers for MK
+#        define _SPI1EIE  IEC1bits.SPI1EIE
+#        define _SPI1EIF  IFS1bits.SPI1EIF
+#        define _SPI1EIP  IPC8bits.SPI1EIP
+#        define _SPI1EIS  IPC8bits.SPI1EIS
+#        define _SPI1RXIE IEC1bits.SPI1RXIE
+#        define _SPI1RXIF IFS1bits.SPI1RXIF
+#        define _SPI1RXIP IPC9bits.SPI1RXIP
+#        define _SPI1RXIS IPC9bits.SPI1RXIS
+#        define _SPI1TXIE IEC1bits.SPI1TXIE
+#        define _SPI1TXIF IFS1bits.SPI1TXIF
+#        define _SPI1TXIP IPC9bits.SPI1TXIP
+#        define _SPI1TXIS IPC9bits.SPI1TXIS
+#        define _SPI2EIE  IEC1bits.SPI2EIE
+#        define _SPI2EIF  IFS1bits.SPI2EIF
+#        define _SPI2EIP  IPC13bits.SPI2EIP
+#        define _SPI2EIS  IPC13bits.SPI2EIS
+#        define _SPI2RXIE IEC1bits.SPI2RXIE
+#        define _SPI2RXIF IFS1bits.SPI2RXIF
+#        define _SPI2RXIP IPC13bits.SPI2RXIP
+#        define _SPI2RXIS IPC13bits.SPI2RXIS
+#        define _SPI2TXIE IEC1bits.SPI2TXIE
+#        define _SPI2TXIF IFS1bits.SPI2TXIF
+#        define _SPI2TXIP IPC13bits.SPI2TXIP
+#        define _SPI2TXIS IPC13bits.SPI2TXIS
+#        define _SPI3EIE  IEC6bits.SPI3EIE
+#        define _SPI3EIF  IFS6bits.SPI3EIF
+#        define _SPI3EIP  IPC54bits.SPI3EIP
+#        define _SPI3EIS  IPC54bits.SPI3EIS
+#        define _SPI3RXIE IEC6bits.SPI3RXIE
+#        define _SPI3RXIF IFS6bits.SPI3RXIF
+#        define _SPI3RXIP IPC54bits.SPI3RXIP
+#        define _SPI3RXIS IPC54bits.SPI3RXIS
+#        define _SPI3TXIE IEC6bits.SPI3TXIE
+#        define _SPI3TXIF IFS6bits.SPI3TXIF
+#        define _SPI3TXIP IPC55bits.SPI3TXIP
+#        define _SPI3TXIS IPC55bits.SPI3TXIS
+#        define _SPI4EIE  IEC6bits.SPI4EIE
+#        define _SPI4EIF  IFS6bits.SPI4EIF
+#        define _SPI4EIP  IPC55bits.SPI4EIP
+#        define _SPI4EIS  IPC55bits.SPI4EIS
+#        define _SPI4RXIE IEC6bits.SPI4RXIE
+#        define _SPI4RXIF IFS6bits.SPI4RXIF
+#        define _SPI4RXIP IPC55bits.SPI4RXIP
+#        define _SPI4RXIS IPC55bits.SPI4RXIS
+#        define _SPI4TXIE IEC6bits.SPI4TXIE
+#        define _SPI4TXIF IFS6bits.SPI4TXIF
+#        define _SPI4TXIP IPC55bits.SPI4TXIP
+#        define _SPI4TXIS IPC55bits.SPI4TXIS
+#        define _SPI5EIE  IEC7bits.SPI5EIE
+#        define _SPI5EIF  IFS7bits.SPI5EIF
+#        define _SPI5EIP  IPC56bits.SPI5EIP
+#        define _SPI5EIS  IPC56bits.SPI5EIS
+#        define _SPI5RXIE IEC7bits.SPI5RXIE
+#        define _SPI5RXIF IFS7bits.SPI5RXIF
+#        define _SPI5RXIP IPC56bits.SPI5RXIP
+#        define _SPI5RXIS IPC56bits.SPI5RXIS
+#        define _SPI5TXIE IEC7bits.SPI5TXIE
+#        define _SPI5TXIF IFS7bits.SPI5TXIF
+#        define _SPI5TXIP IPC56bits.SPI5TXIP
+#        define _SPI5TXIS IPC56bits.SPI5TXIS
+#        define _SPI6EIE  IEC7bits.SPI6EIE
+#        define _SPI6EIF  IFS7bits.SPI6EIF
+#        define _SPI6EIP  IPC56bits.SPI6EIP
+#        define _SPI6EIS  IPC56bits.SPI6EIS
+#        define _SPI6RXIE IEC7bits.SPI6RXIE
+#        define _SPI6RXIF IFS7bits.SPI6RXIF
+#        define _SPI6RXIP IPC57bits.SPI6RXIP
+#        define _SPI6RXIS IPC57bits.SPI6RXIS
+#        define _SPI6TXIE IEC7bits.SPI6TXIE
+#        define _SPI6TXIF IFS7bits.SPI6TXIF
+#        define _SPI6TXIP IPC57bits.SPI6TXIP
+#        define _SPI6TXIS IPC57bits.SPI6TXIS
+
+#    elif defined(ARCHI_pic32mx)
+// interrupt bits helpers for MX
+#        if defined(DEVICE_32MX530F128H) || defined(DEVICE_32MX550F256H) || defined(DEVICE_32MX570F512H) || defined(DEVICE_32MX530F128L)                       \
+            || defined(DEVICE_32MX550F256L) || defined(DEVICE_32MX570F512L) || defined(DEVICE_32MX534F064H) || defined(DEVICE_32MX534F064L)                    \
+            || defined(DEVICE_32MX564F064H) || defined(DEVICE_32MX564F064L) || defined(DEVICE_32MX564F128H) || defined(DEVICE_32MX564F128L)                    \
+            || defined(DEVICE_32MX575F256H) || defined(DEVICE_32MX575F256L) || defined(DEVICE_32MX575F512H) || defined(DEVICE_32MX575F512L)                    \
+            || defined(DEVICE_32MX664F064H) || defined(DEVICE_32MX664F064L) || defined(DEVICE_32MX664F128H) || defined(DEVICE_32MX664F128L)                    \
+            || defined(DEVICE_32MX675F256H) || defined(DEVICE_32MX675F256L) || defined(DEVICE_32MX675F512H) || defined(DEVICE_32MX675F512L)                    \
+            || defined(DEVICE_32MX695F512H) || defined(DEVICE_32MX695F512L) || defined(DEVICE_32MX764F128H) || defined(DEVICE_32MX764F128L)                    \
+            || defined(DEVICE_32MX775F256H) || defined(DEVICE_32MX775F256L) || defined(DEVICE_32MX775F512H) || defined(DEVICE_32MX775F512L)                    \
+            || defined(DEVICE_32MX795F512H) || defined(DEVICE_32MX795F512L)
+#            define _SPI1EIE  IEC0bits.SPI1EIE
+#            define _SPI1EIF  IFS0bits.SPI1EIF
+#            define _SPI1RXIE IEC0bits.SPI1RXIE
+#            define _SPI1RXIF IFS0bits.SPI1RXIF
+#            define _SPI1TXIE IEC0bits.SPI1TXIE
+#            define _SPI1TXIF IFS0bits.SPI1TXIF
+#        else
+#            define _SPI1EIE  IEC1bits.SPI1EIE
+#            define _SPI1EIF  IFS1bits.SPI1EIF
+#            define _SPI1RXIE IEC1bits.SPI1RXIE
+#            define _SPI1RXIF IFS1bits.SPI1RXIF
+#            define _SPI1TXIE IEC1bits.SPI1TXIE
+#            define _SPI1TXIF IFS1bits.SPI1TXIF
+#        endif
+#        define _SPI2EIE  IEC1bits.SPI2EIE
+#        define _SPI2EIF  IFS1bits.SPI2EIF
+#        define _SPI2RXIE IEC1bits.SPI2RXIE
+#        define _SPI2RXIF IFS1bits.SPI2RXIF
+#        define _SPI2TXIE IEC1bits.SPI2TXIE
+#        define _SPI2TXIF IFS1bits.SPI2TXIF
+#        define _SPI3EIE  IEC0bits.SPI3EIE
+#        define _SPI3EIF  IFS0bits.SPI3EIF
+#        define _SPI3RXIE IEC0bits.SPI3RXIE
+#        define _SPI3RXIF IFS0bits.SPI3RXIF
+#        define _SPI3TXIE IEC0bits.SPI3TXIE
+#        define _SPI3TXIF IFS0bits.SPI3TXIF
+#        define _SPI4EIE  IEC1bits.SPI4EIE
+#        define _SPI4EIF  IFS1bits.SPI4EIF
+#        define _SPI4RXIE IEC1bits.SPI4RXIE
+#        define _SPI4RXIF IFS1bits.SPI4RXIF
+#        define _SPI4TXIE IEC1bits.SPI4TXIE
+#        define _SPI4TXIF IFS1bits.SPI4TXIF
+
+#    elif defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
+// interrupt bits helpers for MZ
+#        define _SPI1EIE  IEC3bits.SPI1EIE
+#        define _SPI1EIF  IFS3bits.SPI1EIF
+#        define _SPI1EIP  IPC27bits.SPI1EIP
+#        define _SPI1EIS  IPC27bits.SPI1EIS
+#        define _SPI1RXIE IEC3bits.SPI1RXIE
+#        define _SPI1RXIF IFS3bits.SPI1RXIF
+#        define _SPI1RXIP IPC27bits.SPI1RXIP
+#        define _SPI1RXIS IPC27bits.SPI1RXIS
+#        define _SPI1TXIE IEC3bits.SPI1TXIE
+#        define _SPI1TXIF IFS3bits.SPI1TXIF
+#        define _SPI1TXIP IPC27bits.SPI1TXIP
+#        define _SPI1TXIS IPC27bits.SPI1TXIS
+#        define _SPI2EIE  IEC4bits.SPI2EIE
+#        define _SPI2EIF  IFS4bits.SPI2EIF
+#        define _SPI2EIP  IPC35bits.SPI2EIP
+#        define _SPI2EIS  IPC35bits.SPI2EIS
+#        define _SPI2RXIE IEC4bits.SPI2RXIE
+#        define _SPI2RXIF IFS4bits.SPI2RXIF
+#        define _SPI2RXIP IPC35bits.SPI2RXIP
+#        define _SPI2RXIS IPC35bits.SPI2RXIS
+#        define _SPI2TXIE IEC4bits.SPI2TXIE
+#        define _SPI2TXIF IFS4bits.SPI2TXIF
+#        define _SPI2TXIP IPC36bits.SPI2TXIP
+#        define _SPI2TXIS IPC36bits.SPI2TXIS
+#        define _SPI3EIE  IEC4bits.SPI3EIE
+#        define _SPI3EIF  IFS4bits.SPI3EIF
+#        define _SPI3EIP  IPC38bits.SPI3EIP
+#        define _SPI3EIS  IPC38bits.SPI3EIS
+#        define _SPI3RXIE IEC4bits.SPI3RXIE
+#        define _SPI3RXIF IFS4bits.SPI3RXIF
+#        define _SPI3RXIP IPC38bits.SPI3RXIP
+#        define _SPI3RXIS IPC38bits.SPI3RXIS
+#        define _SPI3TXIE IEC4bits.SPI3TXIE
+#        define _SPI3TXIF IFS4bits.SPI3TXIF
+#        define _SPI3TXIP IPC39bits.SPI3TXIP
+#        define _SPI3TXIS IPC39bits.SPI3TXIS
+#        define _SPI4EIE  IEC5bits.SPI4EIE
+#        define _SPI4EIF  IFS5bits.SPI4EIF
+#        define _SPI4EIP  IPC40bits.SPI4EIP
+#        define _SPI4EIS  IPC40bits.SPI4EIS
+#        define _SPI4RXIE IEC5bits.SPI4RXIE
+#        define _SPI4RXIF IFS5bits.SPI4RXIF
+#        define _SPI4RXIP IPC41bits.SPI4RXIP
+#        define _SPI4RXIS IPC41bits.SPI4RXIS
+#        define _SPI4TXIE IEC5bits.SPI4TXIE
+#        define _SPI4TXIF IFS5bits.SPI4TXIF
+#        define _SPI4TXIP IPC41bits.SPI4TXIP
+#        define _SPI4TXIS IPC41bits.SPI4TXIS
+#        define _SPI5EIE  IEC5bits.SPI5EIE
+#        define _SPI5EIF  IFS5bits.SPI5EIF
+#        define _SPI5EIP  IPC44bits.SPI5EIP
+#        define _SPI5EIS  IPC44bits.SPI5EIS
+#        define _SPI5RXIE IEC5bits.SPI5RXIE
+#        define _SPI5RXIF IFS5bits.SPI5RXIF
+#        define _SPI5RXIP IPC44bits.SPI5RXIP
+#        define _SPI5RXIS IPC44bits.SPI5RXIS
+#        define _SPI5TXIE IEC5bits.SPI5TXIE
+#        define _SPI5TXIF IFS5bits.SPI5TXIF
+#        define _SPI5TXIP IPC44bits.SPI5TXIP
+#        define _SPI5TXIS IPC44bits.SPI5TXIS
+#        define _SPI6EIP  IPC46bits.SPI6EIP
+#        define _SPI6EIS  IPC46bits.SPI6EIS
+#        define _SPI6RXIE IEC5bits.SPI6RXIE
+#        define _SPI6RXIF IFS5bits.SPI6RXIF
+#        define _SPI6RXIP IPC46bits.SPI6RXIP
+#        define _SPI6RXIS IPC46bits.SPI6RXIS
+#        define _SPI6TXIE IEC5bits.SPI6TXIE
+#        define _SPI6TXIP IPC46bits.SPI6TXIP
+#        define _SPI6TXIS IPC46bits.SPI6TXIS
+#    endif
+#endif
+
 #ifdef __cplusplus
 }
 #endif
