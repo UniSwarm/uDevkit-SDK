@@ -16,28 +16,7 @@
 extern "C" {
 #endif
 
-#include <driver/device.h>
-#include <stdint.h>
-
-// ======= specific include =======
-#if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic33fj)                            \
-    || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
-#    include "sysclock_pic24_dspic33.h"
-#elif defined(ARCHI_dspic30f)
-#    include "sysclock_dspic30f.h"
-#elif defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
-#    include "sysclock_dspic33c.h"
-#elif defined(ARCHI_pic32mx)
-#    include "sysclock_pic32mx.h"
-#elif defined(ARCHI_pic32mm)
-#    include "sysclock_pic32mm.h"
-#elif defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mk)
-#    include "sysclock_pic32mz_mk.h"
-#else
-typedef int SYSCLOCK_CLOCK;
-typedef int SYSCLOCK_SOURCE;
-#    error Unsuported ARCHI for sysclock driver.
-#endif
+#include "sysclock_device.h"
 
 int sysclock_setClock(uint32_t freq);
 
