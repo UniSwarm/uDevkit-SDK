@@ -11,7 +11,7 @@
 
 #include <driver/device.h>
 
-#include "modules.h"
+#include "modules.h"  // keep this include before ifdef USE_*
 
 #ifdef USE_uart
 #    include <driver/uart.h>
@@ -21,6 +21,15 @@
 #endif
 #ifdef USE_usb_serial
 #    include <driver/usb_serial.h>
+#endif
+#ifdef USE_i2c
+#    include <driver/i2c.h>
+#endif
+#ifdef USE_timer
+#    include <driver/timer.h>
+#endif
+#ifdef USE_eeprom
+#    include <driver/eeprom.h>
 #endif
 
 ssize_t device_write(rt_dev_t device, const char *data, size_t size)
@@ -73,4 +82,20 @@ ssize_t device_read(rt_dev_t device, char *data, size_t size_max)
         default:
             return -1;
     }
+}
+
+void device_reconfig(void)
+{
+#if defined(USE_uart) && (UART_COUNT > 0)
+    uart_reconfig();
+#endif
+#if defined(USE_timer) && (TIMER_COUNT > 0)
+    timer_reconfig();
+#endif
+#if defined(USE_i2c) && (I2C_COUNT > 0)
+    i2c_reconfig();
+#endif
+#if defined(USE_eeprom) && (EEPROM_COUNT > 0)
+    eeprom_reconfig();
+#endif
 }
