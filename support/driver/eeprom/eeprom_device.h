@@ -20,7 +20,8 @@ extern "C" {
 #if defined(ARCHI_pic32mk)
 #    include "eeprom_pic32mk.h"
 #else
-#    error Unsuported ARCHI
+#    define EEPROM_COUNT 0
+#    define EEPROM_SIZE  0
 #endif
 
 #ifdef __cplusplus
