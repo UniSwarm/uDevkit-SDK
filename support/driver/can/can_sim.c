@@ -19,14 +19,12 @@
 
 #include "simulator.h"
 
-#if !defined(CAN_COUNT) || CAN_COUNT == 0
-#    warning No device
-#endif
-
 void can_sendconfig(uint8_t can);
 
 static can_sim_dev _cans[] = {
+#if CAN_COUNT >= 1
     {.bitRate = 0, .socket = -1, .bus = "can0"},
+#endif
 #if CAN_COUNT >= 2
     {.bitRate = 0, .socket = -1, .bus = "can1"},
 #endif

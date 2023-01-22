@@ -16,10 +16,6 @@
 #include <archi.h>
 #include <driver/sysclock.h>
 
-#if !defined(CAN_COUNT) || CAN_COUNT == 0
-#    warning "No can on the current device or unknow device"
-#endif
-
 enum
 {
     CAN_FLAG_UNUSED = 0x00
