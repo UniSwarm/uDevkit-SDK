@@ -55,59 +55,57 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
         uint8_t divisor = ((*divisorAddr) & 0x0000007F) + 1;
         return _sysclock_sysfreq / divisor;
     }
-    else
+
+    // Ref clock divider
+    volatile uint32_t *refClockConAddr = &REFO1CON + (((uint8_t)busClock - SYSCLOCK_CLOCK_REFCLOCK1) << 3);
+    volatile uint32_t *refClockTrimAddr = &REFO1TRIM + (((uint8_t)busClock - SYSCLOCK_CLOCK_REFCLOCK1) << 3);
+    uint32_t divisorInt = *refClockConAddr >> 16;
+    uint32_t divisorTrim = *refClockTrimAddr >> 23;
+    float divisor = divisorInt * 2 + ((float)divisorTrim * 2) / 512.0;
+    if (divisorInt == 0)
     {
-        // Ref clock divider
-        volatile uint32_t *refClockConAddr = &REFO1CON + (((uint8_t)busClock - SYSCLOCK_CLOCK_REFCLOCK1) << 3);
-        volatile uint32_t *refClockTrimAddr = &REFO1TRIM + (((uint8_t)busClock - SYSCLOCK_CLOCK_REFCLOCK1) << 3);
-        uint32_t divisorInt = *refClockConAddr >> 16;
-        uint32_t divisorTrim = *refClockTrimAddr >> 23;
-        float divisor = divisorInt * 2 + ((float)divisorTrim * 2) / 512.0;
-        if (divisorInt == 0)
-        {
-            divisor = 1;
-        }
-        uint32_t sourceFreq = 1;
-        switch (*refClockConAddr & 0x0000000F)
-        {
-            case SYSCLOCK_REFCLK_SRC_REFCLKI:
-                sourceFreq = 0;
-                break;
-
-            case SYSCLOCK_REFCLK_SRC_SPLL:
-                sourceFreq = 0;
-                break;
-
-            case SYSCLOCK_REFCLK_SRC_UPLL:
-                sourceFreq = 0;
-                break;
-
-            case SYSCLOCK_REFCLK_SRC_SOSC:
-                sourceFreq = 0;
-                break;
-
-            case SYSCLOCK_REFCLK_SRC_LPRC:
-                sourceFreq = 0;
-                break;
-
-            case SYSCLOCK_REFCLK_SRC_FRC:
-                sourceFreq = 0;
-                break;
-
-            case SYSCLOCK_REFCLK_SRC_POSC:
-                sourceFreq = 0;
-                break;
-
-            case SYSCLOCK_REFCLK_SRC_PBCLK1:
-                sourceFreq = sysclock_periphFreq(SYSCLOCK_CLOCK_PBCLK1);
-                break;
-
-            case SYSCLOCK_REFCLK_SRC_SYSCLOCK:
-                sourceFreq = _sysclock_sysfreq;
-                break;
-        }
-        return (uint32_t)((float)sourceFreq / divisor);
+        divisor = 1;
     }
+    uint32_t sourceFreq = 1;
+    switch (*refClockConAddr & 0x0000000F)
+    {
+        case SYSCLOCK_REFCLK_SRC_REFCLKI:
+            sourceFreq = 0;
+            break;
+
+        case SYSCLOCK_REFCLK_SRC_SPLL:
+            sourceFreq = 0;
+            break;
+
+        case SYSCLOCK_REFCLK_SRC_UPLL:
+            sourceFreq = 0;
+            break;
+
+        case SYSCLOCK_REFCLK_SRC_SOSC:
+            sourceFreq = 0;
+            break;
+
+        case SYSCLOCK_REFCLK_SRC_LPRC:
+            sourceFreq = 0;
+            break;
+
+        case SYSCLOCK_REFCLK_SRC_FRC:
+            sourceFreq = 0;
+            break;
+
+        case SYSCLOCK_REFCLK_SRC_POSC:
+            sourceFreq = 0;
+            break;
+
+        case SYSCLOCK_REFCLK_SRC_PBCLK1:
+            sourceFreq = sysclock_periphFreq(SYSCLOCK_CLOCK_PBCLK1);
+            break;
+
+        case SYSCLOCK_REFCLK_SRC_SYSCLOCK:
+            sourceFreq = _sysclock_sysfreq;
+            break;
+    }
+    return (uint32_t)((float)sourceFreq / divisor);
 }
 
 /**
