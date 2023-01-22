@@ -135,7 +135,7 @@ int nvm_writeRow(nvm_addr addr, const uint32_t *data)
     return 0;
 }
 
-int nvm_erasePage(nvm_addr addr)
+ssize_t nvm_erasePage(nvm_addr addr)
 {
     // Set physical address and operation
     NVMADDR = KVA_TO_PA(addr);

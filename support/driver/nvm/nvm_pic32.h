@@ -24,7 +24,6 @@ typedef uint32_t nvm_addr;
 
 int nvm_writeWords(nvm_addr addr, const uint32_t *data);
 int nvm_writeRow(nvm_addr addr, const uint32_t *data);
-int nvm_erasePage(nvm_addr addr);
 
 // #define NVM_FLASH_PAGE_BYTE  4096
 // #define NVM_FLASH_PAGE_MASK  0xFFFFF000
