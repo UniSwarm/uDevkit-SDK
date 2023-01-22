@@ -422,7 +422,7 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
  * @param fosc desirate system frequency in Hz
  * @return 0 if ok, -1 in case of error
  */
-int sysclock_setClock(uint32_t fosc)
+int sysclock_setClock(uint32_t freq)
 {
     uint8_t src = SYSCLOCK_SRC_FRC;
     if (_sysclock_posc != 0)
@@ -433,7 +433,7 @@ int sysclock_setClock(uint32_t fosc)
     {
         sysclock_switchSourceTo(src);
     }
-    if (sysclock_setPLLClock(fosc, src) != 0)
+    if (sysclock_setPLLClock(freq, src) != 0)
     {
         return -1;
     }
