@@ -23,7 +23,6 @@ void archi_init(void)
 #else
     PRISS = 0x76543210;  // Shadows registers assigned to each priority
 #endif
-    enable_interrupt();
 }
 
 void archi_prefetch_enable(void)

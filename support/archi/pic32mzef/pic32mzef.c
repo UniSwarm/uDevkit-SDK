@@ -21,5 +21,4 @@ void archi_init(void)
     // enable multiple vector interrupts
     INTCONSET = _INTCON_MVEC_MASK;
     PRISS = 0x76543210;
-    enable_interrupt();
 }

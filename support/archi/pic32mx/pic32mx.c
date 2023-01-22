@@ -15,5 +15,4 @@ void archi_init(void)
 {
     // enable multiple vector interrupts
     INTCONSET = _INTCON_MVEC_MASK;
-    enable_interrupt();
 }
