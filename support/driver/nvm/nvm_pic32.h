@@ -25,11 +25,38 @@ typedef uint32_t nvm_addr;
 int nvm_writeWords(nvm_addr addr, const uint32_t *data);
 int nvm_writeRow(nvm_addr addr, const uint32_t *data);
 
-// #define NVM_FLASH_PAGE_BYTE  4096
-// #define NVM_FLASH_PAGE_MASK  0xFFFFF000
-// #define NVM_FLASH_PAGE_SHIFT 12
-// #define NVM_FLASH_ROW_BYTE   512
-// #define NVM_HAS_FLASH
+#if defined(ARCHI_pic32mx)
+#    if defined(DEVICE_32MX320F032H) || defined(DEVICE_32MX320F064H) || defined(DEVICE_32MX320F128H) || defined(DEVICE_32MX320F128L)                           \
+        || defined(DEVICE_32MX330F064H) || defined(DEVICE_32MX330F064L) || defined(DEVICE_32MX340F128H) || defined(DEVICE_32MX340F128L)                        \
+        || defined(DEVICE_32MX340F256H) || defined(DEVICE_32MX340F512H) || defined(DEVICE_32MX350F128H) || defined(DEVICE_32MX350F128L)                        \
+        || defined(DEVICE_32MX350F256H) || defined(DEVICE_32MX350F256L) || defined(DEVICE_32MX360F256L) || defined(DEVICE_32MX360F512L)                        \
+        || defined(DEVICE_32MX370F512H) || defined(DEVICE_32MX370F512L) || defined(DEVICE_32MX420F032H) || defined(DEVICE_32MX430F064H)                        \
+        || defined(DEVICE_32MX430F064L) || defined(DEVICE_32MX440F128H) || defined(DEVICE_32MX440F128L) || defined(DEVICE_32MX440F256H)                        \
+        || defined(DEVICE_32MX440F512H) || defined(DEVICE_32MX450F128H) || defined(DEVICE_32MX450F128L) || defined(DEVICE_32MX450F256H)                        \
+        || defined(DEVICE_32MX450F256L) || defined(DEVICE_32MX460F256L) || defined(DEVICE_32MX460F512L) || defined(DEVICE_32MX470F512H)                        \
+        || defined(DEVICE_32MX470F512L) || defined(DEVICE_32MX534F064H) || defined(DEVICE_32MX534F064L) || defined(DEVICE_32MX564F064H)                        \
+        || defined(DEVICE_32MX564F064L) || defined(DEVICE_32MX564F128H) || defined(DEVICE_32MX564F128L) || defined(DEVICE_32MX575F256H)                        \
+        || defined(DEVICE_32MX575F256L) || defined(DEVICE_32MX575F512H) || defined(DEVICE_32MX575F512L) || defined(DEVICE_32MX664F064H)                        \
+        || defined(DEVICE_32MX664F064L) || defined(DEVICE_32MX664F128H) || defined(DEVICE_32MX664F128L) || defined(DEVICE_32MX675F256H)                        \
+        || defined(DEVICE_32MX675F256L) || defined(DEVICE_32MX675F512H) || defined(DEVICE_32MX675F512L) || defined(DEVICE_32MX695F512H)                        \
+        || defined(DEVICE_32MX695F512L) || defined(DEVICE_32MX764F128H) || defined(DEVICE_32MX764F128L) || defined(DEVICE_32MX795F512H)                        \
+        || defined(DEVICE_32MX795F512L)
+#        define NVM_FLASH_PAGE_BYTE (1024 * 4)
+#        define NVM_FLASH_ROW_BYTE  (128 * 4)
+#    else
+#        define NVM_FLASH_PAGE_BYTE (256 * 4)
+#        define NVM_FLASH_ROW_BYTE  (32 * 4)
+#    endif
+#elif defined(ARCHI_pic32mm)
+#    define NVM_FLASH_PAGE_BYTE (512 * 4)
+#    define NVM_FLASH_ROW_BYTE  (64 * 4)
+#elif defined(ARCHI_pic32mk)
+#    define NVM_FLASH_PAGE_BYTE (1024 * 4)
+#    define NVM_FLASH_ROW_BYTE  (128 * 4)
+#elif defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)
+#    define NVM_FLASH_PAGE_BYTE (4096 * 4)
+#    define NVM_FLASH_ROW_BYTE  (512 * 4)
+#endif
 
 #if defined(ARCHI_pic32mx)
 #    define NVM_WORD_COUNT 1
