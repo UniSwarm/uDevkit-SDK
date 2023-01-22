@@ -16,16 +16,11 @@
 #include "cmd_stdio.h"
 
 #include <archi.h>
-#include <driver/i2c.h>
 #include <driver/sysclock.h>
-#include <driver/uart.h>
-
-#include "modules.h"
 
 static void _cmd_sysclock_help(void);
 static void _cmd_sysclock_statusclk(const char *sourceStr, int32_t freq);
 static void _cmd_sysclock_status(void);
-static void _cmd_sysclock_reconfig(void);
 
 void _cmd_sysclock_help(void)
 {
@@ -62,19 +57,6 @@ void _cmd_sysclock_status(void)
     }
 
     // _cmd_sysclock_statusclk("Fvco", sysclock_periphFreq(SYSCLOCK_CLOCK_VCO));
-}
-
-void _cmd_sysclock_reconfig(void)
-{
-#ifdef USE_uart
-    uart_reconfig();
-#endif
-#ifdef USE_timer
-    timer_reconfig();
-#endif
-#ifdef USE_i2c
-    i2c_reconfig();
-#endif
 }
 
 int cmd_sysclock(int argc, char **argv)
@@ -115,7 +97,7 @@ int cmd_sysclock(int argc, char **argv)
             {
                 int res = sysclock_switchSourceTo(source);
 
-                _cmd_sysclock_reconfig();
+                device_reconfig();
 
                 for (uint16_t i = 0; i < 65000; i++)
                 {
