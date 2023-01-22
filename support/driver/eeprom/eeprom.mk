@@ -11,4 +11,6 @@ ifeq ($(ARCHI),$(filter $(ARCHI),pic32mk))
  HEADER += eeprom_pic32mk.h
 endif
 
+SIM_SRC += eeprom_sim.c
+
 endif
