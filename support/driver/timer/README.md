@@ -7,31 +7,29 @@ Timer / counter driver support for hardware abstraction layer.
 In timer mode, with callback handler :
 
 ```C
-void timer100ms_fn()
+void timer100ms_fn(void)
 {
-    puts("tt");
+    puts("time out");
 }
 
 // init timer
-rt_dev_t timer;
-timer = timer_getFreeDevice();
+rt_dev_t timer = timer_getFreeDevice();
 timer_setPeriodMs(timer, 100);
 timer_setHandler(timer, timer100ms_fn);
-timer_enable(timer); // tt function will be called every 100ms
+timer_enable(timer);                       // timer100ms_fn function will be called every 100ms
 ```
 
 In counter mode :
 
 ```C
 // init timer
-rt_dev_t timer;
-timer = timer_getFreeDevice();
-timer_setCounter(timer, 1); // no divider
-timer_enable(timer); // start to count
+rt_dev_t timer = timer_getFreeDevice();
+timer_setCounter(timer, 1);     // no divider
+timer_enable(timer);            // start to count
 
 uint16_t value;
-value = timer_getValue(timer); // get count
-timer_clearValue(timer); // clear count
+value = timer_value(timer);     // get count
+timer_clearValue(timer);        // clear count
 ```
 
 ## API
@@ -62,6 +60,14 @@ int timer_close(rt_dev_t device);
 
 Closes a timer
 
+#### timer_isOpened
+
+```C
+bool timer_isOpened(rt_dev_t device)
+```
+
+Timer sdk state
+
 ### Device enable/disable
 
 #### timer_enable
@@ -79,6 +85,14 @@ int timer_disable(rt_dev_t device);
 ```
 
 Disables the specified timer device
+
+#### timer_isEnabled
+
+```C
+bool timer_isEnabled(rt_dev_t device);
+```
+
+Timer sdk enabled state
 
 ### Timer mode
 
@@ -157,22 +171,21 @@ int timer_setValue(rt_dev_t device, uint16_t value);
 
 Sets the current value of timer
 
-#### timer_getValue
+#### timer_value
 
 ```C
-uint16_t timer_getValue(rt_dev_t device);
+uint16_t timer_value(rt_dev_t device);
 ```
 
 Returns the current value of timer
 
 ## Development status
 
-+ Device assignation, open, basic configuration and handler call with interrupt works. No test done on counter mode, need 
-to be more configurable.
++ Device assignation, open, basic configuration and handler call with interrupt works.
 
 ### TODO
 
-+ Clarify API
++ Improve sim support
 
 ## Supported architectures
 
