@@ -14,15 +14,18 @@ can_setMode(can, CAN_MODE_NORMAL);
 
 // send and receive data
 CAN_MSG_HEADER can_header;
+char data[8] = {0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF};
 can_header.size = 8;
 can_header.id = 0x01AB45CD;
 can_header.flags = CAN_VERS2BA;
-can_send(can1, 0, &can_header, (char*)&cpt);
+can_send(can, 0, &can_header, data);
 
 char rdata[8];
-int r = can_rec(can1, 0, &can_header, rdata);
+int r = can_rec(can, 0, &can_header, rdata);
 if (r == 1)
-    printf("%#08x\n", rdata);
+{
+    printf("%#08X\n", rdata);
+}
 ```
 
 ## API
@@ -50,6 +53,13 @@ int can_close(rt_dev_t device);
 ```
 Closes a can bus device
 
+#### can_isOpened
+
+```C
+bool can_isOpened(rt_dev_t device)
+```
+Gives the SDK device status
+
 ### Device enable/disable
 
 #### can_enable
@@ -65,6 +75,13 @@ Enables the specified can bus device
 int can_disable(rt_dev_t device);
 ```
 Disables the specified can bus device
+
+#### can_isEnabled
+
+```C
+bool can_isEnabled(rt_dev_t device)
+```
+Gives the SDK enabled state
 
 ### Device settings
 
