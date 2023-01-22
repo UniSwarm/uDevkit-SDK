@@ -65,6 +65,24 @@ $(DISTRIB_PWD)/%.s : %.s
 	$(VERB)cp $< $(DISTRIB_PWD)/$(notdir $@)
 distrib: $(addprefix $(DISTRIB_PWD)/, $(notdir $(SRC)) $(notdir $(ARCHI_SRC)) $(notdir $(HEADER)))
 
+info:
+	@printf "$(GREEN)PROJECT:    $(NORM)%s %s %s\n" "$(PROJECT)" "$(OUT_PWD)/$(PROJECT).elf" "$(OUT_PWD)/$(PROJECT).hex"
+	@printf "$(GREEN)DRIVERS:    $(NORM)%s\n" "$(DRIVERS)"
+	@printf "\n"
+	@printf "$(GREEN)BOARD:      $(NORM)%s\n" "$(BOARD)"
+	@printf "$(GREEN)DEVICE:     $(NORM)%s\n" "$(DEVICE)"
+	@printf "$(GREEN)ARCHI:      $(NORM)%s\n" "$(ARCHI)"
+	@printf "$(GREEN)COMPILER:   $(NORM)%s\n" "$(shell whereis $(CC))"
+	@printf "$(GREEN)DEV_PROG:   $(NORM)%s\n" "$(DEV_PROG)"
+	@printf "\n"
+	@printf "$(GREEN)SRC:        $(NORM)%s\n" "$(SRC)"
+	@printf "$(GREEN)HEADER:     $(NORM)%s\n" "$(HEADER)"
+	@printf "\n"
+	@printf "$(GREEN)ARCHI_SRC:  $(NORM)%s\n" "$(ARCHI_SRC)"
+	@printf "\n"
+	@printf "$(GREEN)SIM_SRC:    $(NORM)%s\n" "$(SIM_SRC)"
+	@printf "$(GREEN)SIM_HEADER: $(NORM)%s\n" "$(SIM_HEADER)"
+	
 .PHONY: rebuild
 rebuild: clean hex
 
