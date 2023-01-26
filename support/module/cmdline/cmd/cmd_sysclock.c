@@ -129,7 +129,7 @@ int cmd_sysclock(int argc, char **argv)
             res = sysclock_setPLLClock(pllFreq, SYSCLOCK_SRC_POSC);
         }
 
-        _cmd_sysclock_reconfig();
+        device_reconfig();
 
         for (volatile uint16_t i = 0; i < 65000; i++)
         {
