@@ -151,6 +151,10 @@ int rtc_dateTime(struct tm *dateTime)
         return -1;
     }
 
+    // wait for windows sync
+    while (RTCCONbits.RTCSYNC == 1)
+    {
+    }
     uint32_t hwDate = RTCDATE;
     uint32_t hwTime = RTCTIME;
 
