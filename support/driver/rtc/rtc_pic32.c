@@ -110,13 +110,26 @@ int rtc_setDateTime(const struct tm *dateTime)
     // disable interrupts
     uint32_t int_flag = disable_interrupt();
 
-    // wait for windows sync
-    while (RTCCONbits.RTCSYNC == 1)
-        ;
+    // disable RTC
+    unlockConfig();
+    RTCCONbits.RTCWREN = 1;  // Enable writes to RTCC
+    lockConfig();
+    RTCCONbits.ON = 0;
+    nop();
+    while (RTCCONbits.RTCCLKON == 1)
+    {
+    }
 
     // write date and time
     RTCDATE = hwDate;
     RTCTIME = hwTime;
+
+    // restore RTC
+    RTCCONbits.ON = 1;
+    nop();
+    while (RTCCONbits.RTCCLKON == 0)
+    {
+    }
 
     // restore interrupts
     if ((int_flag & 0x00000001) != 0)
