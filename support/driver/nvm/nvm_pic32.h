@@ -66,18 +66,18 @@ int nvm_writeRow(nvm_addr addr, const uint32_t *data);
 #    define NVM_WORD_COUNT 4
 #endif
 
-// NVM_PROGRAM_BEGIN
-#define NVM_PROGRAM_BEGIN 0x1D000000
+// NVM_SECTOR_START
+#define NVM_SECTOR_START 0x1D000000
 
-// NVM_PROGRAM_END
+// NVM_SECTOR_END
 #if defined(DEVICE_32MM0016GPL020) || defined(DEVICE_32MM0016GPL028) || defined(DEVICE_32MM0016GPL036) || defined(DEVICE_32MX110F016B)                         \
     || defined(DEVICE_32MX110F016C) || defined(DEVICE_32MX110F016D) || defined(DEVICE_32MX210F016B) || defined(DEVICE_32MX210F016C)                            \
     || defined(DEVICE_32MX210F016D)
-#    define NVM_PROGRAM_END 0x1D003FFF
+#    define NVM_SECTOR_END 0x1D003FFF
 #elif defined(DEVICE_32MM0032GPL020) || defined(DEVICE_32MM0032GPL028) || defined(DEVICE_32MM0032GPL036) || defined(DEVICE_32MX120F032B)                       \
     || defined(DEVICE_32MX120F032C) || defined(DEVICE_32MX120F032D) || defined(DEVICE_32MX220F032B) || defined(DEVICE_32MX220F032C)                            \
     || defined(DEVICE_32MX220F032D) || defined(DEVICE_32MX320F032H) || defined(DEVICE_32MX420F032H)
-#    define NVM_PROGRAM_END 0x1D007FFF
+#    define NVM_SECTOR_END 0x1D007FFF
 #elif defined(DEVICE_32MM0064GPL020) || defined(DEVICE_32MM0064GPL028) || defined(DEVICE_32MM0064GPL036) || defined(DEVICE_32MM0064GPM028)                     \
     || defined(DEVICE_32MM0064GPM036) || defined(DEVICE_32MM0064GPM048) || defined(DEVICE_32MM0064GPM064) || defined(DEVICE_32MX120F064H)                      \
     || defined(DEVICE_32MX130F064B) || defined(DEVICE_32MX130F064C) || defined(DEVICE_32MX130F064D) || defined(DEVICE_32MX230F064B)                            \
@@ -85,7 +85,7 @@ int nvm_writeRow(nvm_addr addr, const uint32_t *data);
     || defined(DEVICE_32MX330F064L) || defined(DEVICE_32MX430F064H) || defined(DEVICE_32MX430F064L) || defined(DEVICE_32MX534F064H)                            \
     || defined(DEVICE_32MX534F064L) || defined(DEVICE_32MX564F064H) || defined(DEVICE_32MX564F064L) || defined(DEVICE_32MX664F064H)                            \
     || defined(DEVICE_32MX664F064L)
-#    define NVM_PROGRAM_END 0x1D00FFFF
+#    define NVM_SECTOR_END 0x1D00FFFF
 #elif defined(DEVICE_32MK0128MCA028) || defined(DEVICE_32MK0128MCA032) || defined(DEVICE_32MK0128MCA048) || defined(DEVICE_32MM0128GPM028)                     \
     || defined(DEVICE_32MM0128GPM036) || defined(DEVICE_32MM0128GPM048) || defined(DEVICE_32MM0128GPM064) || defined(DEVICE_32MX130F128H)                      \
     || defined(DEVICE_32MX130F128L) || defined(DEVICE_32MX150F128B) || defined(DEVICE_32MX150F128C) || defined(DEVICE_32MX150F128D)                            \
@@ -96,7 +96,7 @@ int nvm_writeRow(nvm_addr addr, const uint32_t *data);
     || defined(DEVICE_32MX440F128L) || defined(DEVICE_32MX450F128H) || defined(DEVICE_32MX450F128L) || defined(DEVICE_32MX530F128H)                            \
     || defined(DEVICE_32MX530F128L) || defined(DEVICE_32MX564F128H) || defined(DEVICE_32MX564F128L) || defined(DEVICE_32MX664F128H)                            \
     || defined(DEVICE_32MX664F128L) || defined(DEVICE_32MX764F128H) || defined(DEVICE_32MX764F128L)
-#    define NVM_PROGRAM_END 0x1D01FFFF
+#    define NVM_SECTOR_END 0x1D01FFFF
 #elif defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                     \
     || defined(DEVICE_32MM0256GPM028) || defined(DEVICE_32MM0256GPM036) || defined(DEVICE_32MM0256GPM048) || defined(DEVICE_32MM0256GPM064)                    \
     || defined(DEVICE_32MX130F256B) || defined(DEVICE_32MX130F256D) || defined(DEVICE_32MX150F256H) || defined(DEVICE_32MX150F256L)                            \
@@ -107,7 +107,7 @@ int nvm_writeRow(nvm_addr addr, const uint32_t *data);
     || defined(DEVICE_32MX440F256H) || defined(DEVICE_32MX450F256H) || defined(DEVICE_32MX450F256L) || defined(DEVICE_32MX460F256L)                            \
     || defined(DEVICE_32MX550F256H) || defined(DEVICE_32MX550F256L) || defined(DEVICE_32MX575F256H) || defined(DEVICE_32MX575F256L)                            \
     || defined(DEVICE_32MX675F256H) || defined(DEVICE_32MX675F256L) || defined(DEVICE_32MX775F256H) || defined(DEVICE_32MX775F256L)
-#    define NVM_PROGRAM_END 0x1D03FFFF
+#    define NVM_SECTOR_END 0x1D03FFFF
 #elif defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100)                     \
     || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512GPK064) || defined(DEVICE_32MK0512GPK100)                    \
     || defined(DEVICE_32MK0512MCF064) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
@@ -121,7 +121,7 @@ int nvm_writeRow(nvm_addr addr, const uint32_t *data);
     || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFF100)                    \
     || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144) || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ0512EFK100)                    \
     || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144)
-#    define NVM_PROGRAM_END 0x1D07FFFF
+#    define NVM_SECTOR_END 0x1D07FFFF
 #elif defined(DEVICE_32MK1024GPD064) || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE064) || defined(DEVICE_32MK1024GPE100)                     \
     || defined(DEVICE_32MK1024GPK064) || defined(DEVICE_32MK1024GPK100) || defined(DEVICE_32MK1024MCF064) || defined(DEVICE_32MK1024MCF100)                    \
     || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100) || defined(DEVICE_32MZ1024ECG064) || defined(DEVICE_32MZ1024ECG100)                    \
@@ -143,7 +143,7 @@ int nvm_writeRow(nvm_addr addr, const uint32_t *data);
     || defined(DEVICE_32MZ1064DAH169) || defined(DEVICE_32MZ1064DAH176) || defined(DEVICE_32MZ1064DAK169) || defined(DEVICE_32MZ1064DAK176)                    \
     || defined(DEVICE_32MZ1064DAL169) || defined(DEVICE_32MZ1064DAL176) || defined(DEVICE_32MZ1064DAR169) || defined(DEVICE_32MZ1064DAR176)                    \
     || defined(DEVICE_32MZ1064DAS169) || defined(DEVICE_32MZ1064DAS176)
-#    define NVM_PROGRAM_END 0x1D0FFFFF
+#    define NVM_SECTOR_END 0x1D0FFFFF
 #elif defined(DEVICE_32MZ2025DAA169) || defined(DEVICE_32MZ2025DAA176) || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169)                     \
     || defined(DEVICE_32MZ2025DAB176) || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176)                    \
     || defined(DEVICE_32MZ2025DAH169) || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176)                    \
@@ -159,18 +159,18 @@ int nvm_writeRow(nvm_addr addr, const uint32_t *data);
     || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
     || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
     || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define NVM_PROGRAM_END 0x1D1FFFFF
+#    define NVM_SECTOR_END 0x1D1FFFFF
 #endif
 
-// NVM_PROGRAM_SIZE
+// NVM_SIZE
 #if defined(DEVICE_32MM0016GPL020) || defined(DEVICE_32MM0016GPL028) || defined(DEVICE_32MM0016GPL036) || defined(DEVICE_32MX110F016B)                         \
     || defined(DEVICE_32MX110F016C) || defined(DEVICE_32MX110F016D) || defined(DEVICE_32MX210F016B) || defined(DEVICE_32MX210F016C)                            \
     || defined(DEVICE_32MX210F016D)
-#    define NVM_PROGRAM_SIZE 16383
+#    define NVM_SIZE 16384
 #elif defined(DEVICE_32MM0032GPL020) || defined(DEVICE_32MM0032GPL028) || defined(DEVICE_32MM0032GPL036) || defined(DEVICE_32MX120F032B)                       \
     || defined(DEVICE_32MX120F032C) || defined(DEVICE_32MX120F032D) || defined(DEVICE_32MX220F032B) || defined(DEVICE_32MX220F032C)                            \
     || defined(DEVICE_32MX220F032D) || defined(DEVICE_32MX320F032H) || defined(DEVICE_32MX420F032H)
-#    define NVM_PROGRAM_SIZE 32767
+#    define NVM_SIZE 32768
 #elif defined(DEVICE_32MM0064GPL020) || defined(DEVICE_32MM0064GPL028) || defined(DEVICE_32MM0064GPL036) || defined(DEVICE_32MM0064GPM028)                     \
     || defined(DEVICE_32MM0064GPM036) || defined(DEVICE_32MM0064GPM048) || defined(DEVICE_32MM0064GPM064) || defined(DEVICE_32MX120F064H)                      \
     || defined(DEVICE_32MX130F064B) || defined(DEVICE_32MX130F064C) || defined(DEVICE_32MX130F064D) || defined(DEVICE_32MX230F064B)                            \
@@ -178,7 +178,7 @@ int nvm_writeRow(nvm_addr addr, const uint32_t *data);
     || defined(DEVICE_32MX330F064L) || defined(DEVICE_32MX430F064H) || defined(DEVICE_32MX430F064L) || defined(DEVICE_32MX534F064H)                            \
     || defined(DEVICE_32MX534F064L) || defined(DEVICE_32MX564F064H) || defined(DEVICE_32MX564F064L) || defined(DEVICE_32MX664F064H)                            \
     || defined(DEVICE_32MX664F064L)
-#    define NVM_PROGRAM_SIZE 65535
+#    define NVM_SIZE 65536
 #elif defined(DEVICE_32MK0128MCA028) || defined(DEVICE_32MK0128MCA032) || defined(DEVICE_32MK0128MCA048) || defined(DEVICE_32MM0128GPM028)                     \
     || defined(DEVICE_32MM0128GPM036) || defined(DEVICE_32MM0128GPM048) || defined(DEVICE_32MM0128GPM064) || defined(DEVICE_32MX130F128H)                      \
     || defined(DEVICE_32MX130F128L) || defined(DEVICE_32MX150F128B) || defined(DEVICE_32MX150F128C) || defined(DEVICE_32MX150F128D)                            \
@@ -189,7 +189,7 @@ int nvm_writeRow(nvm_addr addr, const uint32_t *data);
     || defined(DEVICE_32MX440F128L) || defined(DEVICE_32MX450F128H) || defined(DEVICE_32MX450F128L) || defined(DEVICE_32MX530F128H)                            \
     || defined(DEVICE_32MX530F128L) || defined(DEVICE_32MX564F128H) || defined(DEVICE_32MX564F128L) || defined(DEVICE_32MX664F128H)                            \
     || defined(DEVICE_32MX664F128L) || defined(DEVICE_32MX764F128H) || defined(DEVICE_32MX764F128L)
-#    define NVM_PROGRAM_SIZE 131071
+#    define NVM_SIZE 131072
 #elif defined(DEVICE_32MK0256GPG048) || defined(DEVICE_32MK0256GPG064) || defined(DEVICE_32MK0256MCJ048) || defined(DEVICE_32MK0256MCJ064)                     \
     || defined(DEVICE_32MM0256GPM028) || defined(DEVICE_32MM0256GPM036) || defined(DEVICE_32MM0256GPM048) || defined(DEVICE_32MM0256GPM064)                    \
     || defined(DEVICE_32MX130F256B) || defined(DEVICE_32MX130F256D) || defined(DEVICE_32MX150F256H) || defined(DEVICE_32MX150F256L)                            \
@@ -200,7 +200,7 @@ int nvm_writeRow(nvm_addr addr, const uint32_t *data);
     || defined(DEVICE_32MX440F256H) || defined(DEVICE_32MX450F256H) || defined(DEVICE_32MX450F256L) || defined(DEVICE_32MX460F256L)                            \
     || defined(DEVICE_32MX550F256H) || defined(DEVICE_32MX550F256L) || defined(DEVICE_32MX575F256H) || defined(DEVICE_32MX575F256L)                            \
     || defined(DEVICE_32MX675F256H) || defined(DEVICE_32MX675F256L) || defined(DEVICE_32MX775F256H) || defined(DEVICE_32MX775F256L)
-#    define NVM_PROGRAM_SIZE 262143
+#    define NVM_SIZE 262144
 #elif defined(DEVICE_32MK0512GPD064) || defined(DEVICE_32MK0512GPD100) || defined(DEVICE_32MK0512GPE064) || defined(DEVICE_32MK0512GPE100)                     \
     || defined(DEVICE_32MK0512GPG048) || defined(DEVICE_32MK0512GPG064) || defined(DEVICE_32MK0512GPK064) || defined(DEVICE_32MK0512GPK100)                    \
     || defined(DEVICE_32MK0512MCF064) || defined(DEVICE_32MK0512MCF100) || defined(DEVICE_32MK0512MCJ048) || defined(DEVICE_32MK0512MCJ064)                    \
@@ -214,7 +214,7 @@ int nvm_writeRow(nvm_addr addr, const uint32_t *data);
     || defined(DEVICE_32MZ0512EFE124) || defined(DEVICE_32MZ0512EFE144) || defined(DEVICE_32MZ0512EFF064) || defined(DEVICE_32MZ0512EFF100)                    \
     || defined(DEVICE_32MZ0512EFF124) || defined(DEVICE_32MZ0512EFF144) || defined(DEVICE_32MZ0512EFK064) || defined(DEVICE_32MZ0512EFK100)                    \
     || defined(DEVICE_32MZ0512EFK124) || defined(DEVICE_32MZ0512EFK144)
-#    define NVM_PROGRAM_SIZE 524287
+#    define NVM_SIZE 524288
 #elif defined(DEVICE_32MK1024GPD064) || defined(DEVICE_32MK1024GPD100) || defined(DEVICE_32MK1024GPE064) || defined(DEVICE_32MK1024GPE100)                     \
     || defined(DEVICE_32MK1024GPK064) || defined(DEVICE_32MK1024GPK100) || defined(DEVICE_32MK1024MCF064) || defined(DEVICE_32MK1024MCF100)                    \
     || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100) || defined(DEVICE_32MZ1024ECG064) || defined(DEVICE_32MZ1024ECG100)                    \
@@ -236,7 +236,7 @@ int nvm_writeRow(nvm_addr addr, const uint32_t *data);
     || defined(DEVICE_32MZ1064DAH169) || defined(DEVICE_32MZ1064DAH176) || defined(DEVICE_32MZ1064DAK169) || defined(DEVICE_32MZ1064DAK176)                    \
     || defined(DEVICE_32MZ1064DAL169) || defined(DEVICE_32MZ1064DAL176) || defined(DEVICE_32MZ1064DAR169) || defined(DEVICE_32MZ1064DAR176)                    \
     || defined(DEVICE_32MZ1064DAS169) || defined(DEVICE_32MZ1064DAS176)
-#    define NVM_PROGRAM_SIZE 1048575
+#    define NVM_SIZE 1048576
 #elif defined(DEVICE_32MZ2025DAA169) || defined(DEVICE_32MZ2025DAA176) || defined(DEVICE_32MZ2025DAA288) || defined(DEVICE_32MZ2025DAB169)                     \
     || defined(DEVICE_32MZ2025DAB176) || defined(DEVICE_32MZ2025DAB288) || defined(DEVICE_32MZ2025DAG169) || defined(DEVICE_32MZ2025DAG176)                    \
     || defined(DEVICE_32MZ2025DAH169) || defined(DEVICE_32MZ2025DAH176) || defined(DEVICE_32MZ2025DAK169) || defined(DEVICE_32MZ2025DAK176)                    \
@@ -252,7 +252,7 @@ int nvm_writeRow(nvm_addr addr, const uint32_t *data);
     || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
     || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
     || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define NVM_PROGRAM_SIZE 2097151
+#    define NVM_SIZE 2097152
 #endif
 
 #ifdef __cplusplus
