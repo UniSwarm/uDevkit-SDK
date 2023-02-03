@@ -153,9 +153,7 @@ int eeprom_writeWord(uint32_t addr, uint32_t *data)
         return -1;
     }
 
-    // EEPROM_WordWrite(addr, *data);
-
-    return 1;
+    return EEPROM_WORDS_WRITE_SIZE;
 #else
     return -1;
 #endif
