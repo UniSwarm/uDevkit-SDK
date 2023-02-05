@@ -7,6 +7,6 @@
 #define board_getLed(a)    0
 #define board_setLed(a, b) 0
 
-#define UART_DGB_ID 1
+#define UART_DBG_ID 1
 
 #endif  // BOARD_H

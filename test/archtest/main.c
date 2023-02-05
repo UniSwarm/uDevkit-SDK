@@ -46,7 +46,7 @@ int main(void)
     timer_enable(timer);
 
     // uart debug init
-    uartDbg = uart(UART_DGB_ID);
+    uartDbg = uart(UART_DBG_ID);
     uart_open(uartDbg);
     uart_setBaudSpeed(uartDbg, 115200);
     uart_setBitConfig(uartDbg, 8, UART_BIT_PARITY_NONE, 1);

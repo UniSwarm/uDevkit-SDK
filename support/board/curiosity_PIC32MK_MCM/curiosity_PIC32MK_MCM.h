@@ -50,7 +50,7 @@ int8_t board_getButton(uint8_t button);
 // Peripherals assignation
 #define UART_MIKROBUS_A_ID 3
 #define UART_MIKROBUS_B_ID 4
-#define UART_DGB_ID        6
+#define UART_DBG_ID        6
 
 #ifdef __cplusplus
 }
