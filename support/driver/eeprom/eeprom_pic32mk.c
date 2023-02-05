@@ -107,6 +107,54 @@ int eeprom_init(void)
 #endif
 }
 
+ssize_t eeprom_read(uint32_t addr, char *data, size_t size)
+{
+    if ((addr & 0x00000FFC) != addr)
+    {
+        return -1;  // addr not aligned
+    }
+    if ((size & 0x03) != 0)
+    {
+        return -2;  // size is not a multiple of 4
+    }
+
+    char *dataPtr = data;
+    uint32_t wordAddr = addr;
+    for (ssize_t byteSize = size; byteSize > 0; byteSize -= EEPROM_WORDS_READ_SIZE)
+    {
+        uint32_t wordData;
+        eeprom_readWord(wordAddr, &wordData);
+        memcpy(dataPtr, &wordData, EEPROM_WORDS_READ_SIZE);
+        dataPtr += EEPROM_WORDS_READ_SIZE;
+        wordAddr += EEPROM_WORDS_READ_SIZE;
+    }
+    return size;
+}
+
+ssize_t eeprom_write(uint32_t addr, const char *data, size_t size)
+{
+    if ((addr & 0x00000FFC) != addr)
+    {
+        return -1;  // addr not aligned
+    }
+    if ((size & 0x03) != 0)
+    {
+        return -2;  // size is not a multiple of 4
+    }
+
+    const char *dataPtr = data;
+    uint32_t wordAddr = addr;
+    for (ssize_t byteSize = size; byteSize > 0; byteSize -= EEPROM_WORDS_WRITE_SIZE)
+    {
+        uint32_t wordData;
+        memcpy(&wordData, dataPtr, EEPROM_WORDS_WRITE_SIZE);
+        eeprom_writeWord(wordAddr, &wordData);
+        dataPtr += EEPROM_WORDS_WRITE_SIZE;
+        wordAddr += EEPROM_WORDS_WRITE_SIZE;
+    }
+    return size;
+}
+
 int eeprom_readWord(uint32_t addr, uint32_t *data)
 {
 #if EEPROM_COUNT > 0
