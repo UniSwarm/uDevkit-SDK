@@ -25,10 +25,12 @@ int eeprom_writeWord(uint32_t addr, uint32_t *data);
     || defined(DEVICE_32MK1024MCF064) || defined(DEVICE_32MK1024MCF100) || defined(DEVICE_32MK1024MCM064) || defined(DEVICE_32MK1024MCM100)
 #    define EEPROM_COUNT            1
 #    define EEPROM_SIZE             4096
+#    define EEPROM_WORDS_READ_SIZE  4
 #    define EEPROM_WORDS_WRITE_SIZE 4
 #else
-#    define EEPROM_COUNT     0
-#    define EEPROM_SIZE      0
+#    define EEPROM_COUNT            0
+#    define EEPROM_SIZE             0
+#    define EEPROM_WORDS_READ_SIZE  0
 #    define EEPROM_WORDS_WRITE_SIZE 0
 #endif
 

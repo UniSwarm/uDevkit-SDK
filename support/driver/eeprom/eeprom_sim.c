@@ -71,7 +71,7 @@ ssize_t eeprom_write(uint32_t addr, const char *data, size_t size)
 
     fseek(_eeprom_file, addr, SEEK_SET);
     fwrite(data, size, 1, _eeprom_file);
-    return 0;
+    return size;
 }
 
 int eeprom_readWord(uint32_t addr, uint32_t *data)
@@ -79,10 +79,10 @@ int eeprom_readWord(uint32_t addr, uint32_t *data)
     uint32_t addrWord = addr - addr % EEPROM_WORDS_WRITE_SIZE;
 
     fseek(_eeprom_file, addrWord, SEEK_SET);
-    fread(data, EEPROM_WORDS_WRITE_SIZE, 1, _eeprom_file);
+    fread(data, EEPROM_WORDS_READ_SIZE, 1, _eeprom_file);
     fflush(_eeprom_file);
 
-    return EEPROM_WORDS_WRITE_SIZE;
+    return EEPROM_WORDS_READ_SIZE;
 }
 
 int eeprom_writeWord(uint32_t addr, uint32_t *data)

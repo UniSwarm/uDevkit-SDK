@@ -127,7 +127,7 @@ int eeprom_readWord(uint32_t addr, uint32_t *data)
     }
 
     *data = EEDATA;
-    return 1;
+    return EEPROM_WORDS_READ_SIZE;
 #else
     return -1;
 #endif
