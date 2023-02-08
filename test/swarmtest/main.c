@@ -23,9 +23,13 @@ void sendLed(uint8_t r, uint8_t g, uint8_t b, char *bufLed)
     {
         bufLed[idLed] = 0x00;
         if ((grb & 0x800000) == 0)
+        {
             bufLed[idLed] |= 0x07;
+        }
         if ((grb & 0x400000) == 0)
+        {
             bufLed[idLed] |= 0xF0;
+        }
         grb = grb << 2;
     }
 }
@@ -53,8 +57,12 @@ int main(void)
 
     board_setLed(0, 1);
     for (j = 0; j < 2; j++)
+    {
         for (i = 0; i < 65000; i++)
+        {
             ;
+        }
+    }
     /*sendLed(64, 0, 128, buff);
     sendLed(0, 128, 64, buff+12);
     uart_write(uartLed, buff, 24);*/
@@ -63,8 +71,12 @@ int main(void)
     steppers_init();
 
     for (j = 0; j < 2; j++)
+    {
         for (i = 0; i < 65000; i++)
+        {
             ;
+        }
+    }
 
     while (1)
     {

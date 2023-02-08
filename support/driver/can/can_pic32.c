@@ -328,10 +328,14 @@ int can_disable(rt_dev_t device)
             _CAN1IE = 0;  // disable can global interrupt
             C1CONbits.REQOP = 4;
             while (C1CONbits.OPMOD != 4)
+            {
                 ;
+            }
             C1CONbits.ON = 0;  // disable can
             while (C1CONbits.CANBUSY == 1)
+            {
                 ;
+            }
             break;
 
 #    if CAN_COUNT >= 2
@@ -339,10 +343,14 @@ int can_disable(rt_dev_t device)
             _CAN2IE = 0;  // disable can global interrupt
             C2CONbits.REQOP = 4;
             while (C2CONbits.OPMOD != 4)
+            {
                 ;
+            }
             C2CONbits.ON = 0;  // disable can
             while (C2CONbits.CANBUSY == 1)
+            {
                 ;
+            }
             break;
 
 #    endif
@@ -351,10 +359,14 @@ int can_disable(rt_dev_t device)
             _CAN3IE = 0;  // disable can global interrupt
             C3CONbits.REQOP = 4;
             while (C3CONbits.OPMOD != 4)
+            {
                 ;
+            }
             C3CONbits.ON = 0;  // disable can
             while (C3CONbits.CANBUSY == 1)
+            {
                 ;
+            }
             break;
 
 #    endif
@@ -363,10 +375,14 @@ int can_disable(rt_dev_t device)
             _CAN4IE = 0;  // disable can global interrupt
             C4CONbits.REQOP = 4;
             while (C4CONbits.OPMOD != 4)
+            {
                 ;
+            }
             C4CONbits.ON = 0;  // disable can
             while (C4CONbits.CANBUSY == 1)
+            {
                 ;
+            }
             break;
 
 #    endif
@@ -448,7 +464,9 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
             C1CONbits.ON = 1;
             C1CONbits.REQOP = modeBits;
             while (C1CONbits.OPMOD != modeBits)
+            {
                 ;
+            }
             break;
 
 #    if CAN_COUNT >= 2
@@ -456,7 +474,9 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
             C2CONbits.ON = 1;
             C2CONbits.REQOP = modeBits;
             while (C2CONbits.OPMOD != modeBits)
+            {
                 ;
+            }
             break;
 
 #    endif
@@ -465,7 +485,9 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
             C3CONbits.ON = 1;
             C3CONbits.REQOP = modeBits;
             while (C3CONbits.OPMOD != modeBits)
+            {
                 ;
+            }
             break;
 
 #    endif
@@ -474,7 +496,9 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
             C4CONbits.ON = 1;
             C4CONbits.REQOP = modeBits;
             while (C4CONbits.OPMOD != modeBits)
+            {
                 ;
+            }
             break;
 
 #    endif
@@ -576,7 +600,9 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             C1CONbits.ON = 1;
             C1CONbits.REQOP = 4;
             while (C1CONbits.OPMOD != 4)
+            {
                 ;
+            }
 
             C1CFGbits.SJW = 0;                // Synchronization Jump Width (1-4)
             C1CFGbits.PRSEG = propagSeg - 1;  // Propagation Time Segment (1-8)
@@ -591,7 +617,9 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             C2CONbits.ON = 1;
             C2CONbits.REQOP = 4;
             while (C2CONbits.OPMOD != 4)
+            {
                 ;
+            }
 
             C2CFGbits.SJW = 0;                // Synchronization Jump Width (1-4)
             C2CFGbits.PRSEG = propagSeg - 1;  // Propagation Time Segment (1-8)
@@ -607,7 +635,9 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             C3CONbits.ON = 1;
             C3CONbits.REQOP = 4;
             while (C3CONbits.OPMOD != 4)
+            {
                 ;
+            }
 
             C3CFGbits.SJW = 0;                // Synchronization Jump Width (1-4)
             C3CFGbits.PRSEG = propagSeg - 1;  // Propagation Time Segment (1-8)
@@ -623,7 +653,9 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             C4CONbits.ON = 1;
             C4CONbits.REQOP = 4;
             while (C4CONbits.OPMOD != 4)
+            {
                 ;
+            }
 
             C4CFGbits.SJW = 0;                // Synchronization Jump Width (1-4)
             C4CFGbits.PRSEG = propagSeg - 1;  // Propagation Time Segment (1-8)

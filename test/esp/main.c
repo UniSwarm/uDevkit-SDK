@@ -38,7 +38,9 @@ int main(void)
         usleep(1000);
 #else
         for (i = 0; i < 65000; i++)
+        {
             ;
+        }
 #endif
     }
 

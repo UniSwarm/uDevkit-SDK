@@ -94,7 +94,9 @@ int16_t VL6180X_getDistance(rt_dev_t i2c_bus, uint8_t i2c_addr)
     // return 0; // error, sensor can not be reached
     // for(i=0;i<65000;i++);
     if (i2c_readregs(i2c_bus, i2c_addr, VL6180X_RESULT_RANGE_VAL, (uint8_t *)&value, 1, I2C_REGADDR16 | I2C_READ_STOPSTART) != 0)
+    {
         return -1;
+    }
     i2c_writereg(i2c_bus, i2c_addr, VL6180X_SYSTEM_INTERRUPT_CLEAR, 0x07, I2C_REGADDR16);
     return value;
 }
@@ -103,7 +105,9 @@ int16_t VL6180X_getALS(rt_dev_t i2c_bus, uint8_t i2c_addr)
 {
     uint16_t value;
     if (i2c_readregs(i2c_bus, i2c_addr, VL6180X_RESULT_ALS_VAL, (uint8_t *)&value, 1, I2C_REGADDR16 | I2C_READ_STOPSTART) != 0)
+    {
         return -1;
+    }
     return value;
 }
 

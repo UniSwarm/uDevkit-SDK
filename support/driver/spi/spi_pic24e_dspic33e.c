@@ -466,24 +466,32 @@ ssize_t spi_write(rt_dev_t device, const char *data, size_t size)
     {
         case 0:
             while (SPI1STATbits.SPITBF)
+            {
                 ;
+            }
             break;
 #if SPI_COUNT >= 2
         case 1:
             while (SPI2STATbits.SPITBF)
+            {
                 ;
+            }
             break;
 #endif
 #if SPI_COUNT >= 3
         case 2:
             while (SPI3STATbits.SPITBF)
+            {
                 ;
+            }
             break;
 #endif
 #if SPI_COUNT >= 4
         case 3:
             while (SPI4STATbits.SPITBF)
+            {
                 ;
+            }
             break;
 #endif
     }
@@ -513,24 +521,32 @@ int spi_flush(rt_dev_t device)
     {
         case 0:
             while (!SPI1STATbits.SRMPT)
+            {
                 ;  // buffer not empty
+            }
             break;
 #if SPI_COUNT >= 2
         case 1:
             while (!SPI2STATbits.SRMPT)
+            {
                 ;
+            }
             break;
 #endif
 #if SPI_COUNT >= 3
         case 2:
             while (!SPI3STATbits.SRMPT)
+            {
                 ;
+            }
             break;
 #endif
 #if SPI_COUNT >= 4
         case 3:
             while (!SPI4STATbits.SRMPT)
+            {
                 ;
+            }
             break;
 #endif
     }

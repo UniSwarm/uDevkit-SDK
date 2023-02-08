@@ -353,32 +353,42 @@ void adc_calib(void)
 #ifdef ADC_HAVE_DEDICATED_CORE0
     ADCON5Lbits.C0PWR = 1;  // Turn on analog power for dedicated core 0
     while (ADCON5Lbits.C0RDY == 0)
-        ;                  // Wait when the core 0 is ready for operation
+    {
+        ;  // Wait when the core 0 is ready for operation
+    }
     ADCON3Hbits.C0EN = 1;  // Turn on digital power to enable triggers to the core 0
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE1
     ADCON5Lbits.C1PWR = 1;  // Turn on analog power for dedicated core 1
     while (ADCON5Lbits.C1RDY == 0)
-        ;                  // Wait when the core 1 is ready for operation
+    {
+        ;  // Wait when the core 1 is ready for operation
+    }
     ADCON3Hbits.C1EN = 1;  // Turn on digital power to enable triggers to the core 1
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE2
     ADCON5Lbits.C2PWR = 1;  // Turn on analog power for dedicated core 1
     while (ADCON5Lbits.C2RDY == 0)
-        ;                  // Wait when the core 1 is ready for operation
+    {
+        ;  // Wait when the core 1 is ready for operation
+    }
     ADCON3Hbits.C2EN = 1;  // Turn on digital power to enable triggers to the core 1
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE3
     ADCON5Lbits.C3PWR = 1;  // Turn on analog power for dedicated core 1
     while (ADCON5Lbits.C3RDY == 0)
-        ;                  // Wait when the core 1 is ready for operation
+    {
+        ;  // Wait when the core 1 is ready for operation
+    }
     ADCON3Hbits.C3EN = 1;  // Turn on digital power to enable triggers to the core 1
 #endif
 
     ADCON5Lbits.SHRPWR = 1;  // Turn on analog power for shared core
 #ifndef __MPLAB_DEBUGGER_SIMULATOR
     while (ADCON5Lbits.SHRRDY == 0)
+    {
         ;  // Wait when the shared core is ready for operation
+    }
 #endif
     ADCON3Hbits.SHREN = 1;  // Turn on digital power to enable triggers to the shared core
 
@@ -388,11 +398,15 @@ void adc_calib(void)
     ADCAL0Lbits.CAL0DIFF = 0;  // Single-ended input calibration
     ADCAL0Lbits.CAL0RUN = 1;   // Start calibration
     while (ADCAL0Lbits.CAL0RDY == 0)
-        ;                      // Poll for the calibration end
+    {
+        ;  // Poll for the calibration end
+    }
     ADCAL0Lbits.CAL0DIFF = 1;  // Differential input calibration
     ADCAL0Lbits.CAL0RUN = 1;   // Start calibration
     while (ADCAL0Lbits.CAL0RDY == 0)
-        ;                    // Poll for the calibration end
+    {
+        ;  // Poll for the calibration end
+    }
     ADCAL0Lbits.CAL0EN = 0;  // End the core 0 calibration
 #    endif
 
@@ -401,11 +415,15 @@ void adc_calib(void)
     ADCAL0Lbits.CAL1DIFF = 0;  // Single-ended input calibration
     ADCAL0Lbits.CAL1RUN = 1;   // Start calibration
     while (ADCAL0Lbits.CAL1RDY == 0)
-        ;                      // Poll for the calibration end
+    {
+        ;  // Poll for the calibration end
+    }
     ADCAL0Lbits.CAL1DIFF = 1;  // Differential input calibration
     ADCAL0Lbits.CAL1RUN = 1;   // Start calibration
     while (ADCAL0Lbits.CAL1RDY == 0)
-        ;                    // Poll for the calibration end
+    {
+        ;  // Poll for the calibration end
+    }
     ADCAL0Lbits.CAL1EN = 0;  // End the core 1 calibration
 #    endif
 
@@ -414,11 +432,15 @@ void adc_calib(void)
     ADCAL0Hbits.CAL2DIFF = 0;  // Single-ended input calibration
     ADCAL0Hbits.CAL2RUN = 1;   // Start calibration
     while (ADCAL0Hbits.CAL2RDY == 0)
-        ;                      // Poll for the calibration end
+    {
+        ;  // Poll for the calibration end
+    }
     ADCAL0Hbits.CAL2DIFF = 1;  // Differential input calibration
     ADCAL0Hbits.CAL2RUN = 1;   // Start calibration
     while (ADCAL0Hbits.CAL2RDY == 0)
-        ;                    // Poll for the calibration end
+    {
+        ;  // Poll for the calibration end
+    }
     ADCAL0Hbits.CAL2EN = 0;  // End the core 2 calibration
 #    endif
 
@@ -427,11 +449,15 @@ void adc_calib(void)
     ADCAL0Hbits.CAL3DIFF = 0;  // Single-ended input calibration
     ADCAL0Hbits.CAL3RUN = 1;   // Start calibration
     while (ADCAL0Hbits.CAL3RDY == 0)
-        ;                      // Poll for the calibration end
+    {
+        ;  // Poll for the calibration end
+    }
     ADCAL0Hbits.CAL3DIFF = 1;  // Differential input calibration
     ADCAL0Hbits.CAL3RUN = 1;   // Start calibration
     while (ADCAL0Hbits.CAL3RDY == 0)
-        ;                    // Poll for the calibration end
+    {
+        ;  // Poll for the calibration end
+    }
     ADCAL0Hbits.CAL3EN = 0;  // End the core 3 calibration
 #    endif
 
@@ -439,11 +465,15 @@ void adc_calib(void)
     ADCAL1Hbits.CSHRDIFF = 0;  // Single-ended input calibration
     ADCAL1Hbits.CSHRRUN = 1;   // Start calibration
     while (ADCAL1Hbits.CSHRRDY == 0)
-        ;                      // Poll for the calibration end
+    {
+        ;  // Poll for the calibration end
+    }
     ADCAL1Hbits.CSHRDIFF = 1;  // Differential input calibration
     ADCAL1Hbits.CSHRRUN = 1;   // Start calibration
     while (ADCAL1Hbits.CSHRRDY == 0)
-        ;                    // Poll for the calibration end
+    {
+        ;  // Poll for the calibration end
+    }
     ADCAL1Hbits.CSHREN = 0;  // End the shared core calibration
 #endif
 }
@@ -645,7 +675,9 @@ int adc_startSampling(uint8_t channel)
     }
 
     while (ADCON3Lbits.CNVRTCH != 0)
+    {
         ;
+    }
 
     ADCON3Lbits.CNVCHSEL = channel;  // select channel to convert
     ADCON3Lbits.CNVRTCH = 1;         // Start sampling
@@ -703,7 +735,9 @@ int16_t adc_getValue(uint8_t channel)
     }
 
     while (ADCON3Lbits.CNVRTCH == 1)
+    {
         ;
+    }
 
     ADCON3Lbits.CNVCHSEL = channel;  // select channel to convert
     ADCON3Lbits.CNVRTCH = 1;         // Start sampling
@@ -712,13 +746,17 @@ int16_t adc_getValue(uint8_t channel)
     {
         bitMask = (0x0001 << channel);
         while ((ADSTATL & bitMask) == 0)
+        {
             ;
+        }
     }
     else
     {
         bitMask = (0x0001 << (channel - 16));
         while ((ADSTATH & bitMask) == 0)
+        {
             ;
+        }
     }
 
     return *(&ADCBUF0 + channel);  // Read the ADC conversion result

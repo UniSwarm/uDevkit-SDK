@@ -74,12 +74,20 @@ int main(void)
 
         board_setLed(2, 1);
         for (j = 0; j < 5; j++)
+        {
             for (i = 0; i < 65000; i++)
+            {
                 ;
+            }
+        }
         board_setLed(2, 0);
         for (j = 0; j < 5; j++)
+        {
             for (i = 0; i < 65000; i++)
+            {
                 ;
+            }
+        }
     }
 
     return 0;

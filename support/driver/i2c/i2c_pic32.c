@@ -583,7 +583,9 @@ int i2c_start(rt_dev_t device)
         case I2C_NUM5:
             I2C5CONbits.SEN = 1;
             while (I2C5CONbits.SEN)
+            {
                 ;
+            }
             break;
 #    endif
     }
@@ -650,7 +652,9 @@ int i2c_restart(rt_dev_t device)
         case I2C_NUM5:
             I2C5CONbits.RSEN = 1;
             while (I2C5CONbits.RSEN)
+            {
                 ;
+            }
             break;
 #    endif
     }
@@ -717,7 +721,9 @@ int i2c_stop(rt_dev_t device)
         case I2C_NUM5:
             I2C5CONbits.PEN = 1;
             while (I2C5CONbits.PEN)
+            {
                 ;
+            }
             break;
 #    endif
     }
@@ -779,7 +785,9 @@ int i2c_idle(rt_dev_t device)
 #    ifdef I2C_NUM5
         case I2C_NUM5:
             while (I2C5CONbits.SEN || I2C5CONbits.PEN || I2C5CONbits.RCEN || I2C5CONbits.RSEN || I2C5CONbits.ACKEN || I2C5STATbits.TRSTAT)
+            {
                 ;
+            }
             break;
 #    endif
     }
@@ -851,7 +859,9 @@ int i2c_ack(rt_dev_t device)
             I2C5CONbits.ACKDT = 0;
             I2C5CONbits.ACKEN = 1;
             while (I2C5CONbits.ACKEN)
+            {
                 ;
+            }
             break;
 #    endif
     }
@@ -923,7 +933,9 @@ int i2c_nack(rt_dev_t device)
             I2C5CONbits.ACKDT = 1;
             I2C5CONbits.ACKEN = 1;
             while (I2C5CONbits.ACKEN)
+            {
                 ;
+            }
             break;
 #    endif
     }
@@ -1045,7 +1057,9 @@ int i2c_putc(rt_dev_t device, const char data)
             }
 
             while (I2C5CONbits.SEN || I2C5CONbits.PEN || I2C5CONbits.RCEN || I2C5CONbits.RSEN || I2C5CONbits.ACKEN || I2C5STATbits.TRSTAT)
+            {
                 ;  // wait iddle
+            }
 
             if (I2C5STATbits.ACKSTAT)  // test for ACK received
             {
@@ -1121,7 +1135,9 @@ uint8_t i2c_getc(rt_dev_t device)
         case I2C_NUM5:
             I2C5CONbits.RCEN = 1;
             while (I2C5CONbits.RCEN)
+            {
                 ;
+            }
             I2C5STATbits.I2COV = 0;
             return I2C5RCV;
 #    endif

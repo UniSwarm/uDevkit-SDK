@@ -5,9 +5,9 @@
 #include <utility>
 
 HeaderCreator::HeaderCreator(const EdcDb &db, QString picFilter, const QString &fileName)
-    : CWritter(fileName)
-    , _db(db)
-    , _picFilter(std::move(picFilter))
+    : CWritter(fileName),
+      _db(db),
+      _picFilter(std::move(picFilter))
 {
 }
 

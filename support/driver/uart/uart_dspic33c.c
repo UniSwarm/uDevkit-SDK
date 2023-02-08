@@ -489,7 +489,9 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLength, uint8_t bitParity, uin
         flags.stop = 1;
     }
     else
+    {
         flags.stop = 0;
+    }
 
     // update flags
     _uarts[uart].flags = flags;

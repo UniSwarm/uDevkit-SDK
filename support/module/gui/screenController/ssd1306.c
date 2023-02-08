@@ -95,13 +95,17 @@ void gui_ctrl_init(rt_dev_t dev)
     for (j = 0; j < 20; j++)
     {
         for (i = 0; i < 65000; i++)
+        {
             ;
+        }
     }
     OLED_RST = 1;
     for (j = 0; j < 50; j++)
     {
         for (i = 0; i < 65000; i++)
+        {
             ;
+        }
     }
 #endif
 

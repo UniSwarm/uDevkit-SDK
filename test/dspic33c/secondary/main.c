@@ -119,14 +119,22 @@ int main(void)
         // board_setLed(0, 1);
         // uart_write(uartDbg, "Led ON", 6);
         for (j = 0; j < 5; j++)
+        {
             for (i = 0; i < 65000; i++)
+            {
                 ;
+            }
+        }
 
         // board_setLed(0, 0);
         // uart_write(uartDbg, "Led OFF", 7);
         for (j = 0; j < 5; j++)
+        {
             for (i = 0; i < 65000; i++)
+            {
                 ;
+            }
+        }
     }
 
     return 0;

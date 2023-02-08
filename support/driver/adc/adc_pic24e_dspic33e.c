@@ -97,7 +97,9 @@ int16_t adc_getValue(uint8_t channel)
     AD1CHS0 = channel;     // select channel to convert
     AD1CON1bits.SAMP = 1;  // Start sampling
     while (!AD1CON1bits.DONE)
-        ;                  // Wait for the conversion to complete
+    {
+        ;  // Wait for the conversion to complete
+    }
     AD1CON1bits.DONE = 0;  // Clear conversion done status bit
     return ADC1BUF0;       // Read the ADC conversion result
 }

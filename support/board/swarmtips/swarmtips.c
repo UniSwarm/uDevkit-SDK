@@ -89,8 +89,12 @@ int board_init(void)
     i2c_enable(_swarmtips_i2c_tof);
 
     for (j = 0; j < 2; j++)
+    {
         for (i = 0; i < 65000; i++)
+        {
             ;
+        }
+    }
 
 #ifdef USE_MODULE_sensor
     VL6180X_init(_swarmtips_i2c_tof, 0x52);

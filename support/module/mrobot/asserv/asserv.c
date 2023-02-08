@@ -299,7 +299,9 @@ void asserv_controlTask(void)
 
             consdt /= 2.0;
             if (distance > 40.0)
+            {
                 masserv_mode = Asserv_Mode_Linear;
+            }
 
             break;
         case Asserv_Mode_Linear:  // =================== Linear

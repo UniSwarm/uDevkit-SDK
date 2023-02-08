@@ -102,7 +102,9 @@ uint8_t console_howManyLinesItTakes(const Console *cmd, const char *txt)
         }
     }
     else
+    {
         printf("Error: console_howManyLinesItTakes: Console width has a wrong value (%d).\n", cmd->width);
+    }
 
     return 0;
 }
@@ -208,7 +210,9 @@ void remove_element(char *array, const int index, const int array_length)
 {
     int i;
     for (i = index; i < array_length - 1; ++i)
+    {
         array[i] = array[i + 1];
+    }
 }
 
 // verifying if the message is heighter than the console height

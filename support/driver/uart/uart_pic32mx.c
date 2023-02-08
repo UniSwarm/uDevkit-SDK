@@ -705,7 +705,9 @@ void __ISR(_UART_1_VECTOR, IPL3SOFT) U1Interrupt(void)
     {
         uart_1_tx();
         if (fifo_len(&_uarts[0].buffTx) == 0)
+        {
             _U1TXIE = 0;
+        }
         _U1TXIF = 0;
     }
 
@@ -737,7 +739,9 @@ void __ISR(_UART_2_VECTOR, IPL3SOFT) U2Interrupt(void)
     {
         uart_2_tx();
         if (fifo_len(&_uarts[1].buffTx) == 0)
+        {
             _U2TXIE = 0;
+        }
         _U2TXIF = 0;
     }
 
@@ -769,7 +773,9 @@ void __ISR(_UART_3_VECTOR, IPL3SOFT) U3Interrupt(void)
     {
         uart_3_tx();
         if (fifo_len(&_uarts[2].buffTx) == 0)
+        {
             _U3TXIE = 0;
+        }
         _U3TXIF = 0;
     }
 
@@ -801,7 +807,9 @@ void __ISR(_UART_4_VECTOR, IPL3SOFT) U4Interrupt(void)
     {
         uart_4_tx();
         if (fifo_len(&_uarts[3].buffTx) == 0)
+        {
             _U4TXIE = 0;
+        }
         _U4TXIF = 0;
     }
 
@@ -833,7 +841,9 @@ void __ISR(_UART_5_VECTOR, IPL3SOFT) U5Interrupt(void)
     {
         uart_5_tx();
         if (fifo_len(&_uarts[4].buffTx) == 0)
+        {
             _U5TXIE = 0;
+        }
         _U5TXIF = 0;
     }
 
@@ -865,7 +875,9 @@ void __ISR(_UART_6_VECTOR, IPL3SOFT) U6Interrupt(void)
     {
         uart_6_tx();
         if (fifo_len(&_uarts[5].buffTx) == 0)
+        {
             _U6TXIE = 0;
+        }
         _U6TXIF = 0;
     }
 

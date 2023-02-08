@@ -72,7 +72,9 @@ void json_open_object(JsonBuffer *json)
     buffer_astring(&json->buffer, "{");
 
     if (json->syntax == JSON_STANDARD)
+    {
         buffer_astring(&json->buffer, "\n");
+    }
 
     json->indent_level++;
     json_set_indentation(json);

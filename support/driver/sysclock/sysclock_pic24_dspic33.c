@@ -413,7 +413,9 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         __builtin_write_OSCCONL(OSCCON | 0x01);
         // Wait for Clock switch to occur
         while (OSCCONbits.COSC != SYSCLOCK_SRC_FRCPLL)
+        {
             ;
+        }
     }
     else
     {
@@ -421,13 +423,17 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         __builtin_write_OSCCONL(OSCCON | 0x01);
         // Wait for Clock switch to occur
         while (OSCCONbits.COSC != SYSCLOCK_SRC_PPLL)
+        {
             ;
+        }
     }
 #endif
 
     // Wait for PLL to lock
     while (OSCCONbits.LOCK != 1)
+    {
         ;
+    }
 
     _sysclock_pll = fplli * multiplier / postdiv;
     _sysclock_sysfreq = _sysclock_pll;  // Complete this

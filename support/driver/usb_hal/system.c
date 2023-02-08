@@ -16,7 +16,9 @@ void SYSTEM_Initialize(SYSTEM_STATE state)
 
             ACLKCON3bits.ENAPLL = 1;
             while (ACLKCON3bits.APLLCK != 1)
+            {
                 ;
+            }
 #endif
 
             break;

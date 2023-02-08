@@ -31,7 +31,9 @@ int a6_init(rt_dev_t uart, rt_dev_t txen, uint8_t inverted)
     a6_txen = txen;
     a6_inverted = inverted;
     if (a6_txen != NULLDEV)
+    {
         gpio_setBitConfig(a6_txen, GPIO_OUTPUT);
+    }
 
     uart_enable(a6_uart);
     return 0;
@@ -43,9 +45,13 @@ ssize_t a6_write(const char *data, size_t size)
     if (a6_txen != NULLDEV)
     {
         if (a6_inverted == 0)
+        {
             gpio_setBit(a6_txen);
+        }
         else
+        {
             gpio_clearBit(a6_txen);
+        }
     }
     byte = uart_write(a6_uart, data, size);
 

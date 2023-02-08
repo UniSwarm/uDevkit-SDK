@@ -24,8 +24,12 @@ int main(void)
     motors_init();
 
     for (j = 0; j < 5; j++)
+    {
         for (i = 0; i < 65000; i++)
+        {
             ;
+        }
+    }
 
     // module init
     network_init();
@@ -51,20 +55,28 @@ int main(void)
         {
             board_setLed(3, 1);
             if (motors_state() != Motors_State_Rotate)
+            {
                 motors_rotate(-90);
+            }
         }
         else
+        {
             board_setLed(3, 0);
+        }
 
         value = VL6180X_getDistance(board_i2c_tof(), TOF2_ADDR);
         ihm_d2 = value;
         if (value < 35)
+        {
             motors_stop();
+        }
         else
         {
             motors_start();
             if (motors_state() != Motors_State_Rotate)
+            {
                 motors_moveForward(100);
+            }
         }
 
         value = VL6180X_getDistance(board_i2c_tof(), TOF3_ADDR);
@@ -73,10 +85,14 @@ int main(void)
         {
             board_setLed(4, 1);
             if (motors_state() != Motors_State_Rotate)
+            {
                 motors_rotate(90);
+            }
         }
         else
+        {
             board_setLed(4, 0);
+        }
     }
 
     return 0;

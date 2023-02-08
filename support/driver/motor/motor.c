@@ -87,7 +87,9 @@ int motor_setPower(rt_dev_t device, int16_t power)
     int16_t pwm = power;
     uint8_t motor = MINOR(device);
     if (motor > MOTOR_COUNT)
+    {
         return -1;
+    }
 
     if (pwm > 1500)
     {
@@ -177,7 +179,9 @@ int16_t motor_getCurrent(rt_dev_t device)
     int16_t value;
     uint8_t motor = MINOR(device);
     if (motor >= MOTOR_COUNT)
+    {
         return -1;
+    }
 
     switch (motor)
     {

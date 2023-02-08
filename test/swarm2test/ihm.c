@@ -47,11 +47,17 @@ void ihm_task()
 
     // process buttons
     if (board_getButton(0) == 1)
+    {
         btn = 1;
+    }
     else if (board_getButton(1) == 1)
+    {
         btn = 2;
+    }
     else if (board_getButton(2) == 1)
+    {
         btn = 3;
+    }
 
     if (screen_btn == 0 && btn != 0)
     {
@@ -68,9 +74,13 @@ void ihm_task()
             ihm_screenClear();
         }
         if (screen_id < 0)
+        {
             screen_id = SCREEN_COUNT - 1;
+        }
         if (screen_id >= SCREEN_COUNT)
+        {
             screen_id = 0;
+        }
         screen_btn = btn;
     }
     else
@@ -83,7 +93,9 @@ void ihm_task()
     // exec only one time on 10
     ihm_count++;
     if (ihm_count <= 5)
+    {
         return;
+    }
     ihm_count = 0;
 
     // call current ihm screen
@@ -148,9 +160,13 @@ void ihm_screenBatt()
 
     int i, x = 33, y = 42, percent = (ihm_batt - 3.3) * 100;
     if (percent > 100)
+    {
         percent = 100;
+    }
     if (percent < 0)
+    {
         percent = 0;
+    }
 
     gui_setBrushColor(0);
     gui_setPenColor(1);
@@ -173,9 +189,13 @@ void ihm_screenBatt()
     gui_drawTextRect(x + 35, y, 55, 14, text, GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
 
     if (CHARGER_CHARGING == 0)
+    {
         gui_drawTextRect(3, y, 30, 14, "chrg", GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
+    }
     else
+    {
         gui_drawTextRect(3, y, 30, 14, " ", GUI_FONT_ALIGN_VLEFT | GUI_FONT_ALIGN_HTOP);
+    }
 
     gui_ctrl_update();
 }

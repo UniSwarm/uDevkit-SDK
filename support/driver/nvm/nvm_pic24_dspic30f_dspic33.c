@@ -93,7 +93,9 @@ void nvm_writeDoubleWord(nvm_addr addr, const char *data)
     __builtin_disi(6);      // Disable interrupts for NVM unlock
     __builtin_write_NVM();  // unlock and wait until WR = 0
     while (NVMCONbits.WR == 1)
+    {
         ;
+    }
 }
 
 /**
@@ -202,7 +204,9 @@ ssize_t nvm_erasePage(nvm_addr addr)
     __builtin_disi(6);      // Disable interrupts for NVM unlock
     __builtin_write_NVM();  // unlock and wait until WR = 0
     while (NVMCONbits.WR == 1)
+    {
         ;
+    }
 
     return size_erase;
 }

@@ -77,7 +77,9 @@ int main(void)
         network_task();
         usb_serial_task();
         for (i = 0; i < 65000; i++)
+        {
             ;
+        }
 
 #ifdef SIMULATOR
         usleep(1000);
@@ -98,9 +100,13 @@ int main(void)
         // ax12_moveTo(1, value, 512, 512);
 
         if (value < 150 || value2 < 150)
+        {
             mrobot_pause();
+        }
         else
+        {
             mrobot_restart();
+        }
 
         i2c_readregs(i2c, 0x38, 0x00, acc, 7, I2C_REG8 | I2C_REGADDR8);
         if (acc[0] & 0x08)

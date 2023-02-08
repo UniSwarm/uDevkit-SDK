@@ -269,20 +269,28 @@ int can_disable(rt_dev_t device)
             _C1IE = 0;  // disable can global interrupt
             C1CONHbits.REQOP = 4;
             while (C1CONHbits.OPMOD != 4)
+            {
                 ;
+            }
             C1CONLbits.CON = 0;  // disable can
             while (C1CONLbits.BUSY == 1)
+            {
                 ;
+            }
             break;
 #    if CAN_COUNT >= 2
         case 1:
             _C2IE = 0;  // disable can global interrupt
             C2CONHbits.REQOP = 4;
             while (C2CONHbits.OPMOD != 4)
+            {
                 ;
+            }
             C2CONLbits.CON = 0;  // disable can
             while (C2CONLbits.BUSY == 1)
+            {
                 ;
+            }
             break;
 #    endif
     }
@@ -366,14 +374,18 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
             C1CONLbits.CON = 1;
             C1CONHbits.REQOP = modeBits;
             while (C1CONHbits.OPMOD != modeBits)
+            {
                 ;
+            }
             break;
 #    if CAN_COUNT >= 2
         case 1:
             C2CONLbits.CON = 1;
             C2CONHbits.REQOP = modeBits;
             while (C2CONHbits.OPMOD != modeBits)
+            {
                 ;
+            }
             break;
 #    endif
     }
@@ -483,7 +495,9 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             C1CONLbits.CON = 1;
             C1CONHbits.REQOP = 4;
             while (C1CONHbits.OPMOD != 4)
+            {
                 ;
+            }
 
             /*C1NBTCFGHbits.BRP = bitRateDiv - 1; // Baud Rate Prescaler bits (1-256)
             C1NBTCFGHbits.TSEG1 = s1Seg - 1; // Phase Buffer Segment 1 (1-256)

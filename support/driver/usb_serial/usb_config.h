@@ -86,10 +86,10 @@ extern "C" {
 // overhead somewhat, but when both buffers are used simultaneously in the
 // firmware, can offer better sustained bandwidth, especially for OUT endpoints.
 //------------------------------------------------------
-//#define USB_PING_PONG_MODE USB_PING_PONG__NO_PING_PONG    //Not recommended
+// #define USB_PING_PONG_MODE USB_PING_PONG__NO_PING_PONG    //Not recommended
 #define USB_PING_PONG_MODE USB_PING_PONG__FULL_PING_PONG  // A good all around setting
-//#define USB_PING_PONG_MODE USB_PING_PONG__EP0_OUT_ONLY    //Another good setting
-//#define USB_PING_PONG_MODE USB_PING_PONG__ALL_BUT_EP0	    //Not recommended
+// #define USB_PING_PONG_MODE USB_PING_PONG__EP0_OUT_ONLY    //Another good setting
+// #define USB_PING_PONG_MODE USB_PING_PONG__ALL_BUT_EP0	    //Not recommended
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
@@ -102,22 +102,22 @@ extern "C" {
 //(ex: USBDeviceTasks()) must be called periodically by the application firmware
 // at a minimum rate as described in the inline code comments in usb_device.c.
 //------------------------------------------------------
-//#define USB_POLLING
+// #define USB_POLLING
 #define USB_INTERRUPT
 //------------------------------------------------------------------------------
 
 /* Parameter definitions are defined in usb_device.h */
 #define USB_PULLUP_OPTION USB_PULLUP_ENABLE
-//#define USB_PULLUP_OPTION USB_PULLUP_DISABLED
+// #define USB_PULLUP_OPTION USB_PULLUP_DISABLED
 
 #define USB_TRANSCEIVER_OPTION USB_INTERNAL_TRANSCEIVER
 // External Transceiver support is not available on all product families.  Please
 //  refer to the product family datasheet for more information if this feature
 //  is available on the target processor.
-//#define USB_TRANSCEIVER_OPTION USB_EXTERNAL_TRANSCEIVER
+// #define USB_TRANSCEIVER_OPTION USB_EXTERNAL_TRANSCEIVER
 
 #define USB_SPEED_OPTION USB_FULL_SPEED
-//#define USB_SPEED_OPTION USB_LOW_SPEED //(this mode is only supported on some microcontrollers)
+// #define USB_SPEED_OPTION USB_LOW_SPEED //(this mode is only supported on some microcontrollers)
 
 //------------------------------------------------------------------------------------------------------------------
 // Option to enable auto-arming of the status stage of control transfers, if no
@@ -173,15 +173,15 @@ extern "C" {
  *   Enable a definition to suppress a specific event.  By default
  *   all events are sent.
  *******************************************************************/
-//#define USB_DISABLE_SUSPEND_HANDLER
-//#define USB_DISABLE_WAKEUP_FROM_SUSPEND_HANDLER
-//#define USB_DISABLE_SOF_HANDLER
-//#define USB_DISABLE_TRANSFER_TERMINATED_HANDLER
-//#define USB_DISABLE_ERROR_HANDLER
-//#define USB_DISABLE_NONSTANDARD_EP0_REQUEST_HANDLER
-//#define USB_DISABLE_SET_DESCRIPTOR_HANDLER
-//#define USB_DISABLE_SET_CONFIGURATION_HANDLER
-//#define USB_DISABLE_TRANSFER_COMPLETE_HANDLER
+// #define USB_DISABLE_SUSPEND_HANDLER
+// #define USB_DISABLE_WAKEUP_FROM_SUSPEND_HANDLER
+// #define USB_DISABLE_SOF_HANDLER
+// #define USB_DISABLE_TRANSFER_TERMINATED_HANDLER
+// #define USB_DISABLE_ERROR_HANDLER
+// #define USB_DISABLE_NONSTANDARD_EP0_REQUEST_HANDLER
+// #define USB_DISABLE_SET_DESCRIPTOR_HANDLER
+// #define USB_DISABLE_SET_CONFIGURATION_HANDLER
+// #define USB_DISABLE_TRANSFER_COMPLETE_HANDLER
 
 /** DEVICE CLASS USAGE *********************************************/
 #define USB_USE_CDC
@@ -199,7 +199,7 @@ extern "C" {
 #define CDC_DATA_OUT_EP_SIZE 64
 #define CDC_DATA_IN_EP_SIZE  64
 
-//#define USB_CDC_SUPPORT_ABSTRACT_CONTROL_MANAGEMENT_CAPABILITIES_D2 //Send_Break command
+// #define USB_CDC_SUPPORT_ABSTRACT_CONTROL_MANAGEMENT_CAPABILITIES_D2 //Send_Break command
 #define USB_CDC_SUPPORT_ABSTRACT_CONTROL_MANAGEMENT_CAPABILITIES_D1  // Set_Line_Coding, Set_Control_Line_State,
                                                                      // Get_Line_Coding, and Serial_State commands
 /** DEFINITIONS ****************************************************/

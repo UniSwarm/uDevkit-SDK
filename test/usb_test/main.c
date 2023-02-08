@@ -40,11 +40,15 @@ int main(void)
 
         byte_read = uart_read(esp8266_uart, buff, 256);
         if (byte_read > 0)
+        {
             usb_serial_write(usb_serial, buff, byte_read);
+        }
 
         byte_read = usb_serial_read(usb_serial, buff, 256);
         if (byte_read > 0)
+        {
             uart_write(esp8266_uart, buff, byte_read);
+        }
     }
 
     return 0;

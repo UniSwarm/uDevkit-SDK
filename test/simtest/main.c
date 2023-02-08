@@ -43,16 +43,24 @@ int main(void)
     while (1)
     {
         for (j = 0; j < 100; j++)
+        {
             for (i = 0; i < 65000; i++)
+            {
                 f = sqrt(f);
+            }
+        }
         // LED = 0;
         printf("LED 0\n");
         fflush(stdout);
         uart_write(uartDbg, "LED 0\n", 6);
 
         for (j = 0; j < 100; j++)
+        {
             for (i = 0; i < 65000; i++)
+            {
                 f = sqrt(f);
+            }
+        }
         // LED = 1;
         printf("LED 1\n");
         fflush(stdout);
@@ -60,7 +68,9 @@ int main(void)
 
         value = uart_read(uartDbg, buff, 100);
         if (value > 0)
+        {
             uart_write(uartDbg, buff, value);
+        }
     }
 
     return 0;

@@ -21,10 +21,16 @@ uint16_t sharp_longfarSharp(uint16_t v)
     float d;
 
     if (v > sharp_tensionLFP[0] || v < sharp_tensionLFP[MAX_VALUE - 1])
+    {
         return 9999;
+    }
     for (i = 1; i < MAX_VALUE - 1; i++)
+    {
         if (v > sharp_tensionLFP[i])
+        {
             break;
+        }
+    }
     d = sharp_distanceLFP[i]
         - (float)((sharp_distanceLFP[i] - sharp_distanceLFP[i - 1])) / (float)((sharp_tensionLFP[i - 1] - sharp_tensionLFP[i]))
               * (float)(v - sharp_tensionLFP[i]);
@@ -39,10 +45,16 @@ uint16_t sharp_farSharp(uint16_t v)
     float d;
 
     if (v > sharp_tensionLP[0] || v < sharp_tensionLP[MAX_VALUE - 1])
+    {
         return 9999;
+    }
     for (i = 1; i < MAX_VALUE - 1; i++)
+    {
         if (v > sharp_tensionLP[i])
+        {
             break;
+        }
+    }
     d = sharp_distanceLP[i]
         - (float)((sharp_distanceLP[i] - sharp_distanceLP[i - 1])) / (float)((sharp_tensionLP[i - 1] - sharp_tensionLP[i])) * (float)(v - sharp_tensionLP[i]);
     return (uint16_t)d;
@@ -56,10 +68,16 @@ uint16_t sharp_nearSharp(uint16_t v)
     float d;
 
     if (v > sharp_tensionCP[0] || v < sharp_tensionCP[MAX_VALUE - 1])
+    {
         return 9999;
+    }
     for (i = 1; i < MAX_VALUE - 1; i++)
+    {
         if (v > sharp_tensionCP[i])
+        {
             break;
+        }
+    }
     d = sharp_distanceCP[i]
         - (float)((sharp_distanceCP[i] - sharp_distanceCP[i - 1])) / (float)((sharp_tensionCP[i - 1] - sharp_tensionCP[i])) * (float)(v - sharp_tensionCP[i]);
     return (uint16_t)d;

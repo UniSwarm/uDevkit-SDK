@@ -34,7 +34,9 @@ void drawBatt(uint16_t x, uint16_t y, uint16_t percent)
     int i;
     char text[20];
     if (percent > 100)
+    {
         percent = 100;
+    }
 
     gui_setBrushColor(BARCOLOR);
     gui_setPenColor(BARTEXTCOLOR);
@@ -90,7 +92,9 @@ void drawMenuBar()
 void drawBar(uint16_t x, uint16_t y, uint16_t dist)
 {
     if (dist > 700)
+    {
         dist = 700;
+    }
 
     dist /= 10;
 
@@ -154,8 +158,12 @@ int main(void)
         }*/
 
         for (j = 0; j < 2; j++)
+        {
             for (i = 0; i < 65000; i++)
+            {
                 ;
+            }
+        }
 
         size = a6_read(buff, 100);
 

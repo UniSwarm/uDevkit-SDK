@@ -63,11 +63,15 @@ int _board_init_io(void)
     ESP8266_RST = 0;
     TRISEbits.TRISE7 = 0;  // ESP8266_FLASH pin as output
     for (i = 0; i < 65000; i++)
+    {
         ;
+    }
     TRISEbits.TRISE5 = 0;  // ESP8266_RST pin as output
 
     for (i = 0; i < 65000; i++)
+    {
         ;
+    }
     ESP8266_RST = 1;
 
     // buzzer
@@ -149,25 +153,35 @@ int board_init_tof(void)
     // tof1
     VL6180X_setAddr(_swarmtips2_i2c_tof, 0x52, TOF1_ADDR);
     for (i = 0; i < 65000; i++)
+    {
         ;
+    }
     VL6180X_init(_swarmtips2_i2c_tof, TOF1_ADDR);
 
     // tof2
     i2c_writereg(_swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 1, 0x01, 0);  // enable tof 2
     for (i = 0; i < 65000; i++)
+    {
         ;
+    }
     VL6180X_setAddr(_swarmtips2_i2c_tof, 0x52, TOF2_ADDR);
     for (i = 0; i < 65000; i++)
+    {
         ;
+    }
     VL6180X_init(_swarmtips2_i2c_tof, TOF2_ADDR);
 
     // tof3
     i2c_writereg(_swarmtips2_i2c_tof, TOF_IOEXP_ADDR, 1, 0x03, 0);  // enable tof 3
     for (i = 0; i < 65000; i++)
+    {
         ;
+    }
     VL6180X_setAddr(_swarmtips2_i2c_tof, 0x52, TOF3_ADDR);
     for (i = 0; i < 65000; i++)
+    {
         ;
+    }
     VL6180X_init(_swarmtips2_i2c_tof, TOF3_ADDR);
 #endif
 
@@ -309,7 +323,9 @@ int board_init(void)
 int board_setLed(uint8_t led, uint8_t state)
 {
     if (led >= LED_COUNT)
+    {
         return -1;
+    }
     switch (led)
     {
 #ifndef SIMULATOR

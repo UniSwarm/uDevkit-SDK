@@ -75,7 +75,9 @@ HTTP_QUERRY_TYPE http_parse_querry(HTTP_PARSER *parser, char *url)
     }
 #endif
     else
+    {
         return HTTP_QUERRY_TYPE_ERROR;
+    }
 
     // check the space after
     if (*pt_querry_str != ' ')

@@ -52,7 +52,9 @@ int16_t adc_getValue(uint8_t channel)
     AD1CON1bits.SAMP = 1;
     // Wait for the result
     while (_AD1IF == 0)
+    {
         ;
+    }
     // Get ADC value
     return ADC1BUF0;
 }

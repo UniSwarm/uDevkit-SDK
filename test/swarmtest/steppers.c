@@ -177,7 +177,9 @@ void stepper_handler()
 
     step++;
     if (step >= 8)
+    {
         step = 0;
+    }
 }
 
 void steppers_init()

@@ -319,10 +319,8 @@ GPIO_VALUE gpio_readBit(rt_dev_t device)
     {
         return GPIO_LOW;
     }
-    else
-    {
-        return GPIO_HIGH;
-    }
+
+    return GPIO_HIGH;
 }
 
 /**
