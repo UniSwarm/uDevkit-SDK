@@ -33,3 +33,7 @@ checks:
 
 search.%:
 	grep -r $* `find . \( -name '*.h' -o -name '*.c' \)`
+
+format:
+	clang-format -i `find include/ support/ test/ -name "*.c" -o -name "*.h"`
+	clang-format -i `find tool/ -name "*.c" -o -name "*.h" -o -name "*.cpp"`
