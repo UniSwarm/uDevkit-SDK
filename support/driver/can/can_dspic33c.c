@@ -184,20 +184,21 @@ int can_enable(rt_dev_t device)
             C1FIFOBAH = 0x0000;
             C1FIFOBAL = (uint16_t)(&_can1_fifo_buffer);
 
-            // Configure TEF to save 5 messages
-            C1CONLbits.BRSDIS = 0x0;
-            C1CONHbits.STEF = 0x0;   // Don't save transmitted messages in TEF
-            C1CONHbits.TXQEN = 0x0;  // No TXQ
+            // Configure TEF to save 0 message
+            C1CONLbits.BRSDIS = 0x0;  // Bit Rate Switching depends on BRS in the transmit message object
+            C1CONHbits.STEF = 0x0;    // Don't save transmitted messages in TEF
+            C1CONHbits.TXQEN = 0x0;   // No TXQ
 
-            // FIFO1 as transmiter (20 messages)
-            C1FIFOCON1Hbits.FSIZE = 20 - 1;  // 20 messages deep
+            // FIFO1 as transmiter (16 messages)
+            C1FIFOCON1Hbits.FSIZE = 16 - 1;  // 16 messages deep
             C1FIFOCON1Hbits.PLSIZE = 0x0;    // 8 bytes of data
             C1FIFOCON1Lbits.TXEN = 1;        // Set TXEN bit, transmit fifo
 
-            // FIFO2 as receiver (20 messages)
-            C1FIFOCON2Hbits.FSIZE = 20 - 1;  // 20 messages deep
+            // FIFO2 as receiver (16 messages)
+            C1FIFOCON2Hbits.FSIZE = 16 - 1;  // 16 messages deep
             C1FIFOCON2Hbits.PLSIZE = 0x0;    // 8 bytes of data
             C1FIFOCON2Lbits.TXEN = 0;        // Clear TXEN bit, receive fifo
+
             // filter 0
             C1FLTCON0Lbits.F0BP = 2;    // Store messages in FIFO2
             C1FLTOBJ0H = 0x0000;        // Filter 0 ID
@@ -209,25 +210,27 @@ int can_enable(rt_dev_t device)
             C1MASK0L = 0x0000;      // Ignore all bits in comparison
             C1MASK0Hbits.MIDE = 0;  // Match all message types
             break;
+
 #    if CAN_COUNT >= 2
         case 1:
             C2FIFOBAH = 0x0000;
             C2FIFOBAL = (uint16_t)(&_can2_fifo_buffer);
 
-            // Configure TEF to save 5 messages
-            C2CONLbits.BRSDIS = 0x0;
-            C2CONHbits.STEF = 0x0;   // Don't save transmitted messages in TEF
-            C2CONHbits.TXQEN = 0x0;  // No TXQ
+            // Configure TEF to save 0 message
+            C2CONLbits.BRSDIS = 0x0;  // Bit Rate Switching depends on BRS in the transmit message object
+            C2CONHbits.STEF = 0x0;    // Don't save transmitted messages in TEF
+            C2CONHbits.TXQEN = 0x0;   // No TXQ
 
-            // FIFO1 as transmiter (20 messages)
-            C2FIFOCON1Hbits.FSIZE = 20 - 1;  // 20 messages deep
+            // FIFO1 as transmiter (16 messages)
+            C2FIFOCON1Hbits.FSIZE = 16 - 1;  // 16 messages deep
             C2FIFOCON1Hbits.PLSIZE = 0x0;    // 8 bytes of data
             C2FIFOCON1Lbits.TXEN = 1;        // Set TXEN bit, transmit fifo
 
-            // FIFO2 as receiver (20 messages)
-            C2FIFOCON2Hbits.FSIZE = 20 - 1;  // 20 messages deep
+            // FIFO2 as receiver (16 messages)
+            C2FIFOCON2Hbits.FSIZE = 16 - 1;  // 16 messages deep
             C2FIFOCON2Hbits.PLSIZE = 0x0;    // 8 bytes of data
             C2FIFOCON2Lbits.TXEN = 0;        // Clear TXEN bit, receive fifo
+
             // filter 0
             C2FLTCON0Lbits.F0BP = 2;    // Store messages in FIFO2
             C2FLTOBJ0H = 0x0000;        // Filter 0 ID
