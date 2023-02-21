@@ -4,7 +4,7 @@ OC_DRIVER=
 vpath %.c $(DRIVERPATH)
 vpath %.h $(DRIVERPATH)
 
-HEADER += oc.h
+HEADER += oc.h oc_device.h
 
 ifeq ($(ARCHI),$(filter $(ARCHI),pic24ep dspic33ep dspic33ev))
  ARCHI_SRC += oc_pic24e_dspic33e.c

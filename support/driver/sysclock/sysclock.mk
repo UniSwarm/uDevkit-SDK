@@ -4,7 +4,7 @@ SYSCLOCK_DRIVER=
 vpath %.c $(DRIVERPATH)
 vpath %.h $(DRIVERPATH)
 
-HEADER += sysclock.h
+HEADER += sysclock.h sysclock_device.h
 
 ifeq ($(ARCHI),$(filter $(ARCHI),dspic30f))
  ARCHI_SRC += sysclock_dspic30f.c

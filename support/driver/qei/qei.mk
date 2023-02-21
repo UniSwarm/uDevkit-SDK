@@ -4,7 +4,7 @@ QEI_DRIVER=
 vpath %.c $(DRIVERPATH)
 vpath %.h $(DRIVERPATH)
 
-HEADER += qei.h
+HEADER += qei.h qei_device.h
 
 ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24hj dspic33fj))
  ARCHI_SRC += qei_pic24f_dspic33f.c

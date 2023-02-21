@@ -4,7 +4,7 @@ EEPROM_DRIVER=
 vpath %.c $(DRIVERPATH)
 vpath %.h $(DRIVERPATH)
 
-HEADER += eeprom.h
+HEADER += eeprom.h eeprom_device.h
 
 ifeq ($(ARCHI),$(filter $(ARCHI),pic32mk))
  ARCHI_SRC += eeprom_pic32mk.c

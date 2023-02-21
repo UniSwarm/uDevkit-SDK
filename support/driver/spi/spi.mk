@@ -6,7 +6,7 @@ vpath %.h $(DRIVERPATH)
 
 DRIVERS += sysclock
 
-HEADER += spi.h
+HEADER += spi.h spi_device.h
 
 ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24hj dspic33fj))
  ARCHI_SRC += spi_pic24f_dspic33f.c

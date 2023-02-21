@@ -6,7 +6,7 @@ vpath %.h $(DRIVERPATH)
 
 DRIVERS += sysclock
 
-HEADER += i2c.h
+HEADER += i2c.h i2c_device.h
 ARCHI_SRC += i2c.c
 
 ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic30f dspic33fj dspic33ep dspic33ev dspic33ch dspic33ck))

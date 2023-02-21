@@ -6,7 +6,7 @@ vpath %.h $(DRIVERPATH)
 
 DRIVERS += sysclock
 
-HEADER += timer.h
+HEADER += timer.h timer_device.h
 
 ifeq ($(ARCHI),$(filter $(ARCHI),pic24ep dspic33ep dspic33ev pic24f pic24fj pic24hj dspic33fj dspic30f))
  ARCHI_SRC += timer_pic24_dspic30f_dspic33.c

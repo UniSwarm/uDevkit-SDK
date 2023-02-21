@@ -4,7 +4,7 @@ IC_DRIVER=
 vpath %.c $(DRIVERPATH)
 vpath %.h $(DRIVERPATH)
 
-HEADER += ic.h
+HEADER += ic.h ic_device.h
 
 ifeq ($(ARCHI),$(filter $(ARCHI),pic24ep dspic33ep dspic33ev))
  SRC += ic_pic24e_dspic33e.c

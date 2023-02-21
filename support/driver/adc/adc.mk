@@ -4,7 +4,7 @@ ADC_DRIVER=
 vpath %.c $(DRIVERPATH)
 vpath %.h $(DRIVERPATH)
 
-HEADER += adc.h
+HEADER += adc.h adc_device.h
 
 ifeq ($(ARCHI), $(filter $(ARCHI), dspic33ch dspic33ck))
  ARCHI_SRC += adc_dspic33_sar12.c

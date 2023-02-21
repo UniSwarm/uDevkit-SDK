@@ -6,7 +6,7 @@ vpath %.h $(DRIVERPATH)
 
 DRIVERS += sysclock
 
-HEADER += can.h
+HEADER += can.h can_device.h
 
 ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic33fj dspic33ep dspic33ev))
  #ARCHI_SRC += can_pic24_dspic33.c
