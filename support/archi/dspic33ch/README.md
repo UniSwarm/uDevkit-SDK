@@ -28,18 +28,18 @@ Secondary core is marked with final S1. Secondary core does not have same periph
 |MP50X           |        2|        1|        0|        0|        2|        2|   1-2 Fd|        2|        4|         1|         0|         0|         8|
 |MP50XS1         |        1|        1|        0|        0|        1|        1|        0|        0|        4|         1|         0|         0|         4|
 
-[1]: ../../driver/uart
-[2]: ../../driver/timer
-[3]: ../../driver/oc
-[4]: ../../driver/ic
-[5]: ../../driver/i2c
-[6]: ../../driver/spi
-[7]: ../../driver/can
-[8]: ../../driver/sent
-[9]: ../../driver/clc
-[10]: ../../driver/qei
-[11]: ../../driver/pwm
-[12]: ../../driver/mccp
+[1]: ../../driver/uart/README.md
+[2]: ../../driver/timer/README.md
+[3]: ../../driver/oc/README.md
+[4]: ../../driver/ic/README.md
+[5]: ../../driver/i2c/README.md
+[6]: ../../driver/spi/README.md
+[7]: ../../driver/can/README.md
+[8]: ../../driver/sent/README.md
+[9]: ../../driver/clc/README.md
+[10]: ../../driver/qei/README.md
+[11]: ../../driver/pwm/README.md
+[12]: ../../driver/mccp/README.md
 
 ## Devices list
 

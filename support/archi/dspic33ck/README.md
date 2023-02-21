@@ -31,18 +31,18 @@ This family have variations of flash memory, pin count and CAN FD for 5XX, 6XX a
 |dsPIC33CK MP60X |        3|        1|        0|        0|        3|        3| __2 Fd__|        2|        4|     __3__|         8|         1|         8|
 |dsPIC33CK MP7XX |        3|        1|        0|        0|        3|        3|     2 Fd|        2|    __8__|     __3__|         8|         1|         8|
 
-[1]: ../../driver/uart
-[2]: ../../driver/timer
-[3]: ../../driver/oc
-[4]: ../../driver/ic
-[5]: ../../driver/i2c
-[6]: ../../driver/spi
-[7]: ../../driver/can
-[8]: ../../driver/sent
-[9]: ../../driver/clc
-[10]: ../../driver/qei
-[11]: ../../driver/pwm
-[12]: ../../driver/ccp
+[1]: ../../driver/uart/README.md
+[2]: ../../driver/timer/README.md
+[3]: ../../driver/oc/README.md
+[4]: ../../driver/ic/README.md
+[5]: ../../driver/i2c/README.md
+[6]: ../../driver/spi/README.md
+[7]: ../../driver/can/README.md
+[8]: ../../driver/sent/README.md
+[9]: ../../driver/clc/README.md
+[10]: ../../driver/qei/README.md
+[11]: ../../driver/pwm/README.md
+[12]: ../../driver/ccp/README.md
 
 ## Devices list
 

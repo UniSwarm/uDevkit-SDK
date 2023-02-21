@@ -30,18 +30,18 @@ This range is oldest than [dsPIC33EP](../dspic33ep/README.md).
 |MC7xx                |        2|        9|        8|        8|        2|        2|      1-2|        0|        0|         1|         2|         0|         0|
 |MC8xx                |        2|        5|        4|        4|        1|        2|        1|        0|        0|         2|         4|         0|         0|
 
-[1]: ../../driver/uart
-[2]: ../../driver/timer
-[3]: ../../driver/oc
-[4]: ../../driver/ic
-[5]: ../../driver/i2c
-[6]: ../../driver/spi
-[7]: ../../driver/can
-[8]: ../../driver/sent
-[9]: ../../driver/clc
-[10]: ../../driver/qei
-[11]: ../../driver/pwm
-[12]: ../../driver/mccp
+[1]: ../../driver/uart/README.md
+[2]: ../../driver/timer/README.md
+[3]: ../../driver/oc/README.md
+[4]: ../../driver/ic/README.md
+[5]: ../../driver/i2c/README.md
+[6]: ../../driver/spi/README.md
+[7]: ../../driver/can/README.md
+[8]: ../../driver/sent/README.md
+[9]: ../../driver/clc/README.md
+[10]: ../../driver/qei/README.md
+[11]: ../../driver/pwm/README.md
+[12]: ../../driver/mccp/README.md
 
 ## Devices list
 

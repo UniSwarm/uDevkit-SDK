@@ -30,18 +30,18 @@ This family is splitted into multiple subfamilies :
 |PIC32 MX6       |        6|        5|        5|        5|      4-5|      3-4|        0|        0|        0|         0|         0|         0|         0|
 |PIC32 MX7       |        6|        5|        5|        5|      4-5|      3-4|      1-2|        0|        0|         0|         0|         0|         0|
 
-[1]: ../../driver/uart
-[2]: ../../driver/timer
-[3]: ../../driver/oc
-[4]: ../../driver/ic
-[5]: ../../driver/i2c
-[6]: ../../driver/spi
-[7]: ../../driver/can
-[8]: ../../driver/sent
-[9]: ../../driver/clc
-[10]: ../../driver/qei
-[11]: ../../driver/pwm
-[12]: ../../driver/ccp
+[1]: ../../driver/uart/README.md
+[2]: ../../driver/timer/README.md
+[3]: ../../driver/oc/README.md
+[4]: ../../driver/ic/README.md
+[5]: ../../driver/i2c/README.md
+[6]: ../../driver/spi/README.md
+[7]: ../../driver/can/README.md
+[8]: ../../driver/sent/README.md
+[9]: ../../driver/clc/README.md
+[10]: ../../driver/qei/README.md
+[11]: ../../driver/pwm/README.md
+[12]: ../../driver/ccp/README.md
 
 ## Devices list
 
