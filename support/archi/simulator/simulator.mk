@@ -37,7 +37,7 @@ vpath %.h $(SIMULATOR_PATH)
 vpath %.c $(SIMULATOR_PATH)
 vpath %.cpp $(SIMULATOR_PATH)
 SIM_SRC += simulator.cpp simulator_socket.c simulator_pthread.c
-HEADER += simulator.h simulator_socket.h simulator_pthread.h
+SIM_HEADER += simulator.h simulator_socket.h simulator_pthread.h
 
 vpath %.h $(OUT_SIM_PWD)
 vpath %.c $(OUT_SIM_PWD)
@@ -67,7 +67,7 @@ $(OUT_SIM_PWD)/$(SIM_EXE) : $(SIM_OBJECTS)
 
 sim-exe: $(OUT_SIM_PWD)/$(SIM_EXE)
 
-sim: sim-exe
+sim: sim-exe $(UDKSIM_EXE)
 	#killall udk-sim || true
 	$(UDKSIM_EXE) $(OUT_SIM_PWD)/$(SIM_EXE)
 
