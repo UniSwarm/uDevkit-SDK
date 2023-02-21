@@ -69,7 +69,7 @@ info:
 	@printf "$(GREEN)PROJECT:    $(NORM)%s %s %s\n" "$(PROJECT)" "$(OUT_PWD)/$(PROJECT).elf" "$(OUT_PWD)/$(PROJECT).hex"
 	@printf "$(GREEN)DRIVERS:    $(NORM)%s\n" "$(DRIVERS)"
 	@printf "\n"
-	@printf "$(GREEN)BOARD:      $(NORM)%s\n" "$(BOARD)"
+	@printf "$(GREEN)BOARD:      $(NORM)%s version: %s\n" "$(BOARD)" "$(BOARD_VERSION)"
 	@printf "$(GREEN)DEVICE:     $(NORM)%s\n" "$(DEVICE)"
 	@printf "$(GREEN)ARCHI:      $(NORM)%s\n" "$(ARCHI)"
 	@printf "$(GREEN)COMPILER:   $(NORM)%s\n" "$(shell whereis $(CC))"
