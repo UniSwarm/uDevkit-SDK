@@ -82,13 +82,14 @@ void board_setBridgesEnabled(int enable);
 #define I_C_CMP 1
 #define I_D_CMP 1  // master
 
-// IOs
-#define IO_COUNT 0
-int8_t board_getIo(uint8_t io);
+// Digital inputs
+#define DI_1_IN0 PORTCbits.RC13
+#define DI_1_IN1 PORTCbits.RC14
+#define DI_1_IN2 PORTCbits.RC15
 
-// limit switches inputs
-#define LIMIT_SWITCH_NO_PORT   0
-#define LIMIT_SWITCH_NO_OFFSET 0
+#define DI_1_IN3 PORTCbits.RC1
+#define DI_1_IN4 PORTCbits.RC2
+#define DI_1_IN5 PORTCbits.RC0
 
 // STO
 #define STO_STATUS_OK_IN PORTEbits.RE0
