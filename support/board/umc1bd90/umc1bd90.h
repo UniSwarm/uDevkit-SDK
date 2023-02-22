@@ -19,9 +19,10 @@ extern "C" {
 #endif
 
 #include <archi.h>
-#include <driver/adc.h>
 
 #include <stdint.h>
+
+#include <driver/adc.h>
 
 int board_init(void);
 
@@ -78,38 +79,19 @@ void board_setBridgesEnabled(int enable);
 #define I_B_CMP 2
 #define I_C_CMP 1
 
-// IOs
-#define IO_COUNT 8
-#define IO_1_IN  PORTEbits.RE4
-#define IO_2_IN  PORTEbits.RE5
-#define IO_3_IN  PORTDbits.RD15
-#define IO_4_IN  PORTEbits.RE3
-#define IO_5_IN  PORTCbits.RC12
-#define IO_6_IN  PORTDbits.RD0
-#define IO_7_IN  PORTDbits.RD2
-#define IO_8_IN  PORTEbits.RE14
-int8_t board_getIo(uint8_t io);
+// Digital inputs
+#define DI_1_IN0 PORTCbits.RC13
+#define DI_1_IN1 PORTCbits.RC14
+#define DI_1_IN2 PORTCbits.RC15
 
-// limit switches inputs
-#define LIMIT_SWITCH_NO_PORT   0
-#define LIMIT_SWITCH_NO_OFFSET 0
-#define LIMIT_SWITCH_COUNT     12
-#define LIMIT_SWITCH_5_PORT    PORTE
-#define LIMIT_SWITCH_5_OFFSET  4
-#define LIMIT_SWITCH_6_PORT    PORTE
-#define LIMIT_SWITCH_6_OFFSET  5
-#define LIMIT_SWITCH_7_PORT    PORTD
-#define LIMIT_SWITCH_7_OFFSET  15
-#define LIMIT_SWITCH_8_PORT    PORTE
-#define LIMIT_SWITCH_8_OFFSET  3
-#define LIMIT_SWITCH_9_PORT    PORTC
-#define LIMIT_SWITCH_9_OFFSET  12
-#define LIMIT_SWITCH_10_PORT   PORTD
-#define LIMIT_SWITCH_10_OFFSET 0
-#define LIMIT_SWITCH_11_PORT   PORTD
-#define LIMIT_SWITCH_11_OFFSET 2
-#define LIMIT_SWITCH_12_PORT   PORTE
-#define LIMIT_SWITCH_12_OFFSET 14
+#define DI_1_IN3 PORTCbits.RC1
+#define DI_1_IN4 PORTCbits.RC2
+#define DI_1_IN5 PORTCbits.RC0
+
+#define DI_1_IN6 PORTEbits.RE4
+#define DI_1_IN7 PORTEbits.RE
+#define DI_1_IN8 PORTDbits.RD15
+#define DI_1_IN9 PORTEbits.RE3
 
 // STO
 #define STO_STATUS_OK_IN PORTEbits.RE0
