@@ -645,12 +645,12 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     {
         case 0:
             CFD1CONbits.ON = 1;
-            CFD1CONbits.CLKSEL0 = 0b1;  // REFCLK4 clock selected
             CFD1CONbits.REQOP = 4;
             while (CFD1CONbits.OPMOD != 4)
             {
                 ;
             }
+            CFD1CONbits.CLKSEL0 = 0b1;  // REFCLK4 clock selected
 
             // NOMINAL BIT TIME CONFIGURATION
             CFD1NBTCFGbits.BRP = bitRateDiv - 1;  // bit rate divisor (1-256)
@@ -668,12 +668,12 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
 #    if CAN_COUNT >= 2
         case 1:
             CFD2CONbits.ON = 1;
-            CFD2CONbits.CLKSEL0 = 0b1;  // REFCLK4 clock selected
             CFD2CONbits.REQOP = 4;
             while (CFD2CONbits.OPMOD != 4)
             {
                 ;
             }
+            CFD2CONbits.CLKSEL0 = 0b1;  // REFCLK4 clock selected
 
             // NOMINAL BIT TIME CONFIGURATION
             CFD2NBTCFGbits.BRP = bitRateDiv - 1;  // bit rate divisor (1-256)
@@ -692,12 +692,12 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
 #    if CAN_COUNT >= 3
         case 2:
             CFD3CONbits.ON = 1;
-            CFD3CONbits.CLKSEL0 = 0b1;  // REFCLK4 clock selected
             CFD3CONbits.REQOP = 4;
             while (CFD3CONbits.OPMOD != 4)
             {
                 ;
             }
+            CFD3CONbits.CLKSEL0 = 0b1;  // REFCLK4 clock selected
 
             // NOMINAL BIT TIME CONFIGURATION
             CFD3NBTCFGbits.BRP = bitRateDiv - 1;  // bit rate divisor (1-256)
@@ -716,12 +716,12 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
 #    if CAN_COUNT >= 4
         case 3:
             CFD4CONbits.ON = 1;
-            CFD4CONbits.CLKSEL0 = 0b1;  // REFCLK4 clock selected
             CFD4CONbits.REQOP = 4;
             while (CFD4CONbits.OPMOD != 4)
             {
                 ;
             }
+            CFD4CONbits.CLKSEL0 = 0b1;  // REFCLK4 clock selected
 
             // NOMINAL BIT TIME CONFIGURATION
             CFD4NBTCFGbits.BRP = bitRateDiv - 1;  // bit rate divisor (1-256)
