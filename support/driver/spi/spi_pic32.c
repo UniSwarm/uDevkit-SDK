@@ -205,8 +205,6 @@ int spi_enable(rt_dev_t device)
     switch (spi)
     {
         case 0:
-            SPI1CONbits.ON = 1;  // enable spi module
-
             _SPI1TXIF = 0;
             _SPI1TXIP = SPI_INTERRUPT_PRIORITY;
             _SPI1TXIE = (_spis[0].txHandler != NULL) ? 1 : 0;
@@ -218,11 +216,11 @@ int spi_enable(rt_dev_t device)
             _SPI1EIF = 0;
             _SPI1EIP = SPI_INTERRUPT_PRIORITY;
             _SPI1EIE = (_spis[0].errorHandler != NULL) ? 1 : 0;
+
+            SPI1CONbits.ON = 1;  // enable spi module
             break;
 #if SPI_COUNT >= 2
         case 1:
-            SPI2CONbits.ON = 1;  // enable spi module
-
             _SPI2TXIF = 0;
             _SPI2TXIP = SPI_INTERRUPT_PRIORITY;
             _SPI2TXIE = (_spis[1].txHandler != NULL) ? 1 : 0;
@@ -234,12 +232,12 @@ int spi_enable(rt_dev_t device)
             _SPI2EIF = 0;
             _SPI2EIP = SPI_INTERRUPT_PRIORITY;
             _SPI2EIE = (_spis[1].errorHandler != NULL) ? 1 : 0;
+
+            SPI2CONbits.ON = 1;  // enable spi module
             break;
 #endif
 #if SPI_COUNT >= 3
         case 2:
-            SPI3CONbits.ON = 1;  // enable spi module
-
             _SPI3TXIF = 0;
             _SPI3TXIP = SPI_INTERRUPT_PRIORITY;
             _SPI3TXIE = (_spis[2].txHandler != NULL) ? 1 : 0;
@@ -251,12 +249,12 @@ int spi_enable(rt_dev_t device)
             _SPI3EIF = 0;
             _SPI3EIP = SPI_INTERRUPT_PRIORITY;
             _SPI3EIE = (_spis[2].errorHandler != NULL) ? 1 : 0;
+
+            SPI3CONbits.ON = 1;  // enable spi module
             break;
 #endif
 #if SPI_COUNT >= 4
         case 3:
-            SPI4CONbits.ON = 1;  // enable spi module
-
             _SPI4TXIF = 0;
             _SPI4TXIP = SPI_INTERRUPT_PRIORITY;
             _SPI4TXIE = (_spis[3].txHandler != NULL) ? 1 : 0;
@@ -268,12 +266,12 @@ int spi_enable(rt_dev_t device)
             _SPI4EIF = 0;
             _SPI4EIP = SPI_INTERRUPT_PRIORITY;
             _SPI4EIE = (_spis[3].errorHandler != NULL) ? 1 : 0;
+
+            SPI4CONbits.ON = 1;  // enable spi module
             break;
 #endif
 #if SPI_COUNT >= 5
         case 4:
-            SPI5CONbits.ON = 1;  // enable spi module
-
             _SPI5TXIF = 0;
             _SPI5TXIP = SPI_INTERRUPT_PRIORITY;
             _SPI5TXIE = (_spis[4].txHandler != NULL) ? 1 : 0;
@@ -285,12 +283,12 @@ int spi_enable(rt_dev_t device)
             _SPI5EIF = 0;
             _SPI5EIP = SPI_INTERRUPT_PRIORITY;
             _SPI5EIE = (_spis[4].errorHandler != NULL) ? 1 : 0;
+
+            SPI5CONbits.ON = 1;  // enable spi module
             break;
 #endif
 #if SPI_COUNT >= 6
         case 5:
-            SPI6CONbits.ON = 1;  // enable spi module
-
             _SPI6TXIF = 0;
             _SPI6TXIP = SPI_INTERRUPT_PRIORITY;
             _SPI6TXIE = (_spis[5].txHandler != NULL) ? 1 : 0;
@@ -302,6 +300,8 @@ int spi_enable(rt_dev_t device)
             _SPI6EIF = 0;
             _SPI6EIP = SPI_INTERRUPT_PRIORITY;
             _SPI6EIE = (_spis[5].errorHandler != NULL) ? 1 : 0;
+
+            SPI6CONbits.ON = 1;  // enable spi module
             break;
 #endif
     }
@@ -327,31 +327,55 @@ int spi_disable(rt_dev_t device)
     switch (spi)
     {
         case 0:
-            SPI1CONbits.ON = 0;  // enable spi module
+            _SPI1TXIE = 0;
+            _SPI1RXIE = 0;
+            _SPI1EIE = 0;
+
+            SPI1CONbits.ON = 0;  // disable spi module
             break;
 #if SPI_COUNT >= 2
         case 1:
-            SPI2CONbits.ON = 0;  // enable spi module
+            _SPI2TXIE = 0;
+            _SPI2RXIE = 0;
+            _SPI2EIE = 0;
+
+            SPI2CONbits.ON = 0;  // disable spi module
             break;
 #endif
 #if SPI_COUNT >= 3
         case 2:
-            SPI3CONbits.ON = 0;  // enable spi module
+            _SPI3TXIE = 0;
+            _SPI3RXIE = 0;
+            _SPI3EIE = 0;
+
+            SPI3CONbits.ON = 0;  // disable spi module
             break;
 #endif
 #if SPI_COUNT >= 4
         case 3:
-            SPI4CONbits.ON = 0;  // enable spi module
+            _SPI4TXIE = 0;
+            _SPI4RXIE = 0;
+            _SPI4EIE = 0;
+
+            SPI4CONbits.ON = 0;  // disable spi module
             break;
 #endif
 #if SPI_COUNT >= 5
         case 4:
-            SPI5CONbits.ON = 0;  // enable spi module
+            _SPI5TXIE = 0;
+            _SPI5RXIE = 0;
+            _SPI5EIE = 0;
+
+            SPI5CONbits.ON = 0;  // disable spi module
             break;
 #endif
 #if SPI_COUNT >= 6
         case 5:
-            SPI6CONbits.ON = 0;  // enable spi module
+            _SPI6TXIE = 0;
+            _SPI6RXIE = 0;
+            _SPI6EIE = 0;
+
+            SPI6CONbits.ON = 0;  // disable spi module
             break;
 #endif
     }
