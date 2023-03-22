@@ -20,7 +20,7 @@ ifeq ($(ARCHI),$(filter $(ARCHI),dspic30f))
  ARCHI_SRC += spi_dspic30f.c
  HEADER += spi_dspic30f.h
 endif
-ifeq ($(ARCHI),$(filter $(ARCHI),pic32mm pic32mx pic32mzec pic32mzef))
+ifeq ($(ARCHI),$(filter $(ARCHI),pic32mm pic32mk pic32mx pic32mzda pic32mzec pic32mzef))
  ARCHI_SRC += spi_pic32.c
  HEADER += spi_pic32.h
 endif
