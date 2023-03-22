@@ -182,6 +182,10 @@ extern "C" {
 #            define _SPI3TXIS IPC12bits.SPI3TXIS
 #            define SPI_IPL   IPL3SRS
 #        endif
+//       Fixed issue with PIC32MM different vector name
+#        define _SPI1_FAULT_VECTOR _SPI1_ERR_VECTOR
+#        define _SPI2_FAULT_VECTOR _SPI2_ERR_VECTOR
+#        define _SPI3_FAULT_VECTOR _SPI3_ERR_VECTOR
 
 #    elif defined(ARCHI_pic32mk)
 // interrupt bits helpers for MK
