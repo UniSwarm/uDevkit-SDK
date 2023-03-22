@@ -23,10 +23,12 @@ extern "C" {
 rt_dev_t spi_getFreeDevice(void);
 int spi_open(rt_dev_t device);
 int spi_close(rt_dev_t device);
+bool spi_isOpened(rt_dev_t device);
 
 // ==== device enable/disable =====
 int spi_enable(rt_dev_t device);
 int spi_disable(rt_dev_t device);
+bool spi_isEnabled(rt_dev_t device);
 
 // ======== device settings =======
 int spi_setFreq(rt_dev_t device, uint32_t freq);

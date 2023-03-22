@@ -130,6 +130,22 @@ int spi_close(rt_dev_t device)
 }
 
 /**
+ * @brief SPI sdk state
+ * @param device spi device number
+ * @return true if spi was openned by spi_open function
+ */
+bool spi_isOpened(rt_dev_t device)
+{
+    uint8_t spi = MINOR(device);
+    if (spi >= SPI_COUNT)
+    {
+        return -1;
+    }
+
+    return (_spis[spi].flags.used == 1);
+}
+
+/**
  * @brief Enable the specified spi bus device
  * @param device spi bus device number
  * @return 0 if ok, -1 in case of error
@@ -207,6 +223,22 @@ int spi_disable(rt_dev_t device)
     }
 
     return 0;
+}
+
+/**
+ * @brief SPI sdk enabled state
+ * @param device spi device number
+ * @return true if spi was enabled by spi_enable function
+ */
+bool spi_isEnabled(rt_dev_t device)
+{
+    uint8_t spi = MINOR(device);
+    if (spi >= SPI_COUNT)
+    {
+        return -1;
+    }
+
+    return (_spis[spi].flags.enabled == 1);
 }
 
 /**
