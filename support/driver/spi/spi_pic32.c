@@ -38,32 +38,73 @@ struct spi_dev
 {
     spi_status flags;
     uint8_t bitLength;
+    void (*txHandler)(void);
+    void (*rxHandler)(void);
+    void (*errorHandler)(void);
 };
 
 #ifdef UDEVKIT_HAVE_CONFIG
 #    include "udevkit_config.h"
 #endif
 
+#ifndef SPI_INTERRUPT_IPL
+#    define SPI_INTERRUPT_IPL SPI_IPL
+#endif
+#ifndef SPI_INTERRUPT_PRIORITY
+#    define SPI_INTERRUPT_PRIORITY 4
+#endif
+
 static struct spi_dev _spis[] = {
 #if SPI_COUNT >= 1
-    {.flags = {{.val = SPI_FLAG_UNUSED}}, .bitLength = 8},
+    {.flags = {{.val = SPI_FLAG_UNUSED}}, .bitLength = 8, .txHandler = NULL, .rxHandler = NULL, .errorHandler = NULL},
 #endif
 #if SPI_COUNT >= 2
-    {.flags = {{.val = SPI_FLAG_UNUSED}}, .bitLength = 8},
+    {.flags = {{.val = SPI_FLAG_UNUSED}}, .bitLength = 8, .txHandler = NULL, .rxHandler = NULL, .errorHandler = NULL},
 #endif
 #if SPI_COUNT >= 3
-    {.flags = {{.val = SPI_FLAG_UNUSED}}, .bitLength = 8},
+    {.flags = {{.val = SPI_FLAG_UNUSED}}, .bitLength = 8, .txHandler = NULL, .rxHandler = NULL, .errorHandler = NULL},
 #endif
 #if SPI_COUNT >= 4
-    {.flags = {{.val = SPI_FLAG_UNUSED}}, .bitLength = 8},
+    {.flags = {{.val = SPI_FLAG_UNUSED}}, .bitLength = 8, .txHandler = NULL, .rxHandler = NULL, .errorHandler = NULL},
 #endif
 #if SPI_COUNT >= 5
-    {.flags = {{.val = SPI_FLAG_UNUSED}}, .bitLength = 8},
+    {.flags = {{.val = SPI_FLAG_UNUSED}}, .bitLength = 8, .txHandler = NULL, .rxHandler = NULL, .errorHandler = NULL},
 #endif
 #if SPI_COUNT >= 6
-    {.flags = {{.val = SPI_FLAG_UNUSED}}, .bitLength = 8},
+    {.flags = {{.val = SPI_FLAG_UNUSED}}, .bitLength = 8, .txHandler = NULL, .rxHandler = NULL, .errorHandler = NULL},
 #endif
 };
+
+#if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
+void SPI1TxInterrupt(void);
+void SPI1RxInterrupt(void);
+void SPI1FaultInterrupt(void);
+#endif
+#if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
+void SPI2TxInterrupt(void);
+void SPI2RxInterrupt(void);
+void SPI2FaultInterrupt(void);
+#endif
+#if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
+void SPI3TxInterrupt(void);
+void SPI3RxInterrupt(void);
+void SPI3FaultInterrupt(void);
+#endif
+#if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
+void SPI4TxInterrupt(void);
+void SPI4RxInterrupt(void);
+void SPI4FaultInterrupt(void);
+#endif
+#if (SPI_COUNT >= 5) && !defined(SPI5_DISABLE)
+void SPI5TxInterrupt(void);
+void SPI5RxInterrupt(void);
+void SPI5FaultInterrupt(void);
+#endif
+#if (SPI_COUNT >= 6) && !defined(SPI6_DISABLE)
+void SPI6TxInterrupt(void);
+void SPI6RxInterrupt(void);
+void SPI6FaultInterrupt(void);
+#endif
 
 /**
  * @brief Gives a free spi bus device number and open it
@@ -165,30 +206,102 @@ int spi_enable(rt_dev_t device)
     {
         case 0:
             SPI1CONbits.ON = 1;  // enable spi module
+
+            _SPI1TXIF = 0;
+            _SPI1TXIP = SPI_INTERRUPT_PRIORITY;
+            _SPI1TXIE = (_spis[0].txHandler != NULL) ? 1 : 0;
+
+            _SPI1RXIF = 0;
+            _SPI1RXIP = SPI_INTERRUPT_PRIORITY;
+            _SPI1RXIE = (_spis[0].rxHandler != NULL) ? 1 : 0;
+
+            _SPI1EIF = 0;
+            _SPI1EIP = SPI_INTERRUPT_PRIORITY;
+            _SPI1EIE = (_spis[0].errorHandler != NULL) ? 1 : 0;
             break;
 #if SPI_COUNT >= 2
         case 1:
             SPI2CONbits.ON = 1;  // enable spi module
+
+            _SPI2TXIF = 0;
+            _SPI2TXIP = SPI_INTERRUPT_PRIORITY;
+            _SPI2TXIE = (_spis[1].txHandler != NULL) ? 1 : 0;
+
+            _SPI2RXIF = 0;
+            _SPI2RXIP = SPI_INTERRUPT_PRIORITY;
+            _SPI2RXIE = (_spis[1].rxHandler != NULL) ? 1 : 0;
+
+            _SPI2EIF = 0;
+            _SPI2EIP = SPI_INTERRUPT_PRIORITY;
+            _SPI2EIE = (_spis[1].errorHandler != NULL) ? 1 : 0;
             break;
 #endif
 #if SPI_COUNT >= 3
         case 2:
             SPI3CONbits.ON = 1;  // enable spi module
+
+            _SPI3TXIF = 0;
+            _SPI3TXIP = SPI_INTERRUPT_PRIORITY;
+            _SPI3TXIE = (_spis[2].txHandler != NULL) ? 1 : 0;
+
+            _SPI3RXIF = 0;
+            _SPI3RXIP = SPI_INTERRUPT_PRIORITY;
+            _SPI3RXIE = (_spis[2].rxHandler != NULL) ? 1 : 0;
+
+            _SPI3EIF = 0;
+            _SPI3EIP = SPI_INTERRUPT_PRIORITY;
+            _SPI3EIE = (_spis[2].errorHandler != NULL) ? 1 : 0;
             break;
 #endif
 #if SPI_COUNT >= 4
         case 3:
             SPI4CONbits.ON = 1;  // enable spi module
+
+            _SPI4TXIF = 0;
+            _SPI4TXIP = SPI_INTERRUPT_PRIORITY;
+            _SPI4TXIE = (_spis[3].txHandler != NULL) ? 1 : 0;
+
+            _SPI4RXIF = 0;
+            _SPI4RXIP = SPI_INTERRUPT_PRIORITY;
+            _SPI4RXIE = (_spis[3].rxHandler != NULL) ? 1 : 0;
+
+            _SPI4EIF = 0;
+            _SPI4EIP = SPI_INTERRUPT_PRIORITY;
+            _SPI4EIE = (_spis[3].errorHandler != NULL) ? 1 : 0;
             break;
 #endif
 #if SPI_COUNT >= 5
         case 4:
             SPI5CONbits.ON = 1;  // enable spi module
+
+            _SPI5TXIF = 0;
+            _SPI5TXIP = SPI_INTERRUPT_PRIORITY;
+            _SPI5TXIE = (_spis[4].txHandler != NULL) ? 1 : 0;
+
+            _SPI5RXIF = 0;
+            _SPI5RXIP = SPI_INTERRUPT_PRIORITY;
+            _SPI5RXIE = (_spis[4].rxHandler != NULL) ? 1 : 0;
+
+            _SPI5EIF = 0;
+            _SPI5EIP = SPI_INTERRUPT_PRIORITY;
+            _SPI5EIE = (_spis[4].errorHandler != NULL) ? 1 : 0;
             break;
 #endif
 #if SPI_COUNT >= 6
         case 5:
             SPI6CONbits.ON = 1;  // enable spi module
+
+            _SPI6TXIF = 0;
+            _SPI6TXIP = SPI_INTERRUPT_PRIORITY;
+            _SPI6TXIE = (_spis[5].txHandler != NULL) ? 1 : 0;
+
+            _SPI6RXIF = 0;
+            _SPI6RXIP = SPI_INTERRUPT_PRIORITY;
+            _SPI6RXIE = (_spis[5].rxHandler != NULL) ? 1 : 0;
+
+            _SPI6EIF = 0;
+            _SPI6EIP = SPI_INTERRUPT_PRIORITY;
+            _SPI6EIE = (_spis[5].errorHandler != NULL) ? 1 : 0;
             break;
 #endif
     }
@@ -347,6 +460,69 @@ uint8_t spi_bitLength(rt_dev_t device)
     return _spis[spi].bitLength;
 }
 
+int spi_setTxHandler(rt_dev_t device, void (*handler)(void))
+{
+#if SPI_COUNT >= 1
+    uint8_t spi = MINOR(device);
+    if (spi >= SPI_COUNT)
+    {
+        return -1;
+    }
+
+    _spis[spi].txHandler = handler;
+    if (_spis[spi].flags.enabled == 1)
+    {
+        spi_enable(device);
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+int spi_setRxHandler(rt_dev_t device, void (*handler)(void))
+{
+#if SPI_COUNT >= 1
+    uint8_t spi = MINOR(device);
+    if (spi >= SPI_COUNT)
+    {
+        return -1;
+    }
+
+    _spis[spi].rxHandler = handler;
+    if (_spis[spi].flags.enabled == 1)
+    {
+        spi_enable(device);
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+int spi_setErrorHandler(rt_dev_t device, void (*handler)(void))
+{
+#if SPI_COUNT >= 1
+    uint8_t spi = MINOR(device);
+    if (spi >= SPI_COUNT)
+    {
+        return -1;
+    }
+
+    _spis[spi].errorHandler = handler;
+    if (_spis[spi].flags.enabled == 1)
+    {
+        spi_enable(device);
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
 ssize_t spi_write(rt_dev_t device, const char *data, size_t size)
 {
     // TODO IMPLEMENT ME
@@ -371,3 +547,196 @@ ssize_t spi_read(rt_dev_t device, char *data, size_t size_max)
     UDK_UNUSED(size_max);
     return -1;
 }
+
+// Ints
+#if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
+void __ISR(_SPI1_TX_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI1TxInterrupt(void)
+{
+    if (_spis[0].txHandler != NULL)
+    {
+        (*_spis[0].txHandler)();
+    }
+
+    _SPI1TXIF = 0;
+}
+
+void __ISR(_SPI1_RX_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI1RxInterrupt(void)
+{
+    if (_spis[0].rxHandler != NULL)
+    {
+        (*_spis[0].rxHandler)();
+    }
+
+    _SPI1RXIF = 0;
+}
+
+void __ISR(_SPI1_FAULT_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI1FaultInterrupt(void)
+{
+    if (_spis[0].errorHandler != NULL)
+    {
+        (*_spis[0].errorHandler)();
+    }
+
+    _SPI1EIF = 0;
+}
+#endif
+
+#if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
+void __ISR(_SPI2_TX_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI2TxInterrupt(void)
+{
+    if (_spis[1].txHandler != NULL)
+    {
+        (*_spis[1].txHandler)();
+    }
+
+    _SPI2TXIF = 0;
+}
+
+void __ISR(_SPI2_RX_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI2RxInterrupt(void)
+{
+    if (_spis[1].rxHandler != NULL)
+    {
+        (*_spis[1].rxHandler)();
+    }
+
+    _SPI2RXIF = 0;
+}
+
+void __ISR(_SPI2_FAULT_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI2FaultInterrupt(void)
+{
+    if (_spis[1].errorHandler != NULL)
+    {
+        (*_spis[1].errorHandler)();
+    }
+
+    _SPI2EIF = 0;
+}
+#endif
+
+#if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
+void __ISR(_SPI3_TX_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI3TxInterrupt(void)
+{
+    if (_spis[2].txHandler != NULL)
+    {
+        (*_spis[2].txHandler)();
+    }
+
+    _SPI3TXIF = 0;
+}
+
+void __ISR(_SPI3_RX_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI3RxInterrupt(void)
+{
+    if (_spis[2].rxHandler != NULL)
+    {
+        (*_spis[2].rxHandler)();
+    }
+
+    _SPI3RXIF = 0;
+}
+
+void __ISR(_SPI3_FAULT_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI3FaultInterrupt(void)
+{
+    if (_spis[2].errorHandler != NULL)
+    {
+        (*_spis[2].errorHandler)();
+    }
+
+    _SPI3EIF = 0;
+}
+#endif
+
+#if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
+void __ISR(_SPI4_TX_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI4TxInterrupt(void)
+{
+    if (_spis[3].txHandler != NULL)
+    {
+        (*_spis[3].txHandler)();
+    }
+
+    _SPI4TXIF = 0;
+}
+
+void __ISR(_SPI4_RX_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI4RxInterrupt(void)
+{
+    if (_spis[3].rxHandler != NULL)
+    {
+        (*_spis[3].rxHandler)();
+    }
+
+    _SPI4RXIF = 0;
+}
+
+void __ISR(_SPI4_FAULT_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI4FaultInterrupt(void)
+{
+    if (_spis[3].errorHandler != NULL)
+    {
+        (*_spis[3].errorHandler)();
+    }
+
+    _SPI4EIF = 0;
+}
+#endif
+
+#if (SPI_COUNT >= 5) && !defined(SPI5_DISABLE)
+void __ISR(_SPI5_TX_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI5TxInterrupt(void)
+{
+    if (_spis[4].txHandler != NULL)
+    {
+        (*_spis[4].txHandler)();
+    }
+
+    _SPI5TXIF = 0;
+}
+
+void __ISR(_SPI5_RX_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI5RxInterrupt(void)
+{
+    if (_spis[4].rxHandler != NULL)
+    {
+        (*_spis[4].rxHandler)();
+    }
+
+    _SPI5RXIF = 0;
+}
+
+void __ISR(_SPI5_FAULT_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI5FaultInterrupt(void)
+{
+    if (_spis[4].errorHandler != NULL)
+    {
+        (*_spis[4].errorHandler)();
+    }
+
+    _SPI5EIF = 0;
+}
+#endif
+
+#if (SPI_COUNT >= 6) && !defined(SPI6_DISABLE)
+void __ISR(_SPI6_TX_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI6TxInterrupt(void)
+{
+    if (_spis[5].txHandler != NULL)
+    {
+        (*_spis[5].txHandler)();
+    }
+
+    _SPI6TXIF = 0;
+}
+
+void __ISR(_SPI6_RX_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI6RxInterrupt(void)
+{
+    if (_spis[5].rxHandler != NULL)
+    {
+        (*_spis[5].rxHandler)();
+    }
+
+    _SPI6RXIF = 0;
+}
+
+void __ISR(_SPI6_FAULT_VECTOR, SPI_INTERRUPT_IPL) __attribute__((weak)) SPI6FaultInterrupt(void)
+{
+    if (_spis[5].errorHandler != NULL)
+    {
+        (*_spis[5].errorHandler)();
+    }
+
+    _SPI6EIF = 0;
+}
+#endif

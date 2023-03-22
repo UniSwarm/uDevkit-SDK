@@ -38,6 +38,11 @@ uint32_t spi_effectiveFreq(rt_dev_t device);
 int spi_setBitLength(rt_dev_t device, uint8_t bitLength);
 uint8_t spi_bitLength(rt_dev_t device);
 
+// ====== callback handlers ======
+int spi_setTxHandler(rt_dev_t device, void (*handler)(void));
+int spi_setRxHandler(rt_dev_t device, void (*handler)(void));
+int spi_setErrorHandler(rt_dev_t device, void (*handler)(void));
+
 // ========= device write ========
 ssize_t spi_write(rt_dev_t device, const char *data, size_t size);
 int spi_flush(rt_dev_t device);

@@ -141,6 +141,7 @@ extern "C" {
 #            define _SPI2TXIF IFS1bits.SPI2TXIF
 #            define _SPI2TXIP IPC9bits.SPI2TXIP
 #            define _SPI2TXIS IPC9bits.SPI2TXIS
+#            define SPI_IPL   IPL3SRS
 #        else
 // interrupt bits helpers for MM GPM
 #            define _SPI1EIE  IEC1bits.SPI1EIE
@@ -179,6 +180,7 @@ extern "C" {
 #            define _SPI3TXIF IFS1bits.SPI3TXIF
 #            define _SPI3TXIP IPC12bits.SPI3TXIP
 #            define _SPI3TXIS IPC12bits.SPI3TXIS
+#            define SPI_IPL   IPL3SRS
 #        endif
 
 #    elif defined(ARCHI_pic32mk)
@@ -255,6 +257,7 @@ extern "C" {
 #        define _SPI6TXIF IFS7bits.SPI6TXIF
 #        define _SPI6TXIP IPC57bits.SPI6TXIP
 #        define _SPI6TXIS IPC57bits.SPI6TXIS
+#        define SPI_IPL   IPL3SRS
 
 #    elif defined(ARCHI_pic32mx)
 // interrupt bits helpers for MX
@@ -299,6 +302,7 @@ extern "C" {
 #        define _SPI4RXIF IFS1bits.SPI4RXIF
 #        define _SPI4TXIE IEC1bits.SPI4TXIE
 #        define _SPI4TXIF IFS1bits.SPI4TXIF
+#        define SPI_IPL   IPL3SOFT
 
 #    elif defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
 // interrupt bits helpers for MZ
@@ -372,6 +376,7 @@ extern "C" {
 #        define _SPI6TXIP IPC46bits.SPI6TXIP
 #        define _SPI6TXIS IPC46bits.SPI6TXIS
 #    endif
+#    define SPI_IPL IPL3SRS
 #endif
 
 #ifdef __cplusplus
