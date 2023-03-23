@@ -16,10 +16,10 @@
 extern "C" {
 #endif
 
-#include <driver/device.h>
-
 #include "gpio_device.h"
 
+// Bit interface
+#define gpio_pin(port, pin) MKDEV(DEV_CLASS_GPIO, (((port) << GPIO_MAX_PORTWIDTHU) + ((pin)&GPIO_MAX_PORTWIDTHMASK)))
 void gpio_setBit(rt_dev_t device);
 void gpio_clearBit(rt_dev_t device);
 void gpio_toggleBit(rt_dev_t device);
@@ -43,9 +43,8 @@ typedef enum
 } GPIO_CONFIG;
 int gpio_setBitConfig(rt_dev_t device, uint16_t config);
 
-#define gpio_pin(port, pin) MKDEV(DEV_CLASS_GPIO, (((port) << GPIO_MAX_PORTWIDTHU) + ((pin)&GPIO_MAX_PORTWIDTHMASK)))
-#define gpio_port(port)     MKDEV(DEV_CLASS_GPIO, ((port) << GPIO_MAX_PORTWIDTHU))
-
+// Port interface
+#define gpio_port(port) MKDEV(DEV_CLASS_GPIO, ((port) << GPIO_MAX_PORTWIDTHU))
 void gpio_writePort(rt_dev_t device, port_type value);
 port_type gpio_readPort(rt_dev_t device);
 int gpio_setPortConfig(rt_dev_t device, uint16_t config);

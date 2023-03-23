@@ -16,6 +16,8 @@
 extern "C" {
 #endif
 
+#include <driver/device.h>
+
 #if defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj) \
     || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
 #    include "gpio_pic24_dspic30f_dspic33.h"
