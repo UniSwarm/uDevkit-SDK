@@ -69,6 +69,40 @@ static struct gpio_dev _gpios[] = {
 #endif
 };
 
+#if defined(GPIO_HAVE_PORTA) && !defined(GPIOA_DISABLE)
+void CNAInterrupt(void);
+#endif
+#if defined(GPIO_HAVE_PORTB) && !defined(GPIOB_DISABLE)
+void CNBInterrupt(void);
+#endif
+#if defined(GPIO_HAVE_PORTC) && !defined(GPIOC_DISABLE)
+void CNCInterrupt(void);
+#endif
+#if defined(GPIO_HAVE_PORTD) && !defined(GPIOD_DISABLE)
+void CNDInterrupt(void);
+#endif
+#if defined(GPIO_HAVE_PORTE) && !defined(GPIOE_DISABLE)
+void CNEInterrupt(void);
+#endif
+#if defined(GPIO_HAVE_PORTF) && !defined(GPIOF_DISABLE)
+void CNFInterrupt(void);
+#endif
+#if defined(GPIO_HAVE_PORTG) && !defined(GPIOG_DISABLE)
+void CNGInterrupt(void);
+#endif
+#if defined(GPIO_HAVE_PORTH) && !defined(GPIOH_DISABLE)
+void CNHInterrupt(void);
+#endif
+#if defined(GPIO_HAVE_PORTI) && !defined(GPIOI_DISABLE)
+void CNIInterrupt(void);
+#endif
+#if defined(GPIO_HAVE_PORTJ) && !defined(GPIOJ_DISABLE)
+void CNJInterrupt(void);
+#endif
+#if defined(GPIO_HAVE_PORTK) && !defined(GPIOK_DISABLE)
+void CNKInterrupt(void);
+#endif
+
 /**
  * @brief Set a bit of a GPIO to 1 (HIGH)
  * @param device GPIO pin
@@ -1186,3 +1220,146 @@ int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
     }
     return 0;
 }
+
+#if defined(GPIO_HAVE_PORTA) && !defined(GPIOA_DISABLE)
+void __ISR(_CHANGE_NOTICE_A_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNAInterrupt(void)
+{
+    if (_gpios[GPIO_PORTA].handler != NULL)
+    {
+        (*_gpios[GPIO_PORTA].handler)(CNSTATA);
+    }
+    PORTA;
+
+    _CNAIF = 0;
+}
+#endif
+
+#if defined(GPIO_HAVE_PORTB) && !defined(GPIOB_DISABLE)
+void __ISR(_CHANGE_NOTICE_B_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNBInterrupt(void)
+{
+    PORTB;
+    if (_gpios[GPIO_PORTB].handler != NULL)
+    {
+        (*_gpios[GPIO_PORTB].handler)(CNSTATB);
+    }
+
+    _CNBIF = 0;
+}
+#endif
+
+#if defined(GPIO_HAVE_PORTC) && !defined(GPIOC_DISABLE)
+void __ISR(_CHANGE_NOTICE_C_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNCInterrupt(void)
+{
+    PORTC;
+    if (_gpios[GPIO_PORTC].handler != NULL)
+    {
+        (*_gpios[GPIO_PORTC].handler)(CNSTATC);
+    }
+
+    _CNCIF = 0;
+}
+#endif
+
+#if defined(GPIO_HAVE_PORTD) && !defined(GPIOD_DISABLE)
+void __ISR(_CHANGE_NOTICE_D_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNDInterrupt(void)
+{
+    PORTD;
+    if (_gpios[GPIO_PORTD].handler != NULL)
+    {
+        (*_gpios[GPIO_PORTD].handler)(CNSTATD);
+    }
+
+    _CNDIF = 0;
+}
+#endif
+
+#if defined(GPIO_HAVE_PORTE) && !defined(GPIOE_DISABLE)
+void __ISR(_CHANGE_NOTICE_E_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNEInterrupt(void)
+{
+    PORTE;
+    if (_gpios[GPIO_PORTE].handler != NULL)
+    {
+        (*_gpios[GPIO_PORTE].handler)(CNSTATE);
+    }
+
+    _CNEIF = 0;
+}
+#endif
+
+#if defined(GPIO_HAVE_PORTF) && !defined(GPIOF_DISABLE)
+void __ISR(_CHANGE_NOTICE_F_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNFInterrupt(void)
+{
+    PORTF;
+    if (_gpios[GPIO_PORTF].handler != NULL)
+    {
+        (*_gpios[GPIO_PORTF].handler)(CNSTATF);
+    }
+
+    _CNFIF = 0;
+}
+#endif
+
+#if defined(GPIO_HAVE_PORTG) && !defined(GPIOG_DISABLE)
+void __ISR(_CHANGE_NOTICE_G_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNGInterrupt(void)
+{
+    PORTG;
+    if (_gpios[GPIO_PORTG].handler != NULL)
+    {
+        (*_gpios[GPIO_PORTG].handler)(CNSTATG);
+    }
+
+    _CNGIF = 0;
+}
+#endif
+
+#if defined(GPIO_HAVE_PORTH) && !defined(GPIOH_DISABLE)
+void __ISR(_CHANGE_NOTICE_H_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNHInterrupt(void)
+{
+    PORTH;
+    if (_gpios[GPIO_PORTH].handler != NULL)
+    {
+        (*_gpios[GPIO_PORTH].handler)(CNSTATH);
+    }
+
+    _CNHIF = 0;
+}
+#endif
+
+#if defined(GPIO_HAVE_PORTI) && !defined(GPIOI_DISABLE)
+void __ISR(_CHANGE_NOTICE_I_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNIInterrupt(void)
+{
+    PORTI;
+    if (_gpios[GPIO_PORTI].handler != NULL)
+    {
+        (*_gpios[GPIO_PORTI].handler)(CNSTATI);
+    }
+
+    _CNIIF = 0;
+}
+#endif
+
+#if defined(GPIO_HAVE_PORTJ) && !defined(GPIOJ_DISABLE)
+void __ISR(_CHANGE_NOTICE_J_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNJInterrupt(void)
+{
+    PORTJ;
+    if (_gpios[GPIO_PORTJ].handler != NULL)
+    {
+        (*_gpios[GPIO_PORTJ].handler)(CNSTATJ);
+    }
+
+    _CNJIF = 0;
+}
+#endif
+
+#if defined(GPIO_HAVE_PORTK) && !defined(GPIOK_DISABLE)
+void __ISR(_CHANGE_NOTICE_K_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNKInterrupt(void)
+{
+    PORTK;
+    if (_gpios[GPIO_PORTK].handler != NULL)
+    {
+        (*_gpios[GPIO_PORTK].handler)(CNSTATK);
+    }
+
+    _CNKIF = 0;
+}
+#endif
