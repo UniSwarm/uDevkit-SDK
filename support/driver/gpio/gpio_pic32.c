@@ -523,6 +523,26 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
                 CNPDBCLR = bit;  // disable pull-down
             }
 #    endif
+#    ifdef CNENB
+            if (config & GPIO_CNPOSITIVE)
+            {
+                CNENBSET = bit;  // enable positive edge detection
+            }
+            else
+            {
+                CNENBCLR = bit;  // disable positive edge detection
+            }
+#    endif
+#    ifdef CNNEB
+            if (config & GPIO_CNNEGATIVE)
+            {
+                CNNEBSET = bit;  // enable negative edge detection
+            }
+            else
+            {
+                CNNEBCLR = bit;  // disable negative edge detection
+            }
+#    endif
             break;
 #endif
 #ifdef GPIO_HAVE_PORTC
@@ -562,6 +582,26 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             else
             {
                 CNPDCCLR = bit;  // disable pull-down
+            }
+#    endif
+#    ifdef CNENC
+            if (config & GPIO_CNPOSITIVE)
+            {
+                CNENCSET = bit;  // enable positive edge detection
+            }
+            else
+            {
+                CNENCCLR = bit;  // disable positive edge detection
+            }
+#    endif
+#    ifdef CNNEC
+            if (config & GPIO_CNNEGATIVE)
+            {
+                CNNECSET = bit;  // enable negative edge detection
+            }
+            else
+            {
+                CNNECCLR = bit;  // disable negative edge detection
             }
 #    endif
             break;
@@ -605,6 +645,26 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
                 CNPDDCLR = bit;  // disable pull-down
             }
 #    endif
+#    ifdef CNEND
+            if (config & GPIO_CNPOSITIVE)
+            {
+                CNENDSET = bit;  // enable positive edge detection
+            }
+            else
+            {
+                CNENDCLR = bit;  // disable positive edge detection
+            }
+#    endif
+#    ifdef CNNED
+            if (config & GPIO_CNNEGATIVE)
+            {
+                CNNEDSET = bit;  // enable negative edge detection
+            }
+            else
+            {
+                CNNEDCLR = bit;  // disable negative edge detection
+            }
+#    endif
             break;
 #endif
 #ifdef GPIO_HAVE_PORTE
@@ -644,6 +704,26 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             else
             {
                 CNPDECLR = bit;  // disable pull-down
+            }
+#    endif
+#    ifdef CNENE
+            if (config & GPIO_CNPOSITIVE)
+            {
+                CNENESET = bit;  // enable positive edge detection
+            }
+            else
+            {
+                CNENECLR = bit;  // disable positive edge detection
+            }
+#    endif
+#    ifdef CNNEE
+            if (config & GPIO_CNNEGATIVE)
+            {
+                CNNEESET = bit;  // enable negative edge detection
+            }
+            else
+            {
+                CNNEECLR = bit;  // disable negative edge detection
             }
 #    endif
             break;
@@ -687,6 +767,26 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
                 CNPDFCLR = bit;  // disable pull-down
             }
 #    endif
+#    ifdef CNENF
+            if (config & GPIO_CNPOSITIVE)
+            {
+                CNENFSET = bit;  // enable positive edge detection
+            }
+            else
+            {
+                CNENFCLR = bit;  // disable positive edge detection
+            }
+#    endif
+#    ifdef CNNEF
+            if (config & GPIO_CNNEGATIVE)
+            {
+                CNNEFSET = bit;  // enable negative edge detection
+            }
+            else
+            {
+                CNNEFCLR = bit;  // disable negative edge detection
+            }
+#    endif
             break;
 #endif
 #ifdef GPIO_HAVE_PORTG
@@ -726,6 +826,26 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             else
             {
                 CNPDGCLR = bit;  // disable pull-down
+            }
+#    endif
+#    ifdef CNENG
+            if (config & GPIO_CNPOSITIVE)
+            {
+                CNENGSET = bit;  // enable positive edge detection
+            }
+            else
+            {
+                CNENGCLR = bit;  // disable positive edge detection
+            }
+#    endif
+#    ifdef CNNEG
+            if (config & GPIO_CNNEGATIVE)
+            {
+                CNNEGSET = bit;  // enable negative edge detection
+            }
+            else
+            {
+                CNNEGCLR = bit;  // disable negative edge detection
             }
 #    endif
             break;
@@ -769,6 +889,26 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
                 CNPDHCLR = bit;  // disable pull-down
             }
 #    endif
+#    ifdef CNENH
+            if (config & GPIO_CNPOSITIVE)
+            {
+                CNENHSET = bit;  // enable positive edge detection
+            }
+            else
+            {
+                CNENHCLR = bit;  // disable positive edge detection
+            }
+#    endif
+#    ifdef CNNEH
+            if (config & GPIO_CNNEGATIVE)
+            {
+                CNNEHSET = bit;  // enable negative edge detection
+            }
+            else
+            {
+                CNNEHCLR = bit;  // disable negative edge detection
+            }
+#    endif
             break;
 #endif
 #ifdef GPIO_HAVE_PORTI
@@ -808,6 +948,26 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             else
             {
                 CNPDICLR = bit;  // disable pull-down
+            }
+#    endif
+#    ifdef CNENI
+            if (config & GPIO_CNPOSITIVE)
+            {
+                CNENISET = bit;  // enable positive edge detection
+            }
+            else
+            {
+                CNENICLR = bit;  // disable positive edge detection
+            }
+#    endif
+#    ifdef CNNEI
+            if (config & GPIO_CNNEGATIVE)
+            {
+                CNNEISET = bit;  // enable negative edge detection
+            }
+            else
+            {
+                CNNEICLR = bit;  // disable negative edge detection
             }
 #    endif
             break;
@@ -851,6 +1011,26 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
                 CNPDJCLR = bit;  // disable pull-down
             }
 #    endif
+#    ifdef CNENJ
+            if (config & GPIO_CNPOSITIVE)
+            {
+                CNENJSET = bit;  // enable positive edge detection
+            }
+            else
+            {
+                CNENJCLR = bit;  // disable positive edge detection
+            }
+#    endif
+#    ifdef CNNEJ
+            if (config & GPIO_CNNEGATIVE)
+            {
+                CNNEJSET = bit;  // enable negative edge detection
+            }
+            else
+            {
+                CNNEJCLR = bit;  // disable negative edge detection
+            }
+#    endif
             break;
 #endif
 #ifdef GPIO_HAVE_PORTK
@@ -890,6 +1070,26 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             else
             {
                 CNPDKCLR = bit;  // disable pull-down
+            }
+#    endif
+#    ifdef CNENK
+            if (config & GPIO_CNPOSITIVE)
+            {
+                CNENKSET = bit;  // enable positive edge detection
+            }
+            else
+            {
+                CNENKCLR = bit;  // disable positive edge detection
+            }
+#    endif
+#    ifdef CNNEK
+            if (config & GPIO_CNNEGATIVE)
+            {
+                CNNEKSET = bit;  // enable negative edge detection
+            }
+            else
+            {
+                CNNEKCLR = bit;  // disable negative edge detection
             }
 #    endif
             break;
