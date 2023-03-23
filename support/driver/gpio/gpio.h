@@ -39,7 +39,9 @@ typedef enum
     GPIO_OUTPUT = 0x01,
     GPIO_OPENDRAIN = 0x02,
     GPIO_PULLUP = 0x04,
-    GPIO_PULLDOWN = 0x08
+    GPIO_PULLDOWN = 0x08,
+    GPIO_CNPOSITIVE = 0x10,
+    GPIO_CNNEGATIVE = 0x20
 } GPIO_CONFIG;
 int gpio_setBitConfig(rt_dev_t device, uint16_t config);
 
@@ -48,6 +50,9 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config);
 void gpio_writePort(rt_dev_t device, port_type value);
 port_type gpio_readPort(rt_dev_t device);
 int gpio_setPortConfig(rt_dev_t device, uint16_t config);
+
+// Port callback handler
+int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE));
 
 #ifdef __cplusplus
 }
