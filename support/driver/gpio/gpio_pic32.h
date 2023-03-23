@@ -235,6 +235,7 @@ extern "C" {
 #        define _CNDIS IPC2bits.CNDIS
 #    endif
 #    define CNIPR IPL5SRS
+#    define GPIO_CN_NOEDGEDETECT
 
 #elif defined(ARCHI_pic32mk)
 #    ifndef _CNAIE
@@ -285,7 +286,7 @@ extern "C" {
 #            define _CNIF IFS1bits.CNIF
 #            define _CNIP IPC6bits.CNIP
 #            define _CNIS IPC6bits.CNIS
-#            define GPIO_SINGLE_CNINTERRUPT
+#            define GPIO_CN_SINGLEINTERRUPT
 #        else
 #            define _CNAIE IEC1bits.CNAIE
 #            define _CNAIF IFS1bits.CNAIF
@@ -304,6 +305,7 @@ extern "C" {
 #        endif
 #    endif
 #    define CNIPR IPL5SRS
+#    define GPIO_CN_NOEDGEDETECT
 #endif
 
 #ifdef __cplusplus
