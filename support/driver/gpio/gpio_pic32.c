@@ -17,6 +17,58 @@
 
 #include <archi.h>
 
+struct gpio_dev
+{
+    void (*handler)(uint32_t);
+};
+
+#ifdef UDEVKIT_HAVE_CONFIG
+#    include "udevkit_config.h"
+#endif
+
+#ifndef GPIO_INTERRUPT_IPR
+#    define GPIO_INTERRUPT_IPR CNIPR
+#endif
+#ifndef GPIO_INTERRUPT_PRIORITY
+#    define GPIO_INTERRUPT_PRIORITY 5
+#endif
+
+static struct gpio_dev _gpios[] = {
+#if GPIO_PORT_MAX >= 1
+    {.handler = NULL},
+#endif
+#if GPIO_PORT_MAX >= 2
+    {.handler = NULL},
+#endif
+#if GPIO_PORT_MAX >= 3
+    {.handler = NULL},
+#endif
+#if GPIO_PORT_MAX >= 4
+    {.handler = NULL},
+#endif
+#if GPIO_PORT_MAX >= 5
+    {.handler = NULL},
+#endif
+#if GPIO_PORT_MAX >= 6
+    {.handler = NULL},
+#endif
+#if GPIO_PORT_MAX >= 7
+    {.handler = NULL},
+#endif
+#if GPIO_PORT_MAX >= 8
+    {.handler = NULL},
+#endif
+#if GPIO_PORT_MAX >= 9
+    {.handler = NULL},
+#endif
+#if GPIO_PORT_MAX >= 10
+    {.handler = NULL},
+#endif
+#if GPIO_PORT_MAX >= 11
+    {.handler = NULL},
+#endif
+};
+
 /**
  * @brief Set a bit of a GPIO to 1 (HIGH)
  * @param device GPIO pin
@@ -374,6 +426,26 @@ int gpio_setBitConfig(rt_dev_t device, uint16_t config)
             else
             {
                 CNPDACLR = bit;  // disable pull-down
+            }
+#    endif
+#    ifdef CNENA
+            if (config & GPIO_CNPOSITIVE)
+            {
+                CNENASET = bit;  // enable positive edge detection
+            }
+            else
+            {
+                CNENACLR = bit;  // disable positive edge detection
+            }
+#    endif
+#    ifdef CNNEA
+            if (config & GPIO_CNNEGATIVE)
+            {
+                CNNEASET = bit;  // enable negative edge detection
+            }
+            else
+            {
+                CNNEACLR = bit;  // disable negative edge detection
             }
 #    endif
             break;
@@ -1005,5 +1077,112 @@ int gpio_setPortConfig(rt_dev_t device, uint16_t config)
             return -1;
     }
 
+    return 0;
+}
+
+int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
+{
+    uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
+    _gpios[port].handler = handler;
+
+    int on = 0;
+    if (handler != NULL)
+    {
+        on = 1;
+    }
+
+    switch (port)
+    {
+#ifdef GPIO_HAVE_PORTA
+        case 0:
+            CNCONAbits.ON = on;
+            CNCONAbits.EDGEDETECT = 1;
+            _CNAIF = 0;
+            _CNAIE = on;
+            break;
+#endif
+#ifdef GPIO_HAVE_PORTB
+        case 1:
+            CNCONBbits.ON = on;
+            CNCONBbits.EDGEDETECT = 1;
+            _CNAIF = 0;
+            _CNAIE = on;
+            break;
+#endif
+#ifdef GPIO_HAVE_PORTC
+        case 2:
+            CNCONCbits.ON = on;
+            CNCONCbits.EDGEDETECT = 1;
+            _CNAIF = 0;
+            _CNAIE = on;
+            break;
+#endif
+#ifdef GPIO_HAVE_PORTD
+        case 3:
+            CNCONDbits.ON = on;
+            CNCONDbits.EDGEDETECT = 1;
+            _CNAIF = 0;
+            _CNAIE = on;
+            break;
+#endif
+#ifdef GPIO_HAVE_PORTE
+        case 4:
+            CNCONEbits.ON = on;
+            CNCONEbits.EDGEDETECT = 1;
+            _CNAIF = 0;
+            _CNAIE = on;
+            break;
+#endif
+#ifdef GPIO_HAVE_PORTF
+        case 5:
+            CNCONFbits.ON = on;
+            CNCONFbits.EDGEDETECT = 1;
+            _CNAIF = 0;
+            _CNAIE = on;
+            break;
+#endif
+#ifdef GPIO_HAVE_PORTG
+        case 6:
+            CNCONGbits.ON = on;
+            CNCONGbits.EDGEDETECT = 1;
+            _CNAIF = 0;
+            _CNAIE = on;
+            break;
+#endif
+#ifdef GPIO_HAVE_PORTH
+        case 7:
+            CNCONHbits.ON = on;
+            CNCONHbits.EDGEDETECT = 1;
+            _CNAIF = 0;
+            _CNAIE = on;
+            break;
+#endif
+#ifdef GPIO_HAVE_PORTI
+        case 8:
+            CNCONIbits.ON = on;
+            CNCONIbits.EDGEDETECT = 1;
+            _CNAIF = 0;
+            _CNAIE = on;
+            break;
+#endif
+#ifdef GPIO_HAVE_PORTJ
+        case 9:
+            CNCONJbits.ON = on;
+            CNCONJbits.EDGEDETECT = 1;
+            _CNAIF = 0;
+            _CNAIE = on;
+            break;
+#endif
+#ifdef GPIO_HAVE_PORTK
+        case 10:
+            CNCONKbits.ON = on;
+            CNCONKbits.EDGEDETECT = 1;
+            _CNAIF = 0;
+            _CNAIE = on;
+            break;
+#endif
+        default:
+            return -1;
+    }
     return 0;
 }
