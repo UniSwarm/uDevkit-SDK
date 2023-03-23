@@ -169,6 +169,143 @@ extern "C" {
 #define GPIO_HAVE_CHANGENOTIFICATION  // have change notification on pins
 #define GPIO_HAVE_OPENDRAIN           // have open drain output config
 
+#if defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
+// interrupt bits helpers for PIC32MZ
+#    ifndef _CNAIE
+#        define _CNAIE IEC3bits.CNAIE
+#        define _CNAIF IFS3bits.CNAIF
+#        define _CNAIP IPC29bits.CNAIP
+#        define _CNAIS IPC29bits.CNAIS
+#        define _CNBIE IEC3bits.CNBIE
+#        define _CNBIF IFS3bits.CNBIF
+#        define _CNBIP IPC29bits.CNBIP
+#        define _CNBIS IPC29bits.CNBIS
+#        define _CNCIE IEC3bits.CNCIE
+#        define _CNCIF IFS3bits.CNCIF
+#        define _CNCIP IPC30bits.CNCIP
+#        define _CNCIS IPC30bits.CNCIS
+#        define _CNDIE IEC3bits.CNDIE
+#        define _CNDIF IFS3bits.CNDIF
+#        define _CNDIP IPC30bits.CNDIP
+#        define _CNDIS IPC30bits.CNDIS
+#        define _CNEIE IEC3bits.CNEIE
+#        define _CNEIF IFS3bits.CNEIF
+#        define _CNEIP IPC30bits.CNEIP
+#        define _CNEIS IPC30bits.CNEIS
+#        define _CNFIE IEC3bits.CNFIE
+#        define _CNFIF IFS3bits.CNFIF
+#        define _CNFIP IPC30bits.CNFIP
+#        define _CNFIS IPC30bits.CNFIS
+#        define _CNGIE IEC3bits.CNGIE
+#        define _CNGIF IFS3bits.CNGIF
+#        define _CNGIP IPC31bits.CNGIP
+#        define _CNGIS IPC31bits.CNGIS
+#        define _CNHIE IEC3bits.CNHIE
+#        define _CNHIF IFS3bits.CNHIF
+#        define _CNHIP IPC31bits.CNHIP
+#        define _CNHIS IPC31bits.CNHIS
+#        define _CNJIE IEC3bits.CNJIE
+#        define _CNJIF IFS3bits.CNJIF
+#        define _CNJIP IPC31bits.CNJIP
+#        define _CNJIS IPC31bits.CNJIS
+#        define _CNKIE IEC3bits.CNKIE
+#        define _CNKIF IFS3bits.CNKIF
+#        define _CNKIP IPC31bits.CNKIP
+#        define _CNKIS IPC31bits.CNKIS
+#    endif
+#    define CNIPR IPL5SRS
+
+#elif defined(ARCHI_pic32mm)
+#    ifndef _CNAIE
+#        define _CNAIE IEC0bits.CNAIE
+#        define _CNAIF IFS0bits.CNAIF
+#        define _CNAIP IPC2bits.CNAIP
+#        define _CNAIS IPC2bits.CNAIS
+#        define _CNBIE IEC0bits.CNBIE
+#        define _CNBIF IFS0bits.CNBIF
+#        define _CNBIP IPC2bits.CNBIP
+#        define _CNBIS IPC2bits.CNBIS
+#        define _CNCIE IEC0bits.CNCIE
+#        define _CNCIF IFS0bits.CNCIF
+#        define _CNCIP IPC2bits.CNCIP
+#        define _CNCIS IPC2bits.CNCIS
+#        define _CNDIE IEC0bits.CNDIE
+#        define _CNDIF IFS0bits.CNDIF
+#        define _CNDIP IPC2bits.CNDIP
+#        define _CNDIS IPC2bits.CNDIS
+#    endif
+#    define CNIPR IPL5SRS
+
+#elif defined(ARCHI_pic32mk)
+#    ifndef _CNAIE
+#        define _CNAIE IEC1bits.CNAIE
+#        define _CNAIF IFS1bits.CNAIF
+#        define _CNAIP IPC11bits.CNAIP
+#        define _CNAIS IPC11bits.CNAIS
+#        define _CNBIE IEC1bits.CNBIE
+#        define _CNBIF IFS1bits.CNBIF
+#        define _CNBIP IPC11bits.CNBIP
+#        define _CNBIS IPC11bits.CNBIS
+#        define _CNCIE IEC1bits.CNCIE
+#        define _CNCIF IFS1bits.CNCIF
+#        define _CNCIP IPC11bits.CNCIP
+#        define _CNCIS IPC11bits.CNCIS
+#        define _CNDIE IEC1bits.CNDIE
+#        define _CNDIF IFS1bits.CNDIF
+#        define _CNDIP IPC11bits.CNDIP
+#        define _CNDIS IPC11bits.CNDIS
+#        define _CNEIE IEC1bits.CNEIE
+#        define _CNEIF IFS1bits.CNEIF
+#        define _CNEIP IPC12bits.CNEIP
+#        define _CNEIS IPC12bits.CNEIS
+#        define _CNFIE IEC1bits.CNFIE
+#        define _CNFIF IFS1bits.CNFIF
+#        define _CNFIP IPC12bits.CNFIP
+#        define _CNFIS IPC12bits.CNFIS
+#        define _CNGIE IEC1bits.CNGIE
+#        define _CNGIF IFS1bits.CNGIF
+#        define _CNGIP IPC12bits.CNGIP
+#        define _CNGIS IPC12bits.CNGIS
+#    endif
+#    define CNIPR IPL5SRS
+
+#elif defined(ARCHI_pic32mx)
+#    ifndef _CNAIE
+#        if defined(DEVICE_32MX530F128H) || defined(DEVICE_32MX550F256H) || defined(DEVICE_32MX570F512H) || defined(DEVICE_32MX530F128L)                       \
+            || defined(DEVICE_32MX550F256L) || defined(DEVICE_32MX570F512L) || defined(DEVICE_32MX534F064H) || defined(DEVICE_32MX534F064L)                    \
+            || defined(DEVICE_32MX564F064H) || defined(DEVICE_32MX564F064L) || defined(DEVICE_32MX564F128H) || defined(DEVICE_32MX564F128L)                    \
+            || defined(DEVICE_32MX575F256H) || defined(DEVICE_32MX575F256L) || defined(DEVICE_32MX575F512H) || defined(DEVICE_32MX575F512L)                    \
+            || defined(DEVICE_32MX664F064H) || defined(DEVICE_32MX664F064L) || defined(DEVICE_32MX664F128H) || defined(DEVICE_32MX664F128L)                    \
+            || defined(DEVICE_32MX675F256H) || defined(DEVICE_32MX675F256L) || defined(DEVICE_32MX675F512H) || defined(DEVICE_32MX675F512L)                    \
+            || defined(DEVICE_32MX695F512H) || defined(DEVICE_32MX695F512L) || defined(DEVICE_32MX764F128H) || defined(DEVICE_32MX764F128L)                    \
+            || defined(DEVICE_32MX775F256H) || defined(DEVICE_32MX775F256L) || defined(DEVICE_32MX775F512H) || defined(DEVICE_32MX775F512L)                    \
+            || defined(DEVICE_32MX795F512H) || defined(DEVICE_32MX795F512L)
+//           PIC32MX5xx / 7xx
+#            define _CNIE IEC1bits.CNIE
+#            define _CNIF IFS1bits.CNIF
+#            define _CNIP IPC6bits.CNIP
+#            define _CNIS IPC6bits.CNIS
+#            define GPIO_SINGLE_CNINTERRUPT
+#        else
+#            define _CNAIE IEC1bits.CNAIE
+#            define _CNAIF IFS1bits.CNAIF
+#            define _CNBIE IEC1bits.CNBIE
+#            define _CNBIF IFS1bits.CNBIF
+#            define _CNCIE IEC1bits.CNCIE
+#            define _CNCIF IFS1bits.CNCIF
+#            define _CNDIE IEC1bits.CNDIE
+#            define _CNDIF IFS1bits.CNDIF
+#            define _CNEIE IEC1bits.CNEIE
+#            define _CNEIF IFS1bits.CNEIF
+#            define _CNFIE IEC1bits.CNFIE
+#            define _CNFIF IFS1bits.CNFIF
+#            define _CNGIE IEC1bits.CNGIE
+#            define _CNGIF IFS1bits.CNGIF
+#        endif
+#    endif
+#    define CNIPR IPL5SRS
+#endif
+
 #ifdef __cplusplus
 }
 #endif
