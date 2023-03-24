@@ -26,7 +26,6 @@ void _cmd_adc_help(void)
 
 int cmd_adc(int argc, char **argv)
 {
-    uint16_t value;
     if (argc < 2)
     {
         printf("%d channels, %d max channel\r\n", (int)ADC_CHANNEL_COUNT, (int)ADC_CHANNEL_MAX);
@@ -48,7 +47,7 @@ int cmd_adc(int argc, char **argv)
         {
             if (adc_channelExists(channel))
             {
-                value = adc_getValue(channel);
+                uint16_t value = adc_getValue(channel);
                 printf("channel %d : %d => %.3fV\r\n", channel, value, (float)value / (1U << ADC_MAX_RESOLUTION_BIT) * 3.3);
             }
         }
@@ -56,7 +55,7 @@ int cmd_adc(int argc, char **argv)
     }
 
     int8_t channel = atoi(argv[1]);
-    if (adc_channelExists(channel))
+    if (!adc_channelExists(channel))
     {
         printf("Invalid channel %d\r\n", channel);
         return -1;
@@ -64,7 +63,7 @@ int cmd_adc(int argc, char **argv)
 
     // read value of an adc channel
     // > adc <adc-channel>
-    value = adc_getValue(channel);
+    uint16_t value = adc_getValue(channel);
     printf("%d => %.3fV\r\n", value, (float)value / (1U << ADC_MAX_RESOLUTION_BIT) * 3.3);
 
     return 0;
