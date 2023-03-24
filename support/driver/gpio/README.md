@@ -19,8 +19,10 @@ gpio_setBitConfig(btn, GPIO_INPUT | GPIO_PULLUP);
 led = gpio_pin(GPIO_PORTE, 4);
 gpio_setBitConfig(btn, GPIO_OUTPUT);
 
-while (1)
+while (true)
+{
     gpio_writeBit(led, gpio_readBit(btn));
+}
 
 ```
 
@@ -42,7 +44,7 @@ Macro to choose a bit of a port
 int gpio_setBitConfig(rt_dev_t device, uint16_t config);
 ```
 
-Set GPIO bit configuration (input / output / open-drain / pull-up / pull-down)
+Set GPIO bit configuration (input / output / open-drain / pull-up / pull-down / change notification)
 
 #### gpio_setBit
 
@@ -84,7 +86,7 @@ GPIO_VALUE gpio_readBit(rt_dev_t device);
 
 Read a bit of a GPIO
 
-### bit / port settings
+### GPIO port access and settings
 
 #### gpio_port
 
@@ -100,7 +102,7 @@ Macro to choose a whole port
 int gpio_setPortConfig(rt_dev_t device, uint16_t config);
 ```
 
-Set GPIO port configuration (input / output)
+Set GPIO port configuration (input / output only)
 
 #### gpio_writePort
 
@@ -117,6 +119,14 @@ port_type gpio_readPort(rt_dev_t device);
 ```
 
 Read GPIO port value (complete port)
+
+### GPIO port change handler
+
+```C
+int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE));
+```
+
+Add a callback to a port. If one bit of the port configured as CN positive and/or negative, handler function will be called.
 
 ## Development status
 
