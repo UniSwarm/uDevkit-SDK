@@ -95,9 +95,9 @@ extern "C" {
     || defined(DEVICE_32MZ2064DAG169) || defined(DEVICE_32MZ2064DAG176) || defined(DEVICE_32MZ2064DAH169) || defined(DEVICE_32MZ2064DAH176)                    \
     || defined(DEVICE_32MZ2064DAK169) || defined(DEVICE_32MZ2064DAK176) || defined(DEVICE_32MZ2064DAL169) || defined(DEVICE_32MZ2064DAL176)                    \
     || defined(DEVICE_32MZ2064DAR169) || defined(DEVICE_32MZ2064DAR176) || defined(DEVICE_32MZ2064DAS169) || defined(DEVICE_32MZ2064DAS176)
-#    define INT_COUNT 5
+#    define INT_EXT_COUNT 5
 #else
-#    define INT_COUNT 0
+#    define INT_EXT_COUNT 0
 #endif
 
 #ifdef __cplusplus
