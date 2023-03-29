@@ -14,6 +14,7 @@
 #include "can.h"
 
 #include <archi.h>
+#include <driver/int.h>
 #include <driver/sysclock.h>
 
 enum
@@ -49,11 +50,23 @@ struct can_dev
 #    include "udevkit_config.h"
 #endif
 
-#ifndef CAN_INTERRUPT_IPR
-#    define CAN_INTERRUPT_IPR CANIPR
+#ifndef INT_MODE
+#    define INT_MODE INT_DEFAULT_MODE
 #endif
 #ifndef CAN_INTERRUPT_PRIORITY
 #    define CAN_INTERRUPT_PRIORITY 4
+#endif
+#ifndef CAN1_INT_TX_PRIORITY
+#    define CAN1_INT_PRIORITY CAN_INTERRUPT_PRIORITY
+#endif
+#ifndef CAN2_INT_TX_PRIORITY
+#    define CAN2_INT_PRIORITY CAN_INTERRUPT_PRIORITY
+#endif
+#ifndef CAN3_INT_TX_PRIORITY
+#    define CAN3_INT_PRIORITY CAN_INTERRUPT_PRIORITY
+#endif
+#ifndef CAN4_INT_TX_PRIORITY
+#    define CAN4_INT_PRIORITY CAN_INTERRUPT_PRIORITY
 #endif
 
 #if CAN_COUNT >= 1
@@ -1007,14 +1020,14 @@ int can_setFifoHandler(rt_dev_t device, void (*handler)(uint8_t fifo, uint8_t ev
         case 0:
             CFD1INTbits.RXIE = 1;
             CFD1INTbits.TXIE = 1;
-            _CAN1IP = CAN_INTERRUPT_PRIORITY;
+            _CAN1IP = CAN1_INT_PRIORITY;
             _CAN1IE = 1;
             break;
 #    if CAN_COUNT >= 2
         case 1:
             CFD2INTbits.RXIE = 1;
             CFD2INTbits.TXIE = 1;
-            _CAN2IP = CAN_INTERRUPT_PRIORITY;
+            _CAN2IP = CAN2_INT_PRIORITY;
             _CAN2IE = 1;
             break;
 #    endif
@@ -1022,7 +1035,7 @@ int can_setFifoHandler(rt_dev_t device, void (*handler)(uint8_t fifo, uint8_t ev
         case 2:
             CFD3INTbits.RXIE = 1;
             CFD3INTbits.TXIE = 1;
-            _CAN3IP = CAN_INTERRUPT_PRIORITY;
+            _CAN3IP = CAN3_INT_PRIORITY;
             _CAN3IE = 1;
             break;
 #    endif
@@ -1030,7 +1043,7 @@ int can_setFifoHandler(rt_dev_t device, void (*handler)(uint8_t fifo, uint8_t ev
         case 3:
             CFD4INTbits.RXIE = 1;
             CFD4INTbits.TXIE = 1;
-            _CAN4IP = CAN_INTERRUPT_PRIORITY;
+            _CAN4IP = CAN4_INT_PRIORITY;
             _CAN4IE = 1;
             break;
 #    endif
@@ -1552,7 +1565,7 @@ int can_filterDisable(rt_dev_t device, uint8_t nFilter)
 }
 
 #if (CAN_COUNT >= 1)
-void __ISR(_CAN1_VECTOR, CAN_INTERRUPT_IPR) __attribute__((weak)) CAN1Interrupt(void)
+void INT_ISR(_CAN1_VECTOR, CAN1_INT_PRIORITY, INT_MODE) __attribute__((weak)) CAN1Interrupt(void)
 {
     uint8_t fifo = CFD1VECbits.ICODE;  // TODO this register get also global can interrupts
     if (_cans[0].fifoHandler != NULL)
@@ -1566,7 +1579,7 @@ void __ISR(_CAN1_VECTOR, CAN_INTERRUPT_IPR) __attribute__((weak)) CAN1Interrupt(
 #endif
 
 #if (CAN_COUNT >= 2)
-void __ISR(_CAN2_VECTOR, CAN_INTERRUPT_IPR) __attribute__((weak)) CAN2Interrupt(void)
+void INT_ISR(_CAN2_VECTOR, CAN2_INT_PRIORITY, INT_MODE) __attribute__((weak)) CAN2Interrupt(void)
 {
     uint8_t fifo = CFD2VECbits.ICODE;  // TODO this register get also global can interrupts
     if (_cans[1].fifoHandler != NULL)
@@ -1580,7 +1593,7 @@ void __ISR(_CAN2_VECTOR, CAN_INTERRUPT_IPR) __attribute__((weak)) CAN2Interrupt(
 #endif
 
 #if (CAN_COUNT >= 3)
-void __ISR(_CAN3_VECTOR, CAN_INTERRUPT_IPR) __attribute__((weak)) CAN3Interrupt(void)
+void INT_ISR(_CAN3_VECTOR, CAN3_INT_PRIORITY, INT_MODE) __attribute__((weak)) CAN3Interrupt(void)
 {
     uint8_t fifo = CFD3VECbits.ICODE;  // TODO this register get also global can interrupts
     if (_cans[2].fifoHandler != NULL)
@@ -1594,7 +1607,7 @@ void __ISR(_CAN3_VECTOR, CAN_INTERRUPT_IPR) __attribute__((weak)) CAN3Interrupt(
 #endif
 
 #if (CAN_COUNT >= 4)
-void __ISR(_CAN4_VECTOR, CAN_INTERRUPT_IPR) __attribute__((weak)) CAN4Interrupt(void)
+void INT_ISR(_CAN4_VECTOR, CAN4_INT_PRIORITY, INT_MODE) __attribute__((weak)) CAN4Interrupt(void)
 {
     uint8_t fifo = CFD4VECbits.ICODE;  // TODO this register get also global can interrupts
     if (_cans[3].fifoHandler != NULL)
