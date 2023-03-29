@@ -16,6 +16,7 @@
 #include "gpio.h"
 
 #include <archi.h>
+#include <driver/int.h>
 
 struct gpio_dev
 {
@@ -26,11 +27,44 @@ struct gpio_dev
 #    include "udevkit_config.h"
 #endif
 
-#ifndef GPIO_INTERRUPT_IPR
-#    define GPIO_INTERRUPT_IPR CNIPR
+#ifndef INT_MODE
+#    define INT_MODE INT_DEFAULT_MODE
 #endif
 #ifndef GPIO_INTERRUPT_PRIORITY
 #    define GPIO_INTERRUPT_PRIORITY 5
+#endif
+#ifndef GPIOA_INT_PRIORITY
+#    define GPIOA_INT_PRIORITY GPIO_INTERRUPT_PRIORITY
+#endif
+#ifndef GPIOB_INT_PRIORITY
+#    define GPIOB_INT_PRIORITY GPIO_INTERRUPT_PRIORITY
+#endif
+#ifndef GPIOC_INT_PRIORITY
+#    define GPIOC_INT_PRIORITY GPIO_INTERRUPT_PRIORITY
+#endif
+#ifndef GPIOD_INT_PRIORITY
+#    define GPIOD_INT_PRIORITY GPIO_INTERRUPT_PRIORITY
+#endif
+#ifndef GPIOE_INT_PRIORITY
+#    define GPIOE_INT_PRIORITY GPIO_INTERRUPT_PRIORITY
+#endif
+#ifndef GPIOF_INT_PRIORITY
+#    define GPIOF_INT_PRIORITY GPIO_INTERRUPT_PRIORITY
+#endif
+#ifndef GPIOG_INT_PRIORITY
+#    define GPIOG_INT_PRIORITY GPIO_INTERRUPT_PRIORITY
+#endif
+#ifndef GPIOH_INT_PRIORITY
+#    define GPIOH_INT_PRIORITY GPIO_INTERRUPT_PRIORITY
+#endif
+#ifndef GPIOI_INT_PRIORITY
+#    define GPIOI_INT_PRIORITY GPIO_INTERRUPT_PRIORITY
+#endif
+#ifndef GPIOJ_INT_PRIORITY
+#    define GPIOJ_INT_PRIORITY GPIO_INTERRUPT_PRIORITY
+#endif
+#ifndef GPIOK_INT_PRIORITY
+#    define GPIOK_INT_PRIORITY GPIO_INTERRUPT_PRIORITY
 #endif
 
 static struct gpio_dev _gpios[] = {
@@ -1335,7 +1369,7 @@ int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
             CNFA = 0;
 #    endif
             _CNAIF = 0;
-            _CNAIP = GPIO_INTERRUPT_PRIORITY;
+            _CNAIP = GPIOA_INT_PRIORITY;
             _CNAIE = on;
             break;
 #endif
@@ -1347,7 +1381,7 @@ int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
             CNFB = 0;
 #    endif
             _CNBIF = 0;
-            _CNBIP = GPIO_INTERRUPT_PRIORITY;
+            _CNBIP = GPIOB_INT_PRIORITY;
             _CNBIE = on;
             break;
 #endif
@@ -1359,7 +1393,7 @@ int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
             CNFC = 0;
 #    endif
             _CNCIF = 0;
-            _CNCIP = GPIO_INTERRUPT_PRIORITY;
+            _CNCIP = GPIOC_INT_PRIORITY;
             _CNCIE = on;
             break;
 #endif
@@ -1371,7 +1405,7 @@ int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
             CNFD = 0;
 #    endif
             _CNDIF = 0;
-            _CNDIP = GPIO_INTERRUPT_PRIORITY;
+            _CNDIP = GPIOD_INT_PRIORITY;
             _CNDIE = on;
             break;
 #endif
@@ -1383,7 +1417,7 @@ int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
             CNFE = 0;
 #    endif
             _CNEIF = 0;
-            _CNEIP = GPIO_INTERRUPT_PRIORITY;
+            _CNEIP = GPIOE_INT_PRIORITY;
             _CNEIE = on;
             break;
 #endif
@@ -1395,7 +1429,7 @@ int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
             CNFF = 0;
 #    endif
             _CNFIF = 0;
-            _CNFIP = GPIO_INTERRUPT_PRIORITY;
+            _CNFIP = GPIOF_INT_PRIORITY;
             _CNFIE = on;
             break;
 #endif
@@ -1407,7 +1441,7 @@ int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
             CNFG = 0;
 #    endif
             _CNGIF = 0;
-            _CNGIP = GPIO_INTERRUPT_PRIORITY;
+            _CNGIP = GPIOG_INT_PRIORITY;
             _CNGIE = on;
             break;
 #endif
@@ -1419,7 +1453,7 @@ int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
             CNFH = 0;
 #    endif
             _CNHIF = 0;
-            _CNHIP = GPIO_INTERRUPT_PRIORITY;
+            _CNHIP = GPIOH_INT_PRIORITY;
             _CNHIE = on;
             break;
 #endif
@@ -1431,7 +1465,7 @@ int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
             CNFI = 0;
 #    endif
             _CNIIF = 0;
-            _CNIIP = GPIO_INTERRUPT_PRIORITY;
+            _CNIIP = GPIOI_INT_PRIORITY;
             _CNIIE = on;
             break;
 #endif
@@ -1443,7 +1477,7 @@ int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
             CNFJ = 0;
 #    endif
             _CNJIF = 0;
-            _CNJIP = GPIO_INTERRUPT_PRIORITY;
+            _CNJIP = GPIOJ_INT_PRIORITY;
             _CNJIE = on;
             break;
 #endif
@@ -1455,7 +1489,7 @@ int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
             CNFK = 0;
 #    endif
             _CNKIF = 0;
-            _CNKIP = GPIO_INTERRUPT_PRIORITY;
+            _CNKIP = GPIOK_INT_PRIORITY;
             _CNKIE = on;
             break;
 #endif
@@ -1466,7 +1500,7 @@ int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
 }
 
 #if defined(GPIO_HAVE_PORTA) && !defined(GPIOA_DISABLE)
-void __ISR(_CHANGE_NOTICE_A_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNAInterrupt(void)
+void INT_ISR(_CHANGE_NOTICE_A_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNAInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
     uint32_t change_mask = CNSTATA;
@@ -1488,7 +1522,7 @@ void __ISR(_CHANGE_NOTICE_A_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CN
 #endif
 
 #if defined(GPIO_HAVE_PORTB) && !defined(GPIOB_DISABLE)
-void __ISR(_CHANGE_NOTICE_B_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNBInterrupt(void)
+void INT_ISR(_CHANGE_NOTICE_B_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNBInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
     uint32_t change_mask = CNSTATB;
@@ -1510,7 +1544,7 @@ void __ISR(_CHANGE_NOTICE_B_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CN
 #endif
 
 #if defined(GPIO_HAVE_PORTC) && !defined(GPIOC_DISABLE)
-void __ISR(_CHANGE_NOTICE_C_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNCInterrupt(void)
+void INT_ISR(_CHANGE_NOTICE_C_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNCInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
     uint32_t change_mask = CNSTATC;
@@ -1532,7 +1566,7 @@ void __ISR(_CHANGE_NOTICE_C_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CN
 #endif
 
 #if defined(GPIO_HAVE_PORTD) && !defined(GPIOD_DISABLE)
-void __ISR(_CHANGE_NOTICE_D_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNDInterrupt(void)
+void INT_ISR(_CHANGE_NOTICE_D_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNDInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
     uint32_t change_mask = CNSTATD;
@@ -1554,7 +1588,7 @@ void __ISR(_CHANGE_NOTICE_D_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CN
 #endif
 
 #if defined(GPIO_HAVE_PORTE) && !defined(GPIOE_DISABLE)
-void __ISR(_CHANGE_NOTICE_E_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNEInterrupt(void)
+void INT_ISR(_CHANGE_NOTICE_E_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNEInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
     uint32_t change_mask = CNSTATE;
@@ -1576,7 +1610,7 @@ void __ISR(_CHANGE_NOTICE_E_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CN
 #endif
 
 #if defined(GPIO_HAVE_PORTF) && !defined(GPIOF_DISABLE)
-void __ISR(_CHANGE_NOTICE_F_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNFInterrupt(void)
+void INT_ISR(_CHANGE_NOTICE_F_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNFInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
     uint32_t change_mask = CNSTATF;
@@ -1598,7 +1632,7 @@ void __ISR(_CHANGE_NOTICE_F_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CN
 #endif
 
 #if defined(GPIO_HAVE_PORTG) && !defined(GPIOG_DISABLE)
-void __ISR(_CHANGE_NOTICE_G_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNGInterrupt(void)
+void INT_ISR(_CHANGE_NOTICE_G_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNGInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
     uint32_t change_mask = CNSTATG;
@@ -1620,7 +1654,7 @@ void __ISR(_CHANGE_NOTICE_G_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CN
 #endif
 
 #if defined(GPIO_HAVE_PORTH) && !defined(GPIOH_DISABLE)
-void __ISR(_CHANGE_NOTICE_H_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNHInterrupt(void)
+void INT_ISR(_CHANGE_NOTICE_H_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNHInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
     uint32_t change_mask = CNSTATH;
@@ -1642,7 +1676,7 @@ void __ISR(_CHANGE_NOTICE_H_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CN
 #endif
 
 #if defined(GPIO_HAVE_PORTI) && !defined(GPIOI_DISABLE)
-void __ISR(_CHANGE_NOTICE_I_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNIInterrupt(void)
+void INT_ISR(_CHANGE_NOTICE_I_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNIInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
     uint32_t change_mask = CNSTATI;
@@ -1664,7 +1698,7 @@ void __ISR(_CHANGE_NOTICE_I_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CN
 #endif
 
 #if defined(GPIO_HAVE_PORTJ) && !defined(GPIOJ_DISABLE)
-void __ISR(_CHANGE_NOTICE_J_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNJInterrupt(void)
+void INT_ISR(_CHANGE_NOTICE_J_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNJInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
     uint32_t change_mask = CNSTATJ;
@@ -1686,7 +1720,7 @@ void __ISR(_CHANGE_NOTICE_J_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CN
 #endif
 
 #if defined(GPIO_HAVE_PORTK) && !defined(GPIOK_DISABLE)
-void __ISR(_CHANGE_NOTICE_K_VECTOR, GPIO_INTERRUPT_IPR) __attribute__((weak)) CNKInterrupt(void)
+void INT_ISR(_CHANGE_NOTICE_K_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNKInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
     uint32_t change_mask = CNSTATK;
