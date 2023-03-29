@@ -16,6 +16,7 @@
 #include "uart.h"
 
 #include <archi.h>
+#include <driver/int.h>
 #include <driver/sysclock.h>
 #include <sys/fifo.h>
 
@@ -34,11 +35,53 @@
 #    define UART_BUFFTX_SIZE 64
 #endif
 
-#ifndef UART_INTERRUPT_IPR
-#    define UART_INTERRUPT_IPR UIPR
+#ifndef INT_MODE
+#    define INT_MODE INT_DEFAULT_MODE
 #endif
 #ifndef UART_INTERRUPT_PRIORITY
 #    define UART_INTERRUPT_PRIORITY 3
+#endif
+#ifndef UART_INTERRUPT_TX_PRIORITY
+#    define UART_INTERRUPT_TX_PRIORITY UART_INTERRUPT_PRIORITY
+#endif
+#ifndef UART_INTERRUPT_RX_PRIORITY
+#    define UART_INTERRUPT_RX_PRIORITY UART_INTERRUPT_PRIORITY
+#endif
+#ifndef UART1_INT_TX_PRIORITY
+#    define UART1_INT_TX_PRIORITY UART_INTERRUPT_PRIORITY
+#endif
+#ifndef UART1_INT_RX_PRIORITY
+#    define UART1_INT_RX_PRIORITY UART_INTERRUPT_PRIORITY
+#endif
+#ifndef UART2_INT_TX_PRIORITY
+#    define UART2_INT_TX_PRIORITY UART_INTERRUPT_PRIORITY
+#endif
+#ifndef UART2_INT_RX_PRIORITY
+#    define UART2_INT_RX_PRIORITY UART_INTERRUPT_PRIORITY
+#endif
+#ifndef UART3_INT_TX_PRIORITY
+#    define UART3_INT_TX_PRIORITY UART_INTERRUPT_PRIORITY
+#endif
+#ifndef UART3_INT_RX_PRIORITY
+#    define UART3_INT_RX_PRIORITY UART_INTERRUPT_PRIORITY
+#endif
+#ifndef UART4_INT_TX_PRIORITY
+#    define UART4_INT_TX_PRIORITY UART_INTERRUPT_PRIORITY
+#endif
+#ifndef UART4_INT_RX_PRIORITY
+#    define UART4_INT_RX_PRIORITY UART_INTERRUPT_PRIORITY
+#endif
+#ifndef UART5_INT_TX_PRIORITY
+#    define UART5_INT_TX_PRIORITY UART_INTERRUPT_PRIORITY
+#endif
+#ifndef UART5_INT_RX_PRIORITY
+#    define UART5_INT_RX_PRIORITY UART_INTERRUPT_PRIORITY
+#endif
+#ifndef UART6_INT_TX_PRIORITY
+#    define UART6_INT_TX_PRIORITY UART_INTERRUPT_PRIORITY
+#endif
+#ifndef UART6_INT_RX_PRIORITY
+#    define UART6_INT_RX_PRIORITY UART_INTERRUPT_PRIORITY
 #endif
 
 enum
@@ -769,7 +812,7 @@ uint8_t uart_bitStop(rt_dev_t device)
 }
 
 #if UART_COUNT >= 1
-void __ISR(_UART1_TX_VECTOR, UART_INTERRUPT_IPR) U1TXInterrupt(void)
+void INT_ISR(_UART1_TX_VECTOR, UART1_INT_TX_PRIORITY, INT_MODE) U1TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U1TXIF = 0;  // 32MK Work around (errata 41)
@@ -795,7 +838,7 @@ void __ISR(_UART1_TX_VECTOR, UART_INTERRUPT_IPR) U1TXInterrupt(void)
     _U1TXIF = 0;
 }
 
-void __ISR(_UART1_RX_VECTOR, UART_INTERRUPT_IPR) U1RXInterrupt(void)
+void INT_ISR(_UART1_RX_VECTOR, UART1_INT_RX_PRIORITY, INT_MODE) U1RXInterrupt(void)
 {
     char rec[4];
     while (U1STAbits.URXDA == 1)
@@ -809,7 +852,7 @@ void __ISR(_UART1_RX_VECTOR, UART_INTERRUPT_IPR) U1RXInterrupt(void)
 #endif
 
 #if UART_COUNT >= 2
-void __ISR(_UART2_TX_VECTOR, UART_INTERRUPT_IPR) U2TXInterrupt(void)
+void INT_ISR(_UART2_TX_VECTOR, UART2_INT_TX_PRIORITY, INT_MODE) U2TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U2TXIF = 0;  // 32MK Work around (errata 41)
@@ -835,7 +878,7 @@ void __ISR(_UART2_TX_VECTOR, UART_INTERRUPT_IPR) U2TXInterrupt(void)
     _U2TXIF = 0;
 }
 
-void __ISR(_UART2_RX_VECTOR, UART_INTERRUPT_IPR) U2RXInterrupt(void)
+void INT_ISR(_UART2_RX_VECTOR, UART2_INT_RX_PRIORITY, INT_MODE) U2RXInterrupt(void)
 {
     char rec[4];
     while (U2STAbits.URXDA == 1)
@@ -849,7 +892,7 @@ void __ISR(_UART2_RX_VECTOR, UART_INTERRUPT_IPR) U2RXInterrupt(void)
 #endif
 
 #if UART_COUNT >= 3
-void __ISR(_UART3_TX_VECTOR, UART_INTERRUPT_IPR) U3TXInterrupt(void)
+void INT_ISR(_UART3_TX_VECTOR, UART3_INT_TX_PRIORITY, INT_MODE) U3TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U3TXIF = 0;  // 32MK Work around (errata 41)
@@ -875,7 +918,7 @@ void __ISR(_UART3_TX_VECTOR, UART_INTERRUPT_IPR) U3TXInterrupt(void)
     _U3TXIF = 0;
 }
 
-void __ISR(_UART3_RX_VECTOR, UART_INTERRUPT_IPR) U3RXInterrupt(void)
+void INT_ISR(_UART3_RX_VECTOR, UART3_INT_RX_PRIORITY, INT_MODE) U3RXInterrupt(void)
 {
     char rec[4];
     while (U3STAbits.URXDA == 1)
@@ -889,7 +932,7 @@ void __ISR(_UART3_RX_VECTOR, UART_INTERRUPT_IPR) U3RXInterrupt(void)
 #endif
 
 #if UART_COUNT >= 4
-void __ISR(_UART4_TX_VECTOR, UART_INTERRUPT_IPR) U4TXInterrupt(void)
+void INT_ISR(_UART4_TX_VECTOR, UART4_INT_TX_PRIORITY, INT_MODE) U4TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U4TXIF = 0;  // 32MK Work around (errata 41)
@@ -915,7 +958,7 @@ void __ISR(_UART4_TX_VECTOR, UART_INTERRUPT_IPR) U4TXInterrupt(void)
     _U4TXIF = 0;
 }
 
-void __ISR(_UART4_RX_VECTOR, UART_INTERRUPT_IPR) U4RXInterrupt(void)
+void INT_ISR(_UART4_RX_VECTOR, UART4_INT_RX_PRIORITY, INT_MODE) U4RXInterrupt(void)
 {
     char rec[4];
     while (U4STAbits.URXDA == 1)
@@ -929,7 +972,7 @@ void __ISR(_UART4_RX_VECTOR, UART_INTERRUPT_IPR) U4RXInterrupt(void)
 #endif
 
 #if UART_COUNT >= 5
-void __ISR(_UART5_TX_VECTOR, UART_INTERRUPT_IPR) U5TXInterrupt(void)
+void INT_ISR(_UART5_TX_VECTOR, UART5_INT_TX_PRIORITY, INT_MODE) U5TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U5TXIF = 0;  // 32MK Work around (errata 41)
@@ -955,7 +998,7 @@ void __ISR(_UART5_TX_VECTOR, UART_INTERRUPT_IPR) U5TXInterrupt(void)
     _U5TXIF = 0;
 }
 
-void __ISR(_UART5_RX_VECTOR, UART_INTERRUPT_IPR) U5RXInterrupt(void)
+void INT_ISR(_UART5_RX_VECTOR, UART5_INT_RX_PRIORITY, INT_MODE) U5RXInterrupt(void)
 {
     char rec[4];
     while (U5STAbits.URXDA == 1)
@@ -969,7 +1012,7 @@ void __ISR(_UART5_RX_VECTOR, UART_INTERRUPT_IPR) U5RXInterrupt(void)
 #endif
 
 #if UART_COUNT >= 6
-void __ISR(_UART6_TX_VECTOR, UART_INTERRUPT_IPR) U6TXInterrupt(void)
+void INT_ISR(_UART6_TX_VECTOR, UART6_INT_TX_PRIORITY, INT_MODE) U6TXInterrupt(void)
 {
 #    if defined(ARCHI_pic32mk)
     _U6TXIF = 0;  // 32MK Work around (errata 41)
@@ -995,7 +1038,7 @@ void __ISR(_UART6_TX_VECTOR, UART_INTERRUPT_IPR) U6TXInterrupt(void)
     _U6TXIF = 0;
 }
 
-void __ISR(_UART6_RX_VECTOR, UART_INTERRUPT_IPR) U6RXInterrupt(void)
+void INT_ISR(_UART6_RX_VECTOR, UART6_INT_RX_PRIORITY, INT_MODE) U6RXInterrupt(void)
 {
     char rec[4];
     while (U6STAbits.URXDA == 1)
