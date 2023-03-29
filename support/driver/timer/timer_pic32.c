@@ -16,6 +16,7 @@
 #include "timer.h"
 
 #include <archi.h>
+#include <driver/int.h>
 #include <driver/sysclock.h>
 
 #if !defined(TIMER_COUNT) || TIMER_COUNT == 0
@@ -52,11 +53,38 @@ struct timer_dev
 #    include "udevkit_config.h"
 #endif
 
-#ifndef TIMER_INTERRUPT_IPR
-#    define TIMER_INTERRUPT_IPR TIPR
+#ifndef INT_MODE
+#    define INT_MODE INT_DEFAULT_MODE
 #endif
 #ifndef TIMER_INTERRUPT_PRIORITY
 #    define TIMER_INTERRUPT_PRIORITY 4
+#endif
+#ifndef TIMER1_INT_PRIORITY
+#    define TIMER1_INT_PRIORITY TIMER_INTERRUPT_PRIORITY
+#endif
+#ifndef TIMER2_INT_PRIORITY
+#    define TIMER2_INT_PRIORITY TIMER_INTERRUPT_PRIORITY
+#endif
+#ifndef TIMER3_INT_PRIORITY
+#    define TIMER3_INT_PRIORITY TIMER_INTERRUPT_PRIORITY
+#endif
+#ifndef TIMER4_INT_PRIORITY
+#    define TIMER4_INT_PRIORITY TIMER_INTERRUPT_PRIORITY
+#endif
+#ifndef TIMER5_INT_PRIORITY
+#    define TIMER5_INT_PRIORITY TIMER_INTERRUPT_PRIORITY
+#endif
+#ifndef TIMER6_INT_PRIORITY
+#    define TIMER6_INT_PRIORITY TIMER_INTERRUPT_PRIORITY
+#endif
+#ifndef TIMER7_INT_PRIORITY
+#    define TIMER7_INT_PRIORITY TIMER_INTERRUPT_PRIORITY
+#endif
+#ifndef TIMER8_INT_PRIORITY
+#    define TIMER8_INT_PRIORITY TIMER_INTERRUPT_PRIORITY
+#endif
+#ifndef TIMER9_INT_PRIORITY
+#    define TIMER9_INT_PRIORITY TIMER_INTERRUPT_PRIORITY
 #endif
 
 static struct timer_dev _timers[] = {
@@ -234,14 +262,14 @@ int timer_enable(rt_dev_t device)
             T1CONbits.ON = 1;  // enable timer module
             _T1IF = 0;
             _T1IE = (_timers[0].handler != NULL) ? 1 : 0;
-            _T1IP = TIMER_INTERRUPT_PRIORITY;
+            _T1IP = TIMER1_INT_PRIORITY;
             break;
 #    if TIMER_COUNT >= 2
         case 1:
             T2CONbits.ON = 1;  // enable timer module
             _T2IF = 0;
             _T2IE = (_timers[1].handler != NULL) ? 1 : 0;
-            _T2IP = TIMER_INTERRUPT_PRIORITY;
+            _T2IP = TIMER2_INT_PRIORITY;
             break;
 #    endif
 #    if TIMER_COUNT >= 3
@@ -249,7 +277,7 @@ int timer_enable(rt_dev_t device)
             T3CONbits.ON = 1;  // enable timer module
             _T3IF = 0;
             _T3IE = (_timers[2].handler != NULL) ? 1 : 0;
-            _T3IP = TIMER_INTERRUPT_PRIORITY;
+            _T3IP = TIMER3_INT_PRIORITY;
             break;
 #    endif
 #    if TIMER_COUNT >= 4
@@ -257,7 +285,7 @@ int timer_enable(rt_dev_t device)
             T4CONbits.ON = 1;  // enable timer module
             _T4IF = 0;
             _T4IE = (_timers[3].handler != NULL) ? 1 : 0;
-            _T4IP = TIMER_INTERRUPT_PRIORITY;
+            _T4IP = TIMER4_INT_PRIORITY;
             break;
 #    endif
 #    if TIMER_COUNT >= 5
@@ -265,7 +293,7 @@ int timer_enable(rt_dev_t device)
             T5CONbits.ON = 1;  // enable timer module
             _T5IF = 0;
             _T5IE = (_timers[4].handler != NULL) ? 1 : 0;
-            _T5IP = TIMER_INTERRUPT_PRIORITY;
+            _T5IP = TIMER5_INT_PRIORITY;
             break;
 #    endif
 #    if TIMER_COUNT >= 6
@@ -273,7 +301,7 @@ int timer_enable(rt_dev_t device)
             T6CONbits.ON = 1;  // enable timer module
             _T6IF = 0;
             _T6IE = (_timers[5].handler != NULL) ? 1 : 0;
-            _T6IP = TIMER_INTERRUPT_PRIORITY;
+            _T6IP = TIMER6_INT_PRIORITY;
             break;
 #    endif
 #    if TIMER_COUNT >= 7
@@ -281,7 +309,7 @@ int timer_enable(rt_dev_t device)
             T7CONbits.ON = 1;  // enable timer module
             _T7IF = 0;
             _T7IE = (_timers[6].handler != NULL) ? 1 : 0;
-            _T7IP = TIMER_INTERRUPT_PRIORITY;
+            _T7IP = TIMER7_INT_PRIORITY;
             break;
 #    endif
 #    if TIMER_COUNT >= 8
@@ -289,7 +317,7 @@ int timer_enable(rt_dev_t device)
             T8CONbits.ON = 1;  // enable timer module
             _T8IF = 0;
             _T8IE = (_timers[7].handler != NULL) ? 1 : 0;
-            _T8IP = TIMER_INTERRUPT_PRIORITY;
+            _T8IP = TIMER8_INT_PRIORITY;
             break;
 #    endif
 #    if TIMER_COUNT >= 9
@@ -297,7 +325,7 @@ int timer_enable(rt_dev_t device)
             T9CONbits.ON = 1;  // enable timer module
             _T9IF = 0;
             _T9IE = (_timers[8].handler != NULL) ? 1 : 0;
-            _T9IP = TIMER_INTERRUPT_PRIORITY;
+            _T9IP = TIMER9_INT_PRIORITY;
             break;
 #    endif
     }
@@ -788,7 +816,7 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 }
 
 #if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
-void __ISR(_TIMER_1_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T1Interrupt(void)
+void INT_ISR(_TIMER_1_VECTOR, TIMER1_INT_PRIORITY, INT_MODE) __attribute__((weak)) T1Interrupt(void)
 {
     if (_timers[0].handler != NULL)
     {
@@ -800,7 +828,7 @@ void __ISR(_TIMER_1_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T1Interru
 #endif
 
 #if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
-void __ISR(_TIMER_2_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T2Interrupt(void)
+void INT_ISR(_TIMER_2_VECTOR, TIMER2_INT_PRIORITY, INT_MODE) __attribute__((weak)) T2Interrupt(void)
 {
     if (_timers[1].handler != NULL)
     {
@@ -812,7 +840,7 @@ void __ISR(_TIMER_2_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T2Interru
 #endif
 
 #if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
-void __ISR(_TIMER_3_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T3Interrupt(void)
+void INT_ISR(_TIMER_3_VECTOR, TIMER3_INT_PRIORITY, INT_MODE) __attribute__((weak)) T3Interrupt(void)
 {
     if (_timers[2].handler != NULL)
     {
@@ -824,7 +852,7 @@ void __ISR(_TIMER_3_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T3Interru
 #endif
 
 #if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
-void __ISR(_TIMER_4_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T4Interrupt(void)
+void INT_ISR(_TIMER_4_VECTOR, TIMER4_INT_PRIORITY, INT_MODE) __attribute__((weak)) T4Interrupt(void)
 {
     if (_timers[3].handler != NULL)
     {
@@ -836,7 +864,7 @@ void __ISR(_TIMER_4_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T4Interru
 #endif
 
 #if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
-void __ISR(_TIMER_5_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T5Interrupt(void)
+void INT_ISR(_TIMER_5_VECTOR, TIMER5_INT_PRIORITY, INT_MODE) __attribute__((weak)) T5Interrupt(void)
 {
     if (_timers[4].handler != NULL)
     {
@@ -848,7 +876,7 @@ void __ISR(_TIMER_5_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T5Interru
 #endif
 
 #if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
-void __ISR(_TIMER_6_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T6Interrupt(void)
+void INT_ISR(_TIMER_6_VECTOR, TIMER6_INT_PRIORITY, INT_MODE) __attribute__((weak)) T6Interrupt(void)
 {
     if (_timers[5].handler != NULL)
     {
@@ -860,7 +888,7 @@ void __ISR(_TIMER_6_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T6Interru
 #endif
 
 #if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
-void __ISR(_TIMER_7_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T7Interrupt(void)
+void INT_ISR(_TIMER_7_VECTOR, TIMER7_INT_PRIORITY, INT_MODE) __attribute__((weak)) T7Interrupt(void)
 {
     if (_timers[6].handler != NULL)
     {
@@ -872,7 +900,7 @@ void __ISR(_TIMER_7_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T7Interru
 #endif
 
 #if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
-void __ISR(_TIMER_8_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T8Interrupt(void)
+void INT_ISR(_TIMER_8_VECTOR, TIMER8_INT_PRIORITY, INT_MODE) __attribute__((weak)) T8Interrupt(void)
 {
     if (_timers[7].handler != NULL)
     {
@@ -884,7 +912,7 @@ void __ISR(_TIMER_8_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T8Interru
 #endif
 
 #if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
-void __ISR(_TIMER_9_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T9Interrupt(void)
+void INT_ISR(_TIMER_9_VECTOR, TIMER9_INT_PRIORITY, INT_MODE) __attribute__((weak)) T9Interrupt(void)
 {
     if (_timers[8].handler != NULL)
     {
