@@ -19,7 +19,7 @@
 #include <driver/sysclock.h>
 
 #if !defined(TIMER_COUNT) || TIMER_COUNT == 0
-#    warning "No uart on the current device or unknow device"
+#    warning "No timer on the current device or unknow device"
 #endif
 
 enum
@@ -584,7 +584,6 @@ uint32_t timer_period(rt_dev_t device)
 int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 {
 #if TIMER_COUNT >= 1
-    float prvalue;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -593,7 +592,8 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
 
     _timers[timer].periodUs = periodMs * 1000;
 
-    prvalue = (float)sysclock_periphFreq(SYSCLOCK_CLOCK_TIMER) / 1000.0 * (float)periodMs;
+    float clockMs = sysclock_periphFreq(SYSCLOCK_CLOCK_TIMER);
+    float prvalue = clockMs / 1000.0 * (float)periodMs;
 
     return timer_setPeriod(device, (uint32_t)prvalue);
 #else
@@ -629,7 +629,6 @@ uint32_t timer_periodMs(rt_dev_t device)
 int timer_setPeriodUs(rt_dev_t device, uint32_t periodUs)
 {
 #if TIMER_COUNT >= 1
-    float prvalue;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
@@ -638,7 +637,8 @@ int timer_setPeriodUs(rt_dev_t device, uint32_t periodUs)
 
     _timers[timer].periodUs = periodUs;
 
-    prvalue = (float)sysclock_periphFreq(SYSCLOCK_CLOCK_TIMER) / 1000000.0 * (float)periodUs;
+    float clockMs = sysclock_periphFreq(SYSCLOCK_CLOCK_TIMER);
+    float prvalue = clockMs / 1000000.0 * (float)periodUs;
 
     return timer_setPeriod(device, (uint32_t)prvalue);
 #else
@@ -790,7 +790,7 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 #if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
 void __ISR(_TIMER_1_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T1Interrupt(void)
 {
-    if (_timers[0].handler)
+    if (_timers[0].handler != NULL)
     {
         (*_timers[0].handler)();
     }
@@ -802,7 +802,7 @@ void __ISR(_TIMER_1_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T1Interru
 #if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
 void __ISR(_TIMER_2_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T2Interrupt(void)
 {
-    if (_timers[1].handler)
+    if (_timers[1].handler != NULL)
     {
         (*_timers[1].handler)();
     }
@@ -814,7 +814,7 @@ void __ISR(_TIMER_2_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T2Interru
 #if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
 void __ISR(_TIMER_3_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T3Interrupt(void)
 {
-    if (_timers[2].handler)
+    if (_timers[2].handler != NULL)
     {
         (*_timers[2].handler)();
     }
@@ -826,7 +826,7 @@ void __ISR(_TIMER_3_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T3Interru
 #if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
 void __ISR(_TIMER_4_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T4Interrupt(void)
 {
-    if (_timers[3].handler)
+    if (_timers[3].handler != NULL)
     {
         (*_timers[3].handler)();
     }
@@ -838,7 +838,7 @@ void __ISR(_TIMER_4_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T4Interru
 #if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
 void __ISR(_TIMER_5_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T5Interrupt(void)
 {
-    if (_timers[4].handler)
+    if (_timers[4].handler != NULL)
     {
         (*_timers[4].handler)();
     }
@@ -850,7 +850,7 @@ void __ISR(_TIMER_5_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T5Interru
 #if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
 void __ISR(_TIMER_6_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T6Interrupt(void)
 {
-    if (_timers[5].handler)
+    if (_timers[5].handler != NULL)
     {
         (*_timers[5].handler)();
     }
@@ -862,7 +862,7 @@ void __ISR(_TIMER_6_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T6Interru
 #if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
 void __ISR(_TIMER_7_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T7Interrupt(void)
 {
-    if (_timers[6].handler)
+    if (_timers[6].handler != NULL)
     {
         (*_timers[6].handler)();
     }
@@ -874,7 +874,7 @@ void __ISR(_TIMER_7_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T7Interru
 #if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
 void __ISR(_TIMER_8_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T8Interrupt(void)
 {
-    if (_timers[7].handler)
+    if (_timers[7].handler != NULL)
     {
         (*_timers[7].handler)();
     }
@@ -886,7 +886,7 @@ void __ISR(_TIMER_8_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T8Interru
 #if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
 void __ISR(_TIMER_9_VECTOR, TIMER_INTERRUPT_IPR) __attribute__((weak)) T9Interrupt(void)
 {
-    if (_timers[8].handler)
+    if (_timers[8].handler != NULL)
     {
         (*_timers[8].handler)();
     }
