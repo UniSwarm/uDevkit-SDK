@@ -17,9 +17,38 @@
 
 #include <archi.h>
 
-#if defined(QEI_COUNT) && QEI_COUNT > 0
-static uint8_t _qeis[QEI_COUNT] = {0};
+#if !defined(QEI_COUNT) || QEI_COUNT == 0
+#    warning "No qei on the current device or unknow device"
 #endif
+
+enum
+{
+    QEI_FLAG_UNUSED = 0x00
+};
+typedef struct
+{
+    union
+    {
+        struct
+        {
+            unsigned used : 1;
+            unsigned enabled : 1;
+            unsigned : 6;
+        };
+        uint8_t val;
+    };
+} qei_status;
+
+struct qei_dev
+{
+    qei_status flags;
+};
+
+static struct qei_dev _qeis[] = {
+#if QEI_COUNT >= 1
+    {.flags = {{.val = QEI_FLAG_UNUSED}}},
+#endif
+};
 
 /**
  * @brief Gives a free QEI device number and open it
@@ -28,23 +57,20 @@ static uint8_t _qeis[QEI_COUNT] = {0};
 rt_dev_t qei_getFreeDevice(void)
 {
 #if QEI_COUNT >= 1
-    uint8_t i;
-    rt_dev_t device;
-
-    for (i = 0; i < QEI_COUNT; i++)
+    uint8_t qei_id;
+    for (qei_id = 0; qei_id < QEI_COUNT; qei_id++)
     {
-        if (_qeis[i] == 0)
+        if (_qeis[qei_id].flags.used == 0)
         {
             break;
         }
     }
-
-    if (i == QEI_COUNT)
+    if (qei_id == QEI_COUNT)
     {
         return NULLDEV;
     }
-    device = MKDEV(DEV_CLASS_QEI, i);
 
+    rt_dev_t device = MKDEV(DEV_CLASS_QEI, qei_id);
     qei_open(device);
 
     return device;
@@ -66,12 +92,12 @@ int qei_open(rt_dev_t device)
     {
         return -1;
     }
-    if (_qeis[qei] == 1)
+    if (_qeis[qei].flags.used == 1)
     {
         return -1;
     }
 
-    _qeis[qei] = 1;
+    _qeis[qei].flags.used = 1;
 
     return 0;
 #else

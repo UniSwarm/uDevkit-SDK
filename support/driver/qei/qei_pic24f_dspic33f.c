@@ -17,9 +17,38 @@
 
 #include <archi.h>
 
-#if defined(QEI_COUNT) && QEI_COUNT > 0
-static uint16_t _qeis[QEI_COUNT] = {0};
+#if !defined(QEI_COUNT) || QEI_COUNT == 0
+#    warning "No qei on the current device or unknow device"
 #endif
+
+enum
+{
+    QEI_FLAG_UNUSED = 0x00
+};
+typedef struct
+{
+    union
+    {
+        struct
+        {
+            unsigned used : 1;
+            unsigned enabled : 1;
+            unsigned : 6;
+        };
+        uint8_t val;
+    };
+} qei_status;
+
+struct qei_dev
+{
+    qei_status flags;
+};
+
+static struct qei_dev _qeis[] = {
+#if QEI_COUNT >= 1
+    {.flags = {{.val = QEI_FLAG_UNUSED}}},
+#endif
+};
 
 /**
  * @brief Gives a free QEI device number and open it
@@ -28,23 +57,20 @@ static uint16_t _qeis[QEI_COUNT] = {0};
 rt_dev_t qei_getFreeDevice(void)
 {
 #if QEI_COUNT >= 1
-    uint8_t i;
-    rt_dev_t device;
-
-    for (i = 0; i < QEI_COUNT; i++)
+    uint8_t qei_id;
+    for (qei_id = 0; qei_id < QEI_COUNT; qei_id++)
     {
-        if (_qeis[i] == 0)
+        if (_qeis[qei_id].flags.used == 0)
         {
             break;
         }
     }
-
-    if (i == QEI_COUNT)
+    if (qei_id == QEI_COUNT)
     {
         return NULLDEV;
     }
-    device = MKDEV(DEV_CLASS_QEI, i);
 
+    rt_dev_t device = MKDEV(DEV_CLASS_QEI, qei_id);
     qei_open(device);
 
     return device;
@@ -66,12 +92,12 @@ int qei_open(rt_dev_t device)
     {
         return -1;
     }
-    if (_qeis[qei] == 1)
+    if (_qeis[qei].flags.used == 1)
     {
         return -1;
     }
 
-    _qeis[qei] = 0b0000011100000000;
+    _qeis[qei].flags.used = 1;
 
     return 0;
 #else
@@ -84,7 +110,7 @@ int qei_open(rt_dev_t device)
  * @param device QEI device number
  * @return 0 if ok, -1 in case of error
  */
-int qei_releaseDevice(rt_dev_t device)
+int qei_close(rt_dev_t device)
 {
 #if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
@@ -95,7 +121,7 @@ int qei_releaseDevice(rt_dev_t device)
 
     qei_disable(device);
 
-    _qeis[qei] = 0;
+    _qeis[qei].flags.used = 0;
     return 0;
 #else
     return -1;
@@ -122,13 +148,13 @@ int qei_enable(rt_dev_t device)
 #if QEI_COUNT >= 1
     if (qei == 0)
     {
-        QEI1CON = _qeis[1];
+        QEI1CON = 0b0000011100000000;
     }
 #endif
 #if QEI_COUNT >= 2
     if (qei == 1)
     {
-        QEI2CON = _qeis[2];
+        QEI2CON = 0b0000011100000000;
     }
 #endif
 
