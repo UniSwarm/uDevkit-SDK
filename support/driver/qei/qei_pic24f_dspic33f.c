@@ -129,6 +129,22 @@ int qei_close(rt_dev_t device)
 }
 
 /**
+ * @brief QEI sdk state
+ * @param device qei device number
+ * @return true if qei was openned by qei_open function
+ */
+bool qei_isOpened(rt_dev_t device)
+{
+    uint8_t qei = MINOR(device);
+    if (qei >= QEI_COUNT)
+    {
+        return false;
+    }
+
+    return (_qeis[qei].flags.used == 1);
+}
+
+/**
  * @brief Enable the specified QEI device
  * @param device QEI device number
  * @return 0 if ok, -1 in case of error
@@ -196,6 +212,22 @@ int qei_disable(rt_dev_t device)
 #if QEI_COUNT >= 1
     return 0;
 #endif
+}
+
+/**
+ * @brief QEI sdk enabled state
+ * @param device qei device number
+ * @return true if qei was enabled by qei_enable function
+ */
+bool qei_isEnabled(rt_dev_t device)
+{
+    uint8_t qei = MINOR(device);
+    if (qei >= QEI_COUNT)
+    {
+        return false;
+    }
+
+    return (_qeis[qei].flags.enabled == 1);
 }
 
 /**

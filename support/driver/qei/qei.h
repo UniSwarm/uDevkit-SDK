@@ -23,10 +23,12 @@ extern "C" {
 rt_dev_t qei_getFreeDevice(void);
 int qei_open(rt_dev_t device);
 int qei_close(rt_dev_t device);
+bool qei_isOpened(rt_dev_t device);
 
 // ==== device enable/disable =====
 int qei_enable(rt_dev_t device);
 int qei_disable(rt_dev_t device);
+bool qei_isEnabled(rt_dev_t device);
 
 // ======== device settings =======
 #define QEI_AB_INV 0x02
