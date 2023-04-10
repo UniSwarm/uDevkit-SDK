@@ -262,15 +262,15 @@ int spi_enable(rt_dev_t device)
         case 0:
             _SPI1TXIF = 0;
             _SPI1TXIP = SPI1_INT_TX_PRIORITY;
-            _SPI1TXIE = (_spis[0].txHandler != NULL) ? 1 : 0;
+            _SPI1TXIE = 0;
 
             _SPI1RXIF = 0;
             _SPI1RXIP = SPI1_INT_RX_PRIORITY;
-            _SPI1RXIE = (_spis[0].rxHandler != NULL) ? 1 : 0;
+            _SPI1RXIE = 0;
 
             _SPI1EIF = 0;
             _SPI1EIP = SPI1_INT_FAULT_PRIORITY;
-            _SPI1EIE = (_spis[0].errorHandler != NULL) ? 1 : 0;
+            _SPI1EIE = 0;
 
             SPI1CONbits.ON = 1;  // enable spi module
             break;
@@ -278,15 +278,15 @@ int spi_enable(rt_dev_t device)
         case 1:
             _SPI2TXIF = 0;
             _SPI2TXIP = SPI2_INT_TX_PRIORITY;
-            _SPI2TXIE = (_spis[1].txHandler != NULL) ? 1 : 0;
+            _SPI2TXIE = 0;
 
             _SPI2RXIF = 0;
             _SPI2RXIP = SPI2_INT_RX_PRIORITY;
-            _SPI2RXIE = (_spis[1].rxHandler != NULL) ? 1 : 0;
+            _SPI2RXIE = 0;
 
             _SPI2EIF = 0;
             _SPI2EIP = SPI2_INT_FAULT_PRIORITY;
-            _SPI2EIE = (_spis[1].errorHandler != NULL) ? 1 : 0;
+            _SPI2EIE = 0;
 
             SPI2CONbits.ON = 1;  // enable spi module
             break;
@@ -295,15 +295,15 @@ int spi_enable(rt_dev_t device)
         case 2:
             _SPI3TXIF = 0;
             _SPI3TXIP = SPI3_INT_TX_PRIORITY;
-            _SPI3TXIE = (_spis[2].txHandler != NULL) ? 1 : 0;
+            _SPI3TXIE = 0;
 
             _SPI3RXIF = 0;
             _SPI3RXIP = SPI3_INT_RX_PRIORITY;
-            _SPI3RXIE = (_spis[2].rxHandler != NULL) ? 1 : 0;
+            _SPI3RXIE = 0;
 
             _SPI3EIF = 0;
             _SPI3EIP = SPI3_INT_FAULT_PRIORITY;
-            _SPI3EIE = (_spis[2].errorHandler != NULL) ? 1 : 0;
+            _SPI3EIE = 0;
 
             SPI3CONbits.ON = 1;  // enable spi module
             break;
@@ -312,15 +312,15 @@ int spi_enable(rt_dev_t device)
         case 3:
             _SPI4TXIF = 0;
             _SPI4TXIP = SPI4_INT_TX_PRIORITY;
-            _SPI4TXIE = (_spis[3].txHandler != NULL) ? 1 : 0;
+            _SPI4TXIE = 0;
 
             _SPI4RXIF = 0;
             _SPI4RXIP = SPI4_INT_RX_PRIORITY;
-            _SPI4RXIE = (_spis[3].rxHandler != NULL) ? 1 : 0;
+            _SPI4RXIE = 0;
 
             _SPI4EIF = 0;
             _SPI4EIP = SPI4_INT_FAULT_PRIORITY;
-            _SPI4EIE = (_spis[3].errorHandler != NULL) ? 1 : 0;
+            _SPI4EIE = 0;
 
             SPI4CONbits.ON = 1;  // enable spi module
             break;
@@ -329,15 +329,15 @@ int spi_enable(rt_dev_t device)
         case 4:
             _SPI5TXIF = 0;
             _SPI5TXIP = SPI5_INT_TX_PRIORITY;
-            _SPI5TXIE = (_spis[4].txHandler != NULL) ? 1 : 0;
+            _SPI5TXIE = 0;
 
             _SPI5RXIF = 0;
             _SPI5RXIP = SPI5_INT_RX_PRIORITY;
-            _SPI5RXIE = (_spis[4].rxHandler != NULL) ? 1 : 0;
+            _SPI5RXIE = 0;
 
             _SPI5EIF = 0;
             _SPI5EIP = SPI5_INT_FAULT_PRIORITY;
-            _SPI5EIE = (_spis[4].errorHandler != NULL) ? 1 : 0;
+            _SPI5EIE = 0;
 
             SPI5CONbits.ON = 1;  // enable spi module
             break;
@@ -346,15 +346,15 @@ int spi_enable(rt_dev_t device)
         case 5:
             _SPI6TXIF = 0;
             _SPI6TXIP = SPI6_INT_TX_PRIORITY;
-            _SPI6TXIE = (_spis[5].txHandler != NULL) ? 1 : 0;
+            _SPI6TXIE = 0;
 
             _SPI6RXIF = 0;
             _SPI6RXIP = SPI6_INT_RX_PRIORITY;
-            _SPI6RXIE = (_spis[5].rxHandler != NULL) ? 1 : 0;
+            _SPI6RXIE = 0;
 
             _SPI6EIF = 0;
             _SPI6EIP = SPI6_INT_FAULT_PRIORITY;
-            _SPI6EIE = (_spis[5].errorHandler != NULL) ? 1 : 0;
+            _SPI6EIE = 0;
 
             SPI6CONbits.ON = 1;  // enable spi module
             break;
