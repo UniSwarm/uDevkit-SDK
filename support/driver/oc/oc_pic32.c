@@ -23,7 +23,10 @@
 #    warning "No output compare (OC) on the current device or unknow device"
 #endif
 
-#define OC_FLAG_UNUSED 0x00
+enum
+{
+    OC_FLAG_UNUSED = 0x00
+};
 typedef struct
 {
     union
@@ -98,13 +101,16 @@ static struct oc_dev _ocs[] = {
 #endif
 };
 
-#define OC_PIC32_DISABLE           0b000
-#define OC_PIC32_PWM               0b110
-#define OC_PIC32_SINGLE_LOW        0b010
-#define OC_PIC32_SINGLE_HIGH       0b001
-#define OC_PIC32_CONTINOUS_TOGGLE  0b011
-#define OC_PIC32_SINGLE_LOWHIGH    0b100
-#define OC_PIC32_CONTINOUS_LOWHIGH 0b101
+enum
+{
+    OC_PIC32_DISABLE = 0b000,
+    OC_PIC32_PWM = 0b110,
+    OC_PIC32_SINGLE_LOW = 0b010,
+    OC_PIC32_SINGLE_HIGH = 0b001,
+    OC_PIC32_CONTINOUS_TOGGLE = 0b011,
+    OC_PIC32_SINGLE_LOWHIGH = 0b100,
+    OC_PIC32_CONTINOUS_LOWHIGH = 0b101
+};
 
 static int _oc_setInternalMode(rt_dev_t device, uint8_t mode);
 
@@ -372,11 +378,8 @@ int oc_setMode(rt_dev_t device, uint8_t mode)
     switch (mode)
     {
         case OC_MODE_PWM:
+        case OC_MODE_PWM_CENTER:  // no PWM center support
             imode = OC_PIC32_PWM;
-            break;
-
-        case OC_MODE_PWM_CENTER:
-            imode = OC_PIC32_PWM;  // no PWM center support
             break;
 
         case OC_MODE_SINGLE_LOW:
@@ -715,86 +718,82 @@ rt_dev_t oc_getTimer(rt_dev_t device)
         {
             return timer(2);  // timer 2
         }
-        else
-        {
-            return timer(3);  // timer 3
-        }
+
+        return timer(3);  // timer 3
     }
 #    ifdef OC_HAVE_ALTERNATIVE_TIMER_SELECTION
-    else
+
+    switch (oc)
     {
-        switch (oc)
-        {
-            case 0:
-            case 1:
-            case 2:
-                if (_ocs[oc].timer == 0)
-                {
-                    return timer(4);  // timer 4
-                }
-                else
-                {
-                    return timer(5);  // timer 5
-                }
-                break;
+        case 0:
+        case 1:
+        case 2:
+            if (_ocs[oc].timer == 0)
+            {
+                return timer(4);  // timer 4
+            }
+            else
+            {
+                return timer(5);  // timer 5
+            }
+            break;
 #        if OC_COUNT >= 4
-            case 3:
-            case 4:
-            case 5:
-                if (_ocs[oc].timer == 0)
-                {
-                    return timer(2);  // timer 2
-                }
-                else
-                {
-                    return timer(3);  // timer 3
-                }
-                break;
+        case 3:
+        case 4:
+        case 5:
+            if (_ocs[oc].timer == 0)
+            {
+                return timer(2);  // timer 2
+            }
+            else
+            {
+                return timer(3);  // timer 3
+            }
+            break;
 #        endif
 #        if OC_COUNT >= 7
-            case 6:
-            case 7:
-            case 8:
-                if (_ocs[oc].timer == 0)
-                {
-                    return timer(6);  // timer 6
-                }
-                else
-                {
-                    return timer(7);  // timer 7
-                }
-                break;
+        case 6:
+        case 7:
+        case 8:
+            if (_ocs[oc].timer == 0)
+            {
+                return timer(6);  // timer 6
+            }
+            else
+            {
+                return timer(7);  // timer 7
+            }
+            break;
 #        endif
 #        if OC_COUNT >= 10
-            case 9:
-            case 10:
-            case 11:
-                if (_ocs[oc].timer == 0)
-                {
-                    return timer(8);  // timer 8
-                }
-                else
-                {
-                    return timer(9);  // timer 9
-                }
-                break;
+        case 9:
+        case 10:
+        case 11:
+            if (_ocs[oc].timer == 0)
+            {
+                return timer(8);  // timer 8
+            }
+            else
+            {
+                return timer(9);  // timer 9
+            }
+            break;
 #        endif
 #        if OC_COUNT >= 13
-            case 12:
-            case 13:
-            case 14:
-            case 15:
-                if (_ocs[oc].timer == 0)
-                {
-                    return timer(2);  // timer 2
-                }
-                else
-                {
-                    return timer(3);  // timer 3
-                }
-                break;
+        case 12:
+        case 13:
+        case 14:
+        case 15:
+            if (_ocs[oc].timer == 0)
+            {
+                return timer(2);  // timer 2
+            }
+            else
+            {
+                return timer(3);  // timer 3
+            }
+            break;
 #        endif
-        }
     }
 #    endif
 #endif
