@@ -1097,3 +1097,20 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     return -1;
 #endif
 }
+
+/**
+ * @brief Reconfigure clocks for all activated CANs devices. Call this function on clock change.
+ */
+void can_reconfig(void)
+{
+    for (uint8_t can_id = 0; can_id < CAN_COUNT; can_id++)
+    {
+        if (_cans[can_id].flags.used == 1 && _cans[can_id].bitRate != 0)
+        {
+            rt_dev_t device = MKDEV(DEV_CLASS_UART, can_id);
+            CAN_MODE oldMode = can_mode(device);
+            can_setBitTiming(device, _cans[can_id].bitRate, _cans[can_id].propagSeg, _cans[can_id].s1Seg, _cans[can_id].s2Seg);
+            can_setMode(device, oldMode);
+        }
+    }
+}

@@ -90,6 +90,9 @@ int can_filterSet(rt_dev_t device, uint8_t nFilter, uint8_t fifo, uint32_t idFil
 int can_filterEnable(rt_dev_t device, uint8_t nFilter);
 int can_filterDisable(rt_dev_t device, uint8_t nFilter);
 
+// ======= dynamic clock =======
+void can_reconfig(void);
+
 #ifdef SIMULATOR
 #    include "can_sim.h"
 #endif
