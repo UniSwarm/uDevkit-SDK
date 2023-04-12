@@ -258,13 +258,15 @@ int timer_enable(rt_dev_t device)
 
     switch (timer)
     {
+#    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
         case 0:
             T1CONbits.ON = 1;  // enable timer module
             _T1IF = 0;
             _T1IE = (_timers[0].handler != NULL) ? 1 : 0;
             _T1IP = TIMER1_INT_PRIORITY;
             break;
-#    if TIMER_COUNT >= 2
+#    endif
+#    if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
         case 1:
             T2CONbits.ON = 1;  // enable timer module
             _T2IF = 0;
@@ -272,7 +274,7 @@ int timer_enable(rt_dev_t device)
             _T2IP = TIMER2_INT_PRIORITY;
             break;
 #    endif
-#    if TIMER_COUNT >= 3
+#    if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
         case 2:
             T3CONbits.ON = 1;  // enable timer module
             _T3IF = 0;
@@ -280,7 +282,7 @@ int timer_enable(rt_dev_t device)
             _T3IP = TIMER3_INT_PRIORITY;
             break;
 #    endif
-#    if TIMER_COUNT >= 4
+#    if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
         case 3:
             T4CONbits.ON = 1;  // enable timer module
             _T4IF = 0;
@@ -288,7 +290,7 @@ int timer_enable(rt_dev_t device)
             _T4IP = TIMER4_INT_PRIORITY;
             break;
 #    endif
-#    if TIMER_COUNT >= 5
+#    if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
         case 4:
             T5CONbits.ON = 1;  // enable timer module
             _T5IF = 0;
@@ -296,7 +298,7 @@ int timer_enable(rt_dev_t device)
             _T5IP = TIMER5_INT_PRIORITY;
             break;
 #    endif
-#    if TIMER_COUNT >= 6
+#    if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
         case 5:
             T6CONbits.ON = 1;  // enable timer module
             _T6IF = 0;
@@ -304,7 +306,7 @@ int timer_enable(rt_dev_t device)
             _T6IP = TIMER6_INT_PRIORITY;
             break;
 #    endif
-#    if TIMER_COUNT >= 7
+#    if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
         case 6:
             T7CONbits.ON = 1;  // enable timer module
             _T7IF = 0;
@@ -312,7 +314,7 @@ int timer_enable(rt_dev_t device)
             _T7IP = TIMER7_INT_PRIORITY;
             break;
 #    endif
-#    if TIMER_COUNT >= 8
+#    if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
         case 7:
             T8CONbits.ON = 1;  // enable timer module
             _T8IF = 0;
@@ -320,7 +322,7 @@ int timer_enable(rt_dev_t device)
             _T8IP = TIMER8_INT_PRIORITY;
             break;
 #    endif
-#    if TIMER_COUNT >= 9
+#    if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
         case 8:
             T9CONbits.ON = 1;  // enable timer module
             _T9IF = 0;
@@ -354,53 +356,55 @@ int timer_disable(rt_dev_t device)
 
     switch (timer)
     {
+#    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
         case 0:
             T1CONbits.ON = 0;  // disable timer module
             _T1IE = 0;
             break;
-#    if TIMER_COUNT >= 2
+#    endif
+#    if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
         case 1:
             T2CONbits.ON = 0;  // disable timer module
             _T2IE = 0;
             break;
 #    endif
-#    if TIMER_COUNT >= 3
+#    if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
         case 2:
             T3CONbits.ON = 0;  // disable timer module
             _T3IE = 0;
             break;
 #    endif
-#    if TIMER_COUNT >= 4
+#    if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
         case 3:
             T4CONbits.ON = 0;  // disable timer module
             _T4IE = 0;
             break;
 #    endif
-#    if TIMER_COUNT >= 5
+#    if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
         case 4:
             T5CONbits.ON = 0;  // disable timer module
             _T5IE = 0;
             break;
 #    endif
-#    if TIMER_COUNT >= 6
+#    if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
         case 5:
             T6CONbits.ON = 0;  // disable timer module
             _T6IE = 0;
             break;
 #    endif
-#    if TIMER_COUNT >= 7
+#    if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
         case 6:
             T7CONbits.ON = 0;  // disable timer module
             _T7IE = 0;
             break;
 #    endif
-#    if TIMER_COUNT >= 8
+#    if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
         case 7:
             T8CONbits.ON = 0;  // disable timer module
             _T8IE = 0;
             break;
 #    endif
-#    if TIMER_COUNT >= 9
+#    if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
         case 8:
             T9CONbits.ON = 0;  // disable timer module
             _T9IE = 0;
@@ -486,53 +490,55 @@ int timer_setPeriod(rt_dev_t device, uint32_t period)
 
     switch (timer)
     {
+#    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
         case 0:
             T1CONbits.TCKPS = divisor;  // set divide number
             PR1 = period;               // pr value, comparator value
             break;
-#    if TIMER_COUNT >= 2
+#    endif
+#    if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
         case 1:
             T2CONbits.TCKPS = divisor;  // set divide number
             PR2 = period;               // pr value, comparator value
             break;
 #    endif
-#    if TIMER_COUNT >= 3
+#    if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
         case 2:
             T3CONbits.TCKPS = divisor;  // set divide number
             PR3 = period;               // pr value, comparator value
             break;
 #    endif
-#    if TIMER_COUNT >= 4
+#    if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
         case 3:
             T4CONbits.TCKPS = divisor;  // set divide number
             PR4 = period;               // pr value, comparator value
             break;
 #    endif
-#    if TIMER_COUNT >= 5
+#    if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
         case 4:
             T5CONbits.TCKPS = divisor;  // set divide number
             PR5 = period;               // pr value, comparator value
             break;
 #    endif
-#    if TIMER_COUNT >= 6
+#    if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
         case 5:
             T6CONbits.TCKPS = divisor;  // set divide number
             PR6 = period;               // pr value, comparator value
             break;
 #    endif
-#    if TIMER_COUNT >= 7
+#    if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
         case 6:
             T7CONbits.TCKPS = divisor;  // set divide number
             PR7 = period;               // pr value, comparator value
             break;
 #    endif
-#    if TIMER_COUNT >= 8
+#    if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
         case 7:
             T8CONbits.TCKPS = divisor;  // set divide number
             PR8 = period;               // pr value, comparator value
             break;
 #    endif
-#    if TIMER_COUNT >= 9
+#    if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
         case 8:
             T9CONbits.TCKPS = divisor;  // set divide number
             PR9 = period;               // pr value, comparator value
@@ -562,37 +568,39 @@ uint32_t timer_period(rt_dev_t device)
 
     switch (timer)
     {
+#    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
         case 0:
             return PR1;
-#    if TIMER_COUNT >= 2
+#    endif
+#    if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
         case 1:
             return PR2;
 #    endif
-#    if TIMER_COUNT >= 3
+#    if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
         case 2:
             return PR3;
 #    endif
-#    if TIMER_COUNT >= 4
+#    if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
         case 3:
             return PR4;
 #    endif
-#    if TIMER_COUNT >= 5
+#    if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
         case 4:
             return PR5;
 #    endif
-#    if TIMER_COUNT >= 6
+#    if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
         case 5:
             return PR6;
 #    endif
-#    if TIMER_COUNT >= 7
+#    if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
         case 6:
             return PR7;
 #    endif
-#    if TIMER_COUNT >= 8
+#    if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
         case 7:
             return PR8;
 #    endif
-#    if TIMER_COUNT >= 9
+#    if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
         case 8:
             return PR9;
 #    endif
@@ -706,37 +714,39 @@ uint16_t timer_value(rt_dev_t device)
 
     switch (timer)
     {
+#    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
         case 0:
             return TMR1;
-#    if TIMER_COUNT >= 2
+#    endif
+#    if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
         case 1:
             return TMR2;
 #    endif
-#    if TIMER_COUNT >= 3
+#    if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
         case 2:
             return TMR3;
 #    endif
-#    if TIMER_COUNT >= 4
+#    if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
         case 3:
             return TMR4;
 #    endif
-#    if TIMER_COUNT >= 5
+#    if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
         case 4:
             return TMR5;
 #    endif
-#    if TIMER_COUNT >= 6
+#    if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
         case 5:
             return TMR6;
 #    endif
-#    if TIMER_COUNT >= 7
+#    if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
         case 6:
             return TMR7;
 #    endif
-#    if TIMER_COUNT >= 8
+#    if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
         case 7:
             return TMR8;
 #    endif
-#    if TIMER_COUNT >= 9
+#    if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
         case 8:
             return TMR9;
 #    endif
@@ -764,45 +774,47 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 
     switch (timer)
     {
+#    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
         case 0:
             TMR1 = value;
             break;
-#    if TIMER_COUNT >= 2
+#    endif
+#    if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
         case 1:
             TMR2 = value;
             break;
 #    endif
-#    if TIMER_COUNT >= 3
+#    if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
         case 2:
             TMR3 = value;
             break;
 #    endif
-#    if TIMER_COUNT >= 4
+#    if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
         case 3:
             TMR4 = value;
             break;
 #    endif
-#    if TIMER_COUNT >= 5
+#    if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
         case 4:
             TMR5 = value;
             break;
 #    endif
-#    if TIMER_COUNT >= 6
+#    if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
         case 5:
             TMR6 = value;
             break;
 #    endif
-#    if TIMER_COUNT >= 7
+#    if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
         case 6:
             TMR7 = value;
             break;
 #    endif
-#    if TIMER_COUNT >= 8
+#    if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
         case 7:
             TMR8 = value;
             break;
 #    endif
-#    if TIMER_COUNT >= 9
+#    if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
         case 8:
             TMR9 = value;
             break;
