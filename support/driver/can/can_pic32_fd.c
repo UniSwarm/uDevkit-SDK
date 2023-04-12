@@ -69,7 +69,7 @@ struct can_dev
 #    define CAN4_INT_PRIORITY CAN_INTERRUPT_PRIORITY
 #endif
 
-#if CAN_COUNT >= 1
+#if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
 #    ifndef CAN1_FIFO_SIZE
 #        define CAN1_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
@@ -77,7 +77,7 @@ static uint8_t __attribute__((coherent, aligned(16), noload)) _can1_fifo_buffer[
 void CAN1Interrupt(void);
 #endif
 
-#if CAN_COUNT >= 2
+#if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
 #    ifndef CAN2_FIFO_SIZE
 #        define CAN2_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
@@ -85,7 +85,7 @@ static uint8_t __attribute__((coherent, aligned(16), noload)) _can2_fifo_buffer[
 void CAN2Interrupt(void);
 #endif
 
-#if CAN_COUNT >= 3
+#if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
 #    ifndef CAN3_FIFO_SIZE
 #        define CAN3_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
@@ -93,7 +93,7 @@ static uint8_t __attribute__((coherent, aligned(16), noload)) _can3_fifo_buffer[
 void CAN3Interrupt(void);
 #endif
 
-#if CAN_COUNT >= 4
+#if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
 #    ifndef CAN4_FIFO_SIZE
 #        define CAN4_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
@@ -233,6 +233,7 @@ int can_enable(rt_dev_t device)
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             // assign memory
             CFD1FIFOBA = KVA_TO_PA(_can1_fifo_buffer);
@@ -262,8 +263,8 @@ int can_enable(rt_dev_t device)
             CFD1MASK0bits.MEID = 0x00000;  // Ignore all bits in comparison
             CFD1MASK0bits.MIDE = 0;        // Match all message types
             break;
-
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             // assign memory
             CFD2FIFOBA = KVA_TO_PA(_can2_fifo_buffer);
@@ -294,7 +295,7 @@ int can_enable(rt_dev_t device)
             CFD2MASK0bits.MIDE = 0;        // Match all message types
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             // assign memory
             CFD3FIFOBA = KVA_TO_PA(_can3_fifo_buffer);
@@ -325,7 +326,7 @@ int can_enable(rt_dev_t device)
             CFD3MASK0bits.MIDE = 0;        // Match all message types
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             // assign memory
             CFD4FIFOBA = KVA_TO_PA(_can4_fifo_buffer);
@@ -382,6 +383,7 @@ int can_disable(rt_dev_t device)
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             _CAN1IE = 0;  // disable can global interrupt
             CFD1CONbits.REQOP = 4;
@@ -395,7 +397,8 @@ int can_disable(rt_dev_t device)
                 ;
             }
             break;
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             _CAN2IE = 0;  // disable can global interrupt
             CFD2CONbits.REQOP = 4;
@@ -410,7 +413,7 @@ int can_disable(rt_dev_t device)
             }
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             _CAN3IE = 0;  // disable can global interrupt
             CFD3CONbits.REQOP = 4;
@@ -425,7 +428,7 @@ int can_disable(rt_dev_t device)
             }
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             _CAN4IE = 0;  // disable can global interrupt
             CFD4CONbits.REQOP = 4;
@@ -514,6 +517,7 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             CFD1CONbits.ON = 1;
             CFD1CONbits.REQOP = modeBits;
@@ -526,7 +530,8 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
                 return -2;  // TODO map error enum
             }
             break;
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             CFD2CONbits.ON = 1;
             CFD2CONbits.REQOP = modeBits;
@@ -540,7 +545,7 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
             }
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             CFD3CONbits.ON = 1;
             CFD3CONbits.REQOP = modeBits;
@@ -554,7 +559,7 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
             }
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             CFD4CONbits.ON = 1;
             CFD4CONbits.REQOP = modeBits;
@@ -656,6 +661,7 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             CFD1CONbits.ON = 1;
             CFD1CONbits.REQOP = 4;
@@ -677,8 +683,8 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             CFD1DBTCFGbits.TSEG2 = s2Seg - 1;     // Phase Buffer Segment 2 (1-16) SEG2PH >= SEG1PH
             CFD1DBTCFGbits.SJW = 0;               // Synchronization Jump Width (1-16)
             break;
-
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             CFD2CONbits.ON = 1;
             CFD2CONbits.REQOP = 4;
@@ -701,8 +707,7 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             CFD2DBTCFGbits.SJW = 0;               // Synchronization Jump Width (1-16)
             break;
 #    endif
-
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             CFD3CONbits.ON = 1;
             CFD3CONbits.REQOP = 4;
@@ -725,8 +730,7 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             CFD3DBTCFGbits.SJW = 0;               // Synchronization Jump Width (1-16)
             break;
 #    endif
-
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             CFD4CONbits.ON = 1;
             CFD4CONbits.REQOP = 4;
@@ -796,20 +800,22 @@ uint32_t can_effectiveBitRate(rt_dev_t device)
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             bitRateDiv = (CFD1NBTCFGbits.BRP + 1);  // bit rate divisor (1-256)
             break;
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             bitRateDiv = (CFD2NBTCFGbits.BRP + 1);  // bit rate divisor (1-256)
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             bitRateDiv = (CFD3NBTCFGbits.BRP + 1);  // bit rate divisor (1-256)
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             bitRateDiv = (CFD4NBTCFGbits.BRP + 1);  // bit rate divisor (1-256)
             break;
@@ -924,20 +930,22 @@ int can_setTxFifo(rt_dev_t device, uint8_t fifo, uint8_t messageCount)
     __CFD1TXQCONbits_t *conBits = NULL;
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             conBits = (__CFD1TXQCONbits_t *)CFD1FIFOCON(fifo);
             break;
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             conBits = (__CFD1TXQCONbits_t *)CFD2FIFOCON(fifo);
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             conBits = (__CFD1TXQCONbits_t *)CFD3FIFOCON(fifo);
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             conBits = (__CFD1TXQCONbits_t *)CFD4FIFOCON(fifo);
             break;
@@ -977,20 +985,22 @@ int can_setRxFifo(rt_dev_t device, uint8_t fifo, uint8_t messageCount)
     __CFD1TXQCONbits_t *conBits = NULL;
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             conBits = (__CFD1TXQCONbits_t *)CFD1FIFOCON(fifo);
             break;
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             conBits = (__CFD1TXQCONbits_t *)CFD2FIFOCON(fifo);
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             conBits = (__CFD1TXQCONbits_t *)CFD3FIFOCON(fifo);
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             conBits = (__CFD1TXQCONbits_t *)CFD4FIFOCON(fifo);
             break;
@@ -1016,13 +1026,15 @@ int can_setFifoHandler(rt_dev_t device, void (*handler)(uint8_t fifo, uint8_t ev
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             CFD1INTbits.RXIE = 1;
             CFD1INTbits.TXIE = 1;
             _CAN1IP = CAN1_INT_PRIORITY;
             _CAN1IE = 1;
             break;
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             CFD2INTbits.RXIE = 1;
             CFD2INTbits.TXIE = 1;
@@ -1030,7 +1042,7 @@ int can_setFifoHandler(rt_dev_t device, void (*handler)(uint8_t fifo, uint8_t ev
             _CAN2IE = 1;
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             CFD3INTbits.RXIE = 1;
             CFD3INTbits.TXIE = 1;
@@ -1038,7 +1050,7 @@ int can_setFifoHandler(rt_dev_t device, void (*handler)(uint8_t fifo, uint8_t ev
             _CAN3IE = 1;
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             CFD4INTbits.RXIE = 1;
             CFD4INTbits.TXIE = 1;
@@ -1074,20 +1086,22 @@ int can_setFifoEventsHandler(rt_dev_t device, uint8_t fifo, CAN_FIFO_EVENTS even
     __CFD1FIFOCON1bits_t *conBits = NULL;
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             conBits = (__CFD1FIFOCON1bits_t *)CFD1FIFOCON(fifo);
             break;
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             conBits = (__CFD1FIFOCON1bits_t *)CFD2FIFOCON(fifo);
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             conBits = (__CFD1FIFOCON1bits_t *)CFD3FIFOCON(fifo);
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             conBits = (__CFD1FIFOCON1bits_t *)CFD4FIFOCON(fifo);
             break;
@@ -1129,6 +1143,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
     switch (can)
     {
         case 0:
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
             if ((*CFD1FIFOSTA(fifo) & _CFD1FIFOSTA1_TFNRFNIF_MASK) == 0)
             {
                 // FIFO full
@@ -1136,7 +1151,8 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
             }
             buffer = (CAN_TxMsgBuffer *)PA_TO_KVA1(*CFD1FIFOUA(fifo));
             break;
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             if ((*CFD2FIFOSTA(fifo) & _CFD2FIFOSTA1_TFNRFNIF_MASK) == 0)
             {
@@ -1146,7 +1162,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
             buffer = (CAN_TxMsgBuffer *)PA_TO_KVA1(*CFD2FIFOUA(fifo));
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             if ((*CFD3FIFOSTA(fifo) & _CFD3FIFOSTA1_TFNRFNIF_MASK) == 0)
             {
@@ -1156,7 +1172,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
             buffer = (CAN_TxMsgBuffer *)PA_TO_KVA1(*CFD3FIFOUA(fifo));
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             if ((*CFD4FIFOSTA(fifo) & _CFD4FIFOSTA1_TFNRFNIF_MASK) == 0)
             {
@@ -1213,23 +1229,25 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             *CFD1FIFOCONSET(fifo) = _CFD1FIFOCON1_UINC_MASK;   // Set the UINC
             *CFD1FIFOCONSET(fifo) = _CFD1FIFOCON1_TXREQ_MASK;  // Set the TXREQ bit
             break;
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             *CFD2FIFOCONSET(fifo) = _CFD2FIFOCON1_UINC_MASK;   // Set the UINC
             *CFD2FIFOCONSET(fifo) = _CFD2FIFOCON1_TXREQ_MASK;  // Set the TXREQ bit
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             *CFD3FIFOCONSET(fifo) = _CFD3FIFOCON1_UINC_MASK;   // Set the UINC
             *CFD3FIFOCONSET(fifo) = _CFD3FIFOCON1_TXREQ_MASK;  // Set the TXREQ bit
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             *CFD4FIFOCONSET(fifo) = _CFD4FIFOCON1_UINC_MASK;   // Set the UINC
             *CFD4FIFOCONSET(fifo) = _CFD4FIFOCON1_TXREQ_MASK;  // Set the TXREQ bit
@@ -1266,6 +1284,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     switch (can)
     {
         case 0:
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
             if ((*CFD1FIFOSTA(fifo) & _CFD1FIFOSTA1_TFNRFNIF_MASK) == 0)
             {
                 // FIFO empty
@@ -1273,7 +1292,8 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
             }
             buffer = (CAN_RxMsgBuffer *)PA_TO_KVA1(*CFD1FIFOUA(fifo));
             break;
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             if ((*CFD2FIFOSTA(fifo) & _CFD2FIFOSTA1_TFNRFNIF_MASK) == 0)
             {
@@ -1283,7 +1303,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
             buffer = (CAN_RxMsgBuffer *)PA_TO_KVA1(*CFD2FIFOUA(fifo));
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             if ((*CFD3FIFOSTA(fifo) & _CFD3FIFOSTA1_TFNRFNIF_MASK) == 0)
             {
@@ -1293,7 +1313,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
             buffer = (CAN_RxMsgBuffer *)PA_TO_KVA1(*CFD3FIFOUA(fifo));
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             if ((*CFD4FIFOSTA(fifo) & _CFD4FIFOSTA1_TFNRFNIF_MASK) == 0)
             {
@@ -1332,20 +1352,22 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             *CFD1FIFOCONSET(fifo) = _CFD1TEFCON_UINC_MASK;  // mark as read
             break;
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             *CFD2FIFOCONSET(fifo) = _CFD2TEFCON_UINC_MASK;  // mark as read
             break;
 #    endif
-#    if CAN_COUNT >= 2
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 2:
             *CFD3FIFOCONSET(fifo) = _CFD3TEFCON_UINC_MASK;  // mark as read
             break;
 #    endif
-#    if CAN_COUNT >= 2
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 3:
             *CFD4FIFOCONSET(fifo) = _CFD4TEFCON_UINC_MASK;  // mark as read
             break;
@@ -1429,13 +1451,15 @@ int can_filterSet(rt_dev_t device, uint8_t nFilter, uint8_t fifo, uint32_t idFil
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             *CFD1FLTCON(nFilter) = 0;            // disable fifo
             *CFD1FLTCON(nFilter) = fifo & 0x1F;  // set destination fifo
             *CFD1MASK(nFilter) = filterMask;
             *CFD1FLTOBJ(nFilter) = filterObj;
             break;
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             *CFD2FLTCON(nFilter) = 0;            // disable fifo
             *CFD2FLTCON(nFilter) = fifo & 0x1F;  // set destination fifo
@@ -1443,7 +1467,7 @@ int can_filterSet(rt_dev_t device, uint8_t nFilter, uint8_t fifo, uint32_t idFil
             *CFD2FLTOBJ(nFilter) = filterObj;
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             *CFD3FLTCON(nFilter) = 0;            // disable fifo
             *CFD3FLTCON(nFilter) = fifo & 0x1F;  // set destination fifo
@@ -1451,7 +1475,7 @@ int can_filterSet(rt_dev_t device, uint8_t nFilter, uint8_t fifo, uint32_t idFil
             *CFD3FLTOBJ(nFilter) = filterObj;
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             *CFD4FLTCON(nFilter) = 0;            // disable fifo
             *CFD4FLTCON(nFilter) = fifo & 0x1F;  // set destination fifo
@@ -1488,20 +1512,22 @@ int can_filterEnable(rt_dev_t device, uint8_t nFilter)
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             *CFD1FLTCON(nFilter) |= _CFD1FLTCON0_FLTEN0_MASK;
             break;
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             *CFD2FLTCON(nFilter) |= _CFD1FLTCON0_FLTEN0_MASK;
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             *CFD3FLTCON(nFilter) |= _CFD1FLTCON0_FLTEN0_MASK;
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             *CFD4FLTCON(nFilter) |= _CFD1FLTCON0_FLTEN0_MASK;
             break;
@@ -1534,20 +1560,22 @@ int can_filterDisable(rt_dev_t device, uint8_t nFilter)
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             *CFD1FLTCON(nFilter) &= ~_CFD1FLTCON0_FLTEN0_MASK;
             break;
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             *CFD2FLTCON(nFilter) &= ~_CFD1FLTCON0_FLTEN0_MASK;
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             *CFD3FLTCON(nFilter) &= ~_CFD1FLTCON0_FLTEN0_MASK;
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             *CFD4FLTCON(nFilter) &= ~_CFD1FLTCON0_FLTEN0_MASK;
             break;
@@ -1563,7 +1591,7 @@ int can_filterDisable(rt_dev_t device, uint8_t nFilter)
 #endif
 }
 
-#if (CAN_COUNT >= 1)
+#if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
 void INT_ISR(_CAN1_VECTOR, CAN1_INT_PRIORITY, INT_MODE) __attribute__((weak)) CAN1Interrupt(void)
 {
     uint8_t fifo = CFD1VECbits.ICODE;  // TODO this register get also global can interrupts
@@ -1577,7 +1605,7 @@ void INT_ISR(_CAN1_VECTOR, CAN1_INT_PRIORITY, INT_MODE) __attribute__((weak)) CA
 }
 #endif
 
-#if (CAN_COUNT >= 2)
+#if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
 void INT_ISR(_CAN2_VECTOR, CAN2_INT_PRIORITY, INT_MODE) __attribute__((weak)) CAN2Interrupt(void)
 {
     uint8_t fifo = CFD2VECbits.ICODE;  // TODO this register get also global can interrupts
@@ -1591,7 +1619,7 @@ void INT_ISR(_CAN2_VECTOR, CAN2_INT_PRIORITY, INT_MODE) __attribute__((weak)) CA
 }
 #endif
 
-#if (CAN_COUNT >= 3)
+#if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
 void INT_ISR(_CAN3_VECTOR, CAN3_INT_PRIORITY, INT_MODE) __attribute__((weak)) CAN3Interrupt(void)
 {
     uint8_t fifo = CFD3VECbits.ICODE;  // TODO this register get also global can interrupts
@@ -1605,7 +1633,7 @@ void INT_ISR(_CAN3_VECTOR, CAN3_INT_PRIORITY, INT_MODE) __attribute__((weak)) CA
 }
 #endif
 
-#if (CAN_COUNT >= 4)
+#if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
 void INT_ISR(_CAN4_VECTOR, CAN4_INT_PRIORITY, INT_MODE) __attribute__((weak)) CAN4Interrupt(void)
 {
     uint8_t fifo = CFD4VECbits.ICODE;  // TODO this register get also global can interrupts

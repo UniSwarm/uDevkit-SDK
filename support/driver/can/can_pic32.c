@@ -46,28 +46,28 @@ struct can_dev
 #    include "udevkit_config.h"
 #endif
 
-#if CAN_COUNT >= 1
+#if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
 #    ifndef CAN1_FIFO_SIZE
 #        define CAN1_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
 static uint8_t __attribute__((aligned(4), noload)) _can1_fifo_buffer[CAN1_FIFO_SIZE];
 #endif
 
-#if CAN_COUNT >= 2
+#if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
 #    ifndef CAN2_FIFO_SIZE
 #        define CAN2_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
 static uint8_t __attribute__((aligned(4), noload)) _can2_fifo_buffer[CAN2_FIFO_SIZE];
 #endif
 
-#if CAN_COUNT >= 3
+#if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
 #    ifndef CAN3_FIFO_SIZE
 #        define CAN3_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
 static uint8_t __attribute__((aligned(4), noload)) _can3_fifo_buffer[CAN3_FIFO_SIZE];
 #endif
 
-#if CAN_COUNT >= 4
+#if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
 #    ifndef CAN4_FIFO_SIZE
 #        define CAN4_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
@@ -204,6 +204,7 @@ int can_enable(rt_dev_t device)
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             // assign memory
             C1FIFOBA = KVA_TO_PA(_can1_fifo_buffer);
@@ -225,8 +226,8 @@ int can_enable(rt_dev_t device)
             C1RXM1bits.EID = 0x00000;  // Ignore all bits in comparison
             C1RXM1bits.MIDE = 0;       // Match all message types.
             break;
-
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             // assign memory
             C2FIFOBA = KVA_TO_PA(_can2_fifo_buffer);
@@ -250,7 +251,7 @@ int can_enable(rt_dev_t device)
             break;
 
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             // assign memory
             C3FIFOBA = KVA_TO_PA(_can3_fifo_buffer);
@@ -274,7 +275,7 @@ int can_enable(rt_dev_t device)
             break;
 
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             // assign memory
             C4FIFOBA = KVA_TO_PA(_can4_fifo_buffer);
@@ -324,6 +325,7 @@ int can_disable(rt_dev_t device)
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             _CAN1IE = 0;  // disable can global interrupt
             C1CONbits.REQOP = 4;
@@ -337,8 +339,8 @@ int can_disable(rt_dev_t device)
                 ;
             }
             break;
-
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             _CAN2IE = 0;  // disable can global interrupt
             C2CONbits.REQOP = 4;
@@ -354,7 +356,7 @@ int can_disable(rt_dev_t device)
             break;
 
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             _CAN3IE = 0;  // disable can global interrupt
             C3CONbits.REQOP = 4;
@@ -370,7 +372,7 @@ int can_disable(rt_dev_t device)
             break;
 
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             _CAN4IE = 0;  // disable can global interrupt
             C4CONbits.REQOP = 4;
@@ -460,6 +462,7 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             C1CONbits.ON = 1;
             C1CONbits.REQOP = modeBits;
@@ -468,8 +471,8 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
                 ;
             }
             break;
-
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             C2CONbits.ON = 1;
             C2CONbits.REQOP = modeBits;
@@ -478,9 +481,8 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
                 ;
             }
             break;
-
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             C3CONbits.ON = 1;
             C3CONbits.REQOP = modeBits;
@@ -489,9 +491,8 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
                 ;
             }
             break;
-
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             C4CONbits.ON = 1;
             C4CONbits.REQOP = modeBits;
@@ -500,7 +501,6 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
                 ;
             }
             break;
-
 #    endif
     }
 
@@ -596,6 +596,7 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             C1CONbits.ON = 1;
             C1CONbits.REQOP = 4;
@@ -611,8 +612,8 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             C1CFGbits.SEG2PH = s2Seg - 1;     // Phase Buffer Segment 2 (1-8) SEG2PH >= SEG1PH
             C1CFGbits.BRP = bitRateDiv;       // bit rate divisor (1-64) * 2
             break;
-
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             C2CONbits.ON = 1;
             C2CONbits.REQOP = 4;
@@ -628,9 +629,8 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             C2CFGbits.SEG2PH = s2Seg - 1;     // Phase Buffer Segment 2 (1-8) SEG2PH >= SEG1PH
             C2CFGbits.BRP = bitRateDiv;       // bit rate divisor (1-64) * 2
             break;
-
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             C3CONbits.ON = 1;
             C3CONbits.REQOP = 4;
@@ -646,9 +646,8 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             C3CFGbits.SEG2PH = s2Seg - 1;     // Phase Buffer Segment 2 (1-8) SEG2PH >= SEG1PH
             C3CFGbits.BRP = bitRateDiv;       // bit rate divisor (1-64) * 2
             break;
-
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             C4CONbits.ON = 1;
             C4CONbits.REQOP = 4;
@@ -664,7 +663,6 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             C4CFGbits.SEG2PH = s2Seg - 1;     // Phase Buffer Segment 2 (1-8) SEG2PH >= SEG1PH
             C4CFGbits.BRP = bitRateDiv;       // bit rate divisor (1-64) * 2
             break;
-
 #    endif
     }
 
@@ -714,27 +712,25 @@ uint32_t can_effectiveBitRate(rt_dev_t device)
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             bitRateDiv = (C1CFGbits.BRP + 1) << 1;  // bit rate divisor (1-64) * 2
             break;
-
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             bitRateDiv = (C2CFGbits.BRP + 1) << 1;  // bit rate divisor (1-64) * 2
             break;
-
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             bitRateDiv = (C3CFGbits.BRP + 1) << 1;  // bit rate divisor (1-64) * 2
             break;
-
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             bitRateDiv = (C4CFGbits.BRP + 1) << 1;  // bit rate divisor (1-64) * 2
             break;
-
 #    endif
     }
 
@@ -827,6 +823,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             if (C1FIFOINT0bits.TXNFULLIF == 0)
             {
@@ -837,8 +834,8 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
                 buffer = (CAN_TxMsgBuffer *)(PA_TO_KVA1(C1FIFOUA0));
             }
             break;
-
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             if (C2FIFOINT0bits.TXNFULLIF == 0)
             {
@@ -849,9 +846,8 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
                 buffer = (CAN_TxMsgBuffer *)(PA_TO_KVA1(C2FIFOUA0));
             }
             break;
-
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             if (C3FIFOINT0bits.TXNFULLIF == 0)
             {
@@ -862,9 +858,8 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
                 buffer = (CAN_TxMsgBuffer *)(PA_TO_KVA1(C3FIFOUA0));
             }
             break;
-
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             if (C4FIFOINT0bits.TXNFULLIF == 0)
             {
@@ -875,7 +870,6 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
                 buffer = (CAN_TxMsgBuffer *)(PA_TO_KVA1(C4FIFOUA0));
             }
             break;
-
 #    endif
     }
 
@@ -921,6 +915,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             if (buffer != NULL)
             {
@@ -931,8 +926,8 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
                 C1FIFOCON0SET = 0x0008;  // Set the TXREQ bit
             }
             break;
-
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             if (buffer != NULL)
             {
@@ -943,9 +938,8 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
                 C2FIFOCON0SET = 0x0008;  // Set the TXREQ bit
             }
             break;
-
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             if (buffer != NULL)
             {
@@ -956,9 +950,8 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
                 C3FIFOCON0SET = 0x0008;  // Set the TXREQ bit
             }
             break;
-
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             if (buffer != NULL)
             {
@@ -969,7 +962,6 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
                 C4FIFOCON0SET = 0x0008;  // Set the TXREQ bit
             }
             break;
-
 #    endif
     }
 
@@ -998,6 +990,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             if (C1FIFOINT1bits.RXNEMPTYIF != 1)
             {
@@ -1005,8 +998,8 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
             }
             buffer = PA_TO_KVA1(C1FIFOUA1);
             break;
-
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             if (C2FIFOINT1bits.RXNEMPTYIF != 1)
             {
@@ -1015,7 +1008,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
             buffer = PA_TO_KVA1(C2FIFOUA1);
             break;
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             if (C3FIFOINT1bits.RXNEMPTYIF != 1)
             {
@@ -1024,7 +1017,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
             buffer = PA_TO_KVA1(C3FIFOUA1);
             break;
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             if (C4FIFOINT1bits.RXNEMPTYIF != 1)
             {
@@ -1068,27 +1061,25 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
 
     switch (can)
     {
+#    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
         case 0:
             C1FIFOCON1SET = 0x2000;  // mark as read
             break;
-
-#    if CAN_COUNT >= 2
+#    endif
+#    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
         case 1:
             C2FIFOCON1SET = 0x2000;  // mark as read
             break;
-
 #    endif
-#    if CAN_COUNT >= 3
+#    if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
         case 2:
             C3FIFOCON1SET = 0x2000;  // mark as read
             break;
-
 #    endif
-#    if CAN_COUNT >= 4
+#    if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
         case 3:
             C4FIFOCON1SET = 0x2000;  // mark as read
             break;
-
 #    endif
     }
 
