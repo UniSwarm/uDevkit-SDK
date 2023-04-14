@@ -50,6 +50,10 @@ struct oc_dev
     oc_status flags;
 };
 
+#ifdef UDEVKIT_HAVE_CONFIG
+#    include "udevkit_config.h"
+#endif
+
 static struct oc_dev _ocs[] = {
 #if OC_COUNT >= 1
     {.rVal = 0, .rsVal = 0, .timer = 0, .flags = {{.val = OC_FLAG_UNUSED}}},
@@ -211,95 +215,97 @@ int _oc_setInternalMode(rt_dev_t device, uint8_t mode)
 
     switch (oc)
     {
+#    if (OC_COUNT >= 1) && !defined(OC1_DISABLE)
         case 0:
             OC1CONbits.OCM = mode;
             OC1CONbits.ON = enabled;
             break;
-#    if OC_COUNT >= 2
+#    endif
+#    if (OC_COUNT >= 2) && !defined(OC2_DISABLE)
         case 1:
             OC2CONbits.OCM = mode;
             OC2CONbits.ON = enabled;
             break;
 #    endif
-#    if OC_COUNT >= 3
+#    if (OC_COUNT >= 3) && !defined(OC3_DISABLE)
         case 2:
             OC3CONbits.OCM = mode;
             OC3CONbits.ON = enabled;
             break;
 #    endif
-#    if OC_COUNT >= 4
+#    if (OC_COUNT >= 4) && !defined(OC4_DISABLE)
         case 3:
             OC4CONbits.OCM = mode;
             OC4CONbits.ON = enabled;
             break;
 #    endif
-#    if OC_COUNT >= 5
+#    if (OC_COUNT >= 5) && !defined(OC5_DISABLE)
         case 4:
             OC5CONbits.OCM = mode;
             OC5CONbits.ON = enabled;
             break;
 #    endif
-#    if OC_COUNT >= 6
+#    if (OC_COUNT >= 6) && !defined(OC6_DISABLE)
         case 5:
             OC6CONbits.OCM = mode;
             OC6CONbits.ON = enabled;
             break;
 #    endif
-#    if OC_COUNT >= 7
+#    if (OC_COUNT >= 7) && !defined(OC7_DISABLE)
         case 6:
             OC7CONbits.OCM = mode;
             OC7CONbits.ON = enabled;
             break;
 #    endif
-#    if OC_COUNT >= 8
+#    if (OC_COUNT >= 8) && !defined(OC8_DISABLE)
         case 7:
             OC8CONbits.OCM = mode;
             OC8CONbits.ON = enabled;
             break;
 #    endif
-#    if OC_COUNT >= 9
+#    if (OC_COUNT >= 9) && !defined(OC9_DISABLE)
         case 8:
             OC9CONbits.OCM = mode;
             OC9CONbits.ON = enabled;
             break;
 #    endif
-#    if OC_COUNT >= 10
+#    if (OC_COUNT >= 10) && !defined(OC10_DISABLE)
         case 9:
             OC10CONbits.OCM = mode;
             OC10CONbits.ON = enabled;
             break;
 #    endif
-#    if OC_COUNT >= 11
+#    if (OC_COUNT >= 11) && !defined(OC11_DISABLE)
         case 10:
             OC11CONbits.OCM = mode;
             OC11CONbits.ON = enabled;
             break;
 #    endif
-#    if OC_COUNT >= 12
+#    if (OC_COUNT >= 12) && !defined(OC12_DISABLE)
         case 11:
             OC12CONbits.OCM = mode;
             OC12CONbits.ON = enabled;
             break;
 #    endif
-#    if OC_COUNT >= 13
+#    if (OC_COUNT >= 13) && !defined(OC13_DISABLE)
         case 12:
             OC13CONbits.OCM = mode;
             OC13CONbits.ON = enabled;
             break;
 #    endif
-#    if OC_COUNT >= 14
+#    if (OC_COUNT >= 14) && !defined(OC14_DISABLE)
         case 13:
             OC14CONbits.OCM = mode;
             OC14CONbits.ON = enabled;
             break;
 #    endif
-#    if OC_COUNT >= 15
+#    if (OC_COUNT >= 15) && !defined(OC15_DISABLE)
         case 14:
             OC15CONbits.OCM = mode;
             OC15CONbits.ON = enabled;
             break;
 #    endif
-#    if OC_COUNT >= 16
+#    if (OC_COUNT >= 16) && !defined(OC16_DISABLE)
         case 15:
             OC16CONbits.OCM = mode;
             OC16CONbits.ON = enabled;
@@ -455,95 +461,97 @@ int oc_setRVal(rt_dev_t device, uint32_t rVal, uint32_t rsVal)
 
     switch (oc)
     {
+#    if (OC_COUNT >= 1) && !defined(OC1_DISABLE)
         case 0:
             OC1R = rVal;
             OC1RS = rsVal;
             break;
-#    if OC_COUNT >= 2
+#    endif
+#    if (OC_COUNT >= 2) && !defined(OC2_DISABLE)
         case 1:
             OC2R = rVal;
             OC2RS = rsVal;
             break;
 #    endif
-#    if OC_COUNT >= 3
+#    if (OC_COUNT >= 3) && !defined(OC3_DISABLE)
         case 2:
             OC3R = rVal;
             OC3RS = rsVal;
             break;
 #    endif
-#    if OC_COUNT >= 4
+#    if (OC_COUNT >= 4) && !defined(OC4_DISABLE)
         case 3:
             OC4R = rVal;
             OC4RS = rsVal;
             break;
 #    endif
-#    if OC_COUNT >= 5
+#    if (OC_COUNT >= 5) && !defined(OC5_DISABLE)
         case 4:
             OC5R = rVal;
             OC5RS = rsVal;
             break;
 #    endif
-#    if OC_COUNT >= 6
+#    if (OC_COUNT >= 6) && !defined(OC6_DISABLE)
         case 5:
             OC6R = rVal;
             OC6RS = rsVal;
             break;
 #    endif
-#    if OC_COUNT >= 7
+#    if (OC_COUNT >= 7) && !defined(OC7_DISABLE)
         case 6:
             OC7R = rVal;
             OC7RS = rsVal;
             break;
 #    endif
-#    if OC_COUNT >= 8
+#    if (OC_COUNT >= 8) && !defined(OC8_DISABLE)
         case 7:
             OC8R = rVal;
             OC8RS = rsVal;
             break;
 #    endif
-#    if OC_COUNT >= 9
+#    if (OC_COUNT >= 9) && !defined(OC9_DISABLE)
         case 8:
             OC9R = rVal;
             OC9RS = rsVal;
             break;
 #    endif
-#    if OC_COUNT >= 10
+#    if (OC_COUNT >= 10) && !defined(OC10_DISABLE)
         case 9:
             OC10R = rVal;
             OC10RS = rsVal;
             break;
 #    endif
-#    if OC_COUNT >= 11
+#    if (OC_COUNT >= 11) && !defined(OC11_DISABLE)
         case 10:
             OC11R = rVal;
             OC11RS = rsVal;
             break;
 #    endif
-#    if OC_COUNT >= 12
+#    if (OC_COUNT >= 12) && !defined(OC12_DISABLE)
         case 11:
             OC12R = rVal;
             OC12RS = rsVal;
             break;
 #    endif
-#    if OC_COUNT >= 13
+#    if (OC_COUNT >= 13) && !defined(OC13_DISABLE)
         case 12:
             OC13R = rVal;
             OC13RS = rsVal;
             break;
 #    endif
-#    if OC_COUNT >= 14
+#    if (OC_COUNT >= 14) && !defined(OC14_DISABLE)
         case 13:
             OC14R = rVal;
             OC14RS = rsVal;
             break;
 #    endif
-#    if OC_COUNT >= 15
+#    if (OC_COUNT >= 15) && !defined(OC15_DISABLE)
         case 14:
             OC15R = rVal;
             OC15RS = rsVal;
             break;
 #    endif
-#    if OC_COUNT >= 16
+#    if (OC_COUNT >= 16) && !defined(OC16_DISABLE)
         case 15:
             OC16R = rVal;
             OC16RS = rsVal;
@@ -615,80 +623,82 @@ int oc_setTimer(rt_dev_t device, uint8_t timer)
 
     switch (oc)
     {
+#    if (OC_COUNT >= 1) && !defined(OC1_DISABLE)
         case 0:
             OC1CONbits.OCTSEL = timer;
             break;
-#    if OC_COUNT >= 2
+#    endif
+#    if (OC_COUNT >= 2) && !defined(OC2_DISABLE)
         case 1:
             OC2CONbits.OCTSEL = timer;
             break;
 #    endif
-#    if OC_COUNT >= 3
+#    if (OC_COUNT >= 3) && !defined(OC3_DISABLE)
         case 2:
             OC3CONbits.OCTSEL = timer;
             break;
 #    endif
-#    if OC_COUNT >= 4
+#    if (OC_COUNT >= 4) && !defined(OC4_DISABLE)
         case 3:
             OC4CONbits.OCTSEL = timer;
             break;
 #    endif
-#    if OC_COUNT >= 5
+#    if (OC_COUNT >= 5) && !defined(OC5_DISABLE)
         case 4:
             OC5CONbits.OCTSEL = timer;
             break;
 #    endif
-#    if OC_COUNT >= 6
+#    if (OC_COUNT >= 6) && !defined(OC6_DISABLE)
         case 5:
             OC6CONbits.OCTSEL = timer;
             break;
 #    endif
-#    if OC_COUNT >= 7
+#    if (OC_COUNT >= 7) && !defined(OC7_DISABLE)
         case 6:
             OC7CONbits.OCTSEL = timer;
             break;
 #    endif
-#    if OC_COUNT >= 8
+#    if (OC_COUNT >= 8) && !defined(OC8_DISABLE)
         case 7:
             OC8CONbits.OCTSEL = timer;
             break;
 #    endif
-#    if OC_COUNT >= 9
+#    if (OC_COUNT >= 9) && !defined(OC9_DISABLE)
         case 8:
             OC9CONbits.OCTSEL = timer;
             break;
 #    endif
-#    if OC_COUNT >= 10
+#    if (OC_COUNT >= 10) && !defined(OC10_DISABLE)
         case 9:
             OC10CONbits.OCTSEL = timer;
             break;
 #    endif
-#    if OC_COUNT >= 11
+#    if (OC_COUNT >= 11) && !defined(OC11_DISABLE)
         case 10:
             OC11CONbits.OCTSEL = timer;
             break;
 #    endif
-#    if OC_COUNT >= 12
+#    if (OC_COUNT >= 12) && !defined(OC12_DISABLE)
         case 11:
             OC12CONbits.OCTSEL = timer;
             break;
 #    endif
-#    if OC_COUNT >= 13
+#    if (OC_COUNT >= 13) && !defined(OC13_DISABLE)
         case 12:
             OC13CONbits.OCTSEL = timer;
             break;
 #    endif
-#    if OC_COUNT >= 14
+#    if (OC_COUNT >= 14) && !defined(OC14_DISABLE)
         case 13:
             OC14CONbits.OCTSEL = timer;
             break;
 #    endif
-#    if OC_COUNT >= 15
+#    if (OC_COUNT >= 15) && !defined(OC15_DISABLE)
         case 14:
             OC15CONbits.OCTSEL = timer;
             break;
 #    endif
-#    if OC_COUNT >= 16
+#    if (OC_COUNT >= 16) && !defined(OC16_DISABLE)
         case 15:
             OC16CONbits.OCTSEL = timer;
             break;
@@ -725,6 +735,7 @@ rt_dev_t oc_getTimer(rt_dev_t device)
 
     switch (oc)
     {
+#        if OC_COUNT >= 1
         case 0:
         case 1:
         case 2:
@@ -737,6 +748,7 @@ rt_dev_t oc_getTimer(rt_dev_t device)
                 return timer(5);  // timer 5
             }
             break;
+#        endif
 #        if OC_COUNT >= 4
         case 3:
         case 4:
