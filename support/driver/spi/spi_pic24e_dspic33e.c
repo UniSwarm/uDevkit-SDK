@@ -172,22 +172,22 @@ int spi_enable(rt_dev_t device)
     switch (spi)
     {
 #if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
-        case 0:
+        case SPI1_ID:
             SPI1STATbits.SPIEN = 1;  // enable spi module
             break;
 #endif
 #if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
-        case 1:
+        case SPI2_ID:
             SPI2STATbits.SPIEN = 1;  // enable spi module
             break;
 #endif
 #if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
-        case 2:
+        case SPI3_ID:
             SPI3STATbits.SPIEN = 1;  // enable spi module
             break;
 #endif
 #if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
-        case 3:
+        case SPI4_ID:
             SPI4STATbits.SPIEN = 1;  // enable spi module
             break;
 #endif
@@ -214,22 +214,22 @@ int spi_disable(rt_dev_t device)
     switch (spi)
     {
 #if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
-        case 0:
+        case SPI1_ID:
             SPI1STATbits.SPIEN = 0;  // disable spi
             break;
 #endif
 #if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
-        case 1:
+        case SPI2_ID:
             SPI2STATbits.SPIEN = 0;  // disable spi
             break;
 #endif
 #if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
-        case 2:
+        case SPI3_ID:
             SPI3STATbits.SPIEN = 0;  // disable spi
             break;
 #endif
 #if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
-        case 3:
+        case SPI4_ID:
             SPI4STATbits.SPIEN = 0;  // disable spi
             break;
 #endif
@@ -331,25 +331,25 @@ int spi_setFreq(rt_dev_t device, uint32_t freq)
     switch (spi)
     {
 #if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
-        case 0:
+        case SPI1_ID:
             SPI1CON1bits.PPRE = sdivp;
             SPI1CON1bits.SPRE = sdivs;
             break;
 #endif
 #if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
-        case 1:
+        case SPI2_ID:
             SPI2CON1bits.PPRE = sdivp;
             SPI2CON1bits.SPRE = sdivs;
             break;
 #endif
 #if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
-        case 2:
+        case SPI3_ID:
             SPI3CON1bits.PPRE = sdivp;
             SPI3CON1bits.SPRE = sdivs;
             break;
 #endif
 #if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
-        case 3:
+        case SPI4_ID:
             SPI4CON1bits.PPRE = sdivp;
             SPI4CON1bits.SPRE = sdivs;
             break;
@@ -459,22 +459,22 @@ int spi_setBitLength(rt_dev_t device, uint8_t bitLength)
     switch (spi)
     {
 #if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
-        case 0:
+        case SPI1_ID:
             SPI1CON1bits.MODE16 = bit16;
             break;
 #endif
 #if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
-        case 1:
+        case SPI2_ID:
             SPI2CON1bits.MODE16 = bit16;
             break;
 #endif
 #if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
-        case 2:
+        case SPI3_ID:
             SPI3CON1bits.MODE16 = bit16;
             break;
 #endif
 #if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
-        case 3:
+        case SPI4_ID:
             SPI4CON1bits.MODE16 = bit16;
             break;
 #endif
@@ -514,7 +514,7 @@ ssize_t spi_write(rt_dev_t device, const char *data, size_t size)
     switch (spi)
     {
 #if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
-        case 0:
+        case SPI1_ID:
             while (SPI1STATbits.SPITBF)
             {
                 ;
@@ -522,7 +522,7 @@ ssize_t spi_write(rt_dev_t device, const char *data, size_t size)
             break;
 #endif
 #if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
-        case 1:
+        case SPI2_ID:
             while (SPI2STATbits.SPITBF)
             {
                 ;
@@ -530,7 +530,7 @@ ssize_t spi_write(rt_dev_t device, const char *data, size_t size)
             break;
 #endif
 #if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
-        case 2:
+        case SPI3_ID:
             while (SPI3STATbits.SPITBF)
             {
                 ;
@@ -538,7 +538,7 @@ ssize_t spi_write(rt_dev_t device, const char *data, size_t size)
             break;
 #endif
 #if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
-        case 3:
+        case SPI4_ID:
             while (SPI4STATbits.SPITBF)
             {
                 ;
@@ -571,7 +571,7 @@ int spi_flush(rt_dev_t device)
     switch (spi)
     {
 #if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
-        case 0:
+        case SPI1_ID:
             while (!SPI1STATbits.SRMPT)
             {
                 ;  // buffer not empty
@@ -579,7 +579,7 @@ int spi_flush(rt_dev_t device)
             break;
 #endif
 #if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
-        case 1:
+        case SPI2_ID:
             while (!SPI2STATbits.SRMPT)
             {
                 ;
@@ -587,7 +587,7 @@ int spi_flush(rt_dev_t device)
             break;
 #endif
 #if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
-        case 2:
+        case SPI3_ID:
             while (!SPI3STATbits.SRMPT)
             {
                 ;
@@ -595,7 +595,7 @@ int spi_flush(rt_dev_t device)
             break;
 #endif
 #if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
-        case 3:
+        case SPI4_ID:
             while (!SPI4STATbits.SRMPT)
             {
                 ;

@@ -260,7 +260,7 @@ int spi_enable(rt_dev_t device)
     switch (spi)
     {
 #if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
-        case 0:
+        case SPI1_ID:
             _SPI1TXIF = 0;
             _SPI1TXIP = SPI1_INT_TX_PRIORITY;
             _SPI1TXIE = 0;
@@ -277,7 +277,7 @@ int spi_enable(rt_dev_t device)
             break;
 #endif
 #if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
-        case 1:
+        case SPI2_ID:
             _SPI2TXIF = 0;
             _SPI2TXIP = SPI2_INT_TX_PRIORITY;
             _SPI2TXIE = 0;
@@ -294,7 +294,7 @@ int spi_enable(rt_dev_t device)
             break;
 #endif
 #if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
-        case 2:
+        case SPI3_ID:
             _SPI3TXIF = 0;
             _SPI3TXIP = SPI3_INT_TX_PRIORITY;
             _SPI3TXIE = 0;
@@ -311,7 +311,7 @@ int spi_enable(rt_dev_t device)
             break;
 #endif
 #if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
-        case 3:
+        case SPI4_ID:
             _SPI4TXIF = 0;
             _SPI4TXIP = SPI4_INT_TX_PRIORITY;
             _SPI4TXIE = 0;
@@ -328,7 +328,7 @@ int spi_enable(rt_dev_t device)
             break;
 #endif
 #if (SPI_COUNT >= 5) && !defined(SPI5_DISABLE)
-        case 4:
+        case SPI5_ID:
             _SPI5TXIF = 0;
             _SPI5TXIP = SPI5_INT_TX_PRIORITY;
             _SPI5TXIE = 0;
@@ -345,7 +345,7 @@ int spi_enable(rt_dev_t device)
             break;
 #endif
 #if (SPI_COUNT >= 6) && !defined(SPI6_DISABLE)
-        case 5:
+        case SPI6_ID:
             _SPI6TXIF = 0;
             _SPI6TXIP = SPI6_INT_TX_PRIORITY;
             _SPI6TXIE = 0;
@@ -384,7 +384,7 @@ int spi_disable(rt_dev_t device)
     switch (spi)
     {
 #if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
-        case 0:
+        case SPI1_ID:
             _SPI1TXIE = 0;
             _SPI1RXIE = 0;
             _SPI1EIE = 0;
@@ -393,7 +393,7 @@ int spi_disable(rt_dev_t device)
             break;
 #endif
 #if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
-        case 1:
+        case SPI2_ID:
             _SPI2TXIE = 0;
             _SPI2RXIE = 0;
             _SPI2EIE = 0;
@@ -402,7 +402,7 @@ int spi_disable(rt_dev_t device)
             break;
 #endif
 #if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
-        case 2:
+        case SPI3_ID:
             _SPI3TXIE = 0;
             _SPI3RXIE = 0;
             _SPI3EIE = 0;
@@ -411,7 +411,7 @@ int spi_disable(rt_dev_t device)
             break;
 #endif
 #if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
-        case 3:
+        case SPI4_ID:
             _SPI4TXIE = 0;
             _SPI4RXIE = 0;
             _SPI4EIE = 0;
@@ -420,7 +420,7 @@ int spi_disable(rt_dev_t device)
             break;
 #endif
 #if (SPI_COUNT >= 5) && !defined(SPI5_DISABLE)
-        case 4:
+        case SPI5_ID:
             _SPI5TXIE = 0;
             _SPI5RXIE = 0;
             _SPI5EIE = 0;
@@ -429,7 +429,7 @@ int spi_disable(rt_dev_t device)
             break;
 #endif
 #if (SPI_COUNT >= 6) && !defined(SPI6_DISABLE)
-        case 5:
+        case SPI6_ID:
             _SPI6TXIE = 0;
             _SPI6RXIE = 0;
             _SPI6EIE = 0;
@@ -495,37 +495,37 @@ int spi_setBitLength(rt_dev_t device, uint8_t bitLength)
     switch (spi)
     {
 #if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
-        case 0:
+        case SPI1_ID:
             SPI1CONbits.MODE16 = modeBits & 0x01;
             SPI1CONbits.MODE32 = (modeBits >> 1) & 0x01;
             break;
 #endif
 #if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
-        case 1:
+        case SPI2_ID:
             SPI2CONbits.MODE16 = modeBits & 0x01;
             SPI2CONbits.MODE32 = (modeBits >> 1) & 0x01;
             break;
 #endif
 #if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
-        case 2:
+        case SPI3_ID:
             SPI3CONbits.MODE16 = modeBits & 0x01;
             SPI3CONbits.MODE32 = (modeBits >> 1) & 0x01;
             break;
 #endif
 #if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
-        case 3:
+        case SPI4_ID:
             SPI4CONbits.MODE16 = modeBits & 0x01;
             SPI4CONbits.MODE32 = (modeBits >> 1) & 0x01;
             break;
 #endif
 #if (SPI_COUNT >= 5) && !defined(SPI5_DISABLE)
-        case 4:
+        case SPI5_ID:
             SPI5CONbits.MODE16 = modeBits & 0x01;
             SPI5CONbits.MODE32 = (modeBits >> 1) & 0x01;
             break;
 #endif
 #if (SPI_COUNT >= 6) && !defined(SPI6_DISABLE)
-        case 5:
+        case SPI6_ID:
             SPI6CONbits.MODE16 = modeBits & 0x01;
             SPI6CONbits.MODE32 = (modeBits >> 1) & 0x01;
             break;
@@ -637,9 +637,9 @@ ssize_t spi_read(rt_dev_t device, char *data, size_t size_max)
 #if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
 void INT_ISR(_SPI1_TX_VECTOR, SPI1_INT_TX_PRIORITY, INT_MODE) __attribute__((weak)) SPI1TxInterrupt(void)
 {
-    if (_spis[0].txHandler != NULL)
+    if (_spis[SPI1_ID].txHandler != NULL)
     {
-        (*_spis[0].txHandler)();
+        (*_spis[SPI1_ID].txHandler)();
     }
 
     _SPI1TXIF = 0;
@@ -647,9 +647,9 @@ void INT_ISR(_SPI1_TX_VECTOR, SPI1_INT_TX_PRIORITY, INT_MODE) __attribute__((wea
 
 void INT_ISR(_SPI1_RX_VECTOR, SPI1_INT_RX_PRIORITY, INT_MODE) __attribute__((weak)) SPI1RxInterrupt(void)
 {
-    if (_spis[0].rxHandler != NULL)
+    if (_spis[SPI1_ID].rxHandler != NULL)
     {
-        (*_spis[0].rxHandler)();
+        (*_spis[SPI1_ID].rxHandler)();
     }
 
     _SPI1RXIF = 0;
@@ -657,9 +657,9 @@ void INT_ISR(_SPI1_RX_VECTOR, SPI1_INT_RX_PRIORITY, INT_MODE) __attribute__((wea
 
 void INT_ISR(_SPI1_FAULT_VECTOR, SPI1_INT_FAULT_PRIORITY, INT_MODE) __attribute__((weak)) SPI1FaultInterrupt(void)
 {
-    if (_spis[0].errorHandler != NULL)
+    if (_spis[SPI1_ID].errorHandler != NULL)
     {
-        (*_spis[0].errorHandler)();
+        (*_spis[SPI1_ID].errorHandler)();
     }
 
     _SPI1EIF = 0;
@@ -669,9 +669,9 @@ void INT_ISR(_SPI1_FAULT_VECTOR, SPI1_INT_FAULT_PRIORITY, INT_MODE) __attribute_
 #if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
 void INT_ISR(_SPI2_TX_VECTOR, SPI2_INT_TX_PRIORITY, INT_MODE) __attribute__((weak)) SPI2TxInterrupt(void)
 {
-    if (_spis[1].txHandler != NULL)
+    if (_spis[SPI2_ID].txHandler != NULL)
     {
-        (*_spis[1].txHandler)();
+        (*_spis[SPI2_ID].txHandler)();
     }
 
     _SPI2TXIF = 0;
@@ -679,9 +679,9 @@ void INT_ISR(_SPI2_TX_VECTOR, SPI2_INT_TX_PRIORITY, INT_MODE) __attribute__((wea
 
 void INT_ISR(_SPI2_RX_VECTOR, SPI2_INT_RX_PRIORITY, INT_MODE) __attribute__((weak)) SPI2RxInterrupt(void)
 {
-    if (_spis[1].rxHandler != NULL)
+    if (_spis[SPI2_ID].rxHandler != NULL)
     {
-        (*_spis[1].rxHandler)();
+        (*_spis[SPI2_ID].rxHandler)();
     }
 
     _SPI2RXIF = 0;
@@ -689,9 +689,9 @@ void INT_ISR(_SPI2_RX_VECTOR, SPI2_INT_RX_PRIORITY, INT_MODE) __attribute__((wea
 
 void INT_ISR(_SPI2_FAULT_VECTOR, SPI2_INT_FAULT_PRIORITY, INT_MODE) __attribute__((weak)) SPI2FaultInterrupt(void)
 {
-    if (_spis[1].errorHandler != NULL)
+    if (_spis[SPI2_ID].errorHandler != NULL)
     {
-        (*_spis[1].errorHandler)();
+        (*_spis[SPI2_ID].errorHandler)();
     }
 
     _SPI2EIF = 0;
@@ -701,9 +701,9 @@ void INT_ISR(_SPI2_FAULT_VECTOR, SPI2_INT_FAULT_PRIORITY, INT_MODE) __attribute_
 #if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
 void INT_ISR(_SPI3_TX_VECTOR, SPI3_INT_TX_PRIORITY, INT_MODE) __attribute__((weak)) SPI3TxInterrupt(void)
 {
-    if (_spis[2].txHandler != NULL)
+    if (_spis[SPI3_ID].txHandler != NULL)
     {
-        (*_spis[2].txHandler)();
+        (*_spis[SPI3_ID].txHandler)();
     }
 
     _SPI3TXIF = 0;
@@ -711,9 +711,9 @@ void INT_ISR(_SPI3_TX_VECTOR, SPI3_INT_TX_PRIORITY, INT_MODE) __attribute__((wea
 
 void INT_ISR(_SPI3_RX_VECTOR, SPI3_INT_RX_PRIORITY, INT_MODE) __attribute__((weak)) SPI3RxInterrupt(void)
 {
-    if (_spis[2].rxHandler != NULL)
+    if (_spis[SPI3_ID].rxHandler != NULL)
     {
-        (*_spis[2].rxHandler)();
+        (*_spis[SPI3_ID].rxHandler)();
     }
 
     _SPI3RXIF = 0;
@@ -721,9 +721,9 @@ void INT_ISR(_SPI3_RX_VECTOR, SPI3_INT_RX_PRIORITY, INT_MODE) __attribute__((wea
 
 void INT_ISR(_SPI3_FAULT_VECTOR, SPI3_INT_FAULT_PRIORITY, INT_MODE) __attribute__((weak)) SPI3FaultInterrupt(void)
 {
-    if (_spis[2].errorHandler != NULL)
+    if (_spis[SPI3_ID].errorHandler != NULL)
     {
-        (*_spis[2].errorHandler)();
+        (*_spis[SPI3_ID].errorHandler)();
     }
 
     _SPI3EIF = 0;
@@ -733,9 +733,9 @@ void INT_ISR(_SPI3_FAULT_VECTOR, SPI3_INT_FAULT_PRIORITY, INT_MODE) __attribute_
 #if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
 void INT_ISR(_SPI4_TX_VECTOR, SPI4_INT_TX_PRIORITY, INT_MODE) __attribute__((weak)) SPI4TxInterrupt(void)
 {
-    if (_spis[3].txHandler != NULL)
+    if (_spis[SPI4_ID].txHandler != NULL)
     {
-        (*_spis[3].txHandler)();
+        (*_spis[SPI4_ID].txHandler)();
     }
 
     _SPI4TXIF = 0;
@@ -743,9 +743,9 @@ void INT_ISR(_SPI4_TX_VECTOR, SPI4_INT_TX_PRIORITY, INT_MODE) __attribute__((wea
 
 void INT_ISR(_SPI4_RX_VECTOR, SPI4_INT_RX_PRIORITY, INT_MODE) __attribute__((weak)) SPI4RxInterrupt(void)
 {
-    if (_spis[3].rxHandler != NULL)
+    if (_spis[SPI4_ID].rxHandler != NULL)
     {
-        (*_spis[3].rxHandler)();
+        (*_spis[SPI4_ID].rxHandler)();
     }
 
     _SPI4RXIF = 0;
@@ -753,9 +753,9 @@ void INT_ISR(_SPI4_RX_VECTOR, SPI4_INT_RX_PRIORITY, INT_MODE) __attribute__((wea
 
 void INT_ISR(_SPI4_FAULT_VECTOR, SPI4_INT_FAULT_PRIORITY, INT_MODE) __attribute__((weak)) SPI4FaultInterrupt(void)
 {
-    if (_spis[3].errorHandler != NULL)
+    if (_spis[SPI4_ID].errorHandler != NULL)
     {
-        (*_spis[3].errorHandler)();
+        (*_spis[SPI4_ID].errorHandler)();
     }
 
     _SPI4EIF = 0;
@@ -765,9 +765,9 @@ void INT_ISR(_SPI4_FAULT_VECTOR, SPI4_INT_FAULT_PRIORITY, INT_MODE) __attribute_
 #if (SPI_COUNT >= 5) && !defined(SPI5_DISABLE)
 void INT_ISR(_SPI5_TX_VECTOR, SPI5_INT_TX_PRIORITY, INT_MODE) __attribute__((weak)) SPI5TxInterrupt(void)
 {
-    if (_spis[4].txHandler != NULL)
+    if (_spis[SPI5_ID].txHandler != NULL)
     {
-        (*_spis[4].txHandler)();
+        (*_spis[SPI5_ID].txHandler)();
     }
 
     _SPI5TXIF = 0;
@@ -775,9 +775,9 @@ void INT_ISR(_SPI5_TX_VECTOR, SPI5_INT_TX_PRIORITY, INT_MODE) __attribute__((wea
 
 void INT_ISR(_SPI5_RX_VECTOR, SPI5_INT_RX_PRIORITY, INT_MODE) __attribute__((weak)) SPI5RxInterrupt(void)
 {
-    if (_spis[4].rxHandler != NULL)
+    if (_spis[SPI5_ID].rxHandler != NULL)
     {
-        (*_spis[4].rxHandler)();
+        (*_spis[SPI5_ID].rxHandler)();
     }
 
     _SPI5RXIF = 0;
@@ -785,9 +785,9 @@ void INT_ISR(_SPI5_RX_VECTOR, SPI5_INT_RX_PRIORITY, INT_MODE) __attribute__((wea
 
 void INT_ISR(_SPI5_FAULT_VECTOR, SPI5_INT_FAULT_PRIORITY, INT_MODE) __attribute__((weak)) SPI5FaultInterrupt(void)
 {
-    if (_spis[4].errorHandler != NULL)
+    if (_spis[SPI5_ID].errorHandler != NULL)
     {
-        (*_spis[4].errorHandler)();
+        (*_spis[SPI5_ID].errorHandler)();
     }
 
     _SPI5EIF = 0;
@@ -797,9 +797,9 @@ void INT_ISR(_SPI5_FAULT_VECTOR, SPI5_INT_FAULT_PRIORITY, INT_MODE) __attribute_
 #if (SPI_COUNT >= 6) && !defined(SPI6_DISABLE)
 void INT_ISR(_SPI6_TX_VECTOR, SPI6_INT_TX_PRIORITY, INT_MODE) __attribute__((weak)) SPI6TxInterrupt(void)
 {
-    if (_spis[5].txHandler != NULL)
+    if (_spis[SPI6_ID].txHandler != NULL)
     {
-        (*_spis[5].txHandler)();
+        (*_spis[SPI6_ID].txHandler)();
     }
 
     _SPI6TXIF = 0;
@@ -807,9 +807,9 @@ void INT_ISR(_SPI6_TX_VECTOR, SPI6_INT_TX_PRIORITY, INT_MODE) __attribute__((wea
 
 void INT_ISR(_SPI6_RX_VECTOR, SPI6_INT_RX_PRIORITY, INT_MODE) __attribute__((weak)) SPI6RxInterrupt(void)
 {
-    if (_spis[5].rxHandler != NULL)
+    if (_spis[SPI6_ID].rxHandler != NULL)
     {
-        (*_spis[5].rxHandler)();
+        (*_spis[SPI6_ID].rxHandler)();
     }
 
     _SPI6RXIF = 0;
@@ -817,9 +817,9 @@ void INT_ISR(_SPI6_RX_VECTOR, SPI6_INT_RX_PRIORITY, INT_MODE) __attribute__((wea
 
 void INT_ISR(_SPI6_FAULT_VECTOR, SPI6_INT_FAULT_PRIORITY, INT_MODE) __attribute__((weak)) SPI6FaultInterrupt(void)
 {
-    if (_spis[5].errorHandler != NULL)
+    if (_spis[SPI6_ID].errorHandler != NULL)
     {
-        (*_spis[5].errorHandler)();
+        (*_spis[SPI6_ID].errorHandler)();
     }
 
     _SPI6EIF = 0;
