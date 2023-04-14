@@ -162,6 +162,8 @@ int qei_enable(rt_dev_t device)
         return -1;
     }
 
+    _qeis[qei].flags.enabled = 1;
+
     switch (qei)
     {
 #    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
@@ -190,6 +192,8 @@ int qei_disable(rt_dev_t device)
     {
         return -1;
     }
+
+    _qeis[qei].flags.enabled = 0;
 
     switch (qei)
     {
