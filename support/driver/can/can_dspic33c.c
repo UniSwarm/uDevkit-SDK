@@ -184,7 +184,7 @@ int can_enable(rt_dev_t device)
     switch (can)
     {
 #    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
-        case 0:
+        case CAN1_ID:
             C1FIFOBAH = 0x0000;
             C1FIFOBAL = (uint16_t)(&_can1_fifo_buffer);
 
@@ -216,7 +216,7 @@ int can_enable(rt_dev_t device)
             break;
 #    endif
 #    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
-        case 1:
+        case CAN2_ID:
             C2FIFOBAH = 0x0000;
             C2FIFOBAL = (uint16_t)(&_can2_fifo_buffer);
 
@@ -273,7 +273,7 @@ int can_disable(rt_dev_t device)
     switch (can)
     {
 #    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
-        case 0:
+        case CAN1_ID:
             _C1IE = 0;  // disable can global interrupt
             C1CONHbits.REQOP = 4;
             while (C1CONHbits.OPMOD != 4)
@@ -288,7 +288,7 @@ int can_disable(rt_dev_t device)
             break;
 #    endif
 #    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
-        case 1:
+        case CAN2_ID:
             _C2IE = 0;  // disable can global interrupt
             C2CONHbits.REQOP = 4;
             while (C2CONHbits.OPMOD != 4)
@@ -380,7 +380,7 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
     switch (can)
     {
 #    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
-        case 0:
+        case CAN1_ID:
             C1CONLbits.CON = 1;
             C1CONHbits.REQOP = modeBits;
             while (C1CONHbits.OPMOD != modeBits)
@@ -390,7 +390,7 @@ int can_setMode(rt_dev_t device, CAN_MODE mode)
             break;
 #    endif
 #    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
-        case 1:
+        case CAN2_ID:
             C2CONLbits.CON = 1;
             C2CONHbits.REQOP = modeBits;
             while (C2CONHbits.OPMOD != modeBits)
@@ -503,7 +503,7 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     switch (can)
     {
 #    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
-        case 0:
+        case CAN1_ID:
             C1CONLbits.CON = 1;
             C1CONHbits.REQOP = 4;
             while (C1CONHbits.OPMOD != 4)
@@ -539,7 +539,7 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
             break;
 #    endif
 #    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
-        case 1:
+        case CAN2_ID:
             // TODO
             break;
 #    endif
@@ -590,13 +590,13 @@ uint32_t can_effectiveBitRate(rt_dev_t device)
     switch (can)
     {
 #    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
-        case 0:
+        case CAN1_ID:
             // TODO
             // bitRateDiv = (C1CFGbits.BRP + 1) << 1;      // bit rate divisor (1-64) * 2
             break;
 #    endif
 #    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
-        case 1:
+        case CAN2_ID:
             // TODO
             break;
 #    endif
@@ -691,7 +691,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
     switch (can)
     {
 #    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
-        case 0:
+        case CAN1_ID:
             if (C1FIFOSTA1bits.TFNRFNIF == 0)  // fifo full
             {
                 return -1;
@@ -703,7 +703,7 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
             break;
 #    endif
 #    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
-        case 1:
+        case CAN2_ID:
             if (C2FIFOSTA1bits.TFNRFNIF == 0)  // fifo full
             {
                 return -1;
@@ -800,13 +800,13 @@ int can_send(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, const char *
     switch (can)
     {
 #    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
-        case 0:
+        case CAN1_ID:
             C1FIFOCON1Lbits.UINC = 1;
             C1FIFOCON1Lbits.TXREQ = 1;
             break;
 #    endif
 #    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
-        case 1:
+        case CAN2_ID:
             C2FIFOCON1Lbits.UINC = 1;
             C2FIFOCON1Lbits.TXREQ = 1;
             break;
@@ -843,7 +843,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     switch (can)
     {
 #    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
-        case 0:
+        case CAN1_ID:
             if (C1FIFOSTA2bits.TFNRFNIF == 0)  // fifo empty
             {
                 return 0;
@@ -852,7 +852,7 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
             break;
 #    endif
 #    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
-        case 1:
+        case CAN2_ID:
             if (C2FIFOSTA2bits.TFNRFNIF == 0)  // fifo empty
             {
                 return 0;
@@ -928,12 +928,12 @@ int can_rec(rt_dev_t device, uint8_t fifo, CAN_MSG_HEADER *header, char *data)
     switch (can)
     {
 #    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
-        case 0:
+        case CAN1_ID:
             C1FIFOCON2Lbits.UINC = 1;  // mark as read
             break;
 #    endif
 #    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
-        case 1:
+        case CAN2_ID:
             C2FIFOCON2Lbits.UINC = 1;  // mark as read
             break;
 #    endif
@@ -999,13 +999,13 @@ int can_filterSet(rt_dev_t device, uint8_t nFilter, uint8_t fifo, uint32_t idFil
     switch (can)
     {
 #    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
-        case 0:
+        case CAN1_ID:
             con = (volatile uint8_t *)&C1FLTCON0L;
             reg = (volatile uint16_t *)&C1FLTOBJ0L;
             break;
 #    endif
 #    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
-        case 1:
+        case CAN2_ID:
             con = (volatile uint8_t *)&C2FLTCON0L;
             reg = (volatile uint16_t *)&C2FLTOBJ0L;
             break;
@@ -1050,12 +1050,12 @@ int can_filterEnable(rt_dev_t device, uint8_t nFilter)
     switch (can)
     {
 #    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
-        case 0:
+        case CAN1_ID:
             con = (volatile uint8_t *)&C1FLTCON0L;
             break;
 #    endif
 #    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
-        case 1:
+        case CAN2_ID:
             con = (volatile uint8_t *)&C2FLTCON0L;
             break;
 #    endif
@@ -1086,12 +1086,12 @@ int can_filterDisable(rt_dev_t device, uint8_t nFilter)
     switch (can)
     {
 #    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
-        case 0:
+        case CAN1_ID:
             con = (volatile uint8_t *)&C1FLTCON0L;
             break;
 #    endif
 #    if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
-        case 1:
+        case CAN2_ID:
             con = (volatile uint8_t *)&C2FLTCON0L;
             break;
 #    endif

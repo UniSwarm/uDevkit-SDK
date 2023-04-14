@@ -44,6 +44,22 @@ typedef enum
 } CAN_FIFO_EVENTS;
 #endif
 
+enum
+{
+#if CAN_COUNT >= 1
+    CAN1_ID = 0,
+#endif
+#if CAN_COUNT >= 2
+    CAN2_ID = 1,
+#endif
+#if CAN_COUNT >= 3
+    CAN3_ID = 2,
+#endif
+#if CAN_COUNT >= 4
+    CAN4_ID = 3,
+#endif
+};
+
 typedef enum
 {
     CAN_FIFO00 = 0,
