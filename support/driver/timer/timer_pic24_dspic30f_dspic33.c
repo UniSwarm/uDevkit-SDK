@@ -228,10 +228,10 @@ int timer_enable(rt_dev_t device)
     switch (timer)
     {
 #    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
-        case 0:
+        case TIMER1_ID:
             T1CONbits.TON = 1;  // enable timer module
             _T1IF = 0;
-            if (_timers[0].handler)
+            if (_timers[TIMER1_ID].handler)
             {
                 _T1IE = 1;
             }
@@ -243,10 +243,10 @@ int timer_enable(rt_dev_t device)
             break;
 #    endif
 #    if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
-        case 1:
+        case TIMER2_ID:
             T2CONbits.TON = 1;  // enable timer module
             _T2IF = 0;
-            if (_timers[1].handler)
+            if (_timers[TIMER2_ID].handler)
             {
                 _T2IE = 1;
             }
@@ -258,10 +258,10 @@ int timer_enable(rt_dev_t device)
             break;
 #    endif
 #    if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
-        case 2:
+        case TIMER3_ID:
             T3CONbits.TON = 1;  // enable timer module
             _T3IF = 0;
-            if (_timers[2].handler)
+            if (_timers[TIMER3_ID].handler)
             {
                 _T3IE = 1;
             }
@@ -273,10 +273,10 @@ int timer_enable(rt_dev_t device)
             break;
 #    endif
 #    if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
-        case 3:
+        case TIMER4_ID:
             T4CONbits.TON = 1;  // enable timer module
             _T4IF = 0;
-            if (_timers[3].handler)
+            if (_timers[TIMER4_ID].handler)
             {
                 _T4IE = 1;
             }
@@ -288,10 +288,10 @@ int timer_enable(rt_dev_t device)
             break;
 #    endif
 #    if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
-        case 4:
+        case TIMER5_ID:
             T5CONbits.TON = 1;  // enable timer module
             _T5IF = 0;
-            if (_timers[4].handler)
+            if (_timers[TIMER5_ID].handler)
             {
                 _T5IE = 1;
             }
@@ -303,10 +303,10 @@ int timer_enable(rt_dev_t device)
             break;
 #    endif
 #    if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
-        case 5:
+        case TIMER6_ID:
             T6CONbits.TON = 1;  // enable timer module
             _T6IF = 0;
-            if (_timers[5].handler)
+            if (_timers[TIMER6_ID].handler)
             {
                 _T6IE = 1;
             }
@@ -318,10 +318,10 @@ int timer_enable(rt_dev_t device)
             break;
 #    endif
 #    if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
-        case 6:
+        case TIMER7_ID:
             T7CONbits.TON = 1;  // enable timer module
             _T7IF = 0;
-            if (_timers[6].handler)
+            if (_timers[TIMER7_ID].handler)
             {
                 _T7IE = 1;
             }
@@ -333,10 +333,10 @@ int timer_enable(rt_dev_t device)
             break;
 #    endif
 #    if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
-        case 7:
+        case TIMER8_ID:
             T8CONbits.TON = 1;  // enable timer module
             _T8IF = 0;
-            if (_timers[7].handler)
+            if (_timers[TIMER8_ID].handler)
             {
                 _T8IE = 1;
             }
@@ -348,10 +348,10 @@ int timer_enable(rt_dev_t device)
             break;
 #    endif
 #    if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
-        case 8:
+        case TIMER9_ID:
             T9CONbits.TON = 1;  // enable timer module
             _T9IF = 0;
-            if (_timers[8].handler)
+            if (_timers[TIMER9_ID].handler)
             {
                 _T9IE = 1;
             }
@@ -389,55 +389,55 @@ int timer_disable(rt_dev_t device)
     switch (timer)
     {
 #    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
-        case 0:
+        case TIMER1_ID:
             T1CONbits.TON = 0;  // disable timer module
             _T1IE = 0;
             break;
 #    endif
 #    if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
-        case 1:
+        case TIMER2_ID:
             T2CONbits.TON = 0;  // disable timer module
             _T2IE = 0;
             break;
 #    endif
 #    if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
-        case 2:
+        case TIMER3_ID:
             T3CONbits.TON = 0;  // disable timer module
             _T3IE = 0;
             break;
 #    endif
 #    if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
-        case 3:
+        case TIMER4_ID:
             T4CONbits.TON = 0;  // disable timer module
             _T4IE = 0;
             break;
 #    endif
 #    if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
-        case 4:
+        case TIMER5_ID:
             T5CONbits.TON = 0;  // disable timer module
             _T5IE = 0;
             break;
 #    endif
 #    if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
-        case 5:
+        case TIMER6_ID:
             T6CONbits.TON = 0;  // disable timer module
             _T6IE = 0;
             break;
 #    endif
 #    if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
-        case 6:
+        case TIMER7_ID:
             T7CONbits.TON = 0;  // disable timer module
             _T7IE = 0;
             break;
 #    endif
 #    if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
-        case 7:
+        case TIMER8_ID:
             T8CONbits.TON = 0;  // disable timer module
             _T8IE = 0;
             break;
 #    endif
 #    if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
-        case 8:
+        case TIMER9_ID:
             T9CONbits.TON = 0;  // disable timer module
             _T9IE = 0;
             break;
@@ -525,55 +525,55 @@ int timer_setPeriodMs(rt_dev_t device, uint32_t periodMs)
     switch (timer)
     {
 #    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
-        case 0:
+        case TIMER1_ID:
             T1CONbits.TCKPS = div;  // set divide number
             PR1 = prvalue;          // pr value, comparator value
             break;
 #    endif
 #    if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
-        case 1:
+        case TIMER2_ID:
             T2CONbits.TCKPS = div;  // set divide number
             PR2 = prvalue;          // pr value, comparator value
             break;
 #    endif
 #    if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
-        case 2:
+        case TIMER3_ID:
             T3CONbits.TCKPS = div;  // set divide number
             PR3 = prvalue;          // pr value, comparator value
             break;
 #    endif
 #    if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
-        case 3:
+        case TIMER4_ID:
             T4CONbits.TCKPS = div;  // set divide number
             PR4 = prvalue;          // pr value, comparator value
             break;
 #    endif
 #    if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
-        case 4:
+        case TIMER5_ID:
             T5CONbits.TCKPS = div;  // set divide number
             PR5 = prvalue;          // pr value, comparator value
             break;
 #    endif
 #    if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
-        case 5:
+        case TIMER6_ID:
             T6CONbits.TCKPS = div;  // set divide number
             PR6 = prvalue;          // pr value, comparator value
             break;
 #    endif
 #    if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
-        case 6:
+        case TIMER7_ID:
             T7CONbits.TCKPS = div;  // set divide number
             PR7 = prvalue;          // pr value, comparator value
             break;
 #    endif
 #    if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
-        case 7:
+        case TIMER8_ID:
             T8CONbits.TCKPS = div;  // set divide number
             PR8 = prvalue;          // pr value, comparator value
             break;
 #    endif
 #    if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
-        case 8:
+        case TIMER9_ID:
             T9CONbits.TCKPS = div;  // set divide number
             PR9 = prvalue;          // pr value, comparator value
             break;
@@ -624,47 +624,47 @@ uint16_t timer_value(rt_dev_t device)
     switch (timer)
     {
 #    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
-        case 0:
+        case TIMER1_ID:
             value = TMR1;
             break;
 #    endif
 #    if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
-        case 1:
+        case TIMER2_ID:
             value = TMR2;
             break;
 #    endif
 #    if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
-        case 2:
+        case TIMER3_ID:
             value = TMR3;
             break;
 #    endif
 #    if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
-        case 3:
+        case TIMER4_ID:
             value = TMR4;
             break;
 #    endif
 #    if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
-        case 4:
+        case TIMER5_ID:
             value = TMR5;
             break;
 #    endif
 #    if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
-        case 5:
+        case TIMER6_ID:
             value = TMR6;
             break;
 #    endif
 #    if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
-        case 6:
+        case TIMER7_ID:
             value = TMR7;
             break;
 #    endif
 #    if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
-        case 7:
+        case TIMER8_ID:
             value = TMR8;
             break;
 #    endif
 #    if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
-        case 8:
+        case TIMER9_ID:
             value = TMR9;
             break;
 #    endif
@@ -693,47 +693,47 @@ int timer_setValue(rt_dev_t device, uint16_t value)
     switch (timer)
     {
 #    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
-        case 0:
+        case TIMER1_ID:
             TMR1 = value;
             break;
 #    endif
 #    if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
-        case 1:
+        case TIMER2_ID:
             TMR2 = value;
             break;
 #    endif
 #    if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
-        case 2:
+        case TIMER3_ID:
             TMR3 = value;
             break;
 #    endif
 #    if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
-        case 3:
+        case TIMER4_ID:
             TMR4 = value;
             break;
 #    endif
 #    if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
-        case 4:
+        case TIMER5_ID:
             TMR5 = value;
             break;
 #    endif
 #    if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
-        case 5:
+        case TIMER6_ID:
             TMR6 = value;
             break;
 #    endif
 #    if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
-        case 6:
+        case TIMER7_ID:
             TMR7 = value;
             break;
 #    endif
 #    if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
-        case 7:
+        case TIMER8_ID:
             TMR8 = value;
             break;
 #    endif
 #    if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
-        case 8:
+        case TIMER9_ID:
             TMR9 = value;
             break;
 #    endif
@@ -748,9 +748,9 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 #if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
 void __attribute__((interrupt, no_auto_psv, weak)) _T1Interrupt(void)
 {
-    if (_timers[0].handler)
+    if (_timers[TIMER1_ID].handler)
     {
-        (*_timers[0].handler)();
+        (*_timers[TIMER1_ID].handler)();
     }
 
     _T1IF = 0;
@@ -760,9 +760,9 @@ void __attribute__((interrupt, no_auto_psv, weak)) _T1Interrupt(void)
 #if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
 void __attribute__((interrupt, no_auto_psv, weak)) _T2Interrupt(void)
 {
-    if (_timers[1].handler)
+    if (_timers[TIMER2_ID].handler)
     {
-        (*_timers[1].handler)();
+        (*_timers[TIMER2_ID].handler)();
     }
 
     _T2IF = 0;
@@ -772,9 +772,9 @@ void __attribute__((interrupt, no_auto_psv, weak)) _T2Interrupt(void)
 #if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
 void __attribute__((interrupt, no_auto_psv, weak)) _T3Interrupt(void)
 {
-    if (_timers[2].handler)
+    if (_timers[TIMER3_ID].handler)
     {
-        (*_timers[2].handler)();
+        (*_timers[TIMER3_ID].handler)();
     }
 
     _T3IF = 0;
@@ -784,9 +784,9 @@ void __attribute__((interrupt, no_auto_psv, weak)) _T3Interrupt(void)
 #if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
 void __attribute__((interrupt, no_auto_psv, weak)) _T4Interrupt(void)
 {
-    if (_timers[3].handler)
+    if (_timers[TIMER4_ID].handler)
     {
-        (*_timers[3].handler)();
+        (*_timers[TIMER4_ID].handler)();
     }
 
     _T4IF = 0;
@@ -796,9 +796,9 @@ void __attribute__((interrupt, no_auto_psv, weak)) _T4Interrupt(void)
 #if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
 void __attribute__((interrupt, no_auto_psv, weak)) _T5Interrupt(void)
 {
-    if (_timers[4].handler)
+    if (_timers[TIMER5_ID].handler)
     {
-        (*_timers[4].handler)();
+        (*_timers[TIMER5_ID].handler)();
     }
 
     _T5IF = 0;
@@ -808,9 +808,9 @@ void __attribute__((interrupt, no_auto_psv, weak)) _T5Interrupt(void)
 #if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
 void __attribute__((interrupt, no_auto_psv, weak)) _T6Interrupt(void)
 {
-    if (_timers[5].handler)
+    if (_timers[TIMER6_ID].handler)
     {
-        (*_timers[5].handler)();
+        (*_timers[TIMER6_ID].handler)();
     }
 
     _T6IF = 0;
@@ -820,9 +820,9 @@ void __attribute__((interrupt, no_auto_psv, weak)) _T6Interrupt(void)
 #if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
 void __attribute__((interrupt, no_auto_psv, weak)) _T7Interrupt(void)
 {
-    if (_timers[6].handler)
+    if (_timers[TIMER7_ID].handler)
     {
-        (*_timers[6].handler)();
+        (*_timers[TIMER7_ID].handler)();
     }
 
     _T7IF = 0;
@@ -832,9 +832,9 @@ void __attribute__((interrupt, no_auto_psv, weak)) _T7Interrupt(void)
 #if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
 void __attribute__((interrupt, no_auto_psv, weak)) _T8Interrupt(void)
 {
-    if (_timers[7].handler)
+    if (_timers[TIMER8_ID].handler)
     {
-        (*_timers[7].handler)();
+        (*_timers[TIMER8_ID].handler)();
     }
 
     _T8IF = 0;
@@ -844,9 +844,9 @@ void __attribute__((interrupt, no_auto_psv, weak)) _T8Interrupt(void)
 #if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
 void __attribute__((interrupt, no_auto_psv, weak)) _T9Interrupt(void)
 {
-    if (_timers[8].handler)
+    if (_timers[TIMER9_ID].handler)
     {
-        (*_timers[8].handler)();
+        (*_timers[TIMER9_ID].handler)();
     }
 
     _T9IF = 0;

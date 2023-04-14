@@ -175,10 +175,10 @@ int timer_enable(rt_dev_t device)
 
     switch (timer)
     {
-        case 0:
+        case TIMER1_ID:
             T1CONbits.TON = 1;  // enable timer module
             _T1IF = 0;
-            if (_timers[0].handler)
+            if (_timers[TIMER1_ID].handler)
             {
                 _T1IE = 1;
             }
@@ -214,7 +214,7 @@ int timer_disable(rt_dev_t device)
 
     switch (timer)
     {
-        case 0:
+        case TIMER1_ID:
             T1CONbits.TON = 0;  // disable timer module
             _T1IE = 0;
             break;
@@ -302,7 +302,7 @@ int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
 
     switch (timer)
     {
-        case 0:
+        case TIMER1_ID:
             T1CONbits.TCKPS = divisor;  // set divide number
             PR1 = prvalue;              // pr value, comparator value
             break;
@@ -330,7 +330,7 @@ uint32_t timer_period(rt_dev_t device)
 
     switch (timer)
     {
-        case 0:
+        case TIMER1_ID:
             return PR1;
     }
     return -1;
@@ -448,7 +448,7 @@ uint16_t timer_value(rt_dev_t device)
 
     switch (timer)
     {
-        case 0:
+        case TIMER1_ID:
             value = TMR1;
             break;
     }
@@ -475,7 +475,7 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 
     switch (timer)
     {
-        case 0:
+        case TIMER1_ID:
             TMR1 = value;
             break;
     }
@@ -489,9 +489,9 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 #if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _T1Interrupt(void)
 {
-    if (_timers[0].handler)
+    if (_timers[TIMER1_ID].handler)
     {
-        (*_timers[0].handler)();
+        (*_timers[TIMER1_ID].handler)();
     }
 
     _T1IF = 0;

@@ -86,11 +86,11 @@ static void *_timer1_thread(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        usleep(_timers[0].periodUs);
-        _timers[0].value++;
-        if (_timers[0].handler)
+        usleep(_timers[TIMER1_ID].periodUs);
+        _timers[TIMER1_ID].value++;
+        if (_timers[TIMER1_ID].handler)
         {
-            (*_timers[0].handler)();
+            (*_timers[TIMER1_ID].handler)();
         }
     }
     return NULL;
@@ -103,11 +103,11 @@ static void *_timer2_thread(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_timers[1].periodUs);
-        _timers[1].value++;
-        if (_timers[1].handler)
+        psleep(_timers[TIMER2_ID].periodUs);
+        _timers[TIMER2_ID].value++;
+        if (_timers[TIMER2_ID].handler)
         {
-            (*_timers[1].handler)();
+            (*_timers[TIMER2_ID].handler)();
         }
     }
     return NULL;
@@ -120,11 +120,11 @@ static void *_timer3_thread(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_timers[2].periodUs);
-        _timers[2].value++;
-        if (_timers[2].handler)
+        psleep(_timers[TIMER3_ID].periodUs);
+        _timers[TIMER3_ID].value++;
+        if (_timers[TIMER3_ID].handler)
         {
-            (*_timers[2].handler)();
+            (*_timers[TIMER3_ID].handler)();
         }
     }
     return NULL;
@@ -137,11 +137,11 @@ static void *_timer4_thread(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_timers[3].periodUs);
-        _timers[3].value++;
-        if (_timers[3].handler)
+        psleep(_timers[TIMER4_ID].periodUs);
+        _timers[TIMER4_ID].value++;
+        if (_timers[TIMER4_ID].handler)
         {
-            (*_timers[3].handler)();
+            (*_timers[TIMER4_ID].handler)();
         }
     }
     return NULL;
@@ -154,11 +154,11 @@ static void *_timer5_thread(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_timers[4].periodUs);
-        _timers[4].value++;
-        if (_timers[4].handler)
+        psleep(_timers[TIMER5_ID].periodUs);
+        _timers[TIMER5_ID].value++;
+        if (_timers[TIMER5_ID].handler)
         {
-            (*_timers[4].handler)();
+            (*_timers[TIMER5_ID].handler)();
         }
     }
     return NULL;
@@ -171,11 +171,11 @@ static void *_timer6_thread(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_timers[5].periodUs);
-        _timers[5].value++;
-        if (_timers[5].handler)
+        psleep(_timers[TIMER6_ID].periodUs);
+        _timers[TIMER6_ID].value++;
+        if (_timers[TIMER6_ID].handler)
         {
-            (*_timers[5].handler)();
+            (*_timers[TIMER6_ID].handler)();
         }
     }
     return NULL;
@@ -188,11 +188,11 @@ static void *_timer7_thread(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_timers[6].periodUs);
-        _timers[6].value++;
-        if (_timers[6].handler)
+        psleep(_timers[TIMER7_ID].periodUs);
+        _timers[TIMER7_ID].value++;
+        if (_timers[TIMER7_ID].handler)
         {
-            (*_timers[6].handler)();
+            (*_timers[TIMER7_ID].handler)();
         }
     }
     return NULL;
@@ -205,11 +205,11 @@ static void *_timer8_thread(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_timers[7].periodUs);
-        _timers[7].value++;
-        if (_timers[7].handler)
+        psleep(_timers[TIMER8_ID].periodUs);
+        _timers[TIMER8_ID].value++;
+        if (_timers[TIMER8_ID].handler)
         {
-            (*_timers[7].handler)();
+            (*_timers[TIMER8_ID].handler)();
         }
     }
     return NULL;
@@ -222,11 +222,11 @@ static void *_timer9_thread(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_timers[8].periodUs);
-        _timers[8].value++;
-        if (_timers[8].handler)
+        psleep(_timers[TIMER9_ID].periodUs);
+        _timers[TIMER9_ID].value++;
+        if (_timers[TIMER9_ID].handler)
         {
-            (*_timers[8].handler)();
+            (*_timers[TIMER9_ID].handler)();
         }
     }
     return NULL;
@@ -338,47 +338,47 @@ int timer_enable(rt_dev_t device)
     switch (timer)
     {
 #if TIMER_COUNT >= 1 && !defined(TIMER1_DISABLE)
-        case 0:
+        case TIMER1_ID:
             pthread_create(&_timers[timer].thread_timer, NULL, _timer1_thread, NULL);
             break;
 #endif
 #if TIMER_COUNT >= 2 && !defined(TIMER2_DISABLE)
-        case 1:
+        case TIMER2_ID:
             pthread_create(&_timers[timer].thread_timer, NULL, _timer2_thread, NULL);
             break;
 #endif
 #if TIMER_COUNT >= 3 && !defined(TIMER3_DISABLE)
-        case 2:
+        case TIMER3_ID:
             pthread_create(&_timers[timer].thread_timer, NULL, _timer3_thread, NULL);
             break;
 #endif
 #if TIMER_COUNT >= 4 && !defined(TIMER4_DISABLE)
-        case 3:
+        case TIMER4_ID:
             pthread_create(&_timers[timer].thread_timer, NULL, _timer4_thread, NULL);
             break;
 #endif
 #if TIMER_COUNT >= 5 && !defined(TIMER5_DISABLE)
-        case 4:
+        case TIMER5_ID:
             pthread_create(&_timers[timer].thread_timer, NULL, _timer5_thread, NULL);
             break;
 #endif
 #if TIMER_COUNT >= 6 && !defined(TIMER6_DISABLE)
-        case 5:
+        case TIMER6_ID:
             pthread_create(&_timers[timer].thread_timer, NULL, _timer6_thread, NULL);
             break;
 #endif
 #if TIMER_COUNT >= 7 && !defined(TIMER7_DISABLE)
-        case 6:
+        case TIMER7_ID:
             pthread_create(&_timers[timer].thread_timer, NULL, _timer7_thread, NULL);
             break;
 #endif
 #if TIMER_COUNT >= 8 && !defined(TIMER8_DISABLE)
-        case 7:
+        case TIMER8_ID:
             pthread_create(&_timers[timer].thread_timer, NULL, _timer8_thread, NULL);
             break;
 #endif
 #if TIMER_COUNT >= 9 && !defined(TIMER9_DISABLE)
-        case 8:
+        case TIMER9_ID:
             pthread_create(&_timers[timer].thread_timer, NULL, _timer9_thread, NULL);
             break;
 #endif
