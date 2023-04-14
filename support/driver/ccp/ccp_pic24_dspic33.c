@@ -224,7 +224,7 @@ int ccp_enable(rt_dev_t device)
     switch (ccp)
     {
 #    if (CCP_COUNT >= 1) && !defined(CCP1_DISABLE)
-        case 0:
+        case CCP1_ID:
             _CCT1IF = 0;
             _CCT1IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT1IP = 4;
@@ -232,7 +232,7 @@ int ccp_enable(rt_dev_t device)
             break;
 #    endif
 #    if (CCP_COUNT >= 2) && !defined(CCP2_DISABLE)
-        case 1:
+        case CCP2_ID:
             _CCT2IF = 0;
             _CCT2IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT2IP = 4;
@@ -240,7 +240,7 @@ int ccp_enable(rt_dev_t device)
             break;
 #    endif
 #    if (CCP_COUNT >= 3) && !defined(CCP3_DISABLE)
-        case 2:
+        case CCP3_ID:
             _CCT3IF = 0;
             _CCT3IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT3IP = 4;
@@ -248,7 +248,7 @@ int ccp_enable(rt_dev_t device)
             break;
 #    endif
 #    if (CCP_COUNT >= 4) && !defined(CCP4_DISABLE)
-        case 3:
+        case CCP4_ID:
             _CCT4IF = 0;
             _CCT4IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT4IP = 4;
@@ -256,7 +256,7 @@ int ccp_enable(rt_dev_t device)
             break;
 #    endif
 #    if (CCP_COUNT >= 5) && !defined(CCP5_DISABLE)
-        case 4:
+        case CCP5_ID:
             _CCT5IF = 0;
             _CCT5IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT5IP = 4;
@@ -264,7 +264,7 @@ int ccp_enable(rt_dev_t device)
             break;
 #    endif
 #    if (CCP_COUNT >= 6) && !defined(CCP6_DISABLE)
-        case 5:
+        case CCP6_ID:
             _CCT6IF = 0;
             _CCT6IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT6IP = 4;
@@ -272,7 +272,7 @@ int ccp_enable(rt_dev_t device)
             break;
 #    endif
 #    if (CCP_COUNT >= 7) && !defined(CCP7_DISABLE)
-        case 6:
+        case CCP7_ID:
             _CCT7IF = 0;
             _CCT7IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT7IP = 4;
@@ -280,7 +280,7 @@ int ccp_enable(rt_dev_t device)
             break;
 #    endif
 #    if (CCP_COUNT >= 8) && !defined(CCP8_DISABLE)
-        case 7:
+        case CCP8_ID:
             _CCT8IF = 0;
             _CCT8IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT8IP = 4;
@@ -288,7 +288,7 @@ int ccp_enable(rt_dev_t device)
             break;
 #    endif
 #    if (CCP_COUNT >= 9) && !defined(CCP9_DISABLE)
-        case 8:
+        case CCP9_ID:
             _CCT9IF = 0;
             _CCT9IE = (_ccps[ccp].handler != NULL) ? 1 : 0;
             _CCT9IP = 4;
@@ -322,55 +322,55 @@ int ccp_disable(rt_dev_t device)
     switch (ccp)
     {
 #    if (CCP_COUNT >= 1) && !defined(CCP1_DISABLE)
-        case 0:
+        case CCP1_ID:
             _CCT1IE = 0;
             CCP1CON1Lbits.CCPON = 0;  // disable ccp module
             break;
 #    endif
 #    if (CCP_COUNT >= 2) && !defined(CCP2_DISABLE)
-        case 1:
+        case CCP2_ID:
             _CCT2IE = 0;
             CCP2CON1Lbits.CCPON = 0;  // disable ccp module
             break;
 #    endif
 #    if (CCP_COUNT >= 3) && !defined(CCP3_DISABLE)
-        case 2:
+        case CCP3_ID:
             _CCT3IE = 0;
             CCP3CON1Lbits.CCPON = 0;  // disable ccp module
             break;
 #    endif
 #    if (CCP_COUNT >= 4) && !defined(CCP4_DISABLE)
-        case 3:
+        case CCP4_ID:
             _CCT4IE = 0;
             CCP4CON1Lbits.CCPON = 0;  // disable ccp module
             break;
 #    endif
 #    if (CCP_COUNT >= 5) && !defined(CCP5_DISABLE)
-        case 4:
+        case CCP5_ID:
             _CCT5IE = 0;
             CCP5CON1Lbits.CCPON = 0;  // disable ccp module
             break;
 #    endif
 #    if (CCP_COUNT >= 6) && !defined(CCP6_DISABLE)
-        case 5:
+        case CCP6_ID:
             _CCT6IE = 0;
             CCP6CON1Lbits.CCPON = 0;  // disable ccp module
             break;
 #    endif
 #    if (CCP_COUNT >= 7) && !defined(CCP7_DISABLE)
-        case 6:
+        case CCP7_ID:
             _CCT7IE = 0;
             CCP7CON1Lbits.CCPON = 0;  // disable ccp module
             break;
 #    endif
 #    if (CCP_COUNT >= 8) && !defined(CCP8_DISABLE)
-        case 7:
+        case CCP8_ID:
             _CCT8IE = 0;
             CCP8CON1Lbits.CCPON = 0;  // disable ccp module
             break;
 #    endif
 #    if (CCP_COUNT >= 9) && !defined(CCP9_DISABLE)
-        case 8:
+        case CCP9_ID:
             _CCT9IE = 0;
             CCP9CON1Lbits.CCPON = 0;  // disable ccp module
             break;
@@ -493,7 +493,7 @@ int ccp_setMode(rt_dev_t device, CCP_MODE mode)
     switch (ccp)
     {
 #    if (CCP_COUNT >= 1) && !defined(CCP1_DISABLE)
-        case 0:
+        case CCP1_ID:
             CCP1CON1Lbits.MOD = modeBit;
             CCP1CON1Lbits.T32 = t32bit;
             CCP1CON1Lbits.CCSEL = icBit;
@@ -501,7 +501,7 @@ int ccp_setMode(rt_dev_t device, CCP_MODE mode)
             break;
 #    endif
 #    if (CCP_COUNT >= 2) && !defined(CCP2_DISABLE)
-        case 1:
+        case CCP2_ID:
             CCP2CON1Lbits.MOD = modeBit;
             CCP2CON1Lbits.T32 = t32bit;
             CCP2CON1Lbits.CCSEL = icBit;
@@ -509,7 +509,7 @@ int ccp_setMode(rt_dev_t device, CCP_MODE mode)
             break;
 #    endif
 #    if (CCP_COUNT >= 3) && !defined(CCP3_DISABLE)
-        case 2:
+        case CCP3_ID:
             CCP3CON1Lbits.MOD = modeBit;
             CCP3CON1Lbits.T32 = t32bit;
             CCP3CON1Lbits.CCSEL = icBit;
@@ -517,7 +517,7 @@ int ccp_setMode(rt_dev_t device, CCP_MODE mode)
             break;
 #    endif
 #    if (CCP_COUNT >= 4) && !defined(CCP4_DISABLE)
-        case 3:
+        case CCP4_ID:
             CCP4CON1Lbits.MOD = modeBit;
             CCP4CON1Lbits.T32 = t32bit;
             CCP4CON1Lbits.CCSEL = icBit;
@@ -525,7 +525,7 @@ int ccp_setMode(rt_dev_t device, CCP_MODE mode)
             break;
 #    endif
 #    if (CCP_COUNT >= 5) && !defined(CCP5_DISABLE)
-        case 4:
+        case CCP5_ID:
             CCP5CON1Lbits.MOD = modeBit;
             CCP5CON1Lbits.T32 = t32bit;
             CCP5CON1Lbits.CCSEL = icBit;
@@ -533,7 +533,7 @@ int ccp_setMode(rt_dev_t device, CCP_MODE mode)
             break;
 #    endif
 #    if (CCP_COUNT >= 6) && !defined(CCP6_DISABLE)
-        case 5:
+        case CCP6_ID:
             CCP6CON1Lbits.MOD = modeBit;
             CCP6CON1Lbits.T32 = t32bit;
             CCP6CON1Lbits.CCSEL = icBit;
@@ -541,7 +541,7 @@ int ccp_setMode(rt_dev_t device, CCP_MODE mode)
             break;
 #    endif
 #    if (CCP_COUNT >= 7) && !defined(CCP7_DISABLE)
-        case 6:
+        case CCP7_ID:
             CCP7CON1Lbits.MOD = modeBit;
             CCP7CON1Lbits.T32 = t32bit;
             CCP7CON1Lbits.CCSEL = icBit;
@@ -549,7 +549,7 @@ int ccp_setMode(rt_dev_t device, CCP_MODE mode)
             break;
 #    endif
 #    if (CCP_COUNT >= 8) && !defined(CCP8_DISABLE)
-        case 7:
+        case CCP8_ID:
             CCP8CON1Lbits.MOD = modeBit;
             CCP8CON1Lbits.T32 = t32bit;
             CCP8CON1Lbits.CCSEL = icBit;
@@ -557,7 +557,7 @@ int ccp_setMode(rt_dev_t device, CCP_MODE mode)
             break;
 #    endif
 #    if (CCP_COUNT >= 9) && !defined(CCP9_DISABLE)
-        case 8:
+        case CCP9_ID:
             CCP9CON1Lbits.MOD = modeBit;
             CCP9CON1Lbits.T32 = t32bit;
             CCP9CON1Lbits.CCSEL = icBit;
@@ -591,55 +591,55 @@ int ccp_setCompare(rt_dev_t device, uint16_t cmpA, uint16_t cmpB)
     switch (ccp)
     {
 #    if (CCP_COUNT >= 1) && !defined(CCP1_DISABLE)
-        case 0:
+        case CCP1_ID:
             CCP1RA = cmpA;
             CCP1RB = cmpB;
             break;
 #    endif
 #    if (CCP_COUNT >= 2) && !defined(CCP2_DISABLE)
-        case 1:
+        case CCP2_ID:
             CCP2RA = cmpA;
             CCP2RB = cmpB;
             break;
 #    endif
 #    if (CCP_COUNT >= 3) && !defined(CCP3_DISABLE)
-        case 2:
+        case CCP3_ID:
             CCP3RA = cmpA;
             CCP3RB = cmpB;
             break;
 #    endif
 #    if (CCP_COUNT >= 4) && !defined(CCP4_DISABLE)
-        case 3:
+        case CCP4_ID:
             CCP4RA = cmpA;
             CCP4RB = cmpB;
             break;
 #    endif
 #    if (CCP_COUNT >= 5) && !defined(CCP5_DISABLE)
-        case 4:
+        case CCP5_ID:
             CCP5RA = cmpA;
             CCP5RB = cmpB;
             break;
 #    endif
 #    if (CCP_COUNT >= 6) && !defined(CCP6_DISABLE)
-        case 5:
+        case CCP6_ID:
             CCP6RA = cmpA;
             CCP6RB = cmpB;
             break;
 #    endif
 #    if (CCP_COUNT >= 7) && !defined(CCP7_DISABLE)
-        case 6:
+        case CCP7_ID:
             CCP7RA = cmpA;
             CCP7RB = cmpB;
             break;
 #    endif
 #    if (CCP_COUNT >= 8) && !defined(CCP8_DISABLE)
-        case 7:
+        case CCP8_ID:
             CCP8RA = cmpA;
             CCP8RB = cmpB;
             break;
 #    endif
 #    if (CCP_COUNT >= 9) && !defined(CCP9_DISABLE)
-        case 8:
+        case CCP9_ID:
             CCP9RA = cmpA;
             CCP9RB = cmpB;
             break;
@@ -670,55 +670,55 @@ int ccp_setPeriod(rt_dev_t device, uint32_t prvalue)
     switch (ccp)
     {
 #    if (CCP_COUNT >= 1) && !defined(CCP1_DISABLE)
-        case 0:
+        case CCP1_ID:
             CCP1PRH = prvalue >> 16;
             CCP1PRL = (uint16_t)prvalue;  // pr value, comparator value
             break;
 #    endif
 #    if (CCP_COUNT >= 2) && !defined(CCP2_DISABLE)
-        case 1:
+        case CCP2_ID:
             CCP2PRH = prvalue >> 16;
             CCP2PRL = (uint16_t)prvalue;  // pr value, comparator value
             break;
 #    endif
 #    if (CCP_COUNT >= 3) && !defined(CCP3_DISABLE)
-        case 2:
+        case CCP3_ID:
             CCP3PRH = prvalue >> 16;
             CCP3PRL = (uint16_t)prvalue;  // pr value, comparator value
             break;
 #    endif
 #    if (CCP_COUNT >= 4) && !defined(CCP4_DISABLE)
-        case 3:
+        case CCP4_ID:
             CCP4PRH = prvalue >> 16;
             CCP4PRL = (uint16_t)prvalue;  // pr value, comparator value
             break;
 #    endif
 #    if (CCP_COUNT >= 5) && !defined(CCP5_DISABLE)
-        case 4:
+        case CCP5_ID:
             CCP5PRH = prvalue >> 16;
             CCP5PRL = (uint16_t)prvalue;  // pr value, comparator value
             break;
 #    endif
 #    if (CCP_COUNT >= 6) && !defined(CCP6_DISABLE)
-        case 5:
+        case CCP6_ID:
             CCP6PRH = prvalue >> 16;
             CCP6PRL = (uint16_t)prvalue;  // pr value, comparator value
             break;
 #    endif
 #    if (CCP_COUNT >= 7) && !defined(CCP7_DISABLE)
-        case 6:
+        case CCP7_ID:
             CCP7PRH = prvalue >> 16;
             CCP7PRL = (uint16_t)prvalue;  // pr value, comparator value
             break;
 #    endif
 #    if (CCP_COUNT >= 8) && !defined(CCP8_DISABLE)
-        case 7:
+        case CCP8_ID:
             CCP8PRH = prvalue >> 16;
             CCP8PRL = (uint16_t)prvalue;  // pr value, comparator value
             break;
 #    endif
 #    if (CCP_COUNT >= 9) && !defined(CCP9_DISABLE)
-        case 8:
+        case CCP9_ID:
             CCP9PRH = prvalue >> 16;
             CCP9PRL = (uint16_t)prvalue;  // pr value, comparator value
             break;
@@ -748,39 +748,39 @@ uint32_t ccp_period(rt_dev_t device)
     switch (ccp)
     {
 #    if (CCP_COUNT >= 1) && !defined(CCP1_DISABLE)
-        case 0:
+        case CCP1_ID:
             return ((uint32_t)CCP1PRH << 16) + CCP1PRL;
 #    endif
 #    if (CCP_COUNT >= 2) && !defined(CCP2_DISABLE)
-        case 1:
+        case CCP2_ID:
             return ((uint32_t)CCP2PRH << 16) + CCP2PRL;
 #    endif
 #    if (CCP_COUNT >= 3) && !defined(CCP3_DISABLE)
-        case 2:
+        case CCP3_ID:
             return ((uint32_t)CCP3PRH << 16) + CCP3PRL;
 #    endif
 #    if (CCP_COUNT >= 4) && !defined(CCP4_DISABLE)
-        case 3:
+        case CCP4_ID:
             return ((uint32_t)CCP4PRH << 16) + CCP4PRL;
 #    endif
 #    if (CCP_COUNT >= 5) && !defined(CCP5_DISABLE)
-        case 4:
+        case CCP5_ID:
             return ((uint32_t)CCP5PRH << 16) + CCP5PRL;
 #    endif
 #    if (CCP_COUNT >= 6) && !defined(CCP6_DISABLE)
-        case 5:
+        case CCP6_ID:
             return ((uint32_t)CCP6PRH << 16) + CCP6PRL;
 #    endif
 #    if (CCP_COUNT >= 7) && !defined(CCP7_DISABLE)
-        case 6:
+        case CCP7_ID:
             return ((uint32_t)CCP7PRH << 16) + CCP7PRL;
 #    endif
 #    if (CCP_COUNT >= 8) && !defined(CCP8_DISABLE)
-        case 7:
+        case CCP8_ID:
             return ((uint32_t)CCP8PRH << 16) + CCP8PRL;
 #    endif
 #    if (CCP_COUNT >= 9) && !defined(CCP9_DISABLE)
-        case 8:
+        case CCP9_ID:
             return ((uint32_t)CCP9PRH << 16) + CCP9PRL;
 #    endif
     }
@@ -901,47 +901,47 @@ uint32_t ccp_value(rt_dev_t device)
     switch (ccp)
     {
 #    if (CCP_COUNT >= 1) && !defined(CCP1_DISABLE)
-        case 0:
+        case CCP1_ID:
             value = ((uint32_t)CCP1TMRH << 16) + CCP1TMRL;
             break;
 #    endif
 #    if (CCP_COUNT >= 2) && !defined(CCP2_DISABLE)
-        case 1:
+        case CCP2_ID:
             value = ((uint32_t)CCP2TMRH << 16) + CCP2TMRL;
             break;
 #    endif
 #    if (CCP_COUNT >= 3) && !defined(CCP3_DISABLE)
-        case 2:
+        case CCP3_ID:
             value = ((uint32_t)CCP3TMRH << 16) + CCP3TMRL;
             break;
 #    endif
 #    if (CCP_COUNT >= 4) && !defined(CCP4_DISABLE)
-        case 3:
+        case CCP4_ID:
             value = ((uint32_t)CCP4TMRH << 16) + CCP4TMRL;
             break;
 #    endif
 #    if (CCP_COUNT >= 5) && !defined(CCP5_DISABLE)
-        case 4:
+        case CCP5_ID:
             value = ((uint32_t)CCP5TMRH << 16) + CCP5TMRL;
             break;
 #    endif
 #    if (CCP_COUNT >= 6) && !defined(CCP6_DISABLE)
-        case 5:
+        case CCP6_ID:
             value = ((uint32_t)CCP6TMRH << 16) + CCP6TMRL;
             break;
 #    endif
 #    if (CCP_COUNT >= 7) && !defined(CCP7_DISABLE)
-        case 6:
+        case CCP7_ID:
             value = ((uint32_t)CCP7TMRH << 16) + CCP7TMRL;
             break;
 #    endif
 #    if (CCP_COUNT >= 8) && !defined(CCP8_DISABLE)
-        case 7:
+        case CCP8_ID:
             value = ((uint32_t)CCP8TMRH << 16) + CCP8TMRL;
             break;
 #    endif
 #    if (CCP_COUNT >= 9) && !defined(CCP9_DISABLE)
-        case 8:
+        case CCP9_ID:
             value = ((uint32_t)CCP9TMRH << 16) + CCP9TMRL;
             break;
 #    endif
@@ -970,55 +970,55 @@ int ccp_setValue(rt_dev_t device, uint32_t value)
     switch (ccp)
     {
 #    if (CCP_COUNT >= 1) && !defined(CCP1_DISABLE)
-        case 0:
+        case CCP1_ID:
             CCP1TMRH = value >> 16;
             CCP1TMRL = (uint16_t)value;
             break;
 #    endif
 #    if (CCP_COUNT >= 2) && !defined(CCP2_DISABLE)
-        case 1:
+        case CCP2_ID:
             CCP2TMRH = value >> 16;
             CCP2TMRL = (uint16_t)value;
             break;
 #    endif
 #    if (CCP_COUNT >= 3) && !defined(CCP3_DISABLE)
-        case 2:
+        case CCP3_ID:
             CCP3TMRH = value >> 16;
             CCP3TMRL = (uint16_t)value;
             break;
 #    endif
 #    if (CCP_COUNT >= 4) && !defined(CCP4_DISABLE)
-        case 3:
+        case CCP4_ID:
             CCP4TMRH = value >> 16;
             CCP4TMRL = (uint16_t)value;
             break;
 #    endif
 #    if (CCP_COUNT >= 5) && !defined(CCP5_DISABLE)
-        case 4:
+        case CCP5_ID:
             CCP5TMRH = value >> 16;
             CCP5TMRL = (uint16_t)value;
             break;
 #    endif
 #    if (CCP_COUNT >= 6) && !defined(CCP6_DISABLE)
-        case 5:
+        case CCP6_ID:
             CCP6TMRH = value >> 16;
             CCP6TMRL = (uint16_t)value;
             break;
 #    endif
 #    if (CCP_COUNT >= 7) && !defined(CCP7_DISABLE)
-        case 6:
+        case CCP7_ID:
             CCP7TMRH = value >> 16;
             CCP7TMRL = (uint16_t)value;
             break;
 #    endif
 #    if (CCP_COUNT >= 8) && !defined(CCP8_DISABLE)
-        case 7:
+        case CCP8_ID:
             CCP8TMRH = value >> 16;
             CCP8TMRL = (uint16_t)value;
             break;
 #    endif
 #    if (CCP_COUNT >= 9) && !defined(CCP9_DISABLE)
-        case 8:
+        case CCP9_ID:
             CCP9TMRH = value >> 16;
             CCP9TMRL = (uint16_t)value;
             break;
@@ -1034,7 +1034,7 @@ int ccp_setValue(rt_dev_t device, uint32_t value)
 #if (CCP_COUNT >= 1) && !defined(CCP1_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _CCT1Interrupt(void)
 {
-    (*_ccps[0].handler)();
+    (*_ccps[CCP1_ID].handler)();
     _CCT1IF = 0;
 }
 #endif
@@ -1042,7 +1042,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT1Interrupt(void)
 #if (CCP_COUNT >= 2) && !defined(CCP2_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _CCT2Interrupt(void)
 {
-    (*_ccps[1].handler)();
+    (*_ccps[CCP2_ID].handler)();
     _CCT2IF = 0;
 }
 #endif
@@ -1050,7 +1050,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT2Interrupt(void)
 #if (CCP_COUNT >= 3) && !defined(CCP3_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _CCT3Interrupt(void)
 {
-    (*_ccps[2].handler)();
+    (*_ccps[CCP3_ID].handler)();
     _CCT3IF = 0;
 }
 #endif
@@ -1058,7 +1058,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT3Interrupt(void)
 #if (CCP_COUNT >= 4) && !defined(CCP4_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _CCT4Interrupt(void)
 {
-    (*_ccps[3].handler)();
+    (*_ccps[CCP4_ID].handler)();
     _CCT4IF = 0;
 }
 #endif
@@ -1066,7 +1066,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT4Interrupt(void)
 #if (CCP_COUNT >= 5) && !defined(CCP5_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _CCT5Interrupt(void)
 {
-    (*_ccps[4].handler)();
+    (*_ccps[CCP5_ID].handler)();
     _CCT5IF = 0;
 }
 #endif
@@ -1074,7 +1074,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT5Interrupt(void)
 #if (CCP_COUNT >= 6) && !defined(CCP6_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _CCT6Interrupt(void)
 {
-    (*_ccps[5].handler)();
+    (*_ccps[CCP6_ID].handler)();
     _CCT6IF = 0;
 }
 #endif
@@ -1082,7 +1082,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT6Interrupt(void)
 #if (CCP_COUNT >= 7) && !defined(CCP7_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _CCT7Interrupt(void)
 {
-    (*_ccps[6].handler)();
+    (*_ccps[CCP7_ID].handler)();
     _CCT7IF = 0;
 }
 #endif
@@ -1090,7 +1090,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT7Interrupt(void)
 #if (CCP_COUNT >= 8) && !defined(CCP8_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _CCT8Interrupt(void)
 {
-    (*_ccps[7].handler)();
+    (*_ccps[CCP8_ID].handler)();
     _CCT8IF = 0;
 }
 #endif
@@ -1098,7 +1098,7 @@ void __attribute__((interrupt, auto_psv, weak)) _CCT8Interrupt(void)
 #if (CCP_COUNT >= 9) && !defined(CCP9_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _CCT9Interrupt(void)
 {
-    (*_ccps[8].handler)();
+    (*_ccps[CCP9_ID].handler)();
     _CCT9IF = 0;
 }
 #endif

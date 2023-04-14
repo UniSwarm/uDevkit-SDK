@@ -81,11 +81,11 @@ static void *ccp1_handler(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        usleep(_ccps[0].periodUs);
-        _ccps[0].value++;
-        if (_ccps[0].handler)
+        usleep(_ccps[CCP1_ID].periodUs);
+        _ccps[CCP1_ID].value++;
+        if (_ccps[CCP1_ID].handler)
         {
-            (*_ccps[0].handler)();
+            (*_ccps[CCP1_ID].handler)();
         }
     }
     return NULL;
@@ -98,11 +98,11 @@ static void *ccp2_handler(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_ccps[1].periodUs);
-        _ccps[1].value++;
-        if (_ccps[1].handler)
+        psleep(_ccps[CCP2_ID].periodUs);
+        _ccps[CCP2_ID].value++;
+        if (_ccps[CCP2_ID].handler)
         {
-            (*_ccps[1].handler)();
+            (*_ccps[CCP2_ID].handler)();
         }
     }
     return NULL;
@@ -115,11 +115,11 @@ static void *ccp3_handler(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_ccps[2].periodUs);
-        _ccps[2].value++;
-        if (_ccps[2].handler)
+        psleep(_ccps[CCP3_ID].periodUs);
+        _ccps[CCP3_ID].value++;
+        if (_ccps[CCP3_ID].handler)
         {
-            (*_ccps[2].handler)();
+            (*_ccps[CCP3_ID].handler)();
         }
     }
     return NULL;
@@ -132,11 +132,11 @@ static void *ccp4_handler(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_ccps[3].periodUs);
-        _ccps[3].value++;
-        if (_ccps[3].handler)
+        psleep(_ccps[CCP4_ID].periodUs);
+        _ccps[CCP4_ID].value++;
+        if (_ccps[CCP4_ID].handler)
         {
-            (*_ccps[3].handler)();
+            (*_ccps[CCP4_ID].handler)();
         }
     }
     return NULL;
@@ -149,11 +149,11 @@ static void *ccp5_handler(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_ccps[4].periodUs);
-        _ccps[4].value++;
-        if (_ccps[4].handler)
+        psleep(_ccps[CCP5_ID].periodUs);
+        _ccps[CCP5_ID].value++;
+        if (_ccps[CCP5_ID].handler)
         {
-            (*_ccps[4].handler)();
+            (*_ccps[CCP5_ID].handler)();
         }
     }
     return NULL;
@@ -166,11 +166,11 @@ static void *ccp6_handler(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_ccps[5].periodUs);
-        _ccps[5].value++;
-        if (_ccps[5].handler)
+        psleep(_ccps[CCP6_ID].periodUs);
+        _ccps[CCP6_ID].value++;
+        if (_ccps[CCP6_ID].handler)
         {
-            (*_ccps[5].handler)();
+            (*_ccps[CCP6_ID].handler)();
         }
     }
     return NULL;
@@ -183,11 +183,11 @@ static void *ccp7_handler(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_ccps[6].periodUs);
-        _ccps[6].value++;
-        if (_ccps[6].handler)
+        psleep(_ccps[CCP7_ID].periodUs);
+        _ccps[CCP7_ID].value++;
+        if (_ccps[CCP7_ID].handler)
         {
-            (*_ccps[6].handler)();
+            (*_ccps[CCP7_ID].handler)();
         }
     }
     return NULL;
@@ -200,11 +200,11 @@ static void *ccp8_handler(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_ccps[7].periodUs);
-        _ccps[7].value++;
-        if (_ccps[7].handler)
+        psleep(_ccps[CCP8_ID].periodUs);
+        _ccps[CCP8_ID].value++;
+        if (_ccps[CCP8_ID].handler)
         {
-            (*_ccps[7].handler)();
+            (*_ccps[CCP8_ID].handler)();
         }
     }
     return NULL;
@@ -217,11 +217,11 @@ static void *ccp9_handler(void *p_data)
     UDK_UNUSED(p_data);
     while (1)
     {
-        psleep(_ccps[8].periodUs);
-        _ccps[8].value++;
-        if (_ccps[8].handler)
+        psleep(_ccps[CCP9_ID].periodUs);
+        _ccps[CCP9_ID].value++;
+        if (_ccps[CCP9_ID].handler)
         {
-            (*_ccps[8].handler)();
+            (*_ccps[CCP9_ID].handler)();
         }
     }
     return NULL;
@@ -343,46 +343,46 @@ int ccp_enable(rt_dev_t device)
 
     switch (ccp)
     {
-        case 0:
+        case CCP1_ID:
             pthread_create(&_ccps[ccp].thread_ccp, NULL, ccp1_handler, NULL);
             break;
 #    if CCP_COUNT >= 2
-        case 1:
+        case CCP2_ID:
             pthread_create(&_ccps[ccp].thread_ccp, NULL, ccp2_handler, NULL);
             break;
 #    endif
 #    if CCP_COUNT >= 3
-        case 2:
+        case CCP3_ID:
             pthread_create(&_ccps[ccp].thread_ccp, NULL, ccp3_handler, NULL);
             break;
 #    endif
 #    if CCP_COUNT >= 4
-        case 3:
+        case CCP4_ID:
             pthread_create(&_ccps[ccp].thread_ccp, NULL, ccp4_handler, NULL);
             break;
 #    endif
 #    if CCP_COUNT >= 5
-        case 4:
+        case CCP5_ID:
             pthread_create(&_ccps[ccp].thread_ccp, NULL, ccp5_handler, NULL);
             break;
 #    endif
 #    if CCP_COUNT >= 6
-        case 5:
+        case CCP6_ID:
             pthread_create(&_ccps[ccp].thread_ccp, NULL, ccp6_handler, NULL);
             break;
 #    endif
 #    if CCP_COUNT >= 7
-        case 6:
+        case CCP7_ID:
             pthread_create(&_ccps[ccp].thread_ccp, NULL, ccp7_handler, NULL);
             break;
 #    endif
 #    if CCP_COUNT >= 8
-        case 7:
+        case CCP8_ID:
             pthread_create(&_ccps[ccp].thread_ccp, NULL, ccp8_handler, NULL);
             break;
 #    endif
 #    if CCP_COUNT >= 9
-        case 8:
+        case CCP9_ID:
             pthread_create(&_ccps[ccp].thread_ccp, NULL, ccp9_handler, NULL);
             break;
 #    endif
