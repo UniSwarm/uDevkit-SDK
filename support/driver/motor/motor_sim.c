@@ -10,7 +10,7 @@
  */
 
 #include "motor_sim.h"
-#include "driver/adc.h"
+#include <driver/adc.h>
 
 int motor_init(void)
 {

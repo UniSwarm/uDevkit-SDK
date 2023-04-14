@@ -14,9 +14,9 @@
 #include "asserv.h"
 #include "board.h"
 
-#include "driver/motor.h"
-#include "driver/qei.h"
-#include "driver/timer.h"
+#include <driver/motor.h>
+#include <driver/qei.h>
+#include <driver/timer.h>
 
 #include <stdio.h>
 #include <string.h>

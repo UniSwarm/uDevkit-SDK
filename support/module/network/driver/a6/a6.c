@@ -14,8 +14,8 @@
 #include "a6.h"
 
 #include "board.h"
-#include "driver/gpio.h"
-#include "driver/uart.h"
+#include <driver/gpio.h>
+#include <driver/uart.h>
 
 rt_dev_t a6_uart;
 rt_dev_t a6_txen;

@@ -11,7 +11,7 @@
 
 #include "VL6180X.h"
 
-#include "driver/i2c.h"
+#include <driver/i2c.h>
 
 rt_dev_t VL6180X_init(rt_dev_t i2c_bus, uint8_t i2c_addr)
 {

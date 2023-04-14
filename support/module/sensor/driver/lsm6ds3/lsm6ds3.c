@@ -12,7 +12,7 @@
 #include "lsm6ds3.h"
 #include "lsm6ds3_registers.h"
 
-#include "driver/i2c.h"
+#include <driver/i2c.h>
 
 rt_dev_t lsm6ds3_init(rt_dev_t i2c_bus, uint8_t i2c_addr)
 {

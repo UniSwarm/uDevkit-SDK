@@ -11,9 +11,9 @@
 
 #include "deltatips.h"
 
-#include "driver/motor.h"
-#include "driver/qei.h"
-#include "module/mrobot.h"
+#include <driver/motor.h>
+#include <driver/qei.h>
+#include <module/mrobot.h>
 
 int robot_init(void)
 {

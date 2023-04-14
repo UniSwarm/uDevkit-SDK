@@ -11,7 +11,7 @@
 
 #include "pwm.h"
 
-#include "driver/timer.h"
+#include <driver/timer.h>
 
 // !!! This implementation only support oc periph at the time
 

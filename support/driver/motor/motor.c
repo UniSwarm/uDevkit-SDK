@@ -11,7 +11,7 @@
 
 #include <archi.h>
 
-#include "driver/adc.h"
+#include <driver/adc.h>
 #include "motor.h"
 
 // <TODO replace theses functions by pwm support

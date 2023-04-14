@@ -17,7 +17,7 @@
 
 #include <board.h>
 
-#include "driver/uart.h"
+#include <driver/uart.h>
 #include "sys/buffer.h"
 
 // data receive from esp

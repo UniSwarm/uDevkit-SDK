@@ -13,7 +13,7 @@
 #include "simulator.h"
 #include "uart.h"
 
-#include "driver/sysclock.h"
+#include <driver/sysclock.h>
 #include "sys/fifo.h"
 
 #if !defined(UART_COUNT) || UART_COUNT == 0

@@ -2,9 +2,9 @@
 
 #include "board.h"
 #include "fonts.h"
-#include "module/gui.h"
+#include <module/gui.h>
 
-#include "module/network.h"
+#include <module/network.h>
 #include "motors.h"
 
 #include <stdio.h>

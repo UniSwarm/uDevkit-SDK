@@ -12,7 +12,7 @@
 #include "simulator.h"
 #include "timer.h"
 
-#include "driver/sysclock.h"
+#include <driver/sysclock.h>
 
 #if !defined(TIMER_COUNT) || TIMER_COUNT == 0
 #    warning "No uart on the current device or unknow device"

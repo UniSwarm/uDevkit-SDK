@@ -12,7 +12,7 @@
 
 #include "i2c.h"
 
-#include "driver/sysclock.h"
+#include <driver/sysclock.h>
 
 #include <archi.h>
 
