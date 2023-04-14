@@ -21,6 +21,10 @@
 #    warning "No qei on the current device or unknow device"
 #endif
 
+#ifdef UDEVKIT_HAVE_CONFIG
+#    include "udevkit_config.h"
+#endif
+
 enum
 {
     QEI_FLAG_UNUSED = 0x00
@@ -153,11 +157,20 @@ int qei_enable(rt_dev_t device)
 {
 #if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
-    if (qei != 0)
+    if (qei > QEI_COUNT)
     {
         return -1;
     }
-    QEICONbits.QEIM = 0b111;  // TODO, review this taking care of setConfig
+
+    switch (qei)
+    {
+#    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
+        case 0:
+            QEICONbits.QEIM = 0b111;  // TODO, review this taking care of setConfig
+            break;
+#    endif
+    }
+
     return 0;
 #else
     return -1;
@@ -173,11 +186,20 @@ int qei_disable(rt_dev_t device)
 {
 #if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
-    if (qei != 0)
+    if (qei > QEI_COUNT)
     {
         return -1;
     }
-    QEICONbits.QEIM = 0;
+
+    switch (qei)
+    {
+#    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
+        case 0:
+            QEICONbits.QEIM = 0;
+            break;
+#    endif
+    }
+
     return 0;
 #else
     return -1;
@@ -251,15 +273,22 @@ int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum)
  * @param device QEI device number
  * @return position
  */
-uint16_t qei_value(rt_dev_t device)
+qei_type qei_value(rt_dev_t device)
 {
 #if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
-    if (qei != 0)
+    if (qei > QEI_COUNT)
     {
-        return -1;
+        return 0;
     }
-    return POSCNT;
+
+    switch (qei)
+    {
+#    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
+        case 0:
+            return POSCNT;
+#    endif
+    }
 #else
     return 0;
 #endif

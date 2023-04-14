@@ -21,6 +21,10 @@
 #    warning "No qei on the current device or unknow device"
 #endif
 
+#ifdef UDEVKIT_HAVE_CONFIG
+#    include "udevkit_config.h"
+#endif
+
 enum
 {
     QEI_FLAG_UNUSED = 0x00
@@ -157,25 +161,24 @@ int qei_enable(rt_dev_t device)
     {
         return -1;
     }
+
+    switch (qei)
+    {
+#    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
+        case 0:
+            QEI1CON = 0b0000011100000000;
+            break;
+#    endif
+#    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
+        case 1:
+            QEI2CON = 0b0000011100000000;
+            break;
+#    endif
+    }
+
+    return 0;
 #else
     return -1;
-#endif
-
-#if QEI_COUNT >= 1
-    if (qei == 0)
-    {
-        QEI1CON = 0b0000011100000000;
-    }
-#endif
-#if QEI_COUNT >= 2
-    if (qei == 1)
-    {
-        QEI2CON = 0b0000011100000000;
-    }
-#endif
-
-#if QEI_COUNT >= 1
-    return 0;
 #endif
 }
 
@@ -192,25 +195,24 @@ int qei_disable(rt_dev_t device)
     {
         return -1;
     }
+
+    switch (qei)
+    {
+#    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
+        case 0:
+            QEI1CONbits.QEIM = 0b000;
+            break;
+#    endif
+#    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
+        case 1:
+            QEI2CONbits.QEIM = 0b000;
+            break;
+#    endif
+    }
+
+    return 0;
 #else
     return -1;
-#endif
-
-#if QEI_COUNT >= 1
-    if (qei == 0)
-    {
-        QEI1CONbits.QEIM = 0b000;
-    }
-#endif
-#if QEI_COUNT >= 2
-    if (qei == 1)
-    {
-        QEI2CONbits.QEIM = 0b000;
-    }
-#endif
-
-#if QEI_COUNT >= 1
-    return 0;
 #endif
 }
 
@@ -276,18 +278,25 @@ qei_type qei_value(rt_dev_t device)
 {
 #if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
-    if (qei == 0)
+    if (qei > QEI_COUNT)
     {
-        return POS1CNT;
+        return -1;
     }
-#endif
-#if QEI_COUNT >= 2
-    if (qei == 1)
+
+    switch (qei)
     {
-        return POS2CNT;
+#    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
+        case 0:
+            return POS1CNT;
+#    endif
+#    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
+        case 1:
+            return POS2CNT;
+#    endif
     }
+#else
+    return -1;
 #endif
-    return 0;
 }
 
 int qei_setHomeValue(rt_dev_t device, qei_type home)

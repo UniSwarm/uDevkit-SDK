@@ -20,6 +20,10 @@
 #    warning "No qei on the current device or unknow device"
 #endif
 
+#ifdef UDEVKIT_HAVE_CONFIG
+#    include "udevkit_config.h"
+#endif
+
 enum
 {
     QEI_FLAG_UNUSED = 0x00
@@ -159,30 +163,32 @@ int qei_enable(rt_dev_t device)
 
     switch (qei)
     {
+#    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
         case 0:
             QEI1CONbits.QEIEN = 1;
             break;
-#    if QEI_COUNT >= 2
+#    endif
+#    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
         case 1:
             QEI2CONbits.QEIEN = 1;
             break;
 #    endif
-#    if QEI_COUNT >= 3
+#    if (QEI_COUNT >= 3) && !defined(QEI3_DISABLE)
         case 2:
             QEI3CONbits.QEIEN = 1;
             break;
 #    endif
-#    if QEI_COUNT >= 4
+#    if (QEI_COUNT >= 4) && !defined(QEI4_DISABLE)
         case 3:
             QEI4CONbits.QEIEN = 1;
             break;
 #    endif
-#    if QEI_COUNT >= 5
+#    if (QEI_COUNT >= 5) && !defined(QEI5_DISABLE)
         case 4:
             QEI5CONbits.QEIEN = 1;
             break;
 #    endif
-#    if QEI_COUNT >= 6
+#    if (QEI_COUNT >= 6) && !defined(QEI6_DISABLE)
         case 5:
             QEI6CONbits.QEIEN = 1;
             break;
@@ -210,30 +216,32 @@ int qei_disable(rt_dev_t device)
 
     switch (qei)
     {
+#    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
         case 0:
             QEI1CONbits.QEIEN = 0;
             break;
-#    if QEI_COUNT >= 2
+#    endif
+#    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
         case 1:
             QEI2CONbits.QEIEN = 0;
             break;
 #    endif
-#    if QEI_COUNT >= 3
+#    if (QEI_COUNT >= 3) && !defined(QEI3_DISABLE)
         case 2:
             QEI3CONbits.QEIEN = 0;
             break;
 #    endif
-#    if QEI_COUNT >= 4
+#    if (QEI_COUNT >= 4) && !defined(QEI4_DISABLE)
         case 3:
             QEI4CONbits.QEIEN = 0;
             break;
 #    endif
-#    if QEI_COUNT >= 5
+#    if (QEI_COUNT >= 5) && !defined(QEI5_DISABLE)
         case 4:
             QEI5CONbits.QEIEN = 0;
             break;
 #    endif
-#    if QEI_COUNT >= 6
+#    if (QEI_COUNT >= 6) && !defined(QEI6_DISABLE)
         case 5:
             QEI6CONbits.QEIEN = 0;
             break;
@@ -278,26 +286,28 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
 
     switch (qei)
     {
+#    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
         case 0:
             // TODO implement me
             break;
-#    if QEI_COUNT >= 2
+#    endif
+#    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
         case 1:
             break;
 #    endif
-#    if QEI_COUNT >= 3
+#    if (QEI_COUNT >= 3) && !defined(QEI3_DISABLE)
         case 2:
             break;
 #    endif
-#    if QEI_COUNT >= 4
+#    if (QEI_COUNT >= 4) && !defined(QEI4_DISABLE)
         case 3:
             break;
 #    endif
-#    if QEI_COUNT >= 5
+#    if (QEI_COUNT >= 5) && !defined(QEI5_DISABLE)
         case 4:
             break;
 #    endif
-#    if QEI_COUNT >= 6
+#    if (QEI_COUNT >= 6) && !defined(QEI6_DISABLE)
         case 5:
             break;
 #    endif
@@ -349,25 +359,27 @@ qei_type qei_value(rt_dev_t device)
 
     switch (qei)
     {
+#    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
         case 0:
             return POS1CNT;
-#    if QEI_COUNT >= 2
+#    endif
+#    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
         case 1:
             return POS2CNT;
 #    endif
-#    if QEI_COUNT >= 3
+#    if (QEI_COUNT >= 3) && !defined(QEI3_DISABLE)
         case 2:
             return POS3CNT;
 #    endif
-#    if QEI_COUNT >= 4
+#    if (QEI_COUNT >= 4) && !defined(QEI4_DISABLE)
         case 3:
             return POS4CNT;
 #    endif
-#    if QEI_COUNT >= 5
+#    if (QEI_COUNT >= 5) && !defined(QEI5_DISABLE)
         case 4:
             return POS5CNT;
 #    endif
-#    if QEI_COUNT >= 6
+#    if (QEI_COUNT >= 6) && !defined(QEI6_DISABLE)
         case 5:
             return POS6CNT;
 #    endif
