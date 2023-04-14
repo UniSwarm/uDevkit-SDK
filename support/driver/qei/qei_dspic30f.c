@@ -167,7 +167,7 @@ int qei_enable(rt_dev_t device)
     switch (qei)
     {
 #    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
-        case 0:
+        case QEI1_ID:
             QEICONbits.QEIM = 0b111;  // TODO, review this taking care of setConfig
             break;
 #    endif
@@ -198,7 +198,7 @@ int qei_disable(rt_dev_t device)
     switch (qei)
     {
 #    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
-        case 0:
+        case QEI1_ID:
             QEICONbits.QEIM = 0;
             break;
 #    endif
@@ -289,7 +289,7 @@ qei_type qei_value(rt_dev_t device)
     switch (qei)
     {
 #    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
-        case 0:
+        case QEI1_ID:
             return POSCNT;
 #    endif
     }

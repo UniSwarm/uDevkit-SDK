@@ -167,12 +167,12 @@ int qei_enable(rt_dev_t device)
     switch (qei)
     {
 #    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
-        case 0:
+        case QEI1_ID:
             QEI1CON = 0b0000011100000000;
             break;
 #    endif
 #    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
-        case 1:
+        case QEI2_ID:
             QEI2CON = 0b0000011100000000;
             break;
 #    endif
@@ -203,12 +203,12 @@ int qei_disable(rt_dev_t device)
     switch (qei)
     {
 #    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
-        case 0:
+        case QEI1_ID:
             QEI1CONbits.QEIM = 0b000;
             break;
 #    endif
 #    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
-        case 1:
+        case QEI2_ID:
             QEI2CONbits.QEIM = 0b000;
             break;
 #    endif
@@ -290,11 +290,11 @@ qei_type qei_value(rt_dev_t device)
     switch (qei)
     {
 #    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
-        case 0:
+        case QEI1_ID:
             return POS1CNT;
 #    endif
 #    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
-        case 1:
+        case QEI2_ID:
             return POS2CNT;
 #    endif
     }

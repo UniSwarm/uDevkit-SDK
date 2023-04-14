@@ -167,17 +167,17 @@ int qei_enable(rt_dev_t device)
     switch (qei)
     {
 #    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
-        case 0:
+        case QEI1_ID:
             QEI1CONbits.QEIEN = 1;
             break;
 #    endif
 #    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
-        case 1:
+        case QEI2_ID:
             QEI2CONbits.QEIEN = 1;
             break;
 #    endif
 #    if (QEI_COUNT >= 3) && !defined(QEI3_DISABLE)
-        case 2:
+        case QEI3_ID:
             QEI3CONbits.QEIEN = 1;
             break;
 #    endif
@@ -208,17 +208,17 @@ int qei_disable(rt_dev_t device)
     switch (qei)
     {
 #    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
-        case 0:
+        case QEI1_ID:
             QEI1CONbits.QEIEN = 0;
             break;
 #    endif
 #    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
-        case 1:
+        case QEI2_ID:
             QEI2CONbits.QEIEN = 0;
             break;
 #    endif
 #    if (QEI_COUNT >= 3) && !defined(QEI3_DISABLE)
-        case 2:
+        case QEI3_ID:
             QEI3CONbits.QEIEN = 0;
             break;
 #    endif
@@ -264,7 +264,7 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
     switch (qei)
     {
 #    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
-        case 0:
+        case QEI1_ID:
             INDX1CNTH = 0xFFFF;
             INDX1CNTL = 0xFFFF;
 
@@ -280,7 +280,7 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
             break;
 #    endif
 #    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
-        case 1:
+        case QEI2_ID:
             INDX2CNTH = 0xFFFF;
             INDX2CNTL = 0xFFFF;
 
@@ -296,7 +296,7 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
             break;
 #    endif
 #    if (QEI_COUNT >= 3) && !defined(QEI3_DISABLE)
-        case 2:
+        case QEI3_ID:
             INDX3CNTH = 0xFFFF;
             INDX3CNTL = 0xFFFF;
 
@@ -358,19 +358,19 @@ int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider)
     switch (qei)
     {
 #    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
-        case 0:
+        case QEI1_ID:
             QEI1IOCbits.FLTREN = fltren;
             QEI1IOCbits.QFDIV = divider;
             break;
 #    endif
 #    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
-        case 1:
+        case QEI2_ID:
             QEI2IOCbits.FLTREN = fltren;
             QEI2IOCbits.QFDIV = divider;
             break;
 #    endif
 #    if (QEI_COUNT >= 3) && !defined(QEI3_DISABLE)
-        case 2:
+        case QEI3_ID:
             QEI3IOCbits.FLTREN = fltren;
             QEI3IOCbits.QFDIV = divider;
             break;
@@ -402,7 +402,7 @@ int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum)
     switch (qei)
     {
 #    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
-        case 0:
+        case QEI1_ID:
             QEI1CONbits.PIMOD = 6;  // modulo count mode for position counter
             QEI1LECL = minimum & 0xFFFF;
             QEI1LECH = (minimum >> 16) & 0xFFFF;
@@ -411,7 +411,7 @@ int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum)
             break;
 #    endif
 #    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
-        case 1:
+        case QEI2_ID:
             QEI2CONbits.PIMOD = 6;  // modulo count mode for position counter
             QEI2LECL = minimum & 0xFFFF;
             QEI2LECH = (minimum >> 16) & 0xFFFF;
@@ -420,7 +420,7 @@ int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum)
             break;
 #    endif
 #    if (QEI_COUNT >= 3) && !defined(QEI3_DISABLE)
-        case 2:
+        case QEI3_ID:
             QEI3CONbits.PIMOD = 6;  // modulo count mode for position counter
             QEI3LECL = minimum & 0xFFFF;
             QEI3LECH = (minimum >> 16) & 0xFFFF;
@@ -454,19 +454,19 @@ qei_type qei_value(rt_dev_t device)
     switch (qei)
     {
 #    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
-        case 0:
+        case QEI1_ID:
             tmp32 = (uint32_t)POS1CNTL;
             tmp32 += (uint32_t)POS1HLD << 16;
             break;
 #    endif
 #    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
-        case 1:
+        case QEI2_ID:
             tmp32 = (uint32_t)POS2CNTL;
             tmp32 += (uint32_t)POS2HLD << 16;
             break;
 #    endif
 #    if (QEI_COUNT >= 3) && !defined(QEI3_DISABLE)
-        case 2:
+        case QEI3_ID:
             tmp32 = (uint32_t)POS3CNTL;
             tmp32 += (uint32_t)POS3HLD << 16;
 #    endif
@@ -488,19 +488,19 @@ int qei_setValue(rt_dev_t device, qei_type value)
     switch (qei)
     {
 #    if (QEI_COUNT >= 1) && !defined(QEI1_DISABLE)
-        case 0:
+        case QEI1_ID:
             POS1CNTL = value & 0x0000FFFF;
             POS1HLD = value >> 16;
             break;
 #    endif
 #    if (QEI_COUNT >= 2) && !defined(QEI2_DISABLE)
-        case 1:
+        case QEI2_ID:
             POS2CNTL = value & 0x0000FFFF;
             POS2HLD = value >> 16;
             break;
 #    endif
 #    if (QEI_COUNT >= 3) && !defined(QEI3_DISABLE)
-        case 2:
+        case QEI3_ID:
             POS3CNTL = value & 0x0000FFFF;
             POS3HLD = value >> 16;
 #    endif
