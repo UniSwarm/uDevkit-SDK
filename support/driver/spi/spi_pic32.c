@@ -259,6 +259,7 @@ int spi_enable(rt_dev_t device)
 
     switch (spi)
     {
+#if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
         case 0:
             _SPI1TXIF = 0;
             _SPI1TXIP = SPI1_INT_TX_PRIORITY;
@@ -274,7 +275,8 @@ int spi_enable(rt_dev_t device)
 
             SPI1CONbits.ON = 1;  // enable spi module
             break;
-#if SPI_COUNT >= 2
+#endif
+#if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
         case 1:
             _SPI2TXIF = 0;
             _SPI2TXIP = SPI2_INT_TX_PRIORITY;
@@ -291,7 +293,7 @@ int spi_enable(rt_dev_t device)
             SPI2CONbits.ON = 1;  // enable spi module
             break;
 #endif
-#if SPI_COUNT >= 3
+#if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
         case 2:
             _SPI3TXIF = 0;
             _SPI3TXIP = SPI3_INT_TX_PRIORITY;
@@ -308,7 +310,7 @@ int spi_enable(rt_dev_t device)
             SPI3CONbits.ON = 1;  // enable spi module
             break;
 #endif
-#if SPI_COUNT >= 4
+#if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
         case 3:
             _SPI4TXIF = 0;
             _SPI4TXIP = SPI4_INT_TX_PRIORITY;
@@ -325,7 +327,7 @@ int spi_enable(rt_dev_t device)
             SPI4CONbits.ON = 1;  // enable spi module
             break;
 #endif
-#if SPI_COUNT >= 5
+#if (SPI_COUNT >= 5) && !defined(SPI5_DISABLE)
         case 4:
             _SPI5TXIF = 0;
             _SPI5TXIP = SPI5_INT_TX_PRIORITY;
@@ -342,7 +344,7 @@ int spi_enable(rt_dev_t device)
             SPI5CONbits.ON = 1;  // enable spi module
             break;
 #endif
-#if SPI_COUNT >= 6
+#if (SPI_COUNT >= 6) && !defined(SPI6_DISABLE)
         case 5:
             _SPI6TXIF = 0;
             _SPI6TXIP = SPI6_INT_TX_PRIORITY;
@@ -381,6 +383,7 @@ int spi_disable(rt_dev_t device)
 
     switch (spi)
     {
+#if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
         case 0:
             _SPI1TXIE = 0;
             _SPI1RXIE = 0;
@@ -388,7 +391,8 @@ int spi_disable(rt_dev_t device)
 
             SPI1CONbits.ON = 0;  // disable spi module
             break;
-#if SPI_COUNT >= 2
+#endif
+#if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
         case 1:
             _SPI2TXIE = 0;
             _SPI2RXIE = 0;
@@ -397,7 +401,7 @@ int spi_disable(rt_dev_t device)
             SPI2CONbits.ON = 0;  // disable spi module
             break;
 #endif
-#if SPI_COUNT >= 3
+#if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
         case 2:
             _SPI3TXIE = 0;
             _SPI3RXIE = 0;
@@ -406,7 +410,7 @@ int spi_disable(rt_dev_t device)
             SPI3CONbits.ON = 0;  // disable spi module
             break;
 #endif
-#if SPI_COUNT >= 4
+#if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
         case 3:
             _SPI4TXIE = 0;
             _SPI4RXIE = 0;
@@ -415,7 +419,7 @@ int spi_disable(rt_dev_t device)
             SPI4CONbits.ON = 0;  // disable spi module
             break;
 #endif
-#if SPI_COUNT >= 5
+#if (SPI_COUNT >= 5) && !defined(SPI5_DISABLE)
         case 4:
             _SPI5TXIE = 0;
             _SPI5RXIE = 0;
@@ -424,7 +428,7 @@ int spi_disable(rt_dev_t device)
             SPI5CONbits.ON = 0;  // disable spi module
             break;
 #endif
-#if SPI_COUNT >= 6
+#if (SPI_COUNT >= 6) && !defined(SPI6_DISABLE)
         case 5:
             _SPI6TXIE = 0;
             _SPI6RXIE = 0;
@@ -490,35 +494,37 @@ int spi_setBitLength(rt_dev_t device, uint8_t bitLength)
 
     switch (spi)
     {
+#if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
         case 0:
             SPI1CONbits.MODE16 = modeBits & 0x01;
             SPI1CONbits.MODE32 = (modeBits >> 1) & 0x01;
             break;
-#if SPI_COUNT >= 2
+#endif
+#if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
         case 1:
             SPI2CONbits.MODE16 = modeBits & 0x01;
             SPI2CONbits.MODE32 = (modeBits >> 1) & 0x01;
             break;
 #endif
-#if SPI_COUNT >= 3
+#if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
         case 2:
             SPI3CONbits.MODE16 = modeBits & 0x01;
             SPI3CONbits.MODE32 = (modeBits >> 1) & 0x01;
             break;
 #endif
-#if SPI_COUNT >= 4
+#if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
         case 3:
             SPI4CONbits.MODE16 = modeBits & 0x01;
             SPI4CONbits.MODE32 = (modeBits >> 1) & 0x01;
             break;
 #endif
-#if SPI_COUNT >= 5
+#if (SPI_COUNT >= 5) && !defined(SPI5_DISABLE)
         case 4:
             SPI5CONbits.MODE16 = modeBits & 0x01;
             SPI5CONbits.MODE32 = (modeBits >> 1) & 0x01;
             break;
 #endif
-#if SPI_COUNT >= 6
+#if (SPI_COUNT >= 6) && !defined(SPI6_DISABLE)
         case 5:
             SPI6CONbits.MODE16 = modeBits & 0x01;
             SPI6CONbits.MODE32 = (modeBits >> 1) & 0x01;
