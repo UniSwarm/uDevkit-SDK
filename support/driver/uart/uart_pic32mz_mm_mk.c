@@ -293,7 +293,7 @@ int uart_enable(rt_dev_t device)
     switch (uart)
     {
 #if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             _U1RXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for receptor
             _U1RXIF = 0;                        // clear receive Flag
             _U1RXIE = 1;                        // enable receive interrupt
@@ -311,7 +311,7 @@ int uart_enable(rt_dev_t device)
             break;
 #endif
 #if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             _U2RXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for receptor
             _U2RXIF = 0;                        // clear receive Flag
             _U2RXIE = 1;                        // enable receive interrupt
@@ -329,7 +329,7 @@ int uart_enable(rt_dev_t device)
             break;
 #endif
 #if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
-        case 2:
+        case UART3_ID:
             _U3RXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for receptor
             _U3RXIF = 0;                        // clear receive Flag
             _U3RXIE = 1;                        // enable receive interrupt
@@ -347,7 +347,7 @@ int uart_enable(rt_dev_t device)
             break;
 #endif
 #if (UART_COUNT >= 4) && !defined(UART4_DISABLE)
-        case 3:
+        case UART4_ID:
             _U4RXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for receptor
             _U4RXIF = 0;                        // clear receive Flag
             _U4RXIE = 1;                        // enable receive interrupt
@@ -365,7 +365,7 @@ int uart_enable(rt_dev_t device)
             break;
 #endif
 #if (UART_COUNT >= 5) && !defined(UART5_DISABLE)
-        case 4:
+        case UART5_ID:
             _U5RXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for receptor
             _U5RXIF = 0;                        // clear receive Flag
             _U5RXIE = 1;                        // enable receive interrupt
@@ -383,7 +383,7 @@ int uart_enable(rt_dev_t device)
             break;
 #endif
 #if (UART_COUNT >= 6) && !defined(UART6_DISABLE)
-        case 5:
+        case UART6_ID:
             _U6RXIP = UART_INTERRUPT_PRIORITY;  // interrupt priority for receptor
             _U6RXIF = 0;                        // clear receive Flag
             _U6RXIE = 1;                        // enable receive interrupt
@@ -423,42 +423,42 @@ int uart_disable(rt_dev_t device)
     switch (uart)
     {
 #if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             _U1RXIE = 0;            // disable receive interrupt
             _U1TXIE = 0;            // disable transmit interrupt
             U1MODEbits.UARTEN = 0;  // disable uart
             break;
 #endif
 #if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             _U2RXIE = 0;            // disable receive interrupt
             _U2TXIE = 0;            // disable transmit interrupt
             U2MODEbits.UARTEN = 0;  // disable uart
             break;
 #endif
 #if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
-        case 2:
+        case UART3_ID:
             _U3RXIE = 0;            // disable receive interrupt
             _U3TXIE = 0;            // disable transmit interrupt
             U3MODEbits.UARTEN = 0;  // disable uart
             break;
 #endif
 #if (UART_COUNT >= 4) && !defined(UART4_DISABLE)
-        case 3:
+        case UART4_ID:
             _U4RXIE = 0;            // disable receive interrupt
             _U4TXIE = 0;            // disable transmit interrupt
             U4MODEbits.UARTEN = 0;  // disable uart
             break;
 #endif
 #if (UART_COUNT >= 5) && !defined(UART5_DISABLE)
-        case 4:
+        case UART5_ID:
             _U5RXIE = 0;            // disable receive interrupt
             _U5TXIE = 0;            // disable transmit interrupt
             U5MODEbits.UARTEN = 0;  // disable uart
             break;
 #endif
 #if (UART_COUNT >= 6) && !defined(UART6_DISABLE)
-        case 5:
+        case UART6_ID:
             _U6RXIE = 0;            // disable receive interrupt
             _U6TXIE = 0;            // disable transmit interrupt
             U6MODEbits.UARTEN = 0;  // disable uart
@@ -541,37 +541,37 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
     switch (uart)
     {
 #if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             U1MODEbits.BRGH = hspeed;
             U1BRG = uBrg - 1;
             break;
 #endif
 #if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             U2MODEbits.BRGH = hspeed;
             U2BRG = uBrg - 1;
             break;
 #endif
 #if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
-        case 2:
+        case UART3_ID:
             U3MODEbits.BRGH = hspeed;
             U3BRG = uBrg - 1;
             break;
 #endif
 #if (UART_COUNT >= 4) && !defined(UART4_DISABLE)
-        case 3:
+        case UART4_ID:
             U4MODEbits.BRGH = hspeed;
             U4BRG = uBrg - 1;
             break;
 #endif
 #if (UART_COUNT >= 5) && !defined(UART5_DISABLE)
-        case 4:
+        case UART5_ID:
             U5MODEbits.BRGH = hspeed;
             U5BRG = uBrg - 1;
             break;
 #endif
 #if (UART_COUNT >= 6) && !defined(UART6_DISABLE)
-        case 5:
+        case UART6_ID:
             U6MODEbits.BRGH = hspeed;
             U6BRG = uBrg - 1;
             break;
@@ -602,37 +602,37 @@ uint32_t uart_baudSpeed(rt_dev_t device)
     switch (uart)
     {
 #if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             hspeed = U1MODEbits.BRGH;
             uBrg = U1BRG + 1;
             break;
 #endif
 #if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             hspeed = U2MODEbits.BRGH;
             uBrg = U2BRG + 1;
             break;
 #endif
 #if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
-        case 2:
+        case UART3_ID:
             hspeed = U3MODEbits.BRGH;
             uBrg = U3BRG + 1;
             break;
 #endif
 #if (UART_COUNT >= 4) && !defined(UART4_DISABLE)
-        case 3:
+        case UART4_ID:
             hspeed = U4MODEbits.BRGH;
             uBrg = U4BRG + 1;
             break;
 #endif
 #if (UART_COUNT >= 5) && !defined(UART5_DISABLE)
-        case 4:
+        case UART5_ID:
             hspeed = U5MODEbits.BRGH;
             uBrg = U5BRG + 1;
             break;
 #endif
 #if (UART_COUNT >= 6) && !defined(UART6_DISABLE)
-        case 5:
+        case UART6_ID:
             hspeed = U6MODEbits.BRGH;
             uBrg = U6BRG + 1;
             break;
@@ -730,37 +730,37 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLength, uint8_t bitParity, uin
     switch (uart)
     {
 #if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             U1MODEbits.STSEL = stop;
             U1MODEbits.PDSEL = bit;
             break;
 #endif
 #if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             U2MODEbits.STSEL = stop;
             U2MODEbits.PDSEL = bit;
             break;
 #endif
 #if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
-        case 2:
+        case UART3_ID:
             U3MODEbits.STSEL = stop;
             U3MODEbits.PDSEL = bit;
             break;
 #endif
 #if (UART_COUNT >= 4) && !defined(UART4_DISABLE)
-        case 3:
+        case UART4_ID:
             U4MODEbits.STSEL = stop;
             U4MODEbits.PDSEL = bit;
             break;
 #endif
 #if (UART_COUNT >= 5) && !defined(UART5_DISABLE)
-        case 4:
+        case UART5_ID:
             U5MODEbits.STSEL = stop;
             U5MODEbits.PDSEL = bit;
             break;
 #endif
 #if (UART_COUNT >= 6) && !defined(UART6_DISABLE)
-        case 5:
+        case UART6_ID:
             U6MODEbits.STSEL = stop;
             U6MODEbits.PDSEL = bit;
             break;
@@ -831,21 +831,21 @@ void INT_ISR(_UART1_TX_VECTOR, UART1_INT_TX_PRIORITY, INT_MODE) U1TXInterrupt(vo
 #    if defined(ARCHI_pic32mk)
     _U1TXIF = 0;  // 32MK Work around (errata 41)
     char uart_tmpchar[1];
-    while (!U1STAbits.UTXBF && fifo_pop(&_uarts[0].buffTx, uart_tmpchar, 1) == 1)
+    while (!U1STAbits.UTXBF && fifo_pop(&_uarts[UART1_ID].buffTx, uart_tmpchar, 1) == 1)
     {
         U1TXREG = (unsigned char)uart_tmpchar[0];
     }
 #    else
     size_t i;
     char uart_tmpchar[8];
-    size_t readen = fifo_pop(&_uarts[0].buffTx, uart_tmpchar, 8);
+    size_t readen = fifo_pop(&_uarts[UART1_ID].buffTx, uart_tmpchar, 8);
     for (i = 0; i < readen; i++)
     {
         U1TXREG = (unsigned char)uart_tmpchar[i];
     }
 #    endif
 
-    if (fifo_len(&_uarts[0].buffTx) == 0)
+    if (fifo_len(&_uarts[UART1_ID].buffTx) == 0)
     {
         _U1TXIE = 0;
     }
@@ -858,7 +858,7 @@ void INT_ISR(_UART1_RX_VECTOR, UART1_INT_RX_PRIORITY, INT_MODE) U1RXInterrupt(vo
     while (U1STAbits.URXDA == 1)
     {
         rec[0] = U1RXREG;
-        fifo_push(&_uarts[0].buffRx, rec, 1);
+        fifo_push(&_uarts[UART1_ID].buffRx, rec, 1);
     }
 
     _U1RXIF = 0;
@@ -871,21 +871,21 @@ void INT_ISR(_UART2_TX_VECTOR, UART2_INT_TX_PRIORITY, INT_MODE) U2TXInterrupt(vo
 #    if defined(ARCHI_pic32mk)
     _U2TXIF = 0;  // 32MK Work around (errata 41)
     char uart_tmpchar[1];
-    while (!U2STAbits.UTXBF && fifo_pop(&_uarts[1].buffTx, uart_tmpchar, 1) == 1)
+    while (!U2STAbits.UTXBF && fifo_pop(&_uarts[UART2_ID].buffTx, uart_tmpchar, 1) == 1)
     {
         U2TXREG = (unsigned char)uart_tmpchar[0];
     }
 #    else
     size_t i;
     char uart_tmpchar[8];
-    size_t readen = fifo_pop(&_uarts[1].buffTx, uart_tmpchar, 8);
+    size_t readen = fifo_pop(&_uarts[UART2_ID].buffTx, uart_tmpchar, 8);
     for (i = 0; i < readen; i++)
     {
         U2TXREG = (unsigned char)uart_tmpchar[i];
     }
 #    endif
 
-    if (fifo_len(&_uarts[1].buffTx) == 0)
+    if (fifo_len(&_uarts[UART2_ID].buffTx) == 0)
     {
         _U2TXIE = 0;
     }
@@ -898,7 +898,7 @@ void INT_ISR(_UART2_RX_VECTOR, UART2_INT_RX_PRIORITY, INT_MODE) U2RXInterrupt(vo
     while (U2STAbits.URXDA == 1)
     {
         rec[0] = U2RXREG;
-        fifo_push(&_uarts[1].buffRx, rec, 1);
+        fifo_push(&_uarts[UART2_ID].buffRx, rec, 1);
     }
 
     _U2RXIF = 0;
@@ -911,21 +911,21 @@ void INT_ISR(_UART3_TX_VECTOR, UART3_INT_TX_PRIORITY, INT_MODE) U3TXInterrupt(vo
 #    if defined(ARCHI_pic32mk)
     _U3TXIF = 0;  // 32MK Work around (errata 41)
     char uart_tmpchar[1];
-    while (!U3STAbits.UTXBF && fifo_pop(&_uarts[2].buffTx, uart_tmpchar, 1) == 1)
+    while (!U3STAbits.UTXBF && fifo_pop(&_uarts[UART3_ID].buffTx, uart_tmpchar, 1) == 1)
     {
         U3TXREG = (unsigned char)uart_tmpchar[0];
     }
 #    else
     size_t i;
     char uart_tmpchar[8];
-    size_t readen = fifo_pop(&_uarts[2].buffTx, uart_tmpchar, 8);
+    size_t readen = fifo_pop(&_uarts[UART3_ID].buffTx, uart_tmpchar, 8);
     for (i = 0; i < readen; i++)
     {
         U3TXREG = (unsigned char)uart_tmpchar[i];
     }
 #    endif
 
-    if (fifo_len(&_uarts[2].buffTx) == 0)
+    if (fifo_len(&_uarts[UART3_ID].buffTx) == 0)
     {
         _U3TXIE = 0;
     }
@@ -938,7 +938,7 @@ void INT_ISR(_UART3_RX_VECTOR, UART3_INT_RX_PRIORITY, INT_MODE) U3RXInterrupt(vo
     while (U3STAbits.URXDA == 1)
     {
         rec[0] = U3RXREG;
-        fifo_push(&_uarts[2].buffRx, rec, 1);
+        fifo_push(&_uarts[UART3_ID].buffRx, rec, 1);
     }
 
     _U3RXIF = 0;
@@ -951,21 +951,21 @@ void INT_ISR(_UART4_TX_VECTOR, UART4_INT_TX_PRIORITY, INT_MODE) U4TXInterrupt(vo
 #    if defined(ARCHI_pic32mk)
     _U4TXIF = 0;  // 32MK Work around (errata 41)
     char uart_tmpchar[1];
-    while (!U4STAbits.UTXBF && fifo_pop(&_uarts[3].buffTx, uart_tmpchar, 1) == 1)
+    while (!U4STAbits.UTXBF && fifo_pop(&_uarts[UART4_ID].buffTx, uart_tmpchar, 1) == 1)
     {
         U4TXREG = (unsigned char)uart_tmpchar[0];
     }
 #    else
     size_t i;
     char uart_tmpchar[8];
-    size_t readen = fifo_pop(&_uarts[3].buffTx, uart_tmpchar, 8);
+    size_t readen = fifo_pop(&_uarts[UART4_ID].buffTx, uart_tmpchar, 8);
     for (i = 0; i < readen; i++)
     {
         U4TXREG = (unsigned char)uart_tmpchar[i];
     }
 #    endif
 
-    if (fifo_len(&_uarts[3].buffTx) == 0)
+    if (fifo_len(&_uarts[UART4_ID].buffTx) == 0)
     {
         _U4TXIE = 0;
     }
@@ -978,7 +978,7 @@ void INT_ISR(_UART4_RX_VECTOR, UART4_INT_RX_PRIORITY, INT_MODE) U4RXInterrupt(vo
     while (U4STAbits.URXDA == 1)
     {
         rec[0] = U4RXREG;
-        fifo_push(&_uarts[3].buffRx, rec, 1);
+        fifo_push(&_uarts[UART4_ID].buffRx, rec, 1);
     }
 
     _U4RXIF = 0;
@@ -991,21 +991,21 @@ void INT_ISR(_UART5_TX_VECTOR, UART5_INT_TX_PRIORITY, INT_MODE) U5TXInterrupt(vo
 #    if defined(ARCHI_pic32mk)
     _U5TXIF = 0;  // 32MK Work around (errata 41)
     char uart_tmpchar[1];
-    while (!U5STAbits.UTXBF && fifo_pop(&_uarts[4].buffTx, uart_tmpchar, 1) == 1)
+    while (!U5STAbits.UTXBF && fifo_pop(&_uarts[UART5_ID].buffTx, uart_tmpchar, 1) == 1)
     {
         U5TXREG = (unsigned char)uart_tmpchar[0];
     }
 #    else
     size_t i;
     char uart_tmpchar[8];
-    size_t readen = fifo_pop(&_uarts[4].buffTx, uart_tmpchar, 8);
+    size_t readen = fifo_pop(&_uarts[UART5_ID].buffTx, uart_tmpchar, 8);
     for (i = 0; i < readen; i++)
     {
         U5TXREG = (unsigned char)uart_tmpchar[i];
     }
 #    endif
 
-    if (fifo_len(&_uarts[4].buffTx) == 0)
+    if (fifo_len(&_uarts[UART5_ID].buffTx) == 0)
     {
         _U5TXIE = 0;
     }
@@ -1018,7 +1018,7 @@ void INT_ISR(_UART5_RX_VECTOR, UART5_INT_RX_PRIORITY, INT_MODE) U5RXInterrupt(vo
     while (U5STAbits.URXDA == 1)
     {
         rec[0] = U5RXREG;
-        fifo_push(&_uarts[4].buffRx, rec, 1);
+        fifo_push(&_uarts[UART5_ID].buffRx, rec, 1);
     }
 
     _U5RXIF = 0;
@@ -1031,21 +1031,21 @@ void INT_ISR(_UART6_TX_VECTOR, UART6_INT_TX_PRIORITY, INT_MODE) U6TXInterrupt(vo
 #    if defined(ARCHI_pic32mk)
     _U6TXIF = 0;  // 32MK Work around (errata 41)
     char uart_tmpchar[1];
-    while (!U6STAbits.UTXBF && fifo_pop(&_uarts[5].buffTx, uart_tmpchar, 1) == 1)
+    while (!U6STAbits.UTXBF && fifo_pop(&_uarts[UART6_ID].buffTx, uart_tmpchar, 1) == 1)
     {
         U6TXREG = (unsigned char)uart_tmpchar[0];
     }
 #    else
     size_t i;
     char uart_tmpchar[8];
-    size_t readen = fifo_pop(&_uarts[5].buffTx, uart_tmpchar, 8);
+    size_t readen = fifo_pop(&_uarts[UART6_ID].buffTx, uart_tmpchar, 8);
     for (i = 0; i < readen; i++)
     {
         U6TXREG = (unsigned char)uart_tmpchar[i];
     }
 #    endif
 
-    if (fifo_len(&_uarts[5].buffTx) == 0)
+    if (fifo_len(&_uarts[UART6_ID].buffTx) == 0)
     {
         _U6TXIE = 0;
     }
@@ -1058,7 +1058,7 @@ void INT_ISR(_UART6_RX_VECTOR, UART6_INT_RX_PRIORITY, INT_MODE) U6RXInterrupt(vo
     while (U6STAbits.URXDA == 1)
     {
         rec[0] = U6RXREG;
-        fifo_push(&_uarts[5].buffRx, rec, 1);
+        fifo_push(&_uarts[UART6_ID].buffRx, rec, 1);
     }
 
     _U6RXIF = 0;
@@ -1083,32 +1083,32 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
     switch (uart)
     {
 #if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             _U1TXIE = 0;
             break;
 #endif
 #if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             _U2TXIE = 0;
             break;
 #endif
 #if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
-        case 2:
+        case UART3_ID:
             _U3TXIE = 0;
             break;
 #endif
 #if (UART_COUNT >= 4) && !defined(UART4_DISABLE)
-        case 3:
+        case UART4_ID:
             _U4TXIE = 0;
             break;
 #endif
 #if (UART_COUNT >= 5) && !defined(UART5_DISABLE)
-        case 4:
+        case UART5_ID:
             _U5TXIE = 0;
             break;
 #endif
 #if (UART_COUNT >= 6) && !defined(UART6_DISABLE)
-        case 5:
+        case UART6_ID:
             _U6TXIE = 0;
             break;
 #endif
@@ -1119,32 +1119,32 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
     switch (uart)
     {
 #if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             _U1TXIE = 1;
             break;
 #endif
 #if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             _U2TXIE = 1;
             break;
 #endif
 #if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
-        case 2:
+        case UART3_ID:
             _U3TXIE = 1;
             break;
 #endif
 #if (UART_COUNT >= 4) && !defined(UART4_DISABLE)
-        case 3:
+        case UART4_ID:
             _U4TXIE = 1;
             break;
 #endif
 #if (UART_COUNT >= 5) && !defined(UART5_DISABLE)
-        case 4:
+        case UART5_ID:
             _U5TXIE = 1;
             break;
 #endif
 #if (UART_COUNT >= 6) && !defined(UART6_DISABLE)
-        case 5:
+        case UART6_ID:
             _U6TXIE = 1;
             break;
 #endif
@@ -1169,32 +1169,32 @@ int uart_transmitFinished(rt_dev_t device)
     switch (uart)
     {
 #if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             transmitFinished = U1STAbits.TRMT;
             break;
 #endif
 #if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             transmitFinished = U2STAbits.TRMT;
             break;
 #endif
 #if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
-        case 2:
+        case UART3_ID:
             transmitFinished = U3STAbits.TRMT;
             break;
 #endif
 #if (UART_COUNT >= 4) && !defined(UART4_DISABLE)
-        case 3:
+        case UART4_ID:
             transmitFinished = U4STAbits.TRMT;
             break;
 #endif
 #if (UART_COUNT >= 5) && !defined(UART5_DISABLE)
-        case 4:
+        case UART5_ID:
             transmitFinished = U5STAbits.TRMT;
             break;
 #endif
 #if (UART_COUNT >= 6) && !defined(UART6_DISABLE)
-        case 5:
+        case UART6_ID:
             transmitFinished = U6STAbits.TRMT;
             break;
 #endif

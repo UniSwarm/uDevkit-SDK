@@ -190,7 +190,7 @@ int uart_enable(rt_dev_t device)
     switch (uart)
     {
 #    if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             _U1RXIP = 6;  // interrupt priority for receptor
             _U1RXIF = 0;  // clear receive Flag
             _U1RXIE = 1;  // enable receive interrupt
@@ -207,7 +207,7 @@ int uart_enable(rt_dev_t device)
             break;
 #    endif
 #    if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             _U2RXIP = 6;  // interrupt priority for receptor
             _U2RXIF = 0;  // clear receive Flag
             _U2RXIE = 1;  // enable receive interrupt
@@ -249,14 +249,14 @@ int uart_disable(rt_dev_t device)
     switch (uart)
     {
 #    if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             _U1RXIE = 0;            // disable receive interrupt
             _U1TXIE = 0;            // disable transmit interrupt
             U1MODEbits.UARTEN = 0;  // disable uart
             break;
 #    endif
 #    if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             _U2RXIE = 0;            // disable receive interrupt
             _U2TXIE = 0;            // disable transmit interrupt
             U2MODEbits.UARTEN = 0;  // disable uart
@@ -330,12 +330,12 @@ int uart_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
     switch (uart)
     {
 #    if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             U1BRG = uBrg - 1;
             break;
 #    endif
 #    if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             U2BRG = uBrg - 1;
             break;
 #    endif
@@ -372,12 +372,12 @@ uint32_t uart_baudSpeed(rt_dev_t device)
     switch (uart)
     {
 #    if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             uBrg = U1BRG + 1;
             break;
 #    endif
 #    if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             uBrg = U2BRG + 1;
             break;
 #    endif
@@ -473,13 +473,13 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLength, uint8_t bitParity, uin
     switch (uart)
     {
 #    if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             U1MODEbits.STSEL = stop;
             U1MODEbits.PDSEL = bit;
             break;
 #    endif
 #    if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             U2MODEbits.STSEL = stop;
             U2MODEbits.PDSEL = bit;
             break;
@@ -563,7 +563,7 @@ uint8_t uart_bitStop(rt_dev_t device)
 void __attribute__((interrupt, no_auto_psv)) _U1TXInterrupt(void)
 {
     char uart_tmpchar[1];
-    while (!U1STAbits.UTXBF && fifo_pop(&_uarts[0].buffTx, uart_tmpchar, 1) == 1)
+    while (!U1STAbits.UTXBF && fifo_pop(&_uarts[UART1_ID].buffTx, uart_tmpchar, 1) == 1)
     {
         U1TXREG = uart_tmpchar[0];
     }
@@ -575,7 +575,7 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
     char rec[4];
     rec[0] = U1RXREG;
 
-    fifo_push(&_uarts[0].buffRx, rec, 1);
+    fifo_push(&_uarts[UART1_ID].buffRx, rec, 1);
 
     _U1RXIF = 0;
 }
@@ -585,7 +585,7 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
 void __attribute__((interrupt, no_auto_psv)) _U2TXInterrupt(void)
 {
     char uart_tmpchar[1];
-    while (!U2STAbits.UTXBF && fifo_pop(&_uarts[1].buffTx, uart_tmpchar, 1) == 1)
+    while (!U2STAbits.UTXBF && fifo_pop(&_uarts[UART2_ID].buffTx, uart_tmpchar, 1) == 1)
     {
         U2TXREG = uart_tmpchar[0];
     }
@@ -597,7 +597,7 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
     char rec[4];
     rec[0] = U2RXREG;
 
-    fifo_push(&_uarts[1].buffRx, rec, 1);
+    fifo_push(&_uarts[UART2_ID].buffRx, rec, 1);
 
     _U2RXIF = 0;
 }
@@ -622,12 +622,12 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
     switch (uart)
     {
 #    if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             _U1TXIE = 0;
             break;
 #    endif
 #    if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             _U2TXIE = 0;
             break;
 #    endif
@@ -638,7 +638,7 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
     switch (uart)
     {
 #    if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             if (U1STAbits.TRMT)
             {
                 _U1TXInterrupt();
@@ -647,7 +647,7 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
             break;
 #    endif
 #    if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             if (U2STAbits.TRMT)
             {
                 _U2TXInterrupt();
@@ -679,17 +679,17 @@ int uart_transmitFinished(rt_dev_t device)
     switch (uart)
     {
 #if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case 0:
+        case UART1_ID:
             transmitFinished = U1STAbits.TRMT;
             break;
 #endif
 #if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case 1:
+        case UART2_ID:
             transmitFinished = U2STAbits.TRMT;
             break;
 #endif
 #if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
-        case 2:
+        case UART3_ID:
             transmitFinished = U3STAbits.TRMT;
             break;
 #endif
