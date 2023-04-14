@@ -17,7 +17,10 @@
 #include <archi.h>
 #include <driver/sysclock.h>
 
-#define CAN_FLAG_UNUSED 0x00
+enum
+{
+    CAN_FLAG_UNUSED = 0x00
+};
 typedef struct
 {
     union

@@ -21,7 +21,10 @@
 #    warning "No output compare (OC) on the current device or unknow device"
 #endif
 
-#define OC_FLAG_UNUSED 0x00
+enum
+{
+    OC_FLAG_UNUSED = 0x00
+};
 typedef struct
 {
     union

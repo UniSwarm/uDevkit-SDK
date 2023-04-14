@@ -17,7 +17,10 @@
 #    warning "No CCP on the current device or unknow device"
 #endif
 
-#define CCP_FLAG_UNUSED 0x00
+enum
+{
+    CCP_FLAG_UNUSED = 0x00
+};
 typedef struct
 {
     union

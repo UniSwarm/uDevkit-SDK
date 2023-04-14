@@ -24,7 +24,10 @@
 
 #define SPI_BUFF_SIZE 32
 
-#define SPI_FLAG_UNUSED 0x00
+enum
+{
+    SPI_FLAG_UNUSED = 0x00
+};
 typedef struct
 {
     union

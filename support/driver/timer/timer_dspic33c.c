@@ -20,7 +20,10 @@
 #    warning "No timer on the current device or unknow device"
 #endif
 
-#define TIMER_FLAG_UNUSED 0x00
+enum
+{
+    TIMER_FLAG_UNUSED = 0x00
+};
 typedef struct
 {
     union
