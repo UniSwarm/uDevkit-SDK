@@ -208,6 +208,10 @@ int can_close(rt_dev_t device)
     _cans[can].used = 0;
     can_sendconfig(can);
 
+#ifdef SIM_UNIX
+    close(_cans[can].socket);
+#endif
+
 #ifdef SIM_WIN
 #    if defined(WIN32)
     WSACleanup();
