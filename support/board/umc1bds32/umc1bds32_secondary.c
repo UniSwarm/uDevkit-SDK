@@ -16,8 +16,6 @@
 #include <driver/gpio.h>
 #include <driver/sysclock.h>
 
-static rt_dev_t _board_leds[LED_COUNT];
-
 static int _board_init_io(void);
 
 int _board_init_io(void)
@@ -41,7 +39,7 @@ int _board_init_io(void)
     _RP41R = _RPOUT_S1SCK1;  // coder_clk = QEI1A_TX_DATA, RB9
 
     // UART1 dbg
-    _RP66R = _RPOUT_S1U1TX;  // TX1 ==> RP66
+    //_RP66R = _RPOUT_S1U1TX;  // TX1 ==> RP66
 
     // Lock configuration pin
     lockIoConfig();

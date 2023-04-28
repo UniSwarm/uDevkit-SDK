@@ -16,8 +16,6 @@
 #include <driver/gpio.h>
 #include <driver/sysclock.h>
 
-static rt_dev_t _board_leds[LED_COUNT];
-
 static int _board_init_io(void);
 
 int _board_init_io(void)
