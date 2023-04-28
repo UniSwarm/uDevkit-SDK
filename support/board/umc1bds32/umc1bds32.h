@@ -117,7 +117,7 @@ void board_setBridgesEnabled(int enable);
 
 // Under/Over voltage protection
 #define UNDER_VOLTAGE_MIN 1100  // 0.01 V
-#define OVER_VOLTAGE_MAX  5500  // 0.01 V
+#define OVER_VOLTAGE_MAX  6000  // 0.01 V
 
 // Temperatures limits
 #define BRIDGES_OVER_TEMP_TRIG_HIGH_MAX 800  // 0.1 °C
