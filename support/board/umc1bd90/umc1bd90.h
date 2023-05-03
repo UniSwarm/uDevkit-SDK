@@ -89,7 +89,7 @@ void board_setBridgesEnabled(int enable);
 #define DI_1_IN5 PORTCbits.RC0
 
 #define DI_1_IN6 PORTEbits.RE4
-#define DI_1_IN7 PORTEbits.RE
+#define DI_1_IN7 PORTEbits.RE5
 #define DI_1_IN8 PORTDbits.RD15
 #define DI_1_IN9 PORTEbits.RE3
 
