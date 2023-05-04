@@ -59,55 +59,55 @@ int adc_init(void)
     // Clock setting
     ADCCON3 = 0;
     ADCCON3bits.ADCSEL = 1;     // Select input clock source (FRC)
-    ADCCON3bits.CONCLKDIV = 1;  // Control clock frequency is half of input clock
+    ADCCON3bits.CONCLKDIV = 0;  // Control clock frequency is equal of input clock
     ADCCON3bits.VREFSEL = 0;    // Select AVDD and AVSS as reference source
 
     // Select ADC sample time and conversion clock
 #ifdef ADC_HAVE_DEDICATED_CORE0
     ADC0TIMEbits.ADCDIV = 1;  // ADC0 clock frequency is half of control clock = TAD0
-    ADC0TIMEbits.SAMC = 5;    // ADC0 sampling time = 5 * TAD0
+    ADC0TIMEbits.SAMC = 10;   // ADC0 sampling time = 10 * TAD0
     ADC0TIMEbits.SELRES = 3;  // ADC0 resolution is 12 bits
 #endif
 
 #ifdef ADC_HAVE_DEDICATED_CORE1
     ADC1TIMEbits.ADCDIV = 1;  // ADC1 clock frequency is half of control clock = TAD1
-    ADC1TIMEbits.SAMC = 5;    // ADC1 sampling time = 5 * TAD1
+    ADC1TIMEbits.SAMC = 10;   // ADC1 sampling time = 10 * TAD1
     ADC1TIMEbits.SELRES = 3;  // ADC1 resolution is 12 bits
 #endif
 
 #ifdef ADC_HAVE_DEDICATED_CORE2
     ADC2TIMEbits.ADCDIV = 1;  // ADC2 clock frequency is half of control clock = TAD2
-    ADC2TIMEbits.SAMC = 5;    // ADC2 sampling time = 5 * TAD2
+    ADC2TIMEbits.SAMC = 10;   // ADC2 sampling time = 10 * TAD2
     ADC2TIMEbits.SELRES = 3;  // ADC2 resolution is 12 bits
 #endif
 
 #ifdef ADC_HAVE_DEDICATED_CORE3
     ADC3TIMEbits.ADCDIV = 1;  // ADC3 clock frequency is half of control clock = TAD3
-    ADC3TIMEbits.SAMC = 5;    // ADC3 sampling time = 5 * TAD2
+    ADC3TIMEbits.SAMC = 10;   // ADC3 sampling time = 10 * TAD3
     ADC3TIMEbits.SELRES = 3;  // ADC3 resolution is 12 bits
 #endif
 
 #ifdef ADC_HAVE_DEDICATED_CORE4
     ADC4TIMEbits.ADCDIV = 1;  // ADC4 clock frequency is half of control clock = TAD4
-    ADC4TIMEbits.SAMC = 5;    // ADC4 sampling time = 5 * TAD2
+    ADC4TIMEbits.SAMC = 10;   // ADC4 sampling time = 10 * TAD4
     ADC4TIMEbits.SELRES = 3;  // ADC4 resolution is 12 bits
 #endif
 
 #ifdef ADC_HAVE_DEDICATED_CORE5
     ADC5TIMEbits.ADCDIV = 1;  // ADC5 clock frequency is half of control clock = TAD5
-    ADC5TIMEbits.SAMC = 5;    // ADC5 sampling time = 5 * TAD2
+    ADC5TIMEbits.SAMC = 10;   // ADC5 sampling time = 10 * TAD5
     ADC5TIMEbits.SELRES = 3;  // ADC5 resolution is 12 bits
 #endif
 
 #ifdef ADC_HAVE_DEDICATED_CORE6
     ADC6TIMEbits.ADCDIV = 1;  // ADC6 clock frequency is half of control clock = TAD6
-    ADC6TIMEbits.SAMC = 5;    // ADC6 sampling time = 5 * TAD2
+    ADC6TIMEbits.SAMC = 10;   // ADC6 sampling time = 10 * TAD6
     ADC6TIMEbits.SELRES = 3;  // ADC6 resolution is 12 bits
 #endif
 
 #ifdef ADC_HAVE_DEDICATED_CORE7
     ADCCON2bits.ADCDIV = 1;  // ADC7 clock frequency is half of control clock = TAD7
-    ADCCON2bits.SAMC = 5;    // ADC7 sampling time = 5 * TAD2
+    ADCCON2bits.SAMC = 10;   // ADC7 sampling time = 10 * TAD7
     ADCCON1bits.SELRES = 3;  // ADC7 resolution is 12 bits
 #endif
 
@@ -249,10 +249,59 @@ int adc_setCoreResolution(uint8_t core, uint16_t resolution)
 
 int adc_setSamplingCycles(uint8_t core, uint16_t cycles)
 {
-    UDK_UNUSED(core);
-    UDK_UNUSED(cycles);
+    if (cycles < 2)
+    {
+        cycles = 2;
+    }
+    if (cycles > 1025)
+    {
+        cycles = 1025;
+    }
 
-    // TODO implement
+    switch (core)
+    {
+#ifdef ADC_HAVE_DEDICATED_CORE0
+        case 0:
+            ADC0TIMEbits.SAMC = cycles - 2;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE1
+        case 1:
+            ADC1TIMEbits.SAMC = cycles - 2;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE2
+        case 2:
+            ADC2TIMEbits.SAMC = cycles - 2;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE3
+        case 3:
+            ADC3TIMEbits.SAMC = cycles - 2;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE4
+        case 4:
+            ADC4TIMEbits.SAMC = cycles - 2;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE5
+        case 5:
+            ADC5TIMEbits.SAMC = cycles - 2;
+            break;
+#endif
+#ifdef ADC_HAVE_DEDICATED_CORE6
+        case 6:
+            ADC6TIMEbits.SAMC = cycles - 2;
+            break;
+#endif
+        case 7:  // shared core
+            ADCCON2bits.SAMC = cycles - 2;
+            break;
+
+        default:
+            return -1;
+    }
 
     return 0;
 }
