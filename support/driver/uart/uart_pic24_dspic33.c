@@ -178,7 +178,7 @@ bool uart_isOpened(rt_dev_t device)
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
     {
-        return -1;
+        return false;
     }
 
     return (_uarts[uart].flags.used == 1);
@@ -402,7 +402,7 @@ bool uart_isEnabled(rt_dev_t device)
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
     {
-        return -1;
+        return false;
     }
 
     return (_uarts[uart].flags.enabled == 1);
