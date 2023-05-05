@@ -286,26 +286,40 @@ extern "C" {
 #            define _CNIF IFS1bits.CNIF
 #            define _CNIP IPC6bits.CNIP
 #            define _CNIS IPC6bits.CNIS
-#            define GPIO_CN_SINGLEINTERRUPT
 #        else
 #            define _CNAIE IEC1bits.CNAIE
 #            define _CNAIF IFS1bits.CNAIF
+#            define _CNAIP IPC8bits.CNIP
+#            define _CNAIS IPC8bits.CNIS
 #            define _CNBIE IEC1bits.CNBIE
 #            define _CNBIF IFS1bits.CNBIF
+#            define _CNBIP IPC8bits.CNIP
+#            define _CNBIS IPC8bits.CNIS
 #            define _CNCIE IEC1bits.CNCIE
 #            define _CNCIF IFS1bits.CNCIF
+#            define _CNCIP IPC8bits.CNIP
+#            define _CNCIS IPC8bits.CNIS
 #            define _CNDIE IEC1bits.CNDIE
 #            define _CNDIF IFS1bits.CNDIF
+#            define _CNDIP IPC8bits.CNIP
+#            define _CNDIS IPC8bits.CNIS
 #            define _CNEIE IEC1bits.CNEIE
 #            define _CNEIF IFS1bits.CNEIF
+#            define _CNEIP IPC8bits.CNIP
+#            define _CNEIS IPC8bits.CNIS
 #            define _CNFIE IEC1bits.CNFIE
 #            define _CNFIF IFS1bits.CNFIF
+#            define _CNFIP IPC8bits.CNIP
+#            define _CNFIS IPC8bits.CNIS
 #            define _CNGIE IEC1bits.CNGIE
 #            define _CNGIF IFS1bits.CNGIF
+#            define _CNGIP IPC8bits.CNIP
+#            define _CNGIS IPC8bits.CNIS
 #        endif
 #    endif
 #    define CNIPR IPL5SRS
 #    define GPIO_CN_NOEDGEDETECT
+#    define GPIO_CN_SINGLEINTERRUPT
 #endif
 
 #ifdef __cplusplus

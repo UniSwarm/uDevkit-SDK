@@ -1499,7 +1499,7 @@ int gpio_setChangeHandler(rt_dev_t device, void (*handler)(GPIO_VALUE))
     return 0;
 }
 
-#if defined(GPIO_HAVE_PORTA) && !defined(GPIOA_DISABLE)
+#if defined(GPIO_HAVE_PORTA) && !defined(GPIOA_DISABLE) && !defined(GPIO_CN_SINGLEINTERRUPT)
 void INT_ISR(_CHANGE_NOTICE_A_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNAInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
@@ -1521,7 +1521,7 @@ void INT_ISR(_CHANGE_NOTICE_A_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute_
 }
 #endif
 
-#if defined(GPIO_HAVE_PORTB) && !defined(GPIOB_DISABLE)
+#if defined(GPIO_HAVE_PORTB) && !defined(GPIOB_DISABLE) && !defined(GPIO_CN_SINGLEINTERRUPT)
 void INT_ISR(_CHANGE_NOTICE_B_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNBInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
@@ -1543,7 +1543,7 @@ void INT_ISR(_CHANGE_NOTICE_B_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute_
 }
 #endif
 
-#if defined(GPIO_HAVE_PORTC) && !defined(GPIOC_DISABLE)
+#if defined(GPIO_HAVE_PORTC) && !defined(GPIOC_DISABLE) && !defined(GPIO_CN_SINGLEINTERRUPT)
 void INT_ISR(_CHANGE_NOTICE_C_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNCInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
@@ -1565,7 +1565,7 @@ void INT_ISR(_CHANGE_NOTICE_C_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute_
 }
 #endif
 
-#if defined(GPIO_HAVE_PORTD) && !defined(GPIOD_DISABLE)
+#if defined(GPIO_HAVE_PORTD) && !defined(GPIOD_DISABLE) && !defined(GPIO_CN_SINGLEINTERRUPT)
 void INT_ISR(_CHANGE_NOTICE_D_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNDInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
@@ -1587,7 +1587,7 @@ void INT_ISR(_CHANGE_NOTICE_D_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute_
 }
 #endif
 
-#if defined(GPIO_HAVE_PORTE) && !defined(GPIOE_DISABLE)
+#if defined(GPIO_HAVE_PORTE) && !defined(GPIOE_DISABLE) && !defined(GPIO_CN_SINGLEINTERRUPT)
 void INT_ISR(_CHANGE_NOTICE_E_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNEInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
@@ -1609,7 +1609,7 @@ void INT_ISR(_CHANGE_NOTICE_E_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute_
 }
 #endif
 
-#if defined(GPIO_HAVE_PORTF) && !defined(GPIOF_DISABLE)
+#if defined(GPIO_HAVE_PORTF) && !defined(GPIOF_DISABLE) && !defined(GPIO_CN_SINGLEINTERRUPT)
 void INT_ISR(_CHANGE_NOTICE_F_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNFInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
@@ -1631,7 +1631,7 @@ void INT_ISR(_CHANGE_NOTICE_F_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute_
 }
 #endif
 
-#if defined(GPIO_HAVE_PORTG) && !defined(GPIOG_DISABLE)
+#if defined(GPIO_HAVE_PORTG) && !defined(GPIOG_DISABLE) && !defined(GPIO_CN_SINGLEINTERRUPT)
 void INT_ISR(_CHANGE_NOTICE_G_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNGInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
@@ -1653,7 +1653,7 @@ void INT_ISR(_CHANGE_NOTICE_G_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute_
 }
 #endif
 
-#if defined(GPIO_HAVE_PORTH) && !defined(GPIOH_DISABLE)
+#if defined(GPIO_HAVE_PORTH) && !defined(GPIOH_DISABLE) && !defined(GPIO_CN_SINGLEINTERRUPT)
 void INT_ISR(_CHANGE_NOTICE_H_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNHInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
@@ -1675,7 +1675,7 @@ void INT_ISR(_CHANGE_NOTICE_H_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute_
 }
 #endif
 
-#if defined(GPIO_HAVE_PORTI) && !defined(GPIOI_DISABLE)
+#if defined(GPIO_HAVE_PORTI) && !defined(GPIOI_DISABLE) && !defined(GPIO_CN_SINGLEINTERRUPT)
 void INT_ISR(_CHANGE_NOTICE_I_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNIInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
@@ -1697,7 +1697,7 @@ void INT_ISR(_CHANGE_NOTICE_I_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute_
 }
 #endif
 
-#if defined(GPIO_HAVE_PORTJ) && !defined(GPIOJ_DISABLE)
+#if defined(GPIO_HAVE_PORTJ) && !defined(GPIOJ_DISABLE) && !defined(GPIO_CN_SINGLEINTERRUPT)
 void INT_ISR(_CHANGE_NOTICE_J_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNJInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
@@ -1719,7 +1719,7 @@ void INT_ISR(_CHANGE_NOTICE_J_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute_
 }
 #endif
 
-#if defined(GPIO_HAVE_PORTK) && !defined(GPIOK_DISABLE)
+#if defined(GPIO_HAVE_PORTK) && !defined(GPIOK_DISABLE) && !defined(GPIO_CN_SINGLEINTERRUPT)
 void INT_ISR(_CHANGE_NOTICE_K_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNKInterrupt(void)
 {
 #    ifdef GPIO_CN_NOEDGEDETECT
@@ -1738,5 +1738,12 @@ void INT_ISR(_CHANGE_NOTICE_K_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute_
     CNFK = 0;
 #    endif
     _CNKIF = 0;
+}
+#endif
+
+#if defined(GPIO_CN_SINGLEINTERRUPT)
+void INT_ISR(_CHANGE_NOTICE_VECTOR, GPIOI_INT_PRIORITY, INT_MODE) __attribute__((weak)) CNInterrupt(void)
+{
+    // TODO
 }
 #endif
