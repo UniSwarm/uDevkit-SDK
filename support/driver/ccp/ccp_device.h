@@ -26,36 +26,38 @@ extern "C" {
 #    warning "Unsupported ARCHI"
 #endif
 
+#if CCP_COUNT >= 1
 enum
 {
-#if CCP_COUNT >= 1
+#    if CCP_COUNT >= 1
     CCP1_ID = 0,
-#endif
-#if CCP_COUNT >= 2
+#    endif
+#    if CCP_COUNT >= 2
     CCP2_ID = 1,
-#endif
-#if CCP_COUNT >= 3
+#    endif
+#    if CCP_COUNT >= 3
     CCP3_ID = 2,
-#endif
-#if CCP_COUNT >= 4
+#    endif
+#    if CCP_COUNT >= 4
     CCP4_ID = 3,
-#endif
-#if CCP_COUNT >= 5
+#    endif
+#    if CCP_COUNT >= 5
     CCP5_ID = 4,
-#endif
-#if CCP_COUNT >= 6
+#    endif
+#    if CCP_COUNT >= 6
     CCP6_ID = 5,
-#endif
-#if CCP_COUNT >= 7
+#    endif
+#    if CCP_COUNT >= 7
     CCP7_ID = 6,
-#endif
-#if CCP_COUNT >= 8
+#    endif
+#    if CCP_COUNT >= 8
     CCP8_ID = 7,
-#endif
-#if CCP_COUNT >= 9
+#    endif
+#    if CCP_COUNT >= 9
     CCP9_ID = 8,
-#endif
+#    endif
 };
+#endif
 
 #ifdef __cplusplus
 }

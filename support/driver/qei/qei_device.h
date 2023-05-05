@@ -36,27 +36,29 @@ typedef uint32_t qei_type;
 typedef uint16_t qei_type;
 #endif
 
+#if QEI_COUNT >= 1
 enum
 {
-#if QEI_COUNT >= 1
+#    if QEI_COUNT >= 1
     QEI1_ID = 0,
-#endif
-#if QEI_COUNT >= 2
+#    endif
+#    if QEI_COUNT >= 2
     QEI2_ID = 1,
-#endif
-#if QEI_COUNT >= 3
+#    endif
+#    if QEI_COUNT >= 3
     QEI3_ID = 2,
-#endif
-#if QEI_COUNT >= 4
+#    endif
+#    if QEI_COUNT >= 4
     QEI4_ID = 3,
-#endif
-#if QEI_COUNT >= 5
+#    endif
+#    if QEI_COUNT >= 5
     QEI5_ID = 4,
-#endif
-#if QEI_COUNT >= 6
+#    endif
+#    if QEI_COUNT >= 6
     QEI6_ID = 5,
-#endif
+#    endif
 };
+#endif
 
 #ifdef __cplusplus
 }

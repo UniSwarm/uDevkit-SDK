@@ -31,27 +31,29 @@ extern "C" {
 #    include "uart_pic32mz_mm_mk.h"
 #endif
 
+#if UART_COUNT >= 1
 enum
 {
-#if UART_COUNT >= 1
+#    if UART_COUNT >= 1
     UART1_ID = 0,
-#endif
-#if UART_COUNT >= 2
+#    endif
+#    if UART_COUNT >= 2
     UART2_ID = 1,
-#endif
-#if UART_COUNT >= 3
+#    endif
+#    if UART_COUNT >= 3
     UART3_ID = 2,
-#endif
-#if UART_COUNT >= 4
+#    endif
+#    if UART_COUNT >= 4
     UART4_ID = 3,
-#endif
-#if UART_COUNT >= 5
+#    endif
+#    if UART_COUNT >= 5
     UART5_ID = 4,
-#endif
-#if UART_COUNT >= 6
+#    endif
+#    if UART_COUNT >= 6
     UART6_ID = 5,
-#endif
+#    endif
 };
+#endif
 
 #ifdef __cplusplus
 }

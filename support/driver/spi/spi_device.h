@@ -30,25 +30,27 @@ extern "C" {
 #    error Unsuported ARCHI
 #endif
 
+#if SPI_COUNT >= 1
 enum
 {
-#if SPI_COUNT >= 1
+#    if SPI_COUNT >= 1
     SPI1_ID = 0,
-#endif
-#if SPI_COUNT >= 2
+#    endif
+#    if SPI_COUNT >= 2
     SPI2_ID = 1,
-#endif
-#if SPI_COUNT >= 3
+#    endif
+#    if SPI_COUNT >= 3
     SPI3_ID = 2,
-#endif
-#if SPI_COUNT >= 4
+#    endif
+#    if SPI_COUNT >= 4
     SPI4_ID = 3,
-#endif
-#if SPI_COUNT >= 5
+#    endif
+#    if SPI_COUNT >= 5
     SPI5_ID = 4,
-#endif
-#if SPI_COUNT >= 6
+#    endif
+#    if SPI_COUNT >= 6
     SPI6_ID = 5,
+#    endif
 #endif
 };
 

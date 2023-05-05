@@ -34,35 +34,37 @@ extern "C" {
 }
 #endif
 
+#if TIMER_COUNT >= 1
 enum
 {
-#if TIMER_COUNT >= 1
+#    if TIMER_COUNT >= 1
     TIMER1_ID = 0,
-#endif
-#if TIMER_COUNT >= 2
+#    endif
+#    if TIMER_COUNT >= 2
     TIMER2_ID = 1,
-#endif
-#if TIMER_COUNT >= 3
+#    endif
+#    if TIMER_COUNT >= 3
     TIMER3_ID = 2,
-#endif
-#if TIMER_COUNT >= 4
+#    endif
+#    if TIMER_COUNT >= 4
     TIMER4_ID = 3,
-#endif
-#if TIMER_COUNT >= 5
+#    endif
+#    if TIMER_COUNT >= 5
     TIMER5_ID = 4,
-#endif
-#if TIMER_COUNT >= 6
+#    endif
+#    if TIMER_COUNT >= 6
     TIMER6_ID = 5,
-#endif
-#if TIMER_COUNT >= 7
+#    endif
+#    if TIMER_COUNT >= 7
     TIMER7_ID = 6,
-#endif
-#if TIMER_COUNT >= 8
+#    endif
+#    if TIMER_COUNT >= 8
     TIMER8_ID = 7,
-#endif
-#if TIMER_COUNT >= 9
+#    endif
+#    if TIMER_COUNT >= 9
     TIMER9_ID = 8,
-#endif
+#    endif
 };
+#endif
 
 #endif  // TIMER_DEVICE_H

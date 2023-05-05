@@ -34,57 +34,59 @@ extern "C" {
 #    warning Unsuported ARCHI
 #endif
 
+#if OC_COUNT >= 1
 enum
 {
-#if OC_COUNT >= 1
+#    if OC_COUNT >= 1
     OC1_ID = 0,
-#endif
-#if OC_COUNT >= 2
+#    endif
+#    if OC_COUNT >= 2
     OC2_ID = 1,
-#endif
-#if OC_COUNT >= 3
+#    endif
+#    if OC_COUNT >= 3
     OC3_ID = 2,
-#endif
-#if OC_COUNT >= 4
+#    endif
+#    if OC_COUNT >= 4
     OC4_ID = 3,
-#endif
-#if OC_COUNT >= 5
+#    endif
+#    if OC_COUNT >= 5
     OC5_ID = 4,
-#endif
-#if OC_COUNT >= 6
+#    endif
+#    if OC_COUNT >= 6
     OC6_ID = 5,
-#endif
-#if OC_COUNT >= 7
+#    endif
+#    if OC_COUNT >= 7
     OC7_ID = 6,
-#endif
-#if OC_COUNT >= 8
+#    endif
+#    if OC_COUNT >= 8
     OC8_ID = 7,
-#endif
-#if OC_COUNT >= 9
+#    endif
+#    if OC_COUNT >= 9
     OC9_ID = 8,
-#endif
-#if OC_COUNT >= 10
+#    endif
+#    if OC_COUNT >= 10
     OC10_ID = 9,
-#endif
-#if OC_COUNT >= 11
+#    endif
+#    if OC_COUNT >= 11
     OC11_ID = 10,
-#endif
-#if OC_COUNT >= 12
+#    endif
+#    if OC_COUNT >= 12
     OC12_ID = 11,
-#endif
-#if OC_COUNT >= 13
+#    endif
+#    if OC_COUNT >= 13
     OC13_ID = 12,
-#endif
-#if OC_COUNT >= 14
+#    endif
+#    if OC_COUNT >= 14
     OC14_ID = 13,
-#endif
-#if OC_COUNT >= 15
+#    endif
+#    if OC_COUNT >= 15
     OC15_ID = 14,
-#endif
-#if OC_COUNT >= 16
+#    endif
+#    if OC_COUNT >= 16
     OC16_ID = 15,
-#endif
+#    endif
 };
+#endif
 
 #ifdef __cplusplus
 }
