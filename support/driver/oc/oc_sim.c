@@ -177,6 +177,22 @@ int oc_close(rt_dev_t device)
 }
 
 /**
+ * @brief OC sdk state
+ * @param device OC device number
+ * @return true if OC was openned by OC_open function
+ */
+bool oc_isOpened(rt_dev_t device)
+{
+    uint8_t oc = MINOR(device);
+    if (oc >= OC_COUNT)
+    {
+        return -1;
+    }
+
+    return (_ocs[oc].flags.used == 1);
+}
+
+/**
  * @brief Enable the specified OC device
  * @param device OC device number
  * @return 0 if ok, -1 in case of error
@@ -218,6 +234,22 @@ int oc_disable(rt_dev_t device)
 #else
     return -1;
 #endif
+}
+
+/**
+ * @brief OC sdk enabled state
+ * @param device OC device number
+ * @return true if OC was enabled by OC_enable function
+ */
+bool oc_isEnabled(rt_dev_t device)
+{
+    uint8_t oc = MINOR(device);
+    if (oc >= OC_COUNT)
+    {
+        return -1;
+    }
+
+    return (_ocs[oc].flags.enabled == 1);
 }
 
 /**

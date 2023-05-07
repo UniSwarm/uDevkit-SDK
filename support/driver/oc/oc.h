@@ -23,10 +23,12 @@ extern "C" {
 rt_dev_t oc_getFreeDevice(void);
 int oc_open(rt_dev_t device);
 int oc_close(rt_dev_t device);
+bool oc_isOpened(rt_dev_t device);
 
 // ====== device enable/disable =======
 int oc_enable(rt_dev_t device);
 int oc_disable(rt_dev_t device);
+bool oc_isEnabled(rt_dev_t device);
 
 // ========== device settings =========
 #define OC_MODE_INVALID    0x00  ///< OC Off
