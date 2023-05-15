@@ -166,7 +166,7 @@ bool i2c_isOpened(rt_dev_t device)
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
-        return -1;
+        return false;
     }
 
     return (_i2cs[i2c].flags.used == 1);
@@ -289,7 +289,7 @@ bool i2c_isEnabled(rt_dev_t device)
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
-        return -1;
+        return false;
     }
 
     return (_i2cs[i2c].flags.enabled == 1);
@@ -443,7 +443,7 @@ int i2c_setAddressWidth(rt_dev_t device, uint8_t addressWidth)
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
-        return 0;
+        return -1;
     }
 
     if (addressWidth == 7)
@@ -533,7 +533,7 @@ int i2c_start(rt_dev_t device)
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
-        return 0;
+        return -1;
     }
 
     switch (i2c)
@@ -602,7 +602,7 @@ int i2c_restart(rt_dev_t device)
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
-        return 0;
+        return -1;
     }
 
     switch (i2c)
@@ -671,7 +671,7 @@ int i2c_stop(rt_dev_t device)
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
-        return 0;
+        return -1;
     }
 
     switch (i2c)
@@ -740,7 +740,7 @@ int i2c_idle(rt_dev_t device)
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
-        return 0;
+        return -1;
     }
 
     switch (i2c)
@@ -804,7 +804,7 @@ int i2c_ack(rt_dev_t device)
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
-        return 0;
+        return -1;
     }
 
     switch (i2c)
@@ -878,7 +878,7 @@ int i2c_nack(rt_dev_t device)
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
-        return 0;
+        return -1;
     }
 
     switch (i2c)
@@ -952,7 +952,7 @@ int i2c_putc(rt_dev_t device, const char data)
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
-        return 0;
+        return -1;
     }
 
     switch (i2c)

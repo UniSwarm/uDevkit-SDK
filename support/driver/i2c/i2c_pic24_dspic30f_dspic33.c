@@ -142,7 +142,7 @@ bool i2c_isOpened(rt_dev_t device)
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
-        return -1;
+        return false;
     }
 
     return (_i2cs[i2c].flags.used == 1);
@@ -241,7 +241,7 @@ bool i2c_isEnabled(rt_dev_t device)
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
-        return -1;
+        return false;
     }
 
     return (_i2cs[i2c].flags.enabled == 1);
@@ -374,7 +374,7 @@ int i2c_setAddressWidth(rt_dev_t device, uint8_t addressWidth)
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
-        return 0;
+        return -1;
     }
 
     if (addressWidth == 7)
