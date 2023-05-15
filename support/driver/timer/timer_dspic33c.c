@@ -56,7 +56,7 @@ static struct timer_dev _timers[] = {
 #endif
 };
 
-#if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
+#if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE) && !defined(TIMER1_INT_DISABLE)
 void _T1Interrupt(void);
 #endif
 
@@ -175,6 +175,7 @@ int timer_enable(rt_dev_t device)
 
     switch (timer)
     {
+#    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
         case TIMER1_ID:
             T1CONbits.TON = 1;  // enable timer module
             _T1IF = 0;
@@ -188,6 +189,7 @@ int timer_enable(rt_dev_t device)
             }
             _T1IP = 1;
             break;
+#    endif
     }
 
     return 0;
@@ -214,10 +216,12 @@ int timer_disable(rt_dev_t device)
 
     switch (timer)
     {
+#    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
         case TIMER1_ID:
             T1CONbits.TON = 0;  // disable timer module
             _T1IE = 0;
             break;
+#    endif
     }
 
     return 0;
@@ -302,10 +306,12 @@ int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
 
     switch (timer)
     {
+#    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
         case TIMER1_ID:
             T1CONbits.TCKPS = divisor;  // set divide number
             PR1 = prvalue;              // pr value, comparator value
             break;
+#    endif
     }
 
     return 0;
@@ -330,8 +336,10 @@ uint32_t timer_period(rt_dev_t device)
 
     switch (timer)
     {
+#    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
         case TIMER1_ID:
             return PR1;
+#    endif
     }
     return -1;
 #else
@@ -448,9 +456,11 @@ uint16_t timer_value(rt_dev_t device)
 
     switch (timer)
     {
+#    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
         case TIMER1_ID:
             value = TMR1;
             break;
+#    endif
     }
 
     return value;
@@ -475,9 +485,11 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 
     switch (timer)
     {
+#    if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
         case TIMER1_ID:
             TMR1 = value;
             break;
+#    endif
     }
 
     return 0;
@@ -486,7 +498,7 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 #endif
 }
 
-#if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
+#if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE) && !defined(TIMER1_INT_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _T1Interrupt(void)
 {
     if (_timers[TIMER1_ID].handler)

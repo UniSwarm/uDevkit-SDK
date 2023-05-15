@@ -117,31 +117,31 @@ static struct timer_dev _timers[] = {
 #endif
 };
 
-#if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
+#if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE) && !defined(TIMER1_INT_DISABLE)
 void T1Interrupt(void);
 #endif
-#if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
+#if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE) && !defined(TIMER2_INT_DISABLE)
 void T2Interrupt(void);
 #endif
-#if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
+#if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE) && !defined(TIMER3_INT_DISABLE)
 void T3Interrupt(void);
 #endif
-#if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
+#if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE) && !defined(TIMER4_INT_DISABLE)
 void T4Interrupt(void);
 #endif
-#if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
+#if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE) && !defined(TIMER5_INT_DISABLE)
 void T5Interrupt(void);
 #endif
-#if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
+#if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE) && !defined(TIMER6_INT_DISABLE)
 void T6Interrupt(void);
 #endif
-#if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
+#if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE) && !defined(TIMER7_INT_DISABLE)
 void T7Interrupt(void);
 #endif
-#if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
+#if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE) && !defined(TIMER8_INT_DISABLE)
 void T8Interrupt(void);
 #endif
-#if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
+#if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE) && !defined(TIMER9_INT_DISABLE)
 void T9Interrupt(void);
 #endif
 
@@ -827,7 +827,7 @@ int timer_setValue(rt_dev_t device, uint16_t value)
 #endif
 }
 
-#if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE)
+#if (TIMER_COUNT >= 1) && !defined(TIMER1_DISABLE) && !defined(TIMER1_INT_DISABLE)
 void INT_ISR(_TIMER_1_VECTOR, TIMER1_INT_PRIORITY, INT_MODE) __attribute__((weak)) T1Interrupt(void)
 {
     if (_timers[TIMER1_ID].handler != NULL)
@@ -839,7 +839,7 @@ void INT_ISR(_TIMER_1_VECTOR, TIMER1_INT_PRIORITY, INT_MODE) __attribute__((weak
 }
 #endif
 
-#if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE)
+#if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE) && !defined(TIMER2_INT_DISABLE)
 void INT_ISR(_TIMER_2_VECTOR, TIMER2_INT_PRIORITY, INT_MODE) __attribute__((weak)) T2Interrupt(void)
 {
     if (_timers[TIMER2_ID].handler != NULL)
@@ -851,7 +851,7 @@ void INT_ISR(_TIMER_2_VECTOR, TIMER2_INT_PRIORITY, INT_MODE) __attribute__((weak
 }
 #endif
 
-#if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE)
+#if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE) && !defined(TIMER3_INT_DISABLE)
 void INT_ISR(_TIMER_3_VECTOR, TIMER3_INT_PRIORITY, INT_MODE) __attribute__((weak)) T3Interrupt(void)
 {
     if (_timers[TIMER3_ID].handler != NULL)
@@ -863,7 +863,7 @@ void INT_ISR(_TIMER_3_VECTOR, TIMER3_INT_PRIORITY, INT_MODE) __attribute__((weak
 }
 #endif
 
-#if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE)
+#if (TIMER_COUNT >= 4) && !defined(TIMER4_DISABLE) && !defined(TIMER4_INT_DISABLE)
 void INT_ISR(_TIMER_4_VECTOR, TIMER4_INT_PRIORITY, INT_MODE) __attribute__((weak)) T4Interrupt(void)
 {
     if (_timers[TIMER4_ID].handler != NULL)
@@ -875,7 +875,7 @@ void INT_ISR(_TIMER_4_VECTOR, TIMER4_INT_PRIORITY, INT_MODE) __attribute__((weak
 }
 #endif
 
-#if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE)
+#if (TIMER_COUNT >= 5) && !defined(TIMER5_DISABLE) && !defined(TIMER5_INT_DISABLE)
 void INT_ISR(_TIMER_5_VECTOR, TIMER5_INT_PRIORITY, INT_MODE) __attribute__((weak)) T5Interrupt(void)
 {
     if (_timers[TIMER5_ID].handler != NULL)
@@ -887,7 +887,7 @@ void INT_ISR(_TIMER_5_VECTOR, TIMER5_INT_PRIORITY, INT_MODE) __attribute__((weak
 }
 #endif
 
-#if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE)
+#if (TIMER_COUNT >= 6) && !defined(TIMER6_DISABLE) && !defined(TIMER6_INT_DISABLE)
 void INT_ISR(_TIMER_6_VECTOR, TIMER6_INT_PRIORITY, INT_MODE) __attribute__((weak)) T6Interrupt(void)
 {
     if (_timers[TIMER6_ID].handler != NULL)
@@ -899,7 +899,7 @@ void INT_ISR(_TIMER_6_VECTOR, TIMER6_INT_PRIORITY, INT_MODE) __attribute__((weak
 }
 #endif
 
-#if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE)
+#if (TIMER_COUNT >= 7) && !defined(TIMER7_DISABLE) && !defined(TIMER7_INT_DISABLE)
 void INT_ISR(_TIMER_7_VECTOR, TIMER7_INT_PRIORITY, INT_MODE) __attribute__((weak)) T7Interrupt(void)
 {
     if (_timers[TIMER7_ID].handler != NULL)
@@ -911,7 +911,7 @@ void INT_ISR(_TIMER_7_VECTOR, TIMER7_INT_PRIORITY, INT_MODE) __attribute__((weak
 }
 #endif
 
-#if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE)
+#if (TIMER_COUNT >= 8) && !defined(TIMER8_DISABLE) && !defined(TIMER8_INT_DISABLE)
 void INT_ISR(_TIMER_8_VECTOR, TIMER8_INT_PRIORITY, INT_MODE) __attribute__((weak)) T8Interrupt(void)
 {
     if (_timers[TIMER8_ID].handler != NULL)
@@ -923,7 +923,7 @@ void INT_ISR(_TIMER_8_VECTOR, TIMER8_INT_PRIORITY, INT_MODE) __attribute__((weak
 }
 #endif
 
-#if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE)
+#if (TIMER_COUNT >= 9) && !defined(TIMER9_DISABLE) && !defined(TIMER9_INT_DISABLE)
 void INT_ISR(_TIMER_9_VECTOR, TIMER9_INT_PRIORITY, INT_MODE) __attribute__((weak)) T9Interrupt(void)
 {
     if (_timers[TIMER9_ID].handler != NULL)
