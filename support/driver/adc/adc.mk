@@ -23,6 +23,10 @@ ifeq ($(ARCHI), $(filter $(ARCHI), dspic33ep dspic33ev))
   HEADER += adc_pic24e_dspic33e.h
  endif
 endif
+ifeq ($(ARCHI),$(filter $(ARCHI), pic32mx))
+ ARCHI_SRC += adc_pic32mx.c
+ HEADER += adc_pic32mx.h
+endif
 ifeq ($(ARCHI),$(filter $(ARCHI), pic32mm))
  ARCHI_SRC += adc_pic32mm.c
  HEADER += adc_pic32mm.h

@@ -29,6 +29,8 @@ extern "C" {
 #    include "adc_pic24e_dspic33e.h"
 #elif defined(ARCHI_pic32mm)
 #    include "adc_pic32mm.h"
+#elif defined(ARCHI_pic32mx)
+#    include "adc_pic32mx.h"
 #elif defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda) || defined(ARCHI_pic32mk)
 #    include "adc_pic32_sar12.h"
 #else
