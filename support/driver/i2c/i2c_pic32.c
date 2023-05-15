@@ -304,9 +304,6 @@ bool i2c_isEnabled(rt_dev_t device)
 int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 {
 #if I2C_COUNT >= 1
-    uint32_t systemClockPeriph;
-    uint16_t uBrg;
-
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
@@ -320,8 +317,8 @@ int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 
     _i2cs[i2c].baudSpeed = baudSpeed;
 
-    systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_I2C);
-    uBrg = (systemClockPeriph / baudSpeed) - (systemClockPeriph / I2C_FPGD) - 2;
+    uint32_t systemClockPeriph = i2c_clock(i2c);
+    uint16_t uBrg = (systemClockPeriph / baudSpeed) - (systemClockPeriph / I2C_FPGD) - 2;
 
     if (uBrg <= 1)
     {
@@ -371,11 +368,9 @@ int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 uint32_t i2c_baudSpeed(rt_dev_t device)
 {
 #if I2C_COUNT >= 1
-    uint32_t baudSpeed, systemClockPeriph;
-    uint16_t uBrg;
-
     uint8_t i2c = MINOR(device);
 
+    uint16_t uBrg;
     switch (i2c)
     {
 #    ifdef I2C_NUM1
@@ -407,8 +402,8 @@ uint32_t i2c_baudSpeed(rt_dev_t device)
             return 0;
     }
 
-    systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_I2C);
-    baudSpeed = systemClockPeriph / (uBrg + 2);  // TODO add PGD period to be exact
+    uint32_t systemClockPeriph = i2c_clock(i2c);
+    uint32_t baudSpeed = systemClockPeriph / (uBrg + 2);  // TODO add PGD period to be exact
 
     return baudSpeed;
 #else
@@ -1145,6 +1140,28 @@ uint8_t i2c_getc(rt_dev_t device)
 #endif
     return 0;
 }
+
+#if defined(ARCHI_pic32mk)
+uint32_t i2c_clock(rt_dev_t device)
+{
+    uint8_t i2c = MINOR(device);
+    if (i2c >= I2C_COUNT)
+    {
+        return 1;
+    }
+
+    switch (i2c)
+    {
+        case 1:
+        case 2:
+            return sysclock_periphFreq(SYSCLOCK_CLOCK_I2C1_2);
+        case 3:
+        case 4:
+            return sysclock_periphFreq(SYSCLOCK_CLOCK_I2C3_4);
+    }
+    return 1;
+}
+#endif
 
 /**
  * @brief Reconfigure clocks for all activated I2C devices. Call this function on clock change.

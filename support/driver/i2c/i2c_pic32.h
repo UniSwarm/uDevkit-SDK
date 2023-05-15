@@ -153,6 +153,12 @@ rt_dev_t i2c(uint8_t d);
 
 #define I2C_FPGD 9615384  // 104ns
 
+#if defined(ARCHI_pic32mk)
+uint32_t i2c_clock(rt_dev_t device);
+#else
+#    define i2c_clock(d) sysclock_periphFreq(SYSCLOCK_CLOCK_I2C)
+#endif
+
 // ======================= Interrupt bits helper =======================
 #if defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
 // interrupt bits helpers for MZ

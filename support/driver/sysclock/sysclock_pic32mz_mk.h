@@ -63,7 +63,8 @@ typedef enum
 #        define SYSCLOCK_CLOCK_CAN SYSCLOCK_CLOCK_PBCLK5  ///< CAN clock bus mapped to peripheral bus 5
 #    endif
 #    define SYSCLOCK_CLOCK_PMP     SYSCLOCK_CLOCK_PBCLK2  ///< PMP clock bus mapped to peripheral bus 2
-#    define SYSCLOCK_CLOCK_I2C     SYSCLOCK_CLOCK_PBCLK2  ///< I2C clock bus mapped to peripheral bus 2
+#    define SYSCLOCK_CLOCK_I2C1_2  SYSCLOCK_CLOCK_PBCLK2  ///< I2C clock bus mapped to peripheral bus 2
+#    define SYSCLOCK_CLOCK_I2C3_4  SYSCLOCK_CLOCK_PBCLK3  ///< I2C clock bus mapped to peripheral bus 2
 #    define SYSCLOCK_CLOCK_UART1_2 SYSCLOCK_CLOCK_PBCLK2  ///< UART 1 to 2 clock bus mapped to peripheral bus 2
 #    define SYSCLOCK_CLOCK_UART3_6 SYSCLOCK_CLOCK_PBCLK3  ///< UART 3 to 6 clock bus mapped to peripheral bus 3
 #    define SYSCLOCK_CLOCK_SPI1_2  SYSCLOCK_CLOCK_PBCLK2  ///< SPI 1 to 2 clock bus mapped to peripheral bus 2
