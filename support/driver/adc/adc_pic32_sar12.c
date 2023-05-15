@@ -112,10 +112,11 @@ int adc_init(void)
 #endif
 
     // Set up the trigger sources
-    ADCTRGSNS = 0;         // Edge trigger
-    ADCTRG1 = 0x01010101;  // Set triggers from software.
-    ADCTRG2 = 0x01010101;  // Set triggers from software.
-    ADCTRG3 = 0x01010101;  // Set triggers from software.
+    ADCCON1bits.STRGSRC = 1;  // scan trigger set to global software trigger (GSWTRG) is self-cleared on the next clock cycle
+    ADCTRGSNS = 0;            // Edge trigger
+    ADCTRG1 = 0x01010101;     // Set triggers from software.
+    ADCTRG2 = 0x01010101;     // Set triggers from software.
+    ADCTRG3 = 0x01010101;     // Set triggers from software.
 #ifdef ARCHI_pic32mk
 #    if (defined(ADC_CHANNEL_HAVE_CH12) | defined(ADC_CHANNEL_HAVE_CH13) | defined(ADC_CHANNEL_HAVE_CH14) | defined(ADC_CHANNEL_HAVE_CH15))
     ADCTRG4 = 0x01010101;  // Set triggers from software.
@@ -373,21 +374,22 @@ int adc_startSampling(uint8_t channel)
 #endif
 
         case 7:
-            if (channel <= 31)
+            if (channel <= 31)  // class 1 / 2
             {
+                ADCCSS2 = 0;
                 ADCCSS1 |= mask;
+                if (adc_setTriggerSource(channel, ADC_TRGSRC_SOFTWARE_EDGE_TRIGGER) < 0)
+                {
+                    return -1;
+                }
             }
-            else
+            else  // class 3
             {
+                ADCCSS1 = 0;
                 ADCCSS2 |= mask;
             }
             ADCCON3bits.DIGEN7 = 1;  // Enable ADC7
             break;
-    }
-
-    if (adc_setTriggerSource(channel, ADC_TRGSRC_SOFTWARE_EDGE_TRIGGER) < 0)
-    {
-        return -1;
     }
 
     // Trigger a conversion
