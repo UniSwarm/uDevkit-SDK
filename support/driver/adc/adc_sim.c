@@ -102,6 +102,9 @@ int16_t adc_value(uint8_t channel)
         return 0;
     }
 
+    simulator_rec_task();
+    simulator_recv(ADC_SIM_MODULE, 0, ADC_SIM_READ, (char *)adc_channels, ADC_CHANNEL_COUNT * 2);
+
     return adc_channels[channel];
 }
 
