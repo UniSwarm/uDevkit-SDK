@@ -106,11 +106,11 @@ void board_setBridgesEnabled(int enable);
 #endif
 
 // Currents limits
-#define CURRENT_PEAK_LIMIT      3500
+#define CURRENT_PEAK_LIMIT      3200
 #define CURRENT_PEAK_PERIOD     40
-#define CURRENT_BURST_LIMIT     3200
+#define CURRENT_BURST_LIMIT     2400
 #define CURRENT_BURST_TIME      1000  // in ms
-#define CURRENT_SUSTAINED_LIMIT 2000
+#define CURRENT_SUSTAINED_LIMIT 1600
 #define CURRENT_I2T_SCALE_SHIFT 3
 // = current protection call frequency * burst time time unit. ex: 32kHz * 1ms = 32
 #define CURRENT_LOOP_TIME_MULTIPLER 32
