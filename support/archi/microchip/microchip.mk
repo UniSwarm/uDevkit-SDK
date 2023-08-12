@@ -82,6 +82,7 @@ ifeq ($(filter %.cpp,$(SRC)),)
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	@printf "$(COMPCOLOR)µLD %-35s => %s\n$(NORM)" "*.o" $(OUT_PWD)/$(PROJECT).elf
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map" 2> $(OUT_PWD)/linker.log || (cat $(OUT_PWD)/linker.log >&2; rm $(OUT_PWD)/linker.log; false)
+	@rm $(OUT_PWD)/linker.log
 
 # prints memory report
 showmem : $(OUT_PWD)/$(PROJECT).elf
@@ -91,6 +92,7 @@ else
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	@printf "$(COMPCOLOR)µLD++ %-33s => %s\n$(NORM)" "*.o" $(OUT_PWD)/$(PROJECT).elf
 	$(VERB)$(CXX) $(CCFLAGS) $(CCFLAGS_XC) $(CXXFLAGS) $(CXXFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map" 2> $(OUT_PWD)/linker.log || (cat $(OUT_PWD)/linker.log >&2; rm $(OUT_PWD)/linker.log; false)
+	@rm $(OUT_PWD)/linker.log
 
 # prints memory report
 showmem : $(OUT_PWD)/$(PROJECT).elf
