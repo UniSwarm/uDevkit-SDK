@@ -37,35 +37,35 @@ OBJECTS := $(notdir $(SRC:.S=.o)) $(notdir $(ARCHI_SRC:.S=.o))
 OBJECTS := $(OBJECTS:.s=.o)
 OBJECTS := $(OBJECTS:.c=.o)
 OBJECTS := $(OBJECTS:.cpp=.o)
-OBJECTS := $(addprefix $(OUT_PWD)/, $(OBJECTS))
--include $(wildcard $(OUT_PWD)/*.d)
+OBJECTS := $(addprefix $(OBJ_PWD)/, $(OBJECTS))
+-include $(wildcard $(OBJ_PWD)/*.d)
 $(OBJECTS) : $(CONFIG_HEADERS)
 
-# rule to build OBJECTS to OUT_PWD and give dependencies
-$(OUT_PWD)/%.o : %.c $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIST))
-	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
-	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
-	$(VERB)$(OBJDUMP) -S -r $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.lst
+# rule to build OBJECTS to OBJ_PWD and give dependencies
+$(OBJ_PWD)/%.o : %.c $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIST))
+	@test -d $(OBJ_PWD) || mkdir -p $(OBJ_PWD)
+	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OBJ_PWD)/$(notdir $@)
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OBJ_PWD)/$(notdir $@)
+	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OBJ_PWD)/$(notdir $@) > $(OBJ_PWD)/$*.d
+	$(VERB)$(OBJDUMP) -S -r $(OBJ_PWD)/$(notdir $@) > $(OBJ_PWD)/$*.lst
 
-$(OUT_PWD)/%.o : %.S $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIST))
-	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
-	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
+$(OBJ_PWD)/%.o : %.S $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIST))
+	@test -d $(OBJ_PWD) || mkdir -p $(OBJ_PWD)
+	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OBJ_PWD)/$(notdir $@)
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OBJ_PWD)/$(notdir $@)
+	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OBJ_PWD)/$(notdir $@) > $(OBJ_PWD)/$*.d
 
-$(OUT_PWD)/%.o : %.s $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIST))
-	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
-	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
+$(OBJ_PWD)/%.o : %.s $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIST))
+	@test -d $(OBJ_PWD) || mkdir -p $(OBJ_PWD)
+	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OBJ_PWD)/$(notdir $@)
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OBJ_PWD)/$(notdir $@)
+	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OBJ_PWD)/$(notdir $@) > $(OBJ_PWD)/$*.d
 
-$(OUT_PWD)/%.o : %.cpp $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIST))
-	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
-	@printf "$(COMPCOLOR)µC++ %-34s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	$(VERB)$(CXX) $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS_XC) $(CXXFLAGS_XC) -x c++ -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
-	@$(CXX) $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS_XC) $(CXXFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OUT_PWD)/$(notdir $@) > $(OUT_PWD)/$*.d
+$(OBJ_PWD)/%.o : %.cpp $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIST))
+	@test -d $(OBJ_PWD) || mkdir -p $(OBJ_PWD)
+	@printf "$(COMPCOLOR)µC++ %-34s => %s\n$(NORM)" $(notdir $<) $(OBJ_PWD)/$(notdir $@)
+	$(VERB)$(CXX) $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS_XC) $(CXXFLAGS_XC) -x c++ -c $< $(DEFINES) $(INCLUDEPATH) -o $(OBJ_PWD)/$(notdir $@)
+	@$(CXX) $(CCFLAGS) $(CXXFLAGS) $(CCFLAGS_XC) $(CXXFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OBJ_PWD)/$(notdir $@) > $(OBJ_PWD)/$*.d
 
 HEAP?=100
 
@@ -81,22 +81,22 @@ ifeq ($(filter %.cpp,$(SRC)),)
 # Pure C project, link with gcc interface
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	@printf "$(COMPCOLOR)µLD %-35s => %s\n$(NORM)" "*.o" $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map" 2> $(OUT_PWD)/linker.log || (cat $(OUT_PWD)/linker.log >&2; rm $(OUT_PWD)/linker.log; false)
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OBJ_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map" 2> $(OUT_PWD)/linker.log || (cat $(OUT_PWD)/linker.log >&2; rm $(OUT_PWD)/linker.log; false)
 	@rm $(OUT_PWD)/linker.log
 
 # prints memory report
 showmem : $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map",--report-mem
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OBJ_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map",--report-mem
 else
 # Mixed C / C++ project, link with g++ interface
 $(OUT_PWD)/$(PROJECT).elf : $(OBJECTS)
 	@printf "$(COMPCOLOR)µLD++ %-33s => %s\n$(NORM)" "*.o" $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(CXX) $(CCFLAGS) $(CCFLAGS_XC) $(CXXFLAGS) $(CXXFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map" 2> $(OUT_PWD)/linker.log || (cat $(OUT_PWD)/linker.log >&2; rm $(OUT_PWD)/linker.log; false)
+	$(VERB)$(CXX) $(CCFLAGS) $(CCFLAGS_XC) $(CXXFLAGS) $(CXXFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OBJ_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map" 2> $(OUT_PWD)/linker.log || (cat $(OUT_PWD)/linker.log >&2; rm $(OUT_PWD)/linker.log; false)
 	@rm $(OUT_PWD)/linker.log
 
 # prints memory report
 showmem : $(OUT_PWD)/$(PROJECT).elf
-	$(VERB)$(CXX) $(CCFLAGS) $(CCFLAGS_XC) $(CXXFLAGS) $(CXXFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OUT_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map",--report-mem
+	$(VERB)$(CXX) $(CCFLAGS) $(CCFLAGS_XC) $(CXXFLAGS) $(CXXFLAGS_XC) -o $(OUT_PWD)/$(PROJECT).elf $(addprefix $(OBJ_PWD)/,$(notdir $(OBJECTS))) $(LIBS) $(LDFLAGS) $(LDFLAGS_XC) -Wl,-Map="$(OUT_PWD)/$(PROJECT).map",--report-mem
 endif
 
 $(OUT_PWD)/$(PROJECT).s : $(OUT_PWD)/$(PROJECT).elf

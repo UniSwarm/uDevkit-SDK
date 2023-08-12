@@ -6,11 +6,11 @@ CONFIG_HEADERS = $(OUT_PWD)/modules.h
 # variable that contain the root directory of uDevkit-SDK
 UDEVKIT := $(dir $(lastword $(MAKEFILE_LIST)))
 
-# if OUT_PWD undefined, OUT_PWD is forced to build/ sub directory
-ifndef OUT_PWD
-  OUT_PWD = build
-endif
+# set OUT_PWD and OBJ_PWD default values
+OUT_PWD ?= build
 OUT_PWD := $(strip $(OUT_PWD))
+OBJ_PWD ?= $(OUT_PWD)/objs
+OBJ_PWD := $(strip $(OBJ_PWD))
 
 BLUE := $(shell command -v tput > /dev/null && tput setaf 4)
 YELLOW := $(shell command -v tput > /dev/null && tput setaf 3)
@@ -30,12 +30,6 @@ else
   VERB := @
 endif
 
-# make all as default rule
-all:
-
-# uncomment this line when all C includes will be in uDevkit-SDK
-# CCFLAGS += -nostdinc
-
 # include all support needed
 include $(UDEVKIT)/support/support.mk
 
@@ -45,8 +39,9 @@ INCLUDEPATH += -I. -I$(UDEVKIT)/include -I$(OUT_PWD)
 # cleaning rule project
 .PHONY: clean
 clean:
-	$(VERB)rm -f $(OUT_PWD)/*.o $(OUT_PWD)/*.d $(OUT_PWD)/*.c $(OUT_PWD)/*.h $(OUT_PWD)/*.s $(OUT_PWD)/*.lst $(OUT_PWD)/*.map
-	$(VERB)rm -f $(OUT_PWD)/$(PROJECT).elf $(OUT_PWD)/$(PROJECT).hex
+	$(VERB)rm -f $(OBJ_PWD)/*.o $(OBJ_PWD)/*.d $(OBJ_PWD)/*.lst
+	$(VERB)rm -f $(OUT_PWD)/*.c $(OUT_PWD)/*.h $(OUT_PWD)/*.s
+	$(VERB)rm -f $(OUT_PWD)/*.map $(OUT_PWD)/$(PROJECT).elf $(OUT_PWD)/$(PROJECT).hex
 	$(VERB)rm -f $(CONFIG_HEADERS)
 
 .PHONY: distrib
@@ -82,7 +77,7 @@ info:
 	@printf "\n"
 	@printf "$(GREEN)SIM_SRC:    $(NORM)%s\n" "$(SIM_SRC)"
 	@printf "$(GREEN)SIM_HEADER: $(NORM)%s\n" "$(SIM_HEADER)"
-	
+
 .PHONY: rebuild
 rebuild: clean hex
 
