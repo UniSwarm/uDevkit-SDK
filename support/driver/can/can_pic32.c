@@ -53,28 +53,28 @@ struct can_dev
 #    ifndef CAN1_FIFO_SIZE
 #        define CAN1_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
-static uint8_t __attribute__((aligned(4), noload)) _can1_fifo_buffer[CAN1_FIFO_SIZE];
+static uint8_t __attribute__((aligned(4), noload, section(".can1_fifos"))) _can1_fifo_buffer[CAN1_FIFO_SIZE];
 #endif
 
 #if (CAN_COUNT >= 2) && !defined(CAN2_DISABLE)
 #    ifndef CAN2_FIFO_SIZE
 #        define CAN2_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
-static uint8_t __attribute__((aligned(4), noload)) _can2_fifo_buffer[CAN2_FIFO_SIZE];
+static uint8_t __attribute__((aligned(4), noload, section(".can2_fifos"))) _can2_fifo_buffer[CAN2_FIFO_SIZE];
 #endif
 
 #if (CAN_COUNT >= 3) && !defined(CAN3_DISABLE)
 #    ifndef CAN3_FIFO_SIZE
 #        define CAN3_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
-static uint8_t __attribute__((aligned(4), noload)) _can3_fifo_buffer[CAN3_FIFO_SIZE];
+static uint8_t __attribute__((aligned(4), noload, section(".can3_fifos"))) _can3_fifo_buffer[CAN3_FIFO_SIZE];
 #endif
 
 #if (CAN_COUNT >= 4) && !defined(CAN4_DISABLE)
 #    ifndef CAN4_FIFO_SIZE
 #        define CAN4_FIFO_SIZE (32 * (CAN_MESSAGE_HEADER_SIZE + 8U))  // 32 messages of 8 bytes
 #    endif
-static uint8_t __attribute__((aligned(4), noload)) _can4_fifo_buffer[CAN4_FIFO_SIZE];
+static uint8_t __attribute__((aligned(4), noload, section(".can4_fifos"))) _can4_fifo_buffer[CAN4_FIFO_SIZE];
 #endif
 
 static struct can_dev _cans[] = {
