@@ -53,7 +53,7 @@ int _board_init_io(void)
     _QEINDX1R = 48;
 
     TRISCbits.TRISC8 = 0;  // RS485 DE
-    LATCbits.LATC8 = 1;
+    LATCbits.LATC8 = 0;    // disable RS485 transmitter
 
     TRISBbits.TRISB4 = 0;   // DBG1
     TRISEbits.TRISE13 = 0;  // DBG2
