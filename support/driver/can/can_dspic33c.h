@@ -30,7 +30,11 @@ extern "C" {
     || defined(DEVICE_33CK256MP505) || defined(DEVICE_33CK256MP506) || defined(DEVICE_33CK256MP508)
 #    define CAN_COUNT 1
 #elif defined(DEVICE_33CH256MP505) || defined(DEVICE_33CH256MP506) || defined(DEVICE_33CH256MP508) || defined(DEVICE_33CH512MP505)                             \
-    || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP508) || defined(DEVICE_33CK256MP605) || defined(DEVICE_33CK256MP606)                            \
+    || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP508) || defined(DEVICE_33CH512MP605) || defined(DEVICE_33CH512MP606)                            \
+    || defined(DEVICE_33CH512MP608) || defined(DEVICE_33CH512MP705) || defined(DEVICE_33CH512MP706) || defined(DEVICE_33CH512MP708)                            \
+    || defined(DEVICE_33CH512MP710) || defined(DEVICE_33CH512MP712) || defined(DEVICE_33CH1024MP605) || defined(DEVICE_33CH1024MP606)                          \
+    || defined(DEVICE_33CH1024MP608) || defined(DEVICE_33CH1024MP705) || defined(DEVICE_33CH1024MP706) || defined(DEVICE_33CH1024MP708)                        \
+    || defined(DEVICE_33CH1024MP710) || defined(DEVICE_33CH1024MP712) || defined(DEVICE_33CK256MP605) || defined(DEVICE_33CK256MP606)                          \
     || defined(DEVICE_33CK256MP608) || defined(DEVICE_33CK256MP705) || defined(DEVICE_33CK256MP706) || defined(DEVICE_33CK256MP708)                            \
     || defined(DEVICE_33CK256MP710) || defined(DEVICE_33CK256MPT608) || defined(DEVICE_33CK512MP605) || defined(DEVICE_33CK512MP606)                           \
     || defined(DEVICE_33CK512MP608) || defined(DEVICE_33CK512MP705) || defined(DEVICE_33CK512MP706) || defined(DEVICE_33CK512MP708)                            \
