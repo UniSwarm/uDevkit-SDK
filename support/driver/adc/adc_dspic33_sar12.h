@@ -489,6 +489,105 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_MASK 0x0FFFFFFFLU
 #    define ADC_CHANNEL_COUNT     28
 #    define ADC_CHANNEL_MAX       27
+#elif defined(DEVICE_33CH512MP305) || defined(DEVICE_33CH512MP305S1) || defined(DEVICE_33CH512MP306) || defined(DEVICE_33CH512MP306S1)                         \
+    || defined(DEVICE_33CH512MP405) || defined(DEVICE_33CH512MP405S1) || defined(DEVICE_33CH512MP406) || defined(DEVICE_33CH512MP406S1)                        \
+    || defined(DEVICE_33CH512MP605) || defined(DEVICE_33CH512MP605S1) || defined(DEVICE_33CH512MP606) || defined(DEVICE_33CH512MP606S1)                        \
+    || defined(DEVICE_33CH512MP705) || defined(DEVICE_33CH512MP705S1) || defined(DEVICE_33CH512MP706) || defined(DEVICE_33CH512MP706S1)                        \
+    || defined(DEVICE_33CH1024MP305) || defined(DEVICE_33CH1024MP305S1) || defined(DEVICE_33CH1024MP306) || defined(DEVICE_33CH1024MP306S1)                    \
+    || defined(DEVICE_33CH1024MP405) || defined(DEVICE_33CH1024MP405S1) || defined(DEVICE_33CH1024MP406) || defined(DEVICE_33CH1024MP406S1)                    \
+    || defined(DEVICE_33CH1024MP605) || defined(DEVICE_33CH1024MP605S1) || defined(DEVICE_33CH1024MP606) || defined(DEVICE_33CH1024MP606S1)                    \
+    || defined(DEVICE_33CH1024MP705) || defined(DEVICE_33CH1024MP705S1) || defined(DEVICE_33CH1024MP706) || defined(DEVICE_33CH1024MP706S1)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH12
+#    define ADC_CHANNEL_HAVE_CH13
+#    define ADC_CHANNEL_HAVE_CH14
+#    define ADC_CHANNEL_HAVE_CH15
+#    define ADC_CHANNEL_HAVE_CH17
+#    define ADC_CHANNEL_HAVE_CH24
+#    define ADC_CHANNEL_HAVE_CH25
+#    define ADC_CHANNEL_HAVE_CH26
+#    define ADC_CHANNEL_HAVE_CH27
+#    define ADC_CHANNEL_HAVE_CH28
+#    define ADC_CHANNEL_HAVE_MASK 0x1F02FFFFLU
+#    define ADC_CHANNEL_COUNT     22
+#    define ADC_CHANNEL_MAX       28
+#elif defined(DEVICE_33CH512MP308) || defined(DEVICE_33CH512MP308S1) || defined(DEVICE_33CH512MP408) || defined(DEVICE_33CH512MP408S1)                         \
+    || defined(DEVICE_33CH512MP608) || defined(DEVICE_33CH512MP608S1) || defined(DEVICE_33CH512MP708) || defined(DEVICE_33CH512MP708S1)                        \
+    || defined(DEVICE_33CH1024MP308) || defined(DEVICE_33CH1024MP308S1) || defined(DEVICE_33CH1024MP408) || defined(DEVICE_33CH1024MP408S1)                    \
+    || defined(DEVICE_33CH1024MP608) || defined(DEVICE_33CH1024MP608S1) || defined(DEVICE_33CH1024MP708) || defined(DEVICE_33CH1024MP708S1)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH12
+#    define ADC_CHANNEL_HAVE_CH13
+#    define ADC_CHANNEL_HAVE_CH14
+#    define ADC_CHANNEL_HAVE_CH15
+#    define ADC_CHANNEL_HAVE_CH17
+#    define ADC_CHANNEL_HAVE_CH19
+#    define ADC_CHANNEL_HAVE_CH24
+#    define ADC_CHANNEL_HAVE_CH25
+#    define ADC_CHANNEL_HAVE_CH26
+#    define ADC_CHANNEL_HAVE_CH27
+#    define ADC_CHANNEL_HAVE_CH28
+#    define ADC_CHANNEL_HAVE_MASK 0x1F0AFFFFLU
+#    define ADC_CHANNEL_COUNT     23
+#    define ADC_CHANNEL_MAX       28
+#elif defined(DEVICE_33CH512MP410) || defined(DEVICE_33CH512MP410S1) || defined(DEVICE_33CH512MP412) || defined(DEVICE_33CH512MP412S1)                         \
+    || defined(DEVICE_33CH512MP710) || defined(DEVICE_33CH512MP710S1) || defined(DEVICE_33CH512MP712) || defined(DEVICE_33CH512MP712S1)                        \
+    || defined(DEVICE_33CH1024MP410) || defined(DEVICE_33CH1024MP410S1) || defined(DEVICE_33CH1024MP412) || defined(DEVICE_33CH1024MP412S1)                    \
+    || defined(DEVICE_33CH1024MP710) || defined(DEVICE_33CH1024MP710S1) || defined(DEVICE_33CH1024MP712) || defined(DEVICE_33CH1024MP712S1)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH12
+#    define ADC_CHANNEL_HAVE_CH13
+#    define ADC_CHANNEL_HAVE_CH14
+#    define ADC_CHANNEL_HAVE_CH15
+#    define ADC_CHANNEL_HAVE_CH16
+#    define ADC_CHANNEL_HAVE_CH17
+#    define ADC_CHANNEL_HAVE_CH18
+#    define ADC_CHANNEL_HAVE_CH19
+#    define ADC_CHANNEL_HAVE_CH20
+#    define ADC_CHANNEL_HAVE_CH21
+#    define ADC_CHANNEL_HAVE_CH22
+#    define ADC_CHANNEL_HAVE_CH23
+#    define ADC_CHANNEL_HAVE_CH24
+#    define ADC_CHANNEL_HAVE_CH25
+#    define ADC_CHANNEL_HAVE_CH26
+#    define ADC_CHANNEL_HAVE_CH27
+#    define ADC_CHANNEL_HAVE_CH28
+#    define ADC_CHANNEL_HAVE_MASK 0x1FFFFFFFLU
+#    define ADC_CHANNEL_COUNT     29
+#    define ADC_CHANNEL_MAX       28
 #elif defined(DEVICE_33CK256MP405) || defined(DEVICE_33CK256MP705) || defined(DEVICE_33CK512MP405) || defined(DEVICE_33CK512MP705)                             \
     || defined(DEVICE_33CK1024MP405) || defined(DEVICE_33CK1024MP705)
 #    define ADC_CHANNEL_HAVE_CH0
@@ -644,7 +743,15 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_33CK256MP508) || defined(DEVICE_33EP16GS202) || defined(DEVICE_33EP32GS202)
 #    define ADC_HAVE_DEDICATED_CORE0
 #    define ADC_HAVE_DEDICATED_CORE1
-#elif defined(DEVICE_33CK256MP305) || defined(DEVICE_33CK256MP306) || defined(DEVICE_33CK256MP308) || defined(DEVICE_33CK256MP405)                             \
+#elif defined(DEVICE_33CH512MP305S1) || defined(DEVICE_33CH512MP306S1) || defined(DEVICE_33CH512MP308S1) || defined(DEVICE_33CH512MP405S1)                     \
+    || defined(DEVICE_33CH512MP406S1) || defined(DEVICE_33CH512MP408S1) || defined(DEVICE_33CH512MP410S1) || defined(DEVICE_33CH512MP412S1)                    \
+    || defined(DEVICE_33CH512MP605S1) || defined(DEVICE_33CH512MP606S1) || defined(DEVICE_33CH512MP608S1) || defined(DEVICE_33CH512MP705S1)                    \
+    || defined(DEVICE_33CH512MP706S1) || defined(DEVICE_33CH512MP708S1) || defined(DEVICE_33CH512MP710S1) || defined(DEVICE_33CH512MP712S1)                    \
+    || defined(DEVICE_33CH1024MP305S1) || defined(DEVICE_33CH1024MP306S1) || defined(DEVICE_33CH1024MP308S1) || defined(DEVICE_33CH1024MP405S1)                \
+    || defined(DEVICE_33CH1024MP406S1) || defined(DEVICE_33CH1024MP408S1) || defined(DEVICE_33CH1024MP410S1) || defined(DEVICE_33CH1024MP412S1)                \
+    || defined(DEVICE_33CH1024MP605S1) || defined(DEVICE_33CH1024MP606S1) || defined(DEVICE_33CH1024MP608S1) || defined(DEVICE_33CH1024MP705S1)                \
+    || defined(DEVICE_33CH1024MP706S1) || defined(DEVICE_33CH1024MP708S1) || defined(DEVICE_33CH1024MP710S1) || defined(DEVICE_33CH1024MP712S1)                \
+    || defined(DEVICE_33CK256MP305) || defined(DEVICE_33CK256MP306) || defined(DEVICE_33CK256MP308) || defined(DEVICE_33CK256MP405)                            \
     || defined(DEVICE_33CK256MP406) || defined(DEVICE_33CK256MP408) || defined(DEVICE_33CK256MP410) || defined(DEVICE_33CK256MP605)                            \
     || defined(DEVICE_33CK256MP606) || defined(DEVICE_33CK256MP608) || defined(DEVICE_33CK256MP705) || defined(DEVICE_33CK256MP706)                            \
     || defined(DEVICE_33CK256MP708) || defined(DEVICE_33CK256MP710) || defined(DEVICE_33CK256MPT608) || defined(DEVICE_33CK512MP305)                           \
@@ -702,8 +809,24 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_33CH256MP218) || defined(DEVICE_33CH256MP218S1) || defined(DEVICE_33CH256MP505) || defined(DEVICE_33CH256MP505S1)                        \
     || defined(DEVICE_33CH256MP506) || defined(DEVICE_33CH256MP506S1) || defined(DEVICE_33CH256MP508) || defined(DEVICE_33CH256MP508S1)                        \
     || defined(DEVICE_33CH512MP205) || defined(DEVICE_33CH512MP205S1) || defined(DEVICE_33CH512MP206) || defined(DEVICE_33CH512MP206S1)                        \
-    || defined(DEVICE_33CH512MP208) || defined(DEVICE_33CH512MP208S1) || defined(DEVICE_33CH512MP505) || defined(DEVICE_33CH512MP505S1)                        \
+    || defined(DEVICE_33CH512MP208) || defined(DEVICE_33CH512MP208S1) || defined(DEVICE_33CH512MP305) || defined(DEVICE_33CH512MP305S1)                        \
+    || defined(DEVICE_33CH512MP306) || defined(DEVICE_33CH512MP306S1) || defined(DEVICE_33CH512MP308) || defined(DEVICE_33CH512MP308S1)                        \
+    || defined(DEVICE_33CH512MP405) || defined(DEVICE_33CH512MP405S1) || defined(DEVICE_33CH512MP406) || defined(DEVICE_33CH512MP406S1)                        \
+    || defined(DEVICE_33CH512MP408) || defined(DEVICE_33CH512MP408S1) || defined(DEVICE_33CH512MP410) || defined(DEVICE_33CH512MP410S1)                        \
+    || defined(DEVICE_33CH512MP412) || defined(DEVICE_33CH512MP412S1) || defined(DEVICE_33CH512MP505) || defined(DEVICE_33CH512MP505S1)                        \
     || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP506S1) || defined(DEVICE_33CH512MP508) || defined(DEVICE_33CH512MP508S1)                        \
+    || defined(DEVICE_33CH512MP605) || defined(DEVICE_33CH512MP605S1) || defined(DEVICE_33CH512MP606) || defined(DEVICE_33CH512MP606S1)                        \
+    || defined(DEVICE_33CH512MP608) || defined(DEVICE_33CH512MP608S1) || defined(DEVICE_33CH512MP705) || defined(DEVICE_33CH512MP705S1)                        \
+    || defined(DEVICE_33CH512MP706) || defined(DEVICE_33CH512MP706S1) || defined(DEVICE_33CH512MP708) || defined(DEVICE_33CH512MP708S1)                        \
+    || defined(DEVICE_33CH512MP710) || defined(DEVICE_33CH512MP710S1) || defined(DEVICE_33CH512MP712) || defined(DEVICE_33CH512MP712S1)                        \
+    || defined(DEVICE_33CH1024MP305) || defined(DEVICE_33CH1024MP305S1) || defined(DEVICE_33CH1024MP306) || defined(DEVICE_33CH1024MP306S1)                    \
+    || defined(DEVICE_33CH1024MP308) || defined(DEVICE_33CH1024MP308S1) || defined(DEVICE_33CH1024MP405) || defined(DEVICE_33CH1024MP405S1)                    \
+    || defined(DEVICE_33CH1024MP406) || defined(DEVICE_33CH1024MP406S1) || defined(DEVICE_33CH1024MP408) || defined(DEVICE_33CH1024MP408S1)                    \
+    || defined(DEVICE_33CH1024MP410) || defined(DEVICE_33CH1024MP410S1) || defined(DEVICE_33CH1024MP412) || defined(DEVICE_33CH1024MP412S1)                    \
+    || defined(DEVICE_33CH1024MP605) || defined(DEVICE_33CH1024MP605S1) || defined(DEVICE_33CH1024MP606) || defined(DEVICE_33CH1024MP606S1)                    \
+    || defined(DEVICE_33CH1024MP608) || defined(DEVICE_33CH1024MP608S1) || defined(DEVICE_33CH1024MP705) || defined(DEVICE_33CH1024MP705S1)                    \
+    || defined(DEVICE_33CH1024MP706) || defined(DEVICE_33CH1024MP706S1) || defined(DEVICE_33CH1024MP708) || defined(DEVICE_33CH1024MP708S1)                    \
+    || defined(DEVICE_33CH1024MP710) || defined(DEVICE_33CH1024MP710S1) || defined(DEVICE_33CH1024MP712) || defined(DEVICE_33CH1024MP712S1)                    \
     || defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK32MC103) || defined(DEVICE_33CK32MC105) || defined(DEVICE_33CK32MP102) || defined(DEVICE_33CK32MP103) \
     || defined(DEVICE_33CK32MP105) || defined(DEVICE_33CK32MP202) || defined(DEVICE_33CK32MP203) || defined(DEVICE_33CK32MP205) || defined(DEVICE_33CK32MP206) \
     || defined(DEVICE_33CK32MP502) || defined(DEVICE_33CK32MP503) || defined(DEVICE_33CK32MP505) || defined(DEVICE_33CK32MP506) || defined(DEVICE_33CK64MC102) \
@@ -760,8 +883,24 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_33CH256MP218) || defined(DEVICE_33CH256MP218S1) || defined(DEVICE_33CH256MP505) || defined(DEVICE_33CH256MP505S1)                        \
     || defined(DEVICE_33CH256MP506) || defined(DEVICE_33CH256MP506S1) || defined(DEVICE_33CH256MP508) || defined(DEVICE_33CH256MP508S1)                        \
     || defined(DEVICE_33CH512MP205) || defined(DEVICE_33CH512MP205S1) || defined(DEVICE_33CH512MP206) || defined(DEVICE_33CH512MP206S1)                        \
-    || defined(DEVICE_33CH512MP208) || defined(DEVICE_33CH512MP208S1) || defined(DEVICE_33CH512MP505) || defined(DEVICE_33CH512MP505S1)                        \
+    || defined(DEVICE_33CH512MP208) || defined(DEVICE_33CH512MP208S1) || defined(DEVICE_33CH512MP305) || defined(DEVICE_33CH512MP305S1)                        \
+    || defined(DEVICE_33CH512MP306) || defined(DEVICE_33CH512MP306S1) || defined(DEVICE_33CH512MP308) || defined(DEVICE_33CH512MP308S1)                        \
+    || defined(DEVICE_33CH512MP405) || defined(DEVICE_33CH512MP405S1) || defined(DEVICE_33CH512MP406) || defined(DEVICE_33CH512MP406S1)                        \
+    || defined(DEVICE_33CH512MP408) || defined(DEVICE_33CH512MP408S1) || defined(DEVICE_33CH512MP410) || defined(DEVICE_33CH512MP410S1)                        \
+    || defined(DEVICE_33CH512MP412) || defined(DEVICE_33CH512MP412S1) || defined(DEVICE_33CH512MP505) || defined(DEVICE_33CH512MP505S1)                        \
     || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP506S1) || defined(DEVICE_33CH512MP508) || defined(DEVICE_33CH512MP508S1)                        \
+    || defined(DEVICE_33CH512MP605) || defined(DEVICE_33CH512MP605S1) || defined(DEVICE_33CH512MP606) || defined(DEVICE_33CH512MP606S1)                        \
+    || defined(DEVICE_33CH512MP608) || defined(DEVICE_33CH512MP608S1) || defined(DEVICE_33CH512MP705) || defined(DEVICE_33CH512MP705S1)                        \
+    || defined(DEVICE_33CH512MP706) || defined(DEVICE_33CH512MP706S1) || defined(DEVICE_33CH512MP708) || defined(DEVICE_33CH512MP708S1)                        \
+    || defined(DEVICE_33CH512MP710) || defined(DEVICE_33CH512MP710S1) || defined(DEVICE_33CH512MP712) || defined(DEVICE_33CH512MP712S1)                        \
+    || defined(DEVICE_33CH1024MP305) || defined(DEVICE_33CH1024MP305S1) || defined(DEVICE_33CH1024MP306) || defined(DEVICE_33CH1024MP306S1)                    \
+    || defined(DEVICE_33CH1024MP308) || defined(DEVICE_33CH1024MP308S1) || defined(DEVICE_33CH1024MP405) || defined(DEVICE_33CH1024MP405S1)                    \
+    || defined(DEVICE_33CH1024MP406) || defined(DEVICE_33CH1024MP406S1) || defined(DEVICE_33CH1024MP408) || defined(DEVICE_33CH1024MP408S1)                    \
+    || defined(DEVICE_33CH1024MP410) || defined(DEVICE_33CH1024MP410S1) || defined(DEVICE_33CH1024MP412) || defined(DEVICE_33CH1024MP412S1)                    \
+    || defined(DEVICE_33CH1024MP605) || defined(DEVICE_33CH1024MP605S1) || defined(DEVICE_33CH1024MP606) || defined(DEVICE_33CH1024MP606S1)                    \
+    || defined(DEVICE_33CH1024MP608) || defined(DEVICE_33CH1024MP608S1) || defined(DEVICE_33CH1024MP705) || defined(DEVICE_33CH1024MP705S1)                    \
+    || defined(DEVICE_33CH1024MP706) || defined(DEVICE_33CH1024MP706S1) || defined(DEVICE_33CH1024MP708) || defined(DEVICE_33CH1024MP708S1)                    \
+    || defined(DEVICE_33CH1024MP710) || defined(DEVICE_33CH1024MP710S1) || defined(DEVICE_33CH1024MP712) || defined(DEVICE_33CH1024MP712S1)                    \
     || defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK32MC103) || defined(DEVICE_33CK32MC105) || defined(DEVICE_33CK32MP102) || defined(DEVICE_33CK32MP103) \
     || defined(DEVICE_33CK32MP105) || defined(DEVICE_33CK32MP202) || defined(DEVICE_33CK32MP203) || defined(DEVICE_33CK32MP205) || defined(DEVICE_33CK32MP206) \
     || defined(DEVICE_33CK32MP502) || defined(DEVICE_33CK32MP503) || defined(DEVICE_33CK32MP505) || defined(DEVICE_33CK32MP506) || defined(DEVICE_33CK64MC102) \
