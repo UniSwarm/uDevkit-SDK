@@ -73,7 +73,7 @@ extern "C" {
     || defined(DEVICE_33FJ64MC802) || defined(DEVICE_33FJ64MC804) || defined(DEVICE_33FJ128GP202) || defined(DEVICE_33FJ128GP204)                              \
     || defined(DEVICE_33FJ128GP802) || defined(DEVICE_33FJ128GP804) || defined(DEVICE_33FJ128MC202) || defined(DEVICE_33FJ128MC204)                            \
     || defined(DEVICE_33FJ128MC802) || defined(DEVICE_33FJ128MC804)
-#    define INT_EXT_COUNT 3
+#    define INT_COUNT 3
 #elif defined(DEVICE_33CDV64MC106) || defined(DEVICE_33CDV128MP506) || defined(DEVICE_33CDV256MP506) || defined(DEVICE_33CDVC128MP506)                         \
     || defined(DEVICE_33CDVC256MP506) || defined(DEVICE_33CDVL64MC106) || defined(DEVICE_33CH64MP202) || defined(DEVICE_33CH64MP202S1)                         \
     || defined(DEVICE_33CH64MP203) || defined(DEVICE_33CH64MP203S1) || defined(DEVICE_33CH64MP205) || defined(DEVICE_33CH64MP205S1)                            \
@@ -90,8 +90,24 @@ extern "C" {
     || defined(DEVICE_33CH256MP218) || defined(DEVICE_33CH256MP218S1) || defined(DEVICE_33CH256MP505) || defined(DEVICE_33CH256MP505S1)                        \
     || defined(DEVICE_33CH256MP506) || defined(DEVICE_33CH256MP506S1) || defined(DEVICE_33CH256MP508) || defined(DEVICE_33CH256MP508S1)                        \
     || defined(DEVICE_33CH512MP205) || defined(DEVICE_33CH512MP205S1) || defined(DEVICE_33CH512MP206) || defined(DEVICE_33CH512MP206S1)                        \
-    || defined(DEVICE_33CH512MP208) || defined(DEVICE_33CH512MP208S1) || defined(DEVICE_33CH512MP505) || defined(DEVICE_33CH512MP505S1)                        \
+    || defined(DEVICE_33CH512MP208) || defined(DEVICE_33CH512MP208S1) || defined(DEVICE_33CH512MP305) || defined(DEVICE_33CH512MP305S1)                        \
+    || defined(DEVICE_33CH512MP306) || defined(DEVICE_33CH512MP306S1) || defined(DEVICE_33CH512MP308) || defined(DEVICE_33CH512MP308S1)                        \
+    || defined(DEVICE_33CH512MP405) || defined(DEVICE_33CH512MP405S1) || defined(DEVICE_33CH512MP406) || defined(DEVICE_33CH512MP406S1)                        \
+    || defined(DEVICE_33CH512MP408) || defined(DEVICE_33CH512MP408S1) || defined(DEVICE_33CH512MP410) || defined(DEVICE_33CH512MP410S1)                        \
+    || defined(DEVICE_33CH512MP412) || defined(DEVICE_33CH512MP412S1) || defined(DEVICE_33CH512MP505) || defined(DEVICE_33CH512MP505S1)                        \
     || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP506S1) || defined(DEVICE_33CH512MP508) || defined(DEVICE_33CH512MP508S1)                        \
+    || defined(DEVICE_33CH512MP605) || defined(DEVICE_33CH512MP605S1) || defined(DEVICE_33CH512MP606) || defined(DEVICE_33CH512MP606S1)                        \
+    || defined(DEVICE_33CH512MP608) || defined(DEVICE_33CH512MP608S1) || defined(DEVICE_33CH512MP705) || defined(DEVICE_33CH512MP705S1)                        \
+    || defined(DEVICE_33CH512MP706) || defined(DEVICE_33CH512MP706S1) || defined(DEVICE_33CH512MP708) || defined(DEVICE_33CH512MP708S1)                        \
+    || defined(DEVICE_33CH512MP710) || defined(DEVICE_33CH512MP710S1) || defined(DEVICE_33CH512MP712) || defined(DEVICE_33CH512MP712S1)                        \
+    || defined(DEVICE_33CH1024MP305) || defined(DEVICE_33CH1024MP305S1) || defined(DEVICE_33CH1024MP306) || defined(DEVICE_33CH1024MP306S1)                    \
+    || defined(DEVICE_33CH1024MP308) || defined(DEVICE_33CH1024MP308S1) || defined(DEVICE_33CH1024MP405) || defined(DEVICE_33CH1024MP405S1)                    \
+    || defined(DEVICE_33CH1024MP406) || defined(DEVICE_33CH1024MP406S1) || defined(DEVICE_33CH1024MP408) || defined(DEVICE_33CH1024MP408S1)                    \
+    || defined(DEVICE_33CH1024MP410) || defined(DEVICE_33CH1024MP410S1) || defined(DEVICE_33CH1024MP412) || defined(DEVICE_33CH1024MP412S1)                    \
+    || defined(DEVICE_33CH1024MP605) || defined(DEVICE_33CH1024MP605S1) || defined(DEVICE_33CH1024MP606) || defined(DEVICE_33CH1024MP606S1)                    \
+    || defined(DEVICE_33CH1024MP608) || defined(DEVICE_33CH1024MP608S1) || defined(DEVICE_33CH1024MP705) || defined(DEVICE_33CH1024MP705S1)                    \
+    || defined(DEVICE_33CH1024MP706) || defined(DEVICE_33CH1024MP706S1) || defined(DEVICE_33CH1024MP708) || defined(DEVICE_33CH1024MP708S1)                    \
+    || defined(DEVICE_33CH1024MP710) || defined(DEVICE_33CH1024MP710S1) || defined(DEVICE_33CH1024MP712) || defined(DEVICE_33CH1024MP712S1)                    \
     || defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK32MC103) || defined(DEVICE_33CK32MC105) || defined(DEVICE_33CK32MP102) || defined(DEVICE_33CK32MP103) \
     || defined(DEVICE_33CK32MP105) || defined(DEVICE_33CK32MP202) || defined(DEVICE_33CK32MP203) || defined(DEVICE_33CK32MP205) || defined(DEVICE_33CK32MP206) \
     || defined(DEVICE_33CK32MP502) || defined(DEVICE_33CK32MP503) || defined(DEVICE_33CK32MP505) || defined(DEVICE_33CK32MP506) || defined(DEVICE_33CK64MC102) \
@@ -123,7 +139,7 @@ extern "C" {
     || defined(DEVICE_33EP128GS702) || defined(DEVICE_33EP128GS704) || defined(DEVICE_33EP128GS705) || defined(DEVICE_33EP128GS706)                            \
     || defined(DEVICE_33EP128GS708) || defined(DEVICE_33EP128GS804) || defined(DEVICE_33EP128GS805) || defined(DEVICE_33EP128GS806)                            \
     || defined(DEVICE_33EP128GS808)
-#    define INT_EXT_COUNT 4
+#    define INT_COUNT 4
 #elif defined(DEVICE_24EP256GU810) || defined(DEVICE_24EP256GU814) || defined(DEVICE_24EP512GP806) || defined(DEVICE_24EP512GU810)                             \
     || defined(DEVICE_24EP512GU814) || defined(DEVICE_24FJ32GP202) || defined(DEVICE_24FJ32GP203) || defined(DEVICE_24FJ32GP205)                               \
     || defined(DEVICE_24FJ32GU202) || defined(DEVICE_24FJ32GU203) || defined(DEVICE_24FJ32GU205) || defined(DEVICE_24FJ64GA006) || defined(DEVICE_24FJ64GA008) \
@@ -192,9 +208,9 @@ extern "C" {
     || defined(DEVICE_33FJ128MC710A) || defined(DEVICE_33FJ256GP506) || defined(DEVICE_33FJ256GP506A) || defined(DEVICE_33FJ256GP510)                          \
     || defined(DEVICE_33FJ256GP510A) || defined(DEVICE_33FJ256GP710) || defined(DEVICE_33FJ256GP710A) || defined(DEVICE_33FJ256MC510)                          \
     || defined(DEVICE_33FJ256MC510A) || defined(DEVICE_33FJ256MC710) || defined(DEVICE_33FJ256MC710A)
-#    define INT_EXT_COUNT 5
+#    define INT_COUNT 5
 #else
-#    define INT_EXT_COUNT 0
+#    define INT_COUNT 0
 #endif
 
 #ifdef __cplusplus
