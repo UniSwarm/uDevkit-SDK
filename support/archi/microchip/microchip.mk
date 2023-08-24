@@ -14,15 +14,27 @@ ifeq (,$(filter $(DEV_PROG),PKOB PKOB4 SNAP PK3 PK4 PK5 ICD3 ICD4 ICD5 RICE ICE4
  $(error Invalid DEV_PROG name '$(DEV_PROG)', choose between 'PKOB', 'PKOB4', 'SNAP', 'PK3', 'PK4', 'ICD3', 'ICD4', 'ICE4' or 'RICE')
 endif
 
-IPEFLAGS ?= -M -OA2
-prog : $(OUT_PWD)/$(PROJECT).hex
-	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -F$(PROJECT).hex -OL $(IPEFLAGS) || true
-	@rm $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.* || true
+# keep compatibility with old sdk revision
+prog : flash
+	@printf "$(YELLOW)'prog' rule is deprecated, please use 'flash' instead\n$(NORM)"
 
-.PHONY: read
-read :
+IPEFLAGS ?= -M -OA2
+flash : $(OUT_PWD)/$(PROJECT).hex
+	@printf "$(GREEN)Flash $(DEVICE) with $(DEV_PROG) ==> $(PROJECT).hex...\n$(NORM)"
+	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -F$(PROJECT).hex -OL $(IPEFLAGS) || true
+	@rm -f $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.*
+
+.PHONY: flash-read
+flash-read :
+	@printf "$(GREEN)Read $(DEVICE) with $(DEV_PROG) ==> $(PROJECT)_read.hex...\n$(NORM)"
 	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -GF$(PROJECT)_read.hex || true
-	@rm $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.* || true
+	@rm -f $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.*
+
+.PHONY: flash-erase
+flash-erase :
+	@printf "$(GREEN)Erase $(DEVICE) with $(DEV_PROG)...\n$(NORM)"
+	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -E || true
+	@rm -f $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.*
 
 # special cmd for hex creation
 $(OUT_PWD)/$(PROJECT).hex : $(OUT_PWD)/$(PROJECT).elf
