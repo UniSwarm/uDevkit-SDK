@@ -139,8 +139,24 @@ void nvm_writeDoubleWord(nvm_addr addr, const char *data);
     || defined(DEVICE_33CH256MP505) || defined(DEVICE_33CH256MP505S1) || defined(DEVICE_33CH256MP506) || defined(DEVICE_33CH256MP506S1)                        \
     || defined(DEVICE_33CH256MP508) || defined(DEVICE_33CH256MP508S1) || defined(DEVICE_33CH512MP205) || defined(DEVICE_33CH512MP205S1)                        \
     || defined(DEVICE_33CH512MP206) || defined(DEVICE_33CH512MP206S1) || defined(DEVICE_33CH512MP208) || defined(DEVICE_33CH512MP208S1)                        \
+    || defined(DEVICE_33CH512MP305) || defined(DEVICE_33CH512MP305S1) || defined(DEVICE_33CH512MP306) || defined(DEVICE_33CH512MP306S1)                        \
+    || defined(DEVICE_33CH512MP308) || defined(DEVICE_33CH512MP308S1) || defined(DEVICE_33CH512MP405) || defined(DEVICE_33CH512MP405S1)                        \
+    || defined(DEVICE_33CH512MP406) || defined(DEVICE_33CH512MP406S1) || defined(DEVICE_33CH512MP408) || defined(DEVICE_33CH512MP408S1)                        \
+    || defined(DEVICE_33CH512MP410) || defined(DEVICE_33CH512MP410S1) || defined(DEVICE_33CH512MP412) || defined(DEVICE_33CH512MP412S1)                        \
     || defined(DEVICE_33CH512MP505) || defined(DEVICE_33CH512MP505S1) || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP506S1)                        \
-    || defined(DEVICE_33CH512MP508) || defined(DEVICE_33CH512MP508S1) || defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK32MC103)                            \
+    || defined(DEVICE_33CH512MP508) || defined(DEVICE_33CH512MP508S1) || defined(DEVICE_33CH512MP605) || defined(DEVICE_33CH512MP605S1)                        \
+    || defined(DEVICE_33CH512MP606) || defined(DEVICE_33CH512MP606S1) || defined(DEVICE_33CH512MP608) || defined(DEVICE_33CH512MP608S1)                        \
+    || defined(DEVICE_33CH512MP705) || defined(DEVICE_33CH512MP705S1) || defined(DEVICE_33CH512MP706) || defined(DEVICE_33CH512MP706S1)                        \
+    || defined(DEVICE_33CH512MP708) || defined(DEVICE_33CH512MP708S1) || defined(DEVICE_33CH512MP710) || defined(DEVICE_33CH512MP710S1)                        \
+    || defined(DEVICE_33CH512MP712) || defined(DEVICE_33CH512MP712S1) || defined(DEVICE_33CH1024MP305) || defined(DEVICE_33CH1024MP305S1)                      \
+    || defined(DEVICE_33CH1024MP306) || defined(DEVICE_33CH1024MP306S1) || defined(DEVICE_33CH1024MP308) || defined(DEVICE_33CH1024MP308S1)                    \
+    || defined(DEVICE_33CH1024MP405) || defined(DEVICE_33CH1024MP405S1) || defined(DEVICE_33CH1024MP406) || defined(DEVICE_33CH1024MP406S1)                    \
+    || defined(DEVICE_33CH1024MP408) || defined(DEVICE_33CH1024MP408S1) || defined(DEVICE_33CH1024MP410) || defined(DEVICE_33CH1024MP410S1)                    \
+    || defined(DEVICE_33CH1024MP412) || defined(DEVICE_33CH1024MP412S1) || defined(DEVICE_33CH1024MP605) || defined(DEVICE_33CH1024MP605S1)                    \
+    || defined(DEVICE_33CH1024MP606) || defined(DEVICE_33CH1024MP606S1) || defined(DEVICE_33CH1024MP608) || defined(DEVICE_33CH1024MP608S1)                    \
+    || defined(DEVICE_33CH1024MP705) || defined(DEVICE_33CH1024MP705S1) || defined(DEVICE_33CH1024MP706) || defined(DEVICE_33CH1024MP706S1)                    \
+    || defined(DEVICE_33CH1024MP708) || defined(DEVICE_33CH1024MP708S1) || defined(DEVICE_33CH1024MP710) || defined(DEVICE_33CH1024MP710S1)                    \
+    || defined(DEVICE_33CH1024MP712) || defined(DEVICE_33CH1024MP712S1) || defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK32MC103)                          \
     || defined(DEVICE_33CK32MC105) || defined(DEVICE_33CK32MP102) || defined(DEVICE_33CK32MP103) || defined(DEVICE_33CK32MP105) || defined(DEVICE_33CK32MP202) \
     || defined(DEVICE_33CK32MP203) || defined(DEVICE_33CK32MP205) || defined(DEVICE_33CK32MP206) || defined(DEVICE_33CK32MP502) || defined(DEVICE_33CK32MP503) \
     || defined(DEVICE_33CK32MP505) || defined(DEVICE_33CK32MP506) || defined(DEVICE_33CK64MC102) || defined(DEVICE_33CK64MC103) || defined(DEVICE_33CK64MC105) \
@@ -388,7 +404,15 @@ void nvm_writeDoubleWord(nvm_addr addr, const char *data);
     || defined(DEVICE_24FJ128GU406) || defined(DEVICE_24FJ128GU408) || defined(DEVICE_24FJ128GU410) || defined(DEVICE_33CDV128MP506)                           \
     || defined(DEVICE_33CDVC128MP506) || defined(DEVICE_33CH128MP202) || defined(DEVICE_33CH128MP203) || defined(DEVICE_33CH128MP205)                          \
     || defined(DEVICE_33CH128MP206) || defined(DEVICE_33CH128MP208) || defined(DEVICE_33CH128MP502) || defined(DEVICE_33CH128MP503)                            \
-    || defined(DEVICE_33CH128MP505) || defined(DEVICE_33CH128MP506) || defined(DEVICE_33CH128MP508) || defined(DEVICE_33CK128MC102)                            \
+    || defined(DEVICE_33CH128MP505) || defined(DEVICE_33CH128MP506) || defined(DEVICE_33CH128MP508) || defined(DEVICE_33CH512MP305S1)                          \
+    || defined(DEVICE_33CH512MP306S1) || defined(DEVICE_33CH512MP308S1) || defined(DEVICE_33CH512MP405S1) || defined(DEVICE_33CH512MP406S1)                    \
+    || defined(DEVICE_33CH512MP408S1) || defined(DEVICE_33CH512MP410S1) || defined(DEVICE_33CH512MP412S1) || defined(DEVICE_33CH512MP605S1)                    \
+    || defined(DEVICE_33CH512MP606S1) || defined(DEVICE_33CH512MP608S1) || defined(DEVICE_33CH512MP705S1) || defined(DEVICE_33CH512MP706S1)                    \
+    || defined(DEVICE_33CH512MP708S1) || defined(DEVICE_33CH512MP710S1) || defined(DEVICE_33CH512MP712S1) || defined(DEVICE_33CH1024MP305S1)                   \
+    || defined(DEVICE_33CH1024MP306S1) || defined(DEVICE_33CH1024MP308S1) || defined(DEVICE_33CH1024MP405S1) || defined(DEVICE_33CH1024MP406S1)                \
+    || defined(DEVICE_33CH1024MP408S1) || defined(DEVICE_33CH1024MP410S1) || defined(DEVICE_33CH1024MP412S1) || defined(DEVICE_33CH1024MP605S1)                \
+    || defined(DEVICE_33CH1024MP606S1) || defined(DEVICE_33CH1024MP608S1) || defined(DEVICE_33CH1024MP705S1) || defined(DEVICE_33CH1024MP706S1)                \
+    || defined(DEVICE_33CH1024MP708S1) || defined(DEVICE_33CH1024MP710S1) || defined(DEVICE_33CH1024MP712S1) || defined(DEVICE_33CK128MC102)                   \
     || defined(DEVICE_33CK128MC103) || defined(DEVICE_33CK128MC105) || defined(DEVICE_33CK128MC106) || defined(DEVICE_33CK128MC502)                            \
     || defined(DEVICE_33CK128MC503) || defined(DEVICE_33CK128MC505) || defined(DEVICE_33CK128MC506) || defined(DEVICE_33CK128MP202)                            \
     || defined(DEVICE_33CK128MP203) || defined(DEVICE_33CK128MP205) || defined(DEVICE_33CK128MP206) || defined(DEVICE_33CK128MP208)                            \
@@ -457,7 +481,11 @@ void nvm_writeDoubleWord(nvm_addr addr, const char *data);
 #    define NVM_SECTOR_END 0x0557FF
 #elif defined(DEVICE_24FJ512GA606) || defined(DEVICE_24FJ512GA610) || defined(DEVICE_24FJ512GB606) || defined(DEVICE_24FJ512GB610)                             \
     || defined(DEVICE_24FJ512GL405) || defined(DEVICE_24FJ512GL406) || defined(DEVICE_24FJ512GL408) || defined(DEVICE_24FJ512GL410)                            \
-    || defined(DEVICE_24FJ512GU405) || defined(DEVICE_24FJ512GU406) || defined(DEVICE_24FJ512GU408) || defined(DEVICE_24FJ512GU410)
+    || defined(DEVICE_24FJ512GU405) || defined(DEVICE_24FJ512GU406) || defined(DEVICE_24FJ512GU408) || defined(DEVICE_24FJ512GU410)                            \
+    || defined(DEVICE_33CH512MP305) || defined(DEVICE_33CH512MP306) || defined(DEVICE_33CH512MP308) || defined(DEVICE_33CH512MP405)                            \
+    || defined(DEVICE_33CH512MP406) || defined(DEVICE_33CH512MP408) || defined(DEVICE_33CH512MP410) || defined(DEVICE_33CH512MP412)                            \
+    || defined(DEVICE_33CH512MP605) || defined(DEVICE_33CH512MP606) || defined(DEVICE_33CH512MP608) || defined(DEVICE_33CH512MP705)                            \
+    || defined(DEVICE_33CH512MP706) || defined(DEVICE_33CH512MP708) || defined(DEVICE_33CH512MP710) || defined(DEVICE_33CH512MP712)
 #    define NVM_SECTOR_END 0x055EFF
 #elif defined(DEVICE_33CH512MP205) || defined(DEVICE_33CH512MP206) || defined(DEVICE_33CH512MP208) || defined(DEVICE_33CH512MP505)                             \
     || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP508) || defined(DEVICE_33CK512MP305) || defined(DEVICE_33CK512MP306)                            \
@@ -466,6 +494,11 @@ void nvm_writeDoubleWord(nvm_addr addr, const char *data);
     || defined(DEVICE_33CK512MP705) || defined(DEVICE_33CK512MP706) || defined(DEVICE_33CK512MP708) || defined(DEVICE_33CK512MP710)                            \
     || defined(DEVICE_33CK512MPT608)
 #    define NVM_SECTOR_END 0x057EFF
+#elif defined(DEVICE_33CH1024MP305) || defined(DEVICE_33CH1024MP306) || defined(DEVICE_33CH1024MP308) || defined(DEVICE_33CH1024MP405)                         \
+    || defined(DEVICE_33CH1024MP406) || defined(DEVICE_33CH1024MP408) || defined(DEVICE_33CH1024MP410) || defined(DEVICE_33CH1024MP412)                        \
+    || defined(DEVICE_33CH1024MP605) || defined(DEVICE_33CH1024MP606) || defined(DEVICE_33CH1024MP608) || defined(DEVICE_33CH1024MP705)                        \
+    || defined(DEVICE_33CH1024MP706) || defined(DEVICE_33CH1024MP708) || defined(DEVICE_33CH1024MP710) || defined(DEVICE_33CH1024MP712)
+#    define NVM_SECTOR_END 0x0AAEFF
 #elif defined(DEVICE_24FJ1024GA606) || defined(DEVICE_24FJ1024GA610) || defined(DEVICE_24FJ1024GB606) || defined(DEVICE_24FJ1024GB610)
 #    define NVM_SECTOR_END 0x0ABEFF
 #elif defined(DEVICE_33CK1024MP405) || defined(DEVICE_33CK1024MP406) || defined(DEVICE_33CK1024MP408) || defined(DEVICE_33CK1024MP410)                         \
@@ -638,6 +671,14 @@ void nvm_writeDoubleWord(nvm_addr addr, const char *data);
 #elif defined(DEVICE_33CDV128MP506) || defined(DEVICE_33CDVC128MP506) || defined(DEVICE_33CH128MP202) || defined(DEVICE_33CH128MP203)                          \
     || defined(DEVICE_33CH128MP205) || defined(DEVICE_33CH128MP206) || defined(DEVICE_33CH128MP208) || defined(DEVICE_33CH128MP502)                            \
     || defined(DEVICE_33CH128MP503) || defined(DEVICE_33CH128MP505) || defined(DEVICE_33CH128MP506) || defined(DEVICE_33CH128MP508)                            \
+    || defined(DEVICE_33CH512MP305S1) || defined(DEVICE_33CH512MP306S1) || defined(DEVICE_33CH512MP308S1) || defined(DEVICE_33CH512MP405S1)                    \
+    || defined(DEVICE_33CH512MP406S1) || defined(DEVICE_33CH512MP408S1) || defined(DEVICE_33CH512MP410S1) || defined(DEVICE_33CH512MP412S1)                    \
+    || defined(DEVICE_33CH512MP605S1) || defined(DEVICE_33CH512MP606S1) || defined(DEVICE_33CH512MP608S1) || defined(DEVICE_33CH512MP705S1)                    \
+    || defined(DEVICE_33CH512MP706S1) || defined(DEVICE_33CH512MP708S1) || defined(DEVICE_33CH512MP710S1) || defined(DEVICE_33CH512MP712S1)                    \
+    || defined(DEVICE_33CH1024MP305S1) || defined(DEVICE_33CH1024MP306S1) || defined(DEVICE_33CH1024MP308S1) || defined(DEVICE_33CH1024MP405S1)                \
+    || defined(DEVICE_33CH1024MP406S1) || defined(DEVICE_33CH1024MP408S1) || defined(DEVICE_33CH1024MP410S1) || defined(DEVICE_33CH1024MP412S1)                \
+    || defined(DEVICE_33CH1024MP605S1) || defined(DEVICE_33CH1024MP606S1) || defined(DEVICE_33CH1024MP608S1) || defined(DEVICE_33CH1024MP705S1)                \
+    || defined(DEVICE_33CH1024MP706S1) || defined(DEVICE_33CH1024MP708S1) || defined(DEVICE_33CH1024MP710S1) || defined(DEVICE_33CH1024MP712S1)                \
     || defined(DEVICE_33CK128MC102) || defined(DEVICE_33CK128MC103) || defined(DEVICE_33CK128MC105) || defined(DEVICE_33CK128MC106)                            \
     || defined(DEVICE_33CK128MC502) || defined(DEVICE_33CK128MC503) || defined(DEVICE_33CK128MC505) || defined(DEVICE_33CK128MC506)                            \
     || defined(DEVICE_33CK128MP202) || defined(DEVICE_33CK128MP203) || defined(DEVICE_33CK128MP205) || defined(DEVICE_33CK128MP206)                            \
@@ -710,6 +751,11 @@ void nvm_writeDoubleWord(nvm_addr addr, const char *data);
 #elif defined(DEVICE_24EP512GP806) || defined(DEVICE_24EP512GU810) || defined(DEVICE_24EP512GU814) || defined(DEVICE_33EP512GP806)                             \
     || defined(DEVICE_33EP512MC806) || defined(DEVICE_33EP512MU810) || defined(DEVICE_33EP512MU814)
 #    define NVM_SIZE 524544
+#elif defined(DEVICE_33CH512MP305) || defined(DEVICE_33CH512MP306) || defined(DEVICE_33CH512MP308) || defined(DEVICE_33CH512MP405)                             \
+    || defined(DEVICE_33CH512MP406) || defined(DEVICE_33CH512MP408) || defined(DEVICE_33CH512MP410) || defined(DEVICE_33CH512MP412)                            \
+    || defined(DEVICE_33CH512MP605) || defined(DEVICE_33CH512MP606) || defined(DEVICE_33CH512MP608) || defined(DEVICE_33CH512MP705)                            \
+    || defined(DEVICE_33CH512MP706) || defined(DEVICE_33CH512MP708) || defined(DEVICE_33CH512MP710) || defined(DEVICE_33CH512MP712)
+#    define NVM_SIZE 527232
 #elif defined(DEVICE_24FJ512GA606) || defined(DEVICE_24FJ512GA610) || defined(DEVICE_24FJ512GB606) || defined(DEVICE_24FJ512GB610)                             \
     || defined(DEVICE_24FJ512GL405) || defined(DEVICE_24FJ512GL406) || defined(DEVICE_24FJ512GL408) || defined(DEVICE_24FJ512GL410)                            \
     || defined(DEVICE_24FJ512GU405) || defined(DEVICE_24FJ512GU406) || defined(DEVICE_24FJ512GU408) || defined(DEVICE_24FJ512GU410)
@@ -721,6 +767,11 @@ void nvm_writeDoubleWord(nvm_addr addr, const char *data);
     || defined(DEVICE_33CK512MP705) || defined(DEVICE_33CK512MP706) || defined(DEVICE_33CK512MP708) || defined(DEVICE_33CK512MP710)                            \
     || defined(DEVICE_33CK512MPT608)
 #    define NVM_SIZE 539520
+#elif defined(DEVICE_33CH1024MP305) || defined(DEVICE_33CH1024MP306) || defined(DEVICE_33CH1024MP308) || defined(DEVICE_33CH1024MP405)                         \
+    || defined(DEVICE_33CH1024MP406) || defined(DEVICE_33CH1024MP408) || defined(DEVICE_33CH1024MP410) || defined(DEVICE_33CH1024MP412)                        \
+    || defined(DEVICE_33CH1024MP605) || defined(DEVICE_33CH1024MP606) || defined(DEVICE_33CH1024MP608) || defined(DEVICE_33CH1024MP705)                        \
+    || defined(DEVICE_33CH1024MP706) || defined(DEVICE_33CH1024MP708) || defined(DEVICE_33CH1024MP710) || defined(DEVICE_33CH1024MP712)
+#    define NVM_SIZE 1049472
 #elif defined(DEVICE_24FJ1024GA606) || defined(DEVICE_24FJ1024GA610) || defined(DEVICE_24FJ1024GB606) || defined(DEVICE_24FJ1024GB610)
 #    define NVM_SIZE 1056000
 #elif defined(DEVICE_33CK1024MP405) || defined(DEVICE_33CK1024MP406) || defined(DEVICE_33CK1024MP408) || defined(DEVICE_33CK1024MP410)                         \
