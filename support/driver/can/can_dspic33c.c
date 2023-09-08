@@ -451,8 +451,6 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
 {
 #if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
-    uint16_t bitRateDiv;
-    uint8_t quantum;
     if (can >= CAN_COUNT)
     {
         return 0;
@@ -466,7 +464,12 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     {
         return -1;
     }
-    quantum = propagSeg + s1Seg + s2Seg + (uint8_t)1;
+    if (bitRate == 0)
+    {
+        return -1;
+    }
+
+    uint8_t quantum = propagSeg + s1Seg + s2Seg + (uint8_t)1;
     if (quantum < 8 || quantum > 25)
     {
         return -1;
@@ -495,11 +498,11 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
     CANCLKCONbits.CANCLKDIV = can_clk_div - 1;  // divide by N
     CANCLKCONbits.CANCLKEN = 1;                 // CAN clock enabled
 
-    bitRateDiv = sysclock_periphFreq(SYSCLOCK_CLOCK_CAN) / (bitRate * quantum * 2);
+    /*uint16_t bitRateDiv = sysclock_periphFreq(SYSCLOCK_CLOCK_CAN) / (bitRate * quantum * 2);
     if (bitRateDiv > 256)
     {
         bitRateDiv = 256;
-    }
+    }*/
     switch (can)
     {
 #    if (CAN_COUNT >= 1) && !defined(CAN1_DISABLE)
@@ -523,8 +526,10 @@ int can_setBitTiming(rt_dev_t device, uint32_t bitRate, uint8_t propagSeg, uint8
 
             /* Set up the CANFD module for 1Mbps of Nominal bit rate speed and 2Mbps of Data bit rate. */
             // C1NBTCFGH = 0x003E;
-            C1NBTCFGHbits.BRP = 0;         // Baud Rate Prescaler bits (1-256) div = 1
-            C1NBTCFGHbits.TSEG1 = 63 - 1;  // Phase Buffer Segment 1 (1-256) Tseg = 63
+            uint16_t bitRateDiv = (1000000 / bitRate);
+
+            C1NBTCFGHbits.BRP = bitRateDiv - 1;  // Baud Rate Prescaler bits (1-256) div = 1
+            C1NBTCFGHbits.TSEG1 = 63 - 1;        // Phase Buffer Segment 1 (1-256) Tseg = 63
 
             // C1NBTCFGL = 0x0F0F;
             C1NBTCFGLbits.TSEG2 = 16 - 1;  // Phase Buffer Segment 2 (1-128) Tseg2 = 16
