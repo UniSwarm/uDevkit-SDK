@@ -33,7 +33,7 @@ public:
     ~SimProject() override;
 
     QString exePath() const;
-    bool setExePath(const QString &exePath);
+    bool setExePath(const QString &exePath, const QStringList &args);
 
     bool isValid() const;
     enum Status

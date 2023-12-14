@@ -45,7 +45,7 @@ QString SimProject::exePath() const
     return _exePath;
 }
 
-bool SimProject::setExePath(const QString &exePath)
+bool SimProject::setExePath(const QString &exePath, const QStringList &args)
 {
     QFileInfo file(exePath);
     if (!file.exists())
@@ -57,6 +57,7 @@ bool SimProject::setExePath(const QString &exePath)
     _path = file.absoluteDir();
     _process->setWorkingDirectory(_path.path());
     _process->setProgram(file.absoluteFilePath());
+    _process->setArguments(args);
 
     _valid = true;
     return true;

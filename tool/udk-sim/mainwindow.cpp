@@ -26,7 +26,7 @@
 
 #include "simserver.h"
 
-MainWindow::MainWindow(QStringList args)
+MainWindow::MainWindow(const QStringList &args)
 {
     readSettings();
 
@@ -43,7 +43,7 @@ MainWindow::MainWindow(QStringList args)
 
     if (args.size() > 1)
     {
-        openProject(args[1]);
+        openProject(args.mid(1));
     }
 
     showMaximized();
@@ -53,9 +53,14 @@ MainWindow::~MainWindow()
 {
 }
 
-bool MainWindow::openProject(const QString &path)
+bool MainWindow::openProject(const QStringList &args)
 {
-    QString mpath = path;
+    QString mpath;
+    if (!args.isEmpty())
+    {
+        mpath = args.first();
+    }
+
     if (mpath.isEmpty())
     {
         QFileDialog dialog(this);
@@ -72,7 +77,7 @@ bool MainWindow::openProject(const QString &path)
         }
         mpath = dialog.selectedFiles().first();
     }
-    if (!_simProject->setExePath(mpath))
+    if (!_simProject->setExePath(mpath, args.mid(1)))
     {
         return false;
     }
@@ -163,7 +168,7 @@ void MainWindow::openRecentFile()
     QAction *action = qobject_cast<QAction *>(sender());
     if (action != nullptr)
     {
-        openProject(action->data().toString());
+        openProject(QStringList(action->data().toString()));
     }
 }
 

@@ -30,11 +30,11 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QStringList args);
+    explicit MainWindow(const QStringList &args);
     ~MainWindow() override;
 
 public slots:
-    bool openProject(const QString &path = QString());
+    bool openProject(const QStringList &args = QStringList());
     void setClient(SimClient *client);
 
 protected:
