@@ -26,7 +26,7 @@ void ihm_screenWifi();
 void ihm_init()
 {
     gui_init(board_i2c_ihm());
-    gui_setFont(&Lucida_Console10);
+    gui_setFont(&Lucida_Console9);
     gui_setBrushColor(0);
     gui_setPenColor(1);
 
