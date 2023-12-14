@@ -69,7 +69,7 @@ sim-exe: $(OUT_SIM_PWD)/$(SIM_EXE)
 
 sim: sim-exe $(UDKSIM_EXE)
 	#killall udk-sim || true
-	$(UDKSIM_EXE) $(OUT_SIM_PWD)/$(SIM_EXE)
+	$(UDKSIM_EXE) $(OUT_SIM_PWD)/$(SIM_EXE) $(SIM_ARGS)
 
 clean: sim-clean
 sim-clean :
