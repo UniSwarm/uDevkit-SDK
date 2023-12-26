@@ -489,14 +489,38 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_MASK 0x0FFFFFFFLU
 #    define ADC_CHANNEL_COUNT     28
 #    define ADC_CHANNEL_MAX       27
-#elif defined(DEVICE_33CH512MP305) || defined(DEVICE_33CH512MP305S1) || defined(DEVICE_33CH512MP306) || defined(DEVICE_33CH512MP306S1)                         \
-    || defined(DEVICE_33CH512MP405) || defined(DEVICE_33CH512MP405S1) || defined(DEVICE_33CH512MP406) || defined(DEVICE_33CH512MP406S1)                        \
-    || defined(DEVICE_33CH512MP605) || defined(DEVICE_33CH512MP605S1) || defined(DEVICE_33CH512MP606) || defined(DEVICE_33CH512MP606S1)                        \
-    || defined(DEVICE_33CH512MP705) || defined(DEVICE_33CH512MP705S1) || defined(DEVICE_33CH512MP706) || defined(DEVICE_33CH512MP706S1)                        \
-    || defined(DEVICE_33CH1024MP305) || defined(DEVICE_33CH1024MP305S1) || defined(DEVICE_33CH1024MP306) || defined(DEVICE_33CH1024MP306S1)                    \
-    || defined(DEVICE_33CH1024MP405) || defined(DEVICE_33CH1024MP405S1) || defined(DEVICE_33CH1024MP406) || defined(DEVICE_33CH1024MP406S1)                    \
-    || defined(DEVICE_33CH1024MP605) || defined(DEVICE_33CH1024MP605S1) || defined(DEVICE_33CH1024MP606) || defined(DEVICE_33CH1024MP606S1)                    \
-    || defined(DEVICE_33CH1024MP705) || defined(DEVICE_33CH1024MP705S1) || defined(DEVICE_33CH1024MP706) || defined(DEVICE_33CH1024MP706S1)
+#elif defined(DEVICE_33CH512MP305) || defined(DEVICE_33CH512MP305S1) || defined(DEVICE_33CH512MP405) || defined(DEVICE_33CH512MP405S1)                         \
+    || defined(DEVICE_33CH512MP605) || defined(DEVICE_33CH512MP605S1) || defined(DEVICE_33CH512MP705) || defined(DEVICE_33CH512MP705S1)                        \
+    || defined(DEVICE_33CH1024MP305) || defined(DEVICE_33CH1024MP305S1) || defined(DEVICE_33CH1024MP405) || defined(DEVICE_33CH1024MP405S1)                    \
+    || defined(DEVICE_33CH1024MP605) || defined(DEVICE_33CH1024MP605S1) || defined(DEVICE_33CH1024MP705) || defined(DEVICE_33CH1024MP705S1)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH12
+#    define ADC_CHANNEL_HAVE_CH13
+#    define ADC_CHANNEL_HAVE_CH14
+#    define ADC_CHANNEL_HAVE_CH15
+#    define ADC_CHANNEL_HAVE_CH24
+#    define ADC_CHANNEL_HAVE_CH25
+#    define ADC_CHANNEL_HAVE_CH26
+#    define ADC_CHANNEL_HAVE_CH27
+#    define ADC_CHANNEL_HAVE_CH28
+#    define ADC_CHANNEL_HAVE_MASK 0x1F00FFFFLU
+#    define ADC_CHANNEL_COUNT     21
+#    define ADC_CHANNEL_MAX       28
+#elif defined(DEVICE_33CH512MP306) || defined(DEVICE_33CH512MP306S1) || defined(DEVICE_33CH512MP406) || defined(DEVICE_33CH512MP406S1)                         \
+    || defined(DEVICE_33CH512MP606) || defined(DEVICE_33CH512MP606S1) || defined(DEVICE_33CH512MP706) || defined(DEVICE_33CH512MP706S1)                        \
+    || defined(DEVICE_33CH1024MP306) || defined(DEVICE_33CH1024MP306S1) || defined(DEVICE_33CH1024MP406) || defined(DEVICE_33CH1024MP406S1)                    \
+    || defined(DEVICE_33CH1024MP606) || defined(DEVICE_33CH1024MP606S1) || defined(DEVICE_33CH1024MP706) || defined(DEVICE_33CH1024MP706S1)
 #    define ADC_CHANNEL_HAVE_CH0
 #    define ADC_CHANNEL_HAVE_CH1
 #    define ADC_CHANNEL_HAVE_CH2
