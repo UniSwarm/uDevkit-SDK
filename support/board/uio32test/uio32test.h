@@ -11,8 +11,8 @@
  *  https://uniswarm.eu/uboards/uio/uio32test
  */
 
-#ifndef UIO8AD_H
-#define UIO8AD_H
+#ifndef UIO32TEST_H
+#define UIO32TEST_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -104,4 +104,4 @@ uint8_t board_analogin(uint8_t io);
 }
 #endif
 
-#endif  // UIO8AD_H
+#endif  // UIO32TEST_H

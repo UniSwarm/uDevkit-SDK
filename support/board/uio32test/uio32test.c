@@ -26,8 +26,8 @@ int _board_init_io(void)
 #ifndef SIMULATOR
     // analog inputs
     ANSELA = 0xFFFF;  // all analog inputs of port A as analog inputs
-    ANSELB = 0x0004;  // all analog inputs of port B as digital buffer
-    ANSELC = 0x000F;  // all analog inputs of port C as digital buffer
+    ANSELB = 0x0000;  // all analog inputs of port B as digital buffer
+    ANSELC = 0x0080;  // all analog inputs of port C as digital buffer
     ANSELD = 0x0000;  // all analog inputs of port D as digital buffer
 
     // remappable pins
@@ -39,7 +39,7 @@ int _board_init_io(void)
     _RP39R = _RPOUT_CAN1TX;  // CAN1TX ==> RP39
 
     LED_LAT = 1;
-    TRIBCbits.TRISB2 = 0;  // LED_LAT
+    TRISBbits.TRISB2 = 0;  // LED_LAT
 
     // Lock configuration pin
     lockIoConfig();
