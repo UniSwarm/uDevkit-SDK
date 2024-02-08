@@ -63,6 +63,9 @@ uint8_t board_analogin(uint8_t io);
 #define LED_LAT LATBbits.LATB2
 
 // IOs
+uint32_t portsToGlobal32(uint16_t ports[]);
+void global32ToPorts(uint32_t global, uint16_t ports[]);
+
 #define IO01_LAT LATDbits.LATD1
 #define IO02_LAT LATDbits.LATD0
 #define IO03_LAT LATBbits.LATB10

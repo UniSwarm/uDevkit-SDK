@@ -123,5 +123,178 @@ uint8_t board_analogin(uint8_t io)
 
 uint8_t board_dipId(void)
 {
+#ifndef SIMULATOR
     return (~((DIP1 << 0) + (DIP2 << 1) + (DIP3 << 2) + (DIP4 << 3)) & 0x0F) + 1;
+#else
+    return 0;
+#endif
+}
+
+typedef struct
+{
+    union
+    {
+        uint32_t g32;
+        struct
+        {
+            uint32_t IO01 : 1;
+            uint32_t IO02 : 1;
+            uint32_t IO03 : 1;
+            uint32_t IO04 : 1;
+            uint32_t IO05 : 1;
+            uint32_t IO06 : 1;
+            uint32_t IO07 : 1;
+            uint32_t IO08 : 1;
+            uint32_t IO09 : 1;
+            uint32_t IO10 : 1;
+            uint32_t IO11 : 1;
+            uint32_t IO12 : 1;
+            uint32_t IO13 : 1;
+            uint32_t IO14 : 1;
+            uint32_t IO15 : 1;
+            uint32_t IO16 : 1;
+            uint32_t IO17 : 1;
+            uint32_t IO18 : 1;
+            uint32_t IO19 : 1;
+            uint32_t IO20 : 1;
+            uint32_t IO21 : 1;
+            uint32_t IO22 : 1;
+            uint32_t IO23 : 1;
+            uint32_t IO24 : 1;
+            uint32_t IO25 : 1;
+            uint32_t IO26 : 1;
+            uint32_t IO27 : 1;
+            uint32_t IO28 : 1;
+            uint32_t IO29 : 1;
+            uint32_t IO30 : 1;
+            uint32_t IO31 : 1;
+            uint32_t IO32 : 1;
+        };
+    };
+} Global32;
+
+typedef struct
+{
+    union
+    {
+        uint16_t p16;
+        struct
+        {
+            uint32_t IO00 : 1;
+            uint32_t IO01 : 1;
+            uint32_t IO02 : 1;
+            uint32_t IO03 : 1;
+            uint32_t IO04 : 1;
+            uint32_t IO05 : 1;
+            uint32_t IO06 : 1;
+            uint32_t IO07 : 1;
+            uint32_t IO08 : 1;
+            uint32_t IO09 : 1;
+            uint32_t IO10 : 1;
+            uint32_t IO11 : 1;
+            uint32_t IO12 : 1;
+            uint32_t IO13 : 1;
+            uint32_t IO14 : 1;
+            uint32_t IO15 : 1;
+        };
+    };
+} Port16;
+
+uint32_t portsToGlobal32(uint16_t ports[])
+{
+    Global32 io;
+
+    Port16 portB;
+    portB.p16 = ports[1];
+    Port16 portC;
+    portC.p16 = ports[2];
+    Port16 portD;
+    portD.p16 = ports[3];
+
+    io.IO01 = portD.IO01;
+    io.IO02 = portD.IO00;
+    io.IO03 = portB.IO10;
+    io.IO04 = portB.IO11;
+    io.IO05 = portB.IO12;
+    io.IO06 = portB.IO13;
+    io.IO07 = portB.IO14;
+    io.IO08 = portB.IO15;
+    io.IO09 = portC.IO12;
+    io.IO10 = portC.IO13;
+    io.IO11 = portC.IO14;
+    io.IO12 = portC.IO15;
+    io.IO13 = portD.IO15;
+    io.IO14 = portD.IO14;
+    io.IO15 = portD.IO12;
+    io.IO16 = portC.IO08;
+    io.IO17 = portC.IO09;
+    io.IO18 = portD.IO09;
+    io.IO19 = portD.IO08;
+    io.IO20 = portD.IO07;
+    io.IO21 = portD.IO06;
+    io.IO22 = portD.IO05;
+    io.IO23 = portB.IO05;
+    io.IO24 = portB.IO06;
+    io.IO25 = portC.IO04;
+    io.IO26 = portC.IO05;
+    io.IO27 = portC.IO10;
+    io.IO28 = portC.IO11;
+    io.IO29 = portD.IO04;
+    io.IO30 = portD.IO03;
+    io.IO31 = portD.IO02;
+    io.IO32 = portB.IO09;
+    return io.g32;
+}
+
+void global32ToPorts(uint32_t global, uint16_t ports[])
+{
+    Global32 io;
+    io.g32 = global;
+
+    // PortA
+    ports[0] = 0;
+
+    // PortB
+    Port16 portB;
+    portB.IO05 = io.IO23;
+    portB.IO06 = io.IO24;
+    portB.IO09 = io.IO32;
+    portB.IO10 = io.IO03;
+    portB.IO11 = io.IO04;
+    portB.IO12 = io.IO05;
+    portB.IO13 = io.IO06;
+    portB.IO14 = io.IO07;
+    portB.IO15 = io.IO08;
+    ports[1] = portB.p16;
+
+    // PortC
+    Port16 portC;
+    portC.IO04 = io.IO25;
+    portC.IO05 = io.IO26;
+    portC.IO08 = io.IO16;
+    portC.IO09 = io.IO17;
+    portC.IO10 = io.IO27;
+    portC.IO11 = io.IO28;
+    portC.IO12 = io.IO09;
+    portC.IO13 = io.IO10;
+    portC.IO14 = io.IO11;
+    portC.IO15 = io.IO12;
+    ports[2] = portC.p16;
+
+    // PortD
+    Port16 portD;
+    portD.IO00 = io.IO02;
+    portD.IO01 = io.IO01;
+    portD.IO02 = io.IO31;
+    portD.IO03 = io.IO30;
+    portD.IO04 = io.IO29;
+    portD.IO05 = io.IO22;
+    portD.IO06 = io.IO21;
+    portD.IO07 = io.IO20;
+    portD.IO08 = io.IO19;
+    portD.IO09 = io.IO18;
+    portD.IO12 = io.IO15;
+    portD.IO14 = io.IO14;
+    portD.IO15 = io.IO13;
+    ports[3] = portD.p16;
 }
