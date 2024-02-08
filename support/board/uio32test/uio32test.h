@@ -53,7 +53,6 @@ uint8_t board_dipId(void);
 // Analog input
 #define ANALOGIN_COUNT     5
 #define VOLTAGEIN_ADC_CHAN 16
-#define BOARD_IN0_ADC_CHAN 12
 #define BOARD_IN1_ADC_CHAN 0
 #define BOARD_IN2_ADC_CHAN 1  // ANA1
 #define BOARD_IN3_ADC_CHAN 9
@@ -64,41 +63,78 @@ uint8_t board_analogin(uint8_t io);
 #define LED_LAT LATBbits.LATB2
 
 // IOs
-#define IO1_LAT LATDbits.LATD1
-#define IO2_LAT LATDbits.LATD0
-#define IO3_LAT LATBbits.LATB10
-#define IO4_LAT LATBbits.LATB11
-#define IO5_LAT LATBbits.LATB12
-#define IO6_LAT LATBbits.LATB13
-#define IO7_LAT LATBbits.LATB14
-#define IO8_LAT LATBbits.LATB15
+#define IO01_LAT LATDbits.LATD1
+#define IO02_LAT LATDbits.LATD0
+#define IO03_LAT LATBbits.LATB10
+#define IO04_LAT LATBbits.LATB11
+#define IO05_LAT LATBbits.LATB12
+#define IO06_LAT LATBbits.LATB13
+#define IO07_LAT LATBbits.LATB14
+#define IO08_LAT LATBbits.LATB15
 
-#define I09_LAT LATCbits.LATC12
-#define I10_LAT LATCbits.LATC13
-#define I11_LAT LATCbits.LATC14
-#define I12_LAT LATCbits.LATC15
-#define I13_LAT LATDbits.LATD15
-#define I14_LAT LATDbits.LATD14
-#define I15_LAT LATDbits.LATD12
-#define I16_LAT LATCbits.LATC8
+#define IO09_LAT LATCbits.LATC12
+#define IO10_LAT LATCbits.LATC13
+#define IO11_LAT LATCbits.LATC14
+#define IO12_LAT LATCbits.LATC15
+#define IO13_LAT LATDbits.LATD15
+#define IO14_LAT LATDbits.LATD14
+#define IO15_LAT LATDbits.LATD12
+#define IO16_LAT LATCbits.LATC8
 
-#define I17_LAT LATCbits.LATC9
-#define I18_LAT LATDbits.LATD9
-#define I19_LAT LATDbits.LATD8
-#define I20_LAT LATDbits.LATD7
-#define I21_LAT LATDbits.LATD6
-#define I22_LAT LATDbits.LATD5
-#define I23_LAT LATBbits.LATB5
-#define I24_LAT LATBbits.LATB6
+#define IO17_LAT LATCbits.LATC9
+#define IO18_LAT LATDbits.LATD9
+#define IO19_LAT LATDbits.LATD8
+#define IO20_LAT LATDbits.LATD7
+#define IO21_LAT LATDbits.LATD6
+#define IO22_LAT LATDbits.LATD5
+#define IO23_LAT LATBbits.LATB5
+#define IO24_LAT LATBbits.LATB6
 
-#define I25_LAT LATCbits.LATC4
-#define I26_LAT LATCbits.LATC5
-#define I27_LAT LATCbits.LATC10
-#define I28_LAT LATCbits.LATC11
-#define I29_LAT LATDbits.LATD4
-#define I30_LAT LATDbits.LATD3
-#define I31_LAT LATDbits.LATD2
-#define I32_LAT LATBbits.LATB9
+#define IO25_LAT LATCbits.LATC4
+#define IO26_LAT LATCbits.LATC5
+#define IO27_LAT LATCbits.LATC10
+#define IO28_LAT LATCbits.LATC11
+#define IO29_LAT LATDbits.LATD4
+#define IO30_LAT LATDbits.LATD3
+#define IO31_LAT LATDbits.LATD2
+#define IO32_LAT LATBbits.LATB9
+
+// TRIS
+#define IO01_TRIS TRISDbits.TRISD1
+#define IO02_TRIS TRISDbits.TRISD0
+#define IO03_TRIS TRISBbits.TRISB10
+#define IO04_TRIS TRISBbits.TRISB11
+#define IO05_TRIS TRISBbits.TRISB12
+#define IO06_TRIS TRISBbits.TRISB13
+#define IO07_TRIS TRISBbits.TRISB14
+#define IO08_TRIS TRISBbits.TRISB15
+
+#define IO09_TRIS TRISCbits.TRISC12
+#define IO10_TRIS TRISCbits.TRISC13
+#define IO11_TRIS TRISCbits.TRISC14
+#define IO12_TRIS TRISCbits.TRISC15
+#define IO13_TRIS TRISDbits.TRISD15
+#define IO14_TRIS TRISDbits.TRISD14
+#define IO15_TRIS TRISDbits.TRISD12
+#define IO16_TRIS TRISCbits.TRISC8
+
+#define IO17_TRIS TRISCbits.TRISC9
+#define IO18_TRIS TRISDbits.TRISD9
+#define IO19_TRIS TRISDbits.TRISD8
+#define IO20_TRIS TRISDbits.TRISD7
+#define IO21_TRIS TRISDbits.TRISD6
+#define IO22_TRIS TRISDbits.TRISD5
+#define IO23_TRIS TRISBbits.TRISB5
+#define IO24_TRIS TRISBbits.TRISB6
+
+#define IO25_TRIS TRISCbits.TRISC4
+#define IO26_TRIS TRISCbits.TRISC5
+#define IO27_TRIS TRISCbits.TRISC10
+#define IO28_TRIS TRISCbits.TRISC11
+#define IO29_TRIS TRISDbits.TRISD4
+#define IO30_TRIS TRISDbits.TRISD3
+#define IO31_TRIS TRISDbits.TRISD2
+#define IO32_TRIS TRISBbits.TRISB9
 
 #ifdef __cplusplus
 }

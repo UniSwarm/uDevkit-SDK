@@ -25,10 +25,11 @@ int _board_init_io(void)
 {
 #ifndef SIMULATOR
     // analog inputs
-    ANSELA = 0xFFFF;  // all analog inputs of port A as analog inputs
-    ANSELB = 0x0000;  // all analog inputs of port B as digital buffer
-    ANSELC = 0x0080;  // all analog inputs of port C as digital buffer
-    ANSELD = 0x0000;  // all analog inputs of port D as digital buffer
+    ANSELA = 0xFFFF;           // all analog inputs of port A as analog inputs
+    ANSELB = 0x0000;           // all analog inputs of port B as digital buffer
+    ANSELC = 0x0080;           // all analog inputs of port C as digital buffer
+    ANSELD = 0x0000;           // all analog inputs of port D as digital buffer
+    ADCON4Hbits.C1CHS = 0b01;  // Dedicated ADC Core 1 Input Channel Selection bits set to ANA1
 
     // remappable pins
     // Unlock configuration pin
@@ -38,20 +39,20 @@ int _board_init_io(void)
     _CAN1RXR = 40;           // CAN1RX ==> RP40
     _RP39R = _RPOUT_CAN1TX;  // CAN1TX ==> RP39
 
-    LED_LAT = 1;
-    TRISBbits.TRISB2 = 0;  // LED_LAT
-
     // Lock configuration pin
     lockIoConfig();
+
+    LED_LAT = 1;
+    TRISBbits.TRISB2 = 0;  // LED_LAT
 #endif
 
     _board_leds[LEDOUT1] = GPIO_PD10;
     gpio_setBitConfig(_board_leds[LEDOUT1], GPIO_OUTPUT);
 
-    _board_analogin[0] = BOARD_IN0_ADC_CHAN;
-    _board_analogin[1] = BOARD_IN1_ADC_CHAN;
-    _board_analogin[2] = BOARD_IN2_ADC_CHAN;
-    _board_analogin[3] = BOARD_IN3_ADC_CHAN;
+    _board_analogin[0] = BOARD_IN1_ADC_CHAN;
+    _board_analogin[1] = BOARD_IN2_ADC_CHAN;
+    _board_analogin[2] = BOARD_IN3_ADC_CHAN;
+    _board_analogin[3] = BOARD_IN4_ADC_CHAN;
 
     return 0;
 }
