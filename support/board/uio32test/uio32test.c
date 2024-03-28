@@ -44,6 +44,11 @@ int _board_init_io(void)
 
     LED_LAT = 1;
     TRISBbits.TRISB2 = 0;  // LED_LAT
+
+    CNPUCbits.CNPUC3 = 1;  // DIP1
+    CNPUCbits.CNPUC2 = 1;  // DIP2
+    CNPUCbits.CNPUC1 = 1;  // DIP3
+    CNPUCbits.CNPUC0 = 1;  // DIP4
 #endif
 
     _board_leds[LEDOUT1] = GPIO_PD10;
