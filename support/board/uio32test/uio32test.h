@@ -139,6 +139,43 @@ void global32ToPorts(uint32_t global, uint16_t ports[]);
 #define IO31_TRIS TRISDbits.TRISD2
 #define IO32_TRIS TRISBbits.TRISB9
 
+// PORT
+#define IO01_PORT PORTDbits.RD1
+#define IO02_PORT PORTDbits.RD0
+#define IO03_PORT PORTBbits.RB10
+#define IO04_PORT PORTBbits.RB11
+#define IO05_PORT PORTBbits.RB12
+#define IO06_PORT PORTBbits.RB13
+#define IO07_PORT PORTBbits.RB14
+#define IO08_PORT PORTBbits.RB15
+
+#define IO09_PORT PORTCbits.RC12
+#define IO10_PORT PORTCbits.RC13
+#define IO11_PORT PORTCbits.RC14
+#define IO12_PORT PORTCbits.RC15
+#define IO13_PORT PORTDbits.RD15
+#define IO14_PORT PORTDbits.RD14
+#define IO15_PORT PORTDbits.RD12
+#define IO16_PORT PORTCbits.RC8
+
+#define IO17_PORT PORTCbits.RC9
+#define IO18_PORT PORTDbits.RD9
+#define IO19_PORT PORTDbits.RD8
+#define IO20_PORT PORTDbits.RD7
+#define IO21_PORT PORTDbits.RD6
+#define IO22_PORT PORTDbits.RD5
+#define IO23_PORT PORTBbits.RB5
+#define IO24_PORT PORTBbits.RB6
+
+#define IO25_PORT PORTCbits.RC4
+#define IO26_PORT PORTCbits.RC5
+#define IO27_PORT PORTCbits.RC10
+#define IO28_PORT PORTCbits.RC11
+#define IO29_PORT PORTDbits.RD4
+#define IO30_PORT PORTDbits.RD3
+#define IO31_PORT PORTDbits.RD2
+#define IO32_PORT PORTBbits.RB9
+
 #ifdef __cplusplus
 }
 #endif
