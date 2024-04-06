@@ -61,6 +61,11 @@ int adc_setSamplingCycles(uint8_t core, uint16_t cycles)
     return 0;
 }
 
+int adc_softTrig(void)
+{
+    return 0;
+}
+
 int adc_startSampling(uint8_t channel)
 {
     if (channel >= ADC_CHANNEL_COUNT)

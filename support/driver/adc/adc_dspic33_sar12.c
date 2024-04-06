@@ -667,6 +667,13 @@ int adc_setSamplingCycles(uint8_t core, uint16_t cycles)
     return 0;
 }
 
+int adc_softTrig(void)
+{
+    int trig = ADCON3Lbits.SWCTRG;
+    ADCON3Lbits.SWCTRG = 1;  // trig all ADC channel with ADC_TRIGSRCxx = ADC_TRGSRC_COMMONSOFTTRG
+    return trig;
+}
+
 int adc_startSampling(uint8_t channel)
 {
     if (channel > ADC_CHANNEL_MAX)
