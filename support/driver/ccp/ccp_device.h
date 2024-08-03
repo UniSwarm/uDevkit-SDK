@@ -20,6 +20,8 @@ extern "C" {
 // ======= specific include =======
 #if defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
 #    include "ccp_pic24_dspic33.h"
+#elif defined(ARCHI_dspic33ak)
+#    include "ccp_dspic33a.h"
 #elif defined(ARCHI_pic32mm)
 #    include "ccp_pic32.h"
 #else
