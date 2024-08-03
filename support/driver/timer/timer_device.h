@@ -23,6 +23,8 @@ extern "C" {
 #    include "timer_pic24_dspic30f_dspic33.h"
 #elif defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
 #    include "timer_dspic33c.h"
+#elif defined(ARCHI_dspic33ak)
+#    include "i2c_dspic33a.h"
 #elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mx) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef)                       \
     || defined(ARCHI_pic32mzda)
 #    include "timer_pic32.h"
