@@ -24,6 +24,8 @@ extern "C" {
 #    include "qei_pic24e_dspic33e.h"
 #elif defined(ARCHI_dspic30f)
 #    include "qei_dspic30f.h"
+#elif defined(ARCHI_dspic33ak)
+#    include "qei_dspic33a.h"
 #elif defined(ARCHI_pic32mk)
 #    include "qei_pic32mk.h"
 #else
