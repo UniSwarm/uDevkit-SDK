@@ -25,6 +25,8 @@ extern "C" {
 #    include "uart_dspic33c.h"
 #elif defined(ARCHI_dspic30f)
 #    include "uart_dspic30f.h"
+#elif defined(ARCHI_dspic33ak)
+#    include "uart_dspic33a.h"
 #elif defined(ARCHI_pic32mx)
 #    include "uart_pic32mx.h"
 #elif defined(ARCHI_pic32mm) || defined(ARCHI_pic32mk) || defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
