@@ -70,6 +70,8 @@ typedef uint8_t rt_dev_t_class;
 #define DEV_CLASS_SPI_SOFT   ((rt_dev_t_class)(DEV_CLASS_SPI + 1))
 #define DEV_CLASS_USB_SERIAL ((rt_dev_t_class)(0x08))
 #define DEV_CLASS_CAN        ((rt_dev_t_class)(0x0A))
+#define DEV_CLASS_SENT        ((rt_dev_t_class)(0x0B))
+#define DEV_CLASS_BISS        ((rt_dev_t_class)(0x0C))
 
 #define DEV_CLASS_GPIO ((rt_dev_t_class)(0x09))
 
