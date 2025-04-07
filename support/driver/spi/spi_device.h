@@ -20,7 +20,7 @@ extern "C" {
 // ======= specific include =======
 #if defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic30f) || defined(ARCHI_dspic33fj)
 #    include "spi_pic24f_dspic33f.h"
-#elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev) || defined(ARCHI_dspic33ck) || defined(ARCHI_dspic33ch)
+#elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
 #    include "spi_pic24e_dspic33e.h"
 #elif defined(ARCHI_dspic30f)
 #    include "spi_dspic30f.h"
@@ -53,8 +53,8 @@ enum
 #    if SPI_COUNT >= 6
     SPI6_ID = 5,
 #    endif
-#endif
 };
+#endif
 
 #ifdef __cplusplus
 }
