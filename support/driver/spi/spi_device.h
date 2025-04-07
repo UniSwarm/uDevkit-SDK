@@ -22,6 +22,8 @@ extern "C" {
 #    include "spi_pic24f_dspic33f.h"
 #elif defined(ARCHI_pic24ep) || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
 #    include "spi_pic24e_dspic33e.h"
+#elif defined(ARCHI_dspic33ck) || defined(ARCHI_dspic33ch)
+#    include "spi_dspic33c.h"
 #elif defined(ARCHI_dspic30f)
 #    include "spi_dspic30f.h"
 #elif defined(ARCHI_dspic33ak)
