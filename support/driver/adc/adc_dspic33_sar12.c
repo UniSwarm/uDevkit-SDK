@@ -730,7 +730,7 @@ volatile int16_t *adc_buffAddr(uint8_t channel)
     {
         return NULL;
     }
-    return (int16_t *)&ADCBUF0 + channel;
+    return (volatile int16_t *)(&ADCBUF0 + channel);
 }
 
 int16_t adc_getValue(uint8_t channel)
