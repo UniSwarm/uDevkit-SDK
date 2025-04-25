@@ -56,39 +56,40 @@ extern "C" {
     || defined(DEVICE_33EP256MC506) || defined(DEVICE_33EP512MC202) || defined(DEVICE_33EP512MC204) || defined(DEVICE_33EP512MC206)                            \
     || defined(DEVICE_33EP512MC502) || defined(DEVICE_33EP512MC504) || defined(DEVICE_33EP512MC506)
 #    define QEI_COUNT 1
-#elif defined(DEVICE_33CDV128MP506) || defined(DEVICE_33CDV256MP506) || defined(DEVICE_33CDVC128MP506) || defined(DEVICE_33CDVC256MP506)                       \
-    || defined(DEVICE_33CH512MP305) || defined(DEVICE_33CH512MP305S1) || defined(DEVICE_33CH512MP306) || defined(DEVICE_33CH512MP306S1)                        \
-    || defined(DEVICE_33CH512MP308) || defined(DEVICE_33CH512MP308S1) || defined(DEVICE_33CH512MP405) || defined(DEVICE_33CH512MP405S1)                        \
-    || defined(DEVICE_33CH512MP406) || defined(DEVICE_33CH512MP406S1) || defined(DEVICE_33CH512MP408) || defined(DEVICE_33CH512MP408S1)                        \
-    || defined(DEVICE_33CH512MP410) || defined(DEVICE_33CH512MP410S1) || defined(DEVICE_33CH512MP412) || defined(DEVICE_33CH512MP412S1)                        \
-    || defined(DEVICE_33CH512MP605) || defined(DEVICE_33CH512MP605S1) || defined(DEVICE_33CH512MP606) || defined(DEVICE_33CH512MP606S1)                        \
-    || defined(DEVICE_33CH512MP608) || defined(DEVICE_33CH512MP608S1) || defined(DEVICE_33CH512MP705) || defined(DEVICE_33CH512MP705S1)                        \
-    || defined(DEVICE_33CH512MP706) || defined(DEVICE_33CH512MP706S1) || defined(DEVICE_33CH512MP708) || defined(DEVICE_33CH512MP708S1)                        \
-    || defined(DEVICE_33CH512MP710) || defined(DEVICE_33CH512MP710S1) || defined(DEVICE_33CH512MP712) || defined(DEVICE_33CH512MP712S1)                        \
-    || defined(DEVICE_33CH1024MP305) || defined(DEVICE_33CH1024MP305S1) || defined(DEVICE_33CH1024MP306) || defined(DEVICE_33CH1024MP306S1)                    \
-    || defined(DEVICE_33CH1024MP308) || defined(DEVICE_33CH1024MP308S1) || defined(DEVICE_33CH1024MP405) || defined(DEVICE_33CH1024MP405S1)                    \
-    || defined(DEVICE_33CH1024MP406) || defined(DEVICE_33CH1024MP406S1) || defined(DEVICE_33CH1024MP408) || defined(DEVICE_33CH1024MP408S1)                    \
-    || defined(DEVICE_33CH1024MP410) || defined(DEVICE_33CH1024MP410S1) || defined(DEVICE_33CH1024MP412) || defined(DEVICE_33CH1024MP412S1)                    \
-    || defined(DEVICE_33CH1024MP605) || defined(DEVICE_33CH1024MP605S1) || defined(DEVICE_33CH1024MP606) || defined(DEVICE_33CH1024MP606S1)                    \
-    || defined(DEVICE_33CH1024MP608) || defined(DEVICE_33CH1024MP608S1) || defined(DEVICE_33CH1024MP705) || defined(DEVICE_33CH1024MP705S1)                    \
-    || defined(DEVICE_33CH1024MP706) || defined(DEVICE_33CH1024MP706S1) || defined(DEVICE_33CH1024MP708) || defined(DEVICE_33CH1024MP708S1)                    \
-    || defined(DEVICE_33CH1024MP710) || defined(DEVICE_33CH1024MP710S1) || defined(DEVICE_33CH1024MP712) || defined(DEVICE_33CH1024MP712S1)                    \
-    || defined(DEVICE_33CK32MP102) || defined(DEVICE_33CK32MP103) || defined(DEVICE_33CK32MP105) || defined(DEVICE_33CK32MP202) || defined(DEVICE_33CK32MP203) \
-    || defined(DEVICE_33CK32MP205) || defined(DEVICE_33CK32MP206) || defined(DEVICE_33CK32MP502) || defined(DEVICE_33CK32MP503) || defined(DEVICE_33CK32MP505) \
-    || defined(DEVICE_33CK32MP506) || defined(DEVICE_33CK64MP102) || defined(DEVICE_33CK64MP103) || defined(DEVICE_33CK64MP105) || defined(DEVICE_33CK64MP202) \
-    || defined(DEVICE_33CK64MP203) || defined(DEVICE_33CK64MP205) || defined(DEVICE_33CK64MP206) || defined(DEVICE_33CK64MP208) || defined(DEVICE_33CK64MP502) \
-    || defined(DEVICE_33CK64MP503) || defined(DEVICE_33CK64MP505) || defined(DEVICE_33CK64MP506) || defined(DEVICE_33CK64MP508)                                \
-    || defined(DEVICE_33CK128MP202) || defined(DEVICE_33CK128MP203) || defined(DEVICE_33CK128MP205) || defined(DEVICE_33CK128MP206)                            \
-    || defined(DEVICE_33CK128MP208) || defined(DEVICE_33CK128MP502) || defined(DEVICE_33CK128MP503) || defined(DEVICE_33CK128MP505)                            \
-    || defined(DEVICE_33CK128MP506) || defined(DEVICE_33CK128MP508) || defined(DEVICE_33CK256MP202) || defined(DEVICE_33CK256MP203)                            \
-    || defined(DEVICE_33CK256MP205) || defined(DEVICE_33CK256MP206) || defined(DEVICE_33CK256MP208) || defined(DEVICE_33CK256MP502)                            \
-    || defined(DEVICE_33CK256MP503) || defined(DEVICE_33CK256MP505) || defined(DEVICE_33CK256MP506) || defined(DEVICE_33CK256MP508)                            \
-    || defined(DEVICE_33EP128GM304) || defined(DEVICE_33EP128GM306) || defined(DEVICE_33EP128GM310) || defined(DEVICE_33EP128GM604)                            \
-    || defined(DEVICE_33EP128GM706) || defined(DEVICE_33EP128GM710) || defined(DEVICE_33EP256GM304) || defined(DEVICE_33EP256GM306)                            \
-    || defined(DEVICE_33EP256GM310) || defined(DEVICE_33EP256GM604) || defined(DEVICE_33EP256GM706) || defined(DEVICE_33EP256GM710)                            \
-    || defined(DEVICE_33EP256MU806) || defined(DEVICE_33EP256MU810) || defined(DEVICE_33EP256MU814) || defined(DEVICE_33EP512GM304)                            \
-    || defined(DEVICE_33EP512GM306) || defined(DEVICE_33EP512GM310) || defined(DEVICE_33EP512GM604) || defined(DEVICE_33EP512GM706)                            \
-    || defined(DEVICE_33EP512GM710) || defined(DEVICE_33EP512MC806) || defined(DEVICE_33EP512MU810) || defined(DEVICE_33EP512MU814)
+#elif defined(DEVICE_33CDV128MP206) || defined(DEVICE_33CDV128MP506) || defined(DEVICE_33CDV256MP206) || defined(DEVICE_33CDV256MP506)                         \
+    || defined(DEVICE_33CDVC128MP506) || defined(DEVICE_33CDVC256MP506) || defined(DEVICE_33CH512MP305) || defined(DEVICE_33CH512MP305S1)                      \
+    || defined(DEVICE_33CH512MP306) || defined(DEVICE_33CH512MP306S1) || defined(DEVICE_33CH512MP308) || defined(DEVICE_33CH512MP308S1)                        \
+    || defined(DEVICE_33CH512MP405) || defined(DEVICE_33CH512MP405S1) || defined(DEVICE_33CH512MP406) || defined(DEVICE_33CH512MP406S1)                        \
+    || defined(DEVICE_33CH512MP408) || defined(DEVICE_33CH512MP408S1) || defined(DEVICE_33CH512MP410) || defined(DEVICE_33CH512MP410S1)                        \
+    || defined(DEVICE_33CH512MP412) || defined(DEVICE_33CH512MP412S1) || defined(DEVICE_33CH512MP605) || defined(DEVICE_33CH512MP605S1)                        \
+    || defined(DEVICE_33CH512MP606) || defined(DEVICE_33CH512MP606S1) || defined(DEVICE_33CH512MP608) || defined(DEVICE_33CH512MP608S1)                        \
+    || defined(DEVICE_33CH512MP705) || defined(DEVICE_33CH512MP705S1) || defined(DEVICE_33CH512MP706) || defined(DEVICE_33CH512MP706S1)                        \
+    || defined(DEVICE_33CH512MP708) || defined(DEVICE_33CH512MP708S1) || defined(DEVICE_33CH512MP710) || defined(DEVICE_33CH512MP710S1)                        \
+    || defined(DEVICE_33CH512MP712) || defined(DEVICE_33CH512MP712S1) || defined(DEVICE_33CH1024MP305) || defined(DEVICE_33CH1024MP305S1)                      \
+    || defined(DEVICE_33CH1024MP306) || defined(DEVICE_33CH1024MP306S1) || defined(DEVICE_33CH1024MP308) || defined(DEVICE_33CH1024MP308S1)                    \
+    || defined(DEVICE_33CH1024MP405) || defined(DEVICE_33CH1024MP405S1) || defined(DEVICE_33CH1024MP406) || defined(DEVICE_33CH1024MP406S1)                    \
+    || defined(DEVICE_33CH1024MP408) || defined(DEVICE_33CH1024MP408S1) || defined(DEVICE_33CH1024MP410) || defined(DEVICE_33CH1024MP410S1)                    \
+    || defined(DEVICE_33CH1024MP412) || defined(DEVICE_33CH1024MP412S1) || defined(DEVICE_33CH1024MP605) || defined(DEVICE_33CH1024MP605S1)                    \
+    || defined(DEVICE_33CH1024MP606) || defined(DEVICE_33CH1024MP606S1) || defined(DEVICE_33CH1024MP608) || defined(DEVICE_33CH1024MP608S1)                    \
+    || defined(DEVICE_33CH1024MP705) || defined(DEVICE_33CH1024MP705S1) || defined(DEVICE_33CH1024MP706) || defined(DEVICE_33CH1024MP706S1)                    \
+    || defined(DEVICE_33CH1024MP708) || defined(DEVICE_33CH1024MP708S1) || defined(DEVICE_33CH1024MP710) || defined(DEVICE_33CH1024MP710S1)                    \
+    || defined(DEVICE_33CH1024MP712) || defined(DEVICE_33CH1024MP712S1) || defined(DEVICE_33CK32MP102) || defined(DEVICE_33CK32MP103)                          \
+    || defined(DEVICE_33CK32MP105) || defined(DEVICE_33CK32MP202) || defined(DEVICE_33CK32MP203) || defined(DEVICE_33CK32MP205) || defined(DEVICE_33CK32MP206) \
+    || defined(DEVICE_33CK32MP502) || defined(DEVICE_33CK32MP503) || defined(DEVICE_33CK32MP505) || defined(DEVICE_33CK32MP506) || defined(DEVICE_33CK64MP102) \
+    || defined(DEVICE_33CK64MP103) || defined(DEVICE_33CK64MP105) || defined(DEVICE_33CK64MP202) || defined(DEVICE_33CK64MP203) || defined(DEVICE_33CK64MP205) \
+    || defined(DEVICE_33CK64MP206) || defined(DEVICE_33CK64MP208) || defined(DEVICE_33CK64MP502) || defined(DEVICE_33CK64MP503) || defined(DEVICE_33CK64MP505) \
+    || defined(DEVICE_33CK64MP506) || defined(DEVICE_33CK64MP508) || defined(DEVICE_33CK128MP202) || defined(DEVICE_33CK128MP203)                              \
+    || defined(DEVICE_33CK128MP205) || defined(DEVICE_33CK128MP206) || defined(DEVICE_33CK128MP208) || defined(DEVICE_33CK128MP502)                            \
+    || defined(DEVICE_33CK128MP503) || defined(DEVICE_33CK128MP505) || defined(DEVICE_33CK128MP506) || defined(DEVICE_33CK128MP508)                            \
+    || defined(DEVICE_33CK256MP202) || defined(DEVICE_33CK256MP203) || defined(DEVICE_33CK256MP205) || defined(DEVICE_33CK256MP206)                            \
+    || defined(DEVICE_33CK256MP208) || defined(DEVICE_33CK256MP502) || defined(DEVICE_33CK256MP503) || defined(DEVICE_33CK256MP505)                            \
+    || defined(DEVICE_33CK256MP506) || defined(DEVICE_33CK256MP508) || defined(DEVICE_33EP128GM304) || defined(DEVICE_33EP128GM306)                            \
+    || defined(DEVICE_33EP128GM310) || defined(DEVICE_33EP128GM604) || defined(DEVICE_33EP128GM706) || defined(DEVICE_33EP128GM710)                            \
+    || defined(DEVICE_33EP256GM304) || defined(DEVICE_33EP256GM306) || defined(DEVICE_33EP256GM310) || defined(DEVICE_33EP256GM604)                            \
+    || defined(DEVICE_33EP256GM706) || defined(DEVICE_33EP256GM710) || defined(DEVICE_33EP256MU806) || defined(DEVICE_33EP256MU810)                            \
+    || defined(DEVICE_33EP256MU814) || defined(DEVICE_33EP512GM304) || defined(DEVICE_33EP512GM306) || defined(DEVICE_33EP512GM310)                            \
+    || defined(DEVICE_33EP512GM604) || defined(DEVICE_33EP512GM706) || defined(DEVICE_33EP512GM710) || defined(DEVICE_33EP512MC806)                            \
+    || defined(DEVICE_33EP512MU810) || defined(DEVICE_33EP512MU814)
 #    define QEI_COUNT 2
 #elif defined(DEVICE_33CK256MP305) || defined(DEVICE_33CK256MP306) || defined(DEVICE_33CK256MP308) || defined(DEVICE_33CK256MP405)                             \
     || defined(DEVICE_33CK256MP406) || defined(DEVICE_33CK256MP408) || defined(DEVICE_33CK256MP410) || defined(DEVICE_33CK256MP605)                            \
