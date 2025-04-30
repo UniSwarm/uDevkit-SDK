@@ -19,7 +19,7 @@ extern "C" {
 #include "spi_device.h"
 
 // ====== device assignation ======
-#define spi(d) MKDEV(DEV_CLASS_SPI, (d)-1)
+#define spi(d) MKDEV(DEV_CLASS_SPI, (d) - 1)
 rt_dev_t spi_getFreeDevice(void);
 int spi_open(rt_dev_t device);
 int spi_close(rt_dev_t device);
@@ -46,6 +46,8 @@ int spi_setErrorHandler(rt_dev_t device, void (*handler)(void));
 // ========= device write ========
 ssize_t spi_write(rt_dev_t device, const char *data, size_t size);
 int spi_flush(rt_dev_t device);
+
+ssize_t spi_exchange(rt_dev_t device, const char *tx, char *rx, size_t size);
 
 // ========= device read =========
 ssize_t spi_read(rt_dev_t device, char *data, size_t size_max);
