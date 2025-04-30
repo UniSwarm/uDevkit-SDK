@@ -1003,7 +1003,7 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP508)
 // CH primary code
 #    define ADC_TRGSRC_ADTRG31        0b11111
-#    define ADC_TRGSRC_MSTR_PTG       0b11110
+#    define ADC_TRGSRC_PTG            0b11110
 #    define ADC_TRGSRC_SLV_CLC1       0b11101
 #    define ADC_TRGSRC_MSTR_CLC1      0b11100
 #    define ADC_TRGSRC_SLV_PWM8_TRG2  0b11011
@@ -1066,7 +1066,7 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_33CK64MP103) || defined(DEVICE_33CK64MP105)
 // CK MP1XX
 #    define ADC_TRGSRC_ADTRG31       0b11111
-#    define ADC_TRGSRC_MSTR_PTG      0b11110
+#    define ADC_TRGSRC_PTG           0b11110
 #    define ADC_TRGSRC_CLC4          0b10010
 #    define ADC_TRGSRC_CLC3          0b10001
 #    define ADC_TRGSRC_CLC2          0b11101
@@ -1101,13 +1101,20 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
     || defined(DEVICE_33CK128MP502) || defined(DEVICE_33CK128MP503) || defined(DEVICE_33CK128MP505) || defined(DEVICE_33CK128MP506)                            \
     || defined(DEVICE_33CK128MP508) || defined(DEVICE_33CK256MP202) || defined(DEVICE_33CK256MP203) || defined(DEVICE_33CK256MP205)                            \
     || defined(DEVICE_33CK256MP206) || defined(DEVICE_33CK256MP208) || defined(DEVICE_33CK256MP305) || defined(DEVICE_33CK256MP306)                            \
-    || defined(DEVICE_33CK256MP308) || defined(DEVICE_33CK256MP502) || defined(DEVICE_33CK256MP503) || defined(DEVICE_33CK256MP505)                            \
+    || defined(DEVICE_33CK256MP308) || defined(DEVICE_33CK256MP405) || defined(DEVICE_33CK256MP406) || defined(DEVICE_33CK256MP408)                            \
+    || defined(DEVICE_33CK256MP410) || defined(DEVICE_33CK256MP502) || defined(DEVICE_33CK256MP503) || defined(DEVICE_33CK256MP505)                            \
     || defined(DEVICE_33CK256MP506) || defined(DEVICE_33CK256MP508) || defined(DEVICE_33CK256MP605) || defined(DEVICE_33CK256MP606)                            \
-    || defined(DEVICE_33CK256MP608) || defined(DEVICE_33CK512MP305) || defined(DEVICE_33CK512MP306) || defined(DEVICE_33CK512MP308)                            \
-    || defined(DEVICE_33CK512MP605) || defined(DEVICE_33CK512MP606) || defined(DEVICE_33CK512MP608)
-// CK MP2/3/5/6XX
+    || defined(DEVICE_33CK256MP608) || defined(DEVICE_33CK256MP705) || defined(DEVICE_33CK256MP706) || defined(DEVICE_33CK256MP708)                            \
+    || defined(DEVICE_33CK256MP710) || defined(DEVICE_33CK256MPT608) || defined(DEVICE_33CK512MP305) || defined(DEVICE_33CK512MP306)                           \
+    || defined(DEVICE_33CK512MP308) || defined(DEVICE_33CK512MP405) || defined(DEVICE_33CK512MP406) || defined(DEVICE_33CK512MP408)                            \
+    || defined(DEVICE_33CK512MP410) || defined(DEVICE_33CK512MP605) || defined(DEVICE_33CK512MP606) || defined(DEVICE_33CK512MP608)                            \
+    || defined(DEVICE_33CK512MP705) || defined(DEVICE_33CK512MP706) || defined(DEVICE_33CK512MP708) || defined(DEVICE_33CK512MP710)                            \
+    || defined(DEVICE_33CK512MPT608) || defined(DEVICE_33CK1024MP405) || defined(DEVICE_33CK1024MP406) || defined(DEVICE_33CK1024MP408)                        \
+    || defined(DEVICE_33CK1024MP410) || defined(DEVICE_33CK1024MP705) || defined(DEVICE_33CK1024MP706) || defined(DEVICE_33CK1024MP708)                        \
+    || defined(DEVICE_33CK1024MP710)
+// CK MP2/3/5/6/7XX
 #    define ADC_TRGSRC_ADTRG31       0b11111
-#    define ADC_TRGSRC_MSTR_PTG      0b11110
+#    define ADC_TRGSRC_PTG           0b11110
 #    define ADC_TRGSRC_CLC2          0b11101
 #    define ADC_TRGSRC_CLC1          0b11100
 #    define ADC_TRGSRC_MCCP9         0b11011
