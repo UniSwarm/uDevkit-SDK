@@ -102,6 +102,24 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN24Interrupt(void);
 #    ifdef ADC_CHANNEL_HAVE_CH25
 void __attribute__((interrupt, auto_psv, weak)) _ADCAN25Interrupt(void);
 #    endif
+#    ifdef ADC_CHANNEL_HAVE_CH26
+void __attribute__((interrupt, auto_psv, weak)) _ADCAN26Interrupt(void);
+#    endif
+#    ifdef ADC_CHANNEL_HAVE_CH27
+void __attribute__((interrupt, auto_psv, weak)) _ADCAN27Interrupt(void);
+#    endif
+#    ifdef ADC_CHANNEL_HAVE_CH28
+void __attribute__((interrupt, auto_psv, weak)) _ADCAN28Interrupt(void);
+#    endif
+#    ifdef ADC_CHANNEL_HAVE_CH29
+void __attribute__((interrupt, auto_psv, weak)) _ADCAN29Interrupt(void);
+#    endif
+#    ifdef ADC_CHANNEL_HAVE_CH30
+void __attribute__((interrupt, auto_psv, weak)) _ADCAN30Interrupt(void);
+#    endif
+#    ifdef ADC_CHANNEL_HAVE_CH31
+void __attribute__((interrupt, auto_psv, weak)) _ADCAN31Interrupt(void);
+#    endif
 #endif  // !ADC_NOHANDLER
 
 struct adc_params
@@ -367,20 +385,20 @@ void adc_calib(void)
     ADCON3Hbits.C1EN = 1;  // Turn on digital power to enable triggers to the core 1
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE2
-    ADCON5Lbits.C2PWR = 1;  // Turn on analog power for dedicated core 1
+    ADCON5Lbits.C2PWR = 1;  // Turn on analog power for dedicated core 2
     while (ADCON5Lbits.C2RDY == 0)
     {
-        ;  // Wait when the core 1 is ready for operation
+        ;  // Wait when the core 2 is ready for operation
     }
-    ADCON3Hbits.C2EN = 1;  // Turn on digital power to enable triggers to the core 1
+    ADCON3Hbits.C2EN = 1;  // Turn on digital power to enable triggers to the core 2
 #endif
 #ifdef ADC_HAVE_DEDICATED_CORE3
-    ADCON5Lbits.C3PWR = 1;  // Turn on analog power for dedicated core 1
+    ADCON5Lbits.C3PWR = 1;  // Turn on analog power for dedicated core 3
     while (ADCON5Lbits.C3RDY == 0)
     {
-        ;  // Wait when the core 1 is ready for operation
+        ;  // Wait when the core 3 is ready for operation
     }
-    ADCON3Hbits.C3EN = 1;  // Turn on digital power to enable triggers to the core 1
+    ADCON3Hbits.C3EN = 1;  // Turn on digital power to enable triggers to the core 3
 #endif
 
     ADCON5Lbits.SHRPWR = 1;  // Turn on analog power for shared core
@@ -1231,5 +1249,53 @@ void __attribute__((interrupt, auto_psv, weak)) _ADCAN25Interrupt(void)
 {
     (*_adcs[25].handler)(ADCBUF25);
     _ADCAN25IF = 0;
+}
+#endif
+
+#if defined(ADC_CHANNEL_HAVE_CH26) && !defined(ADC_NOHANDLER)
+void __attribute__((interrupt, auto_psv, weak)) _ADCAN26Interrupt(void)
+{
+    (*_adcs[26].handler)(ADCBUF26);
+    _ADCAN26IF = 0;
+}
+#endif
+
+#if defined(ADC_CHANNEL_HAVE_CH27) && !defined(ADC_NOHANDLER)
+void __attribute__((interrupt, auto_psv, weak)) _ADCAN27Interrupt(void)
+{
+    (*_adcs[27].handler)(ADCBUF27);
+    _ADCAN27IF = 0;
+}
+#endif
+
+#if defined(ADC_CHANNEL_HAVE_CH28) && !defined(ADC_NOHANDLER)
+void __attribute__((interrupt, auto_psv, weak)) _ADCAN28Interrupt(void)
+{
+    (*_adcs[28].handler)(ADCBUF28);
+    _ADCAN28IF = 0;
+}
+#endif
+
+#if defined(ADC_CHANNEL_HAVE_CH29) && !defined(ADC_NOHANDLER)
+void __attribute__((interrupt, auto_psv, weak)) _ADCAN29Interrupt(void)
+{
+    (*_adcs[29].handler)(ADCBUF29);
+    _ADCAN29IF = 0;
+}
+#endif
+
+#if defined(ADC_CHANNEL_HAVE_CH30) && !defined(ADC_NOHANDLER)
+void __attribute__((interrupt, auto_psv, weak)) _ADCAN30Interrupt(void)
+{
+    (*_adcs[30].handler)(ADCBUF30);
+    _ADCAN30IF = 0;
+}
+#endif
+
+#if defined(ADC_CHANNEL_HAVE_CH31) && !defined(ADC_NOHANDLER)
+void __attribute__((interrupt, auto_psv, weak)) _ADCAN31Interrupt(void)
+{
+    (*_adcs[31].handler)(ADCBUF31);
+    _ADCAN31IF = 0;
 }
 #endif
