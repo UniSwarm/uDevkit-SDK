@@ -52,6 +52,9 @@ static struct qei_dev _qeis[] = {
 #if QEI_COUNT >= 1
     {.flags = {{.val = QEI_FLAG_UNUSED}}},
 #endif
+#if QEI_COUNT >= 2
+    {.flags = {{.val = QEI_FLAG_UNUSED}}},
+#endif
 };
 
 /**
