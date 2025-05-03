@@ -45,6 +45,8 @@ void archi_idle(void);
 #    include "../support/archi/pic24hj/pic24hj.h"
 
 // ======== Microchip 32 bits family =======
+#elif defined(ARCHI_dspic33ak)
+#    include "../support/archi/dspic33ak/dspic33ak.h"
 #elif defined(ARCHI_pic32mx)
 #    include "../support/archi/pic32mx/pic32mx.h"
 #elif defined(ARCHI_pic32mzda)
