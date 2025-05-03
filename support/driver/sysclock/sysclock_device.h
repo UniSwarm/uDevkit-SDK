@@ -25,6 +25,8 @@ extern "C" {
 #    include "sysclock_dspic30f.h"
 #elif defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
 #    include "sysclock_dspic33c.h"
+#elif defined(ARCHI_dspic33ak) || defined(ARCHI_pic32ak)
+#    include "sysclock_dspic33a_pic32a.h"
 #elif defined(ARCHI_pic32mx)
 #    include "sysclock_pic32mx.h"
 #elif defined(ARCHI_pic32mm)
