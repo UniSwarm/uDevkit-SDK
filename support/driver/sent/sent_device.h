@@ -20,8 +20,8 @@ extern "C" {
 // ======= specific include =======
 #if defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
 #    include "sent_dspic33.h"
-#elif defined(ARCHI_dspic33ak)
-#    include "sent_dspic33a.h"
+#elif defined(ARCHI_dspic33ak) || defined(ARCHI_pic32ak)
+#    include "sent_dspic33a_pic32a.h"
 #else
 #    warning "Unsupported ARCHI"
 #endif
