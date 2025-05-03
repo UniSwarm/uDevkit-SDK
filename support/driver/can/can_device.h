@@ -21,6 +21,8 @@ extern "C" {
 #    include "can_dspic30f.h"
 #elif defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
 #    include "can_dspic33c.h"
+#elif defined(ARCHI_dspic33ak) || defined(ARCHI_pic32ak)
+#    include "can_dspic33a_pic32a.h"
 #elif defined(ARCHI_pic24ep) || defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_pic24hj) || defined(ARCHI_dspic33fj)                          \
     || defined(ARCHI_dspic33ep) || defined(ARCHI_dspic33ev)
 #    include "can_pic24_dspic33.h"
