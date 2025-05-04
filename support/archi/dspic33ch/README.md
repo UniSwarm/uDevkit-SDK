@@ -1,25 +1,25 @@
 # dsPIC33CH support
 
-dsPIC33CH family is the first Microchip *dual core* [16 bits](../pic16b/README.md) MCU.
-Architecture and peripherals are similar to [dsPIC33CK](../dspic33ck/README.md), the simple core version.
+The **dsPIC33CH** family is Microchip’s first *dual-core* 16-bit microcontroller unit (MCU), expanding on the dsPIC33 architecture with a dedicated *primary* and *secondary* core. It shares many architectural traits and peripherals with the single-core [dsPIC33CK](../dspic33ck/README.md), but has its own compatibility profile.
 
-A lot of peripherals (UART, Timer...) are not compatible with others dsPIC ranges.
+> ⚠️ Note: Many peripherals (e.g., UART, Timer) are **not compatible** with other dsPIC ranges.
 
-This family have variations of flash memory, pin count and CAN FD for 5XX subfamily.
 
-Secondary core is marked with final S1. Secondary core does not have same peripherals. They have 4 - 31 kb of ram and 24 - 134 kb of PRAM.
+The family includes variations in flash memory, pin count, and support for CAN FD (only available in the 5XX/6XX and 7XX subfamilies).
 
-## Main features
+The **secondary core** is denoted by part numbers ending with **S1** and typically features reduced peripheral access. They have 4 - 31 kb of ram and 24 - 134 kb of PRAM.
 
-|Feature|dsPIC33CH primary core|dsPIC33CH secondary core|
-|-------|:------:|:------:|
-|Core|16 bits|16 bits|
-|Performance|90 DMIPS|100 DMIPS|
-|Program memory|66 - 1049 kb|24 - 134 kb (PRAM)|
-|Data memory|16 - 49 kb|4 - 31 kb|
-|Pins|28 - 80|28 - 80|
+## 📌 Key features
 
-## Common devices
+| Feature        | Primary Core | Secondary Core   |
+| -------------- | ------------ | ---------------- |
+| Core           | 16-bit       | 16-bit           |
+| Performance    | 90 DMIPS     | 100 DMIPS        |
+| Program memory | 66–1049 KB   | 24–134 KB (PRAM) |
+| Data memory    | 16–49 KB     | 4–31 KB          |
+| Pin count      | 28–80        | 28–80            |
+
+## 🧩 Peripheral overview
 
 |Peripheral      |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
 |:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
@@ -31,9 +31,9 @@ Secondary core is marked with final S1. Secondary core does not have same periph
 |MP40XS1         |        2|        1|        0|        0|        1|        2|        0|        2|        4|         2|         8|         0|         5|
 |MP50X           |        2|        1|        0|        0|        2|        2|   1-2 Fd|        2|        4|         1|         4|         0|         8|
 |MP50XS1         |        1|        1|        0|        0|        1|        1|        0|        0|        4|         1|         8|         0|         4|
-|MP60X           |        2|        1|        0|        0|        2|        3|        2|        2|        4|         2|         4|         0|         8|
+|MP60X           |        2|        1|        0|        0|        2|        3|     2 Fd|        2|        4|         2|         4|         0|         8|
 |MP60XS1         |        2|        1|        0|        0|        1|        2|        0|        2|        4|         2|         8|         0|         5|
-|MP70X           |        2|        1|        0|        0|        2|        3|        2|        2|        4|         2|         4|         0|         8|
+|MP70X           |        2|        1|        0|        0|        2|        3|     2 Fd|        2|        4|         2|         4|         0|         8|
 |MP70XS1         |        2|        1|        0|        0|        1|        2|        0|        2|        4|         2|         8|         0|         5|
 
 [1]: ../../driver/uart/README.md
@@ -51,6 +51,8 @@ Secondary core is marked with final S1. Secondary core does not have same periph
 
 ## Devices list
 
+### 📦 Device Families Overview
+
 65 devices on August 2023, plus relative secondary core with a final *S1* which are similar core.
 
 MP3XX vs MP4XX -> CPU with VDD core from internal BUCK converter (MP4XX lose 4 IOs).
@@ -58,6 +60,8 @@ MP6XX vs MP7XX -> CPU with VDD core from internal BUCK converter (MP7XX lose 4 I
 
 MP3XX vs MP6XX -> 2 CAN Fd.
 MP4XX vs MP7XX -> 2 CAN Fd.
+
+## 📚 Subfamily breakdown
 
 ### MP20X subfamily
 
@@ -122,7 +126,7 @@ MP30X with VDD core from internal BUCK converter (MP4XX lose 4 IOs).
 
 ### MP50X subfamily
 
-Contains all functionnalities of 20X plus CAN FD device (2 CAN Fd buses for 256k and 512k flash version).
+Contains all functionnalities of 20X plus CAN FD device (2 CAN Fd buses available from 256 KB models upward).
 
 |Compatible devices|Program|Data|Secondary program|Secondary data|Pins|
 |---------|--:|--:|--:|--:|--:|
