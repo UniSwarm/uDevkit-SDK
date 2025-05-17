@@ -447,7 +447,7 @@ uint32_t timer_periodMs(rt_dev_t device)
 uint16_t timer_value(rt_dev_t device)
 {
 #if TIMER_COUNT >= 1
-    uint16_t value;
+    uint16_t value = 0;
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
     {
