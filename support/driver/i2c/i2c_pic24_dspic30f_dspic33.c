@@ -256,9 +256,6 @@ bool i2c_isEnabled(rt_dev_t device)
 int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 {
 #if I2C_COUNT >= 1
-    uint32_t systemClockPeriph;
-    uint16_t uBrg;
-
     uint8_t i2c = MINOR(device);
     if (i2c >= I2C_COUNT)
     {
@@ -272,8 +269,8 @@ int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 
     _i2cs[i2c].baudSpeed = baudSpeed;
 
-    systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_I2C);
-    uBrg = (systemClockPeriph / baudSpeed) - (systemClockPeriph / I2C_FPGD) - 2;
+    uint32_t systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_I2C);
+    uint16_t uBrg = (systemClockPeriph / baudSpeed) - (systemClockPeriph / I2C_FPGD) - 2;
 
     if (uBrg <= 1)
     {
@@ -311,7 +308,6 @@ int i2c_setBaudSpeed(rt_dev_t device, uint32_t baudSpeed)
 uint32_t i2c_baudSpeed(rt_dev_t device)
 {
 #if I2C_COUNT >= 1
-    uint32_t baudSpeed, systemClockPeriph;
     uint16_t uBrg;
 
     uint8_t i2c = MINOR(device);
@@ -335,10 +331,12 @@ uint32_t i2c_baudSpeed(rt_dev_t device)
             uBrg = I2C3BRG;
             break;
 #    endif
+        default:
+            return 0;
     }
 
-    systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_I2C);
-    baudSpeed = systemClockPeriph / (uBrg + 2);  // TODO add PGD period to be exact
+    uint32_t systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_I2C);
+    uint32_t baudSpeed = systemClockPeriph / (uBrg + 2);  // TODO add PGD period to be exact
 
     return baudSpeed;
 #else
