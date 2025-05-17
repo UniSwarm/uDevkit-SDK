@@ -505,3 +505,18 @@ ssize_t spi_exchange(rt_dev_t device, const char *tx, char *rx, size_t size)
 
     return size;
 }
+
+ssize_t spi_write(rt_dev_t device, const char *data, size_t size)
+{
+    return -1;
+}
+
+int spi_flush(rt_dev_t device)
+{
+    return -1;
+}
+
+ssize_t spi_read(rt_dev_t device, char *data, size_t size_max)
+{
+    return -1;
+}
