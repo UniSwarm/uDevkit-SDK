@@ -5,7 +5,7 @@
  *
  * @date May 3, 2025, 05:20 PM
  *
- * @brief NVM support driver for dsPIC33A and PIC32A
+ * @brief TIMER support driver for dsPIC33A and PIC32A
  *
  * Implementation based on Microchip document DS70005539B:
  *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33AK128MC106-Family-Data-Sheet-DS70005539.pdf
