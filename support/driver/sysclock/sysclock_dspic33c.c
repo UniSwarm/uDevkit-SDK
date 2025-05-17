@@ -33,6 +33,7 @@ static uint32_t _sysclock_avco = 0;
  */
 uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 {
+    uint16_t divisor = 1;
     if (_sysclock_sysfreq == 0)
     {
         _sysclock_sysfreq = sysclock_sourceFreq(sysclock_source());
@@ -47,20 +48,16 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
             return _sysclock_sysfreq >> 1;
 
         case SYSCLOCK_CLOCK_REFCLK:
-        {
-            uint16_t divisor = REFOCONHbits.RODIV << 1;
-            return (_sysclock_sysfreq >> 1) / divisor;
-        }
+            divisor = REFOCONHbits.RODIV << 1;
+            return (_sysclock_sysfreq / divisor) >> 1;
 
         case SYSCLOCK_CLOCK_SYSCLK:
-        {
-            uint16_t divisor = 1;
+            divisor = 1;
             if (CLKDIVbits.DOZEN == 1)
             {
-                divisor = 1 << (CLKDIVbits.DOZE);
+                divisor = 1 << CLKDIVbits.DOZE;
             }
-            return (_sysclock_sysfreq >> 1) / divisor;
-        }
+            return (_sysclock_sysfreq / divisor) >> 1;
 
         case SYSCLOCK_CLOCK_FRC:
             return sysclock_sourceFreq(SYSCLOCK_SRC_FRC);
