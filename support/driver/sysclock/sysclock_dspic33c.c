@@ -48,8 +48,8 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
             return _sysclock_sysfreq >> 1;
 
         case SYSCLOCK_CLOCK_REFCLK:
-            divisor = REFOCONHbits.RODIV << 1;
-            return (_sysclock_sysfreq / divisor) >> 1;
+            divisor = REFOCONHbits.RODIV;
+            return (_sysclock_sysfreq / divisor) >> 2;
 
         case SYSCLOCK_CLOCK_SYSCLK:
             divisor = 1;
