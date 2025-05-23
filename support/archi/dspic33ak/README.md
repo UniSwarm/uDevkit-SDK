@@ -48,7 +48,7 @@ The dsPIC33AK series from Microchip Technology represents a significant advancem
 Base device.
 
 |Compatible devices|Program|Data|Pins|
-|---------|--:|--:|--:|--:|--:|
+|---------|--:|--:|--:|
 |[dsPIC33AK32MC102](http://microchip.com/wwwproducts/en/dsPIC33AK32MC102)   |  43 kb|   8 kb| 28|
 |[dsPIC33AK64MC102](http://microchip.com/wwwproducts/en/dsPIC33AK64MC102)   |  92 kb|  16 kb| 28|
 |[dsPIC33AK128MC102](http://microchip.com/wwwproducts/en/dsPIC33AK128MC102) | 190 kb|  16 kb| 28|
@@ -65,7 +65,7 @@ Base device.
 ### MC2XX subfamily
 
 |Compatible devices|Program|Data|Pins|
-|---------|--:|--:|--:|--:|--:|
+|---------|--:|--:|--:|
 |[*dsPIC33AK256MC205](http://microchip.com/wwwproducts/en/dsPIC33AK256MC205)| 387 kb|  33 kb| 48|
 |[*dsPIC33AK512MC205](http://microchip.com/wwwproducts/en/dsPIC33AK512MC205)| 780 kb|  33 kb| 48|
 |[*dsPIC33AK256MC206](http://microchip.com/wwwproducts/en/dsPIC33AK256MC206)| 387 kb|  33 kb| 64|
@@ -78,7 +78,7 @@ Base device.
 ### MC5XX subfamily
 
 |Compatible devices|Program|Data|Pins|
-|---------|--:|--:|--:|--:|--:|
+|---------|--:|--:|--:|
 |[*dsPIC33AK256MC505](http://microchip.com/wwwproducts/en/dsPIC33AK256MC505)| 387 kb|  33 kb| 48|
 |[*dsPIC33AK512MC505](http://microchip.com/wwwproducts/en/dsPIC33AK512MC505)| 780 kb|  33 kb| 48|
 |[*dsPIC33AK256MC506](http://microchip.com/wwwproducts/en/dsPIC33AK256MC506)| 387 kb|  33 kb| 64|
@@ -91,7 +91,7 @@ Base device.
 ### MPS2XX subfamily
 
 |Compatible devices|Program|Data|Pins|
-|---------|--:|--:|--:|--:|--:|
+|---------|--:|--:|--:|
 |[*dsPIC33AK256MPS205](http://microchip.com/wwwproducts/en/dsPIC33AK256MPS205)| 387 kb|  33 kb| 48|
 |[*dsPIC33AK512MPS205](http://microchip.com/wwwproducts/en/dsPIC33AK512MPS205)| 780 kb|  33 kb| 48|
 |[*dsPIC33AK256MPS206](http://microchip.com/wwwproducts/en/dsPIC33AK256MPS206)| 387 kb|  33 kb| 64|
@@ -106,7 +106,7 @@ Base device.
 ### MP5SXX subfamily
 
 |Compatible devices|Program|Data|Pins|
-|---------|--:|--:|--:|--:|--:|
+|---------|--:|--:|--:|
 |[*dsPIC33AK256MPS505](http://microchip.com/wwwproducts/en/dsPIC33AK256MPS505)| 387 kb|  33 kb| 48|
 |[*dsPIC33AK512MPS505](http://microchip.com/wwwproducts/en/dsPIC33AK512MPS505)| 780 kb|  33 kb| 48|
 |[*dsPIC33AK256MPS506](http://microchip.com/wwwproducts/en/dsPIC33AK256MPS506)| 387 kb|  33 kb| 64|

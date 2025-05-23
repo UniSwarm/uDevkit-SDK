@@ -44,7 +44,7 @@ The PIC32AK is very similar to the [dsPIC33AK](../dspic33ak/README.md) family bu
 Base device.
 
 |Compatible devices|Program|Data|Pins|
-|---------|--:|--:|--:|--:|--:|
+|---------|--:|--:|--:|
 |[PIC32AK3208GC41036](http://microchip.com/wwwproducts/en/PIC32AK3208GC41036) |  43 kb|   8 kb| 36|
 |[PIC32AK6416GC41036](http://microchip.com/wwwproducts/en/PIC32AK6416GC41036) |  92 kb|  16 kb| 36|
 |[PIC32AK1216GC41036](http://microchip.com/wwwproducts/en/PIC32AK1216GC41036) | 190 kb|  16 kb| 36|
