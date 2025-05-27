@@ -157,6 +157,7 @@ int can_close(rt_dev_t device)
  */
 bool can_isOpened(rt_dev_t device)
 {
+#if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {
@@ -164,6 +165,9 @@ bool can_isOpened(rt_dev_t device)
     }
 
     return (_cans[can].flags.used == 1);
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -317,6 +321,7 @@ int can_disable(rt_dev_t device)
  */
 bool can_isEnabled(rt_dev_t device)
 {
+#if CAN_COUNT >= 1
     uint8_t can = MINOR(device);
     if (can >= CAN_COUNT)
     {
@@ -324,6 +329,9 @@ bool can_isEnabled(rt_dev_t device)
     }
 
     return (_cans[can].flags.enabled == 1);
+#else
+    return -1;
+#endif
 }
 
 /**
@@ -1113,6 +1121,7 @@ int can_filterDisable(rt_dev_t device, uint8_t nFilter)
  */
 void can_reconfig(void)
 {
+#if CAN_COUNT >= 1
     for (uint8_t can_id = 0; can_id < CAN_COUNT; can_id++)
     {
         if (_cans[can_id].flags.used == 1 && _cans[can_id].bitRate != 0)
@@ -1123,4 +1132,5 @@ void can_reconfig(void)
             can_setMode(device, oldMode);
         }
     }
+#endif
 }
