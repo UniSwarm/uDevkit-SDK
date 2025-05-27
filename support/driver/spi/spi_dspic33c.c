@@ -508,15 +508,22 @@ ssize_t spi_exchange(rt_dev_t device, const char *tx, char *rx, size_t size)
 
 ssize_t spi_write(rt_dev_t device, const char *data, size_t size)
 {
+    UDK_UNUSED(device);
+    UDK_UNUSED(data);
+    UDK_UNUSED(size);
     return -1;
 }
 
 int spi_flush(rt_dev_t device)
 {
+    UDK_UNUSED(device);
     return -1;
 }
 
 ssize_t spi_read(rt_dev_t device, char *data, size_t size_max)
 {
+    UDK_UNUSED(device);
+    UDK_UNUSED(data);
+    UDK_UNUSED(size_max);
     return -1;
 }
