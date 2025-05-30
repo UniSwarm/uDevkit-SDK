@@ -7,10 +7,12 @@ This architecture support file handle all 32 bits families of Microchip. compare
 * code relocalisation
 * execution from RAM
 
-(316 devices on January 2023)
+373 devices on May 2025.
 
 |Famillies|Device count|
 |---------|-----------:|
+|[dsPIC33AK](../dspic33ak/README.md)| 48|
+|[PIC32AK](../pic32ak/README.md)    |  9|
 |[PIC32MK](../pic32mk/README.md)    | 31|
 |[PIC32MM](../pic32mm/README.md)    | 21|
 |[PIC32MX](../pic32mx/README.md)    |120|

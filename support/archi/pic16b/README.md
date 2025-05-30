@@ -2,7 +2,7 @@
 
 This architecture support file handle all 16 bits families of Microchip.
 
-(835 devices on August 2023)
+835 devices on May 2025.
 
 |Famillies|Device count|
 |---------|-----------:|
@@ -16,5 +16,3 @@ This architecture support file handle all 16 bits families of Microchip.
 |[PIC24F](../pic24f/README.md)      |                      50|
 |[PIC24FJ](../pic24fj/README.md)    |                     197|
 |[PIC24HJ](../pic24hj/README.md)    |                      41|
-
-Missing EDV / CDV variants with integrated mosfet driver and / or tranceiver.
