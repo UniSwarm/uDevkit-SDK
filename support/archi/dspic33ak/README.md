@@ -14,13 +14,13 @@ The dsPIC33AK series from Microchip Technology represents a significant advancem
 
 ## 🧩 Peripheral overview
 
-|Peripheral      |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
-|:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
-|MC1XX           |        3|        1|        0|        0|        2|        3|        0|        2|        4|         1|         0|         0|         4|
-|MC2XX           |        3|        3|        0|        0|        3|        4|        0|        2|       10|         4|         0|         1|         8|
-|MC5XX           |        3|        3|        0|        0|        3|        4|     2 Fd|        2|       10|         4|         0|         1|         8|
-|MPS2XX          |        3|        3|        0|        0|        3|        4|        0|        2|       10|         4|         0|         1|         8|
-|MPS5XX          |        3|        3|        0|        0|        3|        4|     2 Fd|        2|       10|         4|         0|         1|         8|
+|Peripheral |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
+|:----------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
+|MC10X      |        3|        1|        0|        0|        2|        3|        0|        2|        4|         1|         4|         0|         4|
+|MC2XX      |        3|        3|        0|        0|        3|        4|        0|        2|       10|         4|        12|         1|         8|
+|MC5XX      |        3|        3|        0|        0|        3|        4|     2 Fd|        2|       10|         4|        12|         1|         8|
+|MPS2XX     |        3|        3|        0|        0|        3|        4|        0|        2|       10|         4|        12|         1|         8|
+|MPS5XX     |        3|        3|        0|        0|        3|        4|     2 Fd|        2|       10|         4|        12|         1|         8|
 
 [1]: ../../driver/uart/README.md
 [2]: ../../driver/timer/README.md
@@ -62,10 +62,21 @@ Base device.
 |[dsPIC33AK64MC106](http://microchip.com/dsPIC33AK64MC106)   |  64 kb|  16 kb| 64|
 |[dsPIC33AK128MC106](http://microchip.com/dsPIC33AK128MC106) | 128 kb|  16 kb| 64|
 
-### MC10X subfamily
+### MC2XX subfamily
 
-MP20X with more peripherals and memory :
-- 
+MP10X with more peripherals and memory :
+
+- 2 more timer
+- 1 more SPI
+- 6 more CLC
+- 3 more QEI
+- 8 more PWM
+- 3 more ADC modules
+- 5 more MCCP/SCCP modules
+- Internal core is generated from an integrated buck
+
+> ⚠️ Note: Need additionnal inductor and capacitor for buck (4 pins are dedicated to buck)
+
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -80,6 +91,8 @@ MP20X with more peripherals and memory :
 
 ### MC5XX subfamily
 
+MC2XX with 2 CAN Fd
+
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
 |[dsPIC33AK256MC505](http://microchip.com/dsPIC33AK256MC505)| 256 kb|  64 kb| 48|
@@ -92,6 +105,8 @@ MP20X with more peripherals and memory :
 |[dsPIC33AK512MC510](http://microchip.com/dsPIC33AK512MC510)| 512 kb|  64 kb|100|
 
 ### MPS2XX subfamily
+
+MC2XX with crypto accelerator and all PWM as fast PWM
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -107,6 +122,8 @@ MP20X with more peripherals and memory :
 |[dsPIC33AK512MPS212](http://microchip.com/dsPIC33AK512MPS212)| 512 kb|  64 kb|128|
 
 ### MP5SXX subfamily
+
+MPS2XX with 2 CAN Fd
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
