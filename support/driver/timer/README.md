@@ -27,7 +27,7 @@ rt_dev_t timer = timer_getFreeDevice();
 timer_setCounter(timer, 1);     // no divider
 timer_enable(timer);            // start to count
 
-uint16_t value;
+timer_type value;
 value = timer_value(timer);     // get count
 timer_clearValue(timer);        // clear count
 ```
@@ -166,7 +166,7 @@ Reset the value of counter
 #### timer_setValue
 
 ```C
-int timer_setValue(rt_dev_t device, uint16_t value);
+int timer_setValue(rt_dev_t device, timer_type value);
 ```
 
 Sets the current value of timer
@@ -174,7 +174,7 @@ Sets the current value of timer
 #### timer_value
 
 ```C
-uint16_t timer_value(rt_dev_t device);
+timer_type timer_value(rt_dev_t device);
 ```
 
 Returns the current value of timer
@@ -203,6 +203,8 @@ Header file : [timer.h](timer.h)
 |[dspic30f](../../archi/dspic30f/README.md)|[timer_pic24_dspic30f_dspic33.c](timer_pic24_dspic30f_dspic33.c) / [timer_pic24_dspic30f_dspic33.h](timer_pic24_dspic30f_dspic33.h)|
 |[dspic33ch](../../archi/dspic33ch/README.md)|[timer_dspic33c.c](timer_dspic33c.c) / [timer_dspic33c.h](timer_dspic33c.h)|
 |[dspic33ck](../../archi/dspic33ck/README.md)|[timer_dspic33c.c](timer_dspic33c.c) / [timer_dspic33c.h](timer_dspic33c.h)|
+|[dspic33ak](../../archi/dspic33ak/README.md)|[timer_dspic33a_pic32a.c](timer_dspic33a_pic32a.c) / [timer_dspic33a_pic32a.h](timer_dspic33a_pic32a.h)|
+|[pic32ak](../../archi/pic32ak/README.md)|[timer_dspic33a_pic32a.c](timer_dspic33a_pic32a.c) / [timer_dspic33a_pic32a.h](timer_dspic33a_pic32a.h)|
 |[pic32mm](../../archi/pic32mm/README.md)|[timer_pic32.c](timer_pic32.c) / [timer_pic32.h](timer_pic32.h)|
 |[pic32mk](../../archi/pic32mk/README.md)|[timer_pic32.c](timer_pic32.c) / [timer_pic32.h](timer_pic32.h)|
 |[pic32mx](../../archi/pic32mx/README.md)|[timer_pic32.c](timer_pic32.c) / [timer_pic32.h](timer_pic32.h)|
