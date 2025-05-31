@@ -29,7 +29,7 @@ CC_VERSION := $(shell $(CC) --version | egrep -o "v([0-9]+\\.[0-9]+)")
 CC_VERSION_MAJOR := $(shell echo $(CC_VERSION) | cut -f2 -dv | cut -f1 -d.)
 CC_VERSION_MINOR := $(shell echo $(CC_VERSION) | cut -f2 -d.)
 
-$(info $(ARCHI) $(XC) $(CC_VERSION) $(CC_VERSION_MAJOR))
+#$(info $(ARCHI) $(XC) $(CC_VERSION) $(CC_VERSION_MAJOR))
 
 ifeq ("$(LK_SCRIPT)","")
  LK_SCRIPT = p$(DEVICE).gld
