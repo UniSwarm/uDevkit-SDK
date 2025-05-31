@@ -38,6 +38,8 @@ extern "C" {
 #    define TIMER_COUNT 0
 #endif
 
+#define TIMER_32B
+
 #ifdef __cplusplus
 }
 #endif

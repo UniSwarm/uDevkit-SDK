@@ -44,8 +44,8 @@ uint32_t timer_period(rt_dev_t device);
 int timer_setCounter(rt_dev_t device, uint16_t diviser);
 
 #define timer_clearValue(device) timer_setValue((device), 0)
-int timer_setValue(rt_dev_t device, uint16_t value);
-uint16_t timer_value(rt_dev_t device);
+int timer_setValue(rt_dev_t device, timer_type value);
+timer_type timer_value(rt_dev_t device);
 
 // ======= dynamic clock =======
 void timer_reconfig(void);

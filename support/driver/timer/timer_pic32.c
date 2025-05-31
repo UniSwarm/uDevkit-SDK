@@ -707,7 +707,7 @@ uint32_t timer_periodUs(rt_dev_t device)
  * @param device timer device number
  * @return value if ok, 0 in case of error
  */
-uint16_t timer_value(rt_dev_t device)
+timer_type timer_value(rt_dev_t device)
 {
 #if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);
@@ -763,7 +763,7 @@ uint16_t timer_value(rt_dev_t device)
  * @param device timer device number
  * @return 0 if ok, -1 in case of error
  */
-int timer_setValue(rt_dev_t device, uint16_t value)
+int timer_setValue(rt_dev_t device, timer_type value)
 {
 #if TIMER_COUNT >= 1
     uint8_t timer = MINOR(device);

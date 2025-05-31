@@ -32,8 +32,10 @@ extern "C" {
 #    warning "Unsupported ARCHI"
 #endif
 
-#ifdef __cplusplus
-}
+#ifdef TIMER_32B
+typedef uint32_t timer_type;
+#else
+typedef uint16_t timer_type;
 #endif
 
 #if TIMER_COUNT >= 1
@@ -67,6 +69,10 @@ enum
     TIMER9_ID = 8,
 #    endif
 };
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif  // TIMER_DEVICE_H

@@ -41,7 +41,7 @@ struct timer_dev
 {
     pthread_t thread_timer;
     uint32_t periodUs;
-    uint32_t value;
+    timer_type value;
     timer_status flags;
     void (*handler)(void);
 };
@@ -541,7 +541,7 @@ uint32_t timer_periodUs(rt_dev_t device)
  * @param device timer device number
  * @return value if ok, 0 in case of error
  */
-uint16_t timer_value(rt_dev_t device)
+timer_type timer_value(rt_dev_t device)
 {
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)
@@ -557,7 +557,7 @@ uint16_t timer_value(rt_dev_t device)
  * @param device timer device number
  * @return 0 if ok, -1 in case of error
  */
-int timer_setValue(rt_dev_t device, uint16_t value)
+int timer_setValue(rt_dev_t device, timer_type value)
 {
     uint8_t timer = MINOR(device);
     if (timer >= TIMER_COUNT)

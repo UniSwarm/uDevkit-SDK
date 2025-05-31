@@ -108,6 +108,8 @@ extern "C" {
 #    define TIMER_COUNT 0
 #endif
 
+#define TIMER_32B
+
 #if defined(ARCHI_pic32mzec) || defined(ARCHI_pic32mzef) || defined(ARCHI_pic32mzda)
 // interrupt bits helpers for PIC32MZ
 #    ifndef _T1IE
