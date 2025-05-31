@@ -6,7 +6,7 @@
 
 Embedded systems SDK for Uniswarm boards and others (dsPIC33, dsPIC30, PIC24 and PIC32 compatible) https://uniswarm.eu/udevkit
 
-Currently works for all 16 bits and 32 bits Microchip devices (1151 devices on August 2023):
+Currently works for all 16 bits and 32 bits Microchip devices (1208 devices on May 2025):
 
 |Range|Famillies|Device count|
 |-----|---------|-----------:|
