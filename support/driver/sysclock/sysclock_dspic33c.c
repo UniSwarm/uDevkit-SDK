@@ -20,7 +20,9 @@ static uint32_t _sysclock_sysfreq = 0;
 static uint32_t _sysclock_posc = 0;
 static uint32_t _sysclock_pllo = 0;
 static uint32_t _sysclock_vco = 0;
+#ifndef SYSCLOCK_NO_APLL
 static uint32_t _sysclock_apllo = 0;
+#endif
 static uint32_t _sysclock_avco = 0;
 
 /**
@@ -74,8 +76,10 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
         case SYSCLOCK_CLOCK_VCO4:
             return _sysclock_vco >> 2;
 
+#ifndef SYSCLOCK_NO_APLL
         case SYSCLOCK_CLOCK_AFPLLO:
             return _sysclock_apllo;
+#endif
 
         case SYSCLOCK_CLOCK_AVCO:
             return _sysclock_avco;
@@ -460,6 +464,7 @@ uint32_t sysclock_getPLLClock(void)
 
 uint32_t sysclock_getAPLLClock(void)
 {
+#ifndef SYSCLOCK_NO_APLL
     uint32_t fin;
     if (ACLKCON1bits.FRCSEL == 1)  // FRC as input
     {
@@ -478,4 +483,7 @@ uint32_t sysclock_getAPLLClock(void)
     uint32_t afpllo = _sysclock_vco / postdiv;
     _sysclock_apllo = afpllo;
     return afpllo;
+#else
+    return 1;
+#endif
 }

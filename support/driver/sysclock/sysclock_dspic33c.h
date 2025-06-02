@@ -204,6 +204,15 @@ static const char *sysclock_sources_str[] = {"FRC", "FRCPLL", "POSC", "PPLL", ""
 #    define SYSCLOCK_NO_OSCTUNE
 #endif
 
+#if defined(DEVICE_33CDV64MC106) || defined(DEVICE_33CDVL64MC106) || defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK32MC103) || defined(DEVICE_33CK32MC105) \
+    || defined(DEVICE_33CK64MC102) || defined(DEVICE_33CK64MC103) || defined(DEVICE_33CK64MC105) || defined(DEVICE_33CK128MC102)                               \
+    || defined(DEVICE_33CK128MC103) || defined(DEVICE_33CK128MC105) || defined(DEVICE_33CK128MC106) || defined(DEVICE_33CK128MC502)                            \
+    || defined(DEVICE_33CK128MC503) || defined(DEVICE_33CK128MC505) || defined(DEVICE_33CK128MC506) || defined(DEVICE_33CK256MC102)                            \
+    || defined(DEVICE_33CK256MC103) || defined(DEVICE_33CK256MC105) || defined(DEVICE_33CK256MC106) || defined(DEVICE_33CK256MC502)                            \
+    || defined(DEVICE_33CK256MC503) || defined(DEVICE_33CK256MC505) || defined(DEVICE_33CK256MC506)
+#    define SYSCLOCK_NO_APLL
+#endif
+
 int sysclock_setPLLClock(uint32_t freq, uint8_t src);
 uint32_t sysclock_getPLLClock(void);
 
