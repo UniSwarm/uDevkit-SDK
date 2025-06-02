@@ -15,9 +15,6 @@
 #include "sysclock.h"
 
 #include <archi.h>
-#include <board.h>
-
-#include <stdio.h>
 
 static uint32_t _sysclock_sysfreq = 0;
 static uint32_t _sysclock_posc = 0;
