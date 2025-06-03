@@ -270,7 +270,7 @@ int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider)
  * @param maximum The position counter maximum value. will loop to the minimum value
  * @return 0 if ok, -1 in case of error
  */
-int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum)
+int qei_setModuloCountMode(rt_dev_t device, qei_type minimum, qei_type maximum)
 {
     // TODO implement me
     return 0;

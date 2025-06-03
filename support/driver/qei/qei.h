@@ -38,7 +38,7 @@ bool qei_isEnabled(rt_dev_t device);
 #define QEI_X4MODE 0x20
 int qei_setConfig(rt_dev_t device, uint16_t config);
 int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider);
-int qei_setModuloCountMode(rt_dev_t device, int32_t minimum, int32_t maximum);
+int qei_setModuloCountMode(rt_dev_t device, qei_type minimum, qei_type maximum);
 
 // ======= device write/read ======
 qei_type qei_value(rt_dev_t device);
