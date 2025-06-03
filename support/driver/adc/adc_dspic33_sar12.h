@@ -23,152 +23,8 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
 #define ADC_MAX_RESOLUTION_BIT 12
 
 // ====================================== Channel availability ======================================
-#if defined(DEVICE_33EP16GS202) || defined(DEVICE_33EP32GS202)
-#    define ADC_CHANNEL_HAVE_CH0
-#    define ADC_CHANNEL_HAVE_CH1
-#    define ADC_CHANNEL_HAVE_CH2
-#    define ADC_CHANNEL_HAVE_CH3
-#    define ADC_CHANNEL_HAVE_CH4
-#    define ADC_CHANNEL_HAVE_CH5
-#    define ADC_CHANNEL_HAVE_CH6
-#    define ADC_CHANNEL_HAVE_CH7
-#    define ADC_CHANNEL_HAVE_CH8
-#    define ADC_CHANNEL_HAVE_CH9
-#    define ADC_CHANNEL_HAVE_CH10
-#    define ADC_CHANNEL_HAVE_CH11
-#    define ADC_CHANNEL_HAVE_CH12
-#    define ADC_CHANNEL_HAVE_CH13
-#    define ADC_CHANNEL_HAVE_CH14
-#    define ADC_CHANNEL_HAVE_MASK 0x7FFFLU
-#    define ADC_CHANNEL_COUNT     15
-#    define ADC_CHANNEL_MAX       14
-#elif defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK64MC102)
-#    define ADC_CHANNEL_HAVE_CH0
-#    define ADC_CHANNEL_HAVE_CH1
-#    define ADC_CHANNEL_HAVE_CH2
-#    define ADC_CHANNEL_HAVE_CH3
-#    define ADC_CHANNEL_HAVE_CH4
-#    define ADC_CHANNEL_HAVE_CH5
-#    define ADC_CHANNEL_HAVE_CH6
-#    define ADC_CHANNEL_HAVE_CH7
-#    define ADC_CHANNEL_HAVE_CH8
-#    define ADC_CHANNEL_HAVE_CH9
-#    define ADC_CHANNEL_HAVE_CH10
-#    define ADC_CHANNEL_HAVE_CH11
-#    define ADC_CHANNEL_HAVE_CH16
-#    define ADC_CHANNEL_HAVE_CH17
-#    define ADC_CHANNEL_HAVE_MASK 0x00030FFFLU
-#    define ADC_CHANNEL_COUNT     14
-#    define ADC_CHANNEL_MAX       17
-#elif defined(DEVICE_33CDV64MC106) || defined(DEVICE_33CDVL64MC106) || defined(DEVICE_33CK32MC103) || defined(DEVICE_33CK32MC105)                              \
-    || defined(DEVICE_33CK64MC103) || defined(DEVICE_33CK64MC105)
-#    define ADC_CHANNEL_HAVE_CH0
-#    define ADC_CHANNEL_HAVE_CH1
-#    define ADC_CHANNEL_HAVE_CH2
-#    define ADC_CHANNEL_HAVE_CH3
-#    define ADC_CHANNEL_HAVE_CH4
-#    define ADC_CHANNEL_HAVE_CH5
-#    define ADC_CHANNEL_HAVE_CH6
-#    define ADC_CHANNEL_HAVE_CH7
-#    define ADC_CHANNEL_HAVE_CH8
-#    define ADC_CHANNEL_HAVE_CH9
-#    define ADC_CHANNEL_HAVE_CH10
-#    define ADC_CHANNEL_HAVE_CH11
-#    define ADC_CHANNEL_HAVE_CH12
-#    define ADC_CHANNEL_HAVE_CH13
-#    define ADC_CHANNEL_HAVE_CH14
-#    define ADC_CHANNEL_HAVE_CH15
-#    define ADC_CHANNEL_HAVE_CH16
-#    define ADC_CHANNEL_HAVE_CH17
-#    define ADC_CHANNEL_HAVE_MASK 0x0003FFFFLU
-#    define ADC_CHANNEL_COUNT     18
-#    define ADC_CHANNEL_MAX       17
-#elif defined(DEVICE_33CH64MP202) || defined(DEVICE_33CH64MP202S1) || defined(DEVICE_33CH64MP203) || defined(DEVICE_33CH64MP203S1)                             \
-    || defined(DEVICE_33CH64MP205) || defined(DEVICE_33CH64MP205S1) || defined(DEVICE_33CH64MP206) || defined(DEVICE_33CH64MP206S1)                            \
-    || defined(DEVICE_33CH64MP208) || defined(DEVICE_33CH64MP208S1) || defined(DEVICE_33CH64MP502) || defined(DEVICE_33CH64MP502S1)                            \
-    || defined(DEVICE_33CH64MP503) || defined(DEVICE_33CH64MP503S1) || defined(DEVICE_33CH64MP505) || defined(DEVICE_33CH64MP505S1)                            \
-    || defined(DEVICE_33CH64MP506) || defined(DEVICE_33CH64MP506S1) || defined(DEVICE_33CH64MP508) || defined(DEVICE_33CH64MP508S1)                            \
-    || defined(DEVICE_33CH128MP202) || defined(DEVICE_33CH128MP202S1) || defined(DEVICE_33CH128MP203) || defined(DEVICE_33CH128MP203S1)                        \
-    || defined(DEVICE_33CH128MP205) || defined(DEVICE_33CH128MP205S1) || defined(DEVICE_33CH128MP206) || defined(DEVICE_33CH128MP206S1)                        \
-    || defined(DEVICE_33CH128MP208) || defined(DEVICE_33CH128MP208S1) || defined(DEVICE_33CH128MP502) || defined(DEVICE_33CH128MP502S1)                        \
-    || defined(DEVICE_33CH128MP503) || defined(DEVICE_33CH128MP503S1) || defined(DEVICE_33CH128MP505) || defined(DEVICE_33CH128MP505S1)                        \
-    || defined(DEVICE_33CH128MP506) || defined(DEVICE_33CH128MP506S1) || defined(DEVICE_33CH128MP508) || defined(DEVICE_33CH128MP508S1)                        \
-    || defined(DEVICE_33CH256MP205) || defined(DEVICE_33CH256MP205S1) || defined(DEVICE_33CH256MP206) || defined(DEVICE_33CH256MP206S1)                        \
-    || defined(DEVICE_33CH256MP208) || defined(DEVICE_33CH256MP208S1) || defined(DEVICE_33CH256MP218) || defined(DEVICE_33CH256MP218S1)                        \
-    || defined(DEVICE_33CH256MP505) || defined(DEVICE_33CH256MP505S1) || defined(DEVICE_33CH256MP506) || defined(DEVICE_33CH256MP506S1)                        \
-    || defined(DEVICE_33CH256MP508) || defined(DEVICE_33CH256MP508S1) || defined(DEVICE_33CH512MP205) || defined(DEVICE_33CH512MP205S1)                        \
-    || defined(DEVICE_33CH512MP206) || defined(DEVICE_33CH512MP206S1) || defined(DEVICE_33CH512MP208) || defined(DEVICE_33CH512MP208S1)                        \
-    || defined(DEVICE_33CH512MP505) || defined(DEVICE_33CH512MP505S1) || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP506S1)                        \
-    || defined(DEVICE_33CH512MP508) || defined(DEVICE_33CH512MP508S1) || defined(DEVICE_33CK32MP102) || defined(DEVICE_33CK32MP103)                            \
-    || defined(DEVICE_33CK32MP105) || defined(DEVICE_33CK64MP102) || defined(DEVICE_33CK64MP103) || defined(DEVICE_33CK64MP105)
-#    define ADC_CHANNEL_HAVE_CH0
-#    define ADC_CHANNEL_HAVE_CH1
-#    define ADC_CHANNEL_HAVE_CH2
-#    define ADC_CHANNEL_HAVE_CH3
-#    define ADC_CHANNEL_HAVE_CH4
-#    define ADC_CHANNEL_HAVE_CH5
-#    define ADC_CHANNEL_HAVE_CH6
-#    define ADC_CHANNEL_HAVE_CH7
-#    define ADC_CHANNEL_HAVE_CH8
-#    define ADC_CHANNEL_HAVE_CH9
-#    define ADC_CHANNEL_HAVE_CH10
-#    define ADC_CHANNEL_HAVE_CH11
-#    define ADC_CHANNEL_HAVE_CH12
-#    define ADC_CHANNEL_HAVE_CH13
-#    define ADC_CHANNEL_HAVE_CH14
-#    define ADC_CHANNEL_HAVE_CH15
-#    define ADC_CHANNEL_HAVE_CH16
-#    define ADC_CHANNEL_HAVE_CH17
-#    define ADC_CHANNEL_HAVE_CH18
-#    define ADC_CHANNEL_HAVE_CH19
-#    define ADC_CHANNEL_HAVE_CH20
-#    define ADC_CHANNEL_HAVE_MASK 0x001FFFFFLU
-#    define ADC_CHANNEL_COUNT     21
-#    define ADC_CHANNEL_MAX       20
-#elif defined(DEVICE_33CK128MC102) || defined(DEVICE_33CK128MC502) || defined(DEVICE_33CK256MC102) || defined(DEVICE_33CK256MC502)
-#    define ADC_CHANNEL_HAVE_CH0
-#    define ADC_CHANNEL_HAVE_CH1
-#    define ADC_CHANNEL_HAVE_CH2
-#    define ADC_CHANNEL_HAVE_CH3
-#    define ADC_CHANNEL_HAVE_CH4
-#    define ADC_CHANNEL_HAVE_CH5
-#    define ADC_CHANNEL_HAVE_CH6
-#    define ADC_CHANNEL_HAVE_CH8
-#    define ADC_CHANNEL_HAVE_CH9
-#    define ADC_CHANNEL_HAVE_CH10
-#    define ADC_CHANNEL_HAVE_CH11
-#    define ADC_CHANNEL_HAVE_CH16
-#    define ADC_CHANNEL_HAVE_CH17
-#    define ADC_CHANNEL_HAVE_CH20
-#    define ADC_CHANNEL_HAVE_CH21
-#    define ADC_CHANNEL_HAVE_MASK 0x00330F7FLU
-#    define ADC_CHANNEL_COUNT     15
-#    define ADC_CHANNEL_MAX       21
-#elif defined(DEVICE_33CK128MC103) || defined(DEVICE_33CK128MC503) || defined(DEVICE_33CK256MC103) || defined(DEVICE_33CK256MC503)
-#    define ADC_CHANNEL_HAVE_CH0
-#    define ADC_CHANNEL_HAVE_CH1
-#    define ADC_CHANNEL_HAVE_CH2
-#    define ADC_CHANNEL_HAVE_CH3
-#    define ADC_CHANNEL_HAVE_CH4
-#    define ADC_CHANNEL_HAVE_CH5
-#    define ADC_CHANNEL_HAVE_CH6
-#    define ADC_CHANNEL_HAVE_CH8
-#    define ADC_CHANNEL_HAVE_CH9
-#    define ADC_CHANNEL_HAVE_CH10
-#    define ADC_CHANNEL_HAVE_CH11
-#    define ADC_CHANNEL_HAVE_CH12
-#    define ADC_CHANNEL_HAVE_CH13
-#    define ADC_CHANNEL_HAVE_CH14
-#    define ADC_CHANNEL_HAVE_CH15
-#    define ADC_CHANNEL_HAVE_CH16
-#    define ADC_CHANNEL_HAVE_CH17
-#    define ADC_CHANNEL_HAVE_CH20
-#    define ADC_CHANNEL_HAVE_CH21
-#    define ADC_CHANNEL_HAVE_MASK 0x0033FF7FLU
-#    define ADC_CHANNEL_COUNT     19
-#    define ADC_CHANNEL_MAX       21
-#elif defined(DEVICE_33EP64GS804) || defined(DEVICE_33EP64GS805) || defined(DEVICE_33EP128GS704) || defined(DEVICE_33EP128GS705)                               \
-    || defined(DEVICE_33EP128GS804) || defined(DEVICE_33EP128GS805)
+#if defined(DEVICE_33EP64GS804) || defined(DEVICE_33EP64GS805) || defined(DEVICE_33EP128GS704) || defined(DEVICE_33EP128GS705) || defined(DEVICE_33EP128GS804) \
+    || defined(DEVICE_33EP128GS805)
 #    define ADC_CHANNEL_HAVE_CH0
 #    define ADC_CHANNEL_HAVE_CH1
 #    define ADC_CHANNEL_HAVE_CH2
@@ -213,9 +69,7 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_MASK 0x003E5FFFLU
 #    define ADC_CHANNEL_COUNT     19
 #    define ADC_CHANNEL_MAX       21
-#elif defined(DEVICE_33CK128MC105) || defined(DEVICE_33CK128MC106) || defined(DEVICE_33CK128MC505) || defined(DEVICE_33CK128MC506)                             \
-    || defined(DEVICE_33CK256MC105) || defined(DEVICE_33CK256MC106) || defined(DEVICE_33CK256MC505) || defined(DEVICE_33CK256MC506)                            \
-    || defined(DEVICE_33EP16GS506) || defined(DEVICE_33EP32GS506) || defined(DEVICE_33EP64GS506) || defined(DEVICE_33EP64GS708) || defined(DEVICE_33EP64GS806) \
+#elif defined(DEVICE_33EP16GS506) || defined(DEVICE_33EP32GS506) || defined(DEVICE_33EP64GS506) || defined(DEVICE_33EP64GS708) || defined(DEVICE_33EP64GS806)  \
     || defined(DEVICE_33EP64GS808) || defined(DEVICE_33EP128GS706) || defined(DEVICE_33EP128GS708) || defined(DEVICE_33EP128GS806)                             \
     || defined(DEVICE_33EP128GS808)
 #    define ADC_CHANNEL_HAVE_CH0
@@ -490,6 +344,43 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_MASK 0x0FFFFFFFLU
 #    define ADC_CHANNEL_COUNT     28
 #    define ADC_CHANNEL_MAX       27
+#elif defined(DEVICE_33CK256MP410) || defined(DEVICE_33CK256MP710) || defined(DEVICE_33CK512MP410) || defined(DEVICE_33CK512MP710)                             \
+    || defined(DEVICE_33CK1024MP410) || defined(DEVICE_33CK1024MP710)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH12
+#    define ADC_CHANNEL_HAVE_CH13
+#    define ADC_CHANNEL_HAVE_CH14
+#    define ADC_CHANNEL_HAVE_CH15
+#    define ADC_CHANNEL_HAVE_CH16
+#    define ADC_CHANNEL_HAVE_CH17
+#    define ADC_CHANNEL_HAVE_CH18
+#    define ADC_CHANNEL_HAVE_CH19
+#    define ADC_CHANNEL_HAVE_CH20
+#    define ADC_CHANNEL_HAVE_CH21
+#    define ADC_CHANNEL_HAVE_CH22
+#    define ADC_CHANNEL_HAVE_CH23
+#    define ADC_CHANNEL_HAVE_CH24
+#    define ADC_CHANNEL_HAVE_CH25
+#    define ADC_CHANNEL_HAVE_CH26
+#    define ADC_CHANNEL_HAVE_CH27
+#    define ADC_CHANNEL_HAVE_CH28
+#    define ADC_CHANNEL_HAVE_CH29
+#    define ADC_CHANNEL_HAVE_CH30
+#    define ADC_CHANNEL_HAVE_CH31
+#    define ADC_CHANNEL_HAVE_MASK 0xFFFFFFFFLU
+#    define ADC_CHANNEL_COUNT     32
+#    define ADC_CHANNEL_MAX       31
 #elif defined(DEVICE_33CH512MP305) || defined(DEVICE_33CH512MP305S1) || defined(DEVICE_33CH512MP405) || defined(DEVICE_33CH512MP405S1)                         \
     || defined(DEVICE_33CH512MP605) || defined(DEVICE_33CH512MP605S1) || defined(DEVICE_33CH512MP705) || defined(DEVICE_33CH512MP705S1)                        \
     || defined(DEVICE_33CH1024MP305) || defined(DEVICE_33CH1024MP305S1) || defined(DEVICE_33CH1024MP405) || defined(DEVICE_33CH1024MP405S1)                    \
@@ -613,6 +504,317 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_MASK 0x1FFFFFFFLU
 #    define ADC_CHANNEL_COUNT     29
 #    define ADC_CHANNEL_MAX       28
+#elif defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK64MC102)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH16
+#    define ADC_CHANNEL_HAVE_CH17
+#    define ADC_CHANNEL_HAVE_MASK 0x00030FFFLU
+#    define ADC_CHANNEL_COUNT     14
+#    define ADC_CHANNEL_MAX       17
+#elif defined(DEVICE_33CDV64MC106) || defined(DEVICE_33CDVL64MC106) || defined(DEVICE_33CK32MC103) || defined(DEVICE_33CK32MC105)                              \
+    || defined(DEVICE_33CK64MC103) || defined(DEVICE_33CK64MC105)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH12
+#    define ADC_CHANNEL_HAVE_CH13
+#    define ADC_CHANNEL_HAVE_CH14
+#    define ADC_CHANNEL_HAVE_CH15
+#    define ADC_CHANNEL_HAVE_CH16
+#    define ADC_CHANNEL_HAVE_CH17
+#    define ADC_CHANNEL_HAVE_MASK 0x0003FFFFLU
+#    define ADC_CHANNEL_COUNT     18
+#    define ADC_CHANNEL_MAX       17
+#elif defined(DEVICE_33CK32MP102) || defined(DEVICE_33CK64MP102)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH19
+#    define ADC_CHANNEL_HAVE_CH20
+#    define ADC_CHANNEL_HAVE_MASK 0x00180FFFLU
+#    define ADC_CHANNEL_COUNT     14
+#    define ADC_CHANNEL_MAX       20
+#elif defined(DEVICE_33CK32MP103) || defined(DEVICE_33CK64MP103)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH12
+#    define ADC_CHANNEL_HAVE_CH13
+#    define ADC_CHANNEL_HAVE_CH14
+#    define ADC_CHANNEL_HAVE_CH15
+#    define ADC_CHANNEL_HAVE_CH19
+#    define ADC_CHANNEL_HAVE_CH20
+#    define ADC_CHANNEL_HAVE_MASK 0x0018FFFFLU
+#    define ADC_CHANNEL_COUNT     18
+#    define ADC_CHANNEL_MAX       20
+#elif defined(DEVICE_33CH64MP203S1) || defined(DEVICE_33CH64MP503S1) || defined(DEVICE_33CH128MP203S1) || defined(DEVICE_33CH128MP503S1)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH15
+#    define ADC_CHANNEL_HAVE_CH16
+#    define ADC_CHANNEL_HAVE_CH18
+#    define ADC_CHANNEL_HAVE_CH19
+#    define ADC_CHANNEL_HAVE_CH20
+#    define ADC_CHANNEL_HAVE_MASK 0x001D87FFLU
+#    define ADC_CHANNEL_COUNT     16
+#    define ADC_CHANNEL_MAX       20
+#elif defined(DEVICE_33CH64MP205S1) || defined(DEVICE_33CH64MP505S1) || defined(DEVICE_33CH128MP205S1) || defined(DEVICE_33CH128MP505S1)                       \
+    || defined(DEVICE_33CH256MP205S1) || defined(DEVICE_33CH256MP505S1) || defined(DEVICE_33CH512MP205S1) || defined(DEVICE_33CH512MP505S1)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH12
+#    define ADC_CHANNEL_HAVE_CH13
+#    define ADC_CHANNEL_HAVE_CH15
+#    define ADC_CHANNEL_HAVE_CH16
+#    define ADC_CHANNEL_HAVE_CH18
+#    define ADC_CHANNEL_HAVE_CH19
+#    define ADC_CHANNEL_HAVE_CH20
+#    define ADC_CHANNEL_HAVE_MASK 0x001DBFFFLU
+#    define ADC_CHANNEL_COUNT     19
+#    define ADC_CHANNEL_MAX       20
+#elif defined(DEVICE_33CH64MP202S1) || defined(DEVICE_33CH64MP502S1) || defined(DEVICE_33CH128MP202S1) || defined(DEVICE_33CH128MP502S1)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH15
+#    define ADC_CHANNEL_HAVE_CH16
+#    define ADC_CHANNEL_HAVE_CH18
+#    define ADC_CHANNEL_HAVE_CH19
+#    define ADC_CHANNEL_HAVE_CH20
+#    define ADC_CHANNEL_HAVE_MASK 0x001D82FFLU
+#    define ADC_CHANNEL_COUNT     14
+#    define ADC_CHANNEL_MAX       20
+#elif defined(DEVICE_33CH64MP202) || defined(DEVICE_33CH64MP502) || defined(DEVICE_33CH128MP202) || defined(DEVICE_33CH128MP502)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH16
+#    define ADC_CHANNEL_HAVE_CH17
+#    define ADC_CHANNEL_HAVE_CH18
+#    define ADC_CHANNEL_HAVE_CH19
+#    define ADC_CHANNEL_HAVE_CH20
+#    define ADC_CHANNEL_HAVE_MASK 0x001F0FFFLU
+#    define ADC_CHANNEL_COUNT     17
+#    define ADC_CHANNEL_MAX       20
+#elif defined(DEVICE_33CH64MP203) || defined(DEVICE_33CH64MP503) || defined(DEVICE_33CH128MP203) || defined(DEVICE_33CH128MP503)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH12
+#    define ADC_CHANNEL_HAVE_CH13
+#    define ADC_CHANNEL_HAVE_CH14
+#    define ADC_CHANNEL_HAVE_CH16
+#    define ADC_CHANNEL_HAVE_CH17
+#    define ADC_CHANNEL_HAVE_CH18
+#    define ADC_CHANNEL_HAVE_CH19
+#    define ADC_CHANNEL_HAVE_CH20
+#    define ADC_CHANNEL_HAVE_MASK 0x001F7FFFLU
+#    define ADC_CHANNEL_COUNT     20
+#    define ADC_CHANNEL_MAX       20
+#elif defined(DEVICE_33CH64MP205) || defined(DEVICE_33CH64MP206) || defined(DEVICE_33CH64MP206S1) || defined(DEVICE_33CH64MP208)                               \
+    || defined(DEVICE_33CH64MP208S1) || defined(DEVICE_33CH64MP505) || defined(DEVICE_33CH64MP506) || defined(DEVICE_33CH64MP506S1)                            \
+    || defined(DEVICE_33CH64MP508) || defined(DEVICE_33CH64MP508S1) || defined(DEVICE_33CH128MP205) || defined(DEVICE_33CH128MP206)                            \
+    || defined(DEVICE_33CH128MP206S1) || defined(DEVICE_33CH128MP208) || defined(DEVICE_33CH128MP208S1) || defined(DEVICE_33CH128MP505)                        \
+    || defined(DEVICE_33CH128MP506) || defined(DEVICE_33CH128MP506S1) || defined(DEVICE_33CH128MP508) || defined(DEVICE_33CH128MP508S1)                        \
+    || defined(DEVICE_33CH256MP205) || defined(DEVICE_33CH256MP206) || defined(DEVICE_33CH256MP206S1) || defined(DEVICE_33CH256MP208)                          \
+    || defined(DEVICE_33CH256MP208S1) || defined(DEVICE_33CH256MP218) || defined(DEVICE_33CH256MP218S1) || defined(DEVICE_33CH256MP505)                        \
+    || defined(DEVICE_33CH256MP506) || defined(DEVICE_33CH256MP506S1) || defined(DEVICE_33CH256MP508) || defined(DEVICE_33CH256MP508S1)                        \
+    || defined(DEVICE_33CH512MP205) || defined(DEVICE_33CH512MP206) || defined(DEVICE_33CH512MP206S1) || defined(DEVICE_33CH512MP208)                          \
+    || defined(DEVICE_33CH512MP208S1) || defined(DEVICE_33CH512MP505) || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP506S1)                        \
+    || defined(DEVICE_33CH512MP508) || defined(DEVICE_33CH512MP508S1) || defined(DEVICE_33CK32MP105) || defined(DEVICE_33CK64MP105)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH12
+#    define ADC_CHANNEL_HAVE_CH13
+#    define ADC_CHANNEL_HAVE_CH14
+#    define ADC_CHANNEL_HAVE_CH15
+#    define ADC_CHANNEL_HAVE_CH16
+#    define ADC_CHANNEL_HAVE_CH17
+#    define ADC_CHANNEL_HAVE_CH18
+#    define ADC_CHANNEL_HAVE_CH19
+#    define ADC_CHANNEL_HAVE_CH20
+#    define ADC_CHANNEL_HAVE_MASK 0x001FFFFFLU
+#    define ADC_CHANNEL_COUNT     21
+#    define ADC_CHANNEL_MAX       20
+#elif defined(DEVICE_33CK128MC102) || defined(DEVICE_33CK128MC502) || defined(DEVICE_33CK256MC102) || defined(DEVICE_33CK256MC502)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH16
+#    define ADC_CHANNEL_HAVE_CH17
+#    define ADC_CHANNEL_HAVE_CH20
+#    define ADC_CHANNEL_HAVE_CH21
+#    define ADC_CHANNEL_HAVE_MASK 0x00330F7FLU
+#    define ADC_CHANNEL_COUNT     15
+#    define ADC_CHANNEL_MAX       21
+#elif defined(DEVICE_33CK128MC103) || defined(DEVICE_33CK128MC503) || defined(DEVICE_33CK256MC103) || defined(DEVICE_33CK256MC503)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH12
+#    define ADC_CHANNEL_HAVE_CH13
+#    define ADC_CHANNEL_HAVE_CH14
+#    define ADC_CHANNEL_HAVE_CH15
+#    define ADC_CHANNEL_HAVE_CH16
+#    define ADC_CHANNEL_HAVE_CH17
+#    define ADC_CHANNEL_HAVE_CH20
+#    define ADC_CHANNEL_HAVE_CH21
+#    define ADC_CHANNEL_HAVE_MASK 0x0033FF7FLU
+#    define ADC_CHANNEL_COUNT     19
+#    define ADC_CHANNEL_MAX       21
+#elif defined(DEVICE_33CK128MC105) || defined(DEVICE_33CK128MC106) || defined(DEVICE_33CK128MC505) || defined(DEVICE_33CK128MC506)                             \
+    || defined(DEVICE_33CK256MC105) || defined(DEVICE_33CK256MC106) || defined(DEVICE_33CK256MC505) || defined(DEVICE_33CK256MC506)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH12
+#    define ADC_CHANNEL_HAVE_CH13
+#    define ADC_CHANNEL_HAVE_CH14
+#    define ADC_CHANNEL_HAVE_CH15
+#    define ADC_CHANNEL_HAVE_CH16
+#    define ADC_CHANNEL_HAVE_CH17
+#    define ADC_CHANNEL_HAVE_CH18
+#    define ADC_CHANNEL_HAVE_CH19
+#    define ADC_CHANNEL_HAVE_CH20
+#    define ADC_CHANNEL_HAVE_CH21
+#    define ADC_CHANNEL_HAVE_MASK 0x003FFFFFLU
+#    define ADC_CHANNEL_COUNT     22
+#    define ADC_CHANNEL_MAX       21
+#elif defined(DEVICE_33EP16GS202) || defined(DEVICE_33EP32GS202)
+#    define ADC_CHANNEL_HAVE_CH0
+#    define ADC_CHANNEL_HAVE_CH1
+#    define ADC_CHANNEL_HAVE_CH2
+#    define ADC_CHANNEL_HAVE_CH3
+#    define ADC_CHANNEL_HAVE_CH4
+#    define ADC_CHANNEL_HAVE_CH5
+#    define ADC_CHANNEL_HAVE_CH6
+#    define ADC_CHANNEL_HAVE_CH7
+#    define ADC_CHANNEL_HAVE_CH8
+#    define ADC_CHANNEL_HAVE_CH9
+#    define ADC_CHANNEL_HAVE_CH10
+#    define ADC_CHANNEL_HAVE_CH11
+#    define ADC_CHANNEL_HAVE_CH12
+#    define ADC_CHANNEL_HAVE_CH13
+#    define ADC_CHANNEL_HAVE_CH14
+#    define ADC_CHANNEL_HAVE_MASK 0x7FFFLU
+#    define ADC_CHANNEL_COUNT     15
+#    define ADC_CHANNEL_MAX       14
 #elif defined(DEVICE_33CK256MP405) || defined(DEVICE_33CK256MP705) || defined(DEVICE_33CK512MP405) || defined(DEVICE_33CK512MP705)                             \
     || defined(DEVICE_33CK1024MP405) || defined(DEVICE_33CK1024MP705)
 #    define ADC_CHANNEL_HAVE_CH0
@@ -705,43 +907,6 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
 #    define ADC_CHANNEL_HAVE_CH31
 #    define ADC_CHANNEL_HAVE_MASK 0xF8FFFFFFLU
 #    define ADC_CHANNEL_COUNT     29
-#    define ADC_CHANNEL_MAX       31
-#elif defined(DEVICE_33CK256MP410) || defined(DEVICE_33CK256MP710) || defined(DEVICE_33CK512MP410) || defined(DEVICE_33CK512MP710)                             \
-    || defined(DEVICE_33CK1024MP410) || defined(DEVICE_33CK1024MP710)
-#    define ADC_CHANNEL_HAVE_CH0
-#    define ADC_CHANNEL_HAVE_CH1
-#    define ADC_CHANNEL_HAVE_CH2
-#    define ADC_CHANNEL_HAVE_CH3
-#    define ADC_CHANNEL_HAVE_CH4
-#    define ADC_CHANNEL_HAVE_CH5
-#    define ADC_CHANNEL_HAVE_CH6
-#    define ADC_CHANNEL_HAVE_CH7
-#    define ADC_CHANNEL_HAVE_CH8
-#    define ADC_CHANNEL_HAVE_CH9
-#    define ADC_CHANNEL_HAVE_CH10
-#    define ADC_CHANNEL_HAVE_CH11
-#    define ADC_CHANNEL_HAVE_CH12
-#    define ADC_CHANNEL_HAVE_CH13
-#    define ADC_CHANNEL_HAVE_CH14
-#    define ADC_CHANNEL_HAVE_CH15
-#    define ADC_CHANNEL_HAVE_CH16
-#    define ADC_CHANNEL_HAVE_CH17
-#    define ADC_CHANNEL_HAVE_CH18
-#    define ADC_CHANNEL_HAVE_CH19
-#    define ADC_CHANNEL_HAVE_CH20
-#    define ADC_CHANNEL_HAVE_CH21
-#    define ADC_CHANNEL_HAVE_CH22
-#    define ADC_CHANNEL_HAVE_CH23
-#    define ADC_CHANNEL_HAVE_CH24
-#    define ADC_CHANNEL_HAVE_CH25
-#    define ADC_CHANNEL_HAVE_CH26
-#    define ADC_CHANNEL_HAVE_CH27
-#    define ADC_CHANNEL_HAVE_CH28
-#    define ADC_CHANNEL_HAVE_CH29
-#    define ADC_CHANNEL_HAVE_CH30
-#    define ADC_CHANNEL_HAVE_CH31
-#    define ADC_CHANNEL_HAVE_MASK 0xFFFFFFFFLU
-#    define ADC_CHANNEL_COUNT     32
 #    define ADC_CHANNEL_MAX       31
 #endif
 
