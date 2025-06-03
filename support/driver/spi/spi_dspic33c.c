@@ -279,17 +279,17 @@ int spi_setFreq(rt_dev_t device, uint32_t freq)
     {
 #if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
         case SPI1_ID:
-            SPI1BRGH = sdiv;
+            SPI1BRGL = sdiv;
             break;
 #endif
 #if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
         case SPI2_ID:
-            SPI2BRGH = sdiv;
+            SPI2BRGL = sdiv;
             break;
 #endif
 #if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
         case SPI3_ID:
-            SPI3BRGH = sdiv;
+            SPI3BRGL = sdiv;
             break;
 #endif
     }
@@ -323,17 +323,17 @@ uint32_t spi_freq(rt_dev_t device)
     {
 #if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
         case SPI1_ID:
-            sdiv = SPI1BRGH;
+            sdiv = SPI1BRGL;
             break;
 #endif
 #if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
         case SPI2_ID:
-            sdiv = SPI2BRGH;
+            sdiv = SPI2BRGL;
             break;
 #endif
 #if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
         case SPI3_ID:
-            sdiv = SPI3BRGH;
+            sdiv = SPI3BRGL;
             break;
 #endif
     }
