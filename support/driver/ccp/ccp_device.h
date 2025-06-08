@@ -21,7 +21,7 @@ extern "C" {
 #if defined(ARCHI_pic24f) || defined(ARCHI_pic24fj) || defined(ARCHI_dspic33ch) || defined(ARCHI_dspic33ck)
 #    include "ccp_pic24_dspic33.h"
 #elif defined(ARCHI_dspic33ak) || defined(ARCHI_pic32ak)
-#    include "can_dspic33a_pic32a.h"
+#    include "ccp_dspic33a_pic32a.h"
 #elif defined(ARCHI_pic32mm)
 #    include "ccp_pic32.h"
 #else
