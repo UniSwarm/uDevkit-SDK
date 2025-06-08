@@ -58,6 +58,9 @@ static struct qei_dev _qeis[] = {
 #if QEI_COUNT >= 3
     {.flags = {{.val = QEI_FLAG_UNUSED}}},
 #endif
+#if QEI_COUNT >= 4
+    {.flags = {{.val = QEI_FLAG_UNUSED}}},
+#endif
 };
 
 /**
@@ -187,6 +190,11 @@ int qei_enable(rt_dev_t device)
             QEI3CONbits.ON = 1;
             break;
 #    endif
+#    if (QEI_COUNT >= 4) && !defined(QEI4_DISABLE)
+        case QEI4_ID:
+            QEI4CONbits.ON = 1;
+            break;
+#    endif
     }
 
     return 0;
@@ -226,6 +234,11 @@ int qei_disable(rt_dev_t device)
 #    if (QEI_COUNT >= 3) && !defined(QEI3_DISABLE)
         case QEI3_ID:
             QEI3CONbits.ON = 0;
+            break;
+#    endif
+#    if (QEI_COUNT >= 4) && !defined(QEI4_DISABLE)
+        case QEI4_ID:
+            QEI4CONbits.ON = 0;
             break;
 #    endif
     }
@@ -308,6 +321,19 @@ int qei_setConfig(rt_dev_t device, uint16_t config)
             QEI3IOCbits.IDXPOL = config & QEI_I_INV;
             break;
 #    endif
+#    if (QEI_COUNT >= 4) && !defined(QEI4_DISABLE)
+        case QEI4_ID:
+            INDX4CNT = 0xFFFF;
+
+            QEI4GEC = 0xFFFF;
+
+            POS4CNT = 0;
+
+            QEI4IOCbits.QEAPOL = config & QEI_AB_INV;
+            QEI4IOCbits.QEBPOL = config & QEI_AB_INV;
+            QEI4IOCbits.IDXPOL = config & QEI_I_INV;
+            break;
+#    endif
     }
 
     return 0;
@@ -372,6 +398,12 @@ int qei_setInputFilterConfig(rt_dev_t device, uint16_t divider)
             QEI3IOCbits.QFDIV = divider;
             break;
 #    endif
+#    if (QEI_COUNT >= 4) && !defined(QEI4_DISABLE)
+        case QEI4_ID:
+            QEI4IOCbits.FLTREN = fltren;
+            QEI4IOCbits.QFDIV = divider;
+            break;
+#    endif
     }
 
     return 0;
@@ -419,6 +451,13 @@ int qei_setModuloCountMode(rt_dev_t device, qei_type minimum, qei_type maximum)
             QEI3GEC = maximum;
             break;
 #    endif
+#    if (QEI_COUNT >= 4) && !defined(QEI4_DISABLE)
+        case QEI4_ID:
+            QEI4CONbits.PIMOD = 6;  // modulo count mode for position counter
+            QEI4LEC = minimum;
+            QEI4GEC = maximum;
+            break;
+#    endif
     }
 
     return 0;
@@ -434,7 +473,6 @@ int qei_setModuloCountMode(rt_dev_t device, qei_type minimum, qei_type maximum)
  */
 qei_type qei_value(rt_dev_t device)
 {
-    qei_type tmp32 = 0;
 #if QEI_COUNT >= 1
     uint8_t qei = MINOR(device);
     if (qei > QEI_COUNT)
@@ -456,10 +494,14 @@ qei_type qei_value(rt_dev_t device)
         case QEI3_ID:
             return POS3CNT;
 #    endif
+#    if (QEI_COUNT >= 4) && !defined(QEI4_DISABLE)
+        case QEI4_ID:
+            return POS4CNT;
+#    endif
     }
 #endif
 
-    return tmp32;
+    return 0;
 }
 
 int qei_setValue(rt_dev_t device, qei_type value)
@@ -486,6 +528,10 @@ int qei_setValue(rt_dev_t device, qei_type value)
 #    if (QEI_COUNT >= 3) && !defined(QEI3_DISABLE)
         case QEI3_ID:
             POS3CNT = value;
+#    endif
+#    if (QEI_COUNT >= 4) && !defined(QEI4_DISABLE)
+        case QEI4_ID:
+            POS4CNT = value;
 #    endif
     }
 #endif
