@@ -6,6 +6,10 @@ vpath %.h $(DRIVERPATH)
 
 HEADER += qei.h qei_device.h
 
+ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ak pic32ak))
+ ARCHI_SRC += qei_dspic33a_pic32a.c
+ HEADER += qei_dspic33a_pic32a.h
+endif
 ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24hj dspic33fj))
  ARCHI_SRC += qei_pic24f_dspic33f.c
  HEADER += qei_pic24f_dspic33f.h
