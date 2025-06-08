@@ -28,7 +28,7 @@ void gpio_setBit(rt_dev_t device)
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
     uint16_t bit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
 
-    __builtin_disi(0x3FFF);
+    disable_interrupt();
     switch (port)
     {
 #ifdef GPIO_HAVE_PORTA
@@ -87,7 +87,7 @@ void gpio_setBit(rt_dev_t device)
             break;
 #endif
     }
-    __builtin_disi(0);
+    enable_interrupt();
 }
 
 /**
@@ -99,7 +99,7 @@ void gpio_clearBit(rt_dev_t device)
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
     uint16_t bit = ~(1 << (device & GPIO_MAX_PORTWIDTHMASK));
 
-    __builtin_disi(0x3FFF);
+    disable_interrupt();
     switch (port)
     {
 #ifdef GPIO_HAVE_PORTA
@@ -158,7 +158,7 @@ void gpio_clearBit(rt_dev_t device)
             break;
 #endif
     }
-    __builtin_disi(0);
+    enable_interrupt();
 }
 
 /**
@@ -170,7 +170,7 @@ void gpio_toggleBit(rt_dev_t device)
     uint8_t port = MINOR(device) >> GPIO_MAX_PORTWIDTHU;
     uint16_t bit = 1 << (device & GPIO_MAX_PORTWIDTHMASK);
 
-    __builtin_disi(0x3FFF);
+    disable_interrupt();
     switch (port)
     {
 #ifdef GPIO_HAVE_PORTA
@@ -229,7 +229,7 @@ void gpio_toggleBit(rt_dev_t device)
             break;
 #endif
     }
-    __builtin_disi(0);
+    enable_interrupt();
 }
 
 /**
