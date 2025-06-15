@@ -29,12 +29,6 @@ NETWORK_DRIVERS = a6
 SRC += main.c
 FONTS += core14b core18b Lucida_Console10
 
-include $(UDEVKIT)/udevkit.mk
-
 all : hex
-	@echo "DRIVERS asked         :" $(sort $(DRIVERS) $(BADDRIVERS))
-	@echo "DRIVERS implemented   :" $(DRIVERS)
-	@echo "BADDRIVERS sorted     :" $(sort $(BADDRIVERS))
-	@echo DEVICE: $(DEVICE), ARCHI: $(ARCHI), CC: $(CC), DEFINES: $(DEFINES)
-	@echo OBJECTS: $(OBJECTS)
-	@echo SRC: $(SRC)
+
+include $(UDEVKIT)/udevkit.mk

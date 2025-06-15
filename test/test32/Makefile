@@ -1,6 +1,6 @@
 UDEVKIT = ../..
 
-DEV_PROG = RICE
+DEV_PROG = SNAP
 PROJECT = test32
 BOARD = emz64
 OUT_PWD = build 
@@ -14,11 +14,6 @@ MODULES += cmdline
 
 SRC += main.c
 
-include $(UDEVKIT)/udevkit.mk
-
 all : hex
-	@echo "SRC asked         :" $(sort $(SRC) $(ARCHI_SRC))
-	@echo "DRIVERS implemented   :" $(DRIVERS)
-	@echo "BADDRIVERS sorted     :" $(sort $(BADDRIVERS))
-	@echo DEVICE: $(DEVICE), ARCHI: $(ARCHI), CC: $(CC), DEFINES: $(DEFINES)
-	@echo OBJECTS: $(OBJECTS)
+
+include $(UDEVKIT)/udevkit.mk

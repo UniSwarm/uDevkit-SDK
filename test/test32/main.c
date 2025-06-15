@@ -6,25 +6,20 @@
 #include "board.h"
 #include "modules.h"
 
-char led = 0;
-void tt()
+void tt(void)
 {
-    board_setLed(1, led++);
+    board_toggleLed(1);
 }
 
 int main(void)
 {
-    uint16_t i, j;
     rt_dev_t uartDbg;
-    uint16_t value;
-    char buff[100];
 
     archi_init();
-    // sysclock_setClock(200000000);
+    board_init();
+    sysclock_setClock(200000000);
     sysclock_setClockDiv(SYSCLOCK_CLOCK_TIMER, 16);
     sysclock_setClockDiv(SYSCLOCK_CLOCK_UART, 16);
-
-    board_init();
 
     // board_setLed(1, 1);
 
@@ -41,7 +36,7 @@ int main(void)
     // init timer
     rt_dev_t timer;
     timer = timer_getFreeDevice();
-    timer_setPeriodMs(timer, 1000);
+    timer_setPeriodMs(timer, 500);
     timer_setHandler(timer, tt);
     timer_enable(timer);
 
@@ -58,12 +53,16 @@ int main(void)
     gui_setBrushColor(0);
     gui_setPenColor(1);
 
-    gui_drawLine(0, 15, 127, 15);
+    // gui_drawLine(0, 15, 127, 15);
     gui_setBrushColor(1);
     gui_drawFillRect(12, 12, 26, 12);
+    
+    gui_drawRect(10, 10, 30, 14);
+
     gui_ctrl_update();
 #endif
 
+    enable_interrupt();
     while (1)
     {
 #ifdef SIMULATOR
@@ -71,23 +70,6 @@ int main(void)
 #endif
 
         cmdline_task();
-
-        board_setLed(2, 1);
-        for (j = 0; j < 5; j++)
-        {
-            for (i = 0; i < 65000; i++)
-            {
-                ;
-            }
-        }
-        board_setLed(2, 0);
-        for (j = 0; j < 5; j++)
-        {
-            for (i = 0; i < 65000; i++)
-            {
-                ;
-            }
-        }
     }
 
     return 0;
