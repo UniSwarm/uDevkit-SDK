@@ -56,9 +56,9 @@ $(OUT_PWD)/%.bmp.c : %.bmp $(OUT_PWD)/pictures.h $(IMG2RAW_EXE)
 	$(VERB)$(IMG2RAW_EXE) -i  $< -o  $(OUT_PWD)/$(notdir $@)
 
 # rule to build images *.<img>.c to OUT_PWD/*.o
-$(OUT_PWD)/%.o : $(OUT_PWD)/%.c
+$(OBJ_PWD)/%.o : $(OUT_PWD)/%.c
 	@printf "$(GREEN)µCC %-35s => %s$(NORM)\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OBJ_PWD)/$(notdir $@)
 
 PICTURES_C := $(PICTURES)
 PICTURES_NAME := $(notdir $(PICTURES))
@@ -68,7 +68,7 @@ PICTURES_C := $(PICTURES_C:.png=.png.c)
 PICTURES_NAME := $(PICTURES_NAME:.png=)
 PICTURES_C := $(PICTURES_C:.bmp=.bmp.c)
 PICTURES_NAME := $(PICTURES_NAME:.bmp=)
-PICTURES_C := $(addprefix $(OUT_PWD)/, $(PICTURES_C))
+PICTURES_C := $(addprefix $(OBJ_PWD)/, $(PICTURES_C))
 SRC += $(PICTURES_C)
 
 # generate list of used pictures
@@ -97,12 +97,12 @@ $(OUT_PWD)/fonts.h: Makefile
 CONFIG_HEADERS += $(OUT_PWD)/fonts.h
 
 #.PHONY : $(FONTS_C)
-$(OUT_PWD)/%.font.o : $(OUT_PWD)/%.font.c
+$(OBJ_PWD)/%.font.o : $(OUT_PWD)/%.font.c
 $(OUT_PWD)/%.font.c : $(IMG2RAW_EXE)
 	@test -d $(OUT_PWD) || mkdir -p $(OUT_PWD)
 	@printf "$(GREEN)IMG %-35s => %s$(NORM)\n" $(notdir $*) $(OUT_PWD)/$(notdir $@)
 	$(VERB)$(IMG2RAW_EXE) -i $* -o  $(OUT_PWD)/$(notdir $@)
-	
+
 .SECONDARY: $(PICTURES_C) $(FONTS_C)
 
 endif
