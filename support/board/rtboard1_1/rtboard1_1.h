@@ -37,6 +37,7 @@ int board_init(void);
 #define LED2      LATAbits.LATA15
 #define LED3      LATAbits.LATA4
 int board_toggleLed(uint8_t led);
+int board_setLed(uint8_t led, uint8_t state);
 int8_t board_getLed(uint8_t led);
 
 #define BUTTON_COUNT 0
