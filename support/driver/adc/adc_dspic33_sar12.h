@@ -1124,6 +1124,28 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
 #    define ADC_DIGITAL_FILTER_COUNT 0
 #endif
 
+// Digital filters mode
+#define ADC_DIGITAL_MODE_OVERSAMPLING 0b00
+#define ADC_DIGITAL_MODE_AVERAGE      0b11
+
+#define ADC_DIGITAL_OVR_128X_16BITS 0b111
+#define ADC_DIGITAL_OVR_32X_15BITS  0b110
+#define ADC_DIGITAL_OVR_8X_14BITS   0b101
+#define ADC_DIGITAL_OVR_2X_13BITS   0b100
+#define ADC_DIGITAL_OVR_256X_16BITS 0b011
+#define ADC_DIGITAL_OVR_64X_15BITS  0b010
+#define ADC_DIGITAL_OVR_16X_14BITS  0b001
+#define ADC_DIGITAL_OVR_4X_13BITS   0b000
+
+#define ADC_DIGITAL_AVG_256X 0b111
+#define ADC_DIGITAL_AVG_128X 0b110
+#define ADC_DIGITAL_AVG_64X  0b101
+#define ADC_DIGITAL_AVG_32X  0b100
+#define ADC_DIGITAL_AVG_16X  0b011
+#define ADC_DIGITAL_AVG_8X   0b010
+#define ADC_DIGITAL_AVG_4X   0b001
+#define ADC_DIGITAL_AVG_2X   0b000
+
 // ================================== TRIGGER sources ==================================
 #ifdef ADC_CHANNEL_HAVE_CH0
 #    define ADC_TRIGSRC00 ADTRIG0Lbits.TRGSRC0
