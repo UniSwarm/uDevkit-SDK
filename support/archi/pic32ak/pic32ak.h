@@ -27,6 +27,17 @@ extern "C" {
         {                                                                                                                                                      \
         }
 
+#    define unlockIoConfig()                                                                                                                                   \
+        do                                                                                                                                                     \
+        {                                                                                                                                                      \
+            RPCONbits.IOLOCK = 0;                                                                                                                              \
+        } while (0)
+#    define lockIoConfig()                                                                                                                                     \
+        do                                                                                                                                                     \
+        {                                                                                                                                                      \
+            RPCONbits.IOLOCK = 1;                                                                                                                              \
+        } while (0)
+
 #    define enable_interrupt()  __builtin_enable_interrupts()
 #    define disable_interrupt() __builtin_disable_interrupts()
 
