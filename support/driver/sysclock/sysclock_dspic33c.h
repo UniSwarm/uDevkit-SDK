@@ -21,6 +21,15 @@ extern "C" {
 
 #include "sysclock.h"
 
+#if defined(DEVICE_33CDV64MC106) || defined(DEVICE_33CDVL64MC106) || defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK32MC103) || defined(DEVICE_33CK32MC105) \
+    || defined(DEVICE_33CK64MC102) || defined(DEVICE_33CK64MC103) || defined(DEVICE_33CK64MC105) || defined(DEVICE_33CK128MC102)                               \
+    || defined(DEVICE_33CK128MC103) || defined(DEVICE_33CK128MC105) || defined(DEVICE_33CK128MC106) || defined(DEVICE_33CK128MC502)                            \
+    || defined(DEVICE_33CK128MC503) || defined(DEVICE_33CK128MC505) || defined(DEVICE_33CK128MC506) || defined(DEVICE_33CK256MC102)                            \
+    || defined(DEVICE_33CK256MC103) || defined(DEVICE_33CK256MC105) || defined(DEVICE_33CK256MC106) || defined(DEVICE_33CK256MC502)                            \
+    || defined(DEVICE_33CK256MC503) || defined(DEVICE_33CK256MC505) || defined(DEVICE_33CK256MC506)
+#    define SYSCLOCK_NO_APLL
+#endif
+
 // bus clock
 typedef enum
 {
@@ -34,11 +43,13 @@ typedef enum
     SYSCLOCK_CLOCK_VCO2,        ///< PLL VCO / 2
     SYSCLOCK_CLOCK_VCO3,        ///< PLL VCO / 3
     SYSCLOCK_CLOCK_VCO4,        ///< PLL VCO / 4
-    SYSCLOCK_CLOCK_AFPLLO,      ///< Auxiliary PLL outpout
-    SYSCLOCK_CLOCK_AVCO,        ///< Auxiliary PLL VCO
-    SYSCLOCK_CLOCK_AVCO2,       ///< Auxiliary PLL VCO / 2
-    SYSCLOCK_CLOCK_AVCO3,       ///< Auxiliary PLL VCO / 3
-    SYSCLOCK_CLOCK_AVCO4        ///< Auxiliary PLL VCO / 4
+#ifndef SYSCLOCK_NO_APLL
+    SYSCLOCK_CLOCK_AFPLLO,  ///< Auxiliary PLL outpout
+#endif
+    SYSCLOCK_CLOCK_AVCO,   ///< Auxiliary PLL VCO
+    SYSCLOCK_CLOCK_AVCO2,  ///< Auxiliary PLL VCO / 2
+    SYSCLOCK_CLOCK_AVCO3,  ///< Auxiliary PLL VCO / 3
+    SYSCLOCK_CLOCK_AVCO4   ///< Auxiliary PLL VCO / 4
 } SYSCLOCK_CLOCK;
 
 // clock source
@@ -202,15 +213,6 @@ static const char *sysclock_sources_str[] = {"FRC", "FRCPLL", "POSC", "PPLL", ""
     || defined(DEVICE_33CH1024MP705S1) || defined(DEVICE_33CH1024MP706S1) || defined(DEVICE_33CH1024MP708S1) || defined(DEVICE_33CH1024MP710S1)                \
     || defined(DEVICE_33CH1024MP712S1)
 #    define SYSCLOCK_NO_OSCTUNE
-#endif
-
-#if defined(DEVICE_33CDV64MC106) || defined(DEVICE_33CDVL64MC106) || defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK32MC103) || defined(DEVICE_33CK32MC105) \
-    || defined(DEVICE_33CK64MC102) || defined(DEVICE_33CK64MC103) || defined(DEVICE_33CK64MC105) || defined(DEVICE_33CK128MC102)                               \
-    || defined(DEVICE_33CK128MC103) || defined(DEVICE_33CK128MC105) || defined(DEVICE_33CK128MC106) || defined(DEVICE_33CK128MC502)                            \
-    || defined(DEVICE_33CK128MC503) || defined(DEVICE_33CK128MC505) || defined(DEVICE_33CK128MC506) || defined(DEVICE_33CK256MC102)                            \
-    || defined(DEVICE_33CK256MC103) || defined(DEVICE_33CK256MC105) || defined(DEVICE_33CK256MC106) || defined(DEVICE_33CK256MC502)                            \
-    || defined(DEVICE_33CK256MC503) || defined(DEVICE_33CK256MC505) || defined(DEVICE_33CK256MC506)
-#    define SYSCLOCK_NO_APLL
 #endif
 
 int sysclock_setPLLClock(uint32_t freq, uint8_t src);
