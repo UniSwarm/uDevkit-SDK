@@ -504,7 +504,7 @@ int uart_setBitConfig(rt_dev_t device, uint8_t bitLength, uint8_t bitParity, uin
 
     if (bitStop == 2)
     {
-        stop = 1;
+        stop = 0b10;
         flags.stop = 1;
     }
     else
