@@ -1,7 +1,7 @@
 /**
  * @file umc1bds32_secondary.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2019-2023
+ * @copyright UniSwarm 2019-2025
  *
  * @date March 1, 2019, 09:35 AM
  *
@@ -30,6 +30,7 @@ int _board_init_io(void)
     // remappable pins
     // Unlock configuration pin
     unlockIoConfig();
+    // QEI ch1
     _QEIA1R = 61;
     _QEIB1R = 62;
     _QEINDX1R = 63;
