@@ -3,7 +3,7 @@
  * @author Sebastien CAUX (sebcaux)
  * @copyright UniSwarm 2022-2023
  *
- * @date April 25, 2022, 02:35 PM
+ * @date April 25, 2025, 02:35 PM
  *
  * @brief Code for UMC1BD90FR / UMC1BD90FR-I board, secondary core
  *
@@ -30,6 +30,7 @@ int _board_init_io(void)
     // remappable pins
     // Unlock configuration pin
     unlockIoConfig();
+    // QEI ch1
     _QEIA1R = 61;
     _QEIB1R = 62;
     _QEINDX1R = 63;

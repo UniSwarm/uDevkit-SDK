@@ -1,7 +1,7 @@
 /**
  * @file umc1bd90.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2022-2023
+ * @copyright UniSwarm 2022-2025
  *
  * @date April 25, 2022, 02:35 PM
  *
@@ -34,7 +34,7 @@ int _board_init_io(void)
     ANSELC = 0x00C8;  // or 0x00CF when sensor is used as analog
     ANSELD = 0x1C00;
 
-    CNPUDbits.CNPUD14 = 1;  // pullup reset button
+    CNPUDbits.CNPUD13 = 1;  // pullup reset button
 
     // remappable pins
     // Unlock configuration pin
@@ -48,12 +48,13 @@ int _board_init_io(void)
     _CAN1RXR = 69;           // CAN1RX ==> RP69
     _RP71R = _RPOUT_CAN1TX;  // CAN1TX ==> RP71
 
+    // QEI ch2
     _QEIA1R = 49;
     _QEIB1R = 50;
     _QEINDX1R = 48;
 
     TRISCbits.TRISC8 = 0;  // RS485 DE
-    LATCbits.LATC8 = 0;
+    LATCbits.LATC8 = 0;    // disable RS485 transmitter
 #endif
 
     // init leds
@@ -80,24 +81,21 @@ int _board_init_io(void)
     LATEbits.LATE2 = 0;    // 12Ven disable
     TRISEbits.TRISE2 = 0;  // 12Ven in out mode
 
-    LATCbits.LATC12 = 0;    // poweren disable
-    TRISCbits.TRISC12 = 0;  // poweren in out mode
-
     LATDbits.LATD14 = 1;    // bridgedis
     TRISDbits.TRISD14 = 0;  // bridgeen in out mode
 
     // ==== sensor 1
-    LATEbits.LATE11 = 0;    // QEI1A_Rxen disable // TODO disable when not used in receive
+    QEI1A_RXEN = 0;         // QEI1A_Rxen disable // TODO disable when not used in receive
     TRISEbits.TRISE11 = 0;  // QEI1A_Rxen
-    LATEbits.LATE10 = 0;    // QEI1A_Txen disable // TODO SSI
+    QEI1A_TXEN = 0;         // QEI1A_Txen disable // TODO SSI
     TRISEbits.TRISE10 = 0;  // QEI1A_Txen
 
-    LATDbits.LATD8 = 0;    // QEI1B_Rxen disable // TODO disable when not used in receive
+    QEI1B_RXEN = 0;        // QEI1B_Rxen disable // TODO disable when not used in receive
     TRISDbits.TRISD8 = 0;  // QEI1B_Rxen
-    LATDbits.LATD9 = 0;    // QEI1B_Txen disable
+    QEI1B_TXEN = 0;        // QEI1B_Txen disable
     TRISDbits.TRISD9 = 0;  // QEI1B_Txen
 
-    LATEbits.LATE9 = 0;    // QEI1I_Rxen disable // TODO disable when not used in receive
+    QEI1I_RXEN = 0;        // QEI1I_Rxen disable // TODO disable when not used in receive
     TRISEbits.TRISE9 = 0;  // QEI1I_Rxen
 
     // SSI, channel 2
