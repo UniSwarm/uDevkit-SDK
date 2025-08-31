@@ -115,6 +115,12 @@ inline int board_bridgesEnabled(void)
 #define DI_1_IN8 PORTDbits.RD15
 #define DI_1_IN9 PORTEbits.RE3
 
+// Digital outputs
+#define DO_1_OUT0 PORTCbits.RC12
+#define DO_1_OUT1 PORTDbits.RD0
+#define DO_1_OUT2 PORTDbits.RD2
+#define DO_1_OUT3 PORTEbits.RE14
+
 // Currents limits
 #define CURRENT_PEAK_LIMIT      9000
 #define CURRENT_PEAK_PERIOD     40

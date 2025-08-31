@@ -98,6 +98,15 @@ int _board_init_io(void)
     QEI1I_RXEN = 0;        // QEI1I_Rxen disable // TODO disable when not used in receive
     TRISEbits.TRISE9 = 0;  // QEI1I_Rxen
 
+    DO_1_OUT0 = 0;
+    TRISCbits.TRISC12 = 0;  // DO_1_OUT0 as output
+    DO_1_OUT1 = 0;
+    TRISDbits.TRISD0 = 0;  // DO_1_OUT1 as output
+    DO_1_OUT2 = 0;
+    TRISDbits.TRISD2 = 0;  // DO_1_OUT2 as output
+    DO_1_OUT3 = 0;
+    TRISEbits.TRISE14 = 0;  // DO_1_OUT3 as output
+
     // SSI, channel 2
     _SDI1R = 63;  // coder_data = QEI1I_RX_DATA
     _SCK1R = 41;  // coder_clk = QEI1A_TX_DATA
