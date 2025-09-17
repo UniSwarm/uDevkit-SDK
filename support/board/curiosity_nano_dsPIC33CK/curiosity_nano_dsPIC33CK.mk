@@ -1,8 +1,9 @@
 
-DEVICE = 33CK64MP105
+DEVICE = 33CK64MC105
 ARCHI = dspic33ck
 
-DEV_PROG ?= PKOB4
+DEV_PROG ?= PATH
+DEV_PROG_PATH ?= /media/$(shell whoami)/CURIOSITY/
 
 vpath %.c $(dir $(lastword $(MAKEFILE_LIST)))
 vpath %.h $(dir $(lastword $(MAKEFILE_LIST)))

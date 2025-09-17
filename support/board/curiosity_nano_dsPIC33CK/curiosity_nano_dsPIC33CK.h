@@ -30,7 +30,7 @@ int board_init(void);
 // #define SYSCLOCK_POSC 8000000  // 8MHz
 
 // Peripherals assignation
-#define UART_CDC_ID 1
+#define UART_DBG_ID 1
 
 // ==== pins define ====
 // leds
@@ -44,16 +44,6 @@ int8_t board_getLed(uint8_t led);
 #define BUTTON_COUNT 1
 #define BUTTON_1     0
 int8_t board_getButton(uint8_t button);
-
-// analog inputs
-#define POTENTIOMETER_ADC_CHAN ADC_CHANNEL_CH0
-#define TEMP_ADC_CHAN          ADC_CHANNEL_CH16
-#define VBUS_ADC_CHAN          ADC_CHANNEL_CH21
-
-// Peripherals assignation
-#define UART_MIKROBUS_A_ID 1
-#define UART_MIKROBUS_B_ID 2
-#define UART_DBG_ID        3
 
 #ifdef __cplusplus
 }

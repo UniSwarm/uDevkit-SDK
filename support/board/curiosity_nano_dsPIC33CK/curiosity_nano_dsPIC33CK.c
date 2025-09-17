@@ -36,6 +36,10 @@ int _board_init_io(void)
     // Unlock configuration pin
     unlockIoConfig();
 
+    // UART1 pins (CDC)
+    _U1RXR = 59;           // RX1 ==> RP59
+    _RP58R = _RPOUT_U1TX;  // TX1 ==> RP58
+
     // Lock configuration pin
     lockIoConfig();
 #endif
