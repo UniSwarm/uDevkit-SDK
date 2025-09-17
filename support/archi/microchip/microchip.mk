@@ -9,20 +9,32 @@ else
  IPE_EXE := ipecmd.sh
 endif
 
-DEV_PROG?=PK4
-ifeq (,$(filter $(DEV_PROG),PKOB PKOB4 SNAP PK3 PK4 PK5 ICD3 ICD4 ICD5 RICE ICE4))
- $(error Invalid DEV_PROG name '$(DEV_PROG)', choose between 'PKOB', 'PKOB4', 'SNAP', 'PK3', 'PK4', 'ICD3', 'ICD4', 'ICE4' or 'RICE')
-endif
-
 # keep compatibility with old sdk revision
 prog : flash
 	@printf "$(YELLOW)'prog' rule is deprecated, please use 'flash' instead\n$(NORM)"
 
-IPEFLAGS ?= -M -OA2
 flash : $(OUT_PWD)/$(PROJECT).hex
+
+DEV_PROG?=PK4
+ifeq ($(DEV_PROG),PATH)
+ ifeq ($(DEV_PROG_PATH),)
+  $(error Please specify a valid DEV_PROG_PATH variable)
+ endif
+flash:
+	@printf "$(GREEN)Flash $(DEVICE) by file copy $(DEV_PROG_PATH) ==> $(PROJECT).hex...\n$(NORM)"
+	cp $(OUT_PWD)/$(PROJECT).hex $(DEV_PROG_PATH)/
+	cat $(DEV_PROG_PATH)/STATUS.TXT
+else
+ ifeq (,$(filter $(DEV_PROG),PKOB PKOB4 SNAP PK3 PK4 PK5 ICD3 ICD4 ICD5 RICE ICE4))
+  $(error Invalid DEV_PROG name '$(DEV_PROG)', choose between 'PKOB', 'PKOB4', 'SNAP', 'PK3', 'PK4', 'ICD3', 'ICD4', 'ICE4' or 'RICE')
+ endif
+IPEFLAGS ?= -M -OA2
+
+flash:
 	@printf "$(GREEN)Flash $(DEVICE) with $(DEV_PROG) ==> $(PROJECT).hex...\n$(NORM)"
 	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -F$(PROJECT).hex -OL $(IPEFLAGS) || true
 	@rm -f $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.*
+endif
 
 .PHONY: flash-read
 flash-read :
