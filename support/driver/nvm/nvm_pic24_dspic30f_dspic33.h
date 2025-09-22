@@ -241,10 +241,6 @@ void nvm_writeDoubleWord(nvm_addr addr, const char *data);
     || defined(DEVICE_33FJ256GP710) || defined(DEVICE_33FJ256GP710A) || defined(DEVICE_33FJ256MC510) || defined(DEVICE_33FJ256MC510A)                          \
     || defined(DEVICE_33FJ256MC710) || defined(DEVICE_33FJ256MC710A)
 #    define NVM_SECTOR_START 0x000200
-#elif defined(DEVICE_33AK32MC102) || defined(DEVICE_33AK32MC103) || defined(DEVICE_33AK32MC105) || defined(DEVICE_33AK32MC106) || defined(DEVICE_33AK64MC102)  \
-    || defined(DEVICE_33AK64MC103) || defined(DEVICE_33AK64MC105) || defined(DEVICE_33AK64MC106) || defined(DEVICE_33AK128MC102)                               \
-    || defined(DEVICE_33AK128MC103) || defined(DEVICE_33AK128MC105) || defined(DEVICE_33AK128MC106)
-#    define NVM_SECTOR_START 0x801000
 #endif
 
 // NVM_SECTOR_END
@@ -509,12 +505,6 @@ void nvm_writeDoubleWord(nvm_addr addr, const char *data);
 #elif defined(DEVICE_33CK1024MP405) || defined(DEVICE_33CK1024MP406) || defined(DEVICE_33CK1024MP408) || defined(DEVICE_33CK1024MP410)                         \
     || defined(DEVICE_33CK1024MP705) || defined(DEVICE_33CK1024MP706) || defined(DEVICE_33CK1024MP708) || defined(DEVICE_33CK1024MP710)
 #    define NVM_SECTOR_END 0x0AFEFF
-#elif defined(DEVICE_33AK32MC102) || defined(DEVICE_33AK32MC103) || defined(DEVICE_33AK32MC105) || defined(DEVICE_33AK32MC106)
-#    define NVM_SECTOR_END 0x807FFF
-#elif defined(DEVICE_33AK64MC102) || defined(DEVICE_33AK64MC103) || defined(DEVICE_33AK64MC105) || defined(DEVICE_33AK64MC106)
-#    define NVM_SECTOR_END 0x80FFFF
-#elif defined(DEVICE_33AK128MC102) || defined(DEVICE_33AK128MC103) || defined(DEVICE_33AK128MC105) || defined(DEVICE_33AK128MC106)
-#    define NVM_SECTOR_END 0x81FFFF
 #endif
 
 // NVM_SIZE
@@ -582,8 +572,6 @@ void nvm_writeDoubleWord(nvm_addr addr, const char *data);
     || defined(DEVICE_33CK32MP105) || defined(DEVICE_33CK32MP202) || defined(DEVICE_33CK32MP203) || defined(DEVICE_33CK32MP205) || defined(DEVICE_33CK32MP206) \
     || defined(DEVICE_33CK32MP502) || defined(DEVICE_33CK32MP503) || defined(DEVICE_33CK32MP505) || defined(DEVICE_33CK32MP506)
 #    define NVM_SIZE 35712
-#elif defined(DEVICE_33AK32MC102) || defined(DEVICE_33AK32MC103) || defined(DEVICE_33AK32MC105) || defined(DEVICE_33AK32MC106)
-#    define NVM_SIZE 43008
 #elif defined(DEVICE_30F4011) || defined(DEVICE_30F4012) || defined(DEVICE_30F4013)
 #    define NVM_SIZE 48768
 #elif defined(DEVICE_24FJ48GA002) || defined(DEVICE_24FJ48GA004)
@@ -640,8 +628,6 @@ void nvm_writeDoubleWord(nvm_addr addr, const char *data);
     || defined(DEVICE_33CH512MP206S1) || defined(DEVICE_33CH512MP208S1) || defined(DEVICE_33CH512MP505S1) || defined(DEVICE_33CH512MP506S1)                    \
     || defined(DEVICE_33CH512MP508S1)
 #    define NVM_SIZE 72960
-#elif defined(DEVICE_33AK64MC102) || defined(DEVICE_33AK64MC103) || defined(DEVICE_33AK64MC105) || defined(DEVICE_33AK64MC106)
-#    define NVM_SIZE 92160
 #elif defined(DEVICE_24FJ96GA006) || defined(DEVICE_24FJ96GA008) || defined(DEVICE_24FJ96GA010)
 #    define NVM_SIZE 97530
 #elif defined(DEVICE_33EP128GM304) || defined(DEVICE_33EP128GM306) || defined(DEVICE_33EP128GM310) || defined(DEVICE_33EP128GM604)                             \
@@ -711,8 +697,6 @@ void nvm_writeDoubleWord(nvm_addr addr, const char *data);
 #elif defined(DEVICE_30F6010) || defined(DEVICE_30F6010A) || defined(DEVICE_30F6012) || defined(DEVICE_30F6012A) || defined(DEVICE_30F6014)                    \
     || defined(DEVICE_30F6014A) || defined(DEVICE_30F6015)
 #    define NVM_SIZE 147072
-#elif defined(DEVICE_33AK128MC102) || defined(DEVICE_33AK128MC103) || defined(DEVICE_33AK128MC105) || defined(DEVICE_33AK128MC106)
-#    define NVM_SIZE 190464
 #elif defined(DEVICE_24FJ192GA106) || defined(DEVICE_24FJ192GA108) || defined(DEVICE_24FJ192GA110) || defined(DEVICE_24FJ192GB106)                             \
     || defined(DEVICE_24FJ192GB108) || defined(DEVICE_24FJ192GB110)
 #    define NVM_SIZE 200436
