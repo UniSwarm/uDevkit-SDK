@@ -57,22 +57,33 @@ struct uart_dev
 {
     uint32_t baudSpeed;
     uart_status flags;
-
-    STATIC_FIFO(buffRx, UART_BUFFRX_SIZE);
-    STATIC_FIFO(buffTx, UART_BUFFTX_SIZE);
 };
 
-#if UART_COUNT >= 1
+#if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _U1TXInterrupt(void);
 void __attribute__((interrupt, auto_psv, weak)) _U1RXInterrupt(void);
+Fifo _uart1_buffRx;
+char __attribute__((noload, section(".uart1_buffRx"))) _uart1_buffRx_data[UART_BUFFRX_SIZE];
+Fifo _uart1_buffTx;
+char __attribute__((noload, section(".uart1_buffTx"))) _uart1_buffTx_data[UART_BUFFTX_SIZE];
 #endif
-#if UART_COUNT >= 2
+
+#if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _U2TXInterrupt(void);
 void __attribute__((interrupt, auto_psv, weak)) _U2RXInterrupt(void);
+Fifo _uart2_buffRx;
+char __attribute__((noload, section(".uart2_buffRx"))) _uart2_buffRx_data[UART_BUFFRX_SIZE];
+Fifo _uart2_buffTx;
+char __attribute__((noload, section(".uart2_buffTx"))) _uart2_buffTx_data[UART_BUFFTX_SIZE];
 #endif
-#if UART_COUNT >= 3
+
+#if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
 void __attribute__((interrupt, auto_psv, weak)) _U3TXInterrupt(void);
 void __attribute__((interrupt, auto_psv, weak)) _U3RXInterrupt(void);
+Fifo _uart3_buffRx;
+char __attribute__((noload, section(".uart3_buffRx"))) _uart3_buffRx_data[UART_BUFFRX_SIZE];
+Fifo _uart3_buffTx;
+char __attribute__((noload, section(".uart3_buffTx"))) _uart3_buffTx_data[UART_BUFFTX_SIZE];
 #endif
 
 static struct uart_dev _uarts[] = {
@@ -138,8 +149,27 @@ int uart_open(rt_dev_t device)
     }
 
     _uarts[uart].flags.used = 1;
-    STATIC_FIFO_INIT(_uarts[uart].buffRx, UART_BUFFRX_SIZE);
-    STATIC_FIFO_INIT(_uarts[uart].buffTx, UART_BUFFTX_SIZE);
+    switch (uart)
+    {
+#    if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
+        case UART1_ID:
+            STATIC_FIFO_INIT(_uart1_buffRx, UART_BUFFRX_SIZE);
+            STATIC_FIFO_INIT(_uart1_buffTx, UART_BUFFTX_SIZE);
+            break;
+#    endif
+#    if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
+        case UART2_ID:
+            STATIC_FIFO_INIT(_uart2_buffRx, UART_BUFFRX_SIZE);
+            STATIC_FIFO_INIT(_uart2_buffTx, UART_BUFFTX_SIZE);
+            break;
+#    endif
+#    if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
+        case UART3_ID:
+            STATIC_FIFO_INIT(_uart3_buffRx, UART_BUFFRX_SIZE);
+            STATIC_FIFO_INIT(_uart3_buffTx, UART_BUFFTX_SIZE);
+            break;
+#    endif
+    }
 
     return 0;
 #else
@@ -602,7 +632,7 @@ uint8_t uart_bitStop(rt_dev_t device)
 void __attribute__((interrupt, auto_psv, weak)) _U1TXInterrupt(void)
 {
     char uart_tmpchar[1];
-    while (!U1STAHbits.UTXBF && fifo_pop(&_uarts[UART1_ID].buffTx, uart_tmpchar, 1) == 1)
+    while (!U1STAHbits.UTXBF && fifo_pop(&_uart1_buffTx, uart_tmpchar, 1) == 1)
     {
         U1TXREG = uart_tmpchar[0];
     }
@@ -614,7 +644,7 @@ void __attribute__((interrupt, auto_psv, weak)) _U1RXInterrupt(void)
     char rec[4];
     rec[0] = U1RXREG;
 
-    fifo_push(&_uarts[UART1_ID].buffRx, rec, 1);
+    fifo_push(&_uart1_buffRx, rec, 1);
 
     _U1RXIF = 0;
 }
@@ -624,7 +654,7 @@ void __attribute__((interrupt, auto_psv, weak)) _U1RXInterrupt(void)
 void __attribute__((interrupt, auto_psv, weak)) _U2TXInterrupt(void)
 {
     char uart_tmpchar[1];
-    while (!U2STAHbits.UTXBF && fifo_pop(&_uarts[UART2_ID].buffTx, uart_tmpchar, 1) == 1)
+    while (!U2STAHbits.UTXBF && fifo_pop(&_uart2_buffTx, uart_tmpchar, 1) == 1)
     {
         U2TXREG = uart_tmpchar[0];
     }
@@ -636,7 +666,7 @@ void __attribute__((interrupt, auto_psv, weak)) _U2RXInterrupt(void)
     char rec[4];
     rec[0] = U2RXREG;
 
-    fifo_push(&_uarts[UART2_ID].buffRx, rec, 1);
+    fifo_push(&_uart2_buffRx, rec, 1);
 
     _U2RXIF = 0;
 }
@@ -646,7 +676,7 @@ void __attribute__((interrupt, auto_psv, weak)) _U2RXInterrupt(void)
 void __attribute__((interrupt, auto_psv, weak)) _U3TXInterrupt(void)
 {
     char uart_tmpchar[1];
-    while (!U3STAHbits.UTXBF && fifo_pop(&_uarts[UART3_ID].buffTx, uart_tmpchar, 1) == 1)
+    while (!U3STAHbits.UTXBF && fifo_pop(&_uart3_buffTx, uart_tmpchar, 1) == 1)
     {
         U3TXREG = uart_tmpchar[0];
     }
@@ -658,7 +688,7 @@ void __attribute__((interrupt, auto_psv, weak)) _U3RXInterrupt(void)
     char rec[4];
     rec[0] = U3RXREG;
 
-    fifo_push(&_uarts[UART3_ID].buffRx, rec, 1);
+    fifo_push(&_uart3_buffRx, rec, 1);
 
     _U3RXIF = 0;
 }
@@ -674,37 +704,19 @@ void __attribute__((interrupt, auto_psv, weak)) _U3RXInterrupt(void)
 ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 {
 #if UART_COUNT >= 1
-    size_t fifoWritten;
+    size_t fifoWritten = 0;
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
     {
         return -1;
     }
+
     switch (uart)
     {
 #    if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
         case UART1_ID:
             _U1TXIE = 0;
-            break;
-#    endif
-#    if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
-        case UART2_ID:
-            _U2TXIE = 0;
-            break;
-#    endif
-#    if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
-        case UART3_ID:
-            _U3TXIE = 0;
-            break;
-#    endif
-    }
-
-    fifoWritten = fifo_push(&_uarts[uart].buffTx, data, size);
-
-    switch (uart)
-    {
-#    if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
-        case UART1_ID:
+            fifoWritten = fifo_push(&_uart1_buffTx, data, size);
             if (U1STAbits.TRMT)
             {
                 _U1TXInterrupt();
@@ -714,6 +726,8 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 #    endif
 #    if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
         case UART2_ID:
+            _U2TXIE = 0;
+            fifoWritten = fifo_push(&_uart2_buffTx, data, size);
             if (U2STAbits.TRMT)
             {
                 _U2TXInterrupt();
@@ -723,6 +737,8 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 #    endif
 #    if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
         case UART3_ID:
+            _U3TXIE = 0;
+            fifoWritten = fifo_push(&_uart3_buffTx, data, size);
             if (U3STAbits.TRMT)
             {
                 _U3TXInterrupt();
@@ -785,7 +801,22 @@ ssize_t uart_datardy(rt_dev_t device)
         return -1;
     }
 
-    return fifo_len(&_uarts[uart].buffRx);
+    switch (uart)
+    {
+#if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
+        case UART1_ID:
+            return fifo_len(&_uart1_buffRx);
+#endif
+#if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
+        case UART2_ID:
+            return fifo_len(&_uart2_buffRx);
+#endif
+#if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
+        case UART3_ID:
+            return fifo_len(&_uart3_buffRx);
+#endif
+    }
+    return -1;
 }
 
 /**
@@ -797,16 +828,29 @@ ssize_t uart_datardy(rt_dev_t device)
  */
 ssize_t uart_read(rt_dev_t device, char *data, size_t size_max)
 {
-    ssize_t size_read;
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
     {
         return 0;
     }
 
-    size_read = fifo_pop(&_uarts[uart].buffRx, data, size_max);
+    switch (uart)
+    {
+#if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
+        case UART1_ID:
+            return fifo_pop(&_uart1_buffRx, data, size_max);
+#endif
+#if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
+        case UART2_ID:
+            return fifo_pop(&_uart2_buffRx, data, size_max);
+#endif
+#if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
+        case UART3_ID:
+            return fifo_pop(&_uart3_buffRx, data, size_max);
+#endif
+    }
 
-    return size_read;
+    return 0;
 }
 
 /**
