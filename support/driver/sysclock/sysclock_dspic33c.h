@@ -216,6 +216,7 @@ static const char *sysclock_sources_str[] = {"FRC", "FRCPLL", "POSC", "PPLL", ""
 #endif
 
 int sysclock_setPLLClock(uint32_t freq, uint8_t src);
+int sysclock_setPLLCoef(uint16_t prediv, uint8_t postdiv1, uint8_t postdiv2, uint16_t multiplier, uint8_t src);
 uint32_t sysclock_getPLLClock(void);
 
 uint32_t sysclock_getAPLLClock(void);

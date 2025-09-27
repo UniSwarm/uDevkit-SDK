@@ -405,6 +405,11 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
         return -5;
     }
 
+    return sysclock_setPLLCoef(prediv, postdiv1, postdiv2, multiplier, src);
+}
+
+int sysclock_setPLLCoef(uint16_t prediv, uint8_t postdiv1, uint8_t postdiv2, uint16_t multiplier, uint8_t src)
+{
     CLKDIVbits.PLLPRE = prediv;
     PLLFBDbits.PLLFBDIV = multiplier;
     PLLDIVbits.POST1DIV = postdiv1;
