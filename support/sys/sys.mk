@@ -2,7 +2,7 @@ ifndef SYS_FILE
 SYS_FILE=
 
 vpath %.c $(UDEVKIT)/support/sys/
-vpath %.h $(UDEVKIT)/include/sys/
+vpath %.h $(UDEVKIT)/support/sys/
 
 SRC += fifo.c buffer.c device.c
 HEADER += fifo.h buffer.h
