@@ -22,8 +22,8 @@ static uint32_t _sysclock_pllo = 0;
 static uint32_t _sysclock_vco = 0;
 #ifndef SYSCLOCK_NO_APLL
 static uint32_t _sysclock_apllo = 0;
-#endif
 static uint32_t _sysclock_avco = 0;
+#endif
 
 /**
  * @brief Gets the actual frequency on a particular peripheral bus clock
@@ -79,7 +79,6 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 #ifndef SYSCLOCK_NO_APLL
         case SYSCLOCK_CLOCK_AFPLLO:
             return _sysclock_apllo;
-#endif
 
         case SYSCLOCK_CLOCK_AVCO:
             return _sysclock_avco;
@@ -92,6 +91,7 @@ uint32_t sysclock_periphFreq(SYSCLOCK_CLOCK busClock)
 
         case SYSCLOCK_CLOCK_AVCO4:
             return _sysclock_avco >> 2;
+#endif
     }
 
     return 1;
@@ -455,7 +455,7 @@ uint32_t sysclock_getPLLClock(void)
 
     uint16_t prediv = CLKDIVbits.PLLPRE;
     uint16_t multiplier = PLLFBDbits.PLLFBDIV;
-    uint16_t postdiv = (PLLDIVbits.POST1DIV) * (PLLDIVbits.POST2DIV);
+    uint16_t postdiv = PLLDIVbits.POST1DIV * PLLDIVbits.POST2DIV;
 
     _sysclock_vco = fin / prediv * multiplier;
     uint32_t fpllo = _sysclock_vco / postdiv;
@@ -477,7 +477,7 @@ uint32_t sysclock_getAPLLClock(void)
 
     uint16_t prediv = ACLKCON1bits.APLLPRE;
     uint16_t multiplier = APLLFBD1bits.APLLFBDIV;
-    uint16_t postdiv = (APLLDIV1bits.APOST1DIV) * (APLLDIV1bits.APOST2DIV);
+    uint16_t postdiv = APLLDIV1bits.APOST1DIV * APLLDIV1bits.APOST2DIV;
 
     _sysclock_avco = fin / prediv * multiplier;
     uint32_t afpllo = _sysclock_vco / postdiv;

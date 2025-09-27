@@ -45,11 +45,11 @@ typedef enum
     SYSCLOCK_CLOCK_VCO4,        ///< PLL VCO / 4
 #ifndef SYSCLOCK_NO_APLL
     SYSCLOCK_CLOCK_AFPLLO,  ///< Auxiliary PLL outpout
-#endif
     SYSCLOCK_CLOCK_AVCO,   ///< Auxiliary PLL VCO
     SYSCLOCK_CLOCK_AVCO2,  ///< Auxiliary PLL VCO / 2
     SYSCLOCK_CLOCK_AVCO3,  ///< Auxiliary PLL VCO / 3
     SYSCLOCK_CLOCK_AVCO4   ///< Auxiliary PLL VCO / 4
+#endif
 } SYSCLOCK_CLOCK;
 
 // clock source
