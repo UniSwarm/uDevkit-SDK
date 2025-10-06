@@ -705,6 +705,7 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
 {
 #if UART_COUNT >= 1
     size_t fifoWritten = 0;
+    char c;
     uint8_t uart = MINOR(device);
     if (uart >= UART_COUNT)
     {
@@ -719,7 +720,10 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
             fifoWritten = fifo_push(&_uart1_buffTx, data, size);
             if (U1STAbits.TRMT)
             {
-                _U1TXInterrupt();
+                while (!U1STAHbits.UTXBF && fifo_pop(&_uart1_buffTx, &c, 1) == 1)
+                {
+                    U1TXREG = c;
+                }
             }
             _U1TXIE = 1;
             break;
@@ -730,7 +734,10 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
             fifoWritten = fifo_push(&_uart2_buffTx, data, size);
             if (U2STAbits.TRMT)
             {
-                _U2TXInterrupt();
+                while (!U2STAHbits.UTXBF && fifo_pop(&_uart2_buffTx, &c, 1) == 1)
+                {
+                    U2TXREG = c;
+                }
             }
             _U2TXIE = 1;
             break;
@@ -741,7 +748,10 @@ ssize_t uart_write(rt_dev_t device, const char *data, size_t size)
             fifoWritten = fifo_push(&_uart3_buffTx, data, size);
             if (U3STAbits.TRMT)
             {
-                _U3TXInterrupt();
+                while (!U3STAHbits.UTXBF && fifo_pop(&_uart3_buffTx, &c, 1) == 1)
+                {
+                    U3TXREG = c;
+                }
             }
             _U3TXIE = 1;
             break;
