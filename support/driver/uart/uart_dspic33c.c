@@ -651,24 +651,24 @@ int uart_setLineConfig(rt_dev_t device, uint8_t lineConfig)
     {
 #    if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
         case UART1_ID:
-            U1MODEbits.URXEN = ((_uarts[UART1_ID].lineConfig & UART_LINE_RX_REVERSED) == 0);    // enable receiver
-            U1MODEbits.UTXEN = ((_uarts[UART1_ID].lineConfig & UART_LINE_TX_REVERSED) == 0);    // enable transmiter
+            U1MODEbits.URXEN = ((_uarts[UART1_ID].lineConfig & UART_LINE_RX_DISABLED) == 0);    // enable receiver
+            U1MODEbits.UTXEN = ((_uarts[UART1_ID].lineConfig & UART_LINE_TX_DISABLED) == 0);    // enable transmiter
             U1MODEHbits.URXINV = ((_uarts[UART1_ID].lineConfig & UART_LINE_RX_REVERSED) != 0);  // reverse rx polarity
             U1MODEHbits.UTXINV = ((_uarts[UART1_ID].lineConfig & UART_LINE_TX_REVERSED) != 0);  // reverse tx polarity
             break;
 #    endif
 #    if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
         case UART2_ID:
-            U2MODEbits.URXEN = ((_uarts[UART2_ID].lineConfig & UART_LINE_RX_REVERSED) == 0);    // enable receiver
-            U2MODEbits.UTXEN = ((_uarts[UART2_ID].lineConfig & UART_LINE_TX_REVERSED) == 0);    // enable transmiter
+            U2MODEbits.URXEN = ((_uarts[UART2_ID].lineConfig & UART_LINE_RX_DISABLED) == 0);    // enable receiver
+            U2MODEbits.UTXEN = ((_uarts[UART2_ID].lineConfig & UART_LINE_TX_DISABLED) == 0);    // enable transmiter
             U2MODEHbits.URXINV = ((_uarts[UART2_ID].lineConfig & UART_LINE_RX_REVERSED) != 0);  // reverse rx polarity
             U2MODEHbits.UTXINV = ((_uarts[UART2_ID].lineConfig & UART_LINE_TX_REVERSED) != 0);  // reverse tx polarity
             break;
 #    endif
 #    if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
         case UART3_ID:
-            U3MODEbits.URXEN = ((_uarts[UART3_ID].lineConfig & UART_LINE_RX_REVERSED) == 0);    // enable receiver
-            U3MODEbits.UTXEN = ((_uarts[UART3_ID].lineConfig & UART_LINE_TX_REVERSED) == 0);    // enable transmiter
+            U3MODEbits.URXEN = ((_uarts[UART3_ID].lineConfig & UART_LINE_RX_DISABLED) == 0);    // enable receiver
+            U3MODEbits.UTXEN = ((_uarts[UART3_ID].lineConfig & UART_LINE_TX_DISABLED) == 0);    // enable transmiter
             U3MODEHbits.URXINV = ((_uarts[UART3_ID].lineConfig & UART_LINE_RX_REVERSED) != 0);  // reverse rx polarity
             U3MODEHbits.UTXINV = ((_uarts[UART3_ID].lineConfig & UART_LINE_TX_REVERSED) != 0);  // reverse tx polarity
             break;
