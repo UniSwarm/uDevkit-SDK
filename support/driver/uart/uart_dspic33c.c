@@ -1,7 +1,7 @@
 /**
  * @file uart_dspic33.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2018-2023
+ * @copyright UniSwarm 2018-2025
  *
  * @date July 05, 2018, 13:24 PM
  *
@@ -34,7 +34,7 @@
 
 enum
 {
-    UART_FLAG_UNUSED = 0x00
+    UART_FLAG_UNUSED = 0x0000
 };
 typedef struct
 {
@@ -57,6 +57,7 @@ struct uart_dev
 {
     uint32_t baudSpeed;
     uart_status flags;
+    uint8_t lineConfig;
 };
 
 #if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
@@ -88,19 +89,19 @@ char __attribute__((noload, section(".uart3_buffTx"))) _uart3_buffTx_data[UART_B
 
 static struct uart_dev _uarts[] = {
 #if UART_COUNT >= 1
-    {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}},
+    {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}, .lineConfig = 0},
 #endif
 #if UART_COUNT >= 2
-    {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}},
+    {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}, .lineConfig = 0},
 #endif
 #if UART_COUNT >= 3
-    {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}},
+    {.baudSpeed = 0, .flags = {{.val = UART_FLAG_UNUSED}}, .lineConfig = 0},
 #endif
 };
 
 /**
- * @brief Gives a free uart device number and open it
- * @return uart device number
+ * @brief Returns a free UART device number and opens it
+ * @return UART device number, or NULLDEV if none available
  */
 rt_dev_t uart_getFreeDevice(void)
 {
@@ -131,9 +132,9 @@ rt_dev_t uart_getFreeDevice(void)
 }
 
 /**
- * @brief Opens an uart from his uart rt_dev_t
- * @param device uart device number
- * @return 0 if ok, -1 in case of error
+ * @brief Opens a UART device
+ * @param device UART device identifier
+ * @return 0 on success, -1 on error
  */
 int uart_open(rt_dev_t device)
 {
@@ -246,9 +247,9 @@ int uart_enable(rt_dev_t device)
 
             U1STAHbits.UTXISEL = 0b001;  // only one byte in buffer or less
 
-            U1MODEbits.UARTEN = 1;  // enable uart module
-            U1MODEbits.URXEN = 1;   // enable receiver
-            U1MODEbits.UTXEN = 1;   // enable transmiter
+            U1MODEbits.URXEN = ((_uarts[UART1_ID].lineConfig & UART_LINE_RX_DISABLED) == 0);  // enable receiver
+            U1MODEbits.UTXEN = ((_uarts[UART1_ID].lineConfig & UART_LINE_TX_DISABLED) == 0);  // enable transmiter
+            U1MODEbits.UARTEN = 1;                                                            // enable uart module
             break;
 #    endif
 #    if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
@@ -263,9 +264,9 @@ int uart_enable(rt_dev_t device)
 
             U2STAHbits.UTXISEL = 0b001;  // only one byte in buffer or less
 
-            U2MODEbits.UARTEN = 1;  // enable uart module
-            U2MODEbits.URXEN = 1;   // enable receiver
-            U2MODEbits.UTXEN = 1;   // enable transmiter
+            U2MODEbits.URXEN = ((_uarts[UART2_ID].lineConfig & UART_LINE_RX_DISABLED) == 0);  // enable receiver
+            U2MODEbits.UTXEN = ((_uarts[UART2_ID].lineConfig & UART_LINE_TX_DISABLED) == 0);  // enable transmiter
+            U2MODEbits.UARTEN = 1;                                                            // enable uart module
             break;
 #    endif
 #    if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
@@ -280,9 +281,9 @@ int uart_enable(rt_dev_t device)
 
             U3STAHbits.UTXISEL = 0b001;  // only one byte in buffer or less
 
-            U3MODEbits.UARTEN = 1;  // enable uart module
-            U3MODEbits.URXEN = 1;   // enable receiver
-            U3MODEbits.UTXEN = 1;   // enable transmiter
+            U3MODEbits.URXEN = ((_uarts[UART3_ID].lineConfig & UART_LINE_RX_DISABLED) == 0);  // enable receiver
+            U3MODEbits.UTXEN = ((_uarts[UART3_ID].lineConfig & UART_LINE_TX_DISABLED) == 0);  // enable transmiter
+            U3MODEbits.UARTEN = 1;                                                            // enable uart module
             break;
 #    endif
     }
@@ -626,6 +627,71 @@ uint8_t uart_bitStop(rt_dev_t device)
         return 2;
     }
     return 1;
+}
+
+/**
+ * @brief Sets the config line (rx and tx polarity, disable rx or tx line) of the specified
+ * uart device
+ * @param device uart device number
+ * @param lineConfig line option configuration bit field
+ * @return 0 if ok, -1 in case of error
+ */
+int uart_setLineConfig(rt_dev_t device, uint8_t lineConfig)
+{
+#if UART_COUNT >= 1
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+    {
+        return -1;
+    }
+
+    _uarts[uart].lineConfig = lineConfig;
+
+    switch (uart)
+    {
+#    if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
+        case UART1_ID:
+            U1MODEbits.URXEN = ((_uarts[UART1_ID].lineConfig & UART_LINE_RX_REVERSED) == 0);    // enable receiver
+            U1MODEbits.UTXEN = ((_uarts[UART1_ID].lineConfig & UART_LINE_TX_REVERSED) == 0);    // enable transmiter
+            U1MODEHbits.URXINV = ((_uarts[UART1_ID].lineConfig & UART_LINE_RX_REVERSED) != 0);  // reverse rx polarity
+            U1MODEHbits.UTXINV = ((_uarts[UART1_ID].lineConfig & UART_LINE_TX_REVERSED) != 0);  // reverse tx polarity
+            break;
+#    endif
+#    if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
+        case UART2_ID:
+            U2MODEbits.URXEN = ((_uarts[UART2_ID].lineConfig & UART_LINE_RX_REVERSED) == 0);    // enable receiver
+            U2MODEbits.UTXEN = ((_uarts[UART2_ID].lineConfig & UART_LINE_TX_REVERSED) == 0);    // enable transmiter
+            U2MODEHbits.URXINV = ((_uarts[UART2_ID].lineConfig & UART_LINE_RX_REVERSED) != 0);  // reverse rx polarity
+            U2MODEHbits.UTXINV = ((_uarts[UART2_ID].lineConfig & UART_LINE_TX_REVERSED) != 0);  // reverse tx polarity
+            break;
+#    endif
+#    if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
+        case UART3_ID:
+            U3MODEbits.URXEN = ((_uarts[UART3_ID].lineConfig & UART_LINE_RX_REVERSED) == 0);    // enable receiver
+            U3MODEbits.UTXEN = ((_uarts[UART3_ID].lineConfig & UART_LINE_TX_REVERSED) == 0);    // enable transmiter
+            U3MODEHbits.URXINV = ((_uarts[UART3_ID].lineConfig & UART_LINE_RX_REVERSED) != 0);  // reverse rx polarity
+            U3MODEHbits.UTXINV = ((_uarts[UART3_ID].lineConfig & UART_LINE_TX_REVERSED) != 0);  // reverse tx polarity
+            break;
+#    endif
+    }
+#endif
+    return 0;
+}
+
+/**
+ * @brief Gets the config line (rx and tx polarity, disable rx or tx line) of the specified uart device
+ * @param device uart device number
+ * @return line option configuration bit field, 128 in case of error
+ */
+uint8_t uart_lineConfig(rt_dev_t device)
+{
+    uint8_t uart = MINOR(device);
+    if (uart >= UART_COUNT)
+    {
+        return 128;
+    }
+
+    return _uarts[uart].lineConfig;
 }
 
 #if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
