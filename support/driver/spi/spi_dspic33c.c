@@ -33,7 +33,8 @@ typedef struct
         {
             unsigned used : 1;
             unsigned enabled : 1;
-            unsigned : 6;
+            unsigned mode : 2;
+            unsigned : 4;
         };
         uint8_t val;
     };
@@ -435,6 +436,66 @@ uint8_t spi_bitLength(rt_dev_t device)
     }
 
     return _spis[spi].bitLength;
+}
+/**
+ * @brief Sets the mode (clock edge and clock polarity) of the specified spi bus
+ * @param device spi devive bus
+ * @param mode mode 0, 1, 2 or 3
+ * @return 0 if ok, -1 in case of error
+ */
+int spi_setMode(rt_dev_t device, SPI_MODE mode)
+{
+    uint8_t spi = MINOR(device);
+    if (spi >= SPI_COUNT)
+    {
+        return -1;
+    }
+
+    if (mode > 3)
+    {
+        return -1;
+    }
+    _spis[spi].flags.mode = mode;
+
+    switch (spi)
+    {
+#if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
+        case SPI1_ID:
+            SPI1CON1Lbits.CKP = mode & 0x01;
+            SPI1CON1Lbits.CKE = (mode & 0x02) >> 1;
+            break;
+#endif
+#if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
+        case SPI2_ID:
+            SPI2CON1Lbits.CKP = mode & 0x01;
+            SPI2CON1Lbits.CKE = (mode & 0x02) >> 1;
+            break;
+#endif
+#if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
+        case SPI3_ID:
+            SPI3CON1Lbits.CKP = mode & 0x01;
+            SPI3CON1Lbits.CKE = (mode & 0x02) >> 1;
+            break;
+#endif
+    }
+
+    return 0;
+}
+
+/**
+ * @brief Gets the mode (clock edge and clock polarity) of the spi bus
+ * @param device spi devive bus
+ * @return mode of spi bus or -1 if device is invalid
+ */
+SPI_MODE spi_mode(rt_dev_t device)
+{
+    uint8_t spi = MINOR(device);
+    if (spi >= SPI_COUNT)
+    {
+        return -1;
+    }
+
+    return _spis[spi].flags.mode;
 }
 
 ssize_t spi_exchange(rt_dev_t device, const char *tx, char *rx, size_t size)

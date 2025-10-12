@@ -38,6 +38,16 @@ uint32_t spi_effectiveFreq(rt_dev_t device);
 int spi_setBitLength(rt_dev_t device, uint8_t bitLength);
 uint8_t spi_bitLength(rt_dev_t device);
 
+typedef enum
+{
+    SPI_MODE_0 = 0x0,  ///< Clock polarity 0, clock edge 0
+    SPI_MODE_1 = 0x1,  ///< Clock polarity 1, clock edge 0
+    SPI_MODE_2 = 0x2,  ///< Clock polarity 0, clock edge 1
+    SPI_MODE_3 = 0x3,  ///< Clock polarity 1, clock edge 1
+} SPI_MODE;
+int spi_setMode(rt_dev_t device, SPI_MODE mode);
+SPI_MODE spi_mode(rt_dev_t device);
+
 // ====== callback handlers ======
 int spi_setTxHandler(rt_dev_t device, void (*handler)(void));
 int spi_setRxHandler(rt_dev_t device, void (*handler)(void));
