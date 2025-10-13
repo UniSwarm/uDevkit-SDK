@@ -35,13 +35,9 @@ The dsPIC33AK series from Microchip Technology represents a significant advancem
 [11]: ../../driver/pwm/README.md
 [12]: ../../driver/mccp/README.md
 
-## Devices list
-
-### 📦 Device Families Overview
+## 📦 Device list
 
 48 devices on May 2025.
-
-## 📚 Subfamily breakdown
 
 ### MC10X subfamily
 
@@ -75,8 +71,7 @@ MP10X with more peripherals and memory :
 - 5 more MCCP/SCCP modules
 - Internal core is generated from an integrated buck
 
-> ⚠️ Note: Need additionnal inductor and capacitor for buck (4 pins are dedicated to buck)
-
+> ⚠️ Note: Need additionnal inductor and capacitor for internal buck (4 pins are dedicated to buck).
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -91,7 +86,7 @@ MP10X with more peripherals and memory :
 
 ### MC5XX subfamily
 
-MC2XX with 2 CAN Fd
+MC2XX with 2 CAN Fd.
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -106,7 +101,7 @@ MC2XX with 2 CAN Fd
 
 ### MPS2XX subfamily
 
-MC2XX with crypto accelerator and all PWM as fast PWM
+MC2XX with crypto accelerator and all PWM as fast PWM.
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -121,9 +116,9 @@ MC2XX with crypto accelerator and all PWM as fast PWM
 |[dsPIC33AK256MPS212](http://microchip.com/dsPIC33AK256MPS212)| 256 kb|  64 kb|128|
 |[dsPIC33AK512MPS212](http://microchip.com/dsPIC33AK512MPS212)| 512 kb|  64 kb|128|
 
-### MP5SXX subfamily
+### MPS5XX subfamily
 
-MPS2XX with 2 CAN Fd
+MPS2XX with 2 CAN Fd.
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
@@ -138,21 +133,38 @@ MPS2XX with 2 CAN Fd
 |[dsPIC33AK256MPS512](http://microchip.com/dsPIC33AK256MPS512)| 256 kb|  64 kb|128|
 |[dsPIC33AK512MPS512](http://microchip.com/dsPIC33AK512MPS512)| 512 kb|  64 kb|128|
 
-## Comparison with dsPIC33CK/CH Family
+## 📚 Comparison with dsPIC33CK/CH Family
 
-| Feature                     | dsPIC33CK   | dsPIC33AK   |
-| --------------------------- | ----------- | ----------- |
-| Core speed                  | 100 MHz     | 200 MHz     |
-| Pipeline stages             | 1-stage     | 5-stage     |
-| Working registers           | 16 x 16-bit | 16 x 32-bit |
-| Accumulators                | 2 x 40-bit  | 2 x 72-bit  |
-| Alternate register contexts | 4           | 7           |
-| FPU                         | None        | Yes         |
+| Feature                     | dsPIC33CK   | dsPIC33AK     |
+| --------------------------- | ----------- | ------------- |
+| Core speed                  | 100 MHz     | 200 MHz       |
+| Pipeline stages             | 1-stage     | 5-stage       |
+| Working registers           | 16 x 16-bit | 16 x 32-bit   |
+| Accumulators                | 2 x 40-bit  | 2 x 72-bit    |
+| Alternate register contexts | 4           | 7             |
+| FPU                         | None        | Yes (64 bits) |
 
 ### sysclock
 
-TODO
+| Feature                 | dsPIC33CK | dsPIC33AK       |
+| ----------------------- | --------- | --------------- |
+| Clock Sources           | Up to 5   | Up to 6         |
+| PLL Generators          | 2         | 2               |
+| Clock Generators        | -         | Up to 16        |
+| Fractional Dividers     | 1 global  | 1 per generator |
+| Backup Clock Sources    | Fixed     | Configurable    |
+| Fail Safe Clock Monitor | 1 global  | 1 per generator |
+| Fault Injection         | -         | 1 per generator |
+| Clock Monitors          | -         | Up to 4         |
 
 ### ADC
 
-TODO
+| Feature                 | dsPIC33CK | dsPIC33AK       |
+| ----------------------- | --------- | --------------- |
+| Number of Analog Conversion | Cores 3-5 cores, 3.5 MSPS | 2-5 cores, 40 MSPS |
+| Maximum Signal Source Impedance | (200 ns Sampling Time) | 1 kOhm, CHold = ~ 16pF 22 kOhms, Chold = ~1 pF |
+| Sampling Time Selection | Same for all core channels | Selectable for each input |
+| Inputs Conversion Priority/Order | Fixed | Programmable |
+| Conversion Result Comparators | Typically 4 | Up to 20 (1 per channel) |
+| Result Accumulators | Typically 4 | Up to 20 (1 per channel) |
+| Trigger Selection | Set for each input | Set for each channel |
