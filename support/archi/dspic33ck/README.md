@@ -7,7 +7,7 @@ A lot of peripherals (UART, Timer...) are not compatible with others dsPIC range
 
 This family have variations of flash memory, pin count and CAN FD for 5XX, 6XX and 7XX subfamilies.
 
-## Main features
+## 📌 Key features
 
 |Feature|dsPIC33CK|
 |-------|:------:|
@@ -17,7 +17,7 @@ This family have variations of flash memory, pin count and CAN FD for 5XX, 6XX a
 |Data memory|8 - 96kb|
 |Pins|28-100|
 
-## Common devices
+## 🧩 Peripheral overview
 
 |Peripheral      |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
 |:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
@@ -44,200 +44,200 @@ This family have variations of flash memory, pin count and CAN FD for 5XX, 6XX a
 [11]: ../../driver/pwm/README.md
 [12]: ../../driver/ccp/README.md
 
-## Devices list
+## 📦 Device list
 
 104 devices on January 2023.
 
 ### MC10X subfamily
 
-Base device.
+Base device with only one PLL, no dual flash panel, one analog comparator and one ADC core.
 
-14 devices
+14 devices.
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[dsPIC33CK32MC102](http://microchip.com/wwwproducts/en/dsPIC33CK32MC102)   |  36 kb|   8 kb| 28|
-|[dsPIC33CK64MC102](http://microchip.com/wwwproducts/en/dsPIC33CK64MC102)   |  66 kb|   8 kb| 28|
-|[dsPIC33CK128MC102](http://microchip.com/wwwproducts/en/dsPIC33CK128MC102) | 134 kb|  16 kb| 28|
-|[dsPIC33CK256MC102](http://microchip.com/wwwproducts/en/dsPIC33CK256MC102) | 269 kb|  33 kb| 28|
-|[dsPIC33CK32MC103](http://microchip.com/wwwproducts/en/dsPIC33CK32MC103)   |  36 kb|   8 kb| 40|
-|[dsPIC33CK64MC103](http://microchip.com/wwwproducts/en/dsPIC33CK64MC103)   |  66 kb|   8 kb| 40|
-|[dsPIC33CK128MC103](http://microchip.com/wwwproducts/en/dsPIC33CK128MC103) | 134 kb|  16 kb| 40|
-|[dsPIC33CK256MC103](http://microchip.com/wwwproducts/en/dsPIC33CK256MC103) | 269 kb|  33 kb| 40|
-|[dsPIC33CK32MC105](http://microchip.com/wwwproducts/en/dsPIC33CK32MC105)   |  36 kb|   8 kb| 48|
-|[dsPIC33CK64MC105](http://microchip.com/wwwproducts/en/dsPIC33CK64MC105)   |  66 kb|   8 kb| 48|
-|[dsPIC33CK128MC105](http://microchip.com/wwwproducts/en/dsPIC33CK128MC105) | 134 kb|  16 kb| 48|
-|[dsPIC33CK256MC105](http://microchip.com/wwwproducts/en/dsPIC33CK256MC105) | 269 kb|  33 kb| 48|
-|[dsPIC33CK128MC106](http://microchip.com/wwwproducts/en/dsPIC33CK128MC106) | 134 kb|  16 kb| 64|
-|[dsPIC33CK256MC106](http://microchip.com/wwwproducts/en/dsPIC33CK256MC106) | 269 kb|  33 kb| 64|
+|[dsPIC33CK32MC102](http://microchip.com/dsPIC33CK32MC102)   |  36 kb|   8 kb| 28|
+|[dsPIC33CK64MC102](http://microchip.com/dsPIC33CK64MC102)   |  66 kb|   8 kb| 28|
+|[dsPIC33CK128MC102](http://microchip.com/dsPIC33CK128MC102) | 134 kb|  16 kb| 28|
+|[dsPIC33CK256MC102](http://microchip.com/dsPIC33CK256MC102) | 269 kb|  33 kb| 28|
+|[dsPIC33CK32MC103](http://microchip.com/dsPIC33CK32MC103)   |  36 kb|   8 kb| 40|
+|[dsPIC33CK64MC103](http://microchip.com/dsPIC33CK64MC103)   |  66 kb|   8 kb| 40|
+|[dsPIC33CK128MC103](http://microchip.com/dsPIC33CK128MC103) | 134 kb|  16 kb| 40|
+|[dsPIC33CK256MC103](http://microchip.com/dsPIC33CK256MC103) | 269 kb|  33 kb| 40|
+|[dsPIC33CK32MC105](http://microchip.com/dsPIC33CK32MC105)   |  36 kb|   8 kb| 48|
+|[dsPIC33CK64MC105](http://microchip.com/dsPIC33CK64MC105)   |  66 kb|   8 kb| 48|
+|[dsPIC33CK128MC105](http://microchip.com/dsPIC33CK128MC105) | 134 kb|  16 kb| 48|
+|[dsPIC33CK256MC105](http://microchip.com/dsPIC33CK256MC105) | 269 kb|  33 kb| 48|
+|[dsPIC33CK128MC106](http://microchip.com/dsPIC33CK128MC106) | 134 kb|  16 kb| 64|
+|[dsPIC33CK256MC106](http://microchip.com/dsPIC33CK256MC106) | 269 kb|  33 kb| 64|
 
 ### MC50X subfamily
 
 Same functionalities of MC10X plus one CAN FD device.
 
-8 devices
+8 devices.
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[dsPIC33CK128MC502](http://microchip.com/wwwproducts/en/dsPIC33CK128MC502)| 134 kb|  16 kb| 28|
-|[dsPIC33CK128MC503](http://microchip.com/wwwproducts/en/dsPIC33CK128MC503)| 134 kb|  16 kb| 40|
-|[dsPIC33CK128MC505](http://microchip.com/wwwproducts/en/dsPIC33CK128MC505)| 134 kb|  16 kb| 48|
-|[dsPIC33CK128MC506](http://microchip.com/wwwproducts/en/dsPIC33CK128MC506)| 134 kb|  16 kb| 64|
-|[dsPIC33CK256MC502](http://microchip.com/wwwproducts/en/dsPIC33CK256MC502)| 269 kb|  33 kb| 28|
-|[dsPIC33CK256MC503](http://microchip.com/wwwproducts/en/dsPIC33CK256MC503)| 269 kb|  33 kb| 40|
-|[dsPIC33CK256MC505](http://microchip.com/wwwproducts/en/dsPIC33CK256MC505)| 269 kb|  33 kb| 48|
-|[dsPIC33CK256MC506](http://microchip.com/wwwproducts/en/dsPIC33CK256MC506)| 269 kb|  33 kb| 64|
+|[dsPIC33CK128MC502](http://microchip.com/dsPIC33CK128MC502)| 134 kb|  16 kb| 28|
+|[dsPIC33CK128MC503](http://microchip.com/dsPIC33CK128MC503)| 134 kb|  16 kb| 40|
+|[dsPIC33CK128MC505](http://microchip.com/dsPIC33CK128MC505)| 134 kb|  16 kb| 48|
+|[dsPIC33CK128MC506](http://microchip.com/dsPIC33CK128MC506)| 134 kb|  16 kb| 64|
+|[dsPIC33CK256MC502](http://microchip.com/dsPIC33CK256MC502)| 269 kb|  33 kb| 28|
+|[dsPIC33CK256MC503](http://microchip.com/dsPIC33CK256MC503)| 269 kb|  33 kb| 40|
+|[dsPIC33CK256MC505](http://microchip.com/dsPIC33CK256MC505)| 269 kb|  33 kb| 48|
+|[dsPIC33CK256MC506](http://microchip.com/dsPIC33CK256MC506)| 269 kb|  33 kb| 64|
 
 ### MP10X subfamily
 
 Same functionalities of MP10X with more peripherals (SPI, I2C, SENT).
 
-6 devices
+6 devices.
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[dsPIC33CK32MP102](http://microchip.com/wwwproducts/en/dsPIC33CK32MP102)|  33 kb|   8 kb| 28|
-|[dsPIC33CK64MP102](http://microchip.com/wwwproducts/en/dsPIC33CK64MP102)|  66 kb|   8 kb| 28|
-|[dsPIC33CK32MP103](http://microchip.com/wwwproducts/en/dsPIC33CK32MP103)|  33 kb|   8 kb| 40|
-|[dsPIC33CK64MP103](http://microchip.com/wwwproducts/en/dsPIC33CK64MP103)|  66 kb|   8 kb| 40|
-|[dsPIC33CK32MP105](http://microchip.com/wwwproducts/en/dsPIC33CK32MP105)|  33 kb|   8 kb| 48|
-|[dsPIC33CK64MP105](http://microchip.com/wwwproducts/en/dsPIC33CK64MP105)|  66 kb|   8 kb| 48|
+|[dsPIC33CK32MP102](http://microchip.com/dsPIC33CK32MP102)|  33 kb|   8 kb| 28|
+|[dsPIC33CK64MP102](http://microchip.com/dsPIC33CK64MP102)|  66 kb|   8 kb| 28|
+|[dsPIC33CK32MP103](http://microchip.com/dsPIC33CK32MP103)|  33 kb|   8 kb| 40|
+|[dsPIC33CK64MP103](http://microchip.com/dsPIC33CK64MP103)|  66 kb|   8 kb| 40|
+|[dsPIC33CK32MP105](http://microchip.com/dsPIC33CK32MP105)|  33 kb|   8 kb| 48|
+|[dsPIC33CK64MP105](http://microchip.com/dsPIC33CK64MP105)|  66 kb|   8 kb| 48|
 
 ### MP20X subfamily
 
 Same functionalities of MP10X with more peripherals (MCCP, I2C) and more analog inputs and functionalities.
 
-19 devices
+19 devices.
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[dsPIC33CK32MP202](http://microchip.com/wwwproducts/en/dsPIC33CK32MP202)  |  36 kb|   8 kb| 28|
-|[dsPIC33CK64MP202](http://microchip.com/wwwproducts/en/dsPIC33CK64MP202)  |  66 kb|   8 kb| 28|
-|[dsPIC33CK128MP202](http://microchip.com/wwwproducts/en/dsPIC33CK128MP202)| 134 kb|  16 kb| 28|
-|[dsPIC33CK256MP202](http://microchip.com/wwwproducts/en/dsPIC33CK256MP202)| 269 kb|  25 kb| 28|
-|[dsPIC33CK32MP203](http://microchip.com/wwwproducts/en/dsPIC33CK32MP203)  |  36 kb|   8 kb| 40|
-|[dsPIC33CK64MP203](http://microchip.com/wwwproducts/en/dsPIC33CK64MP203)  |  66 kb|   8 kb| 40|
-|[dsPIC33CK128MP203](http://microchip.com/wwwproducts/en/dsPIC33CK128MP203)| 134 kb|  16 kb| 40|
-|[dsPIC33CK256MP203](http://microchip.com/wwwproducts/en/dsPIC33CK256MP203)| 269 kb|  25 kb| 40|
-|[dsPIC33CK32MP205](http://microchip.com/wwwproducts/en/dsPIC33CK32MP205)  |  36 kb|   8 kb| 48|
-|[dsPIC33CK64MP205](http://microchip.com/wwwproducts/en/dsPIC33CK64MP205)  |  66 kb|   8 kb| 48|
-|[dsPIC33CK128MP205](http://microchip.com/wwwproducts/en/dsPIC33CK128MP205)| 134 kb|  16 kb| 48|
-|[dsPIC33CK256MP205](http://microchip.com/wwwproducts/en/dsPIC33CK256MP205)| 269 kb|  25 kb| 48|
-|[dsPIC33CK32MP206](http://microchip.com/wwwproducts/en/dsPIC33CK32MP206)  |  36 kb|   8 kb| 64|
-|[dsPIC33CK64MP206](http://microchip.com/wwwproducts/en/dsPIC33CK64MP206)  |  66 kb|   8 kb| 64|
-|[dsPIC33CK128MP206](http://microchip.com/wwwproducts/en/dsPIC33CK128MP206)| 134 kb|  16 kb| 64|
-|[dsPIC33CK256MP206](http://microchip.com/wwwproducts/en/dsPIC33CK256MP206)| 269 kb|  25 kb| 64|
-|[dsPIC33CK64MP208](http://microchip.com/wwwproducts/en/dsPIC33CK64MP208)  |  66 kb|   8 kb| 80|
-|[dsPIC33CK128MP208](http://microchip.com/wwwproducts/en/dsPIC33CK128MP208)| 134 kb|  16 kb| 80|
-|[dsPIC33CK256MP208](http://microchip.com/wwwproducts/en/dsPIC33CK256MP208)| 269 kb|  25 kb| 80|
+|[dsPIC33CK32MP202](http://microchip.com/dsPIC33CK32MP202)  |  36 kb|   8 kb| 28|
+|[dsPIC33CK64MP202](http://microchip.com/dsPIC33CK64MP202)  |  66 kb|   8 kb| 28|
+|[dsPIC33CK128MP202](http://microchip.com/dsPIC33CK128MP202)| 134 kb|  16 kb| 28|
+|[dsPIC33CK256MP202](http://microchip.com/dsPIC33CK256MP202)| 269 kb|  25 kb| 28|
+|[dsPIC33CK32MP203](http://microchip.com/dsPIC33CK32MP203)  |  36 kb|   8 kb| 40|
+|[dsPIC33CK64MP203](http://microchip.com/dsPIC33CK64MP203)  |  66 kb|   8 kb| 40|
+|[dsPIC33CK128MP203](http://microchip.com/dsPIC33CK128MP203)| 134 kb|  16 kb| 40|
+|[dsPIC33CK256MP203](http://microchip.com/dsPIC33CK256MP203)| 269 kb|  25 kb| 40|
+|[dsPIC33CK32MP205](http://microchip.com/dsPIC33CK32MP205)  |  36 kb|   8 kb| 48|
+|[dsPIC33CK64MP205](http://microchip.com/dsPIC33CK64MP205)  |  66 kb|   8 kb| 48|
+|[dsPIC33CK128MP205](http://microchip.com/dsPIC33CK128MP205)| 134 kb|  16 kb| 48|
+|[dsPIC33CK256MP205](http://microchip.com/dsPIC33CK256MP205)| 269 kb|  25 kb| 48|
+|[dsPIC33CK32MP206](http://microchip.com/dsPIC33CK32MP206)  |  36 kb|   8 kb| 64|
+|[dsPIC33CK64MP206](http://microchip.com/dsPIC33CK64MP206)  |  66 kb|   8 kb| 64|
+|[dsPIC33CK128MP206](http://microchip.com/dsPIC33CK128MP206)| 134 kb|  16 kb| 64|
+|[dsPIC33CK256MP206](http://microchip.com/dsPIC33CK256MP206)| 269 kb|  25 kb| 64|
+|[dsPIC33CK64MP208](http://microchip.com/dsPIC33CK64MP208)  |  66 kb|   8 kb| 80|
+|[dsPIC33CK128MP208](http://microchip.com/dsPIC33CK128MP208)| 134 kb|  16 kb| 80|
+|[dsPIC33CK256MP208](http://microchip.com/dsPIC33CK256MP208)| 269 kb|  25 kb| 80|
 
 ### MP30X subfamily
 
-Same functionalities of MP20X with an additional QEI.
+Same functionalities of MP20X with an additional QEI and more memory.
 
-6 devices
+6 devices.
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[dsPIC33CK256MP305](http://microchip.com/wwwproducts/en/dsPIC33CK256MP305) | 269 kb|  61 kb| 48|
-|[dsPIC33CK512MP305](http://microchip.com/wwwproducts/en/dsPIC33CK512MP305) | 540 kb|  61 kb| 48|
-|[dsPIC33CK256MP306](http://microchip.com/wwwproducts/en/dsPIC33CK256MP306) | 269 kb|  61 kb| 64|
-|[dsPIC33CK512MP306](http://microchip.com/wwwproducts/en/dsPIC33CK512MP306) | 540 kb|  61 kb| 64|
-|[dsPIC33CK256MP308](http://microchip.com/wwwproducts/en/dsPIC33CK256MP308) | 269 kb|  61 kb| 80|
-|[dsPIC33CK512MP308](http://microchip.com/wwwproducts/en/dsPIC33CK512MP308) | 540 kb|  61 kb| 80|
+|[dsPIC33CK256MP305](http://microchip.com/dsPIC33CK256MP305) | 269 kb|  61 kb| 48|
+|[dsPIC33CK512MP305](http://microchip.com/dsPIC33CK512MP305) | 540 kb|  61 kb| 48|
+|[dsPIC33CK256MP306](http://microchip.com/dsPIC33CK256MP306) | 269 kb|  61 kb| 64|
+|[dsPIC33CK512MP306](http://microchip.com/dsPIC33CK512MP306) | 540 kb|  61 kb| 64|
+|[dsPIC33CK256MP308](http://microchip.com/dsPIC33CK256MP308) | 269 kb|  61 kb| 80|
+|[dsPIC33CK512MP308](http://microchip.com/dsPIC33CK512MP308) | 540 kb|  61 kb| 80|
 
 ### MP40X subfamily
 
 Same functionalities of MP30X with an additional CLC.
 
-12 devices
+12 devices.
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[dsPIC33CK256MP405](http://microchip.com/wwwproducts/en/dsPIC33CK256MP405)  |  269 kb| 96 kb|  48|
-|[dsPIC33CK256MP406](http://microchip.com/wwwproducts/en/dsPIC33CK256MP406)  |  269 kb| 96 kb|  64|
-|[dsPIC33CK256MP408](http://microchip.com/wwwproducts/en/dsPIC33CK256MP408)  |  269 kb| 96 kb|  80|
-|[dsPIC33CK256MP410](http://microchip.com/wwwproducts/en/dsPIC33CK256MP410)  |  269 kb| 96 kb| 100|
-|[dsPIC33CK512MP405](http://microchip.com/wwwproducts/en/dsPIC33CK512MP405)  |  540 kb| 96 kb|  48|
-|[dsPIC33CK512MP406](http://microchip.com/wwwproducts/en/dsPIC33CK512MP406)  |  540 kb| 96 kb|  64|
-|[dsPIC33CK512MP408](http://microchip.com/wwwproducts/en/dsPIC33CK512MP408)  |  540 kb| 96 kb|  80|
-|[dsPIC33CK512MP410](http://microchip.com/wwwproducts/en/dsPIC33CK512MP410)  |  540 kb| 96 kb| 100|
-|[dsPIC33CK1024MP405](http://microchip.com/wwwproducts/en/dsPIC33CK1024MP405)| 1080 kb| 96 kb|  48|
-|[dsPIC33CK1024MP406](http://microchip.com/wwwproducts/en/dsPIC33CK1024MP406)| 1080 kb| 96 kb|  64|
-|[dsPIC33CK1024MP408](http://microchip.com/wwwproducts/en/dsPIC33CK1024MP408)| 1080 kb| 96 kb|  80|
-|[dsPIC33CK1024MP410](http://microchip.com/wwwproducts/en/dsPIC33CK1024MP410)| 1080 kb| 96 kb| 100|
+|[dsPIC33CK256MP405](http://microchip.com/dsPIC33CK256MP405)  |  269 kb| 96 kb|  48|
+|[dsPIC33CK256MP406](http://microchip.com/dsPIC33CK256MP406)  |  269 kb| 96 kb|  64|
+|[dsPIC33CK256MP408](http://microchip.com/dsPIC33CK256MP408)  |  269 kb| 96 kb|  80|
+|[dsPIC33CK256MP410](http://microchip.com/dsPIC33CK256MP410)  |  269 kb| 96 kb| 100|
+|[dsPIC33CK512MP405](http://microchip.com/dsPIC33CK512MP405)  |  540 kb| 96 kb|  48|
+|[dsPIC33CK512MP406](http://microchip.com/dsPIC33CK512MP406)  |  540 kb| 96 kb|  64|
+|[dsPIC33CK512MP408](http://microchip.com/dsPIC33CK512MP408)  |  540 kb| 96 kb|  80|
+|[dsPIC33CK512MP410](http://microchip.com/dsPIC33CK512MP410)  |  540 kb| 96 kb| 100|
+|[dsPIC33CK1024MP405](http://microchip.com/dsPIC33CK1024MP405)| 1080 kb| 96 kb|  48|
+|[dsPIC33CK1024MP406](http://microchip.com/dsPIC33CK1024MP406)| 1080 kb| 96 kb|  64|
+|[dsPIC33CK1024MP408](http://microchip.com/dsPIC33CK1024MP408)| 1080 kb| 96 kb|  80|
+|[dsPIC33CK1024MP410](http://microchip.com/dsPIC33CK1024MP410)| 1080 kb| 96 kb| 100|
 
 ### MP50X subfamily
 
 Same functionalities of MP20X plus one CAN FD device.
 
-19 devices
+19 devices.
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[dsPIC33CK32MP502](http://microchip.com/wwwproducts/en/dsPIC33CK32MP502)  |  36 kb|   8 kb| 28|
-|[dsPIC33CK64MP502](http://microchip.com/wwwproducts/en/dsPIC33CK64MP502)  |  66 kb|   8 kb| 28|
-|[dsPIC33CK128MP502](http://microchip.com/wwwproducts/en/dsPIC33CK128MP502)| 134 kb|  16 kb| 28|
-|[dsPIC33CK256MP502](http://microchip.com/wwwproducts/en/dsPIC33CK256MP502)| 269 kb|  25 kb| 28|
-|[dsPIC33CK32MP503](http://microchip.com/wwwproducts/en/dsPIC33CK32MP503)  |  36 kb|   8 kb| 40|
-|[dsPIC33CK64MP503](http://microchip.com/wwwproducts/en/dsPIC33CK64MP503)  |  66 kb|   8 kb| 40|
-|[dsPIC33CK128MP503](http://microchip.com/wwwproducts/en/dsPIC33CK128MP503)| 134 kb|  16 kb| 40|
-|[dsPIC33CK256MP503](http://microchip.com/wwwproducts/en/dsPIC33CK256MP503)| 269 kb|  25 kb| 40|
-|[dsPIC33CK32MP505](http://microchip.com/wwwproducts/en/dsPIC33CK32MP505)  |  36 kb|   8 kb| 48|
-|[dsPIC33CK64MP505](http://microchip.com/wwwproducts/en/dsPIC33CK64MP505)  |  66 kb|   8 kb| 48|
-|[dsPIC33CK128MP505](http://microchip.com/wwwproducts/en/dsPIC33CK128MP505)| 134 kb|  16 kb| 48|
-|[dsPIC33CK256MP505](http://microchip.com/wwwproducts/en/dsPIC33CK256MP505)| 269 kb|  25 kb| 48|
-|[dsPIC33CK32MP506](http://microchip.com/wwwproducts/en/dsPIC33CK32MP506)  |  36 kb|   8 kb| 64|
-|[dsPIC33CK64MP506](http://microchip.com/wwwproducts/en/dsPIC33CK64MP506)  |  66 kb|   8 kb| 64|
-|[dsPIC33CK128MP506](http://microchip.com/wwwproducts/en/dsPIC33CK128MP506)| 134 kb|  16 kb| 64|
-|[dsPIC33CK256MP506](http://microchip.com/wwwproducts/en/dsPIC33CK256MP506)| 269 kb|  25 kb| 64|
-|[dsPIC33CK64MP508](http://microchip.com/wwwproducts/en/dsPIC33CK64MP508)  |  66 kb|   8 kb| 80|
-|[dsPIC33CK128MP508](http://microchip.com/wwwproducts/en/dsPIC33CK128MP508)| 134 kb|  16 kb| 80|
-|[dsPIC33CK256MP508](http://microchip.com/wwwproducts/en/dsPIC33CK256MP508)| 269 kb|  25 kb| 80|
+|[dsPIC33CK32MP502](http://microchip.com/dsPIC33CK32MP502)  |  36 kb|   8 kb| 28|
+|[dsPIC33CK64MP502](http://microchip.com/dsPIC33CK64MP502)  |  66 kb|   8 kb| 28|
+|[dsPIC33CK128MP502](http://microchip.com/dsPIC33CK128MP502)| 134 kb|  16 kb| 28|
+|[dsPIC33CK256MP502](http://microchip.com/dsPIC33CK256MP502)| 269 kb|  25 kb| 28|
+|[dsPIC33CK32MP503](http://microchip.com/dsPIC33CK32MP503)  |  36 kb|   8 kb| 40|
+|[dsPIC33CK64MP503](http://microchip.com/dsPIC33CK64MP503)  |  66 kb|   8 kb| 40|
+|[dsPIC33CK128MP503](http://microchip.com/dsPIC33CK128MP503)| 134 kb|  16 kb| 40|
+|[dsPIC33CK256MP503](http://microchip.com/dsPIC33CK256MP503)| 269 kb|  25 kb| 40|
+|[dsPIC33CK32MP505](http://microchip.com/dsPIC33CK32MP505)  |  36 kb|   8 kb| 48|
+|[dsPIC33CK64MP505](http://microchip.com/dsPIC33CK64MP505)  |  66 kb|   8 kb| 48|
+|[dsPIC33CK128MP505](http://microchip.com/dsPIC33CK128MP505)| 134 kb|  16 kb| 48|
+|[dsPIC33CK256MP505](http://microchip.com/dsPIC33CK256MP505)| 269 kb|  25 kb| 48|
+|[dsPIC33CK32MP506](http://microchip.com/dsPIC33CK32MP506)  |  36 kb|   8 kb| 64|
+|[dsPIC33CK64MP506](http://microchip.com/dsPIC33CK64MP506)  |  66 kb|   8 kb| 64|
+|[dsPIC33CK128MP506](http://microchip.com/dsPIC33CK128MP506)| 134 kb|  16 kb| 64|
+|[dsPIC33CK256MP506](http://microchip.com/dsPIC33CK256MP506)| 269 kb|  25 kb| 64|
+|[dsPIC33CK64MP508](http://microchip.com/dsPIC33CK64MP508)  |  66 kb|   8 kb| 80|
+|[dsPIC33CK128MP508](http://microchip.com/dsPIC33CK128MP508)| 134 kb|  16 kb| 80|
+|[dsPIC33CK256MP508](http://microchip.com/dsPIC33CK256MP508)| 269 kb|  25 kb| 80|
 
 ### MP60X subfamily
 
 Same functionalities of 30X plus two CAN FD devices.
 
-8 devices
+8 devices.
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[dsPIC33CK256MP605](http://microchip.com/wwwproducts/en/dsPIC33CK256MP605)  | 269 kb|  61 kb| 48|
-|[dsPIC33CK512MP605](http://microchip.com/wwwproducts/en/dsPIC33CK512MP605)  | 540 kb|  61 kb| 48|
-|[dsPIC33CK256MP606](http://microchip.com/wwwproducts/en/dsPIC33CK256MP606)  | 269 kb|  61 kb| 64|
-|[dsPIC33CK512MP606](http://microchip.com/wwwproducts/en/dsPIC33CK512MP606)  | 540 kb|  61 kb| 64|
-|[dsPIC33CK256MPT608](http://microchip.com/wwwproducts/en/dsPIC33CK256MPT608)| 269 kb|  61 kb| 72|
-|[dsPIC33CK512MPT608](http://microchip.com/wwwproducts/en/dsPIC33CK512MPT608)| 540 kb|  61 kb| 72|
-|[dsPIC33CK256MP608](http://microchip.com/wwwproducts/en/dsPIC33CK256MP608)  | 269 kb|  61 kb| 80|
-|[dsPIC33CK512MP608](http://microchip.com/wwwproducts/en/dsPIC33CK512MP608)  | 540 kb|  61 kb| 80|
+|[dsPIC33CK256MP605](http://microchip.com/dsPIC33CK256MP605)  | 269 kb|  61 kb| 48|
+|[dsPIC33CK512MP605](http://microchip.com/dsPIC33CK512MP605)  | 540 kb|  61 kb| 48|
+|[dsPIC33CK256MP606](http://microchip.com/dsPIC33CK256MP606)  | 269 kb|  61 kb| 64|
+|[dsPIC33CK512MP606](http://microchip.com/dsPIC33CK512MP606)  | 540 kb|  61 kb| 64|
+|[dsPIC33CK256MPT608](http://microchip.com/dsPIC33CK256MPT608)| 269 kb|  61 kb| 72|
+|[dsPIC33CK512MPT608](http://microchip.com/dsPIC33CK512MPT608)| 540 kb|  61 kb| 72|
+|[dsPIC33CK256MP608](http://microchip.com/dsPIC33CK256MP608)  | 269 kb|  61 kb| 80|
+|[dsPIC33CK512MP608](http://microchip.com/dsPIC33CK512MP608)  | 540 kb|  61 kb| 80|
 
 ### MP70X subfamily
 
-Same functionalities of 30X plus two CAN FD devices.
+Same functionalities of 40X plus two CAN FD devices.
 
-12 devices
+12 devices.
 
 |Compatible devices|Program|Data|Pins|
 |---------|--:|--:|--:|
-|[dsPIC33CK256MP705](http://microchip.com/wwwproducts/en/dsPIC33CK256MP705)  |  269 kb|  96 kb|  48|
-|[dsPIC33CK256MP706](http://microchip.com/wwwproducts/en/dsPIC33CK256MP706)  |  269 kb|  96 kb|  64|
-|[dsPIC33CK256MP708](http://microchip.com/wwwproducts/en/dsPIC33CK256MP708)  |  269 kb|  96 kb|  80|
-|[dsPIC33CK512MP705](http://microchip.com/wwwproducts/en/dsPIC33CK512MP705)  |  540 kb|  96 kb|  48|
-|[dsPIC33CK512MP706](http://microchip.com/wwwproducts/en/dsPIC33CK512MP706)  |  540 kb|  96 kb|  64|
-|[dsPIC33CK512MP708](http://microchip.com/wwwproducts/en/dsPIC33CK512MP708)  |  540 kb|  96 kb|  80|
-|[dsPIC33CK1024MP705](http://microchip.com/wwwproducts/en/dsPIC33CK1024MP705)| 1080 kb|  96 kb|  48|
-|[dsPIC33CK1024MP706](http://microchip.com/wwwproducts/en/dsPIC33CK1024MP706)| 1080 kb|  96 kb|  64|
-|[dsPIC33CK1024MP708](http://microchip.com/wwwproducts/en/dsPIC33CK1024MP708)| 1080 kb|  96 kb|  80|
-|[dsPIC33CK256MP710](http://microchip.com/wwwproducts/en/dsPIC33CK256MP710)  |  269 kb|  96 kb| 100|
-|[dsPIC33CK512MP710](http://microchip.com/wwwproducts/en/dsPIC33CK512MP710)  |  540 kb|  96 kb| 100|
-|[dsPIC33CK1024MP710](http://microchip.com/wwwproducts/en/dsPIC33CK1024MP710)| 1080 kb|  96 kb| 100|
+|[dsPIC33CK256MP705](http://microchip.com/dsPIC33CK256MP705)  |  269 kb|  96 kb|  48|
+|[dsPIC33CK512MP705](http://microchip.com/dsPIC33CK512MP705)  |  540 kb|  96 kb|  48|
+|[dsPIC33CK1024MP705](http://microchip.com/dsPIC33CK1024MP705)| 1080 kb|  96 kb|  48|
+|[dsPIC33CK256MP706](http://microchip.com/dsPIC33CK256MP706)  |  269 kb|  96 kb|  64|
+|[dsPIC33CK512MP706](http://microchip.com/dsPIC33CK512MP706)  |  540 kb|  96 kb|  64|
+|[dsPIC33CK1024MP706](http://microchip.com/dsPIC33CK1024MP706)| 1080 kb|  96 kb|  64|
+|[dsPIC33CK256MP708](http://microchip.com/dsPIC33CK256MP708)  |  269 kb|  96 kb|  80|
+|[dsPIC33CK512MP708](http://microchip.com/dsPIC33CK512MP708)  |  540 kb|  96 kb|  80|
+|[dsPIC33CK1024MP708](http://microchip.com/dsPIC33CK1024MP708)| 1080 kb|  96 kb|  80|
+|[dsPIC33CK256MP710](http://microchip.com/dsPIC33CK256MP710)  |  269 kb|  96 kb| 100|
+|[dsPIC33CK512MP710](http://microchip.com/dsPIC33CK512MP710)  |  540 kb|  96 kb| 100|
+|[dsPIC33CK1024MP710](http://microchip.com/dsPIC33CK1024MP710)| 1080 kb|  96 kb| 100|
 
-## New set of peripherals
+## 📚 Comparison with dsPIC33E Family
 
 ### sysclock
 
-A new PLL block appears in this line.
+A new PLL block appears in this line with up to two independent PLL blocks.
 
 ### UART
 
@@ -256,7 +256,7 @@ capture.
 
 ### CAN Fd
 
-CAN Fd module is completely different of ECAN from dsPIC33E. A complete driver write needs to be done.
+CAN Fd module is completely different of ECAN from dsPIC33E.
 
 ### PWM
 
