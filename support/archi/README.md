@@ -16,17 +16,17 @@ Compiler specific, compilation flags or core dependent definition are contained 
 
 |Family name|Parent family|Device count|
 |-----------|-------------|-----------:|
-|[**PIC16b**](pic16b/README.md)         |[microchip](microchip/README.md)|                     835|
-|[dsPIC30](dspic30/README.md)           |[pic16b](pic16b/README.md)      |                      29|
-|[dsPIC33CH](../dspic33ch/README.md)    |[pic16b](pic16b/README.md)      | 65 (130 with secondary)|
-|[dsPIC33CK](../dspic33ck/README.md)    |[pic16b](pic16b/README.md)      |                     104|
-|[dsPIC33EP](../dspic33ep/README.md)    |[pic16b](pic16b/README.md)      |                     101|
-|[dsPIC33EV](../dspic33ev/README.md)    |[pic16b](pic16b/README.md)      |                      32|
-|[dsPIC33FJ](../dspic33fj/README.md)    |[pic16b](pic16b/README.md)      |                     114|
-|[PIC24EP](../pic24ep/README.md)        |[pic16b](pic16b/README.md)      |                      37|
-|[PIC24F](../pic24f/README.md)          |[pic16b](pic16b/README.md)      |                      50|
-|[PIC24FJ](../pic24fj/README.md)        |[pic16b](pic16b/README.md)      |                     197|
-|[PIC24HJ](../pic24hj/README.md)        |[pic16b](pic16b/README.md)      |                      41|
+|[**PIC16b**](pic16b/README.md)      |[microchip](microchip/README.md)|                     835|
+|[dsPIC30](dspic30/README.md)        |[pic16b](pic16b/README.md)      |                      29|
+|[dsPIC33CH](dspic33ch/README.md)    |[pic16b](pic16b/README.md)      | 65 (130 with secondary)|
+|[dsPIC33CK](dspic33ck/README.md)    |[pic16b](pic16b/README.md)      |                     104|
+|[dsPIC33EP](dspic33ep/README.md)    |[pic16b](pic16b/README.md)      |                     101|
+|[dsPIC33EV](dspic33ev/README.md)    |[pic16b](pic16b/README.md)      |                      32|
+|[dsPIC33FJ](dspic33fj/README.md)    |[pic16b](pic16b/README.md)      |                     114|
+|[PIC24EP](pic24ep/README.md)        |[pic16b](pic16b/README.md)      |                      37|
+|[PIC24F](pic24f/README.md)          |[pic16b](pic16b/README.md)      |                      50|
+|[PIC24FJ](pic24fj/README.md)        |[pic16b](pic16b/README.md)      |                     197|
+|[PIC24HJ](pic24hj/README.md)        |[pic16b](pic16b/README.md)      |                      41|
 
 ### 32 bits
 
