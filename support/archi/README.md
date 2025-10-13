@@ -17,7 +17,7 @@ Compiler specific, compilation flags or core dependent definition are contained 
 |Family name|Parent family|Device count|
 |-----------|-------------|-----------:|
 |[**PIC16b**](pic16b/README.md)      |[microchip](microchip/README.md)|                     835|
-|[dsPIC30](dspic30/README.md)        |[pic16b](pic16b/README.md)      |                      29|
+|[dsPIC30F](dspic30f/README.md)      |[pic16b](pic16b/README.md)      |                      29|
 |[dsPIC33CH](dspic33ch/README.md)    |[pic16b](pic16b/README.md)      | 65 (130 with secondary)|
 |[dsPIC33CK](dspic33ck/README.md)    |[pic16b](pic16b/README.md)      |                     104|
 |[dsPIC33EP](dspic33ep/README.md)    |[pic16b](pic16b/README.md)      |                     101|
