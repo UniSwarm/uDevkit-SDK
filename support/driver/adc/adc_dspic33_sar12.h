@@ -1244,78 +1244,40 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
 #    define ADC_TRIGSRC31 ADTRIG7Hbits.TRGSRC31
 #endif
 
-#if defined(DEVICE_33CH64MP202) || defined(DEVICE_33CH64MP203) || defined(DEVICE_33CH64MP205) || defined(DEVICE_33CH64MP206) || defined(DEVICE_33CH64MP208)    \
-    || defined(DEVICE_33CH64MP502) || defined(DEVICE_33CH64MP503) || defined(DEVICE_33CH64MP505) || defined(DEVICE_33CH64MP506) || defined(DEVICE_33CH64MP508) \
-    || defined(DEVICE_33CH128MP202) || defined(DEVICE_33CH128MP203) || defined(DEVICE_33CH128MP205) || defined(DEVICE_33CH128MP206)                            \
-    || defined(DEVICE_33CH128MP208) || defined(DEVICE_33CH128MP502) || defined(DEVICE_33CH128MP503) || defined(DEVICE_33CH128MP505)                            \
-    || defined(DEVICE_33CH128MP506) || defined(DEVICE_33CH128MP508) || defined(DEVICE_33CH256MP205) || defined(DEVICE_33CH256MP206)                            \
-    || defined(DEVICE_33CH256MP208) || defined(DEVICE_33CH256MP505) || defined(DEVICE_33CH256MP506) || defined(DEVICE_33CH256MP508)                            \
-    || defined(DEVICE_33CH512MP205) || defined(DEVICE_33CH512MP206) || defined(DEVICE_33CH512MP208) || defined(DEVICE_33CH512MP505)                            \
-    || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP508)
-// CH primary code
-#    define ADC_TRGSRC_ADTRG31        0b11111
-#    define ADC_TRGSRC_PTG            0b11110
-#    define ADC_TRGSRC_SLV_CLC1       0b11101
-#    define ADC_TRGSRC_MSTR_CLC1      0b11100
-#    define ADC_TRGSRC_SLV_PWM8_TRG2  0b11011
-#    define ADC_TRGSRC_SLV_PWM5_TRG2  0b11010
-#    define ADC_TRGSRC_SLV_PWM3_TRG2  0b11001
-#    define ADC_TRGSRC_SLV_PWM1_TRG2  0b11000
-#    define ADC_TRGSRC_MSTR_SCCP4     0b10111
-#    define ADC_TRGSRC_MSTR_SCCP3     0b10110
-#    define ADC_TRGSRC_MSTR_SCCP2     0b10101
-#    define ADC_TRGSRC_MSTR_SCCP1     0b10100
-#    define ADC_TRGSRC_MSTR_PWM4_TRG2 0b01011
-#    define ADC_TRGSRC_MSTR_PWM4_TRG1 0b01010
-#    define ADC_TRGSRC_MSTR_PWM3_TRG2 0b01001
-#    define ADC_TRGSRC_MSTR_PWM3_TRG1 0b01000
-#    define ADC_TRGSRC_MSTR_PWM2_TRG2 0b00111
-#    define ADC_TRGSRC_MSTR_PWM2_TRG1 0b00110
-#    define ADC_TRGSRC_MSTR_PWM1_TRG2 0b00101
-#    define ADC_TRGSRC_MSTR_PWM1_TRG1 0b00100
-#    define ADC_TRGSRC_SOFTTRG        0b00010
-#    define ADC_TRGSRC_COMMONSOFTTRG  0b00001
-#    define ADC_TRGSRC_NOTRIG         0b00000
+#if defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK32MC103) || defined(DEVICE_33CK32MC105) || defined(DEVICE_33CK64MC102) || defined(DEVICE_33CK64MC103)    \
+    || defined(DEVICE_33CK64MC105) || defined(DEVICE_33CK128MC102) || defined(DEVICE_33CK128MC103) || defined(DEVICE_33CK128MC105)                             \
+    || defined(DEVICE_33CK128MC106) || defined(DEVICE_33CK128MC502) || defined(DEVICE_33CK128MC503) || defined(DEVICE_33CK128MC505)                            \
+    || defined(DEVICE_33CK128MC506) || defined(DEVICE_33CK256MC102) || defined(DEVICE_33CK256MC103) || defined(DEVICE_33CK256MC105)                            \
+    || defined(DEVICE_33CK256MC106) || defined(DEVICE_33CK256MC502) || defined(DEVICE_33CK256MC503) || defined(DEVICE_33CK256MC505)                            \
+    || defined(DEVICE_33CK256MC506)
+#    define ADC_TRGSRC_ADCTRG31      0b11111
+#    define ADC_TRGSRC_PTG           0b11110
+#    define ADC_TRGSRC_CLC4          0b10010
+#    define ADC_TRGSRC_CLC3          0b10001
+#    define ADC_TRGSRC_CLC2          0b11101
+#    define ADC_TRGSRC_CLC1          0b11100
+#    define ADC_TRGSRC_SCCP4         0b10111
+#    define ADC_TRGSRC_SCCP3         0b10110
+#    define ADC_TRGSRC_SCCP2         0b10101
+#    define ADC_TRGSRC_SCCP1         0b10100
+#    define ADC_TRGSRC_SCCP4_TRG     0b01111
+#    define ADC_TRGSRC_SCCP3_TRG     0b01110
+#    define ADC_TRGSRC_SCCP2_TRG     0b01101
+#    define ADC_TRGSRC_SCCP1_TRG     0b01100
+#    define ADC_TRGSRC_PWM4_TRG2     0b01011
+#    define ADC_TRGSRC_PWM4_TRG1     0b01010
+#    define ADC_TRGSRC_PWM3_TRG2     0b01001
+#    define ADC_TRGSRC_PWM3_TRG1     0b01000
+#    define ADC_TRGSRC_PWM2_TRG2     0b00111
+#    define ADC_TRGSRC_PWM2_TRG1     0b00110
+#    define ADC_TRGSRC_PWM1_TRG2     0b00101
+#    define ADC_TRGSRC_PWM1_TRG1     0b00100
+#    define ADC_TRGSRC_SOFTTRG       0b00010
+#    define ADC_TRGSRC_COMMONSOFTTRG 0b00001
+#    define ADC_TRGSRC_NOTRIG        0b00000
 
-#elif defined(DEVICE_33CH64MP202S1) || defined(DEVICE_33CH64MP203S1) || defined(DEVICE_33CH64MP205S1) || defined(DEVICE_33CH64MP206S1)                         \
-    || defined(DEVICE_33CH64MP208S1) || defined(DEVICE_33CH64MP502S1) || defined(DEVICE_33CH64MP503S1) || defined(DEVICE_33CH64MP505S1)                        \
-    || defined(DEVICE_33CH64MP506S1) || defined(DEVICE_33CH64MP508S1) || defined(DEVICE_33CH128MP202S1) || defined(DEVICE_33CH128MP203S1)                      \
-    || defined(DEVICE_33CH128MP205S1) || defined(DEVICE_33CH128MP206S1) || defined(DEVICE_33CH128MP208S1) || defined(DEVICE_33CH128MP502S1)                    \
-    || defined(DEVICE_33CH128MP503S1) || defined(DEVICE_33CH128MP505S1) || defined(DEVICE_33CH128MP506S1) || defined(DEVICE_33CH128MP508S1)                    \
-    || defined(DEVICE_33CH256MP205S1) || defined(DEVICE_33CH256MP206S1) || defined(DEVICE_33CH256MP208S1) || defined(DEVICE_33CH256MP505S1)                    \
-    || defined(DEVICE_33CH256MP506S1) || defined(DEVICE_33CH256MP508S1) || defined(DEVICE_33CH512MP205S1) || defined(DEVICE_33CH512MP206S1)                    \
-    || defined(DEVICE_33CH512MP208S1) || defined(DEVICE_33CH512MP505S1) || defined(DEVICE_33CH512MP506S1) || defined(DEVICE_33CH512MP508S1)
-// CH secondary code
-#    define ADC_TRGSRC_ADTRG31        0b11111
-#    define ADC_TRGSRC_MSTR_PTG       0b11110
-#    define ADC_TRGSRC_SLV_CLC1       0b11101
-#    define ADC_TRGSRC_MSTR_CLC1      0b11100
-#    define ADC_TRGSRC_MSTR_PWM3_TRG2 0b11001
-#    define ADC_TRGSRC_MSTR_PWM1_TRG2 0b11000
-#    define ADC_TRGSRC_SLV_SCCP4      0b10111
-#    define ADC_TRGSRC_SLV_SCCP3      0b10110
-#    define ADC_TRGSRC_SLV_SCCP2      0b10101
-#    define ADC_TRGSRC_SLV_SCCP1      0b10100
-#    define ADC_TRGSRC_SLV_PWM8_TRG1  0b01111
-#    define ADC_TRGSRC_SLV_PWM7_TRG1  0b01110
-#    define ADC_TRGSRC_SLV_PWM6_TRG1  0b01101
-#    define ADC_TRGSRC_SLV_PWM5_TRG1  0b01100
-#    define ADC_TRGSRC_SLV_PWM4_TRG2  0b01011
-#    define ADC_TRGSRC_SLV_PWM4_TRG1  0b01010
-#    define ADC_TRGSRC_SLV_PWM3_TRG2  0b01001
-#    define ADC_TRGSRC_SLV_PWM3_TRG1  0b01000
-#    define ADC_TRGSRC_SLV_PWM2_TRG2  0b00111
-#    define ADC_TRGSRC_SLV_PWM2_TRG1  0b00110
-#    define ADC_TRGSRC_SLV_PWM1_TRG2  0b00101
-#    define ADC_TRGSRC_SLV_PWM1_TRG1  0b00100
-#    define ADC_TRGSRC_SOFTTRG        0b00010
-#    define ADC_TRGSRC_COMMONSOFTTRG  0b00001
-#    define ADC_TRGSRC_NOTRIG         0b00000
-
-#elif defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK32MC103) || defined(DEVICE_33CK32MC105) || defined(DEVICE_33CK64MC102) || defined(DEVICE_33CK64MC103)  \
-    || defined(DEVICE_33CK64MC105) || defined(DEVICE_33CK32MP102) || defined(DEVICE_33CK32MP103) || defined(DEVICE_33CK32MP105) || defined(DEVICE_33CK64MP102) \
-    || defined(DEVICE_33CK64MP103) || defined(DEVICE_33CK64MP105)
-// CK MP1XX
+#elif defined(DEVICE_33CK32MP102) || defined(DEVICE_33CK32MP103) || defined(DEVICE_33CK32MP105) || defined(DEVICE_33CK64MP102) || defined(DEVICE_33CK64MP103)  \
+    || defined(DEVICE_33CK64MP105)
 #    define ADC_TRGSRC_ADTRG31       0b11111
 #    define ADC_TRGSRC_PTG           0b11110
 #    define ADC_TRGSRC_CLC4          0b10010
@@ -1383,6 +1345,74 @@ volatile int16_t *adc_buffAddr(uint8_t channel);
 #    define ADC_TRGSRC_PWM6_TRG2     0b01111
 #    define ADC_TRGSRC_PWM6_TRG1     0b01110
 #    define ADC_TRGSRC_PWM5_TRG2     0b01101
+#    define ADC_TRGSRC_PWM5_TRG1     0b01100
+#    define ADC_TRGSRC_PWM4_TRG2     0b01011
+#    define ADC_TRGSRC_PWM4_TRG1     0b01010
+#    define ADC_TRGSRC_PWM3_TRG2     0b01001
+#    define ADC_TRGSRC_PWM3_TRG1     0b01000
+#    define ADC_TRGSRC_PWM2_TRG2     0b00111
+#    define ADC_TRGSRC_PWM2_TRG1     0b00110
+#    define ADC_TRGSRC_PWM1_TRG2     0b00101
+#    define ADC_TRGSRC_PWM1_TRG1     0b00100
+#    define ADC_TRGSRC_SOFTTRG       0b00010
+#    define ADC_TRGSRC_COMMONSOFTTRG 0b00001
+#    define ADC_TRGSRC_NOTRIG        0b00000
+
+#elif defined(DEVICE_33CH64MP202) || defined(DEVICE_33CH64MP203) || defined(DEVICE_33CH64MP205) || defined(DEVICE_33CH64MP206) || defined(DEVICE_33CH64MP208)  \
+    || defined(DEVICE_33CH64MP502) || defined(DEVICE_33CH64MP503) || defined(DEVICE_33CH64MP505) || defined(DEVICE_33CH64MP506) || defined(DEVICE_33CH64MP508) \
+    || defined(DEVICE_33CH128MP202) || defined(DEVICE_33CH128MP203) || defined(DEVICE_33CH128MP205) || defined(DEVICE_33CH128MP206)                            \
+    || defined(DEVICE_33CH128MP208) || defined(DEVICE_33CH128MP502) || defined(DEVICE_33CH128MP503) || defined(DEVICE_33CH128MP505)                            \
+    || defined(DEVICE_33CH128MP506) || defined(DEVICE_33CH128MP508) || defined(DEVICE_33CH256MP205) || defined(DEVICE_33CH256MP206)                            \
+    || defined(DEVICE_33CH256MP208) || defined(DEVICE_33CH256MP505) || defined(DEVICE_33CH256MP506) || defined(DEVICE_33CH256MP508)                            \
+    || defined(DEVICE_33CH512MP205) || defined(DEVICE_33CH512MP206) || defined(DEVICE_33CH512MP208) || defined(DEVICE_33CH512MP505)                            \
+    || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP508)
+// CH primary code
+#    define ADC_TRGSRC_ADTRG31       0b11111
+#    define ADC_TRGSRC_PTG           0b11110
+#    define ADC_TRGSRC_SEC_CLC1      0b11101
+#    define ADC_TRGSRC_CLC1          0b11100
+#    define ADC_TRGSRC_SEC_PWM8_TRG2 0b11011
+#    define ADC_TRGSRC_SEC_PWM5_TRG2 0b11010
+#    define ADC_TRGSRC_SEC_PWM3_TRG2 0b11001
+#    define ADC_TRGSRC_SEC_PWM1_TRG2 0b11000
+#    define ADC_TRGSRC_SCCP4         0b10111
+#    define ADC_TRGSRC_SCCP3         0b10110
+#    define ADC_TRGSRC_SCCP2         0b10101
+#    define ADC_TRGSRC_SCCP1         0b10100
+#    define ADC_TRGSRC_PWM4_TRG2     0b01011
+#    define ADC_TRGSRC_PWM4_TRG1     0b01010
+#    define ADC_TRGSRC_PWM3_TRG2     0b01001
+#    define ADC_TRGSRC_PWM3_TRG1     0b01000
+#    define ADC_TRGSRC_PWM2_TRG2     0b00111
+#    define ADC_TRGSRC_PWM2_TRG1     0b00110
+#    define ADC_TRGSRC_PWM1_TRG2     0b00101
+#    define ADC_TRGSRC_PWM1_TRG1     0b00100
+#    define ADC_TRGSRC_SOFTTRG       0b00010
+#    define ADC_TRGSRC_COMMONSOFTTRG 0b00001
+#    define ADC_TRGSRC_NOTRIG        0b00000
+
+#elif defined(DEVICE_33CH64MP202S1) || defined(DEVICE_33CH64MP203S1) || defined(DEVICE_33CH64MP205S1) || defined(DEVICE_33CH64MP206S1)                         \
+    || defined(DEVICE_33CH64MP208S1) || defined(DEVICE_33CH64MP502S1) || defined(DEVICE_33CH64MP503S1) || defined(DEVICE_33CH64MP505S1)                        \
+    || defined(DEVICE_33CH64MP506S1) || defined(DEVICE_33CH64MP508S1) || defined(DEVICE_33CH128MP202S1) || defined(DEVICE_33CH128MP203S1)                      \
+    || defined(DEVICE_33CH128MP205S1) || defined(DEVICE_33CH128MP206S1) || defined(DEVICE_33CH128MP208S1) || defined(DEVICE_33CH128MP502S1)                    \
+    || defined(DEVICE_33CH128MP503S1) || defined(DEVICE_33CH128MP505S1) || defined(DEVICE_33CH128MP506S1) || defined(DEVICE_33CH128MP508S1)                    \
+    || defined(DEVICE_33CH256MP205S1) || defined(DEVICE_33CH256MP206S1) || defined(DEVICE_33CH256MP208S1) || defined(DEVICE_33CH256MP505S1)                    \
+    || defined(DEVICE_33CH256MP506S1) || defined(DEVICE_33CH256MP508S1) || defined(DEVICE_33CH512MP205S1) || defined(DEVICE_33CH512MP206S1)                    \
+    || defined(DEVICE_33CH512MP208S1) || defined(DEVICE_33CH512MP505S1) || defined(DEVICE_33CH512MP506S1) || defined(DEVICE_33CH512MP508S1)
+// CH secondary code
+#    define ADC_TRGSRC_ADTRG31       0b11111
+#    define ADC_TRGSRC_PRI_PTG       0b11110
+#    define ADC_TRGSRC_CLC1          0b11101
+#    define ADC_TRGSRC_PRI_CLC1      0b11100
+#    define ADC_TRGSRC_PRI_PWM3_TRG2 0b11001
+#    define ADC_TRGSRC_PRI_PWM1_TRG2 0b11000
+#    define ADC_TRGSRC_SCCP4         0b10111
+#    define ADC_TRGSRC_SCCP3         0b10110
+#    define ADC_TRGSRC_SCCP2         0b10101
+#    define ADC_TRGSRC_SCCP1         0b10100
+#    define ADC_TRGSRC_PWM8_TRG1     0b01111
+#    define ADC_TRGSRC_PWM7_TRG1     0b01110
+#    define ADC_TRGSRC_PWM6_TRG1     0b01101
 #    define ADC_TRGSRC_PWM5_TRG1     0b01100
 #    define ADC_TRGSRC_PWM4_TRG2     0b01011
 #    define ADC_TRGSRC_PWM4_TRG1     0b01010
