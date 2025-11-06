@@ -6,7 +6,7 @@ else
 endif
 
 ifeq ($(XC), XC16)
- XC_PATH = $(abspath $(dir $(lastword $(shell whereis -b xc16-gcc)))..)/
+ XC_PATH ?= $(abspath $(dir $(lastword $(shell whereis -b xc16-gcc)))..)/
  AS = $(XC_PATH)bin/xc16-as
  CC = $(XC_PATH)bin/xc16-gcc
  LD = $(XC_PATH)bin/xc16-ld
@@ -15,7 +15,7 @@ ifeq ($(XC), XC16)
  SIM = $(XC_PATH)bin/sim30
  OBJDUMP = xc16-objdump
 else
- XC_PATH = $(abspath $(dir $(lastword $(shell whereis -b xc-dsc-gcc)))..)/
+ XC_PATH ?= $(abspath $(dir $(lastword $(shell whereis -b xc-dsc-gcc)))..)/
  AS = $(XC_PATH)bin/xc-dsc-as
  CC = $(XC_PATH)bin/xc-dsc-gcc
  LD = $(XC_PATH)bin/xc-dsc-ld
@@ -35,14 +35,14 @@ ifeq ("$(LK_SCRIPT)","")
  LK_SCRIPT = p$(DEVICE).gld
 endif
 
- ifeq ("$(CC_VERSION_MAJOR)","1")
-  CCFLAGS_XC += -no-legacy-libc
- endif
- CCFLAGS_XC += -mcpu=$(DEVICE)
- CCFLAGS_XC += -mno-eds-warn
- CCFLAGS_XC += -std=c99
- LDFLAGS_XC += -Wl,--heap=$(HEAP),-T$(LK_SCRIPT)
- CCFLAGS += -Wall
+ifeq ("$(CC_VERSION_MAJOR)","1")
+ CCFLAGS_XC += -no-legacy-libc
+endif
+CCFLAGS_XC += -mcpu=$(DEVICE)
+CCFLAGS_XC += -mno-eds-warn
+CCFLAGS_XC += -std=c99
+LDFLAGS_XC += -Wl,--heap=$(HEAP),-T$(LK_SCRIPT)
+CCFLAGS += -Wall
 
 ifeq ($(ARCHI),$(filter $(ARCHI),dspic30f))
  LDFLAGS_XC += -Wl,-L$(XC_PATH)support/dsPIC30F/gld/
