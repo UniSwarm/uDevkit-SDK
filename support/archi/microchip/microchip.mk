@@ -51,7 +51,7 @@ flash-erase :
 # special cmd for hex creation
 $(OUT_PWD)/$(PROJECT).hex : $(OUT_PWD)/$(PROJECT).elf
 	@printf "$(COMPCOLOR)µHX %-35s => %s\n$(NORM)" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	$(VERB)$(HX) $(OUT_PWD)/$(PROJECT).elf
+	$(VERB)$(HX) $(HXFLAGS) $(OUT_PWD)/$(PROJECT).elf
 
 elf : $(OUT_PWD)/$(PROJECT).elf
 hex : $(OUT_PWD)/$(PROJECT).hex
