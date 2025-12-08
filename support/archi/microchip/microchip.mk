@@ -71,7 +71,7 @@ $(OBJ_PWD)/%.o : %.c $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIS
 	@printf "$(COMPCOLOR)µCC %-35s => %s\n$(NORM)" $(notdir $<) $(OBJ_PWD)/$(notdir $@)
 	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OBJ_PWD)/$(notdir $@)
 	@$(CC) $(CCFLAGS) $(CCFLAGS_XC) -MM $< $(DEFINES) $(INCLUDEPATH) -MT $(OBJ_PWD)/$(notdir $@) > $(OBJ_PWD)/$*.d
-	$(VERB)$(OBJDUMP) -S -r $(OBJ_PWD)/$(notdir $@) > $(OBJ_PWD)/$*.lst
+	$(VERB)$(OBJDUMP) $(XC_MDFP) -S -r $(OBJ_PWD)/$(notdir $@) > $(OBJ_PWD)/$*.lst
 
 $(OBJ_PWD)/%.o : %.S $(firstword $(MAKEFILE_LIST)) $(filter %.mk, $(MAKEFILE_LIST))
 	@test -d $(OBJ_PWD) || mkdir -p $(OBJ_PWD)
