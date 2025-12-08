@@ -13,7 +13,7 @@ ifeq ($(XC), XC16)
  AR = $(XC_PATH)bin/xc16-ar
  HX = $(XC_PATH)bin/xc16-bin2hex
  SIM = $(XC_PATH)bin/sim30
- OBJDUMP = xc16-objdump
+ OBJDUMP = $(XC_PATH)bin/xc16-objdump
 else
  XC_PATH ?= $(abspath $(dir $(lastword $(shell whereis -b xc-dsc-gcc)))..)/
  AS = $(XC_PATH)bin/xc-dsc-as
@@ -22,7 +22,7 @@ else
  AR = $(XC_PATH)bin/xc-dsc-ar
  HX = $(XC_PATH)bin/xc-dsc-bin2hex
  SIM = $(XC_PATH)bin/sim30
- OBJDUMP = xc-dsc-objdump
+ OBJDUMP = $(XC_PATH)bin/xc-dsc-objdump
 endif
 
 CC_VERSION := $(shell $(CC) --version | egrep -o "v([0-9]+\\.[0-9]+)")
