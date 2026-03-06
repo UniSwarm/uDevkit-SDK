@@ -41,10 +41,11 @@ extern "C" {
     || defined(DEVICE_24HJ12GP202) || defined(DEVICE_24HJ32GP202) || defined(DEVICE_24HJ32GP302) || defined(DEVICE_24HJ64GP202) || defined(DEVICE_24HJ64GP502) \
     || defined(DEVICE_24HJ128GP202) || defined(DEVICE_24HJ128GP502) || defined(DEVICE_33CH64MP202) || defined(DEVICE_33CH64MP202S1)                            \
     || defined(DEVICE_33CH64MP502) || defined(DEVICE_33CH64MP502S1) || defined(DEVICE_33CH128MP202) || defined(DEVICE_33CH128MP202S1)                          \
-    || defined(DEVICE_33CH128MP502) || defined(DEVICE_33CH128MP502S1) || defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK32MP102)                            \
-    || defined(DEVICE_33CK32MP202) || defined(DEVICE_33CK32MP502) || defined(DEVICE_33CK64MC102) || defined(DEVICE_33CK64MP102) || defined(DEVICE_33CK64MP202) \
-    || defined(DEVICE_33CK64MP502) || defined(DEVICE_33CK128MC102) || defined(DEVICE_33CK128MC502) || defined(DEVICE_33CK128MP202)                             \
-    || defined(DEVICE_33CK128MP502) || defined(DEVICE_33CK256MC102) || defined(DEVICE_33CK256MC502) || defined(DEVICE_33CK256MP202)                            \
+    || defined(DEVICE_33CH128MP502) || defined(DEVICE_33CH128MP502S1) || defined(DEVICE_33CK32MC002) || defined(DEVICE_33CK32MC102)                            \
+    || defined(DEVICE_33CK32MP102) || defined(DEVICE_33CK32MP202) || defined(DEVICE_33CK32MP502) || defined(DEVICE_33CK64MC002) || defined(DEVICE_33CK64MC102) \
+    || defined(DEVICE_33CK64MP102) || defined(DEVICE_33CK64MP202) || defined(DEVICE_33CK64MP502) || defined(DEVICE_33CK128MC002)                               \
+    || defined(DEVICE_33CK128MC102) || defined(DEVICE_33CK128MC502) || defined(DEVICE_33CK128MP202) || defined(DEVICE_33CK128MP502)                            \
+    || defined(DEVICE_33CK256MC002) || defined(DEVICE_33CK256MC102) || defined(DEVICE_33CK256MC502) || defined(DEVICE_33CK256MP202)                            \
     || defined(DEVICE_33CK256MP502) || defined(DEVICE_33EP16GS202) || defined(DEVICE_33EP16GS502) || defined(DEVICE_33EP32GP502)                               \
     || defined(DEVICE_33EP32GS202) || defined(DEVICE_33EP32GS502) || defined(DEVICE_33EP32MC202) || defined(DEVICE_33EP32MC502) || defined(DEVICE_33EP64GP502) \
     || defined(DEVICE_33EP64GS502) || defined(DEVICE_33EP64MC202) || defined(DEVICE_33EP64MC502) || defined(DEVICE_33EP128GP502)                               \
@@ -78,10 +79,11 @@ extern "C" {
     || defined(DEVICE_24HJ16GP304) || defined(DEVICE_24HJ32GP204) || defined(DEVICE_24HJ32GP304) || defined(DEVICE_24HJ64GP204) || defined(DEVICE_24HJ64GP504) \
     || defined(DEVICE_24HJ128GP204) || defined(DEVICE_24HJ128GP504) || defined(DEVICE_33CH64MP203) || defined(DEVICE_33CH64MP203S1)                            \
     || defined(DEVICE_33CH64MP503) || defined(DEVICE_33CH64MP503S1) || defined(DEVICE_33CH128MP203) || defined(DEVICE_33CH128MP203S1)                          \
-    || defined(DEVICE_33CH128MP503) || defined(DEVICE_33CH128MP503S1) || defined(DEVICE_33CK32MC103) || defined(DEVICE_33CK32MP103)                            \
-    || defined(DEVICE_33CK32MP203) || defined(DEVICE_33CK32MP503) || defined(DEVICE_33CK64MC103) || defined(DEVICE_33CK64MP103) || defined(DEVICE_33CK64MP203) \
-    || defined(DEVICE_33CK64MP503) || defined(DEVICE_33CK128MC103) || defined(DEVICE_33CK128MC503) || defined(DEVICE_33CK128MP203)                             \
-    || defined(DEVICE_33CK128MP503) || defined(DEVICE_33CK256MC103) || defined(DEVICE_33CK256MC503) || defined(DEVICE_33CK256MP203)                            \
+    || defined(DEVICE_33CH128MP503) || defined(DEVICE_33CH128MP503S1) || defined(DEVICE_33CK32MC003) || defined(DEVICE_33CK32MC103)                            \
+    || defined(DEVICE_33CK32MP103) || defined(DEVICE_33CK32MP203) || defined(DEVICE_33CK32MP503) || defined(DEVICE_33CK64MC003) || defined(DEVICE_33CK64MC103) \
+    || defined(DEVICE_33CK64MP103) || defined(DEVICE_33CK64MP203) || defined(DEVICE_33CK64MP503) || defined(DEVICE_33CK128MC003)                               \
+    || defined(DEVICE_33CK128MC103) || defined(DEVICE_33CK128MC503) || defined(DEVICE_33CK128MP203) || defined(DEVICE_33CK128MP503)                            \
+    || defined(DEVICE_33CK256MC003) || defined(DEVICE_33CK256MC103) || defined(DEVICE_33CK256MC503) || defined(DEVICE_33CK256MP203)                            \
     || defined(DEVICE_33CK256MP503) || defined(DEVICE_33EP16GS504) || defined(DEVICE_33EP16GS505) || defined(DEVICE_33EP32GP503)                               \
     || defined(DEVICE_33EP32GP504) || defined(DEVICE_33EP32GS504) || defined(DEVICE_33EP32GS505) || defined(DEVICE_33EP32MC203) || defined(DEVICE_33EP32MC204) \
     || defined(DEVICE_33EP32MC503) || defined(DEVICE_33EP32MC504) || defined(DEVICE_33EP64GP503) || defined(DEVICE_33EP64GP504) || defined(DEVICE_33EP64GS504) \
@@ -104,17 +106,224 @@ extern "C" {
 #    define GPIO_HAVE_PORTC
 #    define GPIO_PORT_COUNT 3
 #    define GPIO_PORT_MAX   3
+#elif defined(DEVICE_24EP64GP206) || defined(DEVICE_24EP64MC206) || defined(DEVICE_24EP128GP206) || defined(DEVICE_24EP128MC206)                               \
+    || defined(DEVICE_24EP256GP206) || defined(DEVICE_24EP256GU810) || defined(DEVICE_24EP256MC206) || defined(DEVICE_24EP512GP206)                            \
+    || defined(DEVICE_24EP512GU810) || defined(DEVICE_24EP512MC206) || defined(DEVICE_24FJ64GA008) || defined(DEVICE_24FJ64GA010)                              \
+    || defined(DEVICE_24FJ64GA108) || defined(DEVICE_24FJ64GA110) || defined(DEVICE_24FJ64GA308) || defined(DEVICE_24FJ64GA310) || defined(DEVICE_24FJ64GB108) \
+    || defined(DEVICE_24FJ64GB110) || defined(DEVICE_24FJ64GC010) || defined(DEVICE_24FJ64GL306) || defined(DEVICE_24FJ96GA008) || defined(DEVICE_24FJ96GA010) \
+    || defined(DEVICE_24FJ128DA110) || defined(DEVICE_24FJ128DA210) || defined(DEVICE_24FJ128GA008) || defined(DEVICE_24FJ128GA010)                            \
+    || defined(DEVICE_24FJ128GA108) || defined(DEVICE_24FJ128GA110) || defined(DEVICE_24FJ128GA308) || defined(DEVICE_24FJ128GA310)                            \
+    || defined(DEVICE_24FJ128GA610) || defined(DEVICE_24FJ128GB108) || defined(DEVICE_24FJ128GB110) || defined(DEVICE_24FJ128GB210)                            \
+    || defined(DEVICE_24FJ128GB610) || defined(DEVICE_24FJ128GC010) || defined(DEVICE_24FJ128GL306) || defined(DEVICE_24FJ192GA108)                            \
+    || defined(DEVICE_24FJ192GA110) || defined(DEVICE_24FJ192GB108) || defined(DEVICE_24FJ192GB110) || defined(DEVICE_24FJ256DA110)                            \
+    || defined(DEVICE_24FJ256DA210) || defined(DEVICE_24FJ256GA108) || defined(DEVICE_24FJ256GA110) || defined(DEVICE_24FJ256GA610)                            \
+    || defined(DEVICE_24FJ256GB108) || defined(DEVICE_24FJ256GB110) || defined(DEVICE_24FJ256GB210) || defined(DEVICE_24FJ256GB610)                            \
+    || defined(DEVICE_24FJ512GA610) || defined(DEVICE_24FJ512GB610) || defined(DEVICE_24FJ1024GA610) || defined(DEVICE_24FJ1024GB610)                          \
+    || defined(DEVICE_24HJ64GP210) || defined(DEVICE_24HJ64GP210A) || defined(DEVICE_24HJ64GP510) || defined(DEVICE_24HJ64GP510A)                              \
+    || defined(DEVICE_24HJ128GP210) || defined(DEVICE_24HJ128GP210A) || defined(DEVICE_24HJ128GP310) || defined(DEVICE_24HJ128GP310A)                          \
+    || defined(DEVICE_24HJ128GP510) || defined(DEVICE_24HJ128GP510A) || defined(DEVICE_24HJ256GP210) || defined(DEVICE_24HJ256GP210A)                          \
+    || defined(DEVICE_24HJ256GP610) || defined(DEVICE_24HJ256GP610A) || defined(DEVICE_30F5016) || defined(DEVICE_30F6010) || defined(DEVICE_30F6010A)         \
+    || defined(DEVICE_33AK256MC210) || defined(DEVICE_33AK256MC510) || defined(DEVICE_33AK256MPS210) || defined(DEVICE_33AK256MPS510)                          \
+    || defined(DEVICE_33AK512MC210) || defined(DEVICE_33AK512MC510) || defined(DEVICE_33AK512MPS210) || defined(DEVICE_33AK512MPS510)                          \
+    || defined(DEVICE_33EDV64MC205) || defined(DEVICE_33EP64GP506) || defined(DEVICE_33EP64MC206) || defined(DEVICE_33EP64MC506)                               \
+    || defined(DEVICE_33EP128GM306) || defined(DEVICE_33EP128GM310) || defined(DEVICE_33EP128GM706) || defined(DEVICE_33EP128GM710)                            \
+    || defined(DEVICE_33EP128GP506) || defined(DEVICE_33EP128MC206) || defined(DEVICE_33EP128MC506) || defined(DEVICE_33EP256GM306)                            \
+    || defined(DEVICE_33EP256GM310) || defined(DEVICE_33EP256GM706) || defined(DEVICE_33EP256GM710) || defined(DEVICE_33EP256GP506)                            \
+    || defined(DEVICE_33EP256MC206) || defined(DEVICE_33EP256MC506) || defined(DEVICE_33EP256MU810) || defined(DEVICE_33EP512GM306)                            \
+    || defined(DEVICE_33EP512GM310) || defined(DEVICE_33EP512GM706) || defined(DEVICE_33EP512GM710) || defined(DEVICE_33EP512GP506)                            \
+    || defined(DEVICE_33EP512MC206) || defined(DEVICE_33EP512MC506) || defined(DEVICE_33EP512MU810) || defined(DEVICE_33EV32GM006)                             \
+    || defined(DEVICE_33EV32GM106) || defined(DEVICE_33EV64GM006) || defined(DEVICE_33EV64GM106) || defined(DEVICE_33EV128GM006)                               \
+    || defined(DEVICE_33EV128GM106) || defined(DEVICE_33EV256GM006) || defined(DEVICE_33EV256GM106) || defined(DEVICE_33FJ32GS608)                             \
+    || defined(DEVICE_33FJ32GS610) || defined(DEVICE_33FJ64GP310) || defined(DEVICE_33FJ64GP310A) || defined(DEVICE_33FJ64GP710)                               \
+    || defined(DEVICE_33FJ64GP710A) || defined(DEVICE_33FJ64GS608) || defined(DEVICE_33FJ64GS610) || defined(DEVICE_33FJ64MC508)                               \
+    || defined(DEVICE_33FJ64MC508A) || defined(DEVICE_33FJ64MC510) || defined(DEVICE_33FJ64MC510A) || defined(DEVICE_33FJ64MC710)                              \
+    || defined(DEVICE_33FJ64MC710A) || defined(DEVICE_33FJ128GP310) || defined(DEVICE_33FJ128GP310A) || defined(DEVICE_33FJ128GP710)                           \
+    || defined(DEVICE_33FJ128GP710A) || defined(DEVICE_33FJ128MC510) || defined(DEVICE_33FJ128MC510A) || defined(DEVICE_33FJ128MC708)                          \
+    || defined(DEVICE_33FJ128MC708A) || defined(DEVICE_33FJ128MC710) || defined(DEVICE_33FJ128MC710A) || defined(DEVICE_33FJ256GP510)                          \
+    || defined(DEVICE_33FJ256GP510A) || defined(DEVICE_33FJ256GP710) || defined(DEVICE_33FJ256GP710A) || defined(DEVICE_33FJ256MC510)                          \
+    || defined(DEVICE_33FJ256MC510A) || defined(DEVICE_33FJ256MC710) || defined(DEVICE_33FJ256MC710A)
+#    define GPIO_HAVE_PORTA
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTC
+#    define GPIO_HAVE_PORTD
+#    define GPIO_HAVE_PORTE
+#    define GPIO_HAVE_PORTF
+#    define GPIO_HAVE_PORTG
+#    define GPIO_PORT_COUNT 7
+#    define GPIO_PORT_MAX   7
+#elif defined(DEVICE_24EP256GU814) || defined(DEVICE_24EP512GU814) || defined(DEVICE_33EP256MU814) || defined(DEVICE_33EP512MU814)
+#    define GPIO_HAVE_PORTA
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTC
+#    define GPIO_HAVE_PORTD
+#    define GPIO_HAVE_PORTE
+#    define GPIO_HAVE_PORTF
+#    define GPIO_HAVE_PORTG
+#    define GPIO_HAVE_PORTH
+#    define GPIO_HAVE_PORTJ
+#    define GPIO_HAVE_PORTK
+#    define GPIO_PORT_COUNT 10
+#    define GPIO_PORT_MAX   11
+#elif defined(DEVICE_24EP512GP806) || defined(DEVICE_24FJ64GA006) || defined(DEVICE_24FJ64GA106) || defined(DEVICE_24FJ64GA306) || defined(DEVICE_24FJ64GB106) \
+    || defined(DEVICE_24FJ64GC006) || defined(DEVICE_24FJ64GL303) || defined(DEVICE_24FJ64GL305) || defined(DEVICE_24FJ96GA006)                                \
+    || defined(DEVICE_24FJ128DA106) || defined(DEVICE_24FJ128DA206) || defined(DEVICE_24FJ128GA006) || defined(DEVICE_24FJ128GA106)                            \
+    || defined(DEVICE_24FJ128GA306) || defined(DEVICE_24FJ128GA606) || defined(DEVICE_24FJ128GB106) || defined(DEVICE_24FJ128GB206)                            \
+    || defined(DEVICE_24FJ128GB606) || defined(DEVICE_24FJ128GC006) || defined(DEVICE_24FJ128GL303) || defined(DEVICE_24FJ128GL305)                            \
+    || defined(DEVICE_24FJ128GL405) || defined(DEVICE_24FJ128GU405) || defined(DEVICE_24FJ192GA106) || defined(DEVICE_24FJ192GB106)                            \
+    || defined(DEVICE_24FJ256DA106) || defined(DEVICE_24FJ256DA206) || defined(DEVICE_24FJ256GA106) || defined(DEVICE_24FJ256GA606)                            \
+    || defined(DEVICE_24FJ256GB106) || defined(DEVICE_24FJ256GB206) || defined(DEVICE_24FJ256GB606) || defined(DEVICE_24FJ256GL405)                            \
+    || defined(DEVICE_24FJ256GU405) || defined(DEVICE_24FJ512GA606) || defined(DEVICE_24FJ512GB606) || defined(DEVICE_24FJ512GL405)                            \
+    || defined(DEVICE_24FJ512GU405) || defined(DEVICE_24FJ1024GA606) || defined(DEVICE_24FJ1024GB606) || defined(DEVICE_30F5015) || defined(DEVICE_30F6015)    \
+    || defined(DEVICE_33EP256MU806) || defined(DEVICE_33EP512GP806) || defined(DEVICE_33EP512MC806) || defined(DEVICE_33FJ32GS406)                             \
+    || defined(DEVICE_33FJ32GS606) || defined(DEVICE_33FJ64GS406) || defined(DEVICE_33FJ64GS606) || defined(DEVICE_33FJ64MC506)                                \
+    || defined(DEVICE_33FJ64MC506A) || defined(DEVICE_33FJ64MC706) || defined(DEVICE_33FJ64MC706A) || defined(DEVICE_33FJ128MC506)                             \
+    || defined(DEVICE_33FJ128MC506A) || defined(DEVICE_33FJ128MC706) || defined(DEVICE_33FJ128MC706A)
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTC
+#    define GPIO_HAVE_PORTD
+#    define GPIO_HAVE_PORTE
+#    define GPIO_HAVE_PORTF
+#    define GPIO_HAVE_PORTG
+#    define GPIO_PORT_COUNT 6
+#    define GPIO_PORT_MAX   7
+#elif defined(DEVICE_24FJ64GA406) || defined(DEVICE_24FJ64GA410) || defined(DEVICE_24FJ64GA412) || defined(DEVICE_24FJ64GB406) || defined(DEVICE_24FJ64GB410)  \
+    || defined(DEVICE_24FJ64GB412) || defined(DEVICE_24FJ128GA406) || defined(DEVICE_24FJ128GA410) || defined(DEVICE_24FJ128GA412)                             \
+    || defined(DEVICE_24FJ128GB406) || defined(DEVICE_24FJ128GB410) || defined(DEVICE_24FJ128GB412) || defined(DEVICE_24FJ256GA406)                            \
+    || defined(DEVICE_24FJ256GA410) || defined(DEVICE_24FJ256GA412) || defined(DEVICE_24FJ256GB406) || defined(DEVICE_24FJ256GB410)                            \
+    || defined(DEVICE_24FJ256GB412)
+#    define GPIO_HAVE_PORTA
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTC
+#    define GPIO_HAVE_PORTD
+#    define GPIO_HAVE_PORTE
+#    define GPIO_HAVE_PORTF
+#    define GPIO_HAVE_PORTG
+#    define GPIO_HAVE_PORTH
+#    define GPIO_HAVE_PORTJ
+#    define GPIO_PORT_COUNT 9
+#    define GPIO_PORT_MAX   10
+#elif defined(DEVICE_24FJ64GL302) || defined(DEVICE_24FJ128GL302)
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTC
+#    define GPIO_HAVE_PORTE
+#    define GPIO_HAVE_PORTF
+#    define GPIO_HAVE_PORTG
+#    define GPIO_PORT_COUNT 5
+#    define GPIO_PORT_MAX   7
+#elif defined(DEVICE_24FJ128GL406) || defined(DEVICE_24FJ128GU406) || defined(DEVICE_24FJ256GL406) || defined(DEVICE_24FJ256GU406)                             \
+    || defined(DEVICE_24FJ512GL406) || defined(DEVICE_24FJ512GU406)
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTC
+#    define GPIO_HAVE_PORTD
+#    define GPIO_HAVE_PORTE
+#    define GPIO_HAVE_PORTF
+#    define GPIO_HAVE_PORTG
+#    define GPIO_HAVE_PORTH
+#    define GPIO_PORT_COUNT 7
+#    define GPIO_PORT_MAX   8
+#elif defined(DEVICE_24FJ128GL408) || defined(DEVICE_24FJ128GL410) || defined(DEVICE_24FJ128GU408) || defined(DEVICE_24FJ128GU410)                             \
+    || defined(DEVICE_24FJ256GL408) || defined(DEVICE_24FJ256GL410) || defined(DEVICE_24FJ256GU408) || defined(DEVICE_24FJ256GU410)                            \
+    || defined(DEVICE_24FJ512GL408) || defined(DEVICE_24FJ512GL410) || defined(DEVICE_24FJ512GU408) || defined(DEVICE_24FJ512GU410)                            \
+    || defined(DEVICE_33AK256MPS212) || defined(DEVICE_33AK256MPS512) || defined(DEVICE_33AK512MPS212) || defined(DEVICE_33AK512MPS512)                        \
+    || defined(DEVICE_33CH512MP412) || defined(DEVICE_33CH512MP412S1) || defined(DEVICE_33CH512MP712) || defined(DEVICE_33CH512MP712S1)                        \
+    || defined(DEVICE_33CH1024MP412) || defined(DEVICE_33CH1024MP412S1) || defined(DEVICE_33CH1024MP712) || defined(DEVICE_33CH1024MP712S1)
+#    define GPIO_HAVE_PORTA
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTC
+#    define GPIO_HAVE_PORTD
+#    define GPIO_HAVE_PORTE
+#    define GPIO_HAVE_PORTF
+#    define GPIO_HAVE_PORTG
+#    define GPIO_HAVE_PORTH
+#    define GPIO_PORT_COUNT 8
+#    define GPIO_PORT_MAX   8
+#elif defined(DEVICE_24HJ64GP206) || defined(DEVICE_24HJ64GP206A) || defined(DEVICE_24HJ64GP506) || defined(DEVICE_24HJ64GP506A)                               \
+    || defined(DEVICE_24HJ128GP206) || defined(DEVICE_24HJ128GP206A) || defined(DEVICE_24HJ128GP306) || defined(DEVICE_24HJ128GP306A)                          \
+    || defined(DEVICE_24HJ128GP506) || defined(DEVICE_24HJ128GP506A) || defined(DEVICE_24HJ256GP206) || defined(DEVICE_24HJ256GP206A)                          \
+    || defined(DEVICE_30F5011) || defined(DEVICE_30F6011) || defined(DEVICE_30F6011A) || defined(DEVICE_30F6012) || defined(DEVICE_30F6012A)                   \
+    || defined(DEVICE_33FJ64GP206) || defined(DEVICE_33FJ64GP206A) || defined(DEVICE_33FJ64GP306) || defined(DEVICE_33FJ64GP306A)                              \
+    || defined(DEVICE_33FJ64GP706) || defined(DEVICE_33FJ64GP706A) || defined(DEVICE_33FJ128GP206) || defined(DEVICE_33FJ128GP206A)                            \
+    || defined(DEVICE_33FJ128GP306) || defined(DEVICE_33FJ128GP306A) || defined(DEVICE_33FJ128GP706) || defined(DEVICE_33FJ128GP706A)                          \
+    || defined(DEVICE_33FJ256GP506) || defined(DEVICE_33FJ256GP506A)
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTC
+#    define GPIO_HAVE_PORTD
+#    define GPIO_HAVE_PORTF
+#    define GPIO_HAVE_PORTG
+#    define GPIO_PORT_COUNT 5
+#    define GPIO_PORT_MAX   7
+#elif defined(DEVICE_30F1010) || defined(DEVICE_30F2020)
+#    define GPIO_HAVE_PORTA
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTD
+#    define GPIO_HAVE_PORTE
+#    define GPIO_HAVE_PORTF
+#    define GPIO_PORT_COUNT 5
+#    define GPIO_PORT_MAX   6
+#elif defined(DEVICE_30F2010) || defined(DEVICE_30F3010) || defined(DEVICE_30F3011) || defined(DEVICE_30F4011) || defined(DEVICE_30F4012)
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTC
+#    define GPIO_HAVE_PORTD
+#    define GPIO_HAVE_PORTE
+#    define GPIO_HAVE_PORTF
+#    define GPIO_PORT_COUNT 5
+#    define GPIO_PORT_MAX   6
 #elif defined(DEVICE_30F2011) || defined(DEVICE_30F3012)
 #    define GPIO_HAVE_PORTB
 #    define GPIO_HAVE_PORTC
 #    define GPIO_HAVE_PORTD
 #    define GPIO_PORT_COUNT 3
 #    define GPIO_PORT_MAX   4
+#elif defined(DEVICE_30F2012) || defined(DEVICE_30F3013)
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTC
+#    define GPIO_HAVE_PORTD
+#    define GPIO_HAVE_PORTF
+#    define GPIO_PORT_COUNT 4
+#    define GPIO_PORT_MAX   6
+#elif defined(DEVICE_30F2023)
+#    define GPIO_HAVE_PORTA
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTD
+#    define GPIO_HAVE_PORTE
+#    define GPIO_HAVE_PORTF
+#    define GPIO_HAVE_PORTG
+#    define GPIO_PORT_COUNT 6
+#    define GPIO_PORT_MAX   7
+#elif defined(DEVICE_30F3014) || defined(DEVICE_30F4013)
+#    define GPIO_HAVE_PORTA
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTC
+#    define GPIO_HAVE_PORTD
+#    define GPIO_HAVE_PORTF
+#    define GPIO_PORT_COUNT 5
+#    define GPIO_PORT_MAX   6
+#elif defined(DEVICE_30F5013) || defined(DEVICE_30F6013) || defined(DEVICE_30F6013A) || defined(DEVICE_30F6014) || defined(DEVICE_30F6014A)                    \
+    || defined(DEVICE_33FJ64GP708) || defined(DEVICE_33FJ64GP708A) || defined(DEVICE_33FJ128GP708) || defined(DEVICE_33FJ128GP708A)
+#    define GPIO_HAVE_PORTA
+#    define GPIO_HAVE_PORTB
+#    define GPIO_HAVE_PORTC
+#    define GPIO_HAVE_PORTD
+#    define GPIO_HAVE_PORTF
+#    define GPIO_HAVE_PORTG
+#    define GPIO_PORT_COUNT 6
+#    define GPIO_PORT_MAX   7
 #elif defined(DEVICE_33AK32MC102) || defined(DEVICE_33AK32MC103) || defined(DEVICE_33AK32MC105) || defined(DEVICE_33AK32MC106) || defined(DEVICE_33AK64MC102)  \
     || defined(DEVICE_33AK64MC103) || defined(DEVICE_33AK64MC105) || defined(DEVICE_33AK64MC106) || defined(DEVICE_33AK128MC102)                               \
-    || defined(DEVICE_33AK128MC103) || defined(DEVICE_33AK128MC105) || defined(DEVICE_33AK128MC106) || defined(DEVICE_33CDV64MC106)                            \
-    || defined(DEVICE_33CDV128MP206) || defined(DEVICE_33CDV128MP506) || defined(DEVICE_33CDV256MP206) || defined(DEVICE_33CDV256MP506)                        \
-    || defined(DEVICE_33CDVC128MP506) || defined(DEVICE_33CDVC256MP506) || defined(DEVICE_33CDVL64MC106) || defined(DEVICE_33CH64MP205)                        \
+    || defined(DEVICE_33AK128MC103) || defined(DEVICE_33AK128MC105) || defined(DEVICE_33AK128MC106) || defined(DEVICE_33AK128MPS103)                           \
+    || defined(DEVICE_33AK128MPS105) || defined(DEVICE_33AK128MPS106) || defined(DEVICE_33AK128MPS303) || defined(DEVICE_33AK128MPS305)                        \
+    || defined(DEVICE_33AK128MPS306) || defined(DEVICE_33AK256MC205) || defined(DEVICE_33AK256MC206) || defined(DEVICE_33AK256MC208)                           \
+    || defined(DEVICE_33AK256MC505) || defined(DEVICE_33AK256MC506) || defined(DEVICE_33AK256MC508) || defined(DEVICE_33AK256MPS103)                           \
+    || defined(DEVICE_33AK256MPS105) || defined(DEVICE_33AK256MPS106) || defined(DEVICE_33AK256MPS205) || defined(DEVICE_33AK256MPS206)                        \
+    || defined(DEVICE_33AK256MPS208) || defined(DEVICE_33AK256MPS303) || defined(DEVICE_33AK256MPS305) || defined(DEVICE_33AK256MPS306)                        \
+    || defined(DEVICE_33AK256MPS505) || defined(DEVICE_33AK256MPS506) || defined(DEVICE_33AK256MPS508) || defined(DEVICE_33AK512MC205)                         \
+    || defined(DEVICE_33AK512MC206) || defined(DEVICE_33AK512MC208) || defined(DEVICE_33AK512MC505) || defined(DEVICE_33AK512MC506)                            \
+    || defined(DEVICE_33AK512MC508) || defined(DEVICE_33AK512MPS205) || defined(DEVICE_33AK512MPS206) || defined(DEVICE_33AK512MPS208)                         \
+    || defined(DEVICE_33AK512MPS505) || defined(DEVICE_33AK512MPS506) || defined(DEVICE_33AK512MPS508) || defined(DEVICE_33CDV64MC106)                         \
+    || defined(DEVICE_33CDV128MC106) || defined(DEVICE_33CDV128MC506) || defined(DEVICE_33CDV128MP206) || defined(DEVICE_33CDV128MP506)                        \
+    || defined(DEVICE_33CDV256MC106) || defined(DEVICE_33CDV256MC506) || defined(DEVICE_33CDV256MP206) || defined(DEVICE_33CDV256MP506)                        \
+    || defined(DEVICE_33CDVC128MP506) || defined(DEVICE_33CDVC256MP506) || defined(DEVICE_33CDVL64MC106) || defined(DEVICE_33CDVL128MC106)                     \
+    || defined(DEVICE_33CDVL128MC506) || defined(DEVICE_33CDVL256MC106) || defined(DEVICE_33CDVL256MC506) || defined(DEVICE_33CH64MP205)                       \
     || defined(DEVICE_33CH64MP205S1) || defined(DEVICE_33CH64MP206) || defined(DEVICE_33CH64MP206S1) || defined(DEVICE_33CH64MP505)                            \
     || defined(DEVICE_33CH64MP505S1) || defined(DEVICE_33CH64MP506) || defined(DEVICE_33CH64MP506S1) || defined(DEVICE_33CH128MP205)                           \
     || defined(DEVICE_33CH128MP205S1) || defined(DEVICE_33CH128MP206) || defined(DEVICE_33CH128MP206S1) || defined(DEVICE_33CH128MP505)                        \
@@ -130,21 +339,22 @@ extern "C" {
     || defined(DEVICE_33CH1024MP305S1) || defined(DEVICE_33CH1024MP306) || defined(DEVICE_33CH1024MP306S1) || defined(DEVICE_33CH1024MP405)                    \
     || defined(DEVICE_33CH1024MP405S1) || defined(DEVICE_33CH1024MP406) || defined(DEVICE_33CH1024MP406S1) || defined(DEVICE_33CH1024MP605)                    \
     || defined(DEVICE_33CH1024MP605S1) || defined(DEVICE_33CH1024MP606) || defined(DEVICE_33CH1024MP606S1) || defined(DEVICE_33CH1024MP705)                    \
-    || defined(DEVICE_33CH1024MP705S1) || defined(DEVICE_33CH1024MP706) || defined(DEVICE_33CH1024MP706S1) || defined(DEVICE_33CK32MC105)                      \
-    || defined(DEVICE_33CK32MP105) || defined(DEVICE_33CK32MP205) || defined(DEVICE_33CK32MP206) || defined(DEVICE_33CK32MP505) || defined(DEVICE_33CK32MP506) \
-    || defined(DEVICE_33CK64MC105) || defined(DEVICE_33CK64MP105) || defined(DEVICE_33CK64MP205) || defined(DEVICE_33CK64MP206) || defined(DEVICE_33CK64MP505) \
-    || defined(DEVICE_33CK64MP506) || defined(DEVICE_33CK128MC105) || defined(DEVICE_33CK128MC106) || defined(DEVICE_33CK128MC505)                             \
+    || defined(DEVICE_33CH1024MP705S1) || defined(DEVICE_33CH1024MP706) || defined(DEVICE_33CH1024MP706S1) || defined(DEVICE_33CK32MC005)                      \
+    || defined(DEVICE_33CK32MC105) || defined(DEVICE_33CK32MP105) || defined(DEVICE_33CK32MP205) || defined(DEVICE_33CK32MP206) || defined(DEVICE_33CK32MP505) \
+    || defined(DEVICE_33CK32MP506) || defined(DEVICE_33CK64MC005) || defined(DEVICE_33CK64MC105) || defined(DEVICE_33CK64MP105) || defined(DEVICE_33CK64MP205) \
+    || defined(DEVICE_33CK64MP206) || defined(DEVICE_33CK64MP505) || defined(DEVICE_33CK64MP506) || defined(DEVICE_33CK128MC005)                               \
+    || defined(DEVICE_33CK128MC006) || defined(DEVICE_33CK128MC105) || defined(DEVICE_33CK128MC106) || defined(DEVICE_33CK128MC505)                            \
     || defined(DEVICE_33CK128MC506) || defined(DEVICE_33CK128MP205) || defined(DEVICE_33CK128MP206) || defined(DEVICE_33CK128MP505)                            \
-    || defined(DEVICE_33CK128MP506) || defined(DEVICE_33CK256MC105) || defined(DEVICE_33CK256MC106) || defined(DEVICE_33CK256MC505)                            \
-    || defined(DEVICE_33CK256MC506) || defined(DEVICE_33CK256MP205) || defined(DEVICE_33CK256MP206) || defined(DEVICE_33CK256MP305)                            \
-    || defined(DEVICE_33CK256MP306) || defined(DEVICE_33CK256MP405) || defined(DEVICE_33CK256MP406) || defined(DEVICE_33CK256MP505)                            \
-    || defined(DEVICE_33CK256MP506) || defined(DEVICE_33CK256MP605) || defined(DEVICE_33CK256MP606) || defined(DEVICE_33CK256MP705)                            \
-    || defined(DEVICE_33CK256MP706) || defined(DEVICE_33CK512MP305) || defined(DEVICE_33CK512MP306) || defined(DEVICE_33CK512MP405)                            \
-    || defined(DEVICE_33CK512MP406) || defined(DEVICE_33CK512MP605) || defined(DEVICE_33CK512MP606) || defined(DEVICE_33CK512MP705)                            \
-    || defined(DEVICE_33CK512MP706) || defined(DEVICE_33CK1024MP405) || defined(DEVICE_33CK1024MP406) || defined(DEVICE_33CK1024MP705)                         \
-    || defined(DEVICE_33CK1024MP706) || defined(DEVICE_33EP16GS506) || defined(DEVICE_33EP32GS506) || defined(DEVICE_33EP64GS506)                              \
-    || defined(DEVICE_33EP64GS805) || defined(DEVICE_33EP64GS806) || defined(DEVICE_33EP128GS705) || defined(DEVICE_33EP128GS706)                              \
-    || defined(DEVICE_33EP128GS805) || defined(DEVICE_33EP128GS806)
+    || defined(DEVICE_33CK128MP506) || defined(DEVICE_33CK256MC005) || defined(DEVICE_33CK256MC006) || defined(DEVICE_33CK256MC105)                            \
+    || defined(DEVICE_33CK256MC106) || defined(DEVICE_33CK256MC505) || defined(DEVICE_33CK256MC506) || defined(DEVICE_33CK256MP205)                            \
+    || defined(DEVICE_33CK256MP206) || defined(DEVICE_33CK256MP305) || defined(DEVICE_33CK256MP306) || defined(DEVICE_33CK256MP405)                            \
+    || defined(DEVICE_33CK256MP406) || defined(DEVICE_33CK256MP505) || defined(DEVICE_33CK256MP506) || defined(DEVICE_33CK256MP605)                            \
+    || defined(DEVICE_33CK256MP606) || defined(DEVICE_33CK256MP705) || defined(DEVICE_33CK256MP706) || defined(DEVICE_33CK512MP305)                            \
+    || defined(DEVICE_33CK512MP306) || defined(DEVICE_33CK512MP405) || defined(DEVICE_33CK512MP406) || defined(DEVICE_33CK512MP605)                            \
+    || defined(DEVICE_33CK512MP606) || defined(DEVICE_33CK512MP705) || defined(DEVICE_33CK512MP706) || defined(DEVICE_33CK1024MP405)                           \
+    || defined(DEVICE_33CK1024MP406) || defined(DEVICE_33CK1024MP705) || defined(DEVICE_33CK1024MP706) || defined(DEVICE_33EP16GS506)                          \
+    || defined(DEVICE_33EP32GS506) || defined(DEVICE_33EP64GS506) || defined(DEVICE_33EP64GS805) || defined(DEVICE_33EP64GS806)                                \
+    || defined(DEVICE_33EP128GS705) || defined(DEVICE_33EP128GS706) || defined(DEVICE_33EP128GS805) || defined(DEVICE_33EP128GS806)
 #    define GPIO_HAVE_PORTA
 #    define GPIO_HAVE_PORTB
 #    define GPIO_HAVE_PORTC
@@ -172,37 +382,6 @@ extern "C" {
 #    define GPIO_HAVE_PORTE
 #    define GPIO_PORT_COUNT 5
 #    define GPIO_PORT_MAX   5
-#elif defined(DEVICE_30F2012) || defined(DEVICE_30F3013)
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTC
-#    define GPIO_HAVE_PORTD
-#    define GPIO_HAVE_PORTF
-#    define GPIO_PORT_COUNT 4
-#    define GPIO_PORT_MAX   6
-#elif defined(DEVICE_30F3014) || defined(DEVICE_30F4013)
-#    define GPIO_HAVE_PORTA
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTC
-#    define GPIO_HAVE_PORTD
-#    define GPIO_HAVE_PORTF
-#    define GPIO_PORT_COUNT 5
-#    define GPIO_PORT_MAX   6
-#elif defined(DEVICE_30F1010) || defined(DEVICE_30F2020)
-#    define GPIO_HAVE_PORTA
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTD
-#    define GPIO_HAVE_PORTE
-#    define GPIO_HAVE_PORTF
-#    define GPIO_PORT_COUNT 5
-#    define GPIO_PORT_MAX   6
-#elif defined(DEVICE_30F2010) || defined(DEVICE_30F3010) || defined(DEVICE_30F3011) || defined(DEVICE_30F4011) || defined(DEVICE_30F4012)
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTC
-#    define GPIO_HAVE_PORTD
-#    define GPIO_HAVE_PORTE
-#    define GPIO_HAVE_PORTF
-#    define GPIO_PORT_COUNT 5
-#    define GPIO_PORT_MAX   6
 #elif defined(DEVICE_33CH512MP410) || defined(DEVICE_33CH512MP410S1) || defined(DEVICE_33CH512MP710) || defined(DEVICE_33CH512MP710S1)                         \
     || defined(DEVICE_33CH1024MP410) || defined(DEVICE_33CH1024MP410S1) || defined(DEVICE_33CH1024MP710) || defined(DEVICE_33CH1024MP710S1)                    \
     || defined(DEVICE_33CK256MP410) || defined(DEVICE_33CK256MP710) || defined(DEVICE_33CK512MP410) || defined(DEVICE_33CK512MP710)                            \
@@ -215,171 +394,6 @@ extern "C" {
 #    define GPIO_HAVE_PORTF
 #    define GPIO_PORT_COUNT 6
 #    define GPIO_PORT_MAX   6
-#elif defined(DEVICE_24HJ64GP206) || defined(DEVICE_24HJ64GP206A) || defined(DEVICE_24HJ64GP506) || defined(DEVICE_24HJ64GP506A)                               \
-    || defined(DEVICE_24HJ128GP206) || defined(DEVICE_24HJ128GP206A) || defined(DEVICE_24HJ128GP306) || defined(DEVICE_24HJ128GP306A)                          \
-    || defined(DEVICE_24HJ128GP506) || defined(DEVICE_24HJ128GP506A) || defined(DEVICE_24HJ256GP206) || defined(DEVICE_24HJ256GP206A)                          \
-    || defined(DEVICE_30F5011) || defined(DEVICE_30F6011) || defined(DEVICE_30F6011A) || defined(DEVICE_30F6012) || defined(DEVICE_30F6012A)                   \
-    || defined(DEVICE_33FJ64GP206) || defined(DEVICE_33FJ64GP206A) || defined(DEVICE_33FJ64GP306) || defined(DEVICE_33FJ64GP306A)                              \
-    || defined(DEVICE_33FJ64GP706) || defined(DEVICE_33FJ64GP706A) || defined(DEVICE_33FJ128GP206) || defined(DEVICE_33FJ128GP206A)                            \
-    || defined(DEVICE_33FJ128GP306) || defined(DEVICE_33FJ128GP306A) || defined(DEVICE_33FJ128GP706) || defined(DEVICE_33FJ128GP706A)                          \
-    || defined(DEVICE_33FJ256GP506) || defined(DEVICE_33FJ256GP506A)
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTC
-#    define GPIO_HAVE_PORTD
-#    define GPIO_HAVE_PORTF
-#    define GPIO_HAVE_PORTG
-#    define GPIO_PORT_COUNT 5
-#    define GPIO_PORT_MAX   7
-#elif defined(DEVICE_30F5013) || defined(DEVICE_30F6013) || defined(DEVICE_30F6013A) || defined(DEVICE_30F6014) || defined(DEVICE_30F6014A)                    \
-    || defined(DEVICE_33FJ64GP708) || defined(DEVICE_33FJ64GP708A) || defined(DEVICE_33FJ128GP708) || defined(DEVICE_33FJ128GP708A)
-#    define GPIO_HAVE_PORTA
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTC
-#    define GPIO_HAVE_PORTD
-#    define GPIO_HAVE_PORTF
-#    define GPIO_HAVE_PORTG
-#    define GPIO_PORT_COUNT 6
-#    define GPIO_PORT_MAX   7
-#elif defined(DEVICE_24FJ64GL302) || defined(DEVICE_24FJ128GL302)
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTC
-#    define GPIO_HAVE_PORTE
-#    define GPIO_HAVE_PORTF
-#    define GPIO_HAVE_PORTG
-#    define GPIO_PORT_COUNT 5
-#    define GPIO_PORT_MAX   7
-#elif defined(DEVICE_30F2023)
-#    define GPIO_HAVE_PORTA
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTD
-#    define GPIO_HAVE_PORTE
-#    define GPIO_HAVE_PORTF
-#    define GPIO_HAVE_PORTG
-#    define GPIO_PORT_COUNT 6
-#    define GPIO_PORT_MAX   7
-#elif defined(DEVICE_24EP512GP806) || defined(DEVICE_24FJ64GA006) || defined(DEVICE_24FJ64GA106) || defined(DEVICE_24FJ64GA306) || defined(DEVICE_24FJ64GB106) \
-    || defined(DEVICE_24FJ64GC006) || defined(DEVICE_24FJ64GL303) || defined(DEVICE_24FJ64GL305) || defined(DEVICE_24FJ96GA006)                                \
-    || defined(DEVICE_24FJ128DA106) || defined(DEVICE_24FJ128DA206) || defined(DEVICE_24FJ128GA006) || defined(DEVICE_24FJ128GA106)                            \
-    || defined(DEVICE_24FJ128GA306) || defined(DEVICE_24FJ128GA606) || defined(DEVICE_24FJ128GB106) || defined(DEVICE_24FJ128GB206)                            \
-    || defined(DEVICE_24FJ128GB606) || defined(DEVICE_24FJ128GC006) || defined(DEVICE_24FJ128GL303) || defined(DEVICE_24FJ128GL305)                            \
-    || defined(DEVICE_24FJ128GL405) || defined(DEVICE_24FJ128GU405) || defined(DEVICE_24FJ192GA106) || defined(DEVICE_24FJ192GB106)                            \
-    || defined(DEVICE_24FJ256DA106) || defined(DEVICE_24FJ256DA206) || defined(DEVICE_24FJ256GA106) || defined(DEVICE_24FJ256GA606)                            \
-    || defined(DEVICE_24FJ256GB106) || defined(DEVICE_24FJ256GB206) || defined(DEVICE_24FJ256GB606) || defined(DEVICE_24FJ256GL405)                            \
-    || defined(DEVICE_24FJ256GU405) || defined(DEVICE_24FJ512GA606) || defined(DEVICE_24FJ512GB606) || defined(DEVICE_24FJ512GL405)                            \
-    || defined(DEVICE_24FJ512GU405) || defined(DEVICE_24FJ1024GA606) || defined(DEVICE_24FJ1024GB606) || defined(DEVICE_30F5015) || defined(DEVICE_30F6015)    \
-    || defined(DEVICE_33EP256MU806) || defined(DEVICE_33EP512GP806) || defined(DEVICE_33EP512MC806) || defined(DEVICE_33FJ32GS406)                             \
-    || defined(DEVICE_33FJ32GS606) || defined(DEVICE_33FJ64GS406) || defined(DEVICE_33FJ64GS606) || defined(DEVICE_33FJ64MC506)                                \
-    || defined(DEVICE_33FJ64MC506A) || defined(DEVICE_33FJ64MC706) || defined(DEVICE_33FJ64MC706A) || defined(DEVICE_33FJ128MC506)                             \
-    || defined(DEVICE_33FJ128MC506A) || defined(DEVICE_33FJ128MC706) || defined(DEVICE_33FJ128MC706A)
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTC
-#    define GPIO_HAVE_PORTD
-#    define GPIO_HAVE_PORTE
-#    define GPIO_HAVE_PORTF
-#    define GPIO_HAVE_PORTG
-#    define GPIO_PORT_COUNT 6
-#    define GPIO_PORT_MAX   7
-#elif defined(DEVICE_24EP64GP206) || defined(DEVICE_24EP64MC206) || defined(DEVICE_24EP128GP206) || defined(DEVICE_24EP128MC206)                               \
-    || defined(DEVICE_24EP256GP206) || defined(DEVICE_24EP256GU810) || defined(DEVICE_24EP256MC206) || defined(DEVICE_24EP512GP206)                            \
-    || defined(DEVICE_24EP512GU810) || defined(DEVICE_24EP512MC206) || defined(DEVICE_24FJ64GA008) || defined(DEVICE_24FJ64GA010)                              \
-    || defined(DEVICE_24FJ64GA108) || defined(DEVICE_24FJ64GA110) || defined(DEVICE_24FJ64GA308) || defined(DEVICE_24FJ64GA310) || defined(DEVICE_24FJ64GB108) \
-    || defined(DEVICE_24FJ64GB110) || defined(DEVICE_24FJ64GC010) || defined(DEVICE_24FJ64GL306) || defined(DEVICE_24FJ96GA008) || defined(DEVICE_24FJ96GA010) \
-    || defined(DEVICE_24FJ128DA110) || defined(DEVICE_24FJ128DA210) || defined(DEVICE_24FJ128GA008) || defined(DEVICE_24FJ128GA010)                            \
-    || defined(DEVICE_24FJ128GA108) || defined(DEVICE_24FJ128GA110) || defined(DEVICE_24FJ128GA308) || defined(DEVICE_24FJ128GA310)                            \
-    || defined(DEVICE_24FJ128GA610) || defined(DEVICE_24FJ128GB108) || defined(DEVICE_24FJ128GB110) || defined(DEVICE_24FJ128GB210)                            \
-    || defined(DEVICE_24FJ128GB610) || defined(DEVICE_24FJ128GC010) || defined(DEVICE_24FJ128GL306) || defined(DEVICE_24FJ192GA108)                            \
-    || defined(DEVICE_24FJ192GA110) || defined(DEVICE_24FJ192GB108) || defined(DEVICE_24FJ192GB110) || defined(DEVICE_24FJ256DA110)                            \
-    || defined(DEVICE_24FJ256DA210) || defined(DEVICE_24FJ256GA108) || defined(DEVICE_24FJ256GA110) || defined(DEVICE_24FJ256GA610)                            \
-    || defined(DEVICE_24FJ256GB108) || defined(DEVICE_24FJ256GB110) || defined(DEVICE_24FJ256GB210) || defined(DEVICE_24FJ256GB610)                            \
-    || defined(DEVICE_24FJ512GA610) || defined(DEVICE_24FJ512GB610) || defined(DEVICE_24FJ1024GA610) || defined(DEVICE_24FJ1024GB610)                          \
-    || defined(DEVICE_24HJ64GP210) || defined(DEVICE_24HJ64GP210A) || defined(DEVICE_24HJ64GP510) || defined(DEVICE_24HJ64GP510A)                              \
-    || defined(DEVICE_24HJ128GP210) || defined(DEVICE_24HJ128GP210A) || defined(DEVICE_24HJ128GP310) || defined(DEVICE_24HJ128GP310A)                          \
-    || defined(DEVICE_24HJ128GP510) || defined(DEVICE_24HJ128GP510A) || defined(DEVICE_24HJ256GP210) || defined(DEVICE_24HJ256GP210A)                          \
-    || defined(DEVICE_24HJ256GP610) || defined(DEVICE_24HJ256GP610A) || defined(DEVICE_30F5016) || defined(DEVICE_30F6010) || defined(DEVICE_30F6010A)         \
-    || defined(DEVICE_33EDV64MC205) || defined(DEVICE_33EP64GP506) || defined(DEVICE_33EP64MC206) || defined(DEVICE_33EP64MC506)                               \
-    || defined(DEVICE_33EP128GM306) || defined(DEVICE_33EP128GM310) || defined(DEVICE_33EP128GM706) || defined(DEVICE_33EP128GM710)                            \
-    || defined(DEVICE_33EP128GP506) || defined(DEVICE_33EP128MC206) || defined(DEVICE_33EP128MC506) || defined(DEVICE_33EP256GM306)                            \
-    || defined(DEVICE_33EP256GM310) || defined(DEVICE_33EP256GM706) || defined(DEVICE_33EP256GM710) || defined(DEVICE_33EP256GP506)                            \
-    || defined(DEVICE_33EP256MC206) || defined(DEVICE_33EP256MC506) || defined(DEVICE_33EP256MU810) || defined(DEVICE_33EP512GM306)                            \
-    || defined(DEVICE_33EP512GM310) || defined(DEVICE_33EP512GM706) || defined(DEVICE_33EP512GM710) || defined(DEVICE_33EP512GP506)                            \
-    || defined(DEVICE_33EP512MC206) || defined(DEVICE_33EP512MC506) || defined(DEVICE_33EP512MU810) || defined(DEVICE_33EV32GM006)                             \
-    || defined(DEVICE_33EV32GM106) || defined(DEVICE_33EV64GM006) || defined(DEVICE_33EV64GM106) || defined(DEVICE_33EV128GM006)                               \
-    || defined(DEVICE_33EV128GM106) || defined(DEVICE_33EV256GM006) || defined(DEVICE_33EV256GM106) || defined(DEVICE_33FJ32GS608)                             \
-    || defined(DEVICE_33FJ32GS610) || defined(DEVICE_33FJ64GP310) || defined(DEVICE_33FJ64GP310A) || defined(DEVICE_33FJ64GP710)                               \
-    || defined(DEVICE_33FJ64GP710A) || defined(DEVICE_33FJ64GS608) || defined(DEVICE_33FJ64GS610) || defined(DEVICE_33FJ64MC508)                               \
-    || defined(DEVICE_33FJ64MC508A) || defined(DEVICE_33FJ64MC510) || defined(DEVICE_33FJ64MC510A) || defined(DEVICE_33FJ64MC710)                              \
-    || defined(DEVICE_33FJ64MC710A) || defined(DEVICE_33FJ128GP310) || defined(DEVICE_33FJ128GP310A) || defined(DEVICE_33FJ128GP710)                           \
-    || defined(DEVICE_33FJ128GP710A) || defined(DEVICE_33FJ128MC510) || defined(DEVICE_33FJ128MC510A) || defined(DEVICE_33FJ128MC708)                          \
-    || defined(DEVICE_33FJ128MC708A) || defined(DEVICE_33FJ128MC710) || defined(DEVICE_33FJ128MC710A) || defined(DEVICE_33FJ256GP510)                          \
-    || defined(DEVICE_33FJ256GP510A) || defined(DEVICE_33FJ256GP710) || defined(DEVICE_33FJ256GP710A) || defined(DEVICE_33FJ256MC510)                          \
-    || defined(DEVICE_33FJ256MC510A) || defined(DEVICE_33FJ256MC710) || defined(DEVICE_33FJ256MC710A)
-#    define GPIO_HAVE_PORTA
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTC
-#    define GPIO_HAVE_PORTD
-#    define GPIO_HAVE_PORTE
-#    define GPIO_HAVE_PORTF
-#    define GPIO_HAVE_PORTG
-#    define GPIO_PORT_COUNT 7
-#    define GPIO_PORT_MAX   7
-#elif defined(DEVICE_24FJ128GL406) || defined(DEVICE_24FJ128GU406) || defined(DEVICE_24FJ256GL406) || defined(DEVICE_24FJ256GU406)                             \
-    || defined(DEVICE_24FJ512GL406) || defined(DEVICE_24FJ512GU406)
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTC
-#    define GPIO_HAVE_PORTD
-#    define GPIO_HAVE_PORTE
-#    define GPIO_HAVE_PORTF
-#    define GPIO_HAVE_PORTG
-#    define GPIO_HAVE_PORTH
-#    define GPIO_PORT_COUNT 7
-#    define GPIO_PORT_MAX   8
-#elif defined(DEVICE_24FJ128GL408) || defined(DEVICE_24FJ128GL410) || defined(DEVICE_24FJ128GU408) || defined(DEVICE_24FJ128GU410)                             \
-    || defined(DEVICE_24FJ256GL408) || defined(DEVICE_24FJ256GL410) || defined(DEVICE_24FJ256GU408) || defined(DEVICE_24FJ256GU410)                            \
-    || defined(DEVICE_24FJ512GL408) || defined(DEVICE_24FJ512GL410) || defined(DEVICE_24FJ512GU408) || defined(DEVICE_24FJ512GU410)                            \
-    || defined(DEVICE_33CH512MP412) || defined(DEVICE_33CH512MP412S1) || defined(DEVICE_33CH512MP712) || defined(DEVICE_33CH512MP712S1)                        \
-    || defined(DEVICE_33CH1024MP412) || defined(DEVICE_33CH1024MP412S1) || defined(DEVICE_33CH1024MP712) || defined(DEVICE_33CH1024MP712S1)
-#    define GPIO_HAVE_PORTA
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTC
-#    define GPIO_HAVE_PORTD
-#    define GPIO_HAVE_PORTE
-#    define GPIO_HAVE_PORTF
-#    define GPIO_HAVE_PORTG
-#    define GPIO_HAVE_PORTH
-#    define GPIO_PORT_COUNT 8
-#    define GPIO_PORT_MAX   8
-#elif defined(DEVICE_24FJ64GA406) || defined(DEVICE_24FJ64GA410) || defined(DEVICE_24FJ64GA412) || defined(DEVICE_24FJ64GB406) || defined(DEVICE_24FJ64GB410)  \
-    || defined(DEVICE_24FJ64GB412) || defined(DEVICE_24FJ128GA406) || defined(DEVICE_24FJ128GA410) || defined(DEVICE_24FJ128GA412)                             \
-    || defined(DEVICE_24FJ128GB406) || defined(DEVICE_24FJ128GB410) || defined(DEVICE_24FJ128GB412) || defined(DEVICE_24FJ256GA406)                            \
-    || defined(DEVICE_24FJ256GA410) || defined(DEVICE_24FJ256GA412) || defined(DEVICE_24FJ256GB406) || defined(DEVICE_24FJ256GB410)                            \
-    || defined(DEVICE_24FJ256GB412)
-#    define GPIO_HAVE_PORTA
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTC
-#    define GPIO_HAVE_PORTD
-#    define GPIO_HAVE_PORTE
-#    define GPIO_HAVE_PORTF
-#    define GPIO_HAVE_PORTG
-#    define GPIO_HAVE_PORTH
-#    define GPIO_HAVE_PORTJ
-#    define GPIO_PORT_COUNT 9
-#    define GPIO_PORT_MAX   10
-#elif defined(DEVICE_24EP256GU814) || defined(DEVICE_24EP512GU814) || defined(DEVICE_33EP256MU814) || defined(DEVICE_33EP512MU814)
-#    define GPIO_HAVE_PORTA
-#    define GPIO_HAVE_PORTB
-#    define GPIO_HAVE_PORTC
-#    define GPIO_HAVE_PORTD
-#    define GPIO_HAVE_PORTE
-#    define GPIO_HAVE_PORTF
-#    define GPIO_HAVE_PORTG
-#    define GPIO_HAVE_PORTH
-#    define GPIO_HAVE_PORTJ
-#    define GPIO_HAVE_PORTK
-#    define GPIO_PORT_COUNT 10
-#    define GPIO_PORT_MAX   11
-#else
-#    define GPIO_PORT_COUNT 0
-#    define GPIO_PORT_MAX   0
 #endif
 
 #define GPIO_MAX_PORTWIDTH     16

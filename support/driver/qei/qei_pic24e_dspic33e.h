@@ -25,7 +25,9 @@ extern "C" {
     || defined(DEVICE_24EP64MC204) || defined(DEVICE_24EP64MC206) || defined(DEVICE_24EP128MC202) || defined(DEVICE_24EP128MC204)                              \
     || defined(DEVICE_24EP128MC206) || defined(DEVICE_24EP256MC202) || defined(DEVICE_24EP256MC204) || defined(DEVICE_24EP256MC206)                            \
     || defined(DEVICE_24EP512MC202) || defined(DEVICE_24EP512MC204) || defined(DEVICE_24EP512MC206) || defined(DEVICE_33CDV64MC106)                            \
-    || defined(DEVICE_33CDVL64MC106) || defined(DEVICE_33CH64MP202) || defined(DEVICE_33CH64MP202S1) || defined(DEVICE_33CH64MP203)                            \
+    || defined(DEVICE_33CDV128MC106) || defined(DEVICE_33CDV128MC506) || defined(DEVICE_33CDV256MC106) || defined(DEVICE_33CDV256MC506)                        \
+    || defined(DEVICE_33CDVL64MC106) || defined(DEVICE_33CDVL128MC106) || defined(DEVICE_33CDVL128MC506) || defined(DEVICE_33CDVL256MC106)                     \
+    || defined(DEVICE_33CDVL256MC506) || defined(DEVICE_33CH64MP202) || defined(DEVICE_33CH64MP202S1) || defined(DEVICE_33CH64MP203)                           \
     || defined(DEVICE_33CH64MP203S1) || defined(DEVICE_33CH64MP205) || defined(DEVICE_33CH64MP205S1) || defined(DEVICE_33CH64MP206)                            \
     || defined(DEVICE_33CH64MP206S1) || defined(DEVICE_33CH64MP208) || defined(DEVICE_33CH64MP208S1) || defined(DEVICE_33CH64MP502)                            \
     || defined(DEVICE_33CH64MP502S1) || defined(DEVICE_33CH64MP503) || defined(DEVICE_33CH64MP503S1) || defined(DEVICE_33CH64MP505)                            \

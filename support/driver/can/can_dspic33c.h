@@ -18,14 +18,17 @@
 extern "C" {
 #endif
 
-#if defined(DEVICE_33CDV128MP506) || defined(DEVICE_33CDV256MP506) || defined(DEVICE_33CDVC128MP506) || defined(DEVICE_33CDVC256MP506)                         \
+#if defined(DEVICE_33CDV128MC506) || defined(DEVICE_33CDV128MP506) || defined(DEVICE_33CDV256MC506) || defined(DEVICE_33CDV256MP506)                           \
+    || defined(DEVICE_33CDVC128MP506) || defined(DEVICE_33CDVC256MP506) || defined(DEVICE_33CDVL128MC506) || defined(DEVICE_33CDVL256MC506)                    \
     || defined(DEVICE_33CH64MP502) || defined(DEVICE_33CH64MP503) || defined(DEVICE_33CH64MP505) || defined(DEVICE_33CH64MP506) || defined(DEVICE_33CH64MP508) \
     || defined(DEVICE_33CH128MP502) || defined(DEVICE_33CH128MP503) || defined(DEVICE_33CH128MP505) || defined(DEVICE_33CH128MP506)                            \
     || defined(DEVICE_33CH128MP508) || defined(DEVICE_33CK32MP502) || defined(DEVICE_33CK32MP503) || defined(DEVICE_33CK32MP505)                               \
     || defined(DEVICE_33CK32MP506) || defined(DEVICE_33CK64MP502) || defined(DEVICE_33CK64MP503) || defined(DEVICE_33CK64MP505) || defined(DEVICE_33CK64MP506) \
-    || defined(DEVICE_33CK64MP508) || defined(DEVICE_33CK128MC502) || defined(DEVICE_33CK128MC503) || defined(DEVICE_33CK128MC505)                             \
+    || defined(DEVICE_33CK64MP508) || defined(DEVICE_33CK128MC002) || defined(DEVICE_33CK128MC003) || defined(DEVICE_33CK128MC005)                             \
+    || defined(DEVICE_33CK128MC006) || defined(DEVICE_33CK128MC502) || defined(DEVICE_33CK128MC503) || defined(DEVICE_33CK128MC505)                            \
     || defined(DEVICE_33CK128MC506) || defined(DEVICE_33CK128MP502) || defined(DEVICE_33CK128MP503) || defined(DEVICE_33CK128MP505)                            \
-    || defined(DEVICE_33CK128MP506) || defined(DEVICE_33CK128MP508) || defined(DEVICE_33CK256MC502) || defined(DEVICE_33CK256MC503)                            \
+    || defined(DEVICE_33CK128MP506) || defined(DEVICE_33CK128MP508) || defined(DEVICE_33CK256MC002) || defined(DEVICE_33CK256MC003)                            \
+    || defined(DEVICE_33CK256MC005) || defined(DEVICE_33CK256MC006) || defined(DEVICE_33CK256MC502) || defined(DEVICE_33CK256MC503)                            \
     || defined(DEVICE_33CK256MC505) || defined(DEVICE_33CK256MC506) || defined(DEVICE_33CK256MP502) || defined(DEVICE_33CK256MP503)                            \
     || defined(DEVICE_33CK256MP505) || defined(DEVICE_33CK256MP506) || defined(DEVICE_33CK256MP508)
 #    define CAN_COUNT 1

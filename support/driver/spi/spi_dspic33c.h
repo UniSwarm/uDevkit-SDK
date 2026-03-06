@@ -28,7 +28,9 @@ extern "C" {
     || defined(DEVICE_33CH512MP206S1) || defined(DEVICE_33CH512MP208S1) || defined(DEVICE_33CH512MP505S1) || defined(DEVICE_33CH512MP506S1)                    \
     || defined(DEVICE_33CH512MP508S1)
 #    define SPI_COUNT 1
-#elif defined(DEVICE_33CDV64MC106) || defined(DEVICE_33CDVL64MC106) || defined(DEVICE_33CH64MP202) || defined(DEVICE_33CH64MP203)                              \
+#elif defined(DEVICE_33CDV64MC106) || defined(DEVICE_33CDV128MC106) || defined(DEVICE_33CDV128MC506) || defined(DEVICE_33CDV256MC106)                          \
+    || defined(DEVICE_33CDV256MC506) || defined(DEVICE_33CDVL64MC106) || defined(DEVICE_33CDVL128MC106) || defined(DEVICE_33CDVL128MC506)                      \
+    || defined(DEVICE_33CDVL256MC106) || defined(DEVICE_33CDVL256MC506) || defined(DEVICE_33CH64MP202) || defined(DEVICE_33CH64MP203)                          \
     || defined(DEVICE_33CH64MP205) || defined(DEVICE_33CH64MP206) || defined(DEVICE_33CH64MP208) || defined(DEVICE_33CH64MP502) || defined(DEVICE_33CH64MP503) \
     || defined(DEVICE_33CH64MP505) || defined(DEVICE_33CH64MP506) || defined(DEVICE_33CH64MP508) || defined(DEVICE_33CH128MP202)                               \
     || defined(DEVICE_33CH128MP203) || defined(DEVICE_33CH128MP205) || defined(DEVICE_33CH128MP206) || defined(DEVICE_33CH128MP208)                            \
@@ -44,10 +46,13 @@ extern "C" {
     || defined(DEVICE_33CH1024MP308S1) || defined(DEVICE_33CH1024MP405S1) || defined(DEVICE_33CH1024MP406S1) || defined(DEVICE_33CH1024MP408S1)                \
     || defined(DEVICE_33CH1024MP410S1) || defined(DEVICE_33CH1024MP412S1) || defined(DEVICE_33CH1024MP605S1) || defined(DEVICE_33CH1024MP606S1)                \
     || defined(DEVICE_33CH1024MP608S1) || defined(DEVICE_33CH1024MP705S1) || defined(DEVICE_33CH1024MP706S1) || defined(DEVICE_33CH1024MP708S1)                \
-    || defined(DEVICE_33CH1024MP710S1) || defined(DEVICE_33CH1024MP712S1) || defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK32MC103)                        \
-    || defined(DEVICE_33CK32MC105) || defined(DEVICE_33CK64MC102) || defined(DEVICE_33CK64MC103) || defined(DEVICE_33CK64MC105)                                \
+    || defined(DEVICE_33CH1024MP710S1) || defined(DEVICE_33CH1024MP712S1) || defined(DEVICE_33CK32MC002) || defined(DEVICE_33CK32MC003)                        \
+    || defined(DEVICE_33CK32MC005) || defined(DEVICE_33CK32MC102) || defined(DEVICE_33CK32MC103) || defined(DEVICE_33CK32MC105) || defined(DEVICE_33CK64MC002) \
+    || defined(DEVICE_33CK64MC003) || defined(DEVICE_33CK64MC005) || defined(DEVICE_33CK64MC102) || defined(DEVICE_33CK64MC103) || defined(DEVICE_33CK64MC105) \
+    || defined(DEVICE_33CK128MC002) || defined(DEVICE_33CK128MC003) || defined(DEVICE_33CK128MC005) || defined(DEVICE_33CK128MC006)                            \
     || defined(DEVICE_33CK128MC102) || defined(DEVICE_33CK128MC103) || defined(DEVICE_33CK128MC105) || defined(DEVICE_33CK128MC106)                            \
     || defined(DEVICE_33CK128MC502) || defined(DEVICE_33CK128MC503) || defined(DEVICE_33CK128MC505) || defined(DEVICE_33CK128MC506)                            \
+    || defined(DEVICE_33CK256MC002) || defined(DEVICE_33CK256MC003) || defined(DEVICE_33CK256MC005) || defined(DEVICE_33CK256MC006)                            \
     || defined(DEVICE_33CK256MC102) || defined(DEVICE_33CK256MC103) || defined(DEVICE_33CK256MC105) || defined(DEVICE_33CK256MC106)                            \
     || defined(DEVICE_33CK256MC502) || defined(DEVICE_33CK256MC503) || defined(DEVICE_33CK256MC505) || defined(DEVICE_33CK256MC506)
 #    define SPI_COUNT 2
