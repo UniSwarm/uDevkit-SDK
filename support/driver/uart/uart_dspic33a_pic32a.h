@@ -33,6 +33,10 @@ extern "C" {
     || defined(DEVICE_33AK512MPS208) || defined(DEVICE_33AK512MPS210) || defined(DEVICE_33AK512MPS212) || defined(DEVICE_33AK512MPS505)                        \
     || defined(DEVICE_33AK512MPS506) || defined(DEVICE_33AK512MPS508) || defined(DEVICE_33AK512MPS510) || defined(DEVICE_33AK512MPS512)
 #    define UART_COUNT 3
+#elif defined(DEVICE_33AK128MPS103) || defined(DEVICE_33AK128MPS105) || defined(DEVICE_33AK128MPS106) || defined(DEVICE_33AK128MPS303)                         \
+    || defined(DEVICE_33AK128MPS305) || defined(DEVICE_33AK128MPS306) || defined(DEVICE_33AK256MPS103) || defined(DEVICE_33AK256MPS105)                        \
+    || defined(DEVICE_33AK256MPS106) || defined(DEVICE_33AK256MPS303) || defined(DEVICE_33AK256MPS305) || defined(DEVICE_33AK256MPS306)
+#    define UART_COUNT 4
 #else
 #    define UART_COUNT 0
 #endif

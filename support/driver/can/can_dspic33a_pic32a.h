@@ -18,7 +18,10 @@
 extern "C" {
 #endif
 
-#if defined(DEVICE_33AK256MC505) || defined(DEVICE_33AK256MC506) || defined(DEVICE_33AK256MC508) || defined(DEVICE_33AK256MC510)                               \
+#if defined(DEVICE_33AK128MPS303) || defined(DEVICE_33AK128MPS305) || defined(DEVICE_33AK128MPS306) || defined(DEVICE_33AK256MPS303)                           \
+    || defined(DEVICE_33AK256MPS305) || defined(DEVICE_33AK256MPS306)
+#    define CAN_COUNT 1
+#elif defined(DEVICE_33AK256MC505) || defined(DEVICE_33AK256MC506) || defined(DEVICE_33AK256MC508) || defined(DEVICE_33AK256MC510)                             \
     || defined(DEVICE_33AK256MPS505) || defined(DEVICE_33AK256MPS506) || defined(DEVICE_33AK256MPS508) || defined(DEVICE_33AK256MPS510)                        \
     || defined(DEVICE_33AK256MPS512) || defined(DEVICE_33AK512MC505) || defined(DEVICE_33AK512MC506) || defined(DEVICE_33AK512MC508)                           \
     || defined(DEVICE_33AK512MC510) || defined(DEVICE_33AK512MPS505) || defined(DEVICE_33AK512MPS506) || defined(DEVICE_33AK512MPS508)                         \

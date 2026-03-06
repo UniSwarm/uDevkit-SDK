@@ -25,9 +25,12 @@ extern "C" {
     || defined(DEVICE_32AK6416GC41064) || defined(DEVICE_33AK32MC102) || defined(DEVICE_33AK32MC103) || defined(DEVICE_33AK32MC105)                            \
     || defined(DEVICE_33AK32MC106) || defined(DEVICE_33AK64MC102) || defined(DEVICE_33AK64MC103) || defined(DEVICE_33AK64MC105) || defined(DEVICE_33AK64MC106) \
     || defined(DEVICE_33AK128MC102) || defined(DEVICE_33AK128MC103) || defined(DEVICE_33AK128MC105) || defined(DEVICE_33AK128MC106)                            \
-    || defined(DEVICE_33AK256MC205) || defined(DEVICE_33AK256MC206) || defined(DEVICE_33AK256MC208) || defined(DEVICE_33AK256MC505)                            \
-    || defined(DEVICE_33AK256MC506) || defined(DEVICE_33AK256MC508) || defined(DEVICE_33AK256MPS205) || defined(DEVICE_33AK256MPS206)                          \
-    || defined(DEVICE_33AK256MPS208) || defined(DEVICE_33AK256MPS505) || defined(DEVICE_33AK256MPS506) || defined(DEVICE_33AK256MPS508)                        \
+    || defined(DEVICE_33AK128MPS103) || defined(DEVICE_33AK128MPS105) || defined(DEVICE_33AK128MPS106) || defined(DEVICE_33AK128MPS303)                        \
+    || defined(DEVICE_33AK128MPS305) || defined(DEVICE_33AK128MPS306) || defined(DEVICE_33AK256MC205) || defined(DEVICE_33AK256MC206)                          \
+    || defined(DEVICE_33AK256MC208) || defined(DEVICE_33AK256MC505) || defined(DEVICE_33AK256MC506) || defined(DEVICE_33AK256MC508)                            \
+    || defined(DEVICE_33AK256MPS103) || defined(DEVICE_33AK256MPS105) || defined(DEVICE_33AK256MPS106) || defined(DEVICE_33AK256MPS205)                        \
+    || defined(DEVICE_33AK256MPS206) || defined(DEVICE_33AK256MPS208) || defined(DEVICE_33AK256MPS303) || defined(DEVICE_33AK256MPS305)                        \
+    || defined(DEVICE_33AK256MPS306) || defined(DEVICE_33AK256MPS505) || defined(DEVICE_33AK256MPS506) || defined(DEVICE_33AK256MPS508)                        \
     || defined(DEVICE_33AK512MC205) || defined(DEVICE_33AK512MC206) || defined(DEVICE_33AK512MC208) || defined(DEVICE_33AK512MC505)                            \
     || defined(DEVICE_33AK512MC506) || defined(DEVICE_33AK512MC508) || defined(DEVICE_33AK512MPS205) || defined(DEVICE_33AK512MPS206)                          \
     || defined(DEVICE_33AK512MPS208) || defined(DEVICE_33AK512MPS505) || defined(DEVICE_33AK512MPS506) || defined(DEVICE_33AK512MPS508)
