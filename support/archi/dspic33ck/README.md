@@ -21,7 +21,8 @@ This family have variations of flash memory, pin count and CAN FD for 5XX, 6XX a
 
 |Peripheral      |[UART][1]|[TMR][2] |[OC][3]  |[IC][4]  |[I2C][5] |[SPI][6] |[CAN][7] |[SENT][8]|[CLC][9] |[QEI][10] |[PWM][11] |[MCCP][12]|[SCCP][12]|
 |:---------------|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|--------:|---------:|---------:|---------:|---------:|
-|dsPIC33CK MC10X |        3|        1|        0|        0|        1|        2|        0|        1|        4|         1|         4|         0|         4|
+|dsPIC33CK MC00X |        3|        1|        0|        0|        1|        2|        0|        1|        4|         0|         4|         0|         4|
+|dsPIC33CK MC10X |        3|        1|        0|        0|        1|        2|        0|        1|        4|     __1__|         4|         0|         4|
 |dsPIC33CK MC50X |        3|        1|        0|        0|        1|        2| __1 Fd__|        1|        4|         1|         4|         0|         4|
 |dsPIC33CK MP10X |        3|        1|        0|        0|    __2__|    __3__|        0|    __2__|        4|     __2__|     __8__|     __1__|         4|
 |dsPIC33CK MP20X |        3|        1|        0|        0|    __3__|        3|        0|        2|        4|         2|         8|         1|     __8__|
@@ -46,11 +47,34 @@ This family have variations of flash memory, pin count and CAN FD for 5XX, 6XX a
 
 ## 📦 Device list
 
-104 devices on October 2025.
+118 devices on March 2026.
+
+### MC00X subfamily
+
+Base device with only one PLL, no dual flash panel, one analog comparator and one ADC core.
+
+14 devices.
+
+|Compatible devices|Program|Data|Pins|
+|---------|--:|--:|--:|
+|[dsPIC33CK32MC002](http://microchip.com/dsPIC33CK32MC002)   |  36 kb|   8 kb| 28|
+|[dsPIC33CK64MC002](http://microchip.com/dsPIC33CK64MC002)   |  66 kb|   8 kb| 28|
+|[dsPIC33CK128MC002](http://microchip.com/dsPIC33CK128MC002) | 134 kb|  16 kb| 28|
+|[dsPIC33CK256MC002](http://microchip.com/dsPIC33CK256MC002) | 269 kb|  16 kb| 28|
+|[dsPIC33CK32MC003](http://microchip.com/dsPIC33CK32MC003)   |  36 kb|   8 kb| 36|
+|[dsPIC33CK64MC003](http://microchip.com/dsPIC33CK64MC003)   |  66 kb|   8 kb| 36|
+|[dsPIC33CK128MC003](http://microchip.com/dsPIC33CK128MC003) | 134 kb|  16 kb| 36|
+|[dsPIC33CK256MC003](http://microchip.com/dsPIC33CK256MC003) | 269 kb|  16 kb| 36|
+|[dsPIC33CK32MC005](http://microchip.com/dsPIC33CK32MC005)   |  36 kb|   8 kb| 48|
+|[dsPIC33CK64MC005](http://microchip.com/dsPIC33CK64MC005)   |  66 kb|   8 kb| 48|
+|[dsPIC33CK128MC005](http://microchip.com/dsPIC33CK128MC005) | 134 kb|  16 kb| 48|
+|[dsPIC33CK256MC005](http://microchip.com/dsPIC33CK256MC005) | 269 kb|  16 kb| 48|
+|[dsPIC33CK128MC006](http://microchip.com/dsPIC33CK128MC006) | 134 kb|  16 kb| 64|
+|[dsPIC33CK256MC006](http://microchip.com/dsPIC33CK256MC006) | 269 kb|  16 kb| 64|
 
 ### MC10X subfamily
 
-Base device with only one PLL, no dual flash panel, one analog comparator and one ADC core.
+Same functionalities of MC00X plus IBias, operational amplifier and one QEI.
 
 14 devices.
 
