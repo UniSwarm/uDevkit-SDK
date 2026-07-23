@@ -238,9 +238,9 @@ extern "C" {
 #    define GPIO_PK15  (gpio_pin(GPIO_PORTK, 15))
 #endif
 
-#if GPIO_MAX_PORTWIDTH > 32
+#if GPIO_MAX_PORTWIDTH > 16
 typedef uint32_t port_type;
-#elif GPIO_MAX_PORTWIDTH > 16
+#elif GPIO_MAX_PORTWIDTH > 8
 typedef uint16_t port_type;
 #else
 typedef uint8_t port_type;
