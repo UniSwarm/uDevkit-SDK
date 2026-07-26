@@ -10,7 +10,7 @@ The dsPIC33AK series from Microchip Technology represents a significant advancem
 | Performance    | 200 DMIPS    |
 | Program memory | 32-512 KB    |
 | Data memory    | 8-64 KB      |
-| Pin count      | 28-100       |
+| Pin count      | 28-128       |
 
 ## 🧩 Peripheral overview
 
@@ -19,7 +19,9 @@ The dsPIC33AK series from Microchip Technology represents a significant advancem
 |MC10X      |        3|        1|        0|        0|        2|        3|        0|        2|        4|         1|         4|         0|         4|
 |MC2XX      |        3|        3|        0|        0|        3|        4|        0|        2|       10|         4|        12|         1|         8|
 |MC5XX      |        3|        3|        0|        0|        3|        4|     2 Fd|        2|       10|         4|        12|         1|         8|
+|MPS1XX     |        4|        3|        0|        0| 3(1 I3C)|        3|        0|        2|        4|         1|         4|         1|         4|
 |MPS2XX     |        3|        3|        0|        0|        3|        4|        0|        2|       10|         4|        12|         1|         8|
+|MPS3XX     |        4|        3|        0|        0| 3(1 I3C)|        3|     1 Fd|        2|        4|         1|         4|         1|         4|
 |MPS5XX     |        3|        3|        0|        0|        3|        4|     2 Fd|        2|       10|         4|        12|         1|         8|
 
 [1]: ../../driver/uart/README.md
@@ -37,7 +39,7 @@ The dsPIC33AK series from Microchip Technology represents a significant advancem
 
 ## 📦 Device list
 
-48 devices on May 2025.
+60 devices on July 2026.
 
 ### MC10X subfamily
 
@@ -99,6 +101,28 @@ MC2XX with 2 CAN Fd.
 |[dsPIC33AK256MC510](http://microchip.com/dsPIC33AK256MC510)| 256 kb|  64 kb|100|
 |[dsPIC33AK512MC510](http://microchip.com/dsPIC33AK512MC510)| 512 kb|  64 kb|100|
 
+### MPS1XX subfamily
+
+MP10X with more peripherals and memory :
+
+- 1 more UART
+- 2 more timer
+- 1 I3C
+- 1 more SPI
+- 1 more MCCP/SCCP modules
+- 1 resolver module
+- Internal core is generated from an integrated buck
+- On chip secure element
+
+|Compatible devices|Program|Data|Pins|
+|---------|--:|--:|--:|
+|[dsPIC33AK128MPS103](http://microchip.com/dsPIC33AK128MPS103)| 128 kb|  64 kb| 36|
+|[dsPIC33AK256MPS103](http://microchip.com/dsPIC33AK256MPS103)| 256 kb|  64 kb| 36|
+|[dsPIC33AK128MPS105](http://microchip.com/dsPIC33AK128MPS105)| 128 kb|  64 kb| 48|
+|[dsPIC33AK256MPS105](http://microchip.com/dsPIC33AK256MPS105)| 256 kb|  64 kb| 48|
+|[dsPIC33AK128MPS106](http://microchip.com/dsPIC33AK128MPS106)| 128 kb|  64 kb| 64|
+|[dsPIC33AK256MPS106](http://microchip.com/dsPIC33AK256MPS106)| 256 kb|  64 kb| 64|
+
 ### MPS2XX subfamily
 
 MC2XX with crypto accelerator and all PWM as fast PWM.
@@ -115,6 +139,19 @@ MC2XX with crypto accelerator and all PWM as fast PWM.
 |[dsPIC33AK512MPS210](http://microchip.com/dsPIC33AK512MPS210)| 512 kb|  64 kb|100|
 |[dsPIC33AK256MPS212](http://microchip.com/dsPIC33AK256MPS212)| 256 kb|  64 kb|128|
 |[dsPIC33AK512MPS212](http://microchip.com/dsPIC33AK512MPS212)| 512 kb|  64 kb|128|
+
+### MPS3XX subfamily
+
+MPS1XX with 1 CAN Fd.
+
+|Compatible devices|Program|Data|Pins|
+|---------|--:|--:|--:|
+|[dsPIC33AK128MPS303](http://microchip.com/dsPIC33AK128MPS303)| 128 kb|  64 kb| 36|
+|[dsPIC33AK256MPS303](http://microchip.com/dsPIC33AK256MPS303)| 256 kb|  64 kb| 36|
+|[dsPIC33AK128MPS305](http://microchip.com/dsPIC33AK128MPS305)| 128 kb|  64 kb| 48|
+|[dsPIC33AK256MPS305](http://microchip.com/dsPIC33AK256MPS305)| 256 kb|  64 kb| 48|
+|[dsPIC33AK128MPS306](http://microchip.com/dsPIC33AK128MPS306)| 128 kb|  64 kb| 64|
+|[dsPIC33AK256MPS306](http://microchip.com/dsPIC33AK256MPS306)| 256 kb|  64 kb| 64|
 
 ### MPS5XX subfamily
 
