@@ -32,14 +32,14 @@ IPEFLAGS ?= -M -OA2
 
 flash:
 	@printf "$(GREEN)Flash $(DEVICE) with $(DEV_PROG) ==> $(PROJECT).hex...\n$(NORM)"
-	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -F$(PROJECT).hex -OL $(IPEFLAGS) || true
+	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -F'$(shell pwd)/$(OUT_PWD)/$(PROJECT).hex' -OL $(IPEFLAGS) || true
 	@rm -f $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.*
 endif
 
 .PHONY: flash-read
 flash-read :
 	@printf "$(GREEN)Read $(DEVICE) with $(DEV_PROG) ==> $(PROJECT)_read.hex...\n$(NORM)"
-	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -GF$(PROJECT)_read.hex || true
+	cd $(OUT_PWD)/ && $(IPE_EXE) -P$(DEVICE) -TP$(DEV_PROG) -GF'$(shell pwd)/$(OUT_PWD)/$(PROJECT)_read.hex' || true
 	@rm -f $(OUT_PWD)/log.* $(OUT_PWD)/MPLABXLog.*
 
 .PHONY: flash-erase
