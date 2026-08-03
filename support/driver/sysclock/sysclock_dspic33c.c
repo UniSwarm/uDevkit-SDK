@@ -334,12 +334,12 @@ int sysclock_setPLLClock(uint32_t fosc, uint8_t src)
 {
     if (src != SYSCLOCK_SRC_FRC && src != SYSCLOCK_SRC_POSC)
     {
-        return -4;
+        return -4;  // cannot generate PLL from sources other than FRC or POSC
     }
 
-    if (fosc > SYSCLOCK_FOSC_MAX)
+    if (fosc > SYSCLOCK_FPLL_MAX)
     {
-        return -1;  // cannot generate fosc > SYSCLOCK_FOSC_MAX
+        return -1;  // cannot generate fosc > SYSCLOCK_FPLL_MAX
     }
     if (fosc < SYSCLOCK_FSYS_MIN / 8)
     {

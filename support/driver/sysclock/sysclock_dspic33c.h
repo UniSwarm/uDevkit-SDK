@@ -170,6 +170,7 @@ static const char *sysclock_sources_str[] = {"FRC", "FRCPLL", "POSC", "PPLL", ""
     || defined(DEVICE_33CK1024MP710)
 #    define SYSCLOCK_FSYS_MAX 100000000  //  100 MHz
 #    define SYSCLOCK_FOSC_MAX 200000000  //  200 MHz
+#    define SYSCLOCK_FPLL_MAX 400000000  //  400 MHz
 #elif defined(DEVICE_33CH64MP202) || defined(DEVICE_33CH64MP203) || defined(DEVICE_33CH64MP205) || defined(DEVICE_33CH64MP206) || defined(DEVICE_33CH64MP208)  \
     || defined(DEVICE_33CH64MP502) || defined(DEVICE_33CH64MP503) || defined(DEVICE_33CH64MP505) || defined(DEVICE_33CH64MP506) || defined(DEVICE_33CH64MP508) \
     || defined(DEVICE_33CH128MP202) || defined(DEVICE_33CH128MP203) || defined(DEVICE_33CH128MP205) || defined(DEVICE_33CH128MP206)                            \
@@ -180,6 +181,7 @@ static const char *sysclock_sources_str[] = {"FRC", "FRCPLL", "POSC", "PPLL", ""
     || defined(DEVICE_33CH512MP505) || defined(DEVICE_33CH512MP506) || defined(DEVICE_33CH512MP508)
 #    define SYSCLOCK_FSYS_MAX 90000000   //   90 MHz
 #    define SYSCLOCK_FOSC_MAX 180000000  //  180 MHz
+#    define SYSCLOCK_FPLL_MAX 360000000  //  360 MHz
 #endif
 #define SYSCLOCK_FSYS_MIN 1000000  //   1 MHz
 
