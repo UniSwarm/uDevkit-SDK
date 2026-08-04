@@ -31,9 +31,7 @@ int dma_enable(rt_dev_t device);
 int dma_disable(rt_dev_t device);
 bool dma_isEnabled(rt_dev_t device);
 
-#ifdef SIMULATOR
-#    define _dma_space_
-#endif
+int dma_setHandler(rt_dev_t device, void (*handler)(void));
 
 #ifdef __cplusplus
 }

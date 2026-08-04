@@ -54,6 +54,10 @@ enum
 };
 #endif
 
+#ifdef SIMULATOR
+#    define _dma_space_
+#endif
+
 #ifdef __cplusplus
 }
 #endif
