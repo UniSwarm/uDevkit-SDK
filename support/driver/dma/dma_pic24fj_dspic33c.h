@@ -22,6 +22,21 @@ extern "C" {
 #    define _dma_space_ __attribute__((space(xmemory), aligned(2)))
 #endif
 
+#define DMA_ADDRMODE_NOCHANGE  0b00
+#define DMA_ADDRMODE_INCREMENT 0b01
+#define DMA_ADDRMODE_DECREMENT 0b10
+
+#define DMA_MODE_ONESHOT            0b00
+#define DMA_MODE_REPEATEDONESHOT    0b01
+#define DMA_MODE_CONTINUOUS         0b10
+#define DMA_MODE_REPEATEDCONTINUOUS 0b11
+
+#define DMA_WORDSIZE_8  0b1
+#define DMA_WORDSIZE_16 0b0
+
+#define DMA_OPTION_RELOAD 0x1
+#define DMA_OPTION_NULLW  0x2
+
 #if defined(DEVICE_24FJ32GP202) || defined(DEVICE_24FJ32GP203) || defined(DEVICE_24FJ32GP205) || defined(DEVICE_24FJ32GU202) || defined(DEVICE_24FJ32GU203)    \
     || defined(DEVICE_24FJ32GU205) || defined(DEVICE_24FJ64GP202) || defined(DEVICE_24FJ64GP203) || defined(DEVICE_24FJ64GP205) || defined(DEVICE_24FJ64GU202) \
     || defined(DEVICE_24FJ64GU203) || defined(DEVICE_24FJ64GU205) || defined(DEVICE_33CH64MP202S1) || defined(DEVICE_33CH64MP203S1)                            \

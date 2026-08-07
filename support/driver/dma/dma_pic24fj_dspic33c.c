@@ -95,13 +95,13 @@ static struct dma_dev _dmas[] = {
 #endif
 };
 
-void dma_init(uint16_t addrLow, uint16_t addrHigh)
+void dma_init(const void *addrLow, const void *addrHigh)
 {
     DMACONbits.DMAEN = 1;
     DMACONbits.PRSSEL = 1;  // Round-robin scheme
     // DMACONbits.PRSSEL = 0; // Fixed priority scheme
-    DMAL = addrLow;
-    DMAH = addrHigh;
+    DMAL = (uint16_t)addrLow;
+    DMAH = (uint16_t)addrHigh;
 }
 
 /**
@@ -400,6 +400,502 @@ int dma_setHandler(rt_dev_t device, void (*handler)(void))
     if (_dmas[dma].flags.enabled == 1)
     {
         dma_enable(device);
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+int dma_setSource(rt_dev_t device, const void *srcAddr, uint8_t addrMode)
+{
+#if DMA_COUNT >= 1
+    uint8_t dma = MINOR(device);
+    if (dma >= DMA_COUNT)
+    {
+        return -1;
+    }
+
+    switch (dma)
+    {
+#    if (DMA_COUNT >= 1) && !defined(DMA1_DISABLE)
+        case DMA1_ID:
+            DMACH0bits.SAMODE = addrMode;  // source mode
+            DMASRC0 = (uint16_t)srcAddr;
+            break;
+#    endif
+#    if (DMA_COUNT >= 2) && !defined(DMA2_DISABLE)
+        case DMA2_ID:
+            DMACH1bits.SAMODE = addrMode;  // source mode
+            DMASRC1 = (uint16_t)srcAddr;
+            break;
+#    endif
+#    if (DMA_COUNT >= 3) && !defined(DMA3_DISABLE)
+        case DMA3_ID:
+            DMACH2bits.SAMODE = addrMode;  // source mode
+            DMASRC2 = (uint16_t)srcAddr;
+            break;
+#    endif
+#    if (DMA_COUNT >= 4) && !defined(DMA4_DISABLE)
+        case DMA4_ID:
+            DMACH3bits.SAMODE = addrMode;  // source mode
+            DMASRC3 = (uint16_t)srcAddr;
+            break;
+#    endif
+#    if (DMA_COUNT >= 5) && !defined(DMA5_DISABLE)
+        case DMA5_ID:
+            DMACH4bits.SAMODE = addrMode;  // source mode
+            DMASRC4 = (uint16_t)srcAddr;
+            break;
+#    endif
+#    if (DMA_COUNT >= 6) && !defined(DMA6_DISABLE)
+        case DMA6_ID:
+            DMACH5bits.SAMODE = addrMode;  // source mode
+            DMASRC5 = (uint16_t)srcAddr;
+            break;
+#    endif
+#    if (DMA_COUNT >= 7) && !defined(DMA7_DISABLE)
+        case DMA7_ID:
+            DMACH6bits.SAMODE = addrMode;  // source mode
+            DMASRC6 = (uint16_t)srcAddr;
+            break;
+#    endif
+#    if (DMA_COUNT >= 8) && !defined(DMA8_DISABLE)
+        case DMA8_ID:
+            DMACH7bits.SAMODE = addrMode;  // source mode
+            DMASRC7 = (uint16_t)srcAddr;
+            break;
+#    endif
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+int dma_setDestination(rt_dev_t device, void *dstAddr, uint8_t addrMode)
+{
+#if DMA_COUNT >= 1
+    uint8_t dma = MINOR(device);
+    if (dma >= DMA_COUNT)
+    {
+        return -1;
+    }
+
+    switch (dma)
+    {
+#    if (DMA_COUNT >= 1) && !defined(DMA1_DISABLE)
+        case DMA1_ID:
+            DMACH0bits.DAMODE = addrMode;  // destination mode
+            DMADST0 = (uint16_t)dstAddr;
+            break;
+#    endif
+#    if (DMA_COUNT >= 2) && !defined(DMA2_DISABLE)
+        case DMA2_ID:
+            DMACH1bits.DAMODE = addrMode;  // destination mode
+            DMADST1 = (uint16_t)dstAddr;
+            break;
+#    endif
+#    if (DMA_COUNT >= 3) && !defined(DMA3_DISABLE)
+        case DMA3_ID:
+            DMACH2bits.DAMODE = addrMode;  // destination mode
+            DMADST2 = (uint16_t)dstAddr;
+            break;
+#    endif
+#    if (DMA_COUNT >= 4) && !defined(DMA4_DISABLE)
+        case DMA4_ID:
+            DMACH3bits.DAMODE = addrMode;  // destination mode
+            DMADST3 = (uint16_t)dstAddr;
+            break;
+#    endif
+#    if (DMA_COUNT >= 5) && !defined(DMA5_DISABLE)
+        case DMA5_ID:
+            DMACH4bits.DAMODE = addrMode;  // destination mode
+            DMADST4 = (uint16_t)dstAddr;
+            break;
+#    endif
+#    if (DMA_COUNT >= 6) && !defined(DMA6_DISABLE)
+        case DMA6_ID:
+            DMACH5bits.DAMODE = addrMode;  // destination mode
+            DMADST5 = (uint16_t)dstAddr;
+            break;
+#    endif
+#    if (DMA_COUNT >= 7) && !defined(DMA7_DISABLE)
+        case DMA7_ID:
+            DMACH6bits.DAMODE = addrMode;  // destination mode
+            DMADST6 = (uint16_t)dstAddr;
+            break;
+#    endif
+#    if (DMA_COUNT >= 8) && !defined(DMA8_DISABLE)
+        case DMA8_ID:
+            DMACH7bits.DAMODE = addrMode;  // destination mode
+            DMADST7 = (uint16_t)dstAddr;
+            break;
+#    endif
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+int dma_setTrigger(rt_dev_t device, uint8_t trigger)
+{
+#if DMA_COUNT >= 1
+    uint8_t dma = MINOR(device);
+    if (dma >= DMA_COUNT)
+    {
+        return -1;
+    }
+
+    switch (dma)
+    {
+#    if (DMA_COUNT >= 1) && !defined(DMA1_DISABLE)
+        case DMA1_ID:
+            DMAINT0bits.CHSEL = trigger;
+            break;
+#    endif
+#    if (DMA_COUNT >= 2) && !defined(DMA2_DISABLE)
+        case DMA2_ID:
+            DMAINT1bits.CHSEL = trigger;
+            break;
+#    endif
+#    if (DMA_COUNT >= 3) && !defined(DMA3_DISABLE)
+        case DMA3_ID:
+            DMAINT2bits.CHSEL = trigger;
+            break;
+#    endif
+#    if (DMA_COUNT >= 4) && !defined(DMA4_DISABLE)
+        case DMA4_ID:
+            DMAINT3bits.CHSEL = trigger;
+            break;
+#    endif
+#    if (DMA_COUNT >= 5) && !defined(DMA5_DISABLE)
+        case DMA5_ID:
+            DMAINT4bits.CHSEL = trigger;
+            break;
+#    endif
+#    if (DMA_COUNT >= 6) && !defined(DMA6_DISABLE)
+        case DMA6_ID:
+            DMAINT5bits.CHSEL = trigger;
+            break;
+#    endif
+#    if (DMA_COUNT >= 7) && !defined(DMA7_DISABLE)
+        case DMA7_ID:
+            DMAINT6bits.CHSEL = trigger;
+            break;
+#    endif
+#    if (DMA_COUNT >= 8) && !defined(DMA8_DISABLE)
+        case DMA8_ID:
+            DMAINT7bits.CHSEL = trigger;
+            break;
+#    endif
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+int dma_setTransferMode(rt_dev_t device, uint8_t transferMode)
+{
+#if DMA_COUNT >= 1
+    uint8_t dma = MINOR(device);
+    if (dma >= DMA_COUNT)
+    {
+        return -1;
+    }
+
+    switch (dma)
+    {
+#    if (DMA_COUNT >= 1) && !defined(DMA1_DISABLE)
+        case DMA1_ID:
+            DMACH0bits.TRMODE = transferMode;
+            break;
+#    endif
+#    if (DMA_COUNT >= 2) && !defined(DMA2_DISABLE)
+        case DMA2_ID:
+            DMACH1bits.TRMODE = transferMode;
+            break;
+#    endif
+#    if (DMA_COUNT >= 3) && !defined(DMA3_DISABLE)
+        case DMA3_ID:
+            DMACH2bits.TRMODE = transferMode;
+            break;
+#    endif
+#    if (DMA_COUNT >= 4) && !defined(DMA4_DISABLE)
+        case DMA4_ID:
+            DMACH3bits.TRMODE = transferMode;
+            break;
+#    endif
+#    if (DMA_COUNT >= 5) && !defined(DMA5_DISABLE)
+        case DMA5_ID:
+            DMACH4bits.TRMODE = transferMode;
+            break;
+#    endif
+#    if (DMA_COUNT >= 6) && !defined(DMA6_DISABLE)
+        case DMA6_ID:
+            DMACH5bits.TRMODE = transferMode;
+            break;
+#    endif
+#    if (DMA_COUNT >= 7) && !defined(DMA7_DISABLE)
+        case DMA7_ID:
+            DMACH6bits.TRMODE = transferMode;
+            break;
+#    endif
+#    if (DMA_COUNT >= 8) && !defined(DMA8_DISABLE)
+        case DMA8_ID:
+            DMACH7bits.TRMODE = transferMode;
+            break;
+#    endif
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+int dma_setTransferCount(rt_dev_t device, uint16_t transferCount)
+{
+#if DMA_COUNT >= 1
+    uint8_t dma = MINOR(device);
+    if (dma >= DMA_COUNT)
+    {
+        return -1;
+    }
+
+    switch (dma)
+    {
+#    if (DMA_COUNT >= 1) && !defined(DMA1_DISABLE)
+        case DMA1_ID:
+            DMACNT0 = transferCount;
+            break;
+#    endif
+#    if (DMA_COUNT >= 2) && !defined(DMA2_DISABLE)
+        case DMA2_ID:
+            DMACNT1 = transferCount;
+            break;
+#    endif
+#    if (DMA_COUNT >= 3) && !defined(DMA3_DISABLE)
+        case DMA3_ID:
+            DMACNT2 = transferCount;
+            break;
+#    endif
+#    if (DMA_COUNT >= 4) && !defined(DMA4_DISABLE)
+        case DMA4_ID:
+            DMACNT3 = transferCount;
+            break;
+#    endif
+#    if (DMA_COUNT >= 5) && !defined(DMA5_DISABLE)
+        case DMA5_ID:
+            DMACNT4 = transferCount;
+            break;
+#    endif
+#    if (DMA_COUNT >= 6) && !defined(DMA6_DISABLE)
+        case DMA6_ID:
+            DMACNT5 = transferCount;
+            break;
+#    endif
+#    if (DMA_COUNT >= 7) && !defined(DMA7_DISABLE)
+        case DMA7_ID:
+            DMACNT6 = transferCount;
+            break;
+#    endif
+#    if (DMA_COUNT >= 8) && !defined(DMA8_DISABLE)
+        case DMA8_ID:
+            DMACNT7 = transferCount;
+            break;
+#    endif
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+int dma_setWordSize(rt_dev_t device, uint8_t wordSize)
+{
+#if DMA_COUNT >= 1
+    uint8_t dma = MINOR(device);
+    if (dma >= DMA_COUNT)
+    {
+        return -1;
+    }
+
+    switch (dma)
+    {
+#    if (DMA_COUNT >= 1) && !defined(DMA1_DISABLE)
+        case DMA1_ID:
+            DMACH0bits.SIZE = wordSize;
+            break;
+#    endif
+#    if (DMA_COUNT >= 2) && !defined(DMA2_DISABLE)
+        case DMA2_ID:
+            DMACH1bits.SIZE = wordSize;
+            break;
+#    endif
+#    if (DMA_COUNT >= 3) && !defined(DMA3_DISABLE)
+        case DMA3_ID:
+            DMACH2bits.SIZE = wordSize;
+            break;
+#    endif
+#    if (DMA_COUNT >= 4) && !defined(DMA4_DISABLE)
+        case DMA4_ID:
+            DMACH3bits.SIZE = wordSize;
+            break;
+#    endif
+#    if (DMA_COUNT >= 5) && !defined(DMA5_DISABLE)
+        case DMA5_ID:
+            DMACH4bits.SIZE = wordSize;
+            break;
+#    endif
+#    if (DMA_COUNT >= 6) && !defined(DMA6_DISABLE)
+        case DMA6_ID:
+            DMACH5bits.SIZE = wordSize;
+            break;
+#    endif
+#    if (DMA_COUNT >= 7) && !defined(DMA7_DISABLE)
+        case DMA7_ID:
+            DMACH6bits.SIZE = wordSize;
+            break;
+#    endif
+#    if (DMA_COUNT >= 8) && !defined(DMA8_DISABLE)
+        case DMA8_ID:
+            DMACH7bits.SIZE = wordSize;
+            break;
+#    endif
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+int dma_setOptions(rt_dev_t device, uint8_t options)
+{
+#if DMA_COUNT >= 1
+    uint8_t dma = MINOR(device);
+    if (dma >= DMA_COUNT)
+    {
+        return -1;
+    }
+
+    switch (dma)
+    {
+#    if (DMA_COUNT >= 1) && !defined(DMA1_DISABLE)
+        case DMA1_ID:
+            DMACH0bits.RELOAD = ((options & DMA_OPTION_RELOAD) == DMA_OPTION_RELOAD) ? 1 : 0;  // RELOAD on next operation
+            DMACH0bits.NULLW = ((options & DMA_OPTION_NULLW) == DMA_OPTION_NULLW) ? 1 : 0;     // dummy write is initiated
+            break;
+#    endif
+#    if (DMA_COUNT >= 2) && !defined(DMA2_DISABLE)
+        case DMA2_ID:
+            DMACH1bits.RELOAD = ((options & DMA_OPTION_RELOAD) == DMA_OPTION_RELOAD) ? 1 : 0;  // RELOAD on next operation
+            DMACH1bits.NULLW = ((options & DMA_OPTION_NULLW) == DMA_OPTION_NULLW) ? 1 : 0;     // dummy write is initiated
+            break;
+#    endif
+#    if (DMA_COUNT >= 3) && !defined(DMA3_DISABLE)
+        case DMA3_ID:
+            DMACH2bits.RELOAD = ((options & DMA_OPTION_RELOAD) == DMA_OPTION_RELOAD) ? 1 : 0;  // RELOAD on next operation
+            DMACH2bits.NULLW = ((options & DMA_OPTION_NULLW) == DMA_OPTION_NULLW) ? 1 : 0;     // dummy write is initiated
+            break;
+#    endif
+#    if (DMA_COUNT >= 4) && !defined(DMA4_DISABLE)
+        case DMA4_ID:
+            DMACH3bits.RELOAD = ((options & DMA_OPTION_RELOAD) == DMA_OPTION_RELOAD) ? 1 : 0;  // RELOAD on next operation
+            DMACH3bits.NULLW = ((options & DMA_OPTION_NULLW) == DMA_OPTION_NULLW) ? 1 : 0;     // dummy write is initiated
+            break;
+#    endif
+#    if (DMA_COUNT >= 5) && !defined(DMA5_DISABLE)
+        case DMA5_ID:
+            DMACH4bits.RELOAD = ((options & DMA_OPTION_RELOAD) == DMA_OPTION_RELOAD) ? 1 : 0;  // RELOAD on next operation
+            DMACH4bits.NULLW = ((options & DMA_OPTION_NULLW) == DMA_OPTION_NULLW) ? 1 : 0;     // dummy write is initiated
+            break;
+#    endif
+#    if (DMA_COUNT >= 6) && !defined(DMA6_DISABLE)
+        case DMA6_ID:
+            DMACH5bits.RELOAD = ((options & DMA_OPTION_RELOAD) == DMA_OPTION_RELOAD) ? 1 : 0;  // RELOAD on next operation
+            DMACH5bits.NULLW = ((options & DMA_OPTION_NULLW) == DMA_OPTION_NULLW) ? 1 : 0;     // dummy write is initiated
+            break;
+#    endif
+#    if (DMA_COUNT >= 7) && !defined(DMA7_DISABLE)
+        case DMA7_ID:
+            DMACH6bits.RELOAD = ((options & DMA_OPTION_RELOAD) == DMA_OPTION_RELOAD) ? 1 : 0;  // RELOAD on next operation
+            DMACH6bits.NULLW = ((options & DMA_OPTION_NULLW) == DMA_OPTION_NULLW) ? 1 : 0;     // dummy write is initiated
+            break;
+#    endif
+#    if (DMA_COUNT >= 8) && !defined(DMA8_DISABLE)
+        case DMA8_ID:
+            DMACH7bits.RELOAD = ((options & DMA_OPTION_RELOAD) == DMA_OPTION_RELOAD) ? 1 : 0;  // RELOAD on next operation
+            DMACH7bits.NULLW = ((options & DMA_OPTION_NULLW) == DMA_OPTION_NULLW) ? 1 : 0;     // dummy write is initiated
+            break;
+#    endif
+    }
+
+    return 0;
+#else
+    return -1;
+#endif
+}
+
+int dma_softTrigger(rt_dev_t device)
+{
+#if DMA_COUNT >= 1
+    uint8_t dma = MINOR(device);
+    if (dma >= DMA_COUNT)
+    {
+        return -1;
+    }
+
+    switch (dma)
+    {
+#    if (DMA_COUNT >= 1) && !defined(DMA1_DISABLE)
+        case DMA1_ID:
+            DMACH0bits.CHREQ = 1;
+            break;
+#    endif
+#    if (DMA_COUNT >= 2) && !defined(DMA2_DISABLE)
+        case DMA2_ID:
+            DMACH1bits.CHREQ = 1;
+            break;
+#    endif
+#    if (DMA_COUNT >= 3) && !defined(DMA3_DISABLE)
+        case DMA3_ID:
+            DMACH2bits.CHREQ = 1;
+            break;
+#    endif
+#    if (DMA_COUNT >= 4) && !defined(DMA4_DISABLE)
+        case DMA4_ID:
+            DMACH3bits.CHREQ = 1;
+            break;
+#    endif
+#    if (DMA_COUNT >= 5) && !defined(DMA5_DISABLE)
+        case DMA5_ID:
+            DMACH4bits.CHREQ = 1;
+            break;
+#    endif
+#    if (DMA_COUNT >= 6) && !defined(DMA6_DISABLE)
+        case DMA6_ID:
+            DMACH5bits.CHREQ = 1;
+            break;
+#    endif
+#    if (DMA_COUNT >= 7) && !defined(DMA7_DISABLE)
+        case DMA7_ID:
+            DMACH6bits.CHREQ = 1;
+            break;
+#    endif
+#    if (DMA_COUNT >= 8) && !defined(DMA8_DISABLE)
+        case DMA8_ID:
+            DMACH7bits.CHREQ = 1;
+            break;
+#    endif
     }
 
     return 0;
