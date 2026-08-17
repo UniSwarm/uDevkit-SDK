@@ -237,6 +237,7 @@ int uart_enable(rt_dev_t device)
     {
 #    if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
         case UART1_ID:
+#        if !defined(UART1_DISABLE_INT)
             _U1RXIP = 6;  // interrupt priority for receptor
             _U1RXIF = 0;  // clear receive Flag
             _U1RXIE = 1;  // enable receive interrupt
@@ -246,6 +247,7 @@ int uart_enable(rt_dev_t device)
             _U1TXIE = 1;  // enable transmit interrupt
 
             U1STAHbits.UTXISEL = 0b001;  // only one byte in buffer or less
+#        endif
 
             U1MODEbits.URXEN = ((_uarts[UART1_ID].lineConfig & UART_LINE_RX_DISABLED) == 0);  // enable receiver
             U1MODEbits.UTXEN = ((_uarts[UART1_ID].lineConfig & UART_LINE_TX_DISABLED) == 0);  // enable transmiter
@@ -254,6 +256,7 @@ int uart_enable(rt_dev_t device)
 #    endif
 #    if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
         case UART2_ID:
+#        if !defined(UART2_DISABLE_INT)
             _U2RXIP = 6;  // interrupt priority for receptor
             _U2RXIF = 0;  // clear receive Flag
             _U2RXIE = 1;  // enable receive interrupt
@@ -263,6 +266,7 @@ int uart_enable(rt_dev_t device)
             _U2TXIE = 1;  // enable transmit interrupt
 
             U2STAHbits.UTXISEL = 0b001;  // only one byte in buffer or less
+#        endif
 
             U2MODEbits.URXEN = ((_uarts[UART2_ID].lineConfig & UART_LINE_RX_DISABLED) == 0);  // enable receiver
             U2MODEbits.UTXEN = ((_uarts[UART2_ID].lineConfig & UART_LINE_TX_DISABLED) == 0);  // enable transmiter
@@ -271,6 +275,7 @@ int uart_enable(rt_dev_t device)
 #    endif
 #    if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
         case UART3_ID:
+#        if !defined(UART3_DISABLE_INT)
             _U3RXIP = 6;  // interrupt priority for receptor
             _U3RXIF = 0;  // clear receive Flag
             _U3RXIE = 1;  // enable receive interrupt
@@ -280,6 +285,7 @@ int uart_enable(rt_dev_t device)
             _U3TXIE = 1;  // enable transmit interrupt
 
             U3STAHbits.UTXISEL = 0b001;  // only one byte in buffer or less
+#        endif
 
             U3MODEbits.URXEN = ((_uarts[UART3_ID].lineConfig & UART_LINE_RX_DISABLED) == 0);  // enable receiver
             U3MODEbits.UTXEN = ((_uarts[UART3_ID].lineConfig & UART_LINE_TX_DISABLED) == 0);  // enable transmiter
@@ -694,7 +700,7 @@ uint8_t uart_lineConfig(rt_dev_t device)
     return _uarts[uart].lineConfig;
 }
 
-#if (UART_COUNT >= 1) && !defined(UART1_DISABLE)
+#if (UART_COUNT >= 1) && !defined(UART1_DISABLE) && !defined(UART1_DISABLE_INT)
 void __attribute__((interrupt, auto_psv, weak)) _U1TXInterrupt(void)
 {
     char uart_tmpchar[1];
@@ -716,7 +722,7 @@ void __attribute__((interrupt, auto_psv, weak)) _U1RXInterrupt(void)
 }
 #endif
 
-#if (UART_COUNT >= 2) && !defined(UART2_DISABLE)
+#if (UART_COUNT >= 2) && !defined(UART2_DISABLE) && !defined(UART2_DISABLE_INT)
 void __attribute__((interrupt, auto_psv, weak)) _U2TXInterrupt(void)
 {
     char uart_tmpchar[1];
@@ -738,7 +744,7 @@ void __attribute__((interrupt, auto_psv, weak)) _U2RXInterrupt(void)
 }
 #endif
 
-#if (UART_COUNT >= 3) && !defined(UART3_DISABLE)
+#if (UART_COUNT >= 3) && !defined(UART3_DISABLE) && !defined(UART3_DISABLE_INT)
 void __attribute__((interrupt, auto_psv, weak)) _U3TXInterrupt(void)
 {
     char uart_tmpchar[1];
