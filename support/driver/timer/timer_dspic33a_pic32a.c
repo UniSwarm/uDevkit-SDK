@@ -1,14 +1,15 @@
 /**
  * @file timer_dspic33a_pic32a.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2025
+ * @copyright UniSwarm 2025-2026
  *
  * @date May 3, 2025, 05:20 PM
  *
  * @brief TIMER support driver for dsPIC33A and PIC32A
  *
- * Implementation based on Microchip document DS70005539C:
+ * Implementation based on Microchip documents DS70005539C, DS70005629C, DS70005591D and DS70005592A:
  *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33AK128MC106-Family-Data-Sheet-DS70005539.pdf
+ *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33AK256MPS306-Family-Data-Sheet-DS70005629.pdf
  *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33AK512MPS512-Family-Data-Sheet-DS70005591.pdf
  *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/PIC32AK1216GC41064-Family-Data-Sheet-DS70005592.pdf
  */
@@ -345,7 +346,7 @@ int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
         return -1;
     }
 
-    if (prvalue > 65535)
+    /*if (prvalue > 65535)
     {
         divisor = 0b01;  // 8 divider
         prvalue >>= 3;
@@ -358,7 +359,7 @@ int timer_setPeriod(rt_dev_t device, uint32_t prvalue)
                 prvalue = 65535;
             }
         }
-    }
+    }*/
 
     switch (timer)
     {

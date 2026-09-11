@@ -1,14 +1,17 @@
 /**
  * @file timer_dspic33a_pic32a.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2025
+ * @copyright UniSwarm 2025-2026
  *
  * @date May 3, 2025, 05:20 PM
  *
  * @brief TIMER support driver for dsPIC33A and PIC32A
  *
- * Implementation based on Microchip document DS70005539B:
+ * Implementation based on Microchip documents DS70005539C, DS70005629C, DS70005591D and DS70005592A:
  *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33AK128MC106-Family-Data-Sheet-DS70005539.pdf
+ *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33AK256MPS306-Family-Data-Sheet-DS70005629.pdf
+ *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33AK512MPS512-Family-Data-Sheet-DS70005591.pdf
+ *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/PIC32AK1216GC41064-Family-Data-Sheet-DS70005592.pdf
  */
 
 #ifndef TIMER_DSPIC33A_PIC32A_H
