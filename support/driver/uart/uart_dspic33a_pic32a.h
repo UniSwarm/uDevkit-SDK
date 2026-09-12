@@ -7,8 +7,11 @@
  *
  * @brief UART support driver for dsPIC33A and PIC32A
  *
- * Implementation based on Microchip document DS70005539B:
+ * Implementation based on Microchip documents DS70005539C, DS70005629C, DS70005591D and DS70005592A:
  *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33AK128MC106-Family-Data-Sheet-DS70005539.pdf
+ *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33AK256MPS306-Family-Data-Sheet-DS70005629.pdf
+ *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33AK512MPS512-Family-Data-Sheet-DS70005591.pdf
+ *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/PIC32AK1216GC41064-Family-Data-Sheet-DS70005592.pdf
  */
 
 #ifndef UART_DSPIC33A_PIC32A_H
@@ -40,6 +43,9 @@ extern "C" {
 #else
 #    define UART_COUNT 0
 #endif
+
+#define UART_MINBRG 0x00010U
+#define UART_MAXBRG 0xFFFFFU
 
 #ifdef __cplusplus
 }

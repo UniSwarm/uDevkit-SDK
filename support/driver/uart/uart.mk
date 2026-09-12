@@ -8,6 +8,10 @@ DRIVERS += sysclock
 
 HEADER += uart.h uart_device.h
 
+ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ak pic32ak))
+ ARCHI_SRC += uart_dspic33a_pic32a.c
+ HEADER += uart_dspic33a_pic32a.h
+endif
 ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic33fj dspic33ep dspic33ev))
  ARCHI_SRC += uart_pic24_dspic33.c
  HEADER += uart_pic24_dspic33.h
