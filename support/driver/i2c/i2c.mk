@@ -13,6 +13,10 @@ ifeq ($(ARCHI),$(filter $(ARCHI),pic24f pic24fj pic24ep pic24hj dspic30f dspic33
  ARCHI_SRC += i2c_pic24_dspic30f_dspic33.c
  HEADER += i2c_pic24_dspic30f_dspic33.h
 endif
+ifeq ($(ARCHI),$(filter $(ARCHI),dspic33ak pic32ak))
+ ARCHI_SRC += i2c_dspic33a_pic32a.c
+ HEADER += i2c_dspic33a_pic32a.h
+endif
 ifeq ($(ARCHI),$(filter $(ARCHI),pic32mm pic32mk pic32mx pic32mzda pic32mzec pic32mzef))
  ARCHI_SRC += i2c_pic32.c
  HEADER += i2c_pic32.h
