@@ -25,8 +25,8 @@ flash:
 	cp $(OUT_PWD)/$(PROJECT).hex $(DEV_PROG_PATH)/
 	cat $(DEV_PROG_PATH)/STATUS.TXT
 else
- ifeq (,$(filter $(DEV_PROG),PKOB PKOB4 SNAP PK3 PK4 PK5 ICD3 ICD4 ICD5 RICE ICE4))
-  $(error Invalid DEV_PROG name '$(DEV_PROG)', choose between 'PKOB', 'PKOB4', 'SNAP', 'PK3', 'PK4', 'ICD3', 'ICD4', 'ICE4' or 'RICE')
+ ifeq (,$(filter $(DEV_PROG),PKOB PKOB4 SNAP PK3 PK4 PK5 ICD3 ICD4 ICD5 PKBASIC RICE ICE4))
+  $(error Invalid DEV_PROG name '$(DEV_PROG)', choose between 'PKOB', 'PKOB4', 'SNAP', 'PK3', 'PK4', 'ICD3', 'ICD4', 'PKBASIC', 'ICE4' or 'RICE')
  endif
 IPEFLAGS ?= -M -OA2
 
