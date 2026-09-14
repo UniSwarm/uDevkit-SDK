@@ -21,6 +21,26 @@
 extern "C" {
 #endif
 
+#ifndef SIMULATOR
+#    define _dma_space_ __attribute__((space(xmemory), aligned(2)))
+#endif
+
+#define DMA_ADDRMODE_NOCHANGE  0b00
+#define DMA_ADDRMODE_INCREMENT 0b01
+#define DMA_ADDRMODE_DECREMENT 0b10
+
+#define DMA_MODE_ONESHOT            0b00
+#define DMA_MODE_REPEATEDONESHOT    0b01
+#define DMA_MODE_CONTINUOUS         0b10
+#define DMA_MODE_REPEATEDCONTINUOUS 0b11
+
+#define DMA_WORDSIZE_8  0b00
+#define DMA_WORDSIZE_16 0b01
+#define DMA_WORDSIZE_32 0b10
+
+#define DMA_OPTION_RELOAD 0x1
+#define DMA_OPTION_NULLW  0x2
+
 #if defined(DEVICE_32AK1216GC41036) || defined(DEVICE_32AK1216GC41048) || defined(DEVICE_32AK1216GC41064) || defined(DEVICE_32AK3208GC41036)                   \
     || defined(DEVICE_32AK3208GC41048) || defined(DEVICE_32AK3208GC41064) || defined(DEVICE_32AK6416GC41036) || defined(DEVICE_32AK6416GC41048)                \
     || defined(DEVICE_32AK6416GC41064) || defined(DEVICE_33AK32MC102) || defined(DEVICE_33AK32MC103) || defined(DEVICE_33AK32MC105)                            \
