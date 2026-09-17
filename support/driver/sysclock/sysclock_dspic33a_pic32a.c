@@ -19,10 +19,8 @@
 #include <archi.h>
 
 static uint32_t _sysclock_posc = 0;
-static uint32_t _sysclock_pll1 = 0;
-static uint32_t _sysclock_vco1 = 0;
-static uint32_t _sysclock_pll2 = 0;
-static uint32_t _sysclock_vco2 = 0;
+static uint32_t _sysclock_pll[2] = {0};
+static uint32_t _sysclock_vco[2] = {0};
 static uint32_t _sysclock_refi1 = 0;
 static uint32_t _sysclock_refi2 = 0;
 
@@ -33,6 +31,7 @@ static uint32_t _sysclock_refi2 = 0;
  */
 int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
 {
+    int16_t divisor;
     switch (source)
     {
         case SYSCLOCK_SRC_LPRC:
@@ -42,32 +41,42 @@ int32_t sysclock_sourceFreq(SYSCLOCK_SOURCE source)
             return _sysclock_posc;
 
         case SYSCLOCK_SRC_PLL1_FOUT:
-            if (_sysclock_pll1 == 0)
+            if (_sysclock_pll[0] == 0)
             {
-                _sysclock_pll1 = sysclock_getPLLClock(0);
+                _sysclock_pll[0] = sysclock_getPLLClock(0);
             }
-            return _sysclock_pll1;
+            return _sysclock_pll[0];
 
         case SYSCLOCK_SRC_PLL2_FOUT:
-            if (_sysclock_pll2 == 0)
+            if (_sysclock_pll[1] == 0)
             {
-                _sysclock_pll2 = sysclock_getPLLClock(1);
+                _sysclock_pll[1] = sysclock_getPLLClock(1);
             }
-            return _sysclock_pll2;
+            return _sysclock_pll[1];
 
         case SYSCLOCK_SRC_PLL1_VCO_DIV:
-            if (_sysclock_vco1 == 0)
+            if (_sysclock_vco[0] == 0)
             {
                 sysclock_getPLLClock(0);
             }
-            return _sysclock_vco1 / (VCO1DIVbits.INTDIV * 2);
+            divisor = VCO1DIVbits.INTDIV * 2;
+            if (divisor == 0)
+            {
+                divisor = 1;
+            }
+            return _sysclock_vco[0] / divisor;
 
         case SYSCLOCK_SRC_PLL2_VCO_DIV:
-            if (_sysclock_vco2 == 0)
+            if (_sysclock_vco[1] == 0)
             {
                 sysclock_getPLLClock(1);
             }
-            return _sysclock_vco2 / (VCO2DIVbits.INTDIV * 2);
+            divisor = VCO2DIVbits.INTDIV * 2;
+            if (divisor == 0)
+            {
+                divisor = 1;
+            }
+            return _sysclock_vco[1] / divisor;
 
         case SYSCLOCK_SRC_REFI1:
             return _sysclock_refi1;
@@ -105,6 +114,16 @@ int sysclock_setSourceFreq(SYSCLOCK_SOURCE source, uint32_t freq)
         default:
             return -1;
     }
+}
+
+/**
+ * @brief Return the actual clock source for system clock
+ * @return SYSCLOCK_SOURCE enum corresponding to actual clock source
+ */
+SYSCLOCK_SOURCE sysclock_source(void)
+{
+    SYSCLOCK_SOURCE source = (SYSCLOCK_SOURCE)CLK1CONbits.COSC;
+    return source;
 }
 
 uint32_t sysclock_clkgenFreq(uint8_t clkgen)
@@ -178,7 +197,7 @@ uint32_t sysclock_getPLLClock(uint8_t pllId)
     uint16_t multiplier = pllDiv->PLLFBDIV;
     uint16_t postdiv = pllDiv->POSTDIV1 * pllDiv->POSTDIV2;
 
-    _sysclock_vco1 = fin / prediv * multiplier;
-    uint32_t fpllo = _sysclock_vco1 / postdiv;
-    return fpllo;
+    uint32_t vco = fin / prediv * multiplier;
+    _sysclock_vco[pllId] = vco;
+    return vco / postdiv;
 }
