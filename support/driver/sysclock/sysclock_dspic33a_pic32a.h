@@ -90,6 +90,11 @@ typedef enum
     SYSCLOCK_SRC_REFI1 = 0b1010,         ///< Device REFI1 pin through PPS
     SYSCLOCK_SRC_REFI2 = 0b1001,         ///< Device REFI2 pin through PPS
 } SYSCLOCK_SOURCE;
+#define SYSCLOCK_SRC_MAX    10
+
+#ifdef SYSCLOCK_DEBUG
+static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "", "REFI1", "REFI2"};
+#endif
 
 // periph clock assoc
 #    define SYSCLOCK_CLOCK_CPU   SYSCLOCK_CLOCK_CLKGEN1     ///< CPU clock bus
@@ -152,6 +157,11 @@ typedef enum
     SYSCLOCK_SRC_REFI1 = 0b1001,         ///< Device REFI1 pin through PPS
     SYSCLOCK_SRC_REFI2 = 0b1010,         ///< Device REFI2 pin through PPS
 } SYSCLOCK_SOURCE;
+#define SYSCLOCK_SRC_MAX    10
+
+#ifdef SYSCLOCK_DEBUG
+static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "", "REFI1", "REFI2"};
+#endif
 
 // periph clock assoc
 #    define SYSCLOCK_CLOCK_CPU    SYSCLOCK_CLOCK_CLKGEN1     ///< CPU clock bus
@@ -217,6 +227,11 @@ typedef enum
     SYSCLOCK_SRC_REFI1 = 0b1001,         ///< Device REFI1 pin through PPS
     SYSCLOCK_SRC_REFI2 = 0b1010,         ///< Device REFI2 pin through PPS
 } SYSCLOCK_SOURCE;
+#define SYSCLOCK_SRC_MAX    10
+
+#ifdef SYSCLOCK_DEBUG
+static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "", "REFI1", "REFI2"};
+#endif
 
 // periph clock assoc
 #    define SYSCLOCK_CLOCK_CPU    SYSCLOCK_CLOCK_CLKGEN1     ///< CPU clock bus
@@ -283,6 +298,11 @@ typedef enum
     SYSCLOCK_SRC_REFI1 = 0b1001,         ///< Device REFI1 pin through PPS
     SYSCLOCK_SRC_REFI2 = 0b1010,         ///< Device REFI2 pin through PPS
 } SYSCLOCK_SOURCE;
+#define SYSCLOCK_SRC_MAX    10
+
+#ifdef SYSCLOCK_DEBUG
+static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "", "REFI1", "REFI2"};
+#endif
 
 // periph clock assoc
 #    define SYSCLOCK_CLOCK_CPU    SYSCLOCK_CLOCK_CLKGEN1     ///< CPU clock bus
@@ -346,6 +366,11 @@ typedef enum
     SYSCLOCK_SRC_REFI1 = 0b1001,         ///< Device REFI1 pin through PPS
     SYSCLOCK_SRC_REFI2 = 0b1010,         ///< Device REFI2 pin through PPS
 } SYSCLOCK_SOURCE;
+#define SYSCLOCK_SRC_MAX    10
+
+#ifdef SYSCLOCK_DEBUG
+static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "", "REFI1", "REFI2"};
+#endif
 
 // periph clock assoc
 #    define SYSCLOCK_CLOCK_CPU    SYSCLOCK_CLOCK_CLKGEN1     ///< CPU clock bus
