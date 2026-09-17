@@ -20,8 +20,8 @@
 #    include <stdlib.h>
 #    include <termios.h>
 #    include <unistd.h>
-#    define device_read(a, b, c)  read(0, (b), (c))
-#    define device_write(a, b, c) write(1, (b), (c))
+#    define device_read(a, b, c)           read(0, (b), (c))
+#    define cmdline_device_write(a, b, c) write(1, (b), (c))
 #endif
 
 #include <ctype.h>
@@ -68,6 +68,16 @@ static void _cmdline_pushchar(const char c);
 static void _cmdline_backspace(void);
 static uint8_t _cmdline_getLine(void);
 
+ssize_t cmdline_device_write(rt_dev_t device, const char *data, size_t size)
+{
+    size_t id = 0;
+    while (id < size)
+    {
+        id += device_write(device, data + id, size - id);
+    }
+    return size;
+}
+
 void _cmdline_endofline(void)
 {
     char cmd[10];
@@ -76,7 +86,7 @@ void _cmdline_endofline(void)
         return;
     }
     cmdline_curses_right(cmd, _cmdline_end - _cmdline_id);
-    device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor _cmdline_id to the left
+    cmdline_device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor _cmdline_id to the left
     _cmdline_id = _cmdline_end;
 }
 
@@ -88,7 +98,7 @@ void _cmdline_startofline(void)
         return;
     }
     cmdline_curses_left(cmd, _cmdline_id);
-    device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor _cmdline_id to the left
+    cmdline_device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor _cmdline_id to the left
     _cmdline_id = 0;
 }
 
@@ -102,7 +112,7 @@ void _cmdline_right(void)
     _cmdline_id++;
 
     cmdline_curses_right(cmd, 1);
-    device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor 1 line right
+    cmdline_device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor 1 line right
 }
 
 void _cmdline_left(void)
@@ -115,7 +125,7 @@ void _cmdline_left(void)
     _cmdline_id--;
 
     cmdline_curses_left(cmd, 1);
-    device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor 1 line right
+    cmdline_device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor 1 line right
 }
 
 void _cmdline_replaceLineContent(const char *newline)
@@ -123,7 +133,7 @@ void _cmdline_replaceLineContent(const char *newline)
     // clear line
     _cmdline_startofline();
     memset(_cmdline_line, ' ', _cmdline_end);
-    device_write(_cmdline_device_out, _cmdline_line, _cmdline_end);
+    cmdline_device_write(_cmdline_device_out, _cmdline_line, _cmdline_end);
     _cmdline_id = _cmdline_end;
 
     // get old line
@@ -133,7 +143,7 @@ void _cmdline_replaceLineContent(const char *newline)
     _cmdline_id = _cmdline_end;
     if (_cmdline_end > 0)
     {
-        device_write(_cmdline_device_out, _cmdline_line, _cmdline_end);
+        cmdline_device_write(_cmdline_device_out, _cmdline_line, _cmdline_end);
     }
 }
 
@@ -167,7 +177,7 @@ void _cmdline_clear(void)
 {
     char cmd[10];
     cmdline_curses_clear(cmd);
-    device_write(_cmdline_device_out, cmd, strlen(cmd));
+    cmdline_device_write(_cmdline_device_out, cmd, strlen(cmd));
 }
 
 void _cmdline_newline(void)
@@ -178,13 +188,13 @@ void _cmdline_newline(void)
     _cmdline_end = 0;
     cmdline_history_id = -1;
     cmdline_curses_left(cmd, 200);
-    device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor 200 column before
+    cmdline_device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor 200 column before
 }
 
 void _cmdline_reset(void)
 {
     _cmdline_newline();
-    device_write(_cmdline_device_out, "> ", 2);
+    cmdline_device_write(_cmdline_device_out, "> ", 2);
 }
 
 void _cmdline_processline(char *line)
@@ -217,18 +227,18 @@ void _cmdline_processline(char *line)
 
     if (ret == INT_MIN)  // command not found
     {
-        device_write(_cmdline_device_out, "Invalid command '", 17);
-        device_write(_cmdline_device_out, _cmdline_line, strlen(_cmdline_line));
-        device_write(_cmdline_device_out, "'\r\n", 3);
+        cmdline_device_write(_cmdline_device_out, "Invalid command '", 17);
+        cmdline_device_write(_cmdline_device_out, _cmdline_line, strlen(_cmdline_line));
+        cmdline_device_write(_cmdline_device_out, "'\r\n", 3);
         _cmdline_reset();
         return;
     }
 
     if (ret < 0)  // error in command
     {
-        device_write(_cmdline_device_out, "'", 1);
-        device_write(_cmdline_device_out, _cmdline_line, strlen(_cmdline_line));
-        device_write(_cmdline_device_out, "' failed to exec\r\n", 18);
+        cmdline_device_write(_cmdline_device_out, "'", 1);
+        cmdline_device_write(_cmdline_device_out, _cmdline_line, strlen(_cmdline_line));
+        cmdline_device_write(_cmdline_device_out, "' failed to exec\r\n", 18);
         _cmdline_reset();
         return;
     }
@@ -254,16 +264,16 @@ void _cmdline_pushchar(const char c)
         _cmdline_line[_cmdline_id] = c;
         _cmdline_id++;
         bf[0] = c;
-        device_write(_cmdline_device_out, bf, 1);
+        cmdline_device_write(_cmdline_device_out, bf, 1);
     }
     else  // middle of line (insert)
     {
         char cmd[10];
         bf[0] = c;
-        device_write(_cmdline_device_out, bf, 1);
-        device_write(_cmdline_device_out, _cmdline_line + _cmdline_id, _cmdline_end - _cmdline_id);
+        cmdline_device_write(_cmdline_device_out, bf, 1);
+        cmdline_device_write(_cmdline_device_out, _cmdline_line + _cmdline_id, _cmdline_end - _cmdline_id);
         cmdline_curses_left(cmd, _cmdline_end - _cmdline_id);
-        device_write(_cmdline_device_out, cmd, strlen(cmd));
+        cmdline_device_write(_cmdline_device_out, cmd, strlen(cmd));
         _cmdline_end++;
         for (int i = _cmdline_end - 1; i > _cmdline_id; i--)
         {
@@ -283,9 +293,9 @@ void _cmdline_backspace(void)
     }
 
     cmdline_curses_left(cmd, 1);
-    device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor 1 line right
+    cmdline_device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor 1 line right
     _cmdline_line[_cmdline_end] = ' ';
-    device_write(_cmdline_device_out, _cmdline_line + _cmdline_id, _cmdline_end - _cmdline_id + 1);
+    cmdline_device_write(_cmdline_device_out, _cmdline_line + _cmdline_id, _cmdline_end - _cmdline_id + 1);
     _cmdline_id--;
     for (int i = _cmdline_id + 1; i < _cmdline_end; i++)
     {
@@ -293,7 +303,7 @@ void _cmdline_backspace(void)
     }
 
     cmdline_curses_left(cmd, _cmdline_end - _cmdline_id);
-    device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor 1 line right
+    cmdline_device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor 1 line right
     _cmdline_end--;
 }
 
@@ -314,7 +324,7 @@ uint8_t _cmdline_getLine(void)
                 exit(0);
 #else
             {
-                device_write(_cmdline_device_out, "^C\n\r", 4);
+                cmdline_device_write(_cmdline_device_out, "^C\n\r", 4);
                 cmd_setTask(NULL);  // finished current task
                 _cmdline_reset();
                 continue;
@@ -405,8 +415,8 @@ uint8_t _cmdline_getLine(void)
             {
                 char cmd[10];
                 cmdline_curses_left(cmd, 200);
-                device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor 200 column before
-                device_write(_cmdline_device_out, "\n\r", 2);
+                cmdline_device_write(_cmdline_device_out, cmd, strlen(cmd));  // move cursor 200 column before
+                cmdline_device_write(_cmdline_device_out, "\n\r", 2);
                 valid = 1;
                 break;
             }

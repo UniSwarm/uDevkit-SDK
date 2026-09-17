@@ -139,13 +139,13 @@ void _cmd_carriageReturn(void)
 {
     char cmd[10];
     cmdline_curses_left(cmd, 200);
-    device_write(_cmdline_device_out, cmd, strlen(cmd));
+    cmdline_device_write(_cmdline_device_out, cmd, strlen(cmd));
 }
 
 void cmd_puts(const char *str)
 {
-    device_write(_cmdline_device_out, str, strlen(str));
-    device_write(_cmdline_device_out, "\n", 1);
+    cmdline_device_write(_cmdline_device_out, str, strlen(str));
+    cmdline_device_write(_cmdline_device_out, "\n", 1);
 
     _cmd_carriageReturn();
 }
@@ -164,15 +164,15 @@ int cmd_printf(const char *format, ...)
     char *end = strchr(begin, '\r');
     while (end != NULL)
     {
-        device_write(_cmdline_device_out, begin, end - begin);
-        device_write(_cmdline_device_out, "\r\n", 1);
+        cmdline_device_write(_cmdline_device_out, begin, end - begin);
+        cmdline_device_write(_cmdline_device_out, "\r\n", 1);
 
         _cmd_carriageReturn();
 
         begin = end + 1;
         end = strchr(begin, '\r');
     }
-    device_write(_cmdline_device_out, begin, strlen(begin));
+    cmdline_device_write(_cmdline_device_out, begin, strlen(begin));
 
     return done;
 }

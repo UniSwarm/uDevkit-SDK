@@ -22,6 +22,8 @@ void cmdline_init(void);
 void cmdline_setDevice(rt_dev_t deviceIn, rt_dev_t deviceOut);
 void cmdline_task(void);
 
+ssize_t cmdline_device_write(rt_dev_t device, const char *data, size_t size);
+
 int cmdline_addCommand(const char name[10], int (*cmdFnPtr)(int, char **));
 
 #ifdef __cplusplus
