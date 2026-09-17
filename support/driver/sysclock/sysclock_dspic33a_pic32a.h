@@ -93,7 +93,7 @@ typedef enum
 #define SYSCLOCK_SRC_MAX    10
 
 #ifdef SYSCLOCK_DEBUG
-static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "", "REFI1", "REFI2"};
+static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "REFI2", "REFI1"};
 #endif
 
 // periph clock assoc
@@ -160,7 +160,7 @@ typedef enum
 #define SYSCLOCK_SRC_MAX    10
 
 #ifdef SYSCLOCK_DEBUG
-static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "", "REFI1", "REFI2"};
+static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "REFI1", "REFI2"};
 #endif
 
 // periph clock assoc
@@ -230,7 +230,7 @@ typedef enum
 #define SYSCLOCK_SRC_MAX    10
 
 #ifdef SYSCLOCK_DEBUG
-static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "", "REFI1", "REFI2"};
+static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "REFI1", "REFI2"};
 #endif
 
 // periph clock assoc
@@ -301,7 +301,7 @@ typedef enum
 #define SYSCLOCK_SRC_MAX    10
 
 #ifdef SYSCLOCK_DEBUG
-static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "", "REFI1", "REFI2"};
+static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "REFI1", "REFI2"};
 #endif
 
 // periph clock assoc
@@ -369,7 +369,7 @@ typedef enum
 #define SYSCLOCK_SRC_MAX    10
 
 #ifdef SYSCLOCK_DEBUG
-static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "", "REFI1", "REFI2"};
+static const char *sysclock_sources_str[] = {"", "FRC", "BFRC", "POSC", "LPRC", "PLL1", "PLL2", "VCO1", "VCO2", "REFI1", "REFI2"};
 #endif
 
 // periph clock assoc
