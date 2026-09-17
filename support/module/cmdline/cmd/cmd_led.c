@@ -17,6 +17,7 @@
 
 int cmd_led(int argc, char **argv)
 {
+#if defined(LED_COUNT) && LED_COUNT > 0
     char ledid = 255;
     char status = 0;
 
@@ -70,4 +71,10 @@ int cmd_led(int argc, char **argv)
     }
 
     return 0;
+#else
+    UDK_UNUSED(argc);
+    UDK_UNUSED(argv);
+    puts("No led");
+    return 0;
+#endif
 }
