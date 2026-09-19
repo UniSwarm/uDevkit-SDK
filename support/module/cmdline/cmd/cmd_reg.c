@@ -61,9 +61,9 @@ int cmd_reg(int argc, char **argv)
         // print in binary format
         rt_reg_t mask;
 #if (REGSIZE == 4)
-        mask = 0x80000000;
+        mask = 0x8000U;
 #else
-        mask = 0x8000;
+        mask = 0x80000000U;
 #endif
         while (mask != 0)
         {
@@ -77,13 +77,13 @@ int cmd_reg(int argc, char **argv)
         res[id] = 0;
 
 #if (REGSIZE == 4)
-        printf("dec : %d\n", value);
-        printf("hex : 0x%.8X\n", value);
-        printf("bin : 0b%s\n", res);
+        printf("dec : %d\r\n", value);
+        printf("hex : 0x%.4X\r\n", value);
+        printf("bin : 0b%s\r\n", res);
 #else
-        printf("dec : %d\n", value);
-        printf("hex : 0x%.4X\n", value);
-        printf("bin : 0b%s\n", res);
+        printf("dec : %d\r\n", value);
+        printf("hex : 0x%.8X\r\n", value);
+        printf("bin : 0b%s\r\n", res);
 #endif
         return 0;
     }
