@@ -30,4 +30,8 @@ $(eval $(call $(includedrivers)))
 $(eval $(call $(includedrivers)))
 $(eval $(call $(includedrivers)))
 
+ifneq ($(BADDRIVERS),)
+ $(info Invalid drivers in DRIVER list : $(BADDRIVERS))
+endif
+
 DRIVERS := $(sort $(IDRIVERS))
