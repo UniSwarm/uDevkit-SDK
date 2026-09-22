@@ -84,6 +84,8 @@ typedef uint8_t rt_dev_t_class;
 #define DEV_CLASS_MOTOR ((rt_dev_t_class)(0x15))
 #define DEV_CLASS_CCP   ((rt_dev_t_class)(0x16))
 
+#define DEV_CLASS_DMA ((rt_dev_t_class)(0x20))
+
 // ===== device functions =====
 ssize_t device_write(rt_dev_t device, const char *data, size_t size);
 ssize_t device_read(rt_dev_t device, char *data, size_t size_max);
