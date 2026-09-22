@@ -34,7 +34,7 @@ typedef uint16_t size_t;
 #    endif
 
 #    if !defined(_SSIZE_T_DEFINED) && !defined(_SSIZE_T) && !defined(_SSIZE_T_) && !defined(__have_typedef_ssize_t) && !defined(_SSIZET)                       \
-        && !defined(_BSD_SSIZE_T_DEFINED_) && !defined(__ssize_t_defined) && !defined(_SSIZE_T_DECLARED)
+        && !defined(_BSD_SSIZE_T_DEFINED_) && !defined(__ssize_t_defined) && !defined(_SSIZE_T_DECLARED) && !defined(__DEFINED_ssize_t)
 #        define _SSIZE_T_DEFINED
 #        define __ssize_t_defined
 #        define _SSIZE_T
@@ -43,6 +43,7 @@ typedef uint16_t size_t;
 #        define _SSIZET
 #        define _SSIZE_T_DECLARED
 #        define _BSD_SSIZE_T_DEFINED_
+#        define __DEFINED_ssize_t
 typedef int16_t ssize_t;
 #    endif
 #else
@@ -55,7 +56,7 @@ typedef int16_t ssize_t;
 typedef uint16_t rt_dev_t;
 typedef uint8_t rt_dev_t_class;
 #define MAJOR(dev)    ((rt_dev_t_class)((dev) >> 8))
-#define MINOR(dev)    ((uint8_t)((dev)&0x00FF))
+#define MINOR(dev)    ((uint8_t)((dev) & 0x00FF))
 #define MKDEV(ma, mi) (((ma) << 8) | (mi))
 #define NULLDEV       ((rt_dev_t_class)(0))
 
@@ -70,8 +71,8 @@ typedef uint8_t rt_dev_t_class;
 #define DEV_CLASS_SPI_SOFT   ((rt_dev_t_class)(DEV_CLASS_SPI + 1))
 #define DEV_CLASS_USB_SERIAL ((rt_dev_t_class)(0x08))
 #define DEV_CLASS_CAN        ((rt_dev_t_class)(0x0A))
-#define DEV_CLASS_SENT        ((rt_dev_t_class)(0x0B))
-#define DEV_CLASS_BISS        ((rt_dev_t_class)(0x0C))
+#define DEV_CLASS_SENT       ((rt_dev_t_class)(0x0B))
+#define DEV_CLASS_BISS       ((rt_dev_t_class)(0x0C))
 
 #define DEV_CLASS_GPIO ((rt_dev_t_class)(0x09))
 
