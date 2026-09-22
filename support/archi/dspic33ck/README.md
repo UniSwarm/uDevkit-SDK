@@ -19,23 +19,21 @@ This family have variations of flash memory, pin count and CAN FD for 5XX, 6XX a
 
 ## 🧩 Peripheral overview
 
-| Peripheral      | [UART][1] | [TMR][2] | [OC][3] | [IC][4] | [I2C][5] | [SPI][6] | [CAN][7] | [SENT][8] | [CLC][9] | [QEI][10] | [PWM][11] |      [CCP][12] | [DMA][13] |
-|:----------------|----------:|---------:|--------:|--------:|---------:|---------:|---------:|----------:|---------:|----------:|----------:|---------------:|----------:|
-| dsPIC33CK MC00X |         3 |        1 |       0 |       0 |        1 |        2 |        0 |         1 |        4 |         0 |         4 |              4 |         4 |
-| dsPIC33CK MC10X |         3 |        1 |       0 |       0 |        1 |        2 |        0 |         1 |        4 |     __1__ |         4 |              4 |         4 |
-| dsPIC33CK MC50X |         3 |        1 |       0 |       0 |        1 |        2 | __1 Fd__ |         1 |        4 |         1 |         4 |              4 |         4 |
-| dsPIC33CK MP10X |         3 |        1 |       0 |       0 |    __2__ |    __3__ |        0 |     __2__ |        4 |     __2__ |     __8__ | __5 (1 MCCP)__ |         4 |
-| dsPIC33CK MP20X |         3 |        1 |       0 |       0 |    __3__ |        3 |        0 |         2 |        4 |         2 |         8 | __9 (1 MCCP)__ |         4 |
-| dsPIC33CK MP30X |         3 |        1 |       0 |       0 |        3 |        3 |        0 |         2 |        4 |     __3__ |         8 |     9 (1 MCCP) |     __8__ |
-| dsPIC33CK MP40X |         3 |        1 |       0 |       0 |        3 |        3 |        0 |         2 |    __8__ |         3 |         8 |     9 (1 MCCP) |         8 |
-| dsPIC33CK MP50X |         3 |        1 |       0 |       0 |        3 |        3 |     1 Fd |         2 |        4 |         2 |         8 |     9 (1 MCCP) |     __4__ |
-| dsPIC33CK MP60X |         3 |        1 |       0 |       0 |        3 |        3 | __2 Fd__ |         2 |        4 |     __3__ |         8 |     9 (1 MCCP) |     __8__ |
-| dsPIC33CK MP7XX |         3 |        1 |       0 |       0 |        3 |        3 |     2 Fd |         2 |    __8__ |     __3__ |         8 |     9 (1 MCCP) |         8 |
+| Peripheral      | [UART][1] | [TMR][2] | [I2C][5] | [SPI][6] | [CAN][7] | [SENT][8] | [CLC][9] | [QEI][10] | [PWM][11] |      [CCP][12] | [DMA][13] |
+|:----------------|----------:|---------:|---------:|---------:|---------:|----------:|---------:|----------:|----------:|---------------:|----------:|
+| dsPIC33CK MC00X |         3 |        1 |        1 |        2 |   0-1 Fd |         1 |        4 |         0 |         4 |              4 |         4 |
+| dsPIC33CK MC10X |         3 |        1 |        1 |        2 |        0 |         1 |        4 |     __1__ |         4 |              4 |         4 |
+| dsPIC33CK MC50X |         3 |        1 |        1 |        2 | __1 Fd__ |         1 |        4 |         1 |         4 |              4 |         4 |
+| dsPIC33CK MP10X |         3 |        1 |    __2__ |    __3__ |        0 |     __2__ |        4 |     __2__ |     __8__ | __5 (1 MCCP)__ |         4 |
+| dsPIC33CK MP20X |         3 |        1 |    __3__ |        3 |        0 |         2 |        4 |         2 |         8 | __9 (1 MCCP)__ |         4 |
+| dsPIC33CK MP30X |         3 |        1 |        3 |        3 |        0 |         2 |        4 |     __3__ |         8 |     9 (1 MCCP) |     __8__ |
+| dsPIC33CK MP40X |         3 |        1 |        3 |        3 |        0 |         2 |    __8__ |         3 |         8 |     9 (1 MCCP) |         8 |
+| dsPIC33CK MP50X |         3 |        1 |        3 |        3 |     1 Fd |         2 |        4 |         2 |         8 |     9 (1 MCCP) |     __4__ |
+| dsPIC33CK MP60X |         3 |        1 |        3 |        3 | __2 Fd__ |         2 |        4 |     __3__ |         8 |     9 (1 MCCP) |     __8__ |
+| dsPIC33CK MP7XX |         3 |        1 |        3 |        3 |     2 Fd |         2 |    __8__ |     __3__ |         8 |     9 (1 MCCP) |         8 |
 
 [1]: ../../driver/uart/README.md
 [2]: ../../driver/timer/README.md
-[3]: ../../driver/oc/README.md
-[4]: ../../driver/ic/README.md
 [5]: ../../driver/i2c/README.md
 [6]: ../../driver/spi/README.md
 [7]: ../../driver/can/README.md
@@ -52,11 +50,13 @@ This family have variations of flash memory, pin count and CAN FD for 5XX, 6XX a
 
 ### MC00X subfamily
 
-Base device with only one PLL, no dual flash panel, one analog comparator and one ADC core.
+Base device with only one PLL, no dual flash panel, one analog comparator and one ADC core (2 MSsmps ADC instead of 3.5 Msmps).
+
+Value line with simpler peripheral. 128 and 256 kb have one CAN Fd.
 
 14 devices.
 
-[dsPIC33CK64MC105 family documentation](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33CK64MC105-Family-Data-Sheet-DS70005399D.pdf)
+[dsPIC33CK256MC006 family documentation](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33CK256MC006-Family-Data-Sheet-DS70005633.pdf)
 
 | Compatible devices                                          | Program |  Data | Pins |
 |-------------------------------------------------------------|--------:|------:|-----:|
