@@ -22,7 +22,7 @@ extern "C" {
 #endif
 
 #ifndef SIMULATOR
-#    define _dma_space_ __attribute__((space(xmemory), aligned(2)))
+#    define _dma_space_ __attribute__((space(xmemory), aligned(4)))
 #endif
 
 #define DMA_ADDRMODE_NOCHANGE  0b00
