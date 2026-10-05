@@ -69,10 +69,10 @@ static struct timer_dev _timers[] = {
 void _T1Interrupt(void);
 #endif
 #if (TIMER_COUNT >= 2) && !defined(TIMER2_DISABLE) && !defined(TIMER2_INT_DISABLE)
-void _T1Interrupt(void);
+void _T2Interrupt(void);
 #endif
-#if (TIMER_COUNT >= 3) && !defined(TIMER2_DISABLE) && !defined(TIMER3_INT_DISABLE)
-void _T1Interrupt(void);
+#if (TIMER_COUNT >= 3) && !defined(TIMER3_DISABLE) && !defined(TIMER3_INT_DISABLE)
+void _T3Interrupt(void);
 #endif
 
 /**
