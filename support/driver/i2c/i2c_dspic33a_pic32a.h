@@ -44,6 +44,8 @@ extern "C" {
 #    define I2C_COUNT 0
 #endif
 
+#define i2c(d) MKDEV(DEV_CLASS_I2C, (d) - 1)
+
 #ifdef __cplusplus
 }
 #endif
