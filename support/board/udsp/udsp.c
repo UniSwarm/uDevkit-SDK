@@ -22,7 +22,7 @@ int _board_init_io(void)
     ANSELA = 0x0000;  // all analog inputs of port A as digital buffer
     ANSELB = 0x0000;  // all analog inputs of port B as digital buffer
 
-    // CODEC_PDN = 0;
+    CODEC_PDN = 0;
     TRISBbits.TRISB7 = 0;  // CODEC_PDN
 
     // remappable pins
@@ -31,14 +31,20 @@ int _board_init_io(void)
     _U1RXR = 8;           // RX1 ==> RPA7
     _RP1R = _RPOUT_U1TX;  // TX1 ==> RPA0
 
-    _U2RXR = 50;           // RX2 ==> RPD1
-    _RP49R = _RPOUT_U2TX;  // TX2 ==> RPD0
+    _U2RXR = 49;           // RX2 ==> RPD1
+    _RP50R = _RPOUT_U2TX;  // TX2 ==> RPD0
 
-    _RP4R = _RPOUT_REFO1;  // REFO1 ==>RPA3
+    //_RP4R = _RPOUT_REFO1;  // REFO1 ==>RPA3
+    _RP4R = _RPOUT_SCK1;  // REFO1 ==>RPA3
+
+    // DBG !!!!
+    //_RP10R = _RPOUT_SS1;  // LRCK ==> RPA5
+    //_RP9R = _RPOUT_SCK1;
 
     _RP5R = _RPOUT_SCK1;   // BICK ==> RPA4
     _RP6R = _RPOUT_SS1;    // LRCK ==> RPA5
     _RP22R = _RPOUT_SDO1;  // SDIN1 ==> RPB5
+    _SDI1R = 19;           // SDOUT1 ==> RPB2
     lockIoConfig();
 #endif
 

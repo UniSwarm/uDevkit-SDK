@@ -29,6 +29,9 @@ int board_init(void);
 
 #define CODEC_PDN LATBbits.LATB7
 
+#define UART_ID_CMD 1
+#define UART_ID_DBG 2
+
 #ifdef __cplusplus
 }
 #endif
