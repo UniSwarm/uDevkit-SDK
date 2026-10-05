@@ -1,7 +1,7 @@
 /**
  * @file dspic33ak.h
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2025
+ * @copyright UniSwarm 2025-2026
  *
  * @date May 3, 2025, 06:01 PM
  *
@@ -62,7 +62,7 @@ extern "C" {
         }
 #endif
 
-#define REGSIZE 4
+#define REGSIZE 8
 typedef unsigned int rt_reg_t;
 typedef unsigned int rt_reg_ptr_t;
 
