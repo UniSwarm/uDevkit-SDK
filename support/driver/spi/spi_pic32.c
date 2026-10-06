@@ -16,6 +16,7 @@
 
 #include <archi.h>
 #include <driver/int.h>
+#include <driver/sysclock.h>
 
 enum
 {
@@ -37,6 +38,7 @@ typedef struct
 
 struct spi_dev
 {
+    uint32_t freq;
     spi_status flags;
     uint8_t bitLength;
     void (*txHandler)(void);
@@ -456,6 +458,158 @@ bool spi_isEnabled(rt_dev_t device)
     }
 
     return (_spis[spi].flags.enabled == 1);
+}
+
+/**
+ * @brief Sets the speed of receive and transmit of the specified spi bus device
+ * @param device spi bus device number
+ * @param freq of receive and transmit clock in Hz
+ * @return 0 if ok, -1 in case of error
+ */
+int spi_setFreq(rt_dev_t device, uint32_t freq)
+{
+    uint8_t enabled;
+    uint32_t systemClockPeriph;
+    uint16_t sdiv;
+
+    uint8_t spi = MINOR(device);
+    if (spi >= SPI_COUNT)
+    {
+        return -1;
+    }
+
+    if (freq == 0)
+    {
+        return -1;
+    }
+
+    _spis[spi].freq = freq;
+
+    systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_SPI);
+    sdiv = systemClockPeriph / (2 * freq) - 1;
+    if (sdiv > SPI_MAX_BRG)
+    {
+        sdiv = SPI_MAX_BRG;
+    }
+
+    // disable device if it is already enabled
+    if (_spis[spi].flags.enabled == 1)
+    {
+        enabled = 1;
+        spi_disable(device);
+    }
+
+    switch (spi)
+    {
+#if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
+        case SPI1_ID:
+            SPI1BRG = sdiv;
+            break;
+#endif
+#if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
+        case SPI2_ID:
+            SPI2BRG = sdiv;
+            break;
+#endif
+#if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
+        case SPI3_ID:
+            SPI3BRG = sdiv;
+            break;
+#endif
+#if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
+        case SPI4_ID:
+            SPI4BRG = sdiv;
+            break;
+#endif
+#if (SPI_COUNT >= 5) && !defined(SPI5_DISABLE)
+        case SPI5_ID:
+            SPI5BRG = sdiv;
+            break;
+#endif
+#if (SPI_COUNT >= 6) && !defined(SPI6_DISABLE)
+        case SPI6_ID:
+            SPI6BRG = sdiv;
+            break;
+#endif
+    }
+
+    // re enable device if it was already enabled
+    if (enabled == 1)
+    {
+        spi_enable(device);
+    }
+
+    return 0;
+}
+
+/**
+ * @brief Gets the true baud speed of the specified spi bus device
+ * @param device spi bus device number
+ * @return speed of receive and transmit in bauds (bits / s)
+ */
+uint32_t spi_freq(rt_dev_t device)
+{
+    uint32_t freq;
+    uint16_t sdiv = 1;
+
+    uint8_t spi = MINOR(device);
+    if (spi >= SPI_COUNT)
+    {
+        return 0;
+    }
+
+    switch (spi)
+    {
+#if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
+        case SPI1_ID:
+            sdiv = SPI1BRG;
+            break;
+#endif
+#if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
+        case SPI2_ID:
+            sdiv = SPI2BRG;
+            break;
+#endif
+#if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
+        case SPI3_ID:
+            sdiv = SPI3BRG;
+            break;
+#endif
+#if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
+        case SPI4_ID:
+            sdiv = SPI4BRG;
+            break;
+#endif
+#if (SPI_COUNT >= 5) && !defined(SPI5_DISABLE)
+        case SPI5_ID:
+            sdiv = SPI5BRG;
+            break;
+#endif
+#if (SPI_COUNT >= 6) && !defined(SPI6_DISABLE)
+        case SPI6_ID:
+            sdiv = SPI6BRG;
+            break;
+#endif
+    }
+    uint32_t systemClockPeriph = sysclock_periphFreq(SYSCLOCK_CLOCK_SPI);
+    freq = systemClockPeriph / (2 * (sdiv + 1));
+    return freq;
+}
+
+/**
+ * @brief Gets the effective baud speed of the specified spi bus device
+ * @param device spi bus device number
+ * @return speed of receive and transmit in bauds (bits / s)
+ */
+uint32_t spi_effectiveFreq(rt_dev_t device)
+{
+    uint8_t spi = MINOR(device);
+    if (spi >= SPI_COUNT)
+    {
+        return 0;
+    }
+
+    return _spis[spi].freq;
 }
 
 /**

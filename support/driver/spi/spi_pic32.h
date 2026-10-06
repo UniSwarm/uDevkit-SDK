@@ -20,6 +20,8 @@
 extern "C" {
 #endif
 
+#define SPI_MAX_BRG 511
+
 #if defined(DEVICE_32MX420F032H) || defined(DEVICE_32MX440F128H) || defined(DEVICE_32MX440F256H) || defined(DEVICE_32MX440F512H)
 #    define SPI_COUNT 1
 #elif defined(DEVICE_32MK0128MCA028) || defined(DEVICE_32MK0128MCA032) || defined(DEVICE_32MK0128MCA048) || defined(DEVICE_32MK0256GPG048)                     \
