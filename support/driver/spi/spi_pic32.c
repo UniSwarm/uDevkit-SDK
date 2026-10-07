@@ -884,11 +884,110 @@ ssize_t spi_exchange(rt_dev_t device, const char *tx, char *rx, size_t size)
 
 ssize_t spi_write(rt_dev_t device, const char *data, size_t size)
 {
-    // TODO IMPLEMENT ME
-    UDK_UNUSED(device);
-    UDK_UNUSED(data);
-    UDK_UNUSED(size);
-    return -1;
+
+    uint8_t spi = MINOR(device);
+    if (spi >= SPI_COUNT)
+    {
+        return -1;
+    }
+
+    const char *tx_ptr = data;
+    char __attribute__((unused)) dummyRead;
+    switch (spi)
+    {
+#if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
+        case SPI1_ID:
+            for (size_t i = 0; i < size; i++)
+            {
+                while (SPI1STATbits.SRMT == 0)
+                    ;
+                SPI1BUF = *tx_ptr;
+                tx_ptr++;
+
+                while (SPI1STATbits.SPIRBE == 1)
+                    ;
+                dummyRead = SPI1BUF;
+            }
+            break;
+#endif
+#if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
+        case SPI2_ID:
+            for (size_t i = 0; i < size; i++)
+            {
+                while (SPI2STATbits.SRMT == 0)
+                    ;
+                SPI2BUF = *tx_ptr;
+                tx_ptr++;
+
+                while (SPI2STATbits.SPIRBE == 1)
+                    ;
+                dummyRead = SPI2BUF;
+            }
+            break;
+#endif
+#if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
+        case SPI3_ID:
+            for (size_t i = 0; i < size; i++)
+            {
+                while (SPI3STATbits.SRMT == 0)
+                    ;
+                SPI3BUF = *tx_ptr;
+                tx_ptr++;
+
+                while (SPI3STATbits.SPIRBE == 1)
+                    ;
+                dummyRead = SPI3BUF;
+            }
+            break;
+#endif
+#if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
+        case SPI4_ID:
+            for (size_t i = 0; i < size; i++)
+            {
+                while (SPI4STATbits.SRMT == 0)
+                    ;
+                SPI4BUF = *tx_ptr;
+                tx_ptr++;
+
+                while (SPI4STATbits.SPIRBE == 1)
+                    ;
+                dummyRead = SPI4BUF;
+            }
+            break;
+#endif
+#if (SPI_COUNT >= 5) && !defined(SPI5_DISABLE)
+        case SPI5_ID:
+            for (size_t i = 0; i < size; i++)
+            {
+                while (SPI5STATbits.SRMT == 0)
+                    ;
+                SPI5BUF = *tx_ptr;
+                tx_ptr++;
+
+                while (SPI5STATbits.SPIRBE == 1)
+                    ;
+                dummyRead = SPI5BUF;
+            }
+            break;
+#endif
+#if (SPI_COUNT >= 6) && !defined(SPI6_DISABLE)
+        case SPI6_ID:
+            for (size_t i = 0; i < size; i++)
+            {
+                while (SPI6STATbits.SRMT == 0)
+                    ;
+                SPI6BUF = *tx_ptr;
+                tx_ptr++;
+
+                while (SPI6STATbits.SPIRBE == 1)
+                    ;
+                dummyRead = SPI6BUF;
+            }
+            break;
+#endif
+    }
+
+    return size;
 }
 
 int spi_flush(rt_dev_t device)
@@ -900,11 +999,109 @@ int spi_flush(rt_dev_t device)
 
 ssize_t spi_read(rt_dev_t device, char *data, size_t size_max)
 {
-    // TODO IMPLEMENT ME
-    UDK_UNUSED(device);
-    UDK_UNUSED(data);
-    UDK_UNUSED(size_max);
-    return -1;
+    uint8_t spi = MINOR(device);
+    if (spi >= SPI_COUNT)
+    {
+        return -1;
+    }
+
+    char *rx_ptr = data;
+
+    switch (spi)
+    {
+#if (SPI_COUNT >= 1) && !defined(SPI1_DISABLE)
+        case SPI1_ID:
+            for (size_t i = 0; i < size_max; i++)
+            {
+                while (SPI1STATbits.SRMT == 0)
+                    ;
+                SPI1BUF = 0;
+
+                while (SPI1STATbits.SPIRBE == 1)
+                    ;
+                *rx_ptr = SPI1BUF;
+                rx_ptr++;
+            }
+            break;
+#endif
+#if (SPI_COUNT >= 2) && !defined(SPI2_DISABLE)
+        case SPI2_ID:
+            for (size_t i = 0; i < size_max; i++)
+            {
+                while (SPI2STATbits.SRMT == 0)
+                    ;
+                SPI2BUF = 0;
+
+                while (SPI2STATbits.SPIRBE == 1)
+                    ;
+                *rx_ptr = SPI2BUF;
+                rx_ptr++;
+            }
+            break;
+#endif
+#if (SPI_COUNT >= 3) && !defined(SPI3_DISABLE)
+        case SPI3_ID:
+            for (size_t i = 0; i < size_max; i++)
+            {
+                while (SPI3STATbits.SRMT == 0)
+                    ;
+                SPI3BUF = 0;
+
+                while (SPI3STATbits.SPIRBE == 1)
+                    ;
+                *rx_ptr = SPI3BUF;
+                rx_ptr++;
+            }
+            break;
+#endif
+#if (SPI_COUNT >= 4) && !defined(SPI4_DISABLE)
+        case SPI4_ID:
+            for (size_t i = 0; i < size_max; i++)
+            {
+                while (SPI4STATbits.SRMT == 0)
+                    ;
+                SPI4BUF = 0;
+
+                while (SPI4STATbits.SPIRBE == 1)
+                    ;
+                *rx_ptr = SPI4BUF;
+                rx_ptr++;
+            }
+            break;
+#endif
+#if (SPI_COUNT >= 5) && !defined(SPI5_DISABLE)
+        case SPI5_ID:
+            for (size_t i = 0; i < size_max; i++)
+            {
+                while (SPI5STATbits.SRMT == 0)
+                    ;
+                SPI5BUF = 0;
+
+                while (SPI5STATbits.SPIRBE == 1)
+                    ;
+                *rx_ptr = SPI5BUF;
+                rx_ptr++;
+            }
+            break;
+#endif
+#if (SPI_COUNT >= 6) && !defined(SPI6_DISABLE)
+        case SPI6_ID:
+            for (size_t i = 0; i < size_max; i++)
+            {
+                while (SPI6STATbits.SRMT == 0)
+                    ;
+                SPI6BUF = 0;
+
+                while (SPI6STATbits.SPIRBE == 1)
+                    ;
+                *rx_ptr = SPI6BUF;
+                rx_ptr++;
+            }
+            break;
+#endif
+    }
+
+    return size_max;
 }
 
 // Ints
