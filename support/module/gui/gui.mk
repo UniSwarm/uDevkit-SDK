@@ -62,7 +62,7 @@ $(OUT_PWD)/%.bmp.c : %.bmp $(OUT_PWD)/pictures.h $(IMG2RAW_EXE)
 # rule to build images *.<img>.c to OUT_PWD/*.o
 $(OBJ_PWD)/%.o : $(OUT_PWD)/%.c
 	@printf "$(GREEN)µCC %-35s => %s$(NORM)\n" $(notdir $<) $(OUT_PWD)/$(notdir $@)
-	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OBJ_PWD)/$(notdir $@)
+	$(VERB)$(CC) $(CCFLAGS) $(CCFLAGS_XC) -c $< $(DEFINES) $(INCLUDEPATH) -o $(OUT_PWD)/$(notdir $@)
 
 PICTURES_C := $(PICTURES)
 PICTURES_NAME := $(notdir $(PICTURES))
@@ -72,7 +72,7 @@ PICTURES_C := $(PICTURES_C:.png=.png.c)
 PICTURES_NAME := $(PICTURES_NAME:.png=)
 PICTURES_C := $(PICTURES_C:.bmp=.bmp.c)
 PICTURES_NAME := $(PICTURES_NAME:.bmp=)
-PICTURES_C := $(addprefix $(OBJ_PWD)/, $(PICTURES_C))
+PICTURES_C := $(addprefix $(OUT_PWD)/, $(PICTURES_C))
 SRC += $(PICTURES_C)
 
 # generate list of used pictures
