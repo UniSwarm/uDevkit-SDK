@@ -10,6 +10,7 @@ vpath %.h $(MODULEPATH)/screenController
 HEADER += gui.h
 SRC += gui.c widget.c
 SIM_SRC += gui_sim.c
+INCLUDEPATH := $(INCLUDEPATH) -I$(MODULEPATH)
 
 ########## SCREEN CONTROLER SUPPORT ##########
 
@@ -23,6 +24,9 @@ $(OUT_PWD)/gui_driver.h : $(firstword $(MAKEFILE_LIST))
 	@printf "\n// defines use drivers screen\n\
 $(subst $(space),\n,$(foreach GUI_DRIVER,$(sort $(GUI_DRIVERS)),#define USE_$(GUI_DRIVER)\n))\n\
 " > $(OUT_PWD)/gui_driver.h
+	@printf "\n// includes drivers screen\n\
+$(subst $(space),\n,$(foreach GUI_DRIVER,$(sort $(GUI_DRIVERS)),#include \"$(GUI_DRIVER).h\"\n))\n\
+" >> $(OUT_PWD)/gui_driver.h
 CONFIG_HEADERS += $(OUT_PWD)/gui_driver.h
 
 ######### EXTERNAL RESSOURCE SUPPORT #########
