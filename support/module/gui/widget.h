@@ -33,7 +33,7 @@ typedef struct widget_t
     void (*action_callback)(struct widget_t *widget);
 } Widget;
 
-void widget_init();
+void widget_init(void);
 void widget_addButton(uint16_t x, uint16_t y, uint16_t w, uint16_t h);
 
 #ifdef __cplusplus

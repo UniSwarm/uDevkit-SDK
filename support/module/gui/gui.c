@@ -207,7 +207,7 @@ void gui_drawText(uint16_t x, uint16_t y, const char *txt)
 void gui_drawTextRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, const char *txt, uint8_t flags)
 {
     int16_t byte;
-    char bit;
+    char bit = 0;
     const char *c;
     int16_t text_width, xstartmargin, xendmargin;
     int16_t text_height, ystartmargin, yendmargin;
