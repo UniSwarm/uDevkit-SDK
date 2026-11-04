@@ -372,6 +372,8 @@ extern "C" {
 #        define _SPI5TXIF IFS5bits.SPI5TXIF
 #        define _SPI5TXIP IPC44bits.SPI5TXIP
 #        define _SPI5TXIS IPC44bits.SPI5TXIS
+#        define _SPI6EIE  IEC5bits.SPI6IE  // missing flags, tiping mistake from Microchip headers
+#        define _SPI6EIF  IFS5bits.SPI6IF  // missing flags, tiping mistake from Microchip headers
 #        define _SPI6EIP  IPC46bits.SPI6EIP
 #        define _SPI6EIS  IPC46bits.SPI6EIS
 #        define _SPI6RXIE IEC5bits.SPI6RXIE
@@ -379,6 +381,7 @@ extern "C" {
 #        define _SPI6RXIP IPC46bits.SPI6RXIP
 #        define _SPI6RXIS IPC46bits.SPI6RXIS
 #        define _SPI6TXIE IEC5bits.SPI6TXIE
+#        define _SPI6TXIF IFS5bits.SPI6TX  // missing flags, tiping mistake from Microchip headers
 #        define _SPI6TXIP IPC46bits.SPI6TXIP
 #        define _SPI6TXIS IPC46bits.SPI6TXIS
 #    endif
