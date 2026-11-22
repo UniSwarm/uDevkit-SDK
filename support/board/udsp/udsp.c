@@ -56,7 +56,8 @@ int board_init(void)
     sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, 8000000);  // 8MHz
     // external osc configuration : EC with IO for OSCO
     OSCCFGbits.POSCIOFNC = 0b0;  // CLKO output disabled
-    OSCCFGbits.POSCMD = 1;       // OSCI for EC in, OSCO for clk out
+    OSCCFGbits.POSCMD = 0;       // OSCI for EC in, OSCO for clk out
+    OSCCTRLbits.POSCEN = 1;      // POSC primary oscilator enabled
     archi_init();
 
     _board_init_io();
