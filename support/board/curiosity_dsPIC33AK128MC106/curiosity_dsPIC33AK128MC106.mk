@@ -2,7 +2,7 @@
 DEVICE = 33AK128MC106
 ARCHI = dspic33ak
 
-DEV_PROG ?= PKOB
+DEV_PROG ?= PKOB4
 
 vpath %.c $(dir $(lastword $(MAKEFILE_LIST)))
 vpath %.h $(dir $(lastword $(MAKEFILE_LIST)))

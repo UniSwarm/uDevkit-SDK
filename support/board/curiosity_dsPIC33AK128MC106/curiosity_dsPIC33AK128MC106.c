@@ -1,16 +1,16 @@
 /**
  * @file curiosity_dsPIC33AK128MC106.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2025
+ * @copyright UniSwarm 2025-2026
  *
  * @date June 22, 2025, 06:01 PM
  *
  * @brief Code for Curiosity dsPIC33AK128MC106 board (EV02G02A) plus Curiosity Platform Development Board (EV74H48A)
  *
- * product page:
+ * product pages:
  *  https://www.microchip.com/en-us/development-tool/ev02g02a
  *  https://www.microchip.com/en-us/development-tool/EV74H48A
- * datasheet:
+ * datasheets:
  *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/InformationSheet/dsPIC33AK128MC106-General-Purpose-DIM-Info-Sheet-DS70005556.pdf
  *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/UserGuides/Curiosity-Platform-Development-Board-Users-Guide-DS70005562.pdf
  */
@@ -37,8 +37,8 @@ int _board_init_io(void)
     // remappable pins
     // Unlock configuration pin
     unlockIoConfig();
-    _U1RXR = 52;           // RX1 ==> RPD10
-    _RP50R = _RPOUT_U1TX;  // TX1 ==> RPD15
+    _U1RXR = 52;           // RX1 ==> RPD3
+    _RP50R = _RPOUT_U1TX;  // TX1 ==> RPD1
 
     _U2RXR = 59;           // RX2 ==> RPC3
     _RP58R = _RPOUT_U2TX;  // TX2 ==> RPC2
@@ -55,6 +55,12 @@ int _board_init_io(void)
     gpio_setBitConfig(_board_leds[3], GPIO_OUTPUT);
     _board_leds[4] = gpio_pin(GPIO_PORTC, 7);
     gpio_setBitConfig(_board_leds[4], GPIO_OUTPUT);
+    _board_leds[5] = gpio_pin(GPIO_PORTC, 8);
+    gpio_setBitConfig(_board_leds[5], GPIO_OUTPUT);
+    _board_leds[6] = gpio_pin(GPIO_PORTC, 9);
+    gpio_setBitConfig(_board_leds[6], GPIO_OUTPUT);
+    _board_leds[7] = gpio_pin(GPIO_PORTC, 10);
+    gpio_setBitConfig(_board_leds[7], GPIO_OUTPUT);
 
     _board_buttons[0] = gpio_pin(GPIO_PORTA, 6);
     gpio_setBitConfig(_board_buttons[0], GPIO_INPUT);
@@ -69,6 +75,7 @@ int _board_init_io(void)
 int board_init(void)
 {
     sysclock_setSourceFreq(SYSCLOCK_SRC_POSC, 8000000);  // 8MHz
+    OSCCFGbits.POSCMD = 0x0U;
     archi_init();
 
     _board_init_io();

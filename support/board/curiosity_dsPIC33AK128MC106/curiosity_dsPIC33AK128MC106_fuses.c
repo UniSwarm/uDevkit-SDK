@@ -1,24 +1,18 @@
 /**
  * @file curiosity_dsPIC33AK128MC106_fuses.c
  * @author Sebastien CAUX (sebcaux)
- * @copyright UniSwarm 2025
+ * @copyright UniSwarm 2025-2026
  *
  * @date June 22, 2025, 06:01 PM
- *
  *
  * @brief Fuses for Curiosity dsPIC33AK128MC106 board (EV02G02A) plus Curiosity Platform Development Board (EV74H48A)
  *
  * product page:
- *
- * https://www.microchip.com/en-us/development-tool/ev02g02a
+ *  https://www.microchip.com/en-us/development-tool/ev02g02a
  *  https://www.microchip.com/en-us/development-tool/EV74H48A
  * datasheet:
- *
- * https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/InformationSheet/dsPIC33AK128MC106-General-Purpose-DIM-Info-Sheet-DS70005556.pdf
-
- * *
- * https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/UserGuides/Curiosity-Platform-Development-Board-Users-Guide-DS70005562.pdf
-
+ *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/InformationSheet/dsPIC33AK128MC106-General-Purpose-DIM-Info-Sheet-DS70005556.pdf
+ *  https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/UserGuides/Curiosity-Platform-Development-Board-Users-Guide-DS70005562.pdf
  */
 
 // FCP
@@ -30,15 +24,15 @@
 #pragma config FICD_JTAGEN = OFF  // JTAG enable bit (JTAG is disabled)
 
 // FDEVOPT
-#pragma config FDEVOPT_ALTI2C1 = OFF  // Alternate I2C1 pins selection bit (Primary I2C1 pins are used)
-#pragma config FDEVOPT_ALTI2C2 = OFF  // Alternate I2C2 pins selection bit (Primary I2C2 pins are used)
+#pragma config FDEVOPT_ALTI2C1 = ON   // Alternate I2C1 pins selection bit (Alternate AI2C1 pins are used)
+#pragma config FDEVOPT_ALTI2C2 = ON   // Alternate I2C2 pins selection bit (Alternate AI2C2 pins are used)
 #pragma config FDEVOPT_BISTDIS = OFF  // Hardware RAM test disable bit (RAM test after reset is enabled)
 #pragma config FDEVOPT_SPI2PIN = OFF  // SPI2 peripheral pin selection disable bit (SPI2 pins are selected by peripheral pin selection feature)
 
 // FWDT
 #pragma config FWDT_WINDIS = ON             // Watchdog Timer Window Disable bit (Watchdog Timer operates in Non-Window mode)
 #pragma config FWDT_SWDTMPS = PS2147483648  // Sleep Mode Watchdog Timer Post Scaler select bits (1:2147483648)
-#pragma config FWDT_RCLKSEL = BFRC256       // Watchdog Timer Clock select bits (WDT Run Mode uses BFRC:256)
+#pragma config FWDT_RCLKSEL = BFRC244       // Watchdog Timer Clock select bits (WDT Run Mode uses BFRC:244)
 #pragma config FWDT_RWDTPS = PS2147483648   // Run Mode Watchdog Timer Post Scaler select bits (1:2147483648)
 #pragma config FWDT_WDTWIN = WIN25          // Watchdog Timer Window Size Select bits (WDT Window is 25% of WDT period)
 #pragma config FWDT_WDTEN = SW              // Watchdog Timer Enable bit->WDT is controlled by software, use WDTCON.ON bit
