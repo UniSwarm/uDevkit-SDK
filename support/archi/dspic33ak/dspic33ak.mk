@@ -2,13 +2,14 @@
 vpath %.h $(UDEVKIT)/support/archi/dspic33ak/
 HEADER += dspic33ak.h
 
-AS = xc-dsc-as
-CC = xc-dsc-gcc
-LD = xc-dsc-ld
-AR = xc-dsc-ar
-HX = xc-dsc-bin2hex
-SIM = sim30
-OBJDUMP = xc-dsc-objdump
+XC_PATH ?= $(abspath $(dir $(lastword $(shell whereis -b xc-dsc-gcc)))..)/
+AS = $(XC_PATH)bin/xc-dsc-as
+CC = $(XC_PATH)bin/xc-dsc-gcc
+LD = $(XC_PATH)bin/xc-dsc-ld
+AR = $(XC_PATH)bin/xc-dsc-ar
+HX = $(XC_PATH)bin/xc-dsc-bin2hex
+SIM = $(XC_PATH)bin/sim30
+OBJDUMP = $(XC_PATH)bin/xc-dsc-objdump
 
 CC_VERSION := $(shell $(CC) --version | egrep -o "v([0-9]+\\.[0-9]+)")
 CC_VERSION_MAJOR := $(shell echo $(CC_VERSION) | cut -f2 -dv | cut -f1 -d.)
