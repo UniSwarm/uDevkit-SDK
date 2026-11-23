@@ -34,16 +34,7 @@ extern "C" {
 #    include "can_pic32.h"
 #else
 #    define CAN_COUNT 0
-typedef enum
-{
-    CAN_RXFIFO_NOT_EMPTY,
-    CAN_TXFIFO_NOT_FULL,
-    CAN_RXFIFO_HALF_FULL,
-    CAN_TXFIFO_HALF_EMPTY,
-    CAN_RXFIFO_FULL,
-    CAN_TXFIFO_EMPTY,
-    CAN_RXFIFO_OVERFLOW,
-} CAN_FIFO_EVENTS;
+typedef int CAN_FIFO_EVENTS;
 #endif
 
 #if CAN_COUNT >= 1
